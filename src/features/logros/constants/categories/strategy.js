@@ -1,0 +1,92 @@
+import { faPlay } from '@fortawesome/free-solid-svg-icons';
+
+export const STRATEGY_BADGES = {
+  TIME_STRATEGIST: {
+    id: 'TIME_STRATEGIST',
+    name: 'Estratega del Tiempo',
+    icon: faPlay,
+    description: 'Completa examen con 5 min sobrante',
+    requirement: 'Termina un examen con 5+ minutos restantes',
+    category: 'estrategia'
+  },
+  EFFICIENCY_MASTER: {
+    id: 'EFFICIENCY_MASTER',
+    name: 'Maestro de Eficiencia',
+    icon: faPlay,
+    description: 'Completa 10 exámenes con promedio 15 min',
+    requirement: 'Realiza 10 exámenes en promedio 15 minutos cada uno',
+    category: 'estrategia'
+  },
+  ACCURACY_FIRST: {
+    id: 'ACCURACY_FIRST',
+    name: 'Precisión Primero',
+    icon: faPlay,
+    description: 'Mantén 98%+ de precisión',
+    requirement: 'Obtén 98%+ en 5 exámenes consecutivos',
+    category: 'estrategia'
+  },
+  SPEED_ACCURACY_COMBO: {
+    id: 'SPEED_ACCURACY_COMBO',
+    name: 'Combo Velocidad-Precisión',
+    icon: faPlay,
+    description: 'Combina velocidad y precisión',
+    requirement: 'Completa examen en <10 min con 95%+ aciertos',
+    category: 'estrategia'
+  },
+  STRATEGIC_LEARNER: {
+    id: 'STRATEGIC_LEARNER',
+    name: 'Estudiante Estratégico',
+    icon: faPlay,
+    description: 'Utiliza todas las herramientas de estudio',
+    requirement: 'Usa lecciones, práctica y simulacros',
+    category: 'estrategia'
+  },
+  SPEED_DEMON_ELITE: {
+    id: 'SPEED_DEMON_ELITE',
+    name: 'Demonio de Velocidad Élite',
+    icon: faPlay,
+    description: 'Completa 5 exámenes en menos de 5 minutos cada uno',
+    requirement: 'Realiza 5 exámenes en <5 minutos con 90%+ aciertos',
+    category: 'estrategia'
+  },
+  ACCURACY_MACHINE: {
+    id: 'ACCURACY_MACHINE',
+    name: 'Máquina de Precisión',
+    icon: faPlay,
+    description: 'Mantén 99%+ en 5 exámenes consecutivos',
+    requirement: 'Obtén 99%+ en 5 exámenes seguidos',
+    category: 'estrategia'
+  },
+  PERFECTION_RUNNER: {
+    id: 'PERFECTION_RUNNER',
+    name: 'Corredor de la Perfección',
+    icon: faPlay,
+    description: 'Completa examen en <8 min con 100% aciertos',
+    requirement: 'Termina rápidamente con puntuación perfecta',
+    category: 'estrategia'
+  },
+  RESOURCE_OPTIMIZER: {
+    id: 'RESOURCE_OPTIMIZER',
+    name: 'Optimizador de Recursos',
+    icon: faPlay,
+    description: 'Usa todos los materiales de aprendizaje disponibles',
+    requirement: 'Accede a lecciones, videos, pruebas y análisis',
+    category: 'estrategia'
+  },
+  TACTICAL_MASTER: {
+    id: 'TACTICAL_MASTER',
+    name: 'Maestro Táctico',
+    icon: faPlay,
+    description: 'Implementa 3 estrategias diferentes exitosamente',
+    requirement: 'Usa estrategias: timing, precisión y velocidad',
+    category: 'estrategia'
+  },
+  GENIUS_STRATEGY: {
+    id: 'GENIUS_STRATEGY',
+    name: 'Estrategia de Genio',
+    icon: faPlay,
+    description: 'Combina velocidad, precisión y eficiencia',
+    requirement: 'Completa en <10 min con 95%+ en 3 materias',
+    category: 'estrategia'
+  }
+};

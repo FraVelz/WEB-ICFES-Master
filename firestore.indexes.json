@@ -1,0 +1,19 @@
+{
+  "indexes": [
+    {
+      "collectionGroup": "users",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "rank",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "weeklyXP",
+          "order": "DESCENDING"
+        }
+      ]
+    }
+  ],
+  "fieldOverrides": []
+}

@@ -5,9 +5,9 @@ Una plataforma interactiva para practicar preguntas del examen de estado ICFES (
 ## Características Principales
 
 - **3 Niveles de Aprendizaje**:
-  - 🔵 **Nivel Fácil**: Aprende bases con materiales estructurados y ejercicios básicos
-  - 🟠 **Nivel Intermedio**: Practica exámenes individuales por materia
-  - 🔴 **Nivel Avanzado**: Simulacro global ICFES de 200 preguntas en 3 horas
+  -  **Nivel Fácil**: Aprende bases con materiales estructurados y ejercicios básicos
+  -  **Nivel Intermedio**: Practica exámenes individuales por materia
+  -  **Nivel Avanzado**: Simulacro global ICFES de 200 preguntas en 3 horas
 - **Práctica por Áreas**: Matemáticas, Lenguaje, Ciencias Naturales, Ciencias Sociales e Inglés
 - **Examen Simulado Completo**: Resuelve todas las preguntas con temporizador configurable
 - **Material de Estudio Avanzado**: Acceso a recursos educativos organizados por tema
@@ -61,99 +61,99 @@ Total: 40+ preguntas con contenido avanzado (imágenes, tablas, fórmulas, gráf
 
 ```bash
 src/
-├── features/               # Características organizadas por dominio
-│   ├── exam/               # Feature de exámenes
-│   │   ├── components/
-│   │   │   ├── ExamConfigModal/
-│   │   │   ├── AnswerSheet/
-│   │   │   └── ResultsAnalysis/
-│   │   ├── pages/
-│   │   │   ├── PracticePage/
-│   │   │   └── FullExamPage/
-│   │   ├── hooks/
-│   │   └── utils/
-│   ├── learning/           # Feature de aprendizaje con 3 niveles
-│   │   ├── components/
-│   │   │   ├── LearningFilters/
-│   │   │   ├── MaterialsGrid/
-│   │   │   └── AdditionalResources/
-│   │   ├── pages/
-│   │   │   └── LearningPage/  # Selector de niveles + contenido dinámico
-│   │   ├── lessons/
-│   │   └── utils/
-│   ├── logros/             # Feature de gamificación y badges
-│   │   ├── pages/
-│   │   │   └── LogrosPage/     # 40+ logros por categoría
-│   │   └── hooks/
-│   ├── progress/           # Feature de progreso
-│   │   └── pages/
-│   ├── gamification/       # Feature de gamificación
-│   │   └── hooks/
-│   ├── auth/               # Feature de autenticación
-│   │   ├── components/
-│   │   └── pages/
-│   ├── user/               # Feature de usuario
-│   │   └── hooks/
-│   └── home/               # Feature de inicio
-│       └── pages/
-├── shared/                 # Componentes y utilidades compartidas
-│   ├── components/
-│   │   ├── atoms/          # Componentes básicos
-│   │   │   ├── Badge
-│   │   │   ├── Button
-│   │   │   ├── Card
-│   │   │   ├── Progress
-│   │   │   └── Text
-│   │   ├── molecules/      # Componentes compuestos
-│   │   │   ├── AnswerOption
-│   │   │   ├── FloatingFilterButton
-│   │   │   ├── QuestionCard
-│   │   │   └── ResultsSummary
-│   │   └── organisms/      # Componentes complejos
-│   │       └── QuestionContent/  # Soporte para contenido avanzado
-│   │           ├── TextContent
-│   │           ├── ImageContent
-│   │           ├── TableContent
-│   │           ├── FormulaContent
-│   │           ├── ChartContent
-│   │           ├── TimelineContent
-│   │           ├── CodeContent
-│   │           ├── MapContent
-│   │           ├── QuoteContent
-│   │           └── CompositeContent
-│   └── utils/              # Funciones utilitarias
-│       ├── formatters.js
-│       └── index.js
-├── core/                   # Datos y constantes globales
-│   ├── data/
-│   │   ├── questions.js
-│   │   ├── learningMaterials.js
-│   │   └── index.js
-│   ├── constants/
-│   │   ├── areaInfo.js
-│   │   └── index.js
-│   └── index.js
-├── hooks/                  # Hooks personalizados
-│   ├── useQuizLogic.js
-│   ├── useGamificationFirestore.js
-│   ├── useUserDataFirestore.js
-│   ├── useProgressFirestore.js
-│   └── useExamFirestore.js
-├── services/               # Servicios de Firebase
-│   ├── BaseService.js
-│   ├── ExamFirestoreService.js
-│   ├── GamificationFirestoreService.js
-│   ├── ProgressFirestoreService.js
-│   ├── UserFirestoreService.js
-│   └── index.js
-├── context/                # Context API
-│   └── AuthContext.jsx
-├── pages/                  # Re-exports para compatibilidad
-│   └── index.js
-├── App.jsx                 # Componente principal con rutas
-├── App.css                 # Estilos de la app
-├── index.css               # Estilos globales
-└── main.jsx                # Punto de entrada
+ features/               # Características organizadas por dominio
+    exam/               # Feature de exámenes
+       components/
+          ExamConfigModal/
+          AnswerSheet/
+          ResultsAnalysis/
+       pages/
+          PracticePage/
+          FullExamPage/
+       hooks/
+       utils/
+    learning/           # Feature de aprendizaje con 3 niveles
+       components/
+          LearningFilters/
+          MaterialsGrid/
+          AdditionalResources/
+       pages/
+          LearningPage/  # Selector de niveles + contenido dinámico
+       lessons/
+       utils/
+    logros/             # Feature de gamificación y badges
+       pages/
+          LogrosPage/     # 40+ logros por categoría
+       hooks/
+    progress/           # Feature de progreso
+       pages/
+    gamification/       # Feature de gamificación
+       hooks/
+    auth/               # Feature de autenticación
+       components/
+       pages/
+    user/               # Feature de usuario
+       hooks/
+    home/               # Feature de inicio
+        pages/
+ shared/                 # Componentes y utilidades compartidas
+    components/
+       atoms/          # Componentes básicos
+          Badge
+          Button
+          Card
+          Progress
+          Text
+       molecules/      # Componentes compuestos
+          AnswerOption
+          FloatingFilterButton
+          QuestionCard
+          ResultsSummary
+       organisms/      # Componentes complejos
+           QuestionContent/  # Soporte para contenido avanzado
+               TextContent
+               ImageContent
+               TableContent
+               FormulaContent
+               ChartContent
+               TimelineContent
+               CodeContent
+               MapContent
+               QuoteContent
+               CompositeContent
+    utils/              # Funciones utilitarias
+        formatters.js
+        index.js
+ core/                   # Datos y constantes globales
+    data/
+       questions.js
+       learningMaterials.js
+       index.js
+    constants/
+       areaInfo.js
+       index.js
+    index.js
+ hooks/                  # Hooks personalizados
+    useQuizLogic.js
+    useGamificationFirestore.js
+    useUserDataFirestore.js
+    useProgressFirestore.js
+    useExamFirestore.js
+ services/               # Servicios de Firebase
+    BaseService.js
+    ExamFirestoreService.js
+    GamificationFirestoreService.js
+    ProgressFirestoreService.js
+    UserFirestoreService.js
+    index.js
+ context/                # Context API
+    AuthContext.jsx
+ pages/                  # Re-exports para compatibilidad
+    index.js
+ App.jsx                 # Componente principal con rutas
+ App.css                 # Estilos de la app
+ index.css               # Estilos globales
+ main.jsx                # Punto de entrada
 ```
 
 ## Sistema de Importaciones (Alias)
@@ -227,9 +227,9 @@ Carpeta: `/Documentacion/`
 
 ## Próximas Mejoras Recomendadas
 
-- ✅ Implementar gamificación (insignias, puntos) - **EN PROGRESO**
-- ✅ Agregar autenticación de usuarios con Firebase - **EN PROGRESO**
-- ✅ Almacenamiento en Firestore para resultados - **EN PROGRESO**
+-  Implementar gamificación (insignias, puntos) - **EN PROGRESO**
+-  Agregar autenticación de usuarios con Firebase - **EN PROGRESO**
+-  Almacenamiento en Firestore para resultados - **EN PROGRESO**
 - Crear sistema de reportes y analytics avanzado
 - Agregar videos tutoriales integrados
 - Crear aplicación móvil con React Native

@@ -1,0 +1,84 @@
+import { faPlay } from '@fortawesome/free-solid-svg-icons';
+
+export const IMPROVEMENT_BADGES = {
+  IMPROVEMENT_CHAMPION: {
+    id: 'IMPROVEMENT_CHAMPION',
+    name: 'Campeón de Mejora',
+    icon: faPlay,
+    description: 'Mejora tu puntuación en 20 puntos',
+    requirement: 'Aumenta tu promedio 20 puntos',
+    category: 'mejora'
+  },
+  COMEBACK_KING: {
+    id: 'COMEBACK_KING',
+    name: 'Rey del Regreso',
+    icon: faPlay,
+    description: 'Recuperarte de una mala puntuación',
+    requirement: 'Obtén 90%+ después de un resultado bajo',
+    category: 'mejora'
+  },
+  STEADY_CLIMBER: {
+    id: 'STEADY_CLIMBER',
+    name: 'Escalador Constante',
+    icon: faPlay,
+    description: 'Mejora tu puntuación cada semana',
+    requirement: 'Aumenta puntuación 4 semanas consecutivas',
+    category: 'mejora'
+  },
+  FOCUS_FINDER: {
+    id: 'FOCUS_FINDER',
+    name: 'Buscador de Enfoque',
+    icon: faPlay,
+    description: 'Completa 10 exámenes sin descansar',
+    requirement: 'Realiza 10 exámenes en sesión',
+    category: 'mejora'
+  },
+  THIRTY_POINT_JUMP: {
+    id: 'THIRTY_POINT_JUMP',
+    name: 'Salto de 30 Puntos',
+    icon: faPlay,
+    description: 'Mejora 30 puntos en una materia',
+    requirement: 'Aumenta tu promedio 30 puntos en una área',
+    category: 'mejora'
+  },
+  TRIPLE_RECOVERY: {
+    id: 'TRIPLE_RECOVERY',
+    name: 'Triple Recuperación',
+    icon: faPlay,
+    description: 'Supera 3 rachas bajas en una semana',
+    requirement: 'Obtén 90%+ en 3 exámenes tras resultados bajos',
+    category: 'mejora'
+  },
+  MOMENTUM_BUILDER: {
+    id: 'MOMENTUM_BUILDER',
+    name: 'Constructor de Impulso',
+    icon: faPlay,
+    description: 'Logra 5 mejoras consecutivas',
+    requirement: 'Aumenta puntuación en 5 exámenes seguidos',
+    category: 'mejora'
+  },
+  CONSISTENCY_MASTER: {
+    id: 'CONSISTENCY_MASTER',
+    name: 'Maestro de Consistencia',
+    icon: faPlay,
+    description: 'Mantén 85%+ durante 30 exámenes',
+    requirement: 'Promedio 85%+ en 30 exámenes consecutivos',
+    category: 'mejora'
+  },
+  BREAKTHROUGH_ACHIEVER: {
+    id: 'BREAKTHROUGH_ACHIEVER',
+    name: 'Logrador de Avances',
+    icon: faPlay,
+    description: 'Alcanza tu mejor puntuación de todos los tiempos',
+    requirement: 'Supera tu récord personal en cualquier área',
+    category: 'mejora'
+  },
+  ENDURANCE_TRAINER: {
+    id: 'ENDURANCE_TRAINER',
+    name: 'Entrenador de Resistencia',
+    icon: faPlay,
+    description: 'Completa 50 exámenes manteniéndote motivado',
+    requirement: 'Realiza 50 exámenes sin bajar de 80%',
+    category: 'mejora'
+  }
+};

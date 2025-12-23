@@ -1,0 +1,260 @@
+# Componente Unificado de Logros - Documentación de Componentes
+
+## 📐 Estructura Visual
+
+```
+┌─────────────────────────────────────────────────────────┐
+│         HERO HEADER CON PROGRESO XP                    │
+│  [Trophy Icon] Centro de Logros                        │
+│  Trackea tu progreso, gana insignias y domina...       │
+│  ┌──────────────────────────────────────────────────┐  │
+│  │ ⚡ Experiencia: 450/1000 XP        [████░░░░░] │  │
+│  │ 45% completo → Siguiente nivel: 550 XP           │  │
+│  └──────────────────────────────────────────────────┘  │
+└─────────────────────────────────────────────────────────┘
+
+┌─────────┬─────────┬─────────┬─────────────────────────┐
+│ Nivel 15│ Racha 5 │Racha Max│ Horas: 120              │
+│ 👑      │ 🔥      │ ⬆️      │ 📊                      │
+└─────────┴─────────┴─────────┴─────────────────────────┘
+
+┌──────────────────────────────────────────────────────┐
+│ [Overview] [Insignias] [Niveles] [Desafíos] [Stats]  │
+└──────────────────────────────────────────────────────┘
+
+```
+
+## 🎯 Tab: RESUMEN
+
+```
+┌─────────────────────────────────────────────────────┐
+│ ✨ Logros Recientes                                 │
+│ ┌────────┐ ┌────────┐ ┌────────┐ ┌────────┐ ...     │
+│ │ 🏅     │ │ 🔥     │ │ ⚡     │ │ 🎯     │         │
+│ │Primer  │ │Racha   │ │Maestro │ │Perfec- │         │
+│ │Paso    │ │Fuego   │ │Mates  │ │ción    │         │
+│ └────────┘ └────────┘ └────────┘ └────────┘         │
+│                                                      │
+├──────────────────────┬──────────────────────────────┤
+│ 🎯 Próximo Hito      │ ✅ Logros Desbloqueados     │
+│ Nivel 16: Maestría   │                             │
+│ Avanzada             │ 25                          │
+│ [████████░░░░] 60%   │ [█████░░░░░░░] 60%        │
+│ 400 XP más           │ 60% de todos los logros    │
+└──────────────────────┴──────────────────────────────┘
+```
+
+## 🏅 Tab: INSIGNIAS
+
+```
+FILTROS:
+[Todos] [Comunes] [Raros] [Épicos] [Legendarios]
+
+┌────────┐ ┌────────┐ ┌────────┐ ┌────────┐
+│ 🌟     │ │ 🔥     │ │ ⚡ 🔒  │ │ 🎯     │
+│Primer  │ │Racha   │ │Maestro │ │Puntuac.│
+│Paso    │ │Fuego   │ │Mates   │ │Perfect │
+│✓ Desbl.│ │✓ Desbl.│ │📊 4/6  │ │📊 85%  │
+└────────┘ └────────┘ └────────┘ └────────┘
+
+┌────────┐ ┌────────┐ ┌────────┐ ┌────────┐
+│ 💜     │ │ 🥉     │ │ 🌍     │ │ 📚     │
+│Maratón │ │Erudito │ │Social  │ │Colabr. │
+│✓ Desbl.│ │📊 2/4  │ │📊 3/5  │ │🔒 Bloq.│
+└────────┘ └────────┘ └────────┘ └────────┘
+```
+
+## 📈 Tab: NIVELES
+
+```
+[Nivel 1] [Nivel 2] [Nivel 3] 
+  Actual    Siguiente Bloqueado
+
+┌─ Nivel 1: Aprendiz ──────────────────────┐
+│ 👑 0 - 1000 XP                           │
+│ ✅ ACTUAL                                │
+│ [████████████░░░░░░░░░░] 45%            │
+└──────────────────────────────────────────┘
+
+┌─ Nivel 2: Intermedio ────────────────────┐
+│ 👑 1000 - 2000 XP                        │
+│ ⏭️ SIGUIENTE                             │
+│ [░░░░░░░░░░░░░░░░░░░░░░] 0%             │
+└──────────────────────────────────────────┘
+
+┌─ Nivel 3: Avanzado ──────────────────────┐
+│ 👑 2000 - 3000 XP                        │
+│ 🔒 NO DISPONIBLE                         │
+└──────────────────────────────────────────┘
+```
+
+## 🎪 Tab: DESAFÍOS
+
+```
+DESAFÍOS DIARIOS:
+
+┌──────────────────────────┐ ┌──────────────────────────┐
+│ 5 Preguntas Correctas    │ │ Racha de 3 Días          │
+│ Recompensa: 50 XP        │ │ Recompensa: 100 XP       │
+│ ✅ Completado            │ │ 📅 Pendiente             │
+└──────────────────────────┘ └──────────────────────────┘
+
+┌──────────────────────────┐
+│ Examen Simulado 80%+     │
+│ Recompensa: 200 XP       │
+│ 🔒 Bloqueado             │
+└──────────────────────────┘
+```
+
+## 📊 Tab: ESTADÍSTICAS
+
+```
+┌──────────────────────────┐ ┌──────────────────────────┐
+│ Estadísticas Generales   │ │ Actividad                │
+│                          │ │                          │
+│ Logros Totales     │ 25  │ │ Racha Actual  │ 5 días  │
+│ Nivel Alcanzado    │ 15  │ │ Racha Máxima  │ 30 días │
+│ Experiencia Total  │12.5K│ │ Horas Estud.  │ 150 h   │
+│ Desafíos Compl.    │  8  │ │ Preguntas     │ 1,250+  │
+└──────────────────────────┘ └──────────────────────────┘
+```
+
+## 🎨 Sistema de Rareza
+
+### COMÚN
+```
+┌──────────────────┐
+│  🏅             │
+│  Badge Común    │
+│  [común]        │
+│  Desbloqueado   │
+└──────────────────┘
+```
+Gradiente: Gris → Gris Claro
+
+### RARO
+```
+┌──────────────────┐
+│  🔷             │
+│  Badge Raro     │
+│  [raro]         │
+│  Desbloqueado   │
+└──────────────────┘
+```
+Gradiente: Azul → Azul Claro
+
+### ÉPICO
+```
+┌──────────────────┐
+│  ✨             │
+│  Badge Épico    │
+│  [épico]        │
+│  📊 5/6         │
+└──────────────────┘
+```
+Gradiente: Púrpura → Púrpura Claro
+
+### LEGENDARIO
+```
+┌──────────────────┐
+│  ⭐             │
+│  Badge Legen.   │
+│  [legendario]   │
+│  📊 85/100      │
+└──────────────────┘
+```
+Gradiente: Amarillo → Amarillo Claro
+
+## 🖱️ Modal de Insignia
+
+```
+┌─────────────────────────────────┐
+│  Cerrar                    [X]   │
+├─────────────────────────────────┤
+│                                 │
+│              ⭐                 │
+│                                 │
+│      Puntuación Perfecta        │
+│          [LEGENDARIO]           │
+│                                 │
+│    Consigue 100% en un          │
+│    examen simulado              │
+│                                 │
+│  ┌─────────────────────────────┐│
+│  │ ✓ Desbloqueado 2024-12-01  ││
+│  └─────────────────────────────┘│
+│                                 │
+│        [   Cerrar   ]           │
+└─────────────────────────────────┘
+```
+
+## 🎭 Estados Visuales
+
+### BADGE DESBLOQUEADO
+- Opacidad: 100%
+- Borde: Cyan brillante
+- Fondo: Con gradiente de color
+- Interacción: Hover eleva y brilla más
+
+### BADGE BLOQUEADO
+- Opacidad: 50%
+- Borde: Gris oscuro
+- Fondo: Apagado
+- Símbolo: 🔒 Candado
+- Interacción: Muestra progreso al hover
+
+### BADGE EN PROGRESO
+- Opacidad: 75%
+- Borde: Amarillo
+- Barra de progreso: Visible
+- Símbolo: 📊 Porcentaje
+
+## 🎬 Animaciones
+
+### Loading
+```
+[Spinner] ✨ (rotación continua)
+"Cargando tus logros..."
+```
+
+### Hover en Badge
+```
+Escala: 1 → 1.05
+Sombra: 0 → variable según rareza
+Brillo: normal → mayor
+```
+
+### Progreso XP
+```
+Barra llena de izquierda a derecha
+Duración: 500ms
+Easing: ease-out
+```
+
+### Tab Change
+```
+Fondo: Gradiente cyan-to-blue
+Transición: 300ms
+```
+
+## 📱 Responsive Design
+
+### MOBILE (< 640px)
+- Stack vertical en stats
+- Grid 2 columnas para badges
+- Font sizes reducidos
+- Padding ajustado
+
+### TABLET (640px - 1024px)
+- Grid 2-3 columnas
+- Stats 2x2
+- Tamaño normal de fonts
+
+### DESKTOP (> 1024px)
+- Grid 4-6 columnas
+- Stats 4 en fila
+- Máxima expansión
+
+---
+
+**Última actualización**: 15 de Diciembre, 2024

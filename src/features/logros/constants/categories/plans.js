@@ -1,0 +1,108 @@
+import { faRocket, faFlask, faZap, faMedal, faGem, faCrown, faTrophy, faStar, faCalendarDays, faHandshake, faGraduationCap } from '@fortawesome/free-solid-svg-icons';
+
+export const PLAN_BADGES = {
+  FREE_PLAN_USER: {
+    id: 'FREE_PLAN_USER',
+    name: 'Usuario Gratuito',
+    icon: faRocket,
+    description: 'Acceso al plan gratuito',
+    requirement: 'Registrarse con plan gratuito',
+    category: 'planes'
+  },
+  FREE_PLAN_ACTIVE: {
+    id: 'FREE_PLAN_ACTIVE',
+    name: 'Explorador',
+    icon: faFlask,
+    description: 'Mantén 30 días de actividad en plan gratuito',
+    requirement: 'Accede durante 30 días en plan gratuito',
+    category: 'planes'
+  },
+  PRO_PLAN_USER: {
+    id: 'PRO_PLAN_USER',
+    name: 'Usuario Pro',
+    icon: faRocket,
+    description: 'Acceso al plan Pro',
+    requirement: 'Actualizar a plan Pro',
+    category: 'planes'
+  },
+  PRO_PLAN_POWER: {
+    id: 'PRO_PLAN_POWER',
+    name: 'Poder Pro',
+    icon: faZap,
+    description: 'Usa todas las funciones Pro durante 30 días',
+    requirement: 'Accede durante 30 días en plan Pro',
+    category: 'planes'
+  },
+  PRO_MILESTONES: {
+    id: 'PRO_MILESTONES',
+    name: 'Pro Avanzado',
+    icon: faMedal,
+    description: 'Completa 25 exámenes con plan Pro',
+    requirement: 'Realiza 25 exámenes en plan Pro',
+    category: 'planes'
+  },
+  PREMIUM_PLAN_USER: {
+    id: 'PREMIUM_PLAN_USER',
+    name: 'Usuario Premium',
+    icon: faGem,
+    description: 'Acceso al plan Premium',
+    requirement: 'Actualizar a plan Premium',
+    category: 'planes'
+  },
+  PREMIUM_ELITE: {
+    id: 'PREMIUM_ELITE',
+    name: 'Élite Premium',
+    icon: faCrown,
+    description: 'Mantén plan Premium durante 60 días',
+    requirement: 'Accede durante 60 días en plan Premium',
+    category: 'planes'
+  },
+  PREMIUM_MASTERY: {
+    id: 'PREMIUM_MASTERY',
+    name: 'Maestría Premium',
+    icon: faTrophy,
+    description: 'Completa 75 exámenes con plan Premium',
+    requirement: 'Realiza 75 exámenes en plan Premium',
+    category: 'planes'
+  },
+  PREMIUM_HUNDRED: {
+    id: 'PREMIUM_HUNDRED',
+    name: 'Centinela Premium',
+    icon: faStar,
+    description: 'Completa 100 exámenes con plan Premium',
+    requirement: 'Realiza 100 exámenes en plan Premium',
+    category: 'planes'
+  },
+  ANNUAL_SUBSCRIBER: {
+    id: 'ANNUAL_SUBSCRIBER',
+    name: 'Suscriptor Anual',
+    icon: faCalendarDays,
+    description: 'Suscripción anual activada',
+    requirement: 'Adquirir suscripción de 1 año',
+    category: 'planes'
+  },
+  ANNUAL_COMMITMENT: {
+    id: 'ANNUAL_COMMITMENT',
+    name: 'Compromiso Anual',
+    icon: faHandshake,
+    description: 'Mantén suscripción anual activa',
+    requirement: 'Acceder durante 90 días consecutivos en plan anual',
+    category: 'planes'
+  },
+  ANNUAL_LEGEND: {
+    id: 'ANNUAL_LEGEND',
+    name: 'Leyenda Anual',
+    icon: faStar,
+    description: 'Usuario anual premium con 200+ exámenes',
+    requirement: 'Completa 200 exámenes en plan anual',
+    category: 'planes'
+  },
+  LIFETIME_LEARNER: {
+    id: 'LIFETIME_LEARNER',
+    name: 'Aprendiz de Vida',
+    icon: faGraduationCap,
+    description: 'Completó los primeros 365 días de suscripción anual',
+    requirement: 'Mantén plan anual durante 365 días',
+    category: 'planes'
+  }
+};

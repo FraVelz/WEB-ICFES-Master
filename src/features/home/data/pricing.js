@@ -1,0 +1,51 @@
+export const PRICING_PLANS = [
+  {
+    id: 'free',
+    name: "Básico",
+    price: "Gratis",
+    description: "Acceso completo a todas las funcionalidades principales.",
+    features: [
+      "3 Niveles de aprendizaje: Básico, Intermedio y Avanzado",
+      "Exámenes por área ilimitados con explicaciones",
+      "Simulacros completos sin límite",
+      "Seguimiento de progreso y estadísticas",
+      "Insignias, logros y sistema de rangos",
+      "Acceso a comunidad y tienda en la App"
+    ],
+    cta: "Comienza Ahora",
+    popular: true
+  },
+  {
+    id: 'premium',
+    name: "Premium",
+    price: "$2,000 COP/mes",
+    description: "Mejora tu experiencia de aprendizaje.",
+    features: [
+      "Todo en Básico +",
+      "2x ganancia en recompensas y moneda en la App",
+      "Insignias y logros exclusivos",
+      "Acceso offline en app móvil",
+      "Soporte prioritario"
+    ],
+    cta: "Obtener Premium",
+    popular: false,
+    originalPrice: "$7,900"
+  },
+  {
+    id: 'pro',
+    name: "Pro",
+    price: "$9,900 COP/mes",
+    description: "Apoya el desarrollo de la plataforma.",
+    features: [
+      "Todo en Premium +",
+      "Contribuyes al desarrollo de nuevas funcionalidades",
+      "Financias servidores y bases de datos",
+      "Apoyas la expansión del equipo de desarrollo",
+      "Ayudas a crear contenido educativo en video",
+      "Brindas acceso gratuito a estudiantes sin recursos",
+      "Impacto social directo en la educación"
+    ],
+    cta: "Únete al Proyecto",
+    popular: false
+  }
+];

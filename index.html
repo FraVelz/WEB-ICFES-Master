@@ -1,0 +1,43 @@
+<!doctype html>
+
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/icon" href="/logo.ico?t=1934269400" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="color-scheme" content="dark" />
+
+  <title>ICFES Master</title>
+</head>
+
+<body class="m-0 p-0 box-border h-[100dvh] bg-black text-white font-sans antialiased">
+  <div id="root" class="h-full w-full flex flex-col"></div>
+
+  <script type="module" src="/src/main.jsx"></script>
+
+  <script>
+    // Interceptar enlaces de Firebase y redirigir a tu página personalizada
+    (function() {
+      // Intentar obtener parámetros de Firebase desde query o hash
+      const params = new URLSearchParams(window.location.search);
+      const hashParams = new URLSearchParams(window.location.hash.substring(1));
+      
+      const mode = params.get('mode') || hashParams.get('mode');
+      const oobCode = params.get('oobCode') || hashParams.get('oobCode');
+      const apiKey = params.get('apiKey') || hashParams.get('apiKey');
+      
+      // Si es un enlace de reset de contraseña de Firebase
+      if (mode === 'resetPassword' && oobCode && apiKey) {
+        console.log('[Firebase Intercept] Detectado enlace de reset de contraseña');
+        // Redirigir a la página de redirección que maneja esto correctamente
+        window.location.href = '/auth/redirect?mode=' + mode + '&oobCode=' + encodeURIComponent(oobCode) + '&apiKey=' + encodeURIComponent(apiKey);
+      }
+    })();
+  </script>
+</body>
+
+</html>
+
+<!-- Autor: Fravelz -->

@@ -1,0 +1,50 @@
+{
+  "name": "pruebas-icfes",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "lint": "eslint .",
+    "deploy": "npm run build && echo 'Build complete. Push dist/ to GitHub Pages or gh-pages branch.'",
+    "build:mobile": "pnpm run build && npx cap sync android",
+    "build:release": "bash ./build-release.sh ambos",
+    "build:apk": "bash ./build-release.sh apk",
+    "build:aab": "bash ./build-release.sh aab",
+    "mobile:sync": "npx cap sync android",
+    "mobile:open": "npx cap open android",
+    "mobile:generate-key": "bash ./generate-keystore.sh"
+  },
+  "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^7.1.0",
+    "@fortawesome/free-brands-svg-icons": "^7.1.0",
+    "@fortawesome/free-solid-svg-icons": "^7.1.0",
+    "@fortawesome/react-fontawesome": "^3.1.1",
+    "@tailwindcss/cli": "^4.1.17",
+    "firebase": "^12.6.0",
+    "prop-types": "^15.8.1",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "react-markdown": "^10.1.0",
+    "react-router-dom": "^7.10.1",
+    "tailwindcss": "^4.1.17"
+  },
+  "devDependencies": {
+    "@capacitor/android": "^8.0.0",
+    "@capacitor/cli": "^8.0.0",
+    "@capacitor/core": "^8.0.0",
+    "@eslint/js": "^9.39.1",
+    "@types/react": "^19.2.5",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react-swc": "^4.2.2",
+    "eslint": "^9.39.1",
+    "firebase-tools": "^15.0.0",
+    "eslint-plugin-react-hooks": "^7.0.1",
+    "eslint-plugin-react-refresh": "^0.4.24",
+    "globals": "^16.5.0",
+    "typescript": "^5.9.3",
+    "vite": "^7.2.4"
+  }
+}

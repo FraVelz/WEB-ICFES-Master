@@ -1,0 +1,1 @@
+export { FullExamPage } from './FullExamPage';
