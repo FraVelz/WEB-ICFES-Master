@@ -138,7 +138,7 @@ class GamificationFirestoreService {
         userId,
         totalXP: 0,
         level: 1,
-        coins: 0,
+        virtualMoney: 0,
         badges: [],
         createdAt: Timestamp.now(),
         updatedAt: Timestamp.now(),
@@ -212,7 +212,8 @@ class GamificationFirestoreService {
   async addCoins(userId, amount, reason = 'reward') {
     try {
       const profile = await this.getProfile(userId);
-      const newCoins = profile.coins + amount;
+      const currentVirtualMoney = profile.virtualMoney || profile.coins || 0; // Compatibilidad con datos antiguos
+      const newCoins = currentVirtualMoney + amount;
 
       const gamRef = doc(db, this.collectionPath, userId, this.subcollectionName, 'current');
       
@@ -227,11 +228,11 @@ class GamificationFirestoreService {
       });
 
       await updateDoc(gamRef, {
-        coins: newCoins,
+        virtualMoney: newCoins,
         updatedAt: Timestamp.now()
       });
 
-      return { coins: newCoins };
+      return { coins: newCoins, virtualMoney: newCoins };
     } catch (error) {
       console.error('Error agregando monedas:', error);
       throw error;
@@ -244,12 +245,13 @@ class GamificationFirestoreService {
   async spendCoins(userId, amount, item = 'purchase') {
     try {
       const profile = await this.getProfile(userId);
+      const currentVirtualMoney = profile.virtualMoney || profile.coins || 0; // Compatibilidad con datos antiguos
 
-      if (profile.coins < amount) {
+      if (currentVirtualMoney < amount) {
         throw new Error('Monedas insuficientes');
       }
 
-      const newCoins = profile.coins - amount;
+      const newCoins = currentVirtualMoney - amount;
 
       const gamRef = doc(db, this.collectionPath, userId, this.subcollectionName, 'current');
       
@@ -264,11 +266,11 @@ class GamificationFirestoreService {
       });
 
       await updateDoc(gamRef, {
-        coins: newCoins,
+        virtualMoney: newCoins,
         updatedAt: Timestamp.now()
       });
 
-      return { coins: newCoins };
+      return { coins: newCoins, virtualMoney: newCoins };
     } catch (error) {
       console.error('Error gastando monedas:', error);
       throw error;
@@ -354,6 +356,7 @@ class GamificationFirestoreService {
   async getCoinsInfo(userId) {
     try {
       const profile = await this.getProfile(userId);
+      const currentVirtualMoney = profile.virtualMoney || profile.coins || 0; // Compatibilidad con datos antiguos
       
       // Obtener historial de gastos
       const coinEventsRef = collection(db, this.collectionPath, userId, 'coin_events');
@@ -368,9 +371,10 @@ class GamificationFirestoreService {
       });
 
       return {
-        total: profile.coins,
-        available: profile.coins,
-        spent
+        total: currentVirtualMoney,
+        available: currentVirtualMoney,
+        spent,
+        virtualMoney: currentVirtualMoney
       };
     } catch (error) {
       console.error('Error obteniendo información de monedas:', error);
@@ -450,7 +454,7 @@ class GamificationFirestoreService {
       userId,
       totalXP: 0,
       level: 1,
-      coins: 0,
+      virtualMoney: 0,
       badges: [],
       createdAt: Timestamp.now(),
       updatedAt: Timestamp.now(),

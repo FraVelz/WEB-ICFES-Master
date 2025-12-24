@@ -14,7 +14,7 @@ export const LessonPreview = ({ isOpen, onClose, lesson, onStart }) => {
       />
 
       {/* Content */}
-      <div className="relative w-full mb-20 max-w-md bg-slate-900 border-t border-slate-700 sm:border sm:rounded-2xl p-6 shadow-2xl animate-in slide-in-from-bottom duration-300">
+      <div className="relative w-screen mb-20 max-w-md bg-slate-900 border-t border-slate-700 sm:border sm:rounded-2xl p-6 shadow-2xl animate-in slide-in-from-bottom duration-300">
         
         {/* Close Button */}
         <button 

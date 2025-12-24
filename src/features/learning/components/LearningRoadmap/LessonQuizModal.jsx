@@ -199,9 +199,11 @@ export const LessonQuizModal = ({ isOpen, onClose, questions, quiz, lessonId, le
     if (isLastQuestion && allCorrect && !alreadyCompleted) {
       setLoading(true);
       try {
-        // Otorgar recompensas solo si todas las preguntas están correctas
-        const xpAmount = lessonXp || quiz?.rewards?.xp || 10;
-        const coinsAmount = lessonCoins || quiz?.rewards?.coins || 5;
+        // Obtener recompensas: prioridad: lessonXp/lessonCoins > quiz.rewards > valores por defecto (500/250)
+        const xpAmount = lessonXp ?? quiz?.rewards?.xp ?? 500;
+        const coinsAmount = lessonCoins ?? quiz?.rewards?.coins ?? 250;
+
+        console.log('Otorgando recompensas:', { xpAmount, coinsAmount, lessonXp, lessonCoins, quizRewards: quiz?.rewards });
 
         await GamificationFirestoreService.addXP(user.uid, xpAmount, `lesson_quiz_${lessonId}`);
         await GamificationFirestoreService.addCoins(user.uid, coinsAmount, `lesson_quiz_${lessonId}`);
@@ -217,8 +219,11 @@ export const LessonQuizModal = ({ isOpen, onClose, questions, quiz, lessonId, le
       // Si solo hay una pregunta y está correcta, otorgar recompensas inmediatamente
       setLoading(true);
       try {
-        const xpAmount = lessonXp || quiz?.rewards?.xp || 10;
-        const coinsAmount = lessonCoins || quiz?.rewards?.coins || 5;
+        // Obtener recompensas: prioridad: lessonXp/lessonCoins > quiz.rewards > valores por defecto (500/250)
+        const xpAmount = lessonXp ?? quiz?.rewards?.xp ?? 500;
+        const coinsAmount = lessonCoins ?? quiz?.rewards?.coins ?? 250;
+
+        console.log('Otorgando recompensas (pregunta única):', { xpAmount, coinsAmount, lessonXp, lessonCoins, quizRewards: quiz?.rewards });
 
         await GamificationFirestoreService.addXP(user.uid, xpAmount, `lesson_quiz_${lessonId}`);
         await GamificationFirestoreService.addCoins(user.uid, coinsAmount, `lesson_quiz_${lessonId}`);
@@ -251,60 +256,85 @@ export const LessonQuizModal = ({ isOpen, onClose, questions, quiz, lessonId, le
   if (!isOpen || !currentQuestion) return null;
 
   return (
-    <div className="fixed inset-0 z-[70] bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 animate-in fade-in duration-200">
-      <div className="bg-slate-900 border border-slate-800 rounded-2xl max-w-lg w-full overflow-hidden shadow-2xl transform transition-all scale-100">
+    <div className="fixed inset-0 z-[70] bg-black/80 backdrop-blur-sm flex items-end lg:items-center justify-center p-0 lg:p-4 pb-20 lg:pb-4 animate-in fade-in duration-200">
+      <div className="bg-slate-900 border-t lg:border border-slate-800 rounded-t-2xl lg:rounded-2xl max-w-lg w-full max-h-[calc(95vh-5rem)] lg:max-h-[90vh] overflow-hidden shadow-2xl transform transition-all scale-100 flex flex-col">
         
         {/* Header */}
-        <div className="bg-slate-800/50 p-6 border-b border-slate-800">
-          <h3 className="text-xl font-bold text-white text-center">
-            <FontAwesomeIcon icon={faTrophy} className="text-yellow-400 mr-2" />
-            Prueba de Conocimiento
-          </h3>
-          <p className="text-slate-400 text-center text-sm mt-1">
+        <div className="bg-slate-800/50 p-3.5 lg:p-6 border-b border-slate-800 shrink-0">
+          <div className="flex items-center justify-center gap-2 mb-1">
+            <FontAwesomeIcon icon={faTrophy} className="text-yellow-400 text-base lg:text-lg" />
+            <h3 className="text-base lg:text-xl font-bold text-white text-center">
+              Prueba de Conocimiento
+            </h3>
+          </div>
+          <p className="text-slate-400 text-center text-xs lg:text-sm mt-1.5 line-clamp-2">
             {lessonTitle}
           </p>
           {totalQuestions > 1 && (
-            <div className="text-center mt-2">
-              <span className="text-xs text-slate-500">
-                Pregunta {currentQuestionIndex + 1} de {totalQuestions}
+            <div className="flex items-center justify-center gap-2 mt-2.5">
+              {/* Barra de progreso visual */}
+              <div className="flex-1 h-1.5 bg-slate-700/50 rounded-full overflow-hidden max-w-[120px]">
+                <div 
+                  className="h-full bg-blue-500 transition-all duration-300 rounded-full"
+                  style={{ width: `${((currentQuestionIndex + 1) / totalQuestions) * 100}%` }}
+                />
+              </div>
+              <span className="text-xs text-slate-400 font-medium whitespace-nowrap">
+                {currentQuestionIndex + 1}/{totalQuestions}
               </span>
             </div>
           )}
         </div>
 
-        {/* Content */}
-        <div className="p-6">
-          <div className="mb-6">
-            <h4 className="text-lg text-white font-medium mb-4">
+        {/* Content - Scrollable */}
+        <div className="flex-1 overflow-y-auto overflow-x-hidden p-3.5 lg:p-6 min-h-0 scrollbar-thin scrollbar-thumb-slate-700 scrollbar-track-transparent">
+          <div className="mb-3 lg:mb-6">
+            <h4 className="text-base lg:text-lg text-white font-semibold mb-3 lg:mb-4 leading-relaxed px-0.5">
               {currentQuestion.question}
             </h4>
             
-            <div className="space-y-3">
-              {currentQuestion.options.map((option) => (
+            <div className="space-y-2 lg:space-y-3">
+              {currentQuestion.options.map((option, index) => (
                 <button
                   key={option.id}
                   onClick={() => !isSubmitted && setSelectedOption(option.id)}
                   disabled={isSubmitted}
-                  className={`cursor-pointer w-full p-4 rounded-xl text-left transition-all border-2 ${
+                  className={`cursor-pointer w-full p-3.5 lg:p-4 min-h-[52px] lg:min-h-[48px] rounded-xl lg:rounded-xl text-left transition-all border-2 text-sm lg:text-base relative ${
                     isSubmitted
                       ? option.id === currentQuestion.correctAnswer
-                        ? 'bg-green-500/10 border-green-500 text-green-400'
+                        ? 'bg-green-500/15 border-green-500 text-green-300 shadow-lg shadow-green-500/10'
                         : option.id === selectedOption
-                        ? 'bg-red-500/10 border-red-500 text-red-400'
-                        : 'bg-slate-800/50 border-transparent text-slate-400 opacity-50'
+                        ? 'bg-red-500/15 border-red-500 text-red-300 shadow-lg shadow-red-500/10'
+                        : 'bg-slate-800/30 border-slate-700/50 text-slate-500 opacity-60'
                       : selectedOption === option.id
-                      ? 'bg-blue-500/10 border-blue-500 text-blue-400'
-                      : 'bg-slate-800/50 border-transparent text-slate-300 hover:bg-slate-800 hover:border-slate-700'
+                      ? 'bg-blue-500/15 border-blue-500 text-blue-300 shadow-lg shadow-blue-500/10 scale-[1.02]'
+                      : 'bg-slate-800/50 border-slate-700/50 text-slate-200 hover:bg-slate-800/70 hover:border-slate-600 active:bg-slate-700 active:scale-[0.98]'
                   }`}
                 >
-                  <div className="flex items-center justify-between">
-                    <span>{option.text}</span>
-                    {isSubmitted && option.id === currentQuestion.correctAnswer && (
-                      <FontAwesomeIcon icon={faCheck} className="text-green-500" />
-                    )}
-                    {isSubmitted && option.id === selectedOption && option.id !== currentQuestion.correctAnswer && (
-                      <FontAwesomeIcon icon={faTimes} className="text-red-500" />
-                    )}
+                  <div className="flex items-start gap-3">
+                    {/* Indicador de letra */}
+                    <div className={`flex-shrink-0 w-6 h-6 lg:w-7 lg:h-7 rounded-full flex items-center justify-center text-xs lg:text-sm font-bold mt-0.5 ${
+                      isSubmitted
+                        ? option.id === currentQuestion.correctAnswer
+                          ? 'bg-green-500/20 text-green-400 border border-green-500/30'
+                          : option.id === selectedOption
+                          ? 'bg-red-500/20 text-red-400 border border-red-500/30'
+                          : 'bg-slate-700/50 text-slate-500 border border-slate-600/50'
+                        : selectedOption === option.id
+                        ? 'bg-blue-500/20 text-blue-400 border border-blue-500/30'
+                        : 'bg-slate-700/50 text-slate-400 border border-slate-600/50'
+                    }`}>
+                      {String.fromCharCode(65 + index)}
+                    </div>
+                    <div className="flex-1 flex items-center justify-between gap-2 min-w-0">
+                      <span className="flex-1 break-words leading-snug">{option.text}</span>
+                      {isSubmitted && option.id === currentQuestion.correctAnswer && (
+                        <FontAwesomeIcon icon={faCheck} className="text-green-400 shrink-0 text-lg lg:text-xl ml-2" />
+                      )}
+                      {isSubmitted && option.id === selectedOption && option.id !== currentQuestion.correctAnswer && (
+                        <FontAwesomeIcon icon={faTimes} className="text-red-400 shrink-0 text-lg lg:text-xl ml-2" />
+                      )}
+                    </div>
                   </div>
                 </button>
               ))}
@@ -312,9 +342,10 @@ export const LessonQuizModal = ({ isOpen, onClose, questions, quiz, lessonId, le
 
             {/* Explicación */}
             {isSubmitted && currentQuestion.explanation && (
-              <div className="mt-4 p-4 bg-blue-500/10 border border-blue-500/20 rounded-xl">
-                <p className="text-sm text-blue-300">
-                  <strong className="text-blue-400">Explicación:</strong> {currentQuestion.explanation}
+              <div className="mt-3 lg:mt-4 p-3.5 lg:p-4 bg-blue-500/10 border-l-4 border-blue-500 rounded-r-lg lg:rounded-xl">
+                <p className="text-xs lg:text-sm text-blue-200 leading-relaxed">
+                  <strong className="text-blue-300 block mb-1.5">💡 Explicación:</strong>
+                  <span className="block">{currentQuestion.explanation}</span>
                 </p>
               </div>
             )}
@@ -322,56 +353,68 @@ export const LessonQuizModal = ({ isOpen, onClose, questions, quiz, lessonId, le
 
           {/* Feedback & Rewards */}
           {isSubmitted && (
-            <div className={`mb-6 p-4 rounded-xl text-center ${
-              isCorrect ? 'bg-green-500/10 border border-green-500/20' : 'bg-red-500/10 border border-red-500/20'
+            <div className={`mb-3 lg:mb-6 p-3.5 lg:p-4 rounded-xl lg:rounded-xl text-center border-2 ${
+              isCorrect 
+                ? 'bg-gradient-to-br from-green-500/15 to-green-600/5 border-green-500/30 shadow-lg shadow-green-500/5' 
+                : 'bg-gradient-to-br from-red-500/15 to-red-600/5 border-red-500/30 shadow-lg shadow-red-500/5'
             }`}>
-              <h5 className={`font-bold text-lg mb-1 ${isCorrect ? 'text-green-400' : 'text-red-400'}`}>
-                {isCorrect ? '¡Correcto!' : 'Incorrecto'}
-              </h5>
+              <div className="flex items-center justify-center gap-2 mb-2">
+                {isCorrect ? (
+                  <FontAwesomeIcon icon={faCheck} className="text-green-400 text-xl lg:text-2xl" />
+                ) : (
+                  <FontAwesomeIcon icon={faTimes} className="text-red-400 text-xl lg:text-2xl" />
+                )}
+                <h5 className={`font-bold text-lg lg:text-xl ${isCorrect ? 'text-green-300' : 'text-red-300'}`}>
+                  {isCorrect ? '¡Correcto!' : 'Incorrecto'}
+                </h5>
+              </div>
               
               {isCorrect && rewards && isLastQuestion && (
-                <div className="flex items-center justify-center gap-4 mt-3">
-                  <div className="flex items-center gap-2 text-yellow-400 font-bold bg-yellow-400/10 px-3 py-1 rounded-full">
-                    <FontAwesomeIcon icon={faCoins} />
-                    +{rewards.coins}
+                <div className="flex items-center justify-center gap-2.5 lg:gap-4 mt-3 flex-wrap">
+                  <div className="flex items-center gap-2 text-yellow-300 font-bold bg-yellow-400/15 px-3 lg:px-4 py-1.5 lg:py-2 rounded-full text-sm lg:text-base border border-yellow-400/20 shadow-md">
+                    <FontAwesomeIcon icon={faCoins} className="text-sm lg:text-base" />
+                    <span>+{rewards.coins}</span>
                   </div>
-                  <div className="flex items-center gap-2 text-blue-400 font-bold bg-blue-400/10 px-3 py-1 rounded-full">
-                    <FontAwesomeIcon icon={faStar} />
-                    +{rewards.xp} XP
+                  <div className="flex items-center gap-2 text-blue-300 font-bold bg-blue-400/15 px-3 lg:px-4 py-1.5 lg:py-2 rounded-full text-sm lg:text-base border border-blue-400/20 shadow-md">
+                    <FontAwesomeIcon icon={faStar} className="text-sm lg:text-base" />
+                    <span>+{rewards.xp} XP</span>
                   </div>
                 </div>
               )}
               
               {isCorrect && alreadyCompleted && !rewards && isLastQuestion && (
-                <p className="text-slate-400 text-sm mt-2">
+                <p className="text-slate-300 text-xs lg:text-sm mt-2">
                   Ya has completado esta lección anteriormente.
                 </p>
               )}
 
               {!isCorrect && (
-                <p className="text-slate-400 text-sm mt-2">
+                <p className="text-slate-300 text-xs lg:text-sm mt-2 leading-relaxed px-2">
                   {isLastQuestion ? 'Inténtalo de nuevo para ganar tus recompensas.' : 'Continúa con la siguiente pregunta.'}
                 </p>
               )}
             </div>
           )}
+        </div>
 
-          {/* Actions */}
-          <div className="flex gap-3">
+        {/* Actions - Fixed at bottom */}
+        <div className="p-3 lg:p-6 pt-2 lg:pt-0 border-t border-slate-800 shrink-0 bg-slate-900/95 backdrop-blur-sm">
+          <div className="flex gap-2 lg:gap-3">
             {/* Botón Anterior */}
             {currentQuestionIndex > 0 && (
               <button
                 onClick={handlePreviousQuestion}
-                className="cursor-pointer px-4 py-3 rounded-xl font-bold text-slate-400 hover:bg-slate-800 transition-colors"
+                className="cursor-pointer px-3.5 lg:px-4 py-3 min-h-[48px] lg:min-h-[44px] rounded-xl lg:rounded-xl font-bold text-slate-300 bg-slate-800/80 hover:bg-slate-700 active:bg-slate-600 active:scale-95 transition-all shadow-md"
+                aria-label="Pregunta anterior"
               >
-                <FontAwesomeIcon icon={faArrowLeft} />
+                <FontAwesomeIcon icon={faArrowLeft} className="text-base lg:text-lg" />
               </button>
             )}
 
             {/* Botón Cerrar/Cancelar */}
             <button
               onClick={onClose}
-              className={`${currentQuestionIndex > 0 ? 'flex-1' : 'flex-1'} py-3 px-4 rounded-xl font-bold text-slate-400 hover:bg-slate-800 transition-colors`}
+              className="cursor-pointer flex-1 py-3 px-3 lg:px-4 min-h-[48px] lg:min-h-[44px] rounded-xl lg:rounded-xl font-semibold text-slate-300 bg-slate-800/80 hover:bg-slate-700 active:bg-slate-600 active:scale-95 transition-all text-sm lg:text-base shadow-md"
             >
               {isLastQuestion && (isCorrect || allQuestionsAnswered) ? 'Cerrar' : 'Cancelar'}
             </button>
@@ -380,9 +423,17 @@ export const LessonQuizModal = ({ isOpen, onClose, questions, quiz, lessonId, le
               <button
                 onClick={handleSubmit}
                 disabled={!selectedOption || loading}
-                className="cursor-pointer flex-1 py-3 px-4 rounded-xl font-bold bg-blue-600 text-white hover:bg-blue-500 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                className="cursor-pointer flex-1 py-3 px-3 lg:px-4 min-h-[48px] lg:min-h-[44px] rounded-xl lg:rounded-xl font-bold bg-gradient-to-r from-blue-600 to-blue-500 text-white hover:from-blue-500 hover:to-blue-400 active:from-blue-700 active:to-blue-600 active:scale-95 transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:active:scale-100 text-sm lg:text-base shadow-lg shadow-blue-500/20"
               >
-                {loading ? 'Verificando...' : 'Enviar Respuesta'}
+                {loading ? (
+                  <span className="flex items-center justify-center gap-2">
+                    <span className="animate-spin">⏳</span>
+                    <span className="hidden lg:inline">Verificando...</span>
+                    <span className="lg:hidden">Verificando</span>
+                  </span>
+                ) : (
+                  'Enviar'
+                )}
               </button>
             ) : (
               <>
@@ -392,17 +443,19 @@ export const LessonQuizModal = ({ isOpen, onClose, questions, quiz, lessonId, le
                       setIsSubmitted(false);
                       setSelectedOption(null);
                     }}
-                    className="cursor-pointer flex-1 py-3 px-4 rounded-xl font-bold bg-slate-700 text-white hover:bg-slate-600 transition-colors"
+                    className="cursor-pointer flex-1 py-3 px-3 lg:px-4 min-h-[48px] lg:min-h-[44px] rounded-xl lg:rounded-xl font-bold bg-slate-700 text-white hover:bg-slate-600 active:bg-slate-500 active:scale-95 transition-all text-sm lg:text-base shadow-md"
                   >
-                    Intentar de nuevo
+                    Reintentar
                   </button>
                 )}
                 {isCorrect && !isLastQuestion && (
                   <button
                     onClick={handleNextQuestion}
-                    className="cursor-pointer flex-1 py-3 px-4 rounded-xl font-bold bg-green-600 text-white hover:bg-green-500 transition-colors"
+                    className="cursor-pointer flex-1 py-3 px-3 lg:px-4 min-h-[48px] lg:min-h-[44px] rounded-xl lg:rounded-xl font-bold bg-gradient-to-r from-green-600 to-green-500 text-white hover:from-green-500 hover:to-green-400 active:from-green-700 active:to-green-600 active:scale-95 transition-all text-sm lg:text-base shadow-lg shadow-green-500/20"
                   >
-                    Siguiente <FontAwesomeIcon icon={faArrowRight} className="ml-2" />
+                    <span className="hidden lg:inline">Siguiente </span>
+                    <span className="lg:hidden">Sig.</span>
+                    <FontAwesomeIcon icon={faArrowRight} className="ml-1 lg:ml-2 text-sm lg:text-base" />
                   </button>
                 )}
               </>
