@@ -5,7 +5,7 @@ area: lectura_critica
 order: 8
 type: lesson
 published: true
-description: Identifica y clasifica conectores según su función: adversativos (oposición), causales (causa), consecutivos (consecuencia) y aditivos (suma). Reconoce sinónimos de conectores comunes.
+description: "Identifica y clasifica conectores según su función: adversativos (oposición), causales (causa), consecutivos (consecuencia) y aditivos (suma). Reconoce sinónimos de conectores comunes."
 xp: 500
 coins: 250
 questions:

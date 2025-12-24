@@ -5,7 +5,7 @@ area: lectura_critica
 order: 4
 type: lesson
 published: true
-description: Identifica cómo se relacionan los párrafos: ampliar, explicar, contradecir, ejemplificar o concluir. Reconoce conectores de transición que indican estas relaciones.
+description: "Identifica cómo se relacionan los párrafos: ampliar, explicar, contradecir, ejemplificar o concluir. Reconoce conectores de transición que indican estas relaciones."
 xp: 500
 coins: 250
 questions:

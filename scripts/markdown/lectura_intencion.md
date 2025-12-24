@@ -5,7 +5,7 @@ area: lectura_critica
 order: 3
 type: lesson
 published: true
-description: Identifica la intención del autor: persuadir, informar, narrar o cuestionar. Reconoce el tono objetivo vs subjetivo y evita confundir la intención de un párrafo con la del texto completo.
+description: "Identifica la intención del autor: persuadir, informar, narrar o cuestionar. Reconoce el tono objetivo vs subjetivo y evita confundir la intención de un párrafo con la del texto completo."
 xp: 500
 coins: 250
 questions:

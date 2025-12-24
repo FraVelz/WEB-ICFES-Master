@@ -1,6 +1,6 @@
 # Web Icfes Master
 
-Una plataforma interactiva para practicar preguntas del examen de estado ICFES (Saber 11). Diseñada con arquitectura **Feature-Based** y **Atomic Design** usando React 19, Vite 7 y Tailwind CSS 4.
+Una plataforma interactiva para practicar preguntas y aprender temas del examen de estado ICFES (Saber 11). Diseñada con arquitectura **Feature-Based** y **Atomic Design** usando React 19, Vite 7 y Tailwind CSS 4.
 
 ## Características Principales
 

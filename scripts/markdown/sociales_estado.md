@@ -5,7 +5,7 @@ area: sociales
 order: 1
 type: lesson
 published: true
-description: Comprende las tres ramas del poder público en Colombia: Legislativa (hace leyes), Ejecutiva (administra) y Judicial (juzga). Conoce los organismos de control y sus funciones.
+description: "Comprende las tres ramas del poder público en Colombia: Legislativa (hace leyes), Ejecutiva (administra) y Judicial (juzga). Conoce los organismos de control y sus funciones."
 xp: 500
 coins: 250
 questions:

@@ -5,7 +5,7 @@ area: ciencias_naturales
 order: 1
 type: lesson
 published: true
-description: Aprende a identificar y aplicar los pasos del método científico: observación, hipótesis, experimento y conclusión. El ICFES evalúa tu capacidad para reconocer estos elementos en situaciones experimentales.
+description: "Aprende a identificar y aplicar los pasos del método científico: observación, hipótesis, experimento y conclusión. El ICFES evalúa tu capacidad para reconocer estos elementos en situaciones experimentales."
 xp: 500
 coins: 250
 questions:

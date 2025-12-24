@@ -1,6 +1,6 @@
 ---
 id: ingles_reading_specific
-title: Reading: Specific Information
+title: "Reading: Specific Information"
 area: ingles
 order: 7
 type: lesson

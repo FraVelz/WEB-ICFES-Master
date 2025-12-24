@@ -5,7 +5,7 @@ area: matematicas
 order: 7
 type: lesson
 published: true
-description: Calcula probabilidades simples usando la fórmula: casos favorables sobre casos totales. Comprende el rango de probabilidad (0 a 1) y eventos complementarios.
+description: "Calcula probabilidades simples usando la fórmula: casos favorables sobre casos totales. Comprende el rango de probabilidad (0 a 1) y eventos complementarios."
 xp: 500
 coins: 250
 questions:

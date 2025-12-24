@@ -14,8 +14,11 @@ export const LessonContentModal = ({ isOpen, onClose, lesson }) => {
 
   if (!isOpen || !lesson) return null;
 
+  // Verificar si hay contenido para mostrar el botón
+  const hasContent = lesson?.content && lesson.content.trim().length > 0;
+
   return (
-    <div className="absolute overflow-y-scroll scroll-smooth inset-0 z-[60] bg-slate-950 flex flex-col animate-in slide-in-from-bottom duration-300 w-full h-full">
+    <div className="fixed inset-0 z-[60] bg-slate-950 flex flex-col animate-in slide-in-from-bottom duration-300 w-full h-full">
       {/* Header */}
       <div className="flex items-center p-4 border-b border-slate-800 bg-slate-900/95 backdrop-blur-md shrink-0">
         <button 
@@ -29,9 +32,9 @@ export const LessonContentModal = ({ isOpen, onClose, lesson }) => {
         </h2>
       </div>
 
-      {/* Content */}
-      <div className="flex-1 p-5 sm:p-8">
-        <div className="max-w-3xl mx-auto pb-20">
+      {/* Content - Scrollable */}
+      <div className="flex-1 min-h-0 overflow-y-auto overflow-x-hidden scroll-smooth p-5 sm:p-8">
+        <div className="max-w-3xl mx-auto pb-32">
            <ReactMarkdown
             components={{
               h1: ({node, ...props}) => <h1 className="text-3xl font-bold text-white mb-6 mt-8" {...props} />,
@@ -62,16 +65,24 @@ export const LessonContentModal = ({ isOpen, onClose, lesson }) => {
              {lesson.content || '_No hay contenido disponible para esta lección._'}
            </ReactMarkdown>
 
-           {/* Quiz Section */}
-           {canShowQuiz && (
+           {/* Quiz Section - Siempre mostrar si hay contenido */}
+           {hasContent && (
              <div className="mt-12 pt-8 border-t border-slate-800">
                <h3 className="text-xl font-bold text-white mb-4">¿Listo para ponerte a prueba?</h3>
                <p className="text-slate-400 mb-6">
-                 Completa {hasQuestions ? `las ${lesson.questions.length} pregunta${lesson.questions.length > 1 ? 's' : ''}` : 'el examen rápido'}, para finalizar esta lección y ganar <span className="text-blue-400 font-bold">{lesson.xp || lesson.quiz?.rewards?.xp || 10} XP</span> y <span className="text-yellow-400 font-bold">{lesson.coins || lesson.quiz?.rewards?.coins || 5} monedas</span>.
+                 {canShowQuiz ? (
+                   <>
+                     Completa {hasQuestions ? `las ${lesson.questions.length} pregunta${lesson.questions.length > 1 ? 's' : ''}` : 'el examen rápido'}, para finalizar esta lección y ganar <span className="text-blue-400 font-bold">{lesson.xp || lesson.quiz?.rewards?.xp || 10} XP</span> y <span className="text-yellow-400 font-bold">{lesson.coins || lesson.quiz?.rewards?.coins || 5} monedas</span>.
+                   </>
+                 ) : (
+                   <>
+                     Completa el examen rápido para finalizar esta lección y ganar <span className="text-blue-400 font-bold">{lesson.xp || 10} XP</span> y <span className="text-yellow-400 font-bold">{lesson.coins || 5} monedas</span>.
+                   </>
+                 )}
                </p>
                <button
                  onClick={() => setIsQuizOpen(true)}
-                 className="w-full sm:w-auto px-8 py-4 bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-500 hover:to-blue-400 text-white font-bold rounded-xl shadow-lg shadow-blue-500/20 transition-all transform hover:scale-[1.02] active:scale-[0.98]"
+                 className="cursor-pointer w-full sm:w-auto px-8 py-4 bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-500 hover:to-blue-400 text-white font-bold rounded-xl shadow-lg shadow-blue-500/20 transition-all transform hover:scale-[1.02] active:scale-[0.98]"
                >
                  Realizar Prueba
                </button>
@@ -79,7 +90,8 @@ export const LessonContentModal = ({ isOpen, onClose, lesson }) => {
            )}
         </div>
       </div>
-
+      
+      {/* Quiz Modal - Fuera del contenedor de contenido para que funcione como overlay */}
       <LessonQuizModal 
         isOpen={isQuizOpen} 
         onClose={() => setIsQuizOpen(false)}

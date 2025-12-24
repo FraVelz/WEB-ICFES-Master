@@ -5,7 +5,7 @@ area: lectura_critica
 order: 1
 type: lesson
 published: true
-description: Identifica la idea principal que resume todo el texto y diferencia entre tema e idea principal. Reconoce el propósito del autor: informar, convencer, narrar o describir.
+description: "Identifica la idea principal que resume todo el texto y diferencia entre tema e idea principal. Reconoce el propósito del autor: informar, convencer, narrar o describir."
 xp: 500
 coins: 250
 questions:

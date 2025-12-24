@@ -5,7 +5,7 @@ area: ciencias_naturales
 order: 7
 type: lesson
 published: true
-description: Comprende las tres leyes de Newton de forma conceptual: inercia, fuerza y aceleración, y acción-reacción. Aplica estos conceptos para analizar situaciones de movimiento.
+description: "Comprende las tres leyes de Newton de forma conceptual: inercia, fuerza y aceleración, y acción-reacción. Aplica estos conceptos para analizar situaciones de movimiento."
 xp: 500
 coins: 250
 questions:

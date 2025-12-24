@@ -5,7 +5,7 @@ area: ingles
 order: 9
 type: lesson
 published: true
-description: Usa conectores para unir ideas: and (suma), but/however (contraste), because (causa), so (consecuencia), although (concesión). Identifica la relación lógica entre ideas.
+description: "Usa conectores para unir ideas: and (suma), but/however (contraste), because (causa), so (consecuencia), although (concesión). Identifica la relación lógica entre ideas."
 xp: 500
 coins: 250
 questions:

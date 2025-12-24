@@ -17,22 +17,54 @@ export const LessonQuizModal = ({ isOpen, onClose, questions, quiz, lessonId, le
   const [answers, setAnswers] = useState({}); // Para almacenar respuestas de múltiples preguntas
   const [completedQuestions, setCompletedQuestions] = useState(new Set());
 
+  // Función auxiliar para normalizar opciones
+  const normalizeOptions = (options) => {
+    if (!Array.isArray(options) || options.length === 0) {
+      return [];
+    }
+    
+    // Si es array de strings, convertir a formato {id, text}
+    if (typeof options[0] === 'string') {
+      return options.map((opt, i) => ({ 
+        id: String.fromCharCode(97 + i), 
+        text: opt 
+      }));
+    }
+    
+    // Si es array de objetos, normalizar
+    return options.map((opt, i) => {
+      if (typeof opt === 'string') {
+        return { id: String.fromCharCode(97 + i), text: opt };
+      }
+      // Si ya tiene id y text, usarlos; si no, generar
+      return {
+        id: opt.id || opt.letter || String.fromCharCode(97 + i),
+        text: opt.text || opt.content || String(opt)
+      };
+    });
+  };
+
   // Normalizar preguntas: convertir questions array a formato compatible o usar quiz
   const normalizedQuestions = React.useMemo(() => {
+    // Prioridad 1: questions array directo
     if (questions && Array.isArray(questions) && questions.length > 0) {
-      // Convertir estructura de questions (con options como array de strings y correct_answer como índice)
       return questions.map((q, index) => {
-        // Si options es array de strings, convertir a formato {id, text}
-        const options = Array.isArray(q.options) && q.options.length > 0
-          ? (typeof q.options[0] === 'string'
-              ? q.options.map((opt, i) => ({ id: String.fromCharCode(97 + i), text: opt }))
-              : q.options.map((opt, i) => ({ id: opt.id || String.fromCharCode(97 + i), text: opt.text || opt })))
-          : [];
+        const options = normalizeOptions(q.options);
         
         // Convertir correct_answer (índice) a correctAnswer (id)
         const correctAnswerIndex = typeof q.correct_answer === 'number' ? q.correct_answer : 
-                                   typeof q.correctAnswer === 'number' ? q.correctAnswer : 0;
-        const correctAnswer = options[correctAnswerIndex]?.id || options[0]?.id || 'a';
+                                   typeof q.correctAnswer === 'number' ? q.correctAnswer : null;
+        
+        let correctAnswer;
+        if (correctAnswerIndex !== null && options[correctAnswerIndex]) {
+          correctAnswer = options[correctAnswerIndex].id;
+        } else if (q.correctAnswer) {
+          correctAnswer = q.correctAnswer;
+        } else if (options.length > 0) {
+          correctAnswer = options[0].id;
+        } else {
+          correctAnswer = 'a';
+        }
 
         return {
           id: q.id || `question_${index}`,
@@ -43,17 +75,59 @@ export const LessonQuizModal = ({ isOpen, onClose, questions, quiz, lessonId, le
           difficulty: q.difficulty || 'media'
         };
       });
-    } else if (quiz) {
-      // Formato antiguo: quiz único
+    } 
+    // Prioridad 2: quiz.questions (array de preguntas dentro del quiz)
+    else if (quiz && quiz.questions && Array.isArray(quiz.questions) && quiz.questions.length > 0) {
+      return quiz.questions.map((q, index) => {
+        const options = normalizeOptions(q.options);
+        
+        const correctAnswerIndex = typeof q.correct_answer === 'number' ? q.correct_answer : 
+                                   typeof q.correctAnswer === 'number' ? q.correctAnswer : null;
+        
+        let correctAnswer;
+        if (correctAnswerIndex !== null && options[correctAnswerIndex]) {
+          correctAnswer = options[correctAnswerIndex].id;
+        } else if (q.correctAnswer) {
+          correctAnswer = q.correctAnswer;
+        } else if (options.length > 0) {
+          correctAnswer = options[0].id;
+        } else {
+          correctAnswer = 'a';
+        }
+
+        return {
+          id: q.id || `quiz_question_${index}`,
+          question: q.question || q.text || '',
+          options: options,
+          correctAnswer: correctAnswer,
+          explanation: q.explanation || '',
+          difficulty: q.difficulty || 'media'
+        };
+      });
+    }
+    // Prioridad 3: quiz único (formato antiguo)
+    else if (quiz) {
+      const options = normalizeOptions(quiz.options);
+      
+      let correctAnswer;
+      if (quiz.correctAnswer) {
+        correctAnswer = quiz.correctAnswer;
+      } else if (options.length > 0) {
+        correctAnswer = options[0].id;
+      } else {
+        correctAnswer = 'a';
+      }
+
       return [{
         id: 'quiz_1',
         question: quiz.question || '',
-        options: quiz.options || [],
-        correctAnswer: quiz.correctAnswer || '',
+        options: options,
+        correctAnswer: correctAnswer,
         explanation: quiz.explanation || '',
         difficulty: quiz.difficulty || 'media'
       }];
     }
+    
     return [];
   }, [questions, quiz]);
 
@@ -211,7 +285,7 @@ export const LessonQuizModal = ({ isOpen, onClose, questions, quiz, lessonId, le
                   key={option.id}
                   onClick={() => !isSubmitted && setSelectedOption(option.id)}
                   disabled={isSubmitted}
-                  className={`w-full p-4 rounded-xl text-left transition-all border-2 ${
+                  className={`cursor-pointer w-full p-4 rounded-xl text-left transition-all border-2 ${
                     isSubmitted
                       ? option.id === currentQuestion.correctAnswer
                         ? 'bg-green-500/10 border-green-500 text-green-400'
@@ -288,7 +362,7 @@ export const LessonQuizModal = ({ isOpen, onClose, questions, quiz, lessonId, le
             {currentQuestionIndex > 0 && (
               <button
                 onClick={handlePreviousQuestion}
-                className="px-4 py-3 rounded-xl font-bold text-slate-400 hover:bg-slate-800 transition-colors"
+                className="cursor-pointer px-4 py-3 rounded-xl font-bold text-slate-400 hover:bg-slate-800 transition-colors"
               >
                 <FontAwesomeIcon icon={faArrowLeft} />
               </button>
@@ -306,7 +380,7 @@ export const LessonQuizModal = ({ isOpen, onClose, questions, quiz, lessonId, le
               <button
                 onClick={handleSubmit}
                 disabled={!selectedOption || loading}
-                className="flex-1 py-3 px-4 rounded-xl font-bold bg-blue-600 text-white hover:bg-blue-500 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                className="cursor-pointer flex-1 py-3 px-4 rounded-xl font-bold bg-blue-600 text-white hover:bg-blue-500 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {loading ? 'Verificando...' : 'Enviar Respuesta'}
               </button>
@@ -318,7 +392,7 @@ export const LessonQuizModal = ({ isOpen, onClose, questions, quiz, lessonId, le
                       setIsSubmitted(false);
                       setSelectedOption(null);
                     }}
-                    className="flex-1 py-3 px-4 rounded-xl font-bold bg-slate-700 text-white hover:bg-slate-600 transition-colors"
+                    className="cursor-pointer flex-1 py-3 px-4 rounded-xl font-bold bg-slate-700 text-white hover:bg-slate-600 transition-colors"
                   >
                     Intentar de nuevo
                   </button>
@@ -326,7 +400,7 @@ export const LessonQuizModal = ({ isOpen, onClose, questions, quiz, lessonId, le
                 {isCorrect && !isLastQuestion && (
                   <button
                     onClick={handleNextQuestion}
-                    className="flex-1 py-3 px-4 rounded-xl font-bold bg-green-600 text-white hover:bg-green-500 transition-colors"
+                    className="cursor-pointer flex-1 py-3 px-4 rounded-xl font-bold bg-green-600 text-white hover:bg-green-500 transition-colors"
                   >
                     Siguiente <FontAwesomeIcon icon={faArrowRight} className="ml-2" />
                   </button>

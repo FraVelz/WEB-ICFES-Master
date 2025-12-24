@@ -1,6 +1,6 @@
 ---
 id: ingles_reading_main
-title: Reading: Main Idea
+title: "Reading: Main Idea"
 area: ingles
 order: 6
 type: lesson

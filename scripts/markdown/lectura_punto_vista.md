@@ -5,7 +5,7 @@ area: lectura_critica
 order: 10
 type: lesson
 published: true
-description: Identifica el tono del autor: objetivo, subjetivo, irónico o crítico. Reconoce la actitud del autor a través de adjetivos y expresiones, especialmente la ironía en textos argumentativos.
+description: "Identifica el tono del autor: objetivo, subjetivo, irónico o crítico. Reconoce la actitud del autor a través de adjetivos y expresiones, especialmente la ironía en textos argumentativos."
 xp: 500
 coins: 250
 questions:

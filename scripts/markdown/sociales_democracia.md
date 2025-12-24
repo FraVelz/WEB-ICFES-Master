@@ -5,7 +5,7 @@ area: sociales
 order: 4
 type: lesson
 published: true
-description: Conoce los mecanismos de participación ciudadana: voto, plebiscito, referendo, cabildo abierto y revocatoria del mandato. Diferencia cada uno y su uso apropiado.
+description: "Conoce los mecanismos de participación ciudadana: voto, plebiscito, referendo, cabildo abierto y revocatoria del mandato. Diferencia cada uno y su uso apropiado."
 xp: 500
 coins: 250
 questions:
