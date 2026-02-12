@@ -1,85 +1,30 @@
-import { useState, useEffect, useRef } from 'react';
-import { db } from '@/config/firebase';
-import { collection, query, where, orderBy, limit, onSnapshot } from 'firebase/firestore';
-import { checkAndProcessWeeklyUpdate } from '../services/leaderboardService';
-import { RANKS } from '../constants/ranks';
+import { useState, useEffect } from 'react';
+import { getVirtualMoney } from '@/shared/utils/userProfile';
+import { getProgress } from '@/shared/utils/progressStorage';
 
+/**
+ * Hook de clasificación - Versión local con datos mock
+ * Preparado para futura implementación de backend
+ */
 export const useLeaderboard = (currentRankId = 'novato') => {
   const [leaderboardData, setLeaderboardData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [userRankInfo, setUserRankInfo] = useState(null);
-  
-  // Ref para controlar la suscripción y evitar fugas de memoria
-  const unsubscribeRef = useRef(null);
-
-  // Verificar actualización semanal al montar
-  useEffect(() => {
-    checkAndProcessWeeklyUpdate();
-  }, []);
 
   useEffect(() => {
-    // Función para establecer la conexión
-    const connectLeaderboard = () => {
-      // Si ya hay datos, no mostramos loading para evitar parpadeos al reconectar
-      setLoading(prev => prev === true); 
-      setError(null);
-      
-      // Limpiar suscripción previa si existe
-      if (unsubscribeRef.current) {
-        unsubscribeRef.current();
-      }
-
-      const q = query(
-        collection(db, 'users'),
-        where('rank', '==', currentRankId),
-        orderBy('weeklyXP', 'desc'),
-        limit(50)
-      );
-
-      unsubscribeRef.current = onSnapshot(q, (snapshot) => {
-        const users = snapshot.docs.map(doc => ({
-          id: doc.id,
-          ...doc.data(),
-          weeklyXP: doc.data().weeklyXP || 0,
-          rank: doc.data().rank || 'novato'
-        }));
-        
-        setLeaderboardData(users);
-        setLoading(false);
-      }, (err) => {
-        console.warn("Leaderboard connection warning:", err);
-        // Solo mostramos error si no tenemos datos previos para no romper la UI por desconexiones temporales
-        setLoading(false);
-      });
-    };
-
-    // Manejar visibilidad de la pestaña para ahorrar recursos y evitar errores de timeout
-    const handleVisibilityChange = () => {
-      if (document.visibilityState === 'hidden') {
-        // Desconectar cuando la pestaña no es visible
-        if (unsubscribeRef.current) {
-          unsubscribeRef.current();
-          unsubscribeRef.current = null;
-        }
-      } else {
-        // Reconectar al volver
-        connectLeaderboard();
-      }
-    };
-
-    // Conexión inicial
-    connectLeaderboard();
-    
-    // Escuchar cambios de visibilidad
-    document.addEventListener('visibilitychange', handleVisibilityChange);
-
-    return () => {
-      if (unsubscribeRef.current) {
-        unsubscribeRef.current();
-      }
-      document.removeEventListener('visibilitychange', handleVisibilityChange);
-    };
+    setLoading(true);
+    const progress = getProgress();
+    const coins = getVirtualMoney();
+    const mockUsers = [
+      { id: 'local_user', displayName: 'Tú', weeklyXP: Math.floor((progress?.totalCorrect || 0) * 10), rank: 'novato', virtualMoney: coins },
+      { id: 'm1', displayName: 'Estudiante Ejemplo 1', weeklyXP: 450, rank: 'novato' },
+      { id: 'm2', displayName: 'Estudiante Ejemplo 2', weeklyXP: 320, rank: 'novato' },
+      { id: 'm3', displayName: 'Estudiante Ejemplo 3', weeklyXP: 280, rank: 'novato' },
+      { id: 'm4', displayName: 'Estudiante Ejemplo 4', weeklyXP: 150, rank: 'novato' },
+      { id: 'm5', displayName: 'Estudiante Ejemplo 5', weeklyXP: 90, rank: 'novato' }
+    ].sort((a, b) => (b.weeklyXP || 0) - (a.weeklyXP || 0));
+    setLeaderboardData(mockUsers);
+    setLoading(false);
   }, [currentRankId]);
 
   return { leaderboardData, loading, error };

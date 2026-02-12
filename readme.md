@@ -1,6 +1,6 @@
 # Web Icfes Master
 
-Una plataforma interactiva para practicar preguntas y aprender temas del examen de estado ICFES (Saber 11). Diseñada con arquitectura **Feature-Based** y **Atomic Design** usando React 19, Vite 7 y Tailwind CSS 4.
+Una plataforma interactiva para practicar preguntas y aprender temas del examen de estado ICFES (Saber 11). Diseñada con arquitectura **Feature-Based** y **Atomic Design** usando Next.js 15, React 19, Tailwind CSS 3 y Firebase.
 
 ## Características Principales
 
@@ -148,12 +148,17 @@ src/
     index.js
  context/                # Context API
     AuthContext.jsx
- pages/                  # Re-exports para compatibilidad
-    index.js
- App.jsx                 # Componente principal con rutas
- App.css                 # Estilos de la app
- index.css               # Estilos globales
- main.jsx                # Punto de entrada
+ app/                    # Rutas Next.js (App Router)
+    layout.tsx           # Layout raíz
+    [[...slug]]/         # Catch-all para SPA
+    privacidad/          # Página legal
+    terminos/            # Página legal
+ components/
+    AppWithProviders.jsx # Wrapper React con providers
+ App.jsx                 # Componente principal con rutas React
+ styles/
+    global.css           # Tailwind + estilos globales
+    scrollAnimations.css
 ```
 
 ## Sistema de Importaciones (Alias)
@@ -161,44 +166,54 @@ src/
 ### Requisitos Previos
 
 - Node.js (v18 o superior)
-- npm o pnpm
+- pnpm
 
 ### Instalación
 
 ```bash
 cd pruebas-icfes
-npm install
+pnpm install
+```
+
+### Configuración Firebase
+
+Copia `.env.local.example` a `.env.local` y configura las variables `NEXT_PUBLIC_FIREBASE_*`:
+
+```bash
+cp .env.local.example .env.local
+# Edita .env.local con tus credenciales de Firebase
 ```
 
 ### Desarrollo Local
 
 ```bash
-npm run dev
+pnpm run dev
 ```
 
-La aplicación se abrirá en `http://localhost:5174/`
+La aplicación se abrirá en `http://localhost:3000/`
 
 ### Compilar para Producción
 
 ```bash
-npm run build
+pnpm run build
 ```
 
 ### Preview del Build de Producción
 
 ```bash
-npm run preview
+pnpm run preview
 ```
 
 ## Uso de la Plataforma
 
 La aplicación está configurada para despliegue en GitHub Pages en el repositorio `WEB-ICFES-Master`:
 
-- **URL de producción**: `https://fravelz.github.io/WEB-ICFES-Master/`
-- **Configuración**: `vite.config.js` con `base` condicional
-- **Routing**: `main.jsx` configura basename para React Router automáticamente
+- **URL de producción**: `https://fravelz.github.io/WEB-ICFES-Master/` (o Firebase Hosting)
+- **Configuración**: `next.config.ts` con export estático, Tailwind y Firebase
+- **Routing**: Next.js App Router + React Router en cliente (SPA)
+- **Deploy Firebase**: `firebase deploy` (tras `pnpm run build`)
 
-Ver documentación: `GITHUB_PAGES_SETUP.md` y `GITHUB_PAGES_DEPLOY.md`
+Ver documentación: `docs/setup/` y `firebase.json`
 
 ## Documentación Adicional
 

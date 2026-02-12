@@ -1,9 +1,14 @@
 import { useState, useEffect } from 'react';
-import { db } from '@/config/firebase';
-import { doc, collection, onSnapshot, runTransaction, serverTimestamp, query, getDocs } from 'firebase/firestore';
 import { useAuth } from '@/context/AuthContext';
 import { SHOP_ITEMS } from '../data/shopItems';
+import { getVirtualMoney, addVirtualMoney, removeVirtualMoney } from '@/shared/utils/userProfile';
 
+const PURCHASES_KEY = 'icfes_shop_purchases';
+
+/**
+ * Hook de tienda - Versión local (localStorage)
+ * Preparado para futura implementación de backend
+ */
 export const useShopFirebase = () => {
   const { user } = useAuth();
   const [coins, setCoins] = useState(0);
@@ -11,100 +16,57 @@ export const useShopFirebase = () => {
   const [loading, setLoading] = useState(true);
   const [processing, setProcessing] = useState(false);
 
-  // Escuchar cambios en monedas y compras
   useEffect(() => {
-    if (!user?.uid) return;
-
     setLoading(true);
-
-    // 1. Escuchar monedas del usuario
-    const userUnsub = onSnapshot(doc(db, 'users', user.uid), (docSnap) => {
-      if (docSnap.exists()) {
-        const userData = docSnap.data();
-        setCoins(userData.virtualMoney || 0);
-      }
-    });
-
-    // 2. Escuchar compras
-    const purchasesQuery = collection(db, 'users', user.uid, 'purchases');
-    const purchasesUnsub = onSnapshot(purchasesQuery, (snapshot) => {
-      const purchasedItems = snapshot.docs.map(doc => doc.data().itemId);
-      setPurchases(purchasedItems);
-      setLoading(false);
-    });
-
-    return () => {
-      userUnsub();
-      purchasesUnsub();
-    };
+    setCoins(getVirtualMoney());
+    const stored = localStorage.getItem(PURCHASES_KEY);
+    setPurchases(stored ? JSON.parse(stored) : []);
+    setLoading(false);
   }, [user?.uid]);
 
-  /**
-   * Realizar compra de un ítem
-   */
+  const refreshData = () => {
+    setCoins(getVirtualMoney());
+    const stored = localStorage.getItem(PURCHASES_KEY);
+    setPurchases(stored ? JSON.parse(stored) : []);
+  };
+
   const buyItem = async (item) => {
-    if (!user?.uid) throw new Error("Usuario no autenticado");
-    if (purchases.includes(item.id) && item.category !== 'powerup') {
-      throw new Error("Ya tienes este artículo");
+    const currentCoins = getVirtualMoney();
+    if (item.category !== 'powerup' && hasItem(item.id)) {
+      throw new Error('Ya tienes este artículo');
     }
-    if (coins < item.price) {
-      throw new Error("Monedas insuficientes");
+    if (currentCoins < item.price) {
+      throw new Error('Monedas insuficientes');
     }
 
     setProcessing(true);
-
     try {
-      await runTransaction(db, async (transaction) => {
-        const userRef = doc(db, 'users', user.uid);
-        const userDoc = await transaction.get(userRef);
-
-        if (!userDoc.exists()) {
-          throw new Error("Usuario no encontrado");
-        }
-
-        const currentCoins = userDoc.data().virtualMoney || 0;
-        if (currentCoins < item.price) {
-          throw new Error("Monedas insuficientes");
-        }
-
-        // 1. Descontar monedas
-        transaction.update(userRef, {
-          virtualMoney: currentCoins - item.price
-        });
-
-        // 2. Registrar compra
-        // Usamos el ID del item como ID del documento para evitar duplicados en items únicos
-        // Para consumibles (powerups), usamos un ID único generado
-        const purchaseId = item.category === 'powerup' 
-          ? `${item.id}_${Date.now()}` 
-          : item.id;
-          
-        const purchaseRef = doc(db, 'users', user.uid, 'purchases', purchaseId);
-        
-        transaction.set(purchaseRef, {
-          itemId: item.id,
-          name: item.name,
-          price: item.price,
-          category: item.category,
-          purchasedAt: serverTimestamp()
-        });
-      });
-
-      setProcessing(false);
+      removeVirtualMoney(item.price);
+      const newPurchases = item.category === 'powerup'
+        ? [...purchases, `${item.id}_${Date.now()}`]
+        : [...purchases, item.id];
+      localStorage.setItem(PURCHASES_KEY, JSON.stringify(newPurchases));
+      setPurchases(newPurchases);
+      setCoins(getVirtualMoney());
       return true;
     } catch (error) {
-      console.error("Error en compra:", error);
       setProcessing(false);
       throw error;
+    } finally {
+      setProcessing(false);
     }
   };
+
+  const hasItem = (itemId) => purchases.some(p => p === itemId || p.startsWith(`${itemId}_`));
 
   return {
     coins,
     purchases,
+    hasItem,
     loading,
     processing,
     buyItem,
-    shopItems: SHOP_ITEMS // Exportamos los items estáticos por ahora
+    shopItems: SHOP_ITEMS,
+    refreshData
   };
 };

@@ -1,9 +1,6 @@
-// Utilidades para gestionar datos del usuario en Firebase
+// Utilidades para gestionar datos del usuario (localStorage)
+// Preparado para futura implementación de backend
 import { encryptData, decryptData, createChecksum, verifyChecksum } from './dataEncryption';
-import { getAuth } from 'firebase/auth';
-import { db, storage } from '@/config/firebase';
-import { doc, updateDoc, getDoc, Timestamp } from 'firebase/firestore';
-import { ref, uploadBytes, getDownloadURL, deleteObject } from 'firebase/storage';
 
 const STORAGE_KEYS = {
   USER_PROFILE: 'icfes_user_profile',
@@ -90,156 +87,50 @@ export const getUserRank = () => {
 };
 
 /**
- * Actualiza el nombre de usuario en Firestore
+ * Actualiza el nombre de usuario (localStorage)
  */
 export const updateUsername = async (username) => {
   if (!username || username.trim().length === 0) {
     throw new Error('El nombre de usuario no puede estar vacío');
   }
-  
   if (username.length > 30) {
     throw new Error('El nombre de usuario no puede exceder 30 caracteres');
   }
-  
-  const auth = getAuth();
-  const user = auth.currentUser;
-  
-  if (!user) {
-    throw new Error('Usuario no autenticado');
-  }
-  
-  try {
-    const userRef = doc(db, 'users', user.uid);
-    await updateDoc(userRef, {
-      displayName: username.trim(),
-      updatedAt: Timestamp.now()
-    });
-    
-    // Actualizar también en localStorage para UI inmediata
-    return updateUserProfile({ username: username.trim() });
-  } catch (error) {
-    console.error('Error actualizando nombre de usuario:', error);
-    throw error;
-  }
+  return updateUserProfile({ username: username.trim() });
 };
 
 /**
- * Actualiza la biografía del usuario en Firestore
+ * Actualiza la biografía del usuario (localStorage)
  */
 export const updateUserBio = async (bio) => {
   if (bio && bio.length > 150) {
     throw new Error('La biografía no puede exceder 150 caracteres');
   }
-  
-  const auth = getAuth();
-  const user = auth.currentUser;
-  
-  if (!user) {
-    throw new Error('Usuario no autenticado');
-  }
-  
-  try {
-    const userRef = doc(db, 'users', user.uid);
-    await updateDoc(userRef, {
-      bio: bio?.trim() || '',
-      updatedAt: Timestamp.now()
-    });
-    
-    // Actualizar también en localStorage para UI inmediata
-    return updateUserProfile({ bio: bio?.trim() || '' });
-  } catch (error) {
-    console.error('Error actualizando biografía:', error);
-    throw error;
-  }
+  return updateUserProfile({ bio: bio?.trim() || '' });
 };
 
 /**
- * Actualiza la foto de perfil en Firebase Storage y Firestore
+ * Actualiza la foto de perfil (base64 en localStorage)
  */
 export const updateProfileImage = async (file) => {
-  const auth = getAuth();
-  const user = auth.currentUser;
-  
-  if (!user) {
-    throw new Error('Usuario no autenticado');
+  if (!file) {
+    return updateUserProfile({ profileImage: null });
   }
-  
-  try {
-    let profileImageURL = null;
-    
-    if (file) {
-      // Validar tipo de archivo
-      if (!file.type.startsWith('image/')) {
-        throw new Error('El archivo debe ser una imagen');
-      }
-      
-      // Validar tamaño (máximo 2MB)
-      if (file.size > 2 * 1024 * 1024) {
-        throw new Error('La imagen no puede exceder 2MB');
-      }
-      
-      // Eliminar imagen anterior si existe
-      try {
-        const oldUserRef = doc(db, 'users', user.uid);
-        const oldUserDoc = await getDoc(oldUserRef);
-        if (oldUserDoc.exists() && oldUserDoc.data().profileImage) {
-          const oldImageRef = ref(storage, `profile-images/${user.uid}/avatar`);
-          await deleteObject(oldImageRef).catch(() => {}); // Ignorar si no existe
-        }
-      } catch (err) {
-        console.warn('No se pudo eliminar imagen anterior:', err);
-      }
-      
-      // Subir nueva imagen a Firebase Storage con reintentos
-      const imageRef = ref(storage, `profile-images/${user.uid}/avatar`);
-      const metadata = {
-        contentType: file.type,
-        customMetadata: {
-          uploadedBy: user.uid,
-          uploadedAt: new Date().toISOString()
-        }
-      };
-      
-      try {
-        await uploadBytes(imageRef, file, metadata);
-      } catch (uploadError) {
-        console.error('Error en upload:', uploadError);
-        // Reintentar una vez después de 2 segundos
-        await new Promise(resolve => setTimeout(resolve, 2000));
-        await uploadBytes(imageRef, file, metadata);
-      }
-      
-      // Obtener URL de descarga con reintentos
-      let retries = 3;
-      while (retries > 0) {
-        try {
-          profileImageURL = await getDownloadURL(imageRef);
-          break;
-        } catch (urlError) {
-          retries--;
-          if (retries === 0) {
-            console.error('Error obteniendo URL después de reintentos:', urlError);
-            throw new Error('No se pudo obtener la URL de la imagen. Por favor, intenta de nuevo.');
-          }
-          // Esperar 1 segundo antes de reintentar
-          await new Promise(resolve => setTimeout(resolve, 1000));
-        }
-      }
-    }
-    
-    // Actualizar Firestore con la URL de la imagen
-    const userRef = doc(db, 'users', user.uid);
-    await updateDoc(userRef, {
-      profileImage: profileImageURL || null,
-      updatedAt: Timestamp.now()
-    });
-    
-    // Actualizar localStorage para UI inmediata
-    return updateUserProfile({ profileImage: profileImageURL });
-  } catch (error) {
-    console.error('Error actualizando foto de perfil:', error);
-    throw error;
+  if (!file.type.startsWith('image/')) {
+    throw new Error('El archivo debe ser una imagen');
   }
+  if (file.size > 2 * 1024 * 1024) {
+    throw new Error('La imagen no puede exceder 2MB');
+  }
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => {
+      const result = updateUserProfile({ profileImage: reader.result });
+      resolve(result);
+    };
+    reader.onerror = () => reject(new Error('Error al leer la imagen'));
+    reader.readAsDataURL(file);
+  });
 };
 
 /**

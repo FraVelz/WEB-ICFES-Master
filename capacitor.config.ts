@@ -3,7 +3,7 @@ import type { CapacitorConfig } from '@capacitor/cli';
 const config: CapacitorConfig = {
   appId: 'com.icfes.pruebas',
   appName: 'Pruebas ICFES',
-  webDir: 'dist',
+  webDir: 'out',
   server: {
     androidScheme: 'https'
   },

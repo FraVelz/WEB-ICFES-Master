@@ -4,17 +4,17 @@
  * Permite cambiar fácilmente entre localStorage (desarrollo) y backend API (producción)
  */
 
-// Cambiar estos valores según el ambiente
+// Cambiar estos valores según el ambiente (Next.js usa NEXT_PUBLIC_ para cliente)
 const API_CONFIG = {
   // 'localStorage' para desarrollo local
   // 'api' para conectarse a un backend
-  MODE: import.meta.env.VITE_API_MODE || 'localStorage',
+  MODE: process.env.NEXT_PUBLIC_API_MODE || 'localStorage',
   
   // URL del backend (cuando estés listo para conectar)
-  API_URL: import.meta.env.VITE_API_URL || 'http://localhost:3001/api',
+  API_URL: process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001/api',
   
   // Token para autenticación (cuando implementes)
-  API_TOKEN: import.meta.env.VITE_API_TOKEN || null,
+  API_TOKEN: process.env.NEXT_PUBLIC_API_TOKEN || null,
   
   // Timeouts y configuración
   TIMEOUT: 5000,

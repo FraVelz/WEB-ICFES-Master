@@ -1,5 +1,4 @@
-// LearningRoadmap Components
-export { LearningRoadmap } from './LearningRoadmapExport';
+export { LearningRoadmap } from './LearningRoadmap';
 export { SecondaryHeader } from './SecondaryHeader';
 
 // Otros componentes si existen

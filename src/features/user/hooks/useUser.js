@@ -1,10 +1,9 @@
 import { useState, useEffect } from 'react';
 import { getUserProfile, getUserRank, getVirtualMoney, addVirtualMoney, removeVirtualMoney } from '@/shared/utils/userProfile';
 import { useAuth } from '@/context/AuthContext';
-import UserFirestoreService from '@/features/user/services/UserFirestoreService';
 
 /**
- * Hook personalizado para manejar datos del usuario
+ * Hook personalizado para manejar datos del usuario (localStorage)
  */
 export const useUser = () => {
   const [user, setUser] = useState(null);
@@ -14,63 +13,24 @@ export const useUser = () => {
   const { user: authUser } = useAuth();
 
   useEffect(() => {
-    const loadUserData = async () => {
+    const loadUserData = () => {
       try {
         let profile = getUserProfile();
-        
-        // Si estamos autenticados, intentar obtener datos de Firestore
-        if (authUser?.uid) {
-          try {
-            const firestoreProfile = await UserFirestoreService.getUserProfile(authUser.uid);
-            
-            // Prioridad de imagen de perfil:
-            // 1. Imagen subida a Firebase Storage (profileImage)
-            // 2. Imagen de Google (photoURL) - si no hay en Firebase
-            let photoURL = firestoreProfile.profileImage || firestoreProfile.photoURL;
-            
-            // Si no hay imagen en Firebase pero hay en Google, sincronizar
-            if (!firestoreProfile.profileImage && authUser?.photoURL && !firestoreProfile.googleImageSynced) {
-              photoURL = authUser.photoURL;
-              // Marcar como sincronizado
-              await UserFirestoreService.updateUserProfile(authUser.uid, {
-                photoURL: authUser.photoURL,
-                googleImageSynced: true
-              });
-            }
-            
-            // Fusionar datos de Firestore con los locales, dando prioridad a Firestore
-            profile = {
-              ...profile,
-              displayName: firestoreProfile.displayName || profile.username,
-              username: firestoreProfile.displayName || profile.username,
-              profileImage: photoURL || profile.profileImage,
-              bio: firestoreProfile.bio || profile.bio,
-              virtualMoney: firestoreProfile.virtualMoney || profile.virtualMoney
-            };
-            
-            // Actualizar localStorage con la data de Firebase
-            const { updateUserProfile: updateProfileInStorage } = await import('@/shared/utils/userProfile');
-            updateProfileInStorage(profile);
-          } catch (err) {
-            console.warn('Error cargando datos de Firestore, usando localStorage:', err);
-          }
+        if (authUser?.displayName) {
+          profile = { ...profile, username: authUser.displayName, displayName: authUser.displayName };
         }
-        
         const userRank = getUserRank();
         const money = getVirtualMoney();
-        
         setUser(profile);
         setRank(userRank);
         setVirtualMoney(money);
-        setIsLoading(false);
       } catch (err) {
         console.error('Error cargando datos del usuario:', err);
-        setIsLoading(false);
       }
+      setIsLoading(false);
     };
-
     loadUserData();
-  }, [authUser?.uid, authUser?.photoURL]);
+  }, [authUser?.uid, authUser?.displayName]);
 
   const refreshUser = () => {
     const profile = getUserProfile();

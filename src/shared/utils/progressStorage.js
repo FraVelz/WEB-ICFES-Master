@@ -3,7 +3,19 @@
 const STORAGE_KEYS = {
   EXAMS: 'icfes_exams',
   PRACTICE: 'icfes_practice',
-  PROGRESS: 'icfes_progress'
+  PROGRESS: 'icfes_progress',
+  COMPLETED_LESSONS: 'icfes_completed_lessons'
+};
+
+export const getCompletedLessons = () => {
+  const stored = localStorage.getItem(STORAGE_KEYS.COMPLETED_LESSONS);
+  return stored ? JSON.parse(stored) : [];
+};
+
+export const markLessonAsCompleted = (userId, lessonId) => {
+  const completed = getCompletedLessons();
+  if (!completed.includes(lessonId)) completed.push(lessonId);
+  localStorage.setItem(STORAGE_KEYS.COMPLETED_LESSONS, JSON.stringify(completed));
 };
 
 /**
@@ -279,6 +291,14 @@ export const clearAllData = () => {
   localStorage.removeItem(STORAGE_KEYS.EXAMS);
   localStorage.removeItem(STORAGE_KEYS.PRACTICE);
   localStorage.removeItem(STORAGE_KEYS.PROGRESS);
+};
+
+/**
+ * Limpia solo los exámenes guardados
+ */
+export const clearExamsOnly = () => {
+  localStorage.removeItem(STORAGE_KEYS.EXAMS);
+  updateProgress();
 };
 
 /**

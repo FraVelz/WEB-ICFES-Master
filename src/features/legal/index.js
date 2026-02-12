@@ -1,2 +1,1 @@
-export { Privacidad } from './Privacidad';
-export { Terminos } from './Terminos';
+// Páginas legales: /privacidad y /terminos (Next.js src/app/privacidad, src/app/terminos)

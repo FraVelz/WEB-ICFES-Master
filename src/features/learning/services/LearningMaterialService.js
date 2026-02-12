@@ -1,116 +1,45 @@
-import { doc, collection, setDoc, getDoc, getDocs, addDoc, Timestamp } from 'firebase/firestore';
-import { db } from '@/config/firebase';
-
 /**
- * Servicio para manejar materiales de aprendizaje en Firestore
- * Maneja: Lecciones, materiales, recursos
+ * Servicio de materiales de aprendizaje - Versión local
+ * Preparado para futura implementación de backend
  */
+import { BASICO_TOPICS } from '../data/roadmapData';
+import { getCompletedLessons, markLessonAsCompleted as markLesson } from '@/shared/utils/progressStorage';
+
+const AREA_MAP = { 'sociales-ciudadanas': 'sociales' };
+
 class LearningMaterialService {
-  /**
-   * Obtiene todas las lecciones de un área
-   * @param {string} area - Área/asignatura
-   * @returns {Promise<Array>}
-   */
   async getLessonsByArea(area) {
-    try {
-      const lessonsRef = collection(db, 'learningMaterials');
-      const snapshot = await getDocs(lessonsRef);
-      
-      const lessons = snapshot.docs
-        .map(doc => ({ id: doc.id, ...doc.data() }))
-        .filter(lesson => lesson.area === area);
-      
-      return lessons;
-    } catch (error) {
-      console.error('Error al obtener lecciones:', error);
-      throw error;
-    }
+    const key = AREA_MAP[area] || area;
+    const topics = BASICO_TOPICS[key] || [];
+    return topics.map((t, i) => ({
+      id: `${key}_${i}`,
+      title: t.title,
+      area,
+      ...t
+    }));
   }
 
-  /**
-   * Obtiene una lección específica
-   * @param {string} lessonId - ID de la lección
-   * @returns {Promise<Object|null>}
-   */
   async getLesson(lessonId) {
-    try {
-      const lessonRef = doc(db, 'learningMaterials', lessonId);
-      const lessonDoc = await getDoc(lessonRef);
-      
-      if (lessonDoc.exists()) {
-        return { id: lessonDoc.id, ...lessonDoc.data() };
-      }
-      return null;
-    } catch (error) {
-      console.error('Error al obtener lección:', error);
-      throw error;
-    }
+    return null;
   }
 
-  /**
-   * Crea una nueva lección
-   * @param {Object} lessonData - Datos de la lección
-   * @returns {Promise<string>} - ID de la lección creada
-   */
   async createLesson(lessonData) {
-    try {
-      const lessonsRef = collection(db, 'learningMaterials');
-      const docRef = await addDoc(lessonsRef, {
-        ...lessonData,
-        createdAt: Timestamp.now(),
-        updatedAt: Timestamp.now()
-      });
-      return docRef.id;
-    } catch (error) {
-      console.error('Error al crear lección:', error);
-      throw error;
-    }
+    return `lesson_${Date.now()}`;
   }
 
-  /**
-   * Marca una lección como completada por el usuario
-   * @param {string} userId - ID del usuario
-   * @param {string} lessonId - ID de la lección
-   * @returns {Promise<void>}
-   */
   async markLessonAsCompleted(userId, lessonId) {
-    try {
-      const completedRef = doc(db, 'userLessons', `${userId}_${lessonId}`);
-      await setDoc(completedRef, {
-        userId,
-        lessonId,
-        completedAt: Timestamp.now(),
-        status: 'completed'
-      });
-    } catch (error) {
-      console.error('Error al marcar lección como completada:', error);
-      throw error;
-    }
+    markLesson(userId, lessonId);
   }
 
-  /**
-   * Obtiene el progreso de un usuario en las lecciones
-   * @param {string} userId - ID del usuario
-   * @param {string} area - Área/asignatura
-   * @returns {Promise<Object>}
-   */
   async getUserLessonsProgress(userId, area) {
-    try {
-      const lessons = await this.getLessonsByArea(area);
-      const completedCount = lessons.filter(lesson => 
-        // Verificar si la lección fue completada
-        lesson.completedByUsers?.includes(userId)
-      ).length;
-
-      return {
-        totalLessons: lessons.length,
-        completedLessons: completedCount,
-        progress: (completedCount / lessons.length) * 100 || 0
-      };
-    } catch (error) {
-      console.error('Error al obtener progreso en lecciones:', error);
-      throw error;
-    }
+    const lessons = await this.getLessonsByArea(area);
+    const completed = getCompletedLessons();
+    const completedCount = lessons.filter(l => completed.includes(l.id)).length;
+    return {
+      totalLessons: lessons.length,
+      completedLessons: completedCount,
+      progress: lessons.length ? (completedCount / lessons.length) * 100 : 0
+    };
   }
 }
 

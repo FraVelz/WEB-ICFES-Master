@@ -4,10 +4,14 @@
     "paths": {
       "@/*": ["./src/*"]
     },
-    "target": "ES6",
+    "target": "ES2020",
     "module": "ESNext",
-    "moduleResolution": "Node",
-    "jsx": "react-jsx"
+    "moduleResolution": "bundler",
+    "jsx": "react-jsx",
+    "jsxImportSource": "react",
+    "allowJs": true,
+    "checkJs": false
   },
-  "include": ["src/**/*"]
+  "include": ["src/**/*", ".next/types/**/*.ts"],
+  "exclude": ["dist", "node_modules"]
 }

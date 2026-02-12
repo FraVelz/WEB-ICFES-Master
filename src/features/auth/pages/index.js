@@ -3,5 +3,3 @@ export { SignupPage } from './SignupPage';
 export { OnboardingPage } from './OnboardingPage';
 export { ForgotPasswordPage } from './ForgotPasswordPage';
 export { ResetPasswordPage } from './ResetPasswordPage';
-export { FirebaseRedirectPage } from './FirebaseRedirectPage';
-

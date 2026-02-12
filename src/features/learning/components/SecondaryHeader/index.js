@@ -1,4 +1,4 @@
-export { SecondaryHeader } from './index.jsx';
-export { AreasModal } from './AreasModal.jsx';
-export { StreakModal } from './StreakModal.jsx';
-export { CoinsModal } from './CoinsModal.jsx';
+export { SecondaryHeader } from './SecondaryHeader';
+export { AreasModal } from './AreasModal';
+export { StreakModal } from './StreakModal';
+export { CoinsModal } from './CoinsModal';
