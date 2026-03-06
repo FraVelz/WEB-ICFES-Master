@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useSearchParams, useRouter } from 'next/navigation';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { 
   faTrophy, 
@@ -16,8 +16,9 @@ import {
 import { useUserProfile } from '../hooks/useUserProfile';
 
 export const PerfilPublico = () => {
-  const { userId } = useParams();
-  const navigate = useNavigate();
+  const searchParams = useSearchParams();
+  const userId = searchParams.get('userId');
+  const router = useRouter();
   const { 
     photoUrl, 
     name, 
@@ -30,9 +31,31 @@ export const PerfilPublico = () => {
     coursesProgress,
     loading,
     exists
-  } = useUserProfile(userId);
+  } = useUserProfile(userId || undefined);
 
   const [copied, setCopied] = useState(false);
+
+  if (!userId) {
+    return (
+      <div className="min-h-[100dvh] bg-slate-950 flex items-center justify-center text-white">
+        <div className="text-center space-y-6 max-w-md px-4">
+          <div className="text-6xl text-slate-700">
+            <FontAwesomeIcon icon={faUserSlash} />
+          </div>
+          <h2 className="text-2xl font-bold">Enlace inválido</h2>
+          <p className="text-slate-400">
+            Debes proporcionar un ID de usuario en la URL.
+          </p>
+          <button
+            onClick={() => router.push('/')}
+            className="cursor-pointer px-6 py-2 bg-cyan-600 hover:bg-cyan-500 rounded-lg transition-colors font-medium"
+          >
+            Volver al inicio
+          </button>
+        </div>
+      </div>
+    );
+  }
   const [reported, setReported] = useState(false);
 
   const handleShare = () => {
@@ -77,7 +100,7 @@ export const PerfilPublico = () => {
             El perfil que buscas no existe o ha sido eliminado.
           </p>
           <button 
-            onClick={() => navigate('/')}
+            onClick={() => router.push('/')}
             className="cursor-pointer px-6 py-2 bg-cyan-600 hover:bg-cyan-500 rounded-lg transition-colors font-medium"
           >
             Volver al inicio

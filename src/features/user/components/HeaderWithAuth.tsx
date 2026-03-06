@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { Link, useNavigate, useLocation } from 'react-router-dom';
+import Link from 'next/link';
+import { useRouter, usePathname } from 'next/navigation';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { 
   faHome, 
@@ -18,8 +19,8 @@ import { useUser } from '@/features/user/hooks/useUser';
 import { useAuth } from '@/context/AuthContext';
 
 export const HeaderWithAuth = () => {
-  const navigate = useNavigate();
-  const location = useLocation();
+  const router = useRouter();
+  const pathname = usePathname();
   const { user: authUser, logout } = useAuth();
   const { user, rank, virtualMoney } = useUser();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -34,7 +35,7 @@ export const HeaderWithAuth = () => {
   const handleLogout = async () => {
     try {
       await logout();
-      navigate('/login');
+      router.push('/login');
     } catch (error) {
       console.error('Error al cerrar sesión:', error);
     }
@@ -47,7 +48,7 @@ export const HeaderWithAuth = () => {
         <div className="max-w-7xl mx-auto px-4 py-3 md:px-6">
           <div className="flex items-center justify-between">
             {/* Logo/Brand */}
-            <Link to="/" className="flex items-center gap-3 hover:opacity-80 transition-opacity duration-300">
+            <Link href="/" className="flex items-center gap-3 hover:opacity-80 transition-opacity duration-300">
               <div className="w-12 h-12 bg-linear-to-br from-cyan-500 via-blue-500 to-purple-600 rounded-xl flex items-center justify-center shadow-lg shadow-cyan-500/30 hover:scale-110 transition-transform duration-300">
                 <span className="text-white font-bold text-xl">🚀</span>
               </div>
@@ -61,9 +62,9 @@ export const HeaderWithAuth = () => {
               {mainOptions.map((option) => (
                 <Link
                   key={option.path}
-                  to={option.path}
+                  href={option.path}
                   className={`flex items-center gap-2 transition-all duration-300 pb-2 border-b-2 font-semibold ${
-                    location.pathname === option.path
+                    pathname === option.path
                       ? 'text-cyan-400 border-b-cyan-500 shadow-lg shadow-cyan-500/20'
                       : 'text-slate-300 border-b-transparent hover:text-white hover:border-b-cyan-400/50'
                   }`}
@@ -128,7 +129,7 @@ export const HeaderWithAuth = () => {
                     {/* Menu Items */}
                     <div className="py-2">
                       <Link
-                        to="/perfil"
+                        href="/perfil"
                         onClick={() => setProfileMenuOpen(false)}
                         className="flex items-center gap-3 px-4 py-2 text-slate-300 hover:text-white hover:bg-slate-800/50 transition-colors"
                       >
@@ -136,7 +137,7 @@ export const HeaderWithAuth = () => {
                         <span>Mi Perfil</span>
                       </Link>
                       <Link
-                        to="/configuracion"
+                        href="/configuracion"
                         onClick={() => setProfileMenuOpen(false)}
                         className="flex items-center gap-3 px-4 py-2 text-slate-300 hover:text-white hover:bg-slate-800/50 transition-colors"
                       >
@@ -181,10 +182,10 @@ export const HeaderWithAuth = () => {
             {mainOptions.map((option) => (
               <Link
                 key={option.path}
-                to={option.path}
+                href={option.path}
                 onClick={() => setMobileMenuOpen(false)}
                 className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${
-                  location.pathname === option.path
+                  pathname === option.path
                     ? 'bg-cyan-500/20 text-cyan-400'
                     : 'text-slate-300 hover:text-white hover:bg-slate-800/50'
                 }`}

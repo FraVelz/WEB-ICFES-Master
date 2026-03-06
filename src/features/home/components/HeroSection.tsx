@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import Link from 'next/link';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar, faRocket } from "@fortawesome/free-solid-svg-icons";
 import { getAnimationStyle } from "@/features/home/hooks/animations";
@@ -26,14 +26,14 @@ export const HeroSection = ({ isInitialLoad }) => {
         {/* CTA Buttons */}
         <div style={getAnimationStyle(true, isInitialLoad, 0.45)} className="flex flex-col md:flex-row gap-4 justify-center pt-4">
           <Link
-            to="/onboarding"
+            href="/onboarding"
             className="px-8 py-4 bg-linear-to-r from-cyan-500 to-blue-600 text-white font-bold rounded-lg hover:shadow-lg hover:shadow-cyan-500/50 transition-all duration-300 hover:scale-105 flex items-center justify-center gap-2 text-lg"
           >
             <FontAwesomeIcon icon={faRocket} />
             Comienza Ahora Gratis
           </Link>
           <Link
-            to="/login"
+            href="/login"
             className="px-8 py-4 border-2 border-cyan-500 text-white font-bold rounded-lg hover:border-cyan-400 hover:bg-cyan-500/10 transition-all duration-300 flex items-center justify-center gap-2 text-lg hover:shadow-lg hover:shadow-cyan-500/30"
           >
             <FontAwesomeIcon icon={faRocket} />

@@ -1,5 +1,6 @@
+'use client';
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronRight, faCheckCircle, faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import { MascotaCircle } from '@/shared/components/MascotaCircle';
@@ -96,7 +97,7 @@ const OnboardingLayout = ({ children, className = "" }) => (
 );
 
 export const OnboardingQuiz = ({ onComplete, avatarConfig = {} }) => {
-    const navigate = useNavigate();
+    const router = useRouter();
     const [stage, setStage] = useState('intro'); // 'intro', 'quiz', 'completed'
     const [introIndex, setIntroIndex] = useState(0);
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
@@ -144,7 +145,7 @@ export const OnboardingQuiz = ({ onComplete, avatarConfig = {} }) => {
         if (introIndex > 0) {
             setIntroIndex(prev => prev - 1);
         } else {
-            navigate('/');
+            router.push('/');
         }
     };
 

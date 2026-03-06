@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { 
   faTrophy, 
@@ -17,7 +17,7 @@ import { useUserProfile } from '../hooks/useUserProfile';
 import { useAuth } from '@/context/AuthContext';
 
 export const PerfilNormal = () => {
-  const navigate = useNavigate();
+  const router = useRouter();
   const { user } = useAuth();
   const { 
     uid,
@@ -36,7 +36,7 @@ export const PerfilNormal = () => {
   const [copied, setCopied] = useState(false);
 
   const handleShare = () => {
-    const url = `${window.location.origin}/perfil/public/${uid}`;
+    const url = `${window.location.origin}/perfil/public?userId=${uid}`;
     navigator.clipboard.writeText(url).then(() => {
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
@@ -78,7 +78,7 @@ export const PerfilNormal = () => {
               <span className="hidden sm:inline">{copied ? '¡Copiado!' : 'Compartir'}</span>
             </button>
             <button 
-              onClick={() => navigate('/configuracion')}
+              onClick={() => router.push('/configuracion')}
               className="cursor-pointer bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white transition-colors p-2 rounded-lg"
               title="Editar Perfil"
             >
@@ -186,7 +186,7 @@ export const PerfilNormal = () => {
                   <div className="text-center py-8 text-slate-500">
                     <p>Aún no has iniciado ningún curso.</p>
                     <button 
-                      onClick={() => navigate('/ruta-aprendizaje')}
+                      onClick={() => router.push('/ruta-aprendizaje')}
                       className="cursor-pointer mt-4 px-4 py-2 bg-purple-500/10 text-purple-400 rounded-lg hover:bg-purple-500/20 transition-colors"
                     >
                       Comenzar a aprender
@@ -234,7 +234,7 @@ export const PerfilNormal = () => {
                   Logros
                 </h2>
                 <button 
-                  onClick={() => navigate('/logros')}
+                  onClick={() => router.push('/logros')}
                   className="cursor-pointer text-xs text-cyan-400 hover:text-cyan-300 font-bold uppercase tracking-wider"
                 >
                   Ver todos

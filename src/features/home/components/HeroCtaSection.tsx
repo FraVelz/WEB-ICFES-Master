@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlayCircle, faBook, faStar } from '@fortawesome/free-solid-svg-icons';
 
@@ -19,7 +19,7 @@ export const HeroCtaSection = ({ onDemoAccess, isMobile }) => {
       <div className={`grid ${isMobile ? 'grid-cols-1' : 'md:grid-cols-3'} gap-6 max-w-4xl mx-auto`}>
         {/* Path 1: Empezar Ahora */}
         <Link
-          to="/dashboard"
+          href="/dashboard"
           className="group bg-linear-to-br from-cyan-500/20 to-blue-600/20 border-2 border-cyan-500/50 hover:border-cyan-400 rounded-2xl p-8 transition-all duration-300 hover:shadow-lg hover:shadow-cyan-500/30 hover:scale-105"
         >
           <div className="text-5xl mb-4 text-cyan-400 group-hover:scale-125 transition-transform">
@@ -53,7 +53,7 @@ export const HeroCtaSection = ({ onDemoAccess, isMobile }) => {
 
         {/* Path 3: Aprende Primero */}
         <Link
-          to="/blog"
+          href="/blog"
           className="group bg-linear-to-br from-orange-500/20 to-red-600/20 border-2 border-orange-500/50 hover:border-orange-400 rounded-2xl p-8 transition-all duration-300 hover:shadow-lg hover:shadow-orange-500/30 hover:scale-105"
         >
           <div className="text-5xl mb-4 text-orange-400 group-hover:scale-125 transition-transform">

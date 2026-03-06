@@ -1,11 +1,13 @@
+'use client';
 import { useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleUser, faCoins, faShoppingBag, faRocket, faGraduationCap, faGear, faMedal, faTrophy, faEllipsisVertical, faFire } from '@fortawesome/free-solid-svg-icons';
 import { useUser } from '@/features/user/hooks/useUser';
 
 export const Header = () => {
-  const location = useLocation();
+  const pathname = usePathname();
   const { user, rank, virtualMoney } = useUser();
   const [profileMenuOpen, setProfileMenuOpen] = useState(false);
   const [mobileOptionsMenuOpen, setMobileOptionsMenuOpen] = useState(false);
@@ -29,7 +31,7 @@ export const Header = () => {
         
         {/* 1. Logo & Brand */}
         <div className="h-24 flex items-center justify-center border-b border-cyan-500/10 relative shrink-0">
-          <Link to="/" className="flex items-center gap-3 absolute left-[18px] transition-all duration-300">
+          <Link href="/" className="flex items-center gap-3 absolute left-[18px] transition-all duration-300">
             <div className="w-11 h-11 bg-linear-to-br from-cyan-500 via-blue-500 to-purple-600 rounded-xl flex items-center justify-center shadow-lg shadow-cyan-500/30 shrink-0 z-10">
               <FontAwesomeIcon icon={faRocket} className="text-white text-lg" />
             </div>
@@ -45,9 +47,9 @@ export const Header = () => {
           {mainOptions.map((option) => (
             <Link
               key={option.path}
-              to={option.path}
+              href={option.path}
               className={`flex items-center h-12 px-3 rounded-xl transition-all duration-300 relative group/item ${
-                location.pathname === option.path
+                pathname === option.path
                   ? 'bg-cyan-500/10 text-cyan-400 shadow-lg shadow-cyan-500/5'
                   : 'text-slate-400 hover:bg-white/5 hover:text-white'
               }`}
@@ -60,7 +62,7 @@ export const Header = () => {
               </span>
               
               {/* Active Indicator */}
-              {location.pathname === option.path && (
+              {pathname === option.path && (
                 <div className="absolute right-0 top-1/2 -translate-y-1/2 w-1 h-6 bg-cyan-500 rounded-l-full" />
               )}
             </Link>
@@ -70,9 +72,9 @@ export const Header = () => {
 
           {/* Secondary Options */}
            <Link
-              to="/desafios-diarios"
+              href="/desafios-diarios"
               className={`flex items-center h-12 px-3 rounded-xl transition-all duration-300 relative group/item ${
-                location.pathname === '/desafios-diarios'
+                pathname === '/desafios-diarios'
                   ? 'bg-orange-500/10 text-orange-400'
                   : 'text-slate-400 hover:bg-white/5 hover:text-white'
               }`}
@@ -102,7 +104,7 @@ export const Header = () => {
             </div>
 
             {/* Profile Link */}
-            <Link to="/perfil" className="flex items-center gap-3 group/profile hover:bg-white/5 p-2 rounded-xl transition-colors relative overflow-hidden">
+            <Link href="/perfil" className="flex items-center gap-3 group/profile hover:bg-white/5 p-2 rounded-xl transition-colors relative overflow-hidden">
                 <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-cyan-500/30 shrink-0 z-10 bg-slate-800">
                      {user?.profileImage ? (
                         <img src={user.profileImage} alt="Profile" className="w-full h-full object-cover" />
@@ -119,7 +121,7 @@ export const Header = () => {
             </Link>
             
             {/* Settings Link */}
-             <Link to="/configuracion" className="mt-2 flex items-center justify-center p-2 text-slate-500 hover:text-cyan-400 transition-colors h-10">
+             <Link href="/configuracion" className="mt-2 flex items-center justify-center p-2 text-slate-500 hover:text-cyan-400 transition-colors h-10">
                 <FontAwesomeIcon icon={faGear} className="text-lg" />
              </Link>
         </div>
@@ -131,9 +133,9 @@ export const Header = () => {
           {mainOptions.map((option) => (
             <Link
               key={option.path}
-              to={option.path}
+              href={option.path}
               className={`flex flex-col items-center justify-center w-16 h-20 transition-all duration-300 ${
-                location.pathname === option.path
+                pathname === option.path
                   ? 'text-cyan-400 border-t-2 border-cyan-500'
                   : 'text-slate-400 hover:text-white'
               }`}
@@ -165,7 +167,7 @@ export const Header = () => {
             {mobileMenuOptions.map((option) => (
               <Link
                 key={option.path}
-                to={option.path}
+                href={option.path}
                 className="flex items-center gap-4 px-6 py-4 text-slate-300 hover:bg-cyan-500/10 transition-colors active:bg-cyan-500/20"
                 onClick={() => setMobileOptionsMenuOpen(false)}
               >

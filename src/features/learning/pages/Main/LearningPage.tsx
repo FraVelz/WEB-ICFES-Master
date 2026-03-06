@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRight, faLightbulb, faFire, faBullseye, faRuler, faBook, faFlask, faGlobe, faClock, faChartLine } from '@fortawesome/free-solid-svg-icons';
 import { useState, useMemo } from 'react';
@@ -198,7 +198,7 @@ export const LearningPage = () => {
             {/* Back Button */}
             <div className="text-center pb-20">
               <Link
-                to="/"
+                href="/"
                 className="cursor-pointer inline-block bg-linear-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-semibold py-3 px-8 rounded-xl transition-all duration-300 hover:shadow-lg hover:shadow-purple-500/30 hover:scale-105"
               >
                 ← Volver al Inicio
@@ -289,7 +289,7 @@ export const LearningPage = () => {
               {Object.entries(areaIcons).map(([areaKey, areaData]) => (
                 <Link
                   key={areaKey}
-                  to={`/exam/${areaKey}`}
+                  href={`/exam/${areaKey}`}
                   className="group p-8 rounded-2xl border-2 border-slate-700/50 bg-slate-800/20 hover:border-orange-500/60 hover:bg-orange-500/10 transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-orange-500/30"
                 >
                   <div className="flex flex-col items-center text-center gap-4">
@@ -338,7 +338,7 @@ export const LearningPage = () => {
                       </div>
                     </div>
                     <Link
-                      to="/exam/full"
+                      href="/exam/full"
                       className="inline-block w-full px-8 py-4 rounded-lg font-semibold transition-all duration-300 bg-linear-to-r from-red-500 to-pink-500 text-white hover:shadow-lg hover:shadow-red-500/30 hover:scale-105"
                     >
                       Iniciar Simulacro Global
@@ -356,7 +356,7 @@ export const LearningPage = () => {
         {/* Back Button */}
         <div className="text-center pb-20">
           <Link
-            to="/"
+            href="/"
             className="cursor-pointer inline-block bg-linear-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-semibold py-3 px-8 rounded-xl transition-all duration-300 hover:shadow-lg hover:shadow-purple-500/30 hover:scale-105"
           >
             ← Volver al Inicio

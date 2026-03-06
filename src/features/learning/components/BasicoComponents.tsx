@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 
 export const TopicItem = ({ topic, idx, subject }) => (
   <div className="flex items-start justify-between p-3 bg-slate-800/50 rounded-lg hover:bg-slate-800 transition-colors">
@@ -13,7 +13,7 @@ export const TopicItem = ({ topic, idx, subject }) => (
         {topic.duration}
       </span>
       <Link
-        to={`/aprender/${subject}/basico/${idx}`}
+        href={`/aprender/${subject}/basico/${idx}`}
         className="px-3 py-1 bg-green-600 hover:bg-green-700 text-white text-sm rounded transition-colors"
       >
         Aprender

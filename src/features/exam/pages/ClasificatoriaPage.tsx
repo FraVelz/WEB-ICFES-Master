@@ -1,5 +1,6 @@
+'use client';
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { 
   faTrophy, 
@@ -17,7 +18,7 @@ import { ConstructionAlert } from '@/shared/components';
 import { useUserProfile } from '@/features/user/hooks/useUserProfile';
 
 export const ClasificatoriaPage = () => {
-  const navigate = useNavigate();
+  const router = useRouter();
   const { user } = useAuth();
   const { rank: myRank } = useUserProfile(); // Obtener mi rango actual
   
@@ -156,7 +157,7 @@ export const ClasificatoriaPage = () => {
               return (
                 <div 
                   key={player.id}
-                  onClick={() => navigate(isCurrentUser ? '/perfil' : `/perfil/public/${player.id}`)}
+                  onClick={() => router.push(isCurrentUser ? '/perfil' : `/perfil/public?userId=${player.id}`)}
                   className={`relative group flex items-center gap-4 p-4 rounded-xl border transition-all cursor-pointer ${
                     isCurrentUser 
                       ? 'bg-cyan-500/10 border-cyan-500/50 shadow-lg shadow-cyan-500/10' 

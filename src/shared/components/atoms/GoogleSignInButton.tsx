@@ -3,13 +3,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGoogle } from '@fortawesome/free-brands-svg-icons';
 import { faExclamationCircle, faCircleNotch } from '@fortawesome/free-solid-svg-icons';
 import { useAuth } from '@/context/AuthContext';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
 
 export const GoogleSignInButton = () => {
   const { loginWithGoogle, error } = useAuth();
   const [isLoading, setIsLoading] = useState(false);
   const [localError, setLocalError] = useState('');
-  const navigate = useNavigate();
+  const router = useRouter();
 
   const handleGoogleSignIn = async () => {
     try {
@@ -17,7 +17,7 @@ export const GoogleSignInButton = () => {
       setIsLoading(true);
       await loginWithGoogle();
       // Redirigir al dashboard después del login exitoso
-      navigate('/dashboard');
+      router.push('/dashboard');
     } catch (err) {
       setLocalError('No se pudo iniciar sesión con Google. Intenta de nuevo.');
       console.error('Error en Google Sign-In:', err);

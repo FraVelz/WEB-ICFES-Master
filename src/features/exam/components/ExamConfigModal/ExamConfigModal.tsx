@@ -1,5 +1,6 @@
+'use client';
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 
 export const ExamConfigModal = ({ area, totalQuestions: maxQuestions, onStart, isFullExam = false }) => {
   const [numQuestions, setNumQuestions] = useState(isFullExam ? maxQuestions : 10);
@@ -109,7 +110,7 @@ export const ExamConfigModal = ({ area, totalQuestions: maxQuestions, onStart, i
           {/* Botones */}
           <div className="flex gap-3 pt-6">
             <Link
-              to="/"
+              href="/"
               className="flex-1 text-center bg-white/10 hover:bg-white/20 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-300 border border-white/20"
             >
               Cancelar

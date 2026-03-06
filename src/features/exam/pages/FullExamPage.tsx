@@ -1,5 +1,6 @@
+'use client';
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { ExamConfigModal } from '@/features/exam/components';
 import { AnswerSheet } from '@/features/exam/components';
 import { ResultsAnalysis } from '@/features/exam/components';
@@ -133,7 +134,7 @@ export const FullExamPage = () => {
               </div>
 
               <Link
-                to="/"
+                href="/"
                 className="bg-white/10 hover:bg-white/20 text-white px-4 py-2 rounded-lg text-sm transition-all duration-300"
               >
                 Salir
@@ -212,7 +213,7 @@ export const FullExamPage = () => {
             )}
 
             <Link
-              to="/"
+              href="/"
               className="bg-white/10 hover:bg-white/20 text-white px-4 py-2 rounded-lg text-sm transition-all duration-300"
             >
               Salir

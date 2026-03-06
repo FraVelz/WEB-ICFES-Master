@@ -1,12 +1,10 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useSearchParams, useNavigate } from 'react-router-dom';
 import { faTimes, faCoins } from '@fortawesome/free-solid-svg-icons';
 
 /**
  * Dropdown que muestra el dinero virtual
  */
 export const CoinsModal = ({ isOpen, onClose, coins = 0 }) => {
-  const navigate = useNavigate();
   if (!isOpen) return null;
 
   return (

@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faRuler, faArrowLeft, faBook } from '@fortawesome/free-solid-svg-icons';
 
@@ -79,7 +79,7 @@ export const Algebra = () => {
       <div className="relative z-10 max-w-4xl mx-auto px-6 py-10">
         {/* Header */}
         <div className="flex items-center justify-between mb-12">
-          <Link to="/aprendizaje" className="flex items-center gap-3 text-gray-400 hover:text-blue-400 transition-colors">
+          <Link href="/aprendizaje" className="flex items-center gap-3 text-gray-400 hover:text-blue-400 transition-colors">
             <FontAwesomeIcon icon={faArrowLeft} className="text-xl" />
             Volver
           </Link>
@@ -170,7 +170,7 @@ export const Algebra = () => {
         {/* Back Button */}
         <div className="text-center">
           <Link
-            to="/aprendizaje"
+            href="/aprendizaje"
             className="inline-block bg-linear-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 text-white font-semibold py-3 px-8 rounded-xl transition-all duration-300 hover:shadow-lg hover:scale-105"
           >
             Volver al Aprendizaje

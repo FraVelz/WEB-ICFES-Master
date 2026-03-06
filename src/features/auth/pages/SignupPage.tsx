@@ -1,5 +1,7 @@
+'use client';
 import { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faEnvelope, faLock, faRocket, faEye, faEyeSlash, faExclamationCircle, faCheckCircle, faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { useAuth } from '@/context/AuthContext';
@@ -23,7 +25,7 @@ export const SignupPage = () => {
     hasUppercase: false,
   });
   const { signup } = useAuth();
-  const navigate = useNavigate();
+  const router = useRouter();
 
   // Cargar respuestas del onboarding si existen
   useEffect(() => {
@@ -78,7 +80,7 @@ export const SignupPage = () => {
 
     try {
       await signup(formData.email, formData.password, formData.displayName);
-      navigate('/dashboard');
+      router.push('/perfil');
     } catch (err) {
       setError(err.message);
     } finally {
@@ -99,7 +101,7 @@ export const SignupPage = () => {
         {/* Header with back button if from onboarding */}
         {onboardingAnswers && (
           <button
-            onClick={() => navigate('/onboarding')}
+            onClick={() => router.push('/onboarding')}
             className="cursor-pointer mb-6 inline-flex items-center gap-2 text-cyan-400 hover:text-cyan-300 transition-colors text-sm"
           >
             <FontAwesomeIcon icon={faArrowLeft} />

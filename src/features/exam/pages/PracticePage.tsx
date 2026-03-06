@@ -1,5 +1,7 @@
+'use client';
 import { useState, useEffect } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import Link from 'next/link';
+import { useParams } from 'next/navigation';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEllipsisVertical, faArrowRightFromBracket, faClipboard } from '@fortawesome/free-solid-svg-icons';
 import { ExamConfigModal, AnswerSheet, ResultsAnalysis } from '@/features/exam/components';
@@ -140,7 +142,7 @@ export const PracticePage = () => {
 
               {/* Desktop Exit Button */}
               <Link
-                to="/"
+                href="/"
                 className="hidden md:block bg-white/10 hover:bg-white/20 text-white px-4 py-2 rounded-lg text-sm transition-all duration-300"
               >
                 Salir
@@ -166,7 +168,7 @@ export const PracticePage = () => {
                     <span>Ver Respuestas</span>
                   </button>
                   <Link
-                    to="/"
+                    href="/"
                     onClick={() => setMobileMenuOpen(false)}
                     className="flex items-center gap-3 px-4 py-3 text-white hover:bg-white/10 transition-colors"
                   >
@@ -251,7 +253,7 @@ export const PracticePage = () => {
 
             {/* Desktop Exit Button */}
             <Link
-              to="/"
+              href="/"
               className="hidden md:block bg-white/10 hover:bg-white/20 text-white px-4 py-2 rounded-lg text-sm transition-all duration-300"
             >
               Salir
@@ -280,7 +282,7 @@ export const PracticePage = () => {
                   <span>Ver Respuestas</span>
                 </button>
                 <Link
-                  to="/"
+                  href="/"
                   onClick={() => setMobileMenuOpen(false)}
                   className="flex items-center gap-3 px-4 py-3 text-white hover:bg-white/10 transition-colors"
                 >

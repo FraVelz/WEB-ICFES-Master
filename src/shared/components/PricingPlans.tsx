@@ -1,12 +1,12 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCrown, faCheckCircle } from '@fortawesome/free-solid-svg-icons';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import { PaymentModal } from '@/shared/components';
 import { useAuth } from '@/context/AuthContext';
 
 export const PricingPlans = ({ plans = [] }) => {
-  const navigate = useNavigate();
+  const router = useRouter();
   const { isAuthenticated } = useAuth();
   const [isPaymentOpen, setIsPaymentOpen] = useState(false);
   const [selectedPlan, setSelectedPlan] = useState(null);
@@ -54,7 +54,7 @@ export const PricingPlans = ({ plans = [] }) => {
     } else {
       // Si no está autenticado, guardar el plan en localStorage y redirigir a login
       localStorage.setItem('selectedPlan', JSON.stringify(plan));
-      navigate('/login', { state: { from: 'pricing', plan } });
+      router.push('/login');
     }
   };
 

@@ -1,10 +1,10 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheckCircle, faClock, faCoins, faBolt, faArrowRight } from '@fortawesome/free-solid-svg-icons';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
 
 export const ChallengeCard = ({ challenge, onComplete }) => {
-  const navigate = useNavigate();
+  const router = useRouter();
   const isCompleted = challenge.status === 'completed';
   
   // Mapeo de áreas a rutas de práctica
@@ -27,7 +27,7 @@ export const ChallengeCard = ({ challenge, onComplete }) => {
     if (window.confirm("¿Simular completar este desafío? (En producción esto iría a la lección)")) {
       onComplete(challenge.id);
     } else {
-      navigate(getRoute(challenge.area));
+      router.push(getRoute(challenge.area));
     }
   };
 

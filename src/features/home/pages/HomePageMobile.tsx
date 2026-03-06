@@ -1,4 +1,4 @@
-import { Navigate } from "react-router-dom";
+'use client';
 import { MascotaCircle } from "@/shared/components/MascotaCircle";
 
 export const HomePageMobile = ({ isInitialLoad, onDemoAccess, isModalOpen, setIsModalOpen, isDemoOpen, setIsDemoOpen, demoTimeLeft, onStartDemo, expandedFaq, setExpandedFaq }) => {

@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faArrowLeft,
@@ -75,7 +76,7 @@ const SettingOption = ({ label, description, icon, action, danger = false, onCli
 );
 
 export const UserSettingsPage = () => {
-  const navigate = useNavigate();
+  const router = useRouter();
   const { user, refreshUser } = useUser();
   const { logout } = useAuth();
   const { user: firestoreUser } = useUserDataFirestore();
@@ -202,7 +203,7 @@ export const UserSettingsPage = () => {
       setLoading(true);
       await logout();
       showMessage('Sesión cerrada exitosamente', 'success');
-      setTimeout(() => navigate('/'), 1500);
+      setTimeout(() => router.push('/'), 1500);
     } catch (err) {
       showMessage(`Error al cerrar sesión: ${err.message}`, 'error');
     } finally {
@@ -224,7 +225,7 @@ export const UserSettingsPage = () => {
       showMessage('Todos tus datos han sido eliminados', 'success');
       setShowDeleteModal(false);
       setDeleteConfirmation('');
-      setTimeout(() => navigate('/dashboard'), 1500);
+      setTimeout(() => router.push('/dashboard'), 1500);
     } catch (err) {
       showMessage(`Error al eliminar datos: ${err.message}`, 'error');
     } finally {
@@ -245,7 +246,7 @@ export const UserSettingsPage = () => {
       sessionStorage.clear();
       await logout();
       showMessage('Cuenta eliminada exitosamente', 'success');
-      setTimeout(() => navigate('/'), 1500);
+      setTimeout(() => router.push('/'), 1500);
     } catch (err) {
       showMessage(`Error al eliminar cuenta: ${err.message}`, 'error');
     } finally {
@@ -265,7 +266,7 @@ export const UserSettingsPage = () => {
         {/* Header */}
         <div className="sticky top-0 z-50 backdrop-blur-xl border-b border-slate-800/60 bg-slate-950/80">
           <div className="max-w-6xl mx-auto px-4 py-4 flex items-center gap-4">
-            <Link to="/perfil" className="p-2 hover:bg-slate-800 rounded-full transition-colors text-slate-400 hover:text-white">
+            <Link href="/perfil" className="p-2 hover:bg-slate-800 rounded-full transition-colors text-slate-400 hover:text-white">
               <FontAwesomeIcon icon={faArrowLeft} className="text-lg" />
             </Link>
             <h1 className="text-xl font-bold text-white">Configuración</h1>

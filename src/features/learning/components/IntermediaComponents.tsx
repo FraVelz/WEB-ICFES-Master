@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 
 export const ExamDetailHeader = ({ exam }) => (
   <div>
@@ -34,7 +34,7 @@ export const ExamStats = ({ exam }) => (
 
 export const ExamButton = ({ subject }) => (
   <Link
-    to={`/examen/${subject}/intermedio`}
+    href={`/examen/${subject}/intermedio`}
     className="block w-full py-3 bg-yellow-600 hover:bg-yellow-700 text-white font-semibold rounded-lg transition-colors text-center"
   >
     Iniciar Examen

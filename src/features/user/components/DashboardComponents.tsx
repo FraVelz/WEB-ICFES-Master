@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
 
 export const QuickStatCard = ({ stat, value, icon, color }) => (
@@ -57,7 +57,7 @@ export const ProgressBar = ({ percentage, label, info }) => (
 
 export const NavigationCard = ({ card }) => (
   <Link
-    to={card.link}
+    href={card.link}
     className="group relative bg-slate-800/50 border border-slate-700 hover:border-slate-600 rounded-xl p-5 transition-all duration-300 hover:shadow-lg hover:-translate-y-1"
   >
     {card.badge && (

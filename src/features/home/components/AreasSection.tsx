@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import Link from 'next/link';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight, faFire, faBullseye } from "@fortawesome/free-solid-svg-icons";
 import { AREAS } from "@/features/home/data";
@@ -16,7 +16,7 @@ export const AreasSection = ({ isInitialLoad, areasSection }) => {
         {AREAS.map((area, idx) => (
           <Link
             key={area.id}
-            to={`/practica/${area.id}`}
+            href={`/practica/${area.id}`}
             style={getAnimationStyle(areasSection.isVisible, isInitialLoad, 0.9 + idx * 0.15)}
             className="group relative"
           >
@@ -66,7 +66,7 @@ export const AreasSection = ({ isInitialLoad, areasSection }) => {
           Realiza un simulacro completo bajo condiciones reales. 150 preguntas, tiempo limitado 4 horas y 30 minutos, puntuación exacta.
         </p>
         <Link
-          to="/examen-completo"
+          href="/examen-completo"
           className="inline-flex items-center gap-2 px-8 py-4 bg-linear-to-r from-red-600 to-pink-600 text-white font-bold rounded-lg hover:shadow-lg hover:shadow-red-500/50 transition-all duration-300 hover:scale-105"
         >
           <FontAwesomeIcon icon={faBullseye} />

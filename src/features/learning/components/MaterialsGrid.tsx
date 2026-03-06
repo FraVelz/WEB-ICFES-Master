@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faClock, faBook } from '@fortawesome/free-solid-svg-icons';
 
@@ -67,7 +67,7 @@ export const MaterialsGrid = ({ filteredMaterials, areaIcons, selectedTopics, on
                 ))}
               </div>
               <Link 
-                to={material.path}
+                href={material.path}
                 className="w-full block text-center bg-linear-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold py-2 px-4 rounded-xl transition-all duration-300 hover:shadow-lg"
               >
                 Aprender

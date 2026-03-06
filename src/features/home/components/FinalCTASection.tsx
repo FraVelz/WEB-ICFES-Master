@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import Link from 'next/link';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faRocket } from "@fortawesome/free-solid-svg-icons";
 
@@ -13,7 +13,7 @@ export const FinalCTASection = () => {
           Miles de estudiantes ya están preparándose. Cada día que esperes es un día menos de preparación.
         </p>
         <Link
-          to="/dashboard"
+          href="/dashboard"
           className="inline-flex items-center gap-2 px-10 py-4 bg-linear-to-r from-cyan-500 to-blue-600 text-white font-bold text-lg rounded-lg hover:shadow-lg hover:shadow-cyan-500/50 transition-all duration-300 hover:scale-105"
         >
           <FontAwesomeIcon icon={faRocket} />

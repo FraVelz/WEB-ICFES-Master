@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 
 export const ResultsAnalysis = ({ results, questions, percentage, correctCount, examConfig, onRetry }) => {
  return (
@@ -33,7 +33,7 @@ export const ResultsAnalysis = ({ results, questions, percentage, correctCount, 
  Intentar de Nuevo
  </button>
  <Link
- to="/"
+ href="/"
  className="cursor-pointer bg-linear-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 text-white font-semibold py-3 px-8 rounded-xl transition-all duration-300 hover:shadow-lg hover:scale-105"
  >
  Volver al Inicio

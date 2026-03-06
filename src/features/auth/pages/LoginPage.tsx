@@ -1,5 +1,7 @@
+'use client';
 import { useState } from 'react';
-import { Link, useNavigate, useLocation } from 'react-router-dom';
+import Link from 'next/link';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEnvelope, faLock, faRocket, faEye, faEyeSlash, faExclamationCircle, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { useAuth } from '@/context/AuthContext';
@@ -12,11 +14,9 @@ export const LoginPage = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
   const { login } = useAuth();
-  const navigate = useNavigate();
-  const location = useLocation();
-
-  // Obtener el estado anterior (dónde viene)
-  const from = location.state?.from;
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const from = searchParams.get('from');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -29,9 +29,9 @@ export const LoginPage = () => {
       // Si viene desde pricing, guardar flag y redirigir a home
       if (from === 'pricing') {
         localStorage.setItem('fromPricing', 'true');
-        navigate('/', { replace: true });
+        router.replace('/');
       } else {
-        navigate('/dashboard');
+        router.push('/perfil');
       }
     } catch (err) {
       setError(err.message);
@@ -52,7 +52,7 @@ export const LoginPage = () => {
       <div className="relative z-10">
         <div className="flex items-center justify-between py-4">
           <Link
-            to="/"
+            href="/"
             className="text-slate-400 hover:text-slate-300 transition-colors"
           >
             <FontAwesomeIcon icon={faXmark} className="text-2xl" />
@@ -166,7 +166,7 @@ export const LoginPage = () => {
           {/* Forgot Password Link */}
           <p className="text-center">
             <Link
-              to="/forgot-password"
+              href="/forgot-password"
               className="text-slate-400 text-sm hover:text-slate-300 transition-colors"
             >
               ¿Olvidaste tu contraseña?

@@ -1,9 +1,10 @@
+'use client';
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
 import { OnboardingQuiz } from '../components/OnboardingQuiz';
 
 export const OnboardingPage = () => {
-  const navigate = useNavigate();
+  const router = useRouter();
   const [quizAnswers, setQuizAnswers] = useState(null);
 
   // Configuración de avatares personalizables
@@ -19,7 +20,7 @@ export const OnboardingPage = () => {
     setQuizAnswers(answers);
     // Navegar al registro después de 1 segundo
     setTimeout(() => {
-      navigate('/signup');
+      router.push('/signup');
     }, 1000);
   };
 

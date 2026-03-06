@@ -1,12 +1,14 @@
+'use client';
 import { useState, useEffect } from 'react';
-import { useSearchParams, useNavigate, Link } from 'react-router-dom';
+import { useSearchParams, useRouter } from 'next/navigation';
+import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLock, faCheckCircle, faExclamationCircle, faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import { EMAIL_MESSAGES } from '@/config/emailMessages';
 
 export const ResetPasswordPage = () => {
-  const [searchParams] = useSearchParams();
-  const navigate = useNavigate();
+  const searchParams = useSearchParams();
+  const router = useRouter();
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -80,7 +82,7 @@ export const ResetPasswordPage = () => {
 
       // Redirigir a login después de 3 segundos
       setTimeout(() => {
-        navigate('/login');
+        router.push('/login');
       }, 3000);
     } catch (err) {
       setError(EMAIL_MESSAGES.resetPasswordPage.errorGeneric);
@@ -133,7 +135,7 @@ export const ResetPasswordPage = () => {
             </div>
 
             <Link
-              to="/login"
+              href="/login"
               className="block py-3 px-4 bg-linear-to-r from-cyan-500 to-blue-600 text-white font-bold rounded-lg hover:shadow-lg hover:shadow-cyan-500/50 transition-all text-center"
             >
               {EMAIL_MESSAGES.resetPasswordPage.goToLoginButton}

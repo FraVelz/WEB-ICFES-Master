@@ -12,7 +12,7 @@ import {
   faGlobe,
   faStar
 } from '@fortawesome/free-solid-svg-icons';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 
 export const LearningPathMap = () => {
   const [expandedArea, setExpandedArea] = useState(null);
@@ -306,7 +306,7 @@ export const LearningPathMap = () => {
                     {/* Botón de Acción */}
                     {module.status !== 'locked' && (
                       <Link 
-                        to={module.status === 'in-progress' ? `/practica/${path.id}` : `/aprendizaje`}
+                        href={module.status === 'in-progress' ? `/practica/${path.id}` : `/aprendizaje`}
                         className="mt-3 w-full inline-block text-center py-2 px-4 bg-linear-to-r from-cyan-500 to-blue-500 text-white rounded-lg font-semibold text-sm hover:shadow-lg hover:shadow-blue-500/50 transition-all duration-300 hover:scale-105"
                       >
                         {module.status === 'completed' ? 'Revisar' : 'Continuar'}

@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheckCircle, faLock } from '@fortawesome/free-solid-svg-icons';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { DIFFICULTY_COLORS } from './constants';
 
 /**
@@ -130,7 +130,7 @@ export const ICFESLevelCard = ({ level, index, totalLevels, icons }) => {
             {/* Action Button */}
             {!isLocked && !isCompleted && (
               <Link
-                to={`/practica/icfes?nivel=${level.id}`}
+                href={`/practica/icfes?nivel=${level.id}`}
                 className="w-full px-4 py-3 bg-linear-to-r from-blue-600 to-blue-500 text-white font-semibold rounded-lg hover:shadow-lg hover:shadow-blue-500/50 transition-all duration-300 flex items-center justify-center gap-2 group"
               >
                 Continuar <FontAwesomeIcon icon={icons.faArrowRight} className="group-hover:translate-x-1 transition-transform" />
@@ -139,7 +139,7 @@ export const ICFESLevelCard = ({ level, index, totalLevels, icons }) => {
 
             {isCompleted && (
               <Link
-                to={`/practica/icfes?nivel=${level.id}&review=true`}
+                href={`/practica/icfes?nivel=${level.id}&review=true`}
                 className="w-full px-4 py-3 bg-linear-to-r from-slate-700 to-slate-600 text-white font-semibold rounded-lg hover:shadow-lg hover:shadow-slate-600/50 transition-all duration-300 flex items-center justify-center gap-2"
               >
                 Revisar <FontAwesomeIcon icon={icons.faArrowRight} />

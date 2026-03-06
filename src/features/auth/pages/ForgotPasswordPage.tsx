@@ -1,5 +1,6 @@
+'use client';
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEnvelope, faArrowLeft, faCheckCircle, faExclamationCircle } from '@fortawesome/free-solid-svg-icons';
 import { useAuth } from '@/context/AuthContext';
@@ -44,7 +45,7 @@ export const ForgotPasswordPage = () => {
       <div className="relative z-10 w-full max-w-md">
         {/* Back Link */}
         <Link
-          to="/login"
+          href="/login"
           className="inline-flex items-center gap-2 text-slate-400 hover:text-slate-300 transition-colors mb-8"
         >
           <FontAwesomeIcon icon={faArrowLeft} />
@@ -147,7 +148,7 @@ export const ForgotPasswordPage = () => {
                 {EMAIL_MESSAGES.forgotPasswordPage.useAnotherEmailButton}
               </button>
               <Link
-                to="/login"
+                href="/login"
                 className="block w-full py-3 px-4 bg-slate-800 text-white font-bold rounded-lg hover:bg-slate-700 transition-all text-center"
               >
                 {EMAIL_MESSAGES.forgotPasswordPage.backToLogin}

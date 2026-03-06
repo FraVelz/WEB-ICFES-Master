@@ -3,7 +3,7 @@ import {
   faChevronDown,
   faTrophy
 } from '@fortawesome/free-solid-svg-icons';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 
 export const LevelHeader = ({ icon, color, title, subtitle, isExpanded, onClick }) => (
   <button
@@ -76,7 +76,7 @@ export const AvanzadoNote = () => (
 
 export const AvanzadoButton = () => (
   <Link
-    to="/examen/simulacro/completo"
+    href="/examen/simulacro/completo"
     className="block w-full py-4 bg-gradient-to-r from-red-600 to-purple-600 hover:from-red-700 hover:to-purple-700 text-white font-bold rounded-lg transition-all duration-300 text-center text-lg hover:shadow-lg hover:shadow-red-600/50"
   >
     <FontAwesomeIcon icon={faTrophy} className="mr-2" />
