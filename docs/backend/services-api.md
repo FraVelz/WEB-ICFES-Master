@@ -1,390 +1,316 @@
 # Arquitectura de Servicios y Data Layer
 
-##  Visión General
+## Visión General
 
-La aplicación ICFES utiliza una **arquitectura desacoplada de tres capas** que permite cambiar entre localStorage (desarrollo) y API (producción) sin modificar los componentes:
-
-```
-
-         React Components                 
-     (UserProfilePage, ExamPage, etc)     
-
-              
-
-       Custom Hooks (useUserData)         
-   (Abstracción de lógica de datos)       
-
-              
-
-    Services (UserService, etc)           
-  (Lógica de negocio y CRUD)              
-
-              
-
-   BaseService + api.config.js            
-  (Capa de abstracción - localStorage     
-   o API según MODE)                      
+La aplicación ICFES utiliza una **arquitectura desacoplada** que permite cambiar entre **Supabase** (producción), **localStorage** (desarrollo sin backend) y **API REST** (backend custom) sin modificar los componentes. El modo se controla mediante `NEXT_PUBLIC_API_MODE`.
 
 ```
+         React Components
+     (UserProfilePage, ExamPage, etc)
 
-##  Componentes Principales
+              ↓
+
+       Custom Hooks
+   (useUserData, useProgress, useGamification, useExam)
+
+              ↓
+
+    Services / Adaptadores
+  (UserSupabaseService, GamificationServiceAdapter, etc)
+
+              ↓
+
+   api.config.js (MODE: supabase | localStorage | api)
+              ↓
+   ┌──────────┼──────────┐
+   ↓          ↓          ↓
+Supabase   localStorage   API REST
+(PostgreSQL)  (utils)    (BaseService)
+```
+
+## Componentes Principales
 
 ### 1. **api.config.js** (Configuración Central)
+
 - **Ubicación**: `src/services/api.config.js`
-- **Propósito**: Centraliza toda la configuración de modo (localStorage/API)
-- **Variables de Entorno**:
-  ```
-  REACT_APP_API_MODE=localStorage    # 'localStorage' o 'api'
-  REACT_APP_API_URL=http://localhost:3001/api
-  REACT_APP_API_TOKEN=your_token_here
-  ```
+- **Propósito**: Centraliza el modo de persistencia de datos
+- **Modos soportados**:
+  - `supabase` (por defecto): PostgreSQL + Supabase Auth
+  - `localStorage`: Desarrollo local sin backend
+  - `api`: Backend REST custom
 
-### 2. **BaseService.js** (Clase Abstracta)
+**Variables de Entorno** (Next.js usa prefijo `NEXT_PUBLIC_`):
+
+```
+NEXT_PUBLIC_API_MODE=supabase     # 'supabase' | 'localStorage' | 'api'
+NEXT_PUBLIC_API_URL=http://localhost:3001/api   # Solo cuando MODE === 'api'
+NEXT_PUBLIC_API_TOKEN=your_token_here          # Solo cuando MODE === 'api'
+```
+
+### 2. **BaseService.js** (Legacy - modo API/localStorage)
+
 - **Ubicación**: `src/services/BaseService.js`
-- **Responsabilidad**: Proporciona operaciones CRUD genéricas
-- **Métodos**:
-  - `get(id?)` - Obtener uno o todos
-  - `create(data)` - Crear nuevo registro
-  - `update(id, data)` - Actualizar existente
-  - `delete(id)` - Eliminar registro
+- **Uso**: Servicios que extienden BaseService cuando `MODE === 'api'` o `MODE === 'localStorage'`
+- **Métodos**: `get(id?)`, `create(data)`, `update(id, data)`, `delete(id)`
 
-**Ejemplo de Uso Interno**:
-```javascript
-class UserService extends BaseService {
-  constructor() {
-    super('user'); // 'user' = nombreRecurso
-  }
-}
-```
+### 3. **SupabaseService.js** (Clase base para Supabase)
 
-### 3. **Servicios Especializados**
+- **Ubicación**: `src/services/SupabaseService.js`
+- **Responsabilidad**: Operaciones CRUD con Supabase, mapeo snake_case ↔ camelCase
+- **Métodos**: `get()`, `getByUserId()`, `create()`, `update()`, `delete()`
 
-#### **UserService.js**
-Gestiona datos de usuario, perfil y configuración
-```javascript
-// Métodos principales
-await UserService.getUserProfile()
-await UserService.updateProfile(userId, data)
-await UserService.updateUsername(userId, name)
-await UserService.getSettings(userId)
-await UserService.exportUserData(userId)
-await UserService.deleteAccount(userId)
-```
+### 4. **Servicios Supabase** (`src/services/supabase/`)
 
-#### **ProgressService.js**
-Gestiona estadísticas, progreso y recomendaciones
-```javascript
-// Métodos principales
-await ProgressService.getUserStats(userId)
-await ProgressService.updateAfterAnswer(userId, answerData)
-await ProgressService.getAreaStats(userId, area)
-await ProgressService.getRecommendations(userId)
-await ProgressService.updateDailyStreak(userId)
-```
+Servicios que conectan directamente con tablas de PostgreSQL en Supabase:
 
-#### **GamificationService.js**
-Gestiona gamificación: XP, monedas, badges y niveles
-```javascript
-// Métodos principales
-await GamificationService.addXP(userId, points, reason)
-await GamificationService.addCoins(userId, amount, reason)
-await GamificationService.unlockBadge(userId, badgeId)
-await GamificationService.getLevel(userId)
-await GamificationService.getLeaderboard()
+| Servicio | Tabla | Descripción |
+|----------|-------|-------------|
+| **UserSupabaseService** | `users` | Perfil, username, bio, virtualMoney, profileImage |
+| **ProgressSupabaseService** | `user_progress` | totalAttempts, totalCorrect, streakDays, areaStats |
+| **GamificationSupabaseService** | `user_gamification` | XP, level, totalCoins, badges, achievements |
+| **ExamSupabaseService** | `exam_results` | Exámenes completados, scores, respuestas |
+| **LearningSupabaseService** | `learning_content` | Lecciones por área, quizzes |
 
-// Constantes
-GamificationService.BADGES      // Definición de todos los badges
-GamificationService.LEVELS      // Definición de niveles
-```
+### 5. **GamificationServiceAdapter**
 
-#### **ExamService.js**
-Gestiona exámenes, cuestionarios y análisis de resultados
-```javascript
-// Métodos principales
-await ExamService.createExam(userId, examData)
-await ExamService.saveAnswer(examId, answerData)
-await ExamService.completeExam(examId)
-await ExamService.getUserExams(userId, filters)
-await ExamService.getExamAnalysis(examId)
-await ExamService.getWrongAnswers(examId)
-```
+- **Ubicación**: `src/services/GamificationServiceAdapter.js`
+- **Propósito**: Adaptador que selecciona GamificationSupabaseService o GamificationLocalService según `API_CONFIG.MODE`
+- **Métodos**: `addXP()`, `addCoins()`, `spendCoins()`, `getProfile()`
 
-### 4. **Custom Hooks** (Abstracción de Servicios)
-Proporcionan una interfaz React-friendly para los servicios
+### 6. **Servicios por Feature** (`src/features/*/services/`)
 
-#### **useUserData()**
-```javascript
-const { user, loading, updateProfile, exportData } = useUserData();
-```
+| Feature | Servicio | Descripción |
+|---------|----------|-------------|
+| **user** | UserService | Extiende BaseService (legacy). useUserData usa UserSupabaseService o utils |
+| **progress** | ProgressService | Extiende BaseService. useProgress usa ProgressSupabaseService o progressStorage |
+| **logros** | GamificationService | Extiende BaseService. useGamification usa GamificationSupabaseService o localStorage |
+| **logros** | AchievementService | Lógica de logros desbloqueables |
+| **exam** | ExamService | Extiende BaseService. useExam usa ExamSupabaseService o progressStorage |
+| **exam** | ExamDataService | Carga de preguntas |
+| **exam** | TestResultService | Análisis de resultados |
+| **learning** | LearningService | Supabase o roadmapData estático |
+| **learning** | LearningMaterialService | Material de estudio |
+| **store** | SubscriptionPlanService | Planes (localStorage por ahora) |
+| **store** | PlanScheduleService | Verificación de planes |
+| **auth** | AuthService | Verificación de códigos reset (local) |
 
-#### **useProgress(userId)**
-```javascript
-const { stats, recommendations, updateAfterAnswer } = useProgress(userId);
-```
+## Custom Hooks
 
-#### **useGamification(userId)**
-```javascript
-const { level, coins, badges, addXP, unlockBadge } = useGamification(userId);
-```
+Los hooks abstraen la lógica y seleccionan el servicio según `API_CONFIG.MODE`:
 
-#### **useExam(examId)**
-```javascript
-const { exam, analysis, saveAnswer, completeExam } = useExam(examId);
-```
-
-##  Flujo de Datos
-
-### Ejemplo: Actualizar Perfil de Usuario
-
-```
-1. Component:
-   <button onClick={() => updateUsername('newName')}>
-
-2. Hook (useUserData):
-   const updateUsername = async (username) => {
-     const updated = await UserService.updateProfile(user.id, { username });
-     setUser(updated);
-   }
-
-3. Service (UserService):
-   updateProfile(userId, data) {
-     return this.update(userId, data);
-   }
-
-4. BaseService:
-   update(id, data) {
-     if (MODE === 'localStorage') {
-       return this._updateInLocalStorage(id, data);
-     } else {
-       return this._updateInAPI(id, data);
-     }
-   }
-
-5. Resultado: localStorage actualizado sin cambiar componentes
-```
-
-### Ejemplo: Responder una Pregunta
+### **useUserData()**
 
 ```javascript
-// En ExamPage component
-const { saveAnswer } = useExam(examId);
-const { updateAfterAnswer } = useProgress(userId);
-
-const handleAnswer = async (questionId, selectedAnswer) => {
-  // 1. Guardar respuesta en examen
-  await saveAnswer(questionId, selectedAnswer, correctAnswer, isCorrect, timeSpent);
-  
-  // 2. Actualizar estadísticas de progreso
-  await updateAfterAnswer({
-    isCorrect,
-    area: question.area,
-    difficulty: question.difficulty,
-    timeSpent
-  });
-  
-  // 3. Verificar y desbloquear badges
-  const unlockedBadges = await checkAndUnlockAchievements(context);
-  
-  // Todo sucede automáticamente:
-  // - Se guarda en localStorage
-  // - Se calculan estadísticas
-  // - Se actualizan los UI en tiempo real
-};
+const { user, loading, updateProfile, updateUsername, updateBio, updateProfileImage, addMoney, spendMoney, refresh } = useUserData();
 ```
 
-##  Estructura de Datos en localStorage
+- **Supabase**: UserSupabaseService
+- **localStorage**: `@/shared/utils/userProfile`
+
+### **useProgress()**
 
 ```javascript
-// USUARIO
-localStorage.icfes_user = [{
-  id: "user_1704067200000_0.123",
-  username: "Juan Pérez",
-  email: "juan@email.com",
-  profileImage: "data:image/png;base64,...",
-  personalPhrase: "Mi frase motivadora",
-  settings: { notifications: true, darkMode: true },
-  createdAt: "2024-01-01T...",
-  updatedAt: "2024-01-05T..."
-}]
-
-// PROGRESO
-localStorage.icfes_progress = [{
-  id: "user_1704067200000_0.123",
-  userId: "user_1704067200000_0.123",
-  totalQuestionsAnswered: 150,
-  correctAnswers: 120,
-  currentStreak: 5,
-  areaStats: {
-    "Lenguaje": { questionsAnswered: 50, correctAnswers: 40, percentage: 80 },
-    "Matemáticas": { questionsAnswered: 100, correctAnswers: 80, percentage: 80 }
-  }
-}]
-
-// GAMIFICACIÓN
-localStorage.icfes_gamification = [{
-  id: "user_1704067200000_0.123",
-  userId: "user_1704067200000_0.123",
-  level: 3,
-  totalXP: 450,
-  totalCoins: 250,
-  spentCoins: 100,
-  badges: [
-    { id: "first_question", name: "Primer Paso", unlockedAt: "2024-01-01T..." }
-  ]
-}]
-
-// EXÁMENES
-localStorage.icfes_exam = [{
-  id: "exam_1704067200000_0.456",
-  userId: "user_1704067200000_0.123",
-  type: "practice",
-  totalQuestions: 20,
-  score: 85,
-  status: "completed",
-  answers: [
-    { questionId: "q1", selectedAnswer: "B", correctAnswer: "B", isCorrect: true }
-  ],
-  completedAt: "2024-01-05T..."
-}]
+const { progress, areaStats, recommendations, attemptHistory, resetProgress, refresh } = useProgress();
 ```
 
-##  Migración a Backend: Paso a Paso
+- **Supabase**: ProgressSupabaseService
+- **localStorage**: `@/shared/utils/progressStorage`
 
-### Paso 1: Crear API Backend
-El backend debe implementar los mismos endpoints que BaseService espera:
+### **useGamification(userId)**
 
-```
-POST   /api/user              # create
-GET    /api/user              # get all
-GET    /api/user/:id          # get one
-PUT    /api/user/:id          # update
-DELETE /api/user/:id          # delete
-
-POST   /api/progress          # create
-GET    /api/progress          # get all
-GET    /api/progress/:id      # get one
-PUT    /api/progress/:id      # update
-DELETE /api/progress/:id      # delete
-
-POST   /api/gamification      # create
-GET    /api/gamification      # get all
-GET    /api/gamification/:id  # get one
-PUT    /api/gamification/:id  # update
-DELETE /api/gamification/:id  # delete
-
-POST   /api/exam              # create
-GET    /api/exam              # get all
-GET    /api/exam/:id          # get one
-PUT    /api/exam/:id          # update
-DELETE /api/exam/:id          # delete
+```javascript
+const { achievements, totalXP, level, coins, currentStreak, updateAchievementProgress, refreshData } = useGamification(userId);
 ```
 
-### Paso 2: Cambiar Configuración
-Simplemente cambiar la variable de entorno:
+- **Supabase**: GamificationSupabaseService
+- **localStorage**: localStorage (`icfes_gamification`, `icfes_streak_dates`)
+
+### **useExam(examId)**
+
+```javascript
+const { exam, getUserExams, resetUserExams, refresh } = useExam(examId);
+```
+
+- **Supabase**: ExamSupabaseService
+- **localStorage**: `getStoredExams()` de progressStorage
+
+## Estructura de Tablas Supabase
+
+### `users`
+
+| Columna | Tipo | Descripción |
+|---------|------|-------------|
+| id | uuid | ID del usuario (Supabase Auth) |
+| email | text | Email |
+| display_name | text | Nombre mostrado |
+| username | text | Nombre de usuario |
+| bio | text | Biografía |
+| profile_image | text | URL o base64 de foto |
+| virtual_money | int | Monedas virtuales |
+| created_at | timestamptz | Fecha creación |
+| updated_at | timestamptz | Fecha actualización |
+
+### `user_progress`
+
+| Columna | Tipo | Descripción |
+|---------|------|-------------|
+| user_id | uuid | FK a users |
+| total_attempts | int | Intentos totales |
+| total_correct | int | Respuestas correctas |
+| percentage | float | Porcentaje |
+| streak_days | int | Días de racha |
+| area_stats | jsonb | Estadísticas por área |
+| last_activity_date | date | Última actividad |
+
+### `user_gamification`
+
+| Columna | Tipo | Descripción |
+|---------|------|-------------|
+| user_id | uuid | FK a users |
+| xp / total_xp | int | Experiencia total |
+| level | int | Nivel actual |
+| total_coins | int | Monedas ganadas |
+| spent_coins | int | Monedas gastadas |
+| badges | jsonb | Badges desbloqueados |
+| achievements | jsonb | Progreso de logros |
+| xp_history | jsonb | Historial XP |
+| coins_history | jsonb | Historial monedas |
+
+### `exam_results`
+
+| Columna | Tipo | Descripción |
+|---------|------|-------------|
+| id | text | ID del examen |
+| user_id | uuid | FK a users |
+| exam_type | text | practice | full |
+| score | int | Puntaje |
+| correct_answers | int | Respuestas correctas |
+| total_questions | int | Total preguntas |
+| time_spent | int | Tiempo en segundos |
+| completed_at | timestamptz | Fecha completado |
+| questions | jsonb | Respuestas guardadas |
+
+### `learning_content`
+
+| Columna | Tipo | Descripción |
+|---------|------|-------------|
+| id | uuid | ID |
+| area | text | matematicas, lectura_critica, etc |
+| order_index | int | Orden de lecciones |
+| content | jsonb | Contenido (title, summary, questions, quiz) |
+| published | bool | Publicado |
+
+## Flujo de Datos
+
+### Ejemplo: Actualizar perfil (Supabase)
+
+```
+1. Component: <button onClick={() => updateProfile({ username: 'nuevo' })}>
+2. Hook (useUserData): Llama UserSupabaseService.updateProfile(user.uid, updates)
+3. UserSupabaseService: supabase.from('users').update(...).eq('id', userId)
+4. Resultado: PostgreSQL actualizado
+```
+
+### Ejemplo: Añadir XP (GamificationServiceAdapter)
+
+```javascript
+import GamificationServiceAdapter from '@/services/GamificationServiceAdapter';
+
+// El adaptador selecciona automáticamente Supabase o Local
+await GamificationServiceAdapter.addXP(userId, 50, 'pregunta_correcta');
+```
+
+## Migración entre modos
+
+### Cambiar a Supabase (producción)
 
 ```bash
-# .env.production
-REACT_APP_API_MODE=api
-REACT_APP_API_URL=https://tudominio.com/api
-REACT_APP_API_TOKEN=your_jwt_token
+# .env.local
+NEXT_PUBLIC_API_MODE=supabase
+NEXT_PUBLIC_SUPABASE_URL=https://xxx.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJ...
 ```
 
-**¡Eso es todo!** Los servicios automáticamente usarán la API en lugar de localStorage.
+### Cambiar a localStorage (desarrollo)
 
-### Paso 3: Autenticación
-Cuando implementes autenticación:
+```bash
+NEXT_PUBLIC_API_MODE=localStorage
+```
+
+### Cambiar a API REST (backend custom)
+
+```bash
+NEXT_PUBLIC_API_MODE=api
+NEXT_PUBLIC_API_URL=https://tudominio.com/api
+NEXT_PUBLIC_API_TOKEN=your_jwt_token
+```
+
+Los servicios que usan BaseService (UserService, ProgressService, GamificationService, ExamService) funcionarán con API REST si implementas los endpoints CRUD estándar.
+
+## Exportaciones desde `@/services`
 
 ```javascript
-// En BaseService._fetchWithAuth():
-if (API_CONFIG.API_TOKEN) {
-  options.headers['Authorization'] = `Bearer ${API_CONFIG.API_TOKEN}`;
-}
+import {
+  UserService,
+  ProgressService,
+  GamificationService,
+  ExamService,
+  BaseService,
+  SubscriptionPlanService,
+  PlanScheduleService,
+  ExamDataService,
+  LearningMaterialService,
+  AchievementService,
+  TestResultService,
+  BADGES,
+  LEVELS
+} from '@/services';
+
+import GamificationServiceAdapter from '@/services/GamificationServiceAdapter';
 ```
 
-##  Implementación de Nuevos Servicios
+## Mejores Prácticas
 
-Si necesitas un nuevo servicio (ej: NotificationsService):
+### DO's
 
-```javascript
-// 1. Crear archivo src/services/NotificationsService.js
-import BaseService from './BaseService';
+- Usar hooks en componentes (useUserData, useProgress, etc)
+- Usar GamificationServiceAdapter para XP/monedas
+- Consultar `API_CONFIG.MODE` solo en servicios/hooks, no en componentes
+- Mantener servicios sin conocimiento de React
 
-class NotificationsService extends BaseService {
-  constructor() {
-    super('notification'); // Este es el nombre del recurso en la API
-  }
+### DON'Ts
 
-  async getUserNotifications(userId) {
-    const notifications = await this.get();
-    return notifications.filter(n => n.userId === userId);
-  }
-  
-  // ... más métodos específicos
-}
+- Acceder directamente a localStorage desde componentes
+- Usar UserService/ProgressService directamente si existe hook equivalente (preferir useUserData, useProgress)
+- Hardcodear el modo de API en componentes
 
-export default new NotificationsService();
+## Seguridad
 
-// 2. Agregar al index.js
-// src/services/index.js
-export { NotificationsService } from './NotificationsService';
+### Supabase (Producción)
 
-// 3. Crear un custom hook si lo necesita
-// src/hooks/useNotifications.js
-import { NotificationsService } from '@/services';
-
-export function useNotifications(userId) {
-  // ... hook logic
-}
-
-// 4. Usar en componentes
-// En tu componente
-import { useNotifications } from '@/hooks';
-const { notifications } = useNotifications(userId);
-```
-
-##  Mejores Prácticas
-
-###  DO's
--  Usar servicios para todas las operaciones de datos
--  Usar hooks en componentes funcionales
--  Mantener servicios sin conocimiento de React
--  Usar IDs de usuario para filtrar datos
--  Implementar manejo de errores en hooks
-
-###  DON'Ts
--  Acceder directamente a localStorage desde componentes
--  Hacer lógica de negocio en componentes
--  Usar async/await sin try/catch
--  Guardar datos sensibles en localStorage sin encripción
--  Crear servicios sin extender BaseService
-
-##  Seguridad
+- Row Level Security (RLS) en tablas
+- Autenticación con Supabase Auth (JWT)
+- Anon key solo para operaciones permitidas
 
 ### localStorage (Desarrollo)
-- No almacena datos sensibles (passwords, tokens)
-- Los datos están en texto plano
+
+- No almacenar tokens ni datos sensibles
 - Usar solo para desarrollo local
 
-### API (Producción)
-- Implementar autenticación JWT
-- Validación de token en cada request
-- HTTPS obligatorio
-- CORS configurado correctamente
-- Rate limiting implementado
+### API REST
 
-##  Monitoreo y Debugging
+- JWT en header Authorization
+- HTTPS obligatorio
+- Validación de token en cada request
+
+## Monitoreo y Debugging
 
 ```javascript
-// En src/utils/debugTools.js
-export function logServiceCall(serviceName, method, data) {
-  if (process.env.NODE_ENV === 'development') {
-    console.log(`[${serviceName}] ${method}:`, data);
-  }
-}
-
-// Uso en servicios
-async update(id, data) {
-  logServiceCall('UserService', 'update', { id, data });
-  return super.update(id, data);
-}
+// Ver modo actual
+import API_CONFIG from '@/services/api.config';
+console.log('Modo:', API_CONFIG.MODE);
 ```
+
+---
+
+Última actualización: Marzo 2026

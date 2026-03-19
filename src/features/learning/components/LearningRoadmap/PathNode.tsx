@@ -80,7 +80,7 @@ export const PathNode = ({
     >
       {/* Indicador de Estado (Círculo Izquierdo) */}
       <div className={`
-        relative flex-shrink-0 flex items-center justify-center rounded-full border-b-4 transition-transform group-hover:scale-105
+        relative shrink-0 flex items-center justify-center rounded-full border-b-4 transition-transform group-hover:scale-105
         ${isCheckpoint ? 'w-16 h-16 text-2xl' : 'w-12 h-12 text-lg'}
         ${styles.container}
       `}>

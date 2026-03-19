@@ -37,7 +37,7 @@ export const PerfilPublico = () => {
 
   if (!userId) {
     return (
-      <div className="min-h-[100dvh] bg-slate-950 flex items-center justify-center text-white">
+      <div className="min-h-dvh bg-slate-950 flex items-center justify-center text-white">
         <div className="text-center space-y-6 max-w-md px-4">
           <div className="text-6xl text-slate-700">
             <FontAwesomeIcon icon={faUserSlash} />
@@ -77,7 +77,7 @@ export const PerfilPublico = () => {
 
   if (loading) {
     return (
-      <div className="min-h-[100dvh] bg-slate-950 flex items-center justify-center">
+      <div className="min-h-dvh bg-slate-950 flex items-center justify-center">
         <div className="text-center space-y-4">
           <div className="animate-spin text-4xl text-cyan-400">
             <FontAwesomeIcon icon={faSpinner} />
@@ -90,7 +90,7 @@ export const PerfilPublico = () => {
 
   if (!exists) {
     return (
-      <div className="min-h-[100dvh] bg-slate-950 flex items-center justify-center text-white">
+      <div className="min-h-dvh bg-slate-950 flex items-center justify-center text-white">
         <div className="text-center space-y-6 max-w-md px-4">
           <div className="text-6xl text-slate-700">
             <FontAwesomeIcon icon={faUserSlash} />
@@ -111,10 +111,10 @@ export const PerfilPublico = () => {
   }
 
   return (
-    <div className="min-h-[100dvh] bg-slate-950 text-white pb-24 md:pb-0">
+    <div className="min-h-dvh bg-slate-950 text-white pb-24 md:pb-0">
       {/* Background Effects */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
-        <div className="absolute top-0 left-0 w-full h-96 bg-gradient-to-b from-purple-900/20 to-transparent"></div>
+        <div className="absolute top-0 left-0 w-full h-96 bg-linear-to-b from-purple-900/20 to-transparent"></div>
         <div className="absolute top-1/4 left-0 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl"></div>
       </div>
 
@@ -194,7 +194,7 @@ export const PerfilPublico = () => {
                 </div>
                 <div className="h-4 bg-slate-800 rounded-full overflow-hidden border border-slate-700 shadow-inner">
                   <div 
-                    className={`h-full bg-gradient-to-r ${levelInfo?.levelColor || 'from-purple-500 to-purple-600'} transition-all duration-1000 shadow-lg`}
+                    className={`h-full bg-linear-to-r ${levelInfo?.levelColor || 'from-purple-500 to-purple-600'} transition-all duration-1000 shadow-lg`}
                     style={{ width: `${levelInfo?.xpProgress || 0}%` }}
                   />
                 </div>

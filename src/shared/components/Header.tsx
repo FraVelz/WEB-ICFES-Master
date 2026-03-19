@@ -92,7 +92,7 @@ export const Header = () => {
         <div className="p-4 border-t border-cyan-500/10 bg-slate-900/50">
             {/* Coins Display */}
             <div className="mb-4 flex items-center h-10 bg-slate-800/50 rounded-lg border border-amber-500/20 relative overflow-hidden">
-                <div className="w-full flex justify-center shrink-0 absolute left-0 group-hover:left-[-100%] transition-all duration-300">
+                <div className="w-full flex justify-center shrink-0 absolute left-0 group-hover:-left-full transition-all duration-300">
                      <FontAwesomeIcon icon={faCoins} className="text-amber-400" />
                 </div>
                 <div className="flex items-center gap-3 px-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300 w-full">

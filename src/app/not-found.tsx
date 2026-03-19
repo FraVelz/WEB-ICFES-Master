@@ -1,53 +1,18 @@
 import Link from 'next/link';
 
-const styles = {
-  container: {
-    minHeight: '100dvh',
-    background: 'linear-gradient(to bottom, #000000, #020617, #000000)',
-    display: 'flex',
-    flexDirection: 'column' as const,
-    alignItems: 'center',
-    justifyContent: 'center',
-    padding: '1rem',
-    color: 'white',
-  },
-  title: {
-    fontSize: '6rem',
-    fontWeight: 700,
-    color: 'rgba(6, 182, 212, 0.8)',
-    marginBottom: '1rem',
-    lineHeight: 1,
-  },
-  subtitle: {
-    fontSize: '1.5rem',
-    fontWeight: 600,
-    marginBottom: '0.5rem',
-  },
-  text: {
-    color: '#94a3b8',
-    marginBottom: '2rem',
-  },
-  link: {
-    display: 'inline-block',
-    padding: '0.75rem 2rem',
-    background: 'linear-gradient(to right, #06b6d4, #2563eb)',
-    color: 'white',
-    fontWeight: 600,
-    borderRadius: '0.5rem',
-    textDecoration: 'none',
-  },
-};
-
 export default function NotFound() {
   return (
-    <div style={styles.container}>
-      <div style={{ textAlign: 'center' as const, maxWidth: '28rem' }}>
-        <h1 style={styles.title}>404</h1>
-        <h2 style={styles.subtitle}>Página no encontrada</h2>
-        <p style={styles.text}>
+    <div className="min-h-dvh bg-linear-to-b from-black via-slate-900 to-black flex flex-col items-center justify-center p-4 text-white">
+      <div className="text-center max-w-md">
+        <h1 className="text-8xl font-bold text-cyan-400/80 mb-4 leading-none">404</h1>
+        <h2 className="text-2xl font-semibold mb-2">Página no encontrada</h2>
+        <p className="text-slate-400 mb-8">
           La página que buscas no existe o ha sido movida.
         </p>
-        <Link href="/" style={styles.link}>
+        <Link
+          href="/"
+          className="inline-block px-8 py-3 bg-linear-to-r from-cyan-500 to-blue-600 text-white font-semibold rounded-lg no-underline hover:opacity-90 transition-opacity"
+        >
           Volver al inicio
         </Link>
       </div>

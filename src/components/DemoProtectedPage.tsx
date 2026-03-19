@@ -24,7 +24,7 @@ export default function DemoProtectedPage({ children }: { children: React.ReactN
 
   if (loading || !checked) {
     return (
-      <div className="flex flex-col min-h-[100dvh] bg-gradient-to-b from-black via-slate-950 to-black text-white items-center justify-center">
+      <div className="flex flex-col min-h-dvh bg-linear-to-b from-black via-slate-950 to-black text-white items-center justify-center">
         <div className="text-center">
           <div className="w-16 h-16 border-4 border-cyan-500/30 border-t-cyan-500 rounded-full animate-spin mb-4 mx-auto" />
           <p className="text-lg font-semibold text-cyan-400">Verificando sesión...</p>

@@ -28,7 +28,7 @@ export const AchievementsList = ({ achievements = [] }) => {
     <div className="w-full space-y-6 animate-fade-in">
       {/* Header & Filters */}
       <div className="space-y-4">
-        <h2 className="text-2xl font-bold bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent px-1">
+        <h2 className="text-2xl font-bold bg-linear-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent px-1">
           Logros y Metas
         </h2>
         
@@ -63,7 +63,7 @@ export const AchievementsList = ({ achievements = [] }) => {
               key={achievement.id}
               className={`relative group overflow-hidden rounded-xl border p-4 transition-all duration-300 ${
                 isCompleted 
-                  ? 'bg-gradient-to-br from-yellow-500/10 to-orange-500/5 border-yellow-500/30 hover:border-yellow-500/50' 
+                  ? 'bg-linear-to-br from-yellow-500/10 to-orange-500/5 border-yellow-500/30 hover:border-yellow-500/50' 
                   : isIncomplete
                     ? 'bg-slate-900/50 border-slate-800 opacity-75'
                     : 'bg-slate-800/30 border-slate-700 hover:border-cyan-500/30 hover:bg-slate-800/50'

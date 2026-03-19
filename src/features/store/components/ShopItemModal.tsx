@@ -18,7 +18,7 @@ export const ShopItemModal = ({ item, isOpen, onClose, onBuy, processing, canAff
         </button>
 
         {/* Header Image */}
-        <div className={`h-32 bg-gradient-to-br ${item.color} relative flex items-center justify-center`}>
+        <div className={`h-32 bg-linear-to-br ${item.color} relative flex items-center justify-center`}>
           <div className="absolute inset-0 bg-black/20"></div>
           <div className="w-24 h-24 rounded-2xl bg-slate-900 p-1 shadow-2xl translate-y-8 relative z-10">
             <div className="w-full h-full rounded-xl overflow-hidden flex items-center justify-center bg-slate-800">
@@ -56,7 +56,7 @@ export const ShopItemModal = ({ item, isOpen, onClose, onBuy, processing, canAff
                 processing 
                   ? 'bg-slate-700 text-slate-400 cursor-wait'
                   : canAfford
-                    ? 'bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-400 hover:to-orange-400 text-black shadow-lg shadow-orange-500/20 hover:shadow-orange-500/40 transform hover:-translate-y-0.5'
+                    ? 'bg-linear-to-r from-yellow-500 to-orange-500 hover:from-yellow-400 hover:to-orange-400 text-black shadow-lg shadow-orange-500/20 hover:shadow-orange-500/40 transform hover:-translate-y-0.5'
                     : 'bg-slate-800 text-slate-500 cursor-not-allowed'
               }`}
             >

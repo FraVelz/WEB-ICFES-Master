@@ -109,7 +109,7 @@ export const UnifiedAchievementsHub = ({
 
   if (loading) {
     return (
-      <div className="min-h-[100dvh] bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 flex items-center justify-center">
+      <div className="min-h-dvh bg-linear-to-b from-slate-950 via-slate-900 to-slate-950 flex items-center justify-center">
         <div className="text-center space-y-4">
           <div className="animate-spin text-4xl text-cyan-400">
             <FontAwesomeIcon icon={faTasks} />
@@ -124,7 +124,7 @@ export const UnifiedAchievementsHub = ({
     <div className="w-full space-y-8">
       {/* HERO HEADER */}
       <div className="relative overflow-hidden rounded-2xl border border-gradient-to-r from-cyan-500/50 via-blue-500/50 to-purple-500/50">
-        <div className="absolute inset-0 bg-gradient-to-r from-cyan-900/20 via-blue-900/20 to-purple-900/20"></div>
+        <div className="absolute inset-0 bg-linear-to-r from-cyan-900/20 via-blue-900/20 to-purple-900/20"></div>
         <div className="absolute inset-0 opacity-20">
           <div className="absolute top-0 left-1/4 w-64 h-64 bg-cyan-400 rounded-full blur-3xl"></div>
           <div className="absolute bottom-0 right-1/4 w-64 h-64 bg-purple-400 rounded-full blur-3xl"></div>
@@ -134,7 +134,7 @@ export const UnifiedAchievementsHub = ({
           <div className="max-w-2xl">
             <div className="flex items-center gap-3 mb-4">
               <FontAwesomeIcon icon={faTrophy} className="text-4xl text-amber-400" />
-              <h1 className="text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400">
+              <h1 className="text-5xl font-bold text-transparent bg-clip-text bg-linear-to-r from-cyan-400 via-blue-400 to-purple-400">
                 Centro de Logros
               </h1>
             </div>
@@ -155,7 +155,7 @@ export const UnifiedAchievementsHub = ({
               </div>
               <div className="w-full bg-slate-800 rounded-full h-4 overflow-hidden border border-slate-700">
                 <div
-                  className="h-full bg-gradient-to-r from-yellow-500 via-orange-500 to-red-500 transition-all duration-500"
+                  className="h-full bg-linear-to-r from-yellow-500 via-orange-500 to-red-500 transition-all duration-500"
                   style={{ width: `${levelProgress.percentage}%` }}
                 />
               </div>
@@ -174,10 +174,10 @@ export const UnifiedAchievementsHub = ({
             key={idx}
             className={`relative group rounded-xl border ${stat.borderColor} ${stat.bgColor} backdrop-blur-md p-6 hover:border-opacity-100 transition-all duration-300 overflow-hidden`}
           >
-            <div className={`absolute inset-0 opacity-0 group-hover:opacity-10 bg-gradient-to-r ${stat.color} transition-opacity`}></div>
+            <div className={`absolute inset-0 opacity-0 group-hover:opacity-10 bg-linear-to-r ${stat.color} transition-opacity`}></div>
             <div className="relative z-10">
               <div className="flex items-start justify-between mb-4">
-                <div className={`text-3xl text-transparent bg-clip-text bg-gradient-to-r ${stat.color}`}>
+                <div className={`text-3xl text-transparent bg-clip-text bg-linear-to-r ${stat.color}`}>
                   <FontAwesomeIcon icon={stat.icon} />
                 </div>
               </div>
@@ -202,7 +202,7 @@ export const UnifiedAchievementsHub = ({
             onClick={() => setActiveTab(tab.id)}
             className={`flex items-center gap-2 px-6 py-3 rounded-lg font-semibold transition-all duration-300 whitespace-nowrap ${
               activeTab === tab.id
-                ? 'bg-gradient-to-r from-cyan-500 to-blue-500 text-white shadow-lg shadow-cyan-500/50'
+                ? 'bg-linear-to-r from-cyan-500 to-blue-500 text-white shadow-lg shadow-cyan-500/50'
                 : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/50'
             }`}
           >
@@ -218,7 +218,7 @@ export const UnifiedAchievementsHub = ({
       {activeTab === 'overview' && (
         <div className="space-y-6">
           {/* Recent Achievements */}
-          <div className="rounded-xl border border-slate-700 bg-gradient-to-b from-slate-900/50 to-slate-950/50 backdrop-blur-md p-8">
+          <div className="rounded-xl border border-slate-700 bg-linear-to-b from-slate-900/50 to-slate-950/50 backdrop-blur-md p-8">
             <div className="flex items-center gap-3 mb-6">
               <FontAwesomeIcon icon={faTasks} className="text-2xl text-cyan-400" />
               <h2 className="text-2xl font-bold text-white">Logros Recientes</h2>
@@ -258,7 +258,7 @@ export const UnifiedAchievementsHub = ({
           {/* Quick Stats */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Next Milestone */}
-            <div className="rounded-xl border border-blue-500/30 bg-gradient-to-br from-blue-900/20 to-blue-950/20 backdrop-blur-md p-8">
+            <div className="rounded-xl border border-blue-500/30 bg-linear-to-br from-blue-900/20 to-blue-950/20 backdrop-blur-md p-8">
               <div className="flex items-center gap-3 mb-4">
                 <FontAwesomeIcon icon={faTasks} className="text-2xl text-blue-400" />
                 <h3 className="text-xl font-bold text-white">Próximo Hito</h3>
@@ -267,7 +267,7 @@ export const UnifiedAchievementsHub = ({
                 <p className="text-slate-300">Nivel {level + 1}: Maestría Avanzada</p>
                 <div className="w-full bg-slate-800 rounded-full h-3 overflow-hidden">
                   <div
-                    className="h-full bg-gradient-to-r from-blue-500 to-cyan-500"
+                    className="h-full bg-linear-to-r from-blue-500 to-cyan-500"
                     style={{ width: `${levelProgress.percentage}%` }}
                   />
                 </div>
@@ -276,7 +276,7 @@ export const UnifiedAchievementsHub = ({
             </div>
 
             {/* Achievements Unlocked */}
-            <div className="rounded-xl border border-green-500/30 bg-gradient-to-br from-green-900/20 to-green-950/20 backdrop-blur-md p-8">
+            <div className="rounded-xl border border-green-500/30 bg-linear-to-br from-green-900/20 to-green-950/20 backdrop-blur-md p-8">
               <div className="flex items-center gap-3 mb-4">
                 <FontAwesomeIcon icon={faCheckCircle} className="text-2xl text-green-400" />
                 <h3 className="text-xl font-bold text-white">Logros Desbloqueados</h3>
@@ -285,7 +285,7 @@ export const UnifiedAchievementsHub = ({
                 <p className="text-3xl font-bold text-green-400">{badges?.length || 0}</p>
                 <div className="w-full bg-slate-800 rounded-full h-3 overflow-hidden">
                   <div
-                    className="h-full bg-gradient-to-r from-green-500 to-emerald-500"
+                    className="h-full bg-linear-to-r from-green-500 to-emerald-500"
                     style={{ width: '60%' }}
                   />
                 </div>
@@ -307,7 +307,7 @@ export const UnifiedAchievementsHub = ({
                 onClick={() => setFilterCategory(key)}
                 className={`px-4 py-2 rounded-lg font-medium transition-all duration-300 ${
                   filterCategory === key
-                    ? 'bg-gradient-to-r from-cyan-500 to-blue-500 text-white'
+                    ? 'bg-linear-to-r from-cyan-500 to-blue-500 text-white'
                     : 'bg-slate-800 text-slate-300 hover:bg-slate-700'
                 }`}
               >
@@ -329,7 +329,7 @@ export const UnifiedAchievementsHub = ({
                     className="group cursor-pointer"
                     onClick={() => setSelectedBadge(badge)}
                   >
-                    <div className={`relative rounded-xl border ${config.badge} bg-gradient-to-br ${config.color} p-6 overflow-hidden transition-all duration-300 hover:shadow-lg hover:shadow-${rarity}-500/30 ${
+                    <div className={`relative rounded-xl border ${config.badge} bg-linear-to-br ${config.color} p-6 overflow-hidden transition-all duration-300 hover:shadow-lg hover:shadow-${rarity}-500/30 ${
                       badge.unlocked ? 'opacity-100' : 'opacity-50'
                     }`}>
                       {/* Background glow */}
@@ -396,7 +396,7 @@ export const UnifiedAchievementsHub = ({
       {/* LEVELS TAB */}
       {activeTab === 'levels' && (
         <div className="space-y-6">
-          <div className="rounded-xl border border-slate-700 bg-gradient-to-b from-slate-900/50 to-slate-950/50 backdrop-blur-md p-8">
+          <div className="rounded-xl border border-slate-700 bg-linear-to-b from-slate-900/50 to-slate-950/50 backdrop-blur-md p-8">
             <h2 className="text-2xl font-bold text-white mb-6">Progresión de Niveles</h2>
 
             <div className="space-y-6">
@@ -416,9 +416,9 @@ export const UnifiedAchievementsHub = ({
                       <div className="flex items-center gap-4">
                         <div className={`text-3xl font-bold w-16 h-16 rounded-lg flex items-center justify-center ${
                           isCurrentLevel
-                            ? 'bg-gradient-to-br from-cyan-500 to-blue-500 text-white'
+                            ? 'bg-linear-to-br from-cyan-500 to-blue-500 text-white'
                             : isCompleted
-                            ? 'bg-gradient-to-br from-green-500 to-emerald-500 text-white'
+                            ? 'bg-linear-to-br from-green-500 to-emerald-500 text-white'
                             : 'bg-slate-700 text-slate-400'
                         }`}>
                           {lv}
@@ -448,7 +448,7 @@ export const UnifiedAchievementsHub = ({
                     {isCurrentLevel && (
                       <div className="w-full bg-slate-800 rounded-full h-3 overflow-hidden border border-slate-700">
                         <div
-                          className="h-full bg-gradient-to-r from-cyan-500 to-blue-500"
+                          className="h-full bg-linear-to-r from-cyan-500 to-blue-500"
                           style={{ width: `${levelProgress.percentage}%` }}
                         />
                       </div>
@@ -464,7 +464,7 @@ export const UnifiedAchievementsHub = ({
       {/* CHALLENGES TAB */}
       {activeTab === 'challenges' && (
         <div className="space-y-6">
-          <div className="rounded-xl border border-slate-700 bg-gradient-to-b from-slate-900/50 to-slate-950/50 backdrop-blur-md p-8">
+          <div className="rounded-xl border border-slate-700 bg-linear-to-b from-slate-900/50 to-slate-950/50 backdrop-blur-md p-8">
             <h2 className="text-2xl font-bold text-white mb-6">Desafíos Diarios</h2>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -503,7 +503,7 @@ export const UnifiedAchievementsHub = ({
       {activeTab === 'statistics' && (
         <div className="space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="rounded-xl border border-slate-700 bg-gradient-to-b from-slate-900/50 to-slate-950/50 backdrop-blur-md p-8">
+            <div className="rounded-xl border border-slate-700 bg-linear-to-b from-slate-900/50 to-slate-950/50 backdrop-blur-md p-8">
               <h3 className="text-xl font-bold text-white mb-6 flex items-center gap-2">
                 <FontAwesomeIcon icon={faChartLine} />
                 Estadísticas Generales
@@ -528,7 +528,7 @@ export const UnifiedAchievementsHub = ({
               </div>
             </div>
 
-            <div className="rounded-xl border border-slate-700 bg-gradient-to-b from-slate-900/50 to-slate-950/50 backdrop-blur-md p-8">
+            <div className="rounded-xl border border-slate-700 bg-linear-to-b from-slate-900/50 to-slate-950/50 backdrop-blur-md p-8">
               <h3 className="text-xl font-bold text-white mb-6 flex items-center gap-2">
                 <FontAwesomeIcon icon={faFire} />
                 Actividad
@@ -596,7 +596,7 @@ export const UnifiedAchievementsHub = ({
 
             <button
               onClick={() => setSelectedBadge(null)}
-              className="w-full py-3 rounded-lg bg-gradient-to-r from-cyan-500 to-blue-500 text-white font-bold hover:shadow-lg hover:shadow-cyan-500/50 transition-all"
+              className="w-full py-3 rounded-lg bg-linear-to-r from-cyan-500 to-blue-500 text-white font-bold hover:shadow-lg hover:shadow-cyan-500/50 transition-all"
             >
               Cerrar
             </button>

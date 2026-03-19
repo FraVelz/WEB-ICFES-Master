@@ -3,6 +3,7 @@ import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { DonationSection } from "@/features/home/components";
 import { PricingPlans, Footer } from "@/shared/components";
 import { PRICING_PLANS } from "@/features/home/data";
+
 import { 
   HeroSection, 
   AreasSection, 
@@ -55,6 +56,7 @@ const HomePageDesktopComponent = ({
   isInitialLoad,
   expandedFaq,
   setExpandedFaq,
+  onDemoAccess,
 }) => {
   // Scroll animation refs
   const areasSection = useScrollAnimation();
@@ -63,10 +65,10 @@ const HomePageDesktopComponent = ({
   const faqSection = useScrollAnimation();
 
   return (
-    <div className="min-h-[100dvh] bg-gradient-to-b from-black via-slate-950 to-black text-white overflow-x-hidden">
+    <div className="min-h-dvh bg-linear-to-b from-black via-slate-950 to-black text-white overflow-x-hidden">
       {/* Background glow effects with improved visuals */}
       <div className="lg:mx-20 fixed inset-0 overflow-hidden pointer-events-none z-0" role="presentation">
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/50" />
+        <div className="absolute inset-0 bg-linear-to-b from-transparent via-transparent to-black/50" />
         {GLOW_EFFECTS.map((effect, index) => (
           <div
             key={`glow-${index}`}
@@ -86,12 +88,12 @@ const HomePageDesktopComponent = ({
       <div className="relative z-10 w-full">
         {/* Hero Section */}
         <section className="relative py-0 overflow-hidden">
-          <HeroSection isInitialLoad={isInitialLoad} />
+          <HeroSection isInitialLoad={isInitialLoad} onDemoAccess={onDemoAccess} />
         </section>
 
         {/* Areas Section with visual separator */}
         <section className="relative py-8 md:py-12 overflow-hidden">
-          <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-blue-500/50 to-transparent" />
+          <div className="absolute top-0 left-0 right-0 h-1 bg-linear-to-r from-transparent via-blue-500/50 to-transparent" />
           <AreasSection isInitialLoad={isInitialLoad} areasSection={areasSection} />
         </section>
 
@@ -102,13 +104,13 @@ const HomePageDesktopComponent = ({
 
         {/* Testimonials Section with visual separator */}
         <section className="relative py-12 md:py-16 overflow-hidden">
-          <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-purple-500/50 to-transparent" />
+          <div className="absolute top-0 left-0 right-0 h-1 bg-linear-to-r from-transparent via-purple-500/50 to-transparent" />
           <TestimonialsSection isInitialLoad={isInitialLoad} testimonialSection={testimonialSection} />
         </section>
 
         {/* Pricing Section */}
         {/* <section className="relative py-12 md:py-16 overflow-hidden">
-          <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-indigo-500/50 to-transparent" />
+          <div className="absolute top-0 left-0 right-0 h-1 bg-linear-to-r from-transparent via-indigo-500/50 to-transparent" />
           <PricingPlans plans={PRICING_PLANS} />
         </section> */}
 
@@ -124,7 +126,7 @@ const HomePageDesktopComponent = ({
 
         {/* Final CTA Section */}
         <section className="relative py-12 md:py-16 overflow-hidden">
-          <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-blue-500/50 to-transparent" />
+          <div className="absolute top-0 left-0 right-0 h-1 bg-linear-to-r from-transparent via-blue-500/50 to-transparent" />
           <FinalCTASection />
         </section>
 

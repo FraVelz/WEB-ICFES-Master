@@ -162,7 +162,7 @@ export const AdvancedGamificationHub = () => {
   return (
     <div className="space-y-8">
       {/* Mascota de Bienvenida */}
-      <div className="bg-gradient-to-r from-slate-900/80 via-slate-800/80 to-slate-900/80 border border-cyan-500/30 rounded-2xl p-8 flex flex-col lg:flex-row items-center justify-between gap-8">
+      <div className="bg-linear-to-r from-slate-900/80 via-slate-800/80 to-slate-900/80 border border-cyan-500/30 rounded-2xl p-8 flex flex-col lg:flex-row items-center justify-between gap-8">
         <div className="flex-1">
           <h1 className="text-4xl font-bold text-white mb-3">¡Bienvenido a tu Centro de Gamificación!</h1>
           <p className="text-lg text-slate-300 mb-4">
@@ -182,7 +182,7 @@ export const AdvancedGamificationHub = () => {
             </div>
           </div>
         </div>
-        <div className="flex-shrink-0">
+        <div className="shrink-0">
           <AppMascot size="lg" emotion="celebrating" context="achievement" interactive={true} />
         </div>
       </div>

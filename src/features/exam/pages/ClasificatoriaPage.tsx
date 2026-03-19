@@ -68,10 +68,10 @@ export const ClasificatoriaPage = () => {
   };
 
   return (
-    <div className="min-h-[100dvh] bg-slate-950 text-white pb-24 md:pb-0">
+    <div className="min-h-dvh bg-slate-950 text-white pb-24 md:pb-0">
       {/* Background Effects */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
-        <div className="absolute top-0 left-0 w-full h-96 bg-gradient-to-b from-purple-900/20 to-transparent"></div>
+        <div className="absolute top-0 left-0 w-full h-96 bg-linear-to-b from-purple-900/20 to-transparent"></div>
         <div className="absolute bottom-0 right-0 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl"></div>
       </div>
 
@@ -95,7 +95,7 @@ export const ClasificatoriaPage = () => {
               onClick={() => setSelectedRank(rank.id)}
               className={` cursor-pointer flex items-center gap-2 px-4 py-2 rounded-full whitespace-nowrap transition-all border ${
                 selectedRank === rank.id
-                  ? `bg-gradient-to-r ${rank.color} text-white border-transparent shadow-lg`
+                  ? `bg-linear-to-r ${rank.color} text-white border-transparent shadow-lg`
                   : 'bg-slate-900 border-slate-700 text-slate-400 hover:bg-slate-800'
               }`}
             >
@@ -106,11 +106,11 @@ export const ClasificatoriaPage = () => {
         </div>
 
         {/* Rank Info Card */}
-        <div className={`bg-gradient-to-r ${currentRankInfo.color} p-[1px] rounded-2xl mb-8`}>
+        <div className={`bg-linear-to-r ${currentRankInfo.color} p-px rounded-2xl mb-8`}>
           <div className="bg-slate-900/95 backdrop-blur-xl rounded-2xl p-6">
             <div className="flex flex-col md:flex-row justify-between items-center gap-4">
               <div className="flex items-center gap-4">
-                <div className={`w-16 h-16 rounded-xl bg-gradient-to-br ${currentRankInfo.color} flex items-center justify-center text-3xl shadow-lg`}>
+                <div className={`w-16 h-16 rounded-xl bg-linear-to-br ${currentRankInfo.color} flex items-center justify-center text-3xl shadow-lg`}>
                   {currentRankInfo.icon}
                 </div>
                 <div>

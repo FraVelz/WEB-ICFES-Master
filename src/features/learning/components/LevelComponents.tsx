@@ -67,7 +67,7 @@ export const AvanzadoStats = () => (
 );
 
 export const AvanzadoNote = () => (
-  <div className="bg-gradient-to-r from-red-900/30 to-purple-900/30 border border-red-600/50 rounded-lg p-4 mb-6">
+  <div className="bg-linear-to-r from-red-900/30 to-purple-900/30 border border-red-600/50 rounded-lg p-4 mb-6">
     <p className="text-slate-300 text-sm">
       <strong>Nota:</strong> Este simulacro incluye cronómetro, retroalimentación detallada y análisis de desempeño por materia.
     </p>
@@ -77,7 +77,7 @@ export const AvanzadoNote = () => (
 export const AvanzadoButton = () => (
   <Link
     href="/examen/simulacro/completo"
-    className="block w-full py-4 bg-gradient-to-r from-red-600 to-purple-600 hover:from-red-700 hover:to-purple-700 text-white font-bold rounded-lg transition-all duration-300 text-center text-lg hover:shadow-lg hover:shadow-red-600/50"
+    className="block w-full py-4 bg-linear-to-r from-red-600 to-purple-600 hover:from-red-700 hover:to-purple-700 text-white font-bold rounded-lg transition-all duration-300 text-center text-lg hover:shadow-lg hover:shadow-red-600/50"
   >
     <FontAwesomeIcon icon={faTrophy} className="mr-2" />
     Iniciar Simulacro Completo

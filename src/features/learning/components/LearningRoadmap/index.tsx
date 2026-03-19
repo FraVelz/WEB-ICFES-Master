@@ -43,7 +43,7 @@ export const LearningRoadmap = ({ initialArea = 'lectura-critica' }) => {
   };
 
   return (
-    <div className={`bg-slate-950 flex flex-col relative ${viewingLesson ? 'h-[100dvh] overflow-hidden' : 'min-h-[100dvh]'}`}>
+    <div className={`bg-slate-950 flex flex-col relative ${viewingLesson ? 'h-dvh overflow-hidden' : 'min-h-dvh'}`}>
       {/* Header Secundario Sticky - Ahora parte del componente */}
       <div className="sticky top-0 z-50">
         <SecondaryHeader 

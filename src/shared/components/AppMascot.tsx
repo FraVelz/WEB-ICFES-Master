@@ -145,10 +145,10 @@ export const AppMascot = ({
  className={`cursor-pointer relative group transition-transform duration-300 ${interactive && 'hover:scale-110'} ${isAnimating && 'animate-bounce'} ${bobbing && 'mascot-bobbing'}`}
  >
  {/* Glow effect */}
- <div className="absolute inset-0 bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400 rounded-full blur-xl opacity-0 group-hover:opacity-50 transition-opacity duration-300 scale-110"></div>
+ <div className="absolute inset-0 bg-linear-to-r from-cyan-400 via-blue-400 to-purple-400 rounded-full blur-xl opacity-0 group-hover:opacity-50 transition-opacity duration-300 scale-110"></div>
 
  {/* Mascota image */}
- <div className={`${sizes.mascot} rounded-full overflow-hidden relative z-10 shadow-2xl shadow-blue-500/50 bg-gradient-to-br from-slate-800 to-slate-900 flex items-center justify-center`}
+ <div className={`${sizes.mascot} rounded-full overflow-hidden relative z-10 shadow-2xl shadow-blue-500/50 bg-linear-to-br from-slate-800 to-slate-900 flex items-center justify-center`}
  style={{
  borderImage: 'linear-gradient(135deg, #06b6d4, #3b82f6, #a855f7) 1'
  }}
@@ -164,7 +164,7 @@ export const AppMascot = ({
  </div>
 
  {/* Emotion indicator */}
- <div className="absolute -bottom-2 -right-2 bg-gradient-to-r from-cyan-400 to-blue-500 text-white px-3 py-1 rounded-full text-xs font-bold shadow-lg whitespace-nowrap">
+ <div className="absolute -bottom-2 -right-2 bg-linear-to-r from-cyan-400 to-blue-500 text-white px-3 py-1 rounded-full text-xs font-bold shadow-lg whitespace-nowrap">
  {currentAvatar.label}
  </div>
  </div>
@@ -176,7 +176,7 @@ export const AppMascot = ({
  <div className="absolute -top-3 left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-8 border-r-8 border-t-8 border-l-transparent border-r-transparent border-t-cyan-400/80"></div>
 
  {/* Speech bubble */}
- <div className="bg-gradient-to-r from-cyan-400/10 to-blue-400/10 backdrop-blur-xl border border-cyan-400/50 rounded-2xl p-4 shadow-xl shadow-cyan-400/20 hover:border-cyan-400 transition-all duration-300">
+ <div className="bg-linear-to-r from-cyan-400/10 to-blue-400/10 backdrop-blur-xl border border-cyan-400/50 rounded-2xl p-4 shadow-xl shadow-cyan-400/20 hover:border-cyan-400 transition-all duration-300">
  <p className={`${sizes.text} text-white font-semibold text-center leading-relaxed`}>
  {dialogue}
  </p>
@@ -194,14 +194,14 @@ export const AppMascot = ({
  <FontAwesomeIcon icon={faBolt} className="text-yellow-400 text-xl mb-1" />
  <span className="text-xs text-slate-300">Energía</span>
  <div className="w-16 h-2 bg-slate-700 rounded-full mt-1 overflow-hidden">
- <div className="w-4/5 h-full bg-gradient-to-r from-yellow-400 to-orange-400 rounded-full"></div>
+ <div className="w-4/5 h-full bg-linear-to-r from-yellow-400 to-orange-400 rounded-full"></div>
  </div>
  </div>
  <div className="flex flex-col items-center">
  <FontAwesomeIcon icon={faBullseye} className="text-cyan-400 text-xl mb-1" />
  <span className="text-xs text-slate-300">Enfoque</span>
  <div className="w-16 h-2 bg-slate-700 rounded-full mt-1 overflow-hidden">
- <div className="w-3/5 h-full bg-gradient-to-r from-cyan-400 to-blue-400 rounded-full"></div>
+ <div className="w-3/5 h-full bg-linear-to-r from-cyan-400 to-blue-400 rounded-full"></div>
  </div>
  </div>
  </div>

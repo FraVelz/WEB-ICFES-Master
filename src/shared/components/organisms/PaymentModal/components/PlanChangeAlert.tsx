@@ -82,7 +82,7 @@ export const PlanChangeAlert = ({ currentPlan, newPlan }) => {
       <div className="flex gap-3">
         <FontAwesomeIcon 
           icon={alertConfig.icon} 
-          className={`text-xl ${alertConfig.titleColor} flex-shrink-0 mt-0.5`}
+          className={`text-xl ${alertConfig.titleColor} shrink-0 mt-0.5`}
         />
         <div>
           <h4 className={`font-bold ${alertConfig.titleColor} mb-1`}>

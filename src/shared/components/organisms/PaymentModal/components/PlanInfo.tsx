@@ -4,7 +4,7 @@ export const PlanInfo = ({ plan, billingPeriod, priceCalculation }) => {
   const getMonthlyPrice = () => priceCalculation.monthlyPrice;
 
   return (
-    <div className="bg-gradient-to-r from-slate-800/50 to-slate-800/30 rounded-lg p-4 mb-6 border border-slate-700/50">
+    <div className="bg-linear-to-r from-slate-800/50 to-slate-800/30 rounded-lg p-4 mb-6 border border-slate-700/50">
       <div className="flex justify-between items-center mb-3">
         <span className="text-slate-300 font-medium">{plan?.name}</span>
         <span className="text-3xl font-bold text-cyan-400">{getPrice()}</span>

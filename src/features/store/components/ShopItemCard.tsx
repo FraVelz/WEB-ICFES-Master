@@ -15,7 +15,7 @@ export const ShopItemCard = ({ item, isPurchased, canAfford, onClick }) => {
       }`}
     >
       {/* Background Gradient Effect */}
-      <div className={`absolute inset-0 bg-gradient-to-br ${item.color} opacity-0 group-hover:opacity-5 transition-opacity duration-500`}></div>
+      <div className={`absolute inset-0 bg-linear-to-br ${item.color} opacity-0 group-hover:opacity-5 transition-opacity duration-500`}></div>
 
       {/* Status Badge */}
       <div className="absolute top-3 right-3">
@@ -34,7 +34,7 @@ export const ShopItemCard = ({ item, isPurchased, canAfford, onClick }) => {
 
       {/* Icon / Image */}
       <div className="flex justify-center mb-6 mt-2">
-        <div className={`w-20 h-20 rounded-2xl bg-gradient-to-br ${item.color} p-0.5 shadow-lg group-hover:scale-110 transition-transform duration-300`}>
+        <div className={`w-20 h-20 rounded-2xl bg-linear-to-br ${item.color} p-0.5 shadow-lg group-hover:scale-110 transition-transform duration-300`}>
           <div className="w-full h-full bg-slate-900 rounded-xl flex items-center justify-center overflow-hidden">
             {item.image ? (
               <img src={item.image} alt={item.name} className="w-full h-full object-cover" />

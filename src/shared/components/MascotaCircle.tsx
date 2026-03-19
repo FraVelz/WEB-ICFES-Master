@@ -34,7 +34,7 @@ export const MascotaCircle = ({
 
   return (
     <div className={`${containerClass} ${className}`}>
-      <div className={`${circleClass} bg-gradient-to-br from-slate-800 to-slate-900 rounded-full flex items-center justify-center shadow-lg overflow-hidden ${circleClassName}`}>
+      <div className={`${circleClass} bg-linear-to-br from-slate-800 to-slate-900 rounded-full flex items-center justify-center shadow-lg overflow-hidden ${circleClassName}`}>
         <img
           draggable="false"
           src={src}
