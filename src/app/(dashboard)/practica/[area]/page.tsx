@@ -1,4 +1,4 @@
-import ProtectedPage from '@/components/ProtectedPage';
+import DemoProtectedPage from '@/components/DemoProtectedPage';
 import { PracticePage } from '@/features/exam/pages';
 
 const PRACTICA_AREAS = [
@@ -14,8 +14,8 @@ export function generateStaticParams() {
 
 export default function Page() {
   return (
-    <ProtectedPage>
+    <DemoProtectedPage>
       <PracticePage />
-    </ProtectedPage>
+    </DemoProtectedPage>
   );
 }

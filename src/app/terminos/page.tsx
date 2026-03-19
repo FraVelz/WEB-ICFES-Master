@@ -7,14 +7,14 @@ export const metadata = {
 
 export default function TerminosPage() {
   return (
-    <div className="min-h-[100dvh] bg-gradient-to-b from-black via-slate-950 to-black py-12 px-4 sm:px-6 lg:px-8 relative">
+    <div className="min-h-dvh bg-linear-to-b from-black via-slate-950 to-black py-12 px-4 sm:px-6 lg:px-8 relative">
       <div className="fixed inset-0 pointer-events-none z-0">
         <div className="absolute top-1/3 left-1/4 w-96 h-96 bg-blue-500/20 rounded-full blur-3xl animate-pulse" />
         <div className="absolute bottom-1/3 right-1/4 w-96 h-96 bg-purple-500/20 rounded-full blur-3xl animate-pulse" />
       </div>
 
       <div className="max-w-4xl mx-auto bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl p-4 sm:p-8 relative z-10">
-        <h1 className="text-4xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-500 flex items-center gap-3">
+        <h1 className="text-4xl font-bold mb-4 text-transparent bg-clip-text bg-linear-to-r from-purple-400 to-pink-500 flex items-center gap-3">
           <span className="text-purple-400">📜</span> Términos y Condiciones
         </h1>
         <p className="text-gray-300 mb-8"><strong>ICFES Master</strong></p>
@@ -83,7 +83,7 @@ export default function TerminosPage() {
           </div>
 
           <div className="mt-12 pt-8 border-t border-white/10 flex justify-center">
-            <Link href="/" className="px-8 py-3 bg-gradient-to-r from-purple-500 to-pink-600 hover:from-purple-600 hover:to-pink-700 text-white font-semibold rounded-lg transition-all duration-300 hover:shadow-lg hover:shadow-purple-500/50 flex items-center gap-2">
+            <Link href="/" className="px-8 py-3 bg-linear-to-r from-purple-500 to-pink-600 hover:from-purple-600 hover:to-pink-700 text-white font-semibold rounded-lg transition-all duration-300 hover:shadow-lg hover:shadow-purple-500/50 flex items-center gap-2">
               ← Volver al Inicio
             </Link>
           </div>

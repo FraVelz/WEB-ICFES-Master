@@ -319,7 +319,7 @@ export const LessonQuizModal = ({ isOpen, onClose, onComplete, questions, quiz, 
   if (!isOpen || !currentQuestion) return null;
 
   return (
-    <div className="fixed inset-0 z-[70] bg-black/80 backdrop-blur-sm flex items-end lg:items-center justify-center p-0 lg:p-4 pb-20 lg:pb-4 animate-in fade-in duration-200">
+    <div className="fixed inset-0 z-70 bg-black/80 backdrop-blur-sm flex items-end lg:items-center justify-center p-0 lg:p-4 pb-20 lg:pb-4 animate-in fade-in duration-200">
       <div className="bg-slate-900 border-t lg:border border-slate-800 rounded-t-2xl lg:rounded-2xl max-w-lg w-full max-h-[calc(95vh-5rem)] lg:max-h-[90vh] overflow-hidden shadow-2xl transform transition-all scale-100 flex flex-col">
         
         {/* Header */}
@@ -376,7 +376,7 @@ export const LessonQuizModal = ({ isOpen, onClose, onComplete, questions, quiz, 
                 >
                   <div className="flex items-start gap-3">
                     {/* Indicador de letra */}
-                    <div className={`flex-shrink-0 w-6 h-6 lg:w-7 lg:h-7 rounded-full flex items-center justify-center text-xs lg:text-sm font-bold mt-0.5 ${
+                    <div className={`shrink-0 w-6 h-6 lg:w-7 lg:h-7 rounded-full flex items-center justify-center text-xs lg:text-sm font-bold mt-0.5 ${
                       isSubmitted
                         ? option.id === currentQuestion.correctAnswer
                           ? 'bg-green-500/20 text-green-400 border border-green-500/30'
@@ -390,7 +390,7 @@ export const LessonQuizModal = ({ isOpen, onClose, onComplete, questions, quiz, 
                       {String.fromCharCode(65 + index)}
                     </div>
                     <div className="flex-1 flex items-center justify-between gap-2 min-w-0">
-                      <span className="flex-1 break-words leading-snug">{option.text}</span>
+                      <span className="flex-1 wrap-break-word leading-snug">{option.text}</span>
                       {isSubmitted && option.id === currentQuestion.correctAnswer && (
                         <FontAwesomeIcon icon={faCheck} className="text-green-400 shrink-0 text-lg lg:text-xl ml-2" />
                       )}
@@ -418,8 +418,8 @@ export const LessonQuizModal = ({ isOpen, onClose, onComplete, questions, quiz, 
           {isSubmitted && (
             <div className={`mb-3 lg:mb-6 p-3.5 lg:p-4 rounded-xl lg:rounded-xl text-center border-2 ${
               isCorrect 
-                ? 'bg-gradient-to-br from-green-500/15 to-green-600/5 border-green-500/30 shadow-lg shadow-green-500/5' 
-                : 'bg-gradient-to-br from-red-500/15 to-red-600/5 border-red-500/30 shadow-lg shadow-red-500/5'
+                ? 'bg-linear-to-br from-green-500/15 to-green-600/5 border-green-500/30 shadow-lg shadow-green-500/5' 
+                : 'bg-linear-to-br from-red-500/15 to-red-600/5 border-red-500/30 shadow-lg shadow-red-500/5'
             }`}>
               <div className="flex items-center justify-center gap-2 mb-2">
                 {isCorrect ? (
@@ -493,7 +493,7 @@ export const LessonQuizModal = ({ isOpen, onClose, onComplete, questions, quiz, 
               <button
                 onClick={handleSubmit}
                 disabled={!selectedOption || loading}
-                className="cursor-pointer flex-1 py-3 px-3 lg:px-4 min-h-[48px] lg:min-h-[44px] rounded-xl lg:rounded-xl font-bold bg-gradient-to-r from-blue-600 to-blue-500 text-white hover:from-blue-500 hover:to-blue-400 active:from-blue-700 active:to-blue-600 active:scale-95 transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:active:scale-100 text-sm lg:text-base shadow-lg shadow-blue-500/20"
+                className="cursor-pointer flex-1 py-3 px-3 lg:px-4 min-h-[48px] lg:min-h-[44px] rounded-xl lg:rounded-xl font-bold bg-linear-to-r from-blue-600 to-blue-500 text-white hover:from-blue-500 hover:to-blue-400 active:from-blue-700 active:to-blue-600 active:scale-95 transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:active:scale-100 text-sm lg:text-base shadow-lg shadow-blue-500/20"
               >
                 {loading ? (
                   <span className="flex items-center justify-center gap-2">
@@ -521,7 +521,7 @@ export const LessonQuizModal = ({ isOpen, onClose, onComplete, questions, quiz, 
                 {isCorrect && !isLastQuestion && (
                   <button
                     onClick={handleNextQuestion}
-                    className="cursor-pointer flex-1 py-3 px-3 lg:px-4 min-h-[48px] lg:min-h-[44px] rounded-xl lg:rounded-xl font-bold bg-gradient-to-r from-green-600 to-green-500 text-white hover:from-green-500 hover:to-green-400 active:from-green-700 active:to-green-600 active:scale-95 transition-all text-sm lg:text-base shadow-lg shadow-green-500/20"
+                    className="cursor-pointer flex-1 py-3 px-3 lg:px-4 min-h-[48px] lg:min-h-[44px] rounded-xl lg:rounded-xl font-bold bg-linear-to-r from-green-600 to-green-500 text-white hover:from-green-500 hover:to-green-400 active:from-green-700 active:to-green-600 active:scale-95 transition-all text-sm lg:text-base shadow-lg shadow-green-500/20"
                   >
                     <span className="hidden lg:inline">Siguiente </span>
                     <span className="lg:hidden">Sig.</span>

@@ -58,7 +58,7 @@ const SettingOption = ({ label, description, icon, action, danger = false, onCli
   >
     <div className="flex items-start gap-4 mb-3 sm:mb-0">
       {icon && (
-        <div className={`w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 transition-colors ${
+        <div className={`w-10 h-10 rounded-full flex items-center justify-center shrink-0 transition-colors ${
           danger ? 'bg-red-500/10 text-red-400 group-hover:bg-red-500/20' : 'bg-slate-700/50 text-slate-400 group-hover:text-cyan-400 group-hover:bg-slate-700'
         }`}>
           <FontAwesomeIcon icon={icon} />
@@ -255,10 +255,10 @@ export const UserSettingsPage = () => {
   };
 
   return (
-    <div className="min-h-[100dvh] bg-slate-950 text-white pb-24 md:pb-0">
+    <div className="min-h-dvh bg-slate-950 text-white pb-24 md:pb-0">
       {/* Background Effects */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
-        <div className="absolute top-0 left-0 w-full h-96 bg-gradient-to-b from-cyan-900/10 to-transparent"></div>
+        <div className="absolute top-0 left-0 w-full h-96 bg-linear-to-b from-cyan-900/10 to-transparent"></div>
         <div className="absolute bottom-0 right-0 w-96 h-96 bg-blue-500/5 rounded-full blur-3xl"></div>
       </div>
 
@@ -294,7 +294,7 @@ export const UserSettingsPage = () => {
             <div className="lg:col-span-4 space-y-6">
               <div className="lg:sticky lg:top-24">
                 <SettingsSection className="text-center relative overflow-hidden">
-                  <div className="absolute top-0 left-0 w-full h-24 bg-gradient-to-b from-cyan-500/10 to-transparent"></div>
+                  <div className="absolute top-0 left-0 w-full h-24 bg-linear-to-b from-cyan-500/10 to-transparent"></div>
                   
                   <div className="relative inline-block mb-4 group">
                     <div className="w-32 h-32 rounded-full overflow-hidden border-4 border-slate-800 shadow-2xl bg-slate-800">
@@ -483,7 +483,7 @@ export const UserSettingsPage = () => {
                   <button
                     type="submit"
                     disabled={sendingSupport}
-                    className=" cursor-pointer w-full py-3 bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white font-bold rounded-xl shadow-lg shadow-cyan-500/20 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                    className=" cursor-pointer w-full py-3 bg-linear-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white font-bold rounded-xl shadow-lg shadow-cyan-500/20 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     {sendingSupport ? 'Enviando...' : 'Enviar Mensaje'}
                   </button>
@@ -521,7 +521,7 @@ export const UserSettingsPage = () => {
 
         {/* Delete Modal */}
         {showDeleteModal && (
-          <div className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-[60] p-4">
+          <div className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-60 p-4">
             <div className="bg-slate-900 border border-slate-800 rounded-2xl max-w-md w-full p-6 shadow-2xl animate-scaleIn">
               <div className="w-12 h-12 rounded-full bg-red-500/10 flex items-center justify-center text-red-500 mx-auto mb-4">
                 <FontAwesomeIcon icon={faWarning} className="text-xl" />
@@ -574,7 +574,7 @@ export const UserSettingsPage = () => {
             const element = document.getElementById('donation-section');
             element?.scrollIntoView({ behavior: 'smooth' });
           }}
-          className="cursor-pointer fixed bottom-6 right-6 z-40 p-4 bg-gradient-to-r from-pink-500 to-rose-500 text-white rounded-full shadow-lg shadow-pink-500/30 hover:scale-110 transition-transform duration-300 lg:hidden"
+          className="cursor-pointer fixed bottom-6 right-6 z-40 p-4 bg-linear-to-r from-pink-500 to-rose-500 text-white rounded-full shadow-lg shadow-pink-500/30 hover:scale-110 transition-transform duration-300 lg:hidden"
         >
           <FontAwesomeIcon icon={faHeart} className="text-xl" />
         </button>

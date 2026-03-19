@@ -3,7 +3,7 @@ import { faCreditCard, faTimes } from '@fortawesome/free-solid-svg-icons';
 
 export const PaymentHeader = ({ plan, onClose }) => {
   return (
-    <div className="flex items-center justify-between p-6 border-b border-slate-700 flex-shrink-0">
+    <div className="flex items-center justify-between p-6 border-b border-slate-700 shrink-0">
       <div>
         <h2 className="text-2xl font-bold text-white flex items-center gap-2">
           <FontAwesomeIcon icon={faCreditCard} className="text-cyan-400" />

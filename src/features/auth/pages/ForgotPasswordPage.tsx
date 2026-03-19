@@ -34,7 +34,7 @@ export const ForgotPasswordPage = () => {
   };
 
   return (
-    <div className="min-h-[100dvh] bg-linear-to-b from-black via-slate-950 to-black text-white flex items-center justify-center px-6 overflow-hidden">
+    <div className="min-h-dvh bg-linear-to-b from-black via-slate-950 to-black text-white flex items-center justify-center px-6 overflow-hidden">
       {/* Background glow effects */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
         <div className="absolute top-1/3 left-1/4 w-96 h-96 bg-blue-500/30 rounded-full blur-3xl animate-pulse"></div>

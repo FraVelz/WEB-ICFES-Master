@@ -6,7 +6,7 @@ import { LearningRoadmap } from '@/features/learning/components';
  */
 export const LearningRoadmapPage = () => {
   return (
-    <div className="min-h-[100dvh] bg-linear-to-b from-slate-950 via-slate-900 to-slate-950 p-0">
+    <div className="min-h-dvh bg-linear-to-b from-slate-950 via-slate-900 to-slate-950 p-0">
       <div className="max-w-7xl mx-auto">
         <LearningRoadmap />
       </div>

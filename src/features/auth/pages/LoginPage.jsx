@@ -41,7 +41,7 @@ export const LoginPage = () => {
   };
 
   return (
-    <div className="min-h-[100dvh] bg-linear-to-b from-black via-slate-950 to-black text-white flex flex-col px-6 overflow-hidden">
+    <div className="min-h-dvh bg-linear-to-b from-black via-slate-950 to-black text-white flex flex-col px-6 overflow-hidden">
       {/* Background glow effects */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
         <div className="absolute top-1/3 left-1/4 w-96 h-96 bg-blue-500/30 rounded-full blur-3xl animate-pulse"></div>
@@ -60,7 +60,7 @@ export const LoginPage = () => {
           <h2 className="text-lg font-semibold">Ingresa tus datos</h2>
           <div className="w-6"></div>
         </div>
-        <div className="h-px bg-gradient-to-r from-transparent via-slate-700 to-transparent"></div>
+        <div className="h-px bg-linear-to-r from-transparent via-slate-700 to-transparent"></div>
       </div>
 
       {/* Login Card */}

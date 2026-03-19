@@ -142,7 +142,7 @@ export const DonationSection = () => {
   const currentAmount = selectedAmount === 'custom' ? (customAmount || '0') : selectedAmount;
 
   return (
-    <div className="max-w-4xl mx-auto mt-16 px-4 sm:px-6 py-12 bg-gradient-to-b from-gray-900 to-gray-800 rounded-2xl border border-white/10 shadow-2xl">
+    <div className="max-w-4xl mx-auto mt-16 px-4 sm:px-6 py-12 bg-linear-to-b from-gray-900 to-gray-800 rounded-2xl border border-white/10 shadow-2xl">
       
       {/* Header */}
       <div className="text-center mb-10">
@@ -228,7 +228,7 @@ export const DonationSection = () => {
                   } ${method.highlight ? 'sm:col-span-2' : ''}`}
                 >
                   {method.highlight && (
-                    <div className="absolute -top-3 -right-2 bg-gradient-to-r from-yellow-400 to-orange-500 text-black text-[10px] font-bold px-2 py-1 rounded-full shadow-lg transform rotate-3">
+                    <div className="absolute -top-3 -right-2 bg-linear-to-r from-yellow-400 to-orange-500 text-black text-[10px] font-bold px-2 py-1 rounded-full shadow-lg transform rotate-3">
                       RECOMENDADO
                     </div>
                   )}
@@ -354,7 +354,7 @@ export const DonationSection = () => {
                         <button
                           type="submit"
                           disabled={isProcessing}
-                          className="w-full mt-4 bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-500 hover:to-purple-600 text-white font-bold py-3 px-4 rounded-xl transition-all transform hover:scale-[1.02] shadow-lg shadow-purple-500/25 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                          className="w-full mt-4 bg-linear-to-r from-purple-600 to-purple-700 hover:from-purple-500 hover:to-purple-600 text-white font-bold py-3 px-4 rounded-xl transition-all transform hover:scale-[1.02] shadow-lg shadow-purple-500/25 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                         >
                           {isProcessing ? (
                             <>

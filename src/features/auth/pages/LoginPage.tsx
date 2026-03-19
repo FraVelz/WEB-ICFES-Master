@@ -1,9 +1,9 @@
 'use client';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEnvelope, faLock, faRocket, faEye, faEyeSlash, faExclamationCircle, faXmark } from '@fortawesome/free-solid-svg-icons';
+import { faEnvelope, faLock, faRocket, faEye, faEyeSlash, faExclamationCircle, faXmark, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { useAuth } from '@/context/AuthContext';
 import { GoogleSignInButton } from '@/shared/components/atoms/GoogleSignInButton';
 
@@ -13,8 +13,15 @@ export const LoginPage = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
+  const [isDemoMode, setIsDemoMode] = useState(false);
   const { login } = useAuth();
   const router = useRouter();
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      setIsDemoMode(localStorage.getItem('demoMode') === 'true');
+    }
+  }, []);
   const searchParams = useSearchParams();
   const from = searchParams.get('from');
 
@@ -41,7 +48,7 @@ export const LoginPage = () => {
   };
 
   return (
-    <div className="min-h-[100dvh] bg-linear-to-b from-black via-slate-950 to-black text-white flex flex-col px-6 overflow-hidden">
+    <div className="min-h-dvh bg-linear-to-b from-black via-slate-950 to-black text-white flex flex-col px-6 overflow-hidden">
       {/* Background glow effects */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
         <div className="absolute top-1/3 left-1/4 w-96 h-96 bg-blue-500/30 rounded-full blur-3xl animate-pulse"></div>
@@ -60,7 +67,7 @@ export const LoginPage = () => {
           <h2 className="text-lg font-semibold">Ingresa tus datos</h2>
           <div className="w-6"></div>
         </div>
-        <div className="h-px bg-gradient-to-r from-transparent via-slate-700 to-transparent"></div>
+        <div className="h-px bg-linear-to-r from-transparent via-slate-700 to-transparent"></div>
       </div>
 
       {/* Login Card */}
@@ -172,6 +179,23 @@ export const LoginPage = () => {
               ¿Olvidaste tu contraseña?
             </Link>
           </p>
+          {/* Cerrar Demo - solo visible en modo demo */}
+          {isDemoMode && (
+            <p className="text-center">
+              <button
+                onClick={() => {
+                  if (typeof window !== 'undefined') {
+                    localStorage.removeItem('demoMode');
+                    router.replace('/');
+                  }
+                }}
+                className="text-slate-400 text-sm hover:text-slate-300 transition-colors inline-flex items-center gap-2"
+              >
+                <FontAwesomeIcon icon={faTimes} />
+                Cerrar Demo
+              </button>
+            </p>
+          )}
         </div>
         </div>
       </div>

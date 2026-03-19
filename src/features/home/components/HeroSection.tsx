@@ -1,11 +1,24 @@
+'use client';
+
 import Link from 'next/link';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faStar, faRocket } from "@fortawesome/free-solid-svg-icons";
+import { faStar, faRocket, faPlay } from "@fortawesome/free-solid-svg-icons";
 import { getAnimationStyle } from "@/features/home/hooks/animations";
 
-export const HeroSection = ({ isInitialLoad }) => {
+export const HeroSection = ({ isInitialLoad, onDemoAccess }) => {
+  const handleDemoClick = () => {
+    if (onDemoAccess) {
+      onDemoAccess();
+    } else {
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('demoMode', 'true');
+        window.location.href = '/ruta-aprendizaje';
+      }
+    }
+  };
+
   return (
-    <section className="min-h-[100dvh] flex items-center justify-center pt-5 sm:pt-20 px-6 md:px-8">
+    <section className="min-h-dvh flex items-center justify-center pt-5 sm:pt-20 px-6 md:px-8">
       <div className="max-w-6xl mx-auto text-center space-y-8">
         {/* Badge */}
         <div style={getAnimationStyle(true, isInitialLoad, 0)} className="inline-flex items-center gap-2 bg-cyan-500/20 border border-cyan-500/50 rounded-full px-4 py-2">
@@ -25,13 +38,13 @@ export const HeroSection = ({ isInitialLoad }) => {
 
         {/* CTA Buttons */}
         <div style={getAnimationStyle(true, isInitialLoad, 0.45)} className="flex flex-col md:flex-row gap-4 justify-center pt-4">
-          <Link
-            href="/onboarding"
+          <button
+            onClick={handleDemoClick}
             className="px-8 py-4 bg-linear-to-r from-cyan-500 to-blue-600 text-white font-bold rounded-lg hover:shadow-lg hover:shadow-cyan-500/50 transition-all duration-300 hover:scale-105 flex items-center justify-center gap-2 text-lg"
           >
-            <FontAwesomeIcon icon={faRocket} />
-            Comienza Ahora Gratis
-          </Link>
+            <FontAwesomeIcon icon={faPlay} />
+            Probar Demo
+          </button>
           <Link
             href="/login"
             className="px-8 py-4 border-2 border-cyan-500 text-white font-bold rounded-lg hover:border-cyan-400 hover:bg-cyan-500/10 transition-all duration-300 flex items-center justify-center gap-2 text-lg hover:shadow-lg hover:shadow-cyan-500/30"

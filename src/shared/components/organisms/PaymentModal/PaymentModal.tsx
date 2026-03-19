@@ -172,7 +172,7 @@ export const PaymentModal = ({ isOpen, onClose, plan }) => {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center lg:items-end bg-black/50 backdrop-blur-sm p-0 lg:p-4 lg:pt-20">
-      <div className="flex flex-col w-full sm:w-auto h-[100dvh] max-h-[90vh] bg-slate-900 sm:rounded-xl border-t lg:border border-slate-700 shadow-2xl max-w-md rounded-t-2xl lg:rounded-b-2xl mb-20 lg:mb-0">
+      <div className="flex flex-col w-full sm:w-auto h-dvh max-h-[90vh] bg-slate-900 sm:rounded-xl border-t lg:border border-slate-700 shadow-2xl max-w-md rounded-t-2xl lg:rounded-b-2xl mb-20 lg:mb-0">
         <PaymentHeader plan={plan} onClose={onClose} />
 
         <div className="flex-1 overflow-y-auto p-6">

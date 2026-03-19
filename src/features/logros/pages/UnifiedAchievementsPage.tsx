@@ -17,7 +17,7 @@ export const UnifiedAchievementsPage = () => {
 
   if (loading) {
     return (
-      <div className="min-h-[100dvh] bg-slate-950 flex items-center justify-center">
+      <div className="min-h-dvh bg-slate-950 flex items-center justify-center">
         <div className="text-center space-y-4">
           <div className="animate-spin text-4xl text-cyan-400">
             <FontAwesomeIcon icon={faSpinner} />
@@ -29,7 +29,7 @@ export const UnifiedAchievementsPage = () => {
   }
 
   return (
-    <div className="min-h-[100dvh] bg-slate-950 text-white pb-24 md:pb-0">
+    <div className="min-h-dvh bg-slate-950 text-white pb-24 md:pb-0">
       <div className="container mx-auto px-4 py-8 space-y-8">
         
         {/* Stats Header */}

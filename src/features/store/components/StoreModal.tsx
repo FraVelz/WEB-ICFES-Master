@@ -33,7 +33,7 @@ export const StoreModal = ({ isOpen, onClose }) => {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-[100] bg-slate-950 flex flex-col animate-in fade-in duration-200">
+    <div className="fixed inset-0 z-100 bg-slate-950 flex flex-col animate-in fade-in duration-200">
       <div className="w-full h-full overflow-hidden flex flex-col bg-slate-900">
         
         {/* Header */}

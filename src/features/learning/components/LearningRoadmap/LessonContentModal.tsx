@@ -18,7 +18,7 @@ export const LessonContentModal = ({ isOpen, onClose, lesson }) => {
   const hasContent = lesson?.content && lesson.content.trim().length > 0;
 
   return (
-    <div className="fixed inset-0 z-[60] bg-slate-950 flex flex-col animate-in slide-in-from-bottom duration-300 w-full h-full">
+    <div className="fixed inset-0 z-60 bg-slate-950 flex flex-col animate-in slide-in-from-bottom duration-300 w-full h-full">
       {/* Header */}
       <div className="flex items-center p-4 border-b border-slate-800 bg-slate-900/95 backdrop-blur-md shrink-0">
         <button 
@@ -82,7 +82,7 @@ export const LessonContentModal = ({ isOpen, onClose, lesson }) => {
                </p>
                <button
                  onClick={() => setIsQuizOpen(true)}
-                 className="cursor-pointer w-full sm:w-auto px-8 py-4 bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-500 hover:to-blue-400 text-white font-bold rounded-xl shadow-lg shadow-blue-500/20 transition-all transform hover:scale-[1.02] active:scale-[0.98]"
+                 className="cursor-pointer w-full sm:w-auto px-8 py-4 bg-linear-to-r from-blue-600 to-blue-500 hover:from-blue-500 hover:to-blue-400 text-white font-bold rounded-xl shadow-lg shadow-blue-500/20 transition-all transform hover:scale-[1.02] active:scale-[0.98]"
                >
                  Realizar Prueba
                </button>

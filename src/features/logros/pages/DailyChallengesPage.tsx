@@ -39,10 +39,10 @@ export const DailyChallengesPage = () => {
   const isToday = dateString === new Date().toISOString().split('T')[0];
 
   return (
-    <div className="min-h-[100dvh] bg-slate-950 text-white pb-24 md:pb-0">
+    <div className="min-h-dvh bg-slate-950 text-white pb-24 md:pb-0">
       {/* Background Effects */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
-        <div className="absolute top-0 left-0 w-full h-96 bg-gradient-to-b from-orange-900/20 to-transparent"></div>
+        <div className="absolute top-0 left-0 w-full h-96 bg-linear-to-b from-orange-900/20 to-transparent"></div>
         <div className="absolute bottom-0 right-0 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl"></div>
       </div>
 
@@ -93,7 +93,7 @@ export const DailyChallengesPage = () => {
         </div>
 
         {/* Progress Summary */}
-        <div className="bg-gradient-to-r from-slate-900 to-slate-800 rounded-2xl p-6 border border-slate-700 mb-8 relative overflow-hidden">
+        <div className="bg-linear-to-r from-slate-900 to-slate-800 rounded-2xl p-6 border border-slate-700 mb-8 relative overflow-hidden">
           <div className="absolute top-0 right-0 p-4 opacity-10">
             <FontAwesomeIcon icon={faGift} className="text-9xl" />
           </div>
@@ -115,7 +115,7 @@ export const DailyChallengesPage = () => {
               </div>
               <div className="h-4 bg-slate-950 rounded-full overflow-hidden border border-slate-700">
                 <div 
-                  className="h-full bg-gradient-to-r from-orange-500 to-red-500 transition-all duration-1000 relative"
+                  className="h-full bg-linear-to-r from-orange-500 to-red-500 transition-all duration-1000 relative"
                   style={{ width: `${stats.total > 0 ? (stats.completed / stats.total) * 100 : 0}%` }}
                 >
                   <div className="absolute inset-0 bg-white/20 animate-pulse"></div>

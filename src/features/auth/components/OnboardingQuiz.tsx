@@ -83,7 +83,7 @@ const ONBOARDING_QUESTIONS = [
 
 // Componente de Layout reutilizable para mantener consistencia
 const OnboardingLayout = ({ children, className = "" }) => (
-    <div className={`min-h-[100dvh] bg-linear-to-b from-black via-slate-950 to-black text-white flex flex-col relative ${className}`}>
+    <div className={`min-h-dvh bg-linear-to-b from-black via-slate-950 to-black text-white flex flex-col relative ${className}`}>
         {/* Background glow effects - Fixed position */}
         <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
             <div className="absolute top-1/3 left-1/4 w-96 h-96 bg-blue-500/30 rounded-full blur-3xl animate-pulse"></div>
@@ -294,7 +294,7 @@ export const OnboardingQuiz = ({ onComplete, avatarConfig = {} }) => {
                 
                 {/* Question + Avatar */}
                 <div className="flex flex-col sm:flex-row gap-6 items-center sm:items-start">
-                    <div className="flex-shrink-0">
+                    <div className="shrink-0">
                         <MascotaCircle
                             src="/avatars/pensativo.webp"
                             size="medium"
@@ -322,7 +322,7 @@ export const OnboardingQuiz = ({ onComplete, avatarConfig = {} }) => {
                                 }`}
                         >
                             <div
-                                className={`w-6 h-6 rounded border-2 flex items-center justify-center transition-all flex-shrink-0 
+                                className={`w-6 h-6 rounded border-2 flex items-center justify-center transition-all shrink-0 
                                     ${(isMultiple ? currentAnswer.includes(option.value) : currentAnswer === option.value)
                                     ? 'border-cyan-500 bg-cyan-500 scale-110'
                                     : 'border-slate-600 group-hover:border-slate-400'
