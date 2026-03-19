@@ -1,5 +1,4 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCheckCircle, faTrophy, faCrown } from '@fortawesome/free-solid-svg-icons';
+import { Icon } from '@/shared/components/Icon';
 
 export const SuccessMessage = ({ plan, onClose, currentPlan }) => {
   const isFree = plan?.price === 'Gratis';
@@ -16,8 +15,9 @@ export const SuccessMessage = ({ plan, onClose, currentPlan }) => {
           ? 'bg-purple-500/20 border-2 border-purple-500'
           : 'bg-cyan-500/20 border-2 border-cyan-500'
       }`}>
-        <FontAwesomeIcon 
-          icon={isFree ? faCheckCircle : isPro ? faTrophy : faCrown} 
+        <Icon 
+          name={isFree ? 'check-circle' : isPro ? 'trophy' : 'crown'} 
+          size="2xl"
           className={`text-4xl ${
             isFree 
               ? 'text-green-400' 

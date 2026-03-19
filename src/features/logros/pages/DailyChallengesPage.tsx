@@ -1,13 +1,5 @@
 import React, { useState } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { 
-  faFire, 
-  faCalendarAlt, 
-  faChevronLeft, 
-  faChevronRight,
-  faSpinner,
-  faGift
-} from '@fortawesome/free-solid-svg-icons';
+import { Icon } from '@/shared/components/Icon';
 import { useDailyChallenges } from '../hooks/useDailyChallenges';
 import { ChallengeCard } from '../components/ChallengeCard';
 import { ConstructionAlert } from '@/shared/components';
@@ -53,7 +45,7 @@ export const DailyChallengesPage = () => {
         <div className="flex flex-col md:flex-row justify-between items-center mb-8 gap-4">
           <div>
             <h1 className="text-3xl font-bold flex items-center gap-3">
-              <FontAwesomeIcon icon={faFire} className="text-orange-500" />
+              <Icon name="fire" className="text-orange-500" />
               Desafíos Diarios
             </h1>
             <p className="text-slate-400 mt-1">
@@ -66,11 +58,11 @@ export const DailyChallengesPage = () => {
               onClick={handlePrevDay}
               className="w-10 h-10 rounded-full hover:bg-slate-800 text-slate-400 hover:text-white transition-colors"
             >
-              <FontAwesomeIcon icon={faChevronLeft} />
+              <Icon name="chevron-left" />
             </button>
             
             <div className="px-4 flex items-center gap-2 font-medium min-w-[140px] justify-center">
-              <FontAwesomeIcon icon={faCalendarAlt} className="text-cyan-500" />
+              <Icon name="calendar-alt" className="text-cyan-500" />
               {selectedDate.toLocaleDateString('es-CO', { 
                 weekday: 'short', 
                 day: 'numeric', 
@@ -87,7 +79,7 @@ export const DailyChallengesPage = () => {
                   : 'hover:bg-slate-800 text-slate-400 hover:text-white'
               }`}
             >
-              <FontAwesomeIcon icon={faChevronRight} />
+              <Icon name="chevron-right" />
             </button>
           </div>
         </div>
@@ -95,7 +87,7 @@ export const DailyChallengesPage = () => {
         {/* Progress Summary */}
         <div className="bg-linear-to-r from-slate-900 to-slate-800 rounded-2xl p-6 border border-slate-700 mb-8 relative overflow-hidden">
           <div className="absolute top-0 right-0 p-4 opacity-10">
-            <FontAwesomeIcon icon={faGift} className="text-9xl" />
+            <Icon name="gift" className="text-9xl" />
           </div>
           
           <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-6">
@@ -132,7 +124,7 @@ export const DailyChallengesPage = () => {
         <div className="space-y-4">
           {loading ? (
             <div className="text-center py-12">
-              <FontAwesomeIcon icon={faSpinner} className="animate-spin text-4xl text-cyan-400 mb-4" />
+              <Icon name="spinner" className="animate-spin text-4xl text-cyan-400 mb-4" />
               <p className="text-slate-400">Cargando desafíos...</p>
             </div>
           ) : challenges.length > 0 ? (

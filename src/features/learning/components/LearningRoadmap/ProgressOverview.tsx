@@ -1,5 +1,4 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBook, faClock } from '@fortawesome/free-solid-svg-icons';
+import { Icon } from '@/shared/components/Icon';
 
 /**
  * Componente para la sección de progreso general del mapa ICFES
@@ -14,7 +13,7 @@ export const ProgressOverview = () => {
       {/* Nivel Básico */}
       <div className="bg-slate-800/50 border border-green-600/30 rounded-xl p-6">
         <div className="flex items-center gap-3 mb-3">
-          <FontAwesomeIcon icon={faBook} className="text-2xl text-green-400" />
+          <Icon name="book" size="2xl" className="text-2xl text-green-400" />
           <p className="text-sm font-semibold text-slate-300 uppercase">Nivel Básico</p>
         </div>
         <p className="text-3xl font-bold text-white mb-2">5 Materias</p>
@@ -27,7 +26,7 @@ export const ProgressOverview = () => {
       {/* Nivel Intermedio */}
       <div className="bg-slate-800/50 border border-yellow-600/30 rounded-xl p-6">
         <div className="flex items-center gap-3 mb-3">
-          <FontAwesomeIcon icon={faBook} className="text-2xl text-yellow-400" />
+          <Icon name="book" size="2xl" className="text-2xl text-yellow-400" />
           <p className="text-sm font-semibold text-slate-300 uppercase">Nivel Intermedio</p>
         </div>
         <p className="text-3xl font-bold text-white mb-2">5 Exámenes</p>
@@ -40,7 +39,7 @@ export const ProgressOverview = () => {
       {/* Nivel Avanzado */}
       <div className="bg-slate-800/50 border border-red-600/30 rounded-xl p-6">
         <div className="flex items-center gap-3 mb-3">
-          <FontAwesomeIcon icon={faClock} className="text-2xl text-red-400" />
+          <Icon name="clock" size="2xl" className="text-2xl text-red-400" />
           <p className="text-sm font-semibold text-slate-300 uppercase">Nivel Avanzado</p>
         </div>
         <p className="text-3xl font-bold text-white mb-2">1 Simulacro</p>

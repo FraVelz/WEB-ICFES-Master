@@ -1,10 +1,8 @@
-import { faPlay } from '@fortawesome/free-solid-svg-icons';
-
 export const KNOWLEDGE_BADGES = {
   DEEP_LEARNER: {
     id: 'DEEP_LEARNER',
     name: 'Estudiante Profundo',
-    icon: faPlay,
+    icon: 'play',
     description: 'Domina un área con 95%+',
     requirement: 'Obtén 95%+ en una materia',
     category: 'conocimiento'
@@ -12,7 +10,7 @@ export const KNOWLEDGE_BADGES = {
   POLYMATH: {
     id: 'POLYMATH',
     name: 'Políglota del Conocimiento',
-    icon: faPlay,
+    icon: 'play',
     description: 'Aprende todas las áreas en una sesión',
     requirement: 'Realiza exámenes de todas las áreas en 1 día',
     category: 'conocimiento'
@@ -20,7 +18,7 @@ export const KNOWLEDGE_BADGES = {
   SUBJECT_MASTER_MATH: {
     id: 'SUBJECT_MASTER_MATH',
     name: 'Maestro de Matemáticas',
-    icon: faPlay,
+    icon: 'play',
     description: 'Domina el área de Matemáticas',
     requirement: 'Promedio 90%+ en Matemáticas',
     category: 'conocimiento'
@@ -28,7 +26,7 @@ export const KNOWLEDGE_BADGES = {
   SUBJECT_MASTER_LANGUAGE: {
     id: 'SUBJECT_MASTER_LANGUAGE',
     name: 'Maestro de Lenguaje',
-    icon: faPlay,
+    icon: 'play',
     description: 'Domina el área de Lenguaje',
     requirement: 'Promedio 90%+ en Lenguaje',
     category: 'conocimiento'
@@ -36,7 +34,7 @@ export const KNOWLEDGE_BADGES = {
   SUBJECT_MASTER_SCIENCE: {
     id: 'SUBJECT_MASTER_SCIENCE',
     name: 'Maestro de Ciencias',
-    icon: faPlay,
+    icon: 'play',
     description: 'Domina el área de Ciencias',
     requirement: 'Promedio 90%+ en Ciencias',
     category: 'conocimiento'
@@ -44,7 +42,7 @@ export const KNOWLEDGE_BADGES = {
   SUBJECT_MASTER_SOCIAL: {
     id: 'SUBJECT_MASTER_SOCIAL',
     name: 'Maestro de Sociales',
-    icon: faPlay,
+    icon: 'play',
     description: 'Domina el área de Sociales',
     requirement: 'Promedio 90%+ en Sociales',
     category: 'conocimiento'
@@ -52,7 +50,7 @@ export const KNOWLEDGE_BADGES = {
   ULTIMATE_SCHOLAR: {
     id: 'ULTIMATE_SCHOLAR',
     name: 'Erudito Supremo',
-    icon: faPlay,
+    icon: 'play',
     description: 'Maestro en todas las áreas',
     requirement: 'Promedio 90%+ en todas las materias',
     category: 'conocimiento'
@@ -60,7 +58,7 @@ export const KNOWLEDGE_BADGES = {
   DEEP_MATH_EXPERT: {
     id: 'DEEP_MATH_EXPERT',
     name: 'Experto Profundo en Matemáticas',
-    icon: faPlay,
+    icon: 'play',
     description: 'Alcanza 98%+ en Matemáticas',
     requirement: 'Obtén 98%+ en 5 exámenes de Matemáticas',
     category: 'conocimiento'
@@ -68,7 +66,7 @@ export const KNOWLEDGE_BADGES = {
   LANGUAGE_VIRTUOSO: {
     id: 'LANGUAGE_VIRTUOSO',
     name: 'Virtuoso del Lenguaje',
-    icon: faPlay,
+    icon: 'play',
     description: 'Demuestra excelencia en Lenguaje',
     requirement: 'Obtén 98%+ en 5 exámenes de Lenguaje',
     category: 'conocimiento'
@@ -76,7 +74,7 @@ export const KNOWLEDGE_BADGES = {
   SCIENCE_SAGE: {
     id: 'SCIENCE_SAGE',
     name: 'Sabio de las Ciencias',
-    icon: faPlay,
+    icon: 'play',
     description: 'Dominio experto en Ciencias',
     requirement: 'Obtén 98%+ en 5 exámenes de Ciencias',
     category: 'conocimiento'
@@ -84,7 +82,7 @@ export const KNOWLEDGE_BADGES = {
   SOCIAL_SCHOLAR: {
     id: 'SOCIAL_SCHOLAR',
     name: 'Erudito de Sociales',
-    icon: faPlay,
+    icon: 'play',
     description: 'Expertise en Ciencias Sociales',
     requirement: 'Obtén 98%+ en 5 exámenes de Sociales',
     category: 'conocimiento'
@@ -92,7 +90,7 @@ export const KNOWLEDGE_BADGES = {
   KNOWLEDGE_ORACLE: {
     id: 'KNOWLEDGE_ORACLE',
     name: 'Oráculo del Conocimiento',
-    icon: faPlay,
+    icon: 'play',
     description: 'Responde 2000 preguntas correctamente',
     requirement: 'Acumula 2000 respuestas correctas en total',
     category: 'conocimiento'

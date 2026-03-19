@@ -1,6 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCheckCircle, faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
+import { Icon } from '@/shared/components/Icon';
 import { PaymentHeader } from './components/PaymentHeader';
 import { BillingPeriodSelector } from './components/BillingPeriodSelector';
 import { PlanInfo } from './components/PlanInfo';
@@ -179,8 +178,9 @@ export const PaymentModal = ({ isOpen, onClose, plan }) => {
           {!canSchedulePlan && !isSamePlanActive ? (
             <div className="text-center py-12">
               <div className="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6 bg-red-500/20 border-2 border-red-500">
-                <FontAwesomeIcon 
-                  icon={faExclamationTriangle} 
+                <Icon 
+                  name="exclamation-triangle" 
+                  size="2xl"
                   className="text-4xl text-red-400"
                 />
               </div>
@@ -215,8 +215,9 @@ export const PaymentModal = ({ isOpen, onClose, plan }) => {
           ) : isSamePlanActive ? (
             <div className="text-center py-12">
               <div className="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6 bg-blue-500/20 border-2 border-blue-500">
-                <FontAwesomeIcon 
-                  icon={faCheckCircle} 
+                <Icon 
+                  name="check-circle" 
+                  size="2xl"
                   className="text-4xl text-blue-400"
                 />
               </div>

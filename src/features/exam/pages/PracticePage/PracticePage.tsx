@@ -3,8 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'next/navigation';
 import Link from 'next/link';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEllipsisVertical, faArrowRightFromBracket, faClipboard } from '@fortawesome/free-solid-svg-icons';
+import { Icon } from '@/shared/components/Icon';
 import { ExamConfigModal, AnswerSheet, ResultsAnalysis } from '@/features/exam/components';
 import { formatTimeExtended } from '@/shared/utils';
 import { AREA_INFO } from '@/shared/constants';
@@ -134,7 +133,7 @@ export const PracticePage = () => {
                   onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
                   className="text-white p-2"
                 >
-                  <FontAwesomeIcon icon={faEllipsisVertical} className="text-xl" />
+                  <Icon name="ellipsis-vertical" className="text-xl" />
                 </button>
 
                 {/* Mobile Menu */}
@@ -144,7 +143,7 @@ export const PracticePage = () => {
                       onClick={() => setShowAnswerSheetMobile(true)}
                       className="w-full flex items-center gap-3 px-4 py-3 text-white hover:bg-white/10 transition-colors border-b border-white/10"
                     >
-                      <FontAwesomeIcon icon={faClipboard} className="text-sm" />
+                      <Icon name="clipboard" className="text-sm" />
                       <span>Ver Respuestas</span>
                     </button>
                     <Link
@@ -152,7 +151,7 @@ export const PracticePage = () => {
                       onClick={() => setMobileMenuOpen(false)}
                       className="flex items-center gap-3 px-4 py-3 text-white hover:bg-white/10 transition-colors"
                     >
-                      <FontAwesomeIcon icon={faArrowRightFromBracket} className="text-sm" />
+                      <Icon name="sign-out" className="text-sm" />
                       <span>Salir</span>
                     </Link>
                   </div>
@@ -247,7 +246,7 @@ export const PracticePage = () => {
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
                 className="text-white p-2"
               >
-                <FontAwesomeIcon icon={faEllipsisVertical} className="text-xl" />
+                <Icon name="ellipsis-vertical" className="text-xl" />
               </button>
 
               {/* Mobile Menu */}
@@ -260,7 +259,7 @@ export const PracticePage = () => {
                     }}
                     className="w-full flex items-center gap-3 px-4 py-3 text-white hover:bg-white/10 transition-colors border-b border-white/10"
                   >
-                    <FontAwesomeIcon icon={faClipboard} className="text-sm" />
+                    <Icon name="clipboard" className="text-sm" />
                     <span>Ver Respuestas</span>
                   </button>
                   <Link
@@ -268,7 +267,7 @@ export const PracticePage = () => {
                     onClick={() => setMobileMenuOpen(false)}
                     className="flex items-center gap-3 px-4 py-3 text-white hover:bg-white/10 transition-colors"
                   >
-                    <FontAwesomeIcon icon={faArrowRightFromBracket} className="text-sm" />
+                    <Icon name="sign-out" className="text-sm" />
                     <span>Salir</span>
                   </Link>
                 </div>

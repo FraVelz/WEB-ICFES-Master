@@ -1,5 +1,4 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrophy } from "@fortawesome/free-solid-svg-icons";
+import { Icon } from "@/shared/components/Icon";
 import { TESTIMONIALS } from "@/features/home/data";
 import { getAnimationStyle } from "@/features/home/hooks/animations";
 
@@ -19,7 +18,7 @@ export const TestimonialsSection = ({ isInitialLoad, testimonialSection }) => {
             className="bg-slate-800/50 border border-slate-700 rounded-lg p-6 hover:border-slate-600 transition-all duration-300 hover:shadow-lg"
           >
             <div className="flex items-center gap-2 mb-4">
-              <FontAwesomeIcon icon={faTrophy} className="text-amber-400 text-xl" />
+              <Icon name="trophy" className="text-amber-400 text-xl" />
               <span className="text-2xl font-bold text-amber-400">{testimonial.score}</span>
             </div>
             <p className="text-slate-300 mb-4 italic">"{testimonial.text}"</p>

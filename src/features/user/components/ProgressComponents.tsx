@@ -1,4 +1,4 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Icon } from '@/shared/components/Icon';
 
 export const ProgressOverviewCard = ({ label, value, color, borderColor, shadowColor, info }) => (
   <div className={`p-8 bg-white/5 backdrop-blur-xl border ${borderColor} hover:border-opacity-100 hover:bg-opacity-20 rounded-2xl transition-all duration-300 hover:shadow-lg ${shadowColor} hover:scale-105`}>
@@ -19,7 +19,7 @@ export const AreaPerformanceCard = ({ area }) => (
   <div className="p-8 bg-white/5 backdrop-blur-xl border border-cyan-500/20 hover:border-cyan-500/50 hover:bg-cyan-500/10 rounded-2xl transition-all duration-300 hover:shadow-lg hover:shadow-cyan-500/20 hover:scale-105">
     <div className="flex items-center justify-between mb-6">
       <div className="flex items-center gap-4">
-        <FontAwesomeIcon icon={area.icon} className="text-3xl text-cyan-400" />
+        <Icon name={area.icon} className="text-3xl text-cyan-400" />
         <div>
           <h4 className="text-xl font-semibold text-white">{area.name}</h4>
           <p className="text-3xl font-black bg-linear-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent mt-2">{area.percentage}%</p>
@@ -47,8 +47,8 @@ export const RecommendationsList = ({ recommendations, icons, iconColors }) => (
     <ul className="space-y-4">
       {recommendations.map((recommendation, idx) => (
         <li key={idx} className="flex gap-4 items-start">
-          <FontAwesomeIcon 
-            icon={icons[idx % icons.length]} 
+          <Icon 
+            name={icons[idx % icons.length]} 
             className={`${iconColors[idx % iconColors.length]} text-xl shrink-0 mt-1`} 
           />
           <span className="text-slate-200 font-semibold text-lg">{recommendation}</span>

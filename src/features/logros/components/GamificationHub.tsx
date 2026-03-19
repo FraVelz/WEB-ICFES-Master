@@ -1,27 +1,16 @@
 import { useState } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faTrophy,
-  faStar,
-  faFire,
-  faRing,
-  faGem,
-  faMedal,
-  faAward,
-  faFlask,
-  faLightbulb
-} from '@fortawesome/free-solid-svg-icons';
+import { Icon } from '@/shared/components/Icon';
 
 export const GamificationHub = () => {
   const [activeTab, setActiveTab] = useState('badges');
 
   const badges = [
-    { id: 1, name: 'Primer Paso', icon: faLightbulb, color: 'bg-yellow-500', rarity: 'común', achieved: true },
-    { id: 2, name: 'Racha de Fuego', icon: faFire, color: 'bg-red-500', rarity: 'raro', achieved: true },
-    { id: 3, name: 'Matemático', icon: faFlask, color: 'bg-green-500', rarity: 'épico', achieved: false },
-    { id: 4, name: 'Erudito', icon: faStar, color: 'bg-purple-500', rarity: 'legendario', achieved: false },
-    { id: 5, name: 'Perfeccionista', icon: faGem, color: 'bg-cyan-500', rarity: 'épico', achieved: true },
-    { id: 6, name: 'Campeón', icon: faTrophy, color: 'bg-amber-500', rarity: 'legendario', achieved: false },
+    { id: 1, name: 'Primer Paso', icon: 'lightbulb', color: 'bg-yellow-500', rarity: 'común', achieved: true },
+    { id: 2, name: 'Racha de Fuego', icon: 'fire', color: 'bg-red-500', rarity: 'raro', achieved: true },
+    { id: 3, name: 'Matemático', icon: 'flask', color: 'bg-green-500', rarity: 'épico', achieved: false },
+    { id: 4, name: 'Erudito', icon: 'star', color: 'bg-purple-500', rarity: 'legendario', achieved: false },
+    { id: 5, name: 'Perfeccionista', icon: 'gem', color: 'bg-cyan-500', rarity: 'épico', achieved: true },
+    { id: 6, name: 'Campeón', icon: 'trophy', color: 'bg-amber-500', rarity: 'legendario', achieved: false },
   ];
 
   const levels = [
@@ -50,7 +39,7 @@ export const GamificationHub = () => {
       {/* Encabezado */}
       <div className="bg-linear-to-r from-amber-900 via-slate-900 to-slate-900 rounded-xl p-6 border border-amber-700/50">
         <h2 className="text-3xl font-bold text-white mb-2">
-          <FontAwesomeIcon icon={faTrophy} className="text-amber-400 mr-2" />
+          <Icon name="trophy" className="text-amber-400 mr-2" />
           Centro de Gamificación
         </h2>
         <p className="text-slate-400">Gana XP, insignias y compite en el ranking global</p>
@@ -59,9 +48,9 @@ export const GamificationHub = () => {
       {/* Tabs */}
       <div className="flex gap-2 bg-slate-800 p-2 rounded-lg border border-slate-700">
         {[
-          { id: 'badges', label: 'Insignias', icon: faMedal },
-          { id: 'levels', label: 'Niveles', icon: faAward },
-          { id: 'leaderboard', label: 'Ranking', icon: faTrophy }
+          { id: 'badges', label: 'Insignias', icon: 'medal' },
+          { id: 'levels', label: 'Niveles', icon: 'award' },
+          { id: 'leaderboard', label: 'Ranking', icon: 'trophy' }
         ].map(tab => (
           <button
             key={tab.id}
@@ -72,7 +61,7 @@ export const GamificationHub = () => {
                 : 'text-slate-400 hover:text-white'
             }`}
           >
-            <FontAwesomeIcon icon={tab.icon} />
+            <Icon name={tab.icon} />
             {tab.label}
           </button>
         ))}
@@ -98,7 +87,7 @@ export const GamificationHub = () => {
 
                 {/* Icon */}
                 <div className={`text-4xl mb-3 ${badge.color} p-3 rounded-lg inline-block text-white ${!badge.achieved && 'opacity-30'}`}>
-                  <FontAwesomeIcon icon={badge.icon} />
+                  <Icon name={badge.icon} />
                 </div>
 
                 {/* Name */}
@@ -185,11 +174,11 @@ export const GamificationHub = () => {
                 </p>
                 <div className="flex gap-4 text-sm text-slate-400">
                   <span className="flex items-center gap-1">
-                    <FontAwesomeIcon icon={faStar} className="text-yellow-400" />
+                    <Icon name="star" className="text-yellow-400" />
                     {user.xp.toLocaleString()} XP
                   </span>
                   <span className="flex items-center gap-1">
-                    <FontAwesomeIcon icon={faFire} className="text-red-400" />
+                    <Icon name="fire" className="text-red-400" />
                     {user.streak} días
                   </span>
                 </div>
@@ -205,7 +194,7 @@ export const GamificationHub = () => {
 
       {/* Action Button */}
       <button className="w-full bg-linear-to-r from-amber-500 via-orange-500 to-red-500 text-white font-bold py-4 rounded-lg hover:shadow-lg hover:shadow-orange-500/50 transition-all duration-300 hover:scale-105 text-lg">
-        <FontAwesomeIcon icon={faRing} className="mr-2" />
+        <Icon name="ring" className="mr-2" />
         Continuar ganando XP
       </button>
     </div>

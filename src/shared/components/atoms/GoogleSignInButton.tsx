@@ -1,7 +1,5 @@
 import { useState } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faGoogle } from '@fortawesome/free-brands-svg-icons';
-import { faExclamationCircle, faCircleNotch } from '@fortawesome/free-solid-svg-icons';
+import { Icon } from '@/shared/components/Icon';
 import { useAuth } from '@/context/AuthContext';
 import { useRouter } from 'next/navigation';
 
@@ -49,12 +47,12 @@ export const GoogleSignInButton = () => {
       >
         {isLoading ? (
           <>
-            <FontAwesomeIcon icon={faCircleNotch} className="animate-spin" />
+            <Icon name="spinner" className="animate-spin" />
             Conectando...
           </>
         ) : (
           <>
-            <FontAwesomeIcon icon={faGoogle} className="text-red-500" />
+            <Icon name="google" className="text-red-500" />
             Continuar con Google
           </>
         )}
@@ -63,7 +61,7 @@ export const GoogleSignInButton = () => {
       {/* Error Message */}
       {displayError && (
         <div className="flex items-start gap-3 p-3 bg-red-500/20 border border-red-500/50 rounded-lg">
-          <FontAwesomeIcon icon={faExclamationCircle} className="text-red-400 mt-0.5 shrink-0" />
+          <Icon name="exclamation-circle" className="text-red-400 mt-0.5 shrink-0" />
           <p className="text-sm text-red-400">{displayError}</p>
         </div>
       )}

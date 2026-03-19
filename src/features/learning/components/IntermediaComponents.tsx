@@ -1,5 +1,4 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
+import { Icon } from '@/shared/components/Icon';
 import Link from 'next/link';
 
 export const ExamDetailHeader = ({ exam }) => (
@@ -44,7 +43,7 @@ export const ExamButton = ({ subject }) => (
 export const ExamHeader = ({ subject, exam, isExpanded }) => (
   <button className="w-full p-4 flex items-center justify-between hover:bg-slate-700/50 transition-colors">
     <div className="flex items-center gap-3 text-left">
-      <FontAwesomeIcon icon={subject.icon} className={`text-xl ${subject.color}`} />
+      <Icon name={subject.icon} size="xl" className={`text-xl ${subject.color}`} />
       <div>
         <h3 className="text-lg font-semibold text-white">{exam.title}</h3>
         <p className="text-xs text-slate-400">
@@ -52,8 +51,8 @@ export const ExamHeader = ({ subject, exam, isExpanded }) => (
         </p>
       </div>
     </div>
-    <FontAwesomeIcon
-      icon={faChevronDown}
+    <Icon
+      name="chevron-down"
       className={`text-slate-400 transition-transform duration-300 ${
         isExpanded ? 'rotate-180' : ''
       }`}

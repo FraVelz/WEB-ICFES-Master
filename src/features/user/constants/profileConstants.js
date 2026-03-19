@@ -1,13 +1,8 @@
-import { 
-  faFire, faBullseye, faClock, faZap, faMap, faGem,
-  faCalculator, faBook, faFlask, faGlobe
-} from '@fortawesome/free-solid-svg-icons';
-
 export const QUICK_STATS = [
-  { label: 'Racha', value: (streak) => `${streak}d`, icon: faFire, color: 'from-red-600 to-orange-600' },
-  { label: 'Precisión', value: (accuracy) => `${accuracy}%`, icon: faBullseye, color: 'from-green-600 to-emerald-600' },
-  { label: 'Horas', value: (hours) => `${hours}h`, icon: faClock, color: 'from-blue-600 to-cyan-600' },
-  { label: 'XP Hoy', value: (xp) => Math.floor(xp), icon: faZap, color: 'from-purple-600 to-pink-600' },
+  { label: 'Racha', value: (streak) => `${streak}d`, icon: 'fire', color: 'from-red-600 to-orange-600' },
+  { label: 'Precisión', value: (accuracy) => `${accuracy}%`, icon: 'bullseye', color: 'from-green-600 to-emerald-600' },
+  { label: 'Horas', value: (hours) => `${hours}h`, icon: 'clock', color: 'from-blue-600 to-cyan-600' },
+  { label: 'XP Hoy', value: (xp) => Math.floor(xp), icon: 'zap', color: 'from-purple-600 to-pink-600' },
 ];
 
 export const NAVIGATION_CARDS = [
@@ -15,7 +10,7 @@ export const NAVIGATION_CARDS = [
     id: 'learning-roadmap',
     title: 'Tu Ruta de Aprendizaje',
     description: 'Aprende de forma estructurada por niveles y áreas',
-    icon: faMap,
+    icon: 'map',
     color: 'from-blue-600 to-blue-400',
     link: '/ruta-aprendizaje',
     badge: 'Nueva'
@@ -24,7 +19,7 @@ export const NAVIGATION_CARDS = [
     id: 'daily-challenges',
     title: 'Desafíos Diarios',
     description: 'Completa retos para ganar XP y bonificaciones',
-    icon: faFire,
+    icon: 'fire',
     color: 'from-orange-600 to-red-400',
     link: '/desafios-diarios',
     badge: null
@@ -32,16 +27,16 @@ export const NAVIGATION_CARDS = [
 ];
 
 export const AREA_ICONS = {
-  matematicas: { icon: faCalculator, color: 'text-yellow-400' },
-  lenguaje: { icon: faBook, color: 'text-blue-400' },
-  ciencias: { icon: faFlask, color: 'text-green-400' },
-  sociales: { icon: faGlobe, color: 'text-orange-400' }
+  matematicas: { icon: 'calculator', color: 'text-yellow-400' },
+  lenguaje: { icon: 'book', color: 'text-blue-400' },
+  ciencias: { icon: 'flask', color: 'text-green-400' },
+  sociales: { icon: 'globe', color: 'text-orange-400' }
 };
 
 export const TABS = [
-  { id: 'profile', label: 'Perfil', icon: 'faCheckCircle' },
-  { id: 'dashboard', label: 'Tu Tablero', icon: 'faChartLine' },
-  { id: 'progress', label: 'Progreso', icon: 'faAward' }
+  { id: 'profile', label: 'Perfil', icon: 'check-circle' },
+  { id: 'dashboard', label: 'Tu Tablero', icon: 'chart-line' },
+  { id: 'progress', label: 'Progreso', icon: 'award' }
 ];
 
 export const RECOMMENDED_SESSIONS = [

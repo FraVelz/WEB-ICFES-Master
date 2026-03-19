@@ -1,10 +1,5 @@
 import { useState, useMemo } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faFire,
-  faCoins,
-  faChevronDown
-} from '@fortawesome/free-solid-svg-icons';
+import { Icon } from '@/shared/components/Icon';
 import { AREA_INFO } from '@/shared/constants';
 import { useAuth } from '@/context/AuthContext';
 import { useGamification } from '@/features/logros/hooks/useGamification';
@@ -81,14 +76,14 @@ export const SecondaryHeader = ({ currentArea = 'lectura-critica', onAreaChange 
         >
           {/* Ícono del área */}
           <div className={`w-8 h-8 rounded-lg bg-linear-to-br ${currentAreaInfo.color} flex items-center justify-center shadow-lg`}>
-            <FontAwesomeIcon icon={currentAreaInfo.icon} className="text-white text-xs" />
+            <Icon name={currentAreaInfo.icon} className="text-white text-xs" />
           </div>
           {/* Nombre del área - Oculto en móvil muy pequeño */}
           <div className="hidden sm:flex flex-col items-start">
             <span className="text-xs text-slate-400 uppercase font-bold tracking-wider">Área actual</span>
             <span className="text-sm font-bold text-slate-200">{currentAreaInfo.name}</span>
           </div>
-          <FontAwesomeIcon icon={faChevronDown} className={`text-slate-500 text-xs ml-1 transition-transform ${activeModal === 'areas' ? 'rotate-180' : ''}`} />
+          <Icon name="chevron-down" className={`text-slate-500 text-xs ml-1 transition-transform ${activeModal === 'areas' ? 'rotate-180' : ''}`} />
         </button>
 
         <div className="flex items-center gap-3">
@@ -98,8 +93,8 @@ export const SecondaryHeader = ({ currentArea = 'lectura-critica', onAreaChange 
             className="cursor-pointer flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-900 border border-slate-800 hover:border-orange-500/50 transition-colors group"
             title="Ver información de racha"
           >
-            <FontAwesomeIcon
-              icon={faFire}
+            <Icon
+              name="fire"
               className={`text-sm transition-colors ${currentStreak > 0 ? 'text-orange-500' : 'text-slate-600 group-hover:text-orange-500/50'}`}
             />
             <span className={`text-sm font-bold ${currentStreak > 0 ? 'text-orange-500' : 'text-slate-400 group-hover:text-orange-500/50'}`}>
@@ -113,8 +108,8 @@ export const SecondaryHeader = ({ currentArea = 'lectura-critica', onAreaChange 
             className="cursor-pointer flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-900 border border-slate-800 hover:border-yellow-500/50 transition-colors group"
             title="Abrir tienda"
           >
-            <FontAwesomeIcon
-              icon={faCoins}
+            <Icon
+              name="coins"
               className="text-yellow-500 text-sm"
             />
             <span className="text-sm font-bold text-yellow-500">

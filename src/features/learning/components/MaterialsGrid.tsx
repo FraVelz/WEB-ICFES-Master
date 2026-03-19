@@ -1,6 +1,5 @@
 import Link from 'next/link';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faClock, faBook } from '@fortawesome/free-solid-svg-icons';
+import { Icon } from '@/shared/components/Icon';
 
 export const MaterialsGrid = ({ filteredMaterials, areaIcons, selectedTopics, onTopicToggle }) => {
   if (Object.keys(filteredMaterials).length === 0) {
@@ -16,7 +15,7 @@ export const MaterialsGrid = ({ filteredMaterials, areaIcons, selectedTopics, on
       {Object.entries(filteredMaterials).map(([area, materials]) => (
         <div key={area} className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <h2 className="text-3xl md:text-4xl font-bold text-white flex items-center gap-3">
-            <FontAwesomeIcon icon={areaIcons[area].icon} className={areaIcons[area].color} />
+            <Icon name={areaIcons[area].icon} className={areaIcons[area].color} />
             {areaIcons[area].label}
           </h2>
           
@@ -42,11 +41,11 @@ export const MaterialsGrid = ({ filteredMaterials, areaIcons, selectedTopics, on
 
               <div className="grid grid-cols-2 gap-4 mb-4 text-xs text-gray-400">
                 <div className="flex items-center gap-2">
-                  <FontAwesomeIcon icon={faClock} className="text-blue-400 font-semibold" />
+                  <Icon name="clock" className="text-blue-400 font-semibold" />
                   <span>{material.duration}</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <FontAwesomeIcon icon={faBook} className="text-purple-400 font-semibold" />
+                  <Icon name="book" className="text-purple-400 font-semibold" />
                   <span>{material.lessons} lecciones</span>
                 </div>
               </div>

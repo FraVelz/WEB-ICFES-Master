@@ -1,6 +1,5 @@
 import React from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCoins, faTimes, faShoppingCart, faSpinner, faCheckCircle } from '@fortawesome/free-solid-svg-icons';
+import { Icon } from '@/shared/components/Icon';
 
 export const ShopItemModal = ({ item, isOpen, onClose, onBuy, processing, canAfford, isPurchased }) => {
   if (!isOpen || !item) return null;
@@ -14,7 +13,7 @@ export const ShopItemModal = ({ item, isOpen, onClose, onBuy, processing, canAff
           onClick={onClose}
           className="absolute top-4 right-4 w-8 h-8 rounded-full bg-slate-800 text-slate-400 hover:bg-slate-700 hover:text-white flex items-center justify-center transition-colors z-10"
         >
-          <FontAwesomeIcon icon={faTimes} />
+          <Icon name="times" />
         </button>
 
         {/* Header Image */}
@@ -25,7 +24,7 @@ export const ShopItemModal = ({ item, isOpen, onClose, onBuy, processing, canAff
               {item.image ? (
                 <img src={item.image} alt={item.name} className="w-full h-full object-cover" />
               ) : (
-                <FontAwesomeIcon icon={item.icon} className="text-4xl text-white" />
+                <Icon name={item.icon} className="text-4xl text-white" />
               )}
             </div>
           </div>
@@ -45,7 +44,7 @@ export const ShopItemModal = ({ item, isOpen, onClose, onBuy, processing, canAff
           {/* Action Button */}
           {isPurchased && item.category !== 'powerup' ? (
             <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4 flex items-center justify-center gap-3 text-green-400 font-bold">
-              <FontAwesomeIcon icon={faCheckCircle} className="text-xl" />
+              <Icon name="check-circle" className="text-xl" />
               <span>¡Ya tienes este artículo!</span>
             </div>
           ) : (
@@ -62,19 +61,19 @@ export const ShopItemModal = ({ item, isOpen, onClose, onBuy, processing, canAff
             >
               {processing ? (
                 <>
-                  <FontAwesomeIcon icon={faSpinner} className="animate-spin" />
+                  <Icon name="spinner" className="animate-spin" />
                   Procesando...
                 </>
               ) : canAfford ? (
                 <>
                   <span>Comprar por</span>
                   <span className="flex items-center gap-1 bg-black/20 px-2 py-0.5 rounded-lg">
-                    <FontAwesomeIcon icon={faCoins} /> {item.price}
+                    <Icon name="coins" /> {item.price}
                   </span>
                 </>
               ) : (
                 <>
-                  <FontAwesomeIcon icon={faLock} />
+                  <Icon name="lock" />
                   Insuficientes Monedas ({item.price})
                 </>
               )}

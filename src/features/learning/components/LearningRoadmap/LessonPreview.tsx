@@ -1,6 +1,5 @@
 import React from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTimes, faStar, faCoins, faPlay } from '@fortawesome/free-solid-svg-icons';
+import { Icon } from '@/shared/components/Icon';
 
 export const LessonPreview = ({ isOpen, onClose, lesson, onStart }) => {
   if (!isOpen || !lesson) return null;
@@ -21,7 +20,7 @@ export const LessonPreview = ({ isOpen, onClose, lesson, onStart }) => {
           onClick={onClose}
           className="cursor-pointer absolute top-4 right-4 p-2 text-slate-400 hover:text-white transition-colors"
         >
-          <FontAwesomeIcon icon={faTimes} />
+          <Icon name="times" />
         </button>
 
         {/* Header */}
@@ -50,7 +49,7 @@ export const LessonPreview = ({ isOpen, onClose, lesson, onStart }) => {
           }}
           className="cursor-pointer w-full py-4 bg-green-500 hover:bg-green-400 text-slate-900 font-bold rounded-xl shadow-lg shadow-green-500/20 transition-all active:scale-95 flex items-center justify-center gap-2"
         >
-          <FontAwesomeIcon icon={faPlay} />
+          <Icon name="play" />
           COMENZAR LECCIÓN
         </button>
       </div>

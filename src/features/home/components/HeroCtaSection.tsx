@@ -1,6 +1,5 @@
 import Link from 'next/link';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlayCircle, faBook, faStar } from '@fortawesome/free-solid-svg-icons';
+import { Icon } from '@/shared/components/Icon';
 
 export const HeroCtaSection = ({ onDemoAccess, isMobile }) => {
   return (
@@ -23,7 +22,7 @@ export const HeroCtaSection = ({ onDemoAccess, isMobile }) => {
           className="group bg-linear-to-br from-cyan-500/20 to-blue-600/20 border-2 border-cyan-500/50 hover:border-cyan-400 rounded-2xl p-8 transition-all duration-300 hover:shadow-lg hover:shadow-cyan-500/30 hover:scale-105"
         >
           <div className="text-5xl mb-4 text-cyan-400 group-hover:scale-125 transition-transform">
-            <FontAwesomeIcon icon={faPlayCircle} />
+            <Icon name="play-circle" />
           </div>
           <h3 className="text-xl font-bold text-white mb-2">Empezar Ahora</h3>
           <p className="text-slate-300 text-sm mb-4">
@@ -40,7 +39,7 @@ export const HeroCtaSection = ({ onDemoAccess, isMobile }) => {
           className="group bg-linear-to-br from-purple-500/20 to-pink-600/20 border-2 border-purple-500/50 hover:border-purple-400 rounded-2xl p-8 transition-all duration-300 hover:shadow-lg hover:shadow-purple-500/30 hover:scale-105 text-left"
         >
           <div className="text-5xl mb-4 text-purple-400 group-hover:scale-125 transition-transform">
-            <FontAwesomeIcon icon={faStar} />
+            <Icon name="star" />
           </div>
           <h3 className="text-xl font-bold text-white mb-2">Ver Demo</h3>
           <p className="text-slate-300 text-sm mb-4">
@@ -57,7 +56,7 @@ export const HeroCtaSection = ({ onDemoAccess, isMobile }) => {
           className="group bg-linear-to-br from-orange-500/20 to-red-600/20 border-2 border-orange-500/50 hover:border-orange-400 rounded-2xl p-8 transition-all duration-300 hover:shadow-lg hover:shadow-orange-500/30 hover:scale-105"
         >
           <div className="text-5xl mb-4 text-orange-400 group-hover:scale-125 transition-transform">
-            <FontAwesomeIcon icon={faBook} />
+            <Icon name="book" />
           </div>
           <h3 className="text-xl font-bold text-white mb-2">Aprende Primero</h3>
           <p className="text-slate-300 text-sm mb-4">

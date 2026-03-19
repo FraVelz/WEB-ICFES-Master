@@ -1,5 +1,4 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCrown, faCheckCircle } from '@fortawesome/free-solid-svg-icons';
+import { Icon } from '@/shared/components/Icon';
 import { useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import { PaymentModal } from '@/shared/components';
@@ -84,7 +83,7 @@ export const PricingPlans = ({ plans = [] }) => {
             {plan.popular && (
               <div className="text-center mb-4">
                 <span className="inline-flex items-center gap-1 bg-cyan-500/30 border border-cyan-500/50 px-4 py-1 rounded-full text-sm font-bold text-cyan-400">
-                  <FontAwesomeIcon icon={faCrown} />
+                  <Icon name="crown" />
                   Más Popular
                 </span>
               </div>
@@ -114,7 +113,7 @@ export const PricingPlans = ({ plans = [] }) => {
             <ul className="space-y-3">
               {plan.features.map((feature, fidx) => (
                 <li key={fidx} className="flex items-start gap-3 text-slate-300">
-                  <FontAwesomeIcon icon={faCheckCircle} className="text-green-400 mt-1 shrink-0" />
+                  <Icon name="check-circle" className="text-green-400 mt-1 shrink-0" />
                   {feature}
                 </li>
               ))}

@@ -1,8 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faStar, faRocket, faPlay } from "@fortawesome/free-solid-svg-icons";
+import { Icon } from '@/shared/components/Icon';
 import { getAnimationStyle } from "@/features/home/hooks/animations";
 
 export const HeroSection = ({ isInitialLoad, onDemoAccess }) => {
@@ -22,7 +21,7 @@ export const HeroSection = ({ isInitialLoad, onDemoAccess }) => {
       <div className="max-w-6xl mx-auto text-center space-y-8">
         {/* Badge */}
         <div style={getAnimationStyle(true, isInitialLoad, 0)} className="inline-flex items-center gap-2 bg-cyan-500/20 border border-cyan-500/50 rounded-full px-4 py-2">
-          <FontAwesomeIcon icon={faStar} className="text-cyan-400" />
+          <Icon name="star" className="text-cyan-400" />
           <span className="text-sm font-semibold text-cyan-400">Conviertete en en uno de los primeros estudiantes en alcanzar +400</span>
         </div>
 
@@ -40,16 +39,16 @@ export const HeroSection = ({ isInitialLoad, onDemoAccess }) => {
         <div style={getAnimationStyle(true, isInitialLoad, 0.45)} className="flex flex-col md:flex-row gap-4 justify-center pt-4">
           <button
             onClick={handleDemoClick}
-            className="px-8 py-4 bg-linear-to-r from-cyan-500 to-blue-600 text-white font-bold rounded-lg hover:shadow-lg hover:shadow-cyan-500/50 transition-all duration-300 hover:scale-105 flex items-center justify-center gap-2 text-lg"
+            className="cursor-pointer px-8 py-4 bg-linear-to-r from-cyan-500 to-blue-600 text-white font-bold rounded-lg hover:shadow-lg hover:shadow-cyan-500/50 transition-all duration-300 hover:scale-105 flex items-center justify-center gap-2 text-lg"
           >
-            <FontAwesomeIcon icon={faPlay} />
+            <Icon name="play" />
             Probar Demo
           </button>
           <Link
             href="/login"
             className="px-8 py-4 border-2 border-cyan-500 text-white font-bold rounded-lg hover:border-cyan-400 hover:bg-cyan-500/10 transition-all duration-300 flex items-center justify-center gap-2 text-lg hover:shadow-lg hover:shadow-cyan-500/30"
           >
-            <FontAwesomeIcon icon={faRocket} />
+            <Icon name="rocket" />
             Iniciar Sesión
           </Link>
         </div>

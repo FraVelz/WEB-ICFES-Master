@@ -1,5 +1,4 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import { Icon } from '@/shared/components/Icon';
 import { AREA_INFO } from '@/shared/constants';
 
 /**
@@ -25,7 +24,7 @@ export const AreasModal = ({ isOpen, onClose, onSelectArea, currentArea }) => {
           <div className="flex justify-between items-center mb-3 pb-2 border-b border-slate-800">
             <h3 className="text-sm font-bold text-slate-400 uppercase tracking-wider">Mis Cursos</h3>
             <button onClick={onClose} className="text-slate-500 hover:text-white">
-              <FontAwesomeIcon icon={faTimes} />
+              <Icon name="times" />
             </button>
           </div>
 
@@ -46,8 +45,8 @@ export const AreasModal = ({ isOpen, onClose, onSelectArea, currentArea }) => {
                 <div className={`w-8 h-8 rounded-lg flex items-center justify-center ${
                   currentArea === areaKey ? 'bg-white/20' : 'bg-slate-700/50'
                 }`}>
-                  <FontAwesomeIcon 
-                    icon={areaData.icon} 
+                  <Icon 
+                    name={areaData.icon} 
                     className={currentArea === areaKey ? 'text-white' : 'text-slate-400'} 
                   />
                 </div>

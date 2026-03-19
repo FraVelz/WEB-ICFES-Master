@@ -14,8 +14,8 @@ export const ICFES_LEVELS = [
     colorGradient: 'from-green-600 to-green-400',
     colorBorder: 'border-green-600',
     colorBg20: 'bg-green-600/20',
-    icon: 'faBook',
-    statusIcon: 'faCheckCircle',
+    icon: 'book',
+    statusIcon: 'check-circle',
     completed: true,
     progress: 100
   },
@@ -30,8 +30,8 @@ export const ICFES_LEVELS = [
     colorGradient: 'from-blue-600 to-blue-400',
     colorBorder: 'border-blue-600',
     colorBg20: 'bg-blue-600/20',
-    icon: 'faBullseye',
-    statusIcon: 'faCheckCircle',
+    icon: 'bullseye',
+    statusIcon: 'check-circle',
     completed: true,
     progress: 100
   },
@@ -46,8 +46,8 @@ export const ICFES_LEVELS = [
     colorGradient: 'from-purple-600 to-purple-400',
     colorBorder: 'border-purple-600',
     colorBg20: 'bg-purple-600/20',
-    icon: 'faCog',
-    statusIcon: 'faFire',
+    icon: 'cog',
+    statusIcon: 'fire',
     completed: true,
     progress: 75
   },
@@ -62,8 +62,8 @@ export const ICFES_LEVELS = [
     colorGradient: 'from-orange-600 to-orange-400',
     colorBorder: 'border-orange-600',
     colorBg20: 'bg-orange-600/20',
-    icon: 'faSquareRootVariable',
-    statusIcon: 'faArrowRight',
+    icon: 'square-root-variable',
+    statusIcon: 'arrow-right',
     completed: false,
     progress: 45
   },
@@ -78,8 +78,8 @@ export const ICFES_LEVELS = [
     colorGradient: 'from-yellow-600 to-yellow-400',
     colorBorder: 'border-yellow-600',
     colorBg20: 'bg-yellow-600/20',
-    icon: 'faTrophy',
-    statusIcon: 'faLock',
+    icon: 'trophy',
+    statusIcon: 'lock',
     completed: false,
     progress: 0
   }
@@ -96,19 +96,19 @@ export const DIFFICULTY_COLORS = {
 export const LEVEL_CONFIG = {
   basico: {
     color: 'green',
-    icon: 'faLightbulb',
+    icon: 'lightbulb',
     title: 'NIVEL BÁSICO',
     subtitle: 'Aprende los fundamentos de cada materia'
   },
   intermedio: {
     color: 'yellow',
-    icon: 'faBook',
+    icon: 'book',
     title: 'NIVEL INTERMEDIO',
     subtitle: 'Exámenes individuales de cada materia'
   },
   avanzado: {
     color: 'red',
-    icon: 'faTrophy',
+    icon: 'trophy',
     title: 'NIVEL AVANZADO',
     subtitle: 'Simulacro completo del examen ICFES'
   }

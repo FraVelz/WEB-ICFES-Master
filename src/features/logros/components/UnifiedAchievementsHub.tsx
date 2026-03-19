@@ -1,23 +1,5 @@
 import { useState, useMemo } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faTrophy,
-  faStar,
-  faFire,
-  faRing,
-  faGem,
-  faMedal,
-  faAward,
-  faZap,
-  faCrown,
-  faBullseye,
-  faLock,
-  faCheckCircle,
-  faChartLine,
-  faCalendar,
-  faTasks,
-  faArrowUp
-} from '@fortawesome/free-solid-svg-icons';
+import { Icon } from '@/shared/components/Icon';
 
 /**
  * Centro Unificado de Logros y Gamificación
@@ -76,7 +58,7 @@ export const UnifiedAchievementsHub = ({
     {
       label: 'Nivel Actual',
       value: level,
-      icon: faCrown,
+      icon: 'crown',
       color: 'from-amber-600 to-amber-400',
       bgColor: 'bg-amber-500/10',
       borderColor: 'border-amber-500/30'
@@ -84,7 +66,7 @@ export const UnifiedAchievementsHub = ({
     {
       label: 'Racha Actual',
       value: `${currentStreak} días`,
-      icon: faArrowUp,
+      icon: 'arrow-up',
       color: 'from-red-600 to-red-400',
       bgColor: 'bg-red-500/10',
       borderColor: 'border-red-500/30'
@@ -92,7 +74,7 @@ export const UnifiedAchievementsHub = ({
     {
       label: 'Mejora Récord',
       value: `${maxStreak} días`,
-      icon: faArrowUp,
+      icon: 'arrow-up',
       color: 'from-green-600 to-green-400',
       bgColor: 'bg-green-500/10',
       borderColor: 'border-green-500/30'
@@ -100,7 +82,7 @@ export const UnifiedAchievementsHub = ({
     {
       label: 'Horas Estudiadas',
       value: totalHours,
-      icon: faChartLine,
+      icon: 'chart-line',
       color: 'from-cyan-600 to-cyan-400',
       bgColor: 'bg-cyan-500/10',
       borderColor: 'border-cyan-500/30'
@@ -112,7 +94,7 @@ export const UnifiedAchievementsHub = ({
       <div className="min-h-dvh bg-linear-to-b from-slate-950 via-slate-900 to-slate-950 flex items-center justify-center">
         <div className="text-center space-y-4">
           <div className="animate-spin text-4xl text-cyan-400">
-            <FontAwesomeIcon icon={faTasks} />
+            <Icon name="tasks" />
           </div>
           <p className="text-slate-300 text-lg">Cargando tus logros...</p>
         </div>
@@ -133,7 +115,7 @@ export const UnifiedAchievementsHub = ({
         <div className="relative z-10 p-8 md:p-12">
           <div className="max-w-2xl">
             <div className="flex items-center gap-3 mb-4">
-              <FontAwesomeIcon icon={faTrophy} className="text-4xl text-amber-400" />
+              <Icon name="trophy" size="2xl" className="text-4xl text-amber-400" />
               <h1 className="text-5xl font-bold text-transparent bg-clip-text bg-linear-to-r from-cyan-400 via-blue-400 to-purple-400">
                 Centro de Logros
               </h1>
@@ -146,7 +128,7 @@ export const UnifiedAchievementsHub = ({
             <div className="space-y-3 bg-black/30 backdrop-blur-md p-6 rounded-xl border border-white/10">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
-                  <FontAwesomeIcon icon={faZap} className="text-yellow-400 text-lg" />
+                  <Icon name="zap" size="lg" className="text-yellow-400 text-lg" />
                   <span className="text-white font-semibold">Experiencia</span>
                 </div>
                 <span className="text-cyan-400 font-bold text-lg">
@@ -178,7 +160,7 @@ export const UnifiedAchievementsHub = ({
             <div className="relative z-10">
               <div className="flex items-start justify-between mb-4">
                 <div className={`text-3xl text-transparent bg-clip-text bg-linear-to-r ${stat.color}`}>
-                  <FontAwesomeIcon icon={stat.icon} />
+                  <Icon name={stat.icon} />
                 </div>
               </div>
               <p className="text-slate-400 text-sm font-medium mb-1">{stat.label}</p>
@@ -191,11 +173,11 @@ export const UnifiedAchievementsHub = ({
       {/* TABS */}
       <div className="flex flex-wrap gap-2 bg-slate-900/50 backdrop-blur-md p-3 rounded-xl border border-slate-700 overflow-x-auto">
         {[
-          { id: 'overview', label: 'Resumen', icon: faChartLine },
-          { id: 'badges', label: 'Insignias', icon: faMedal },
-          { id: 'levels', label: 'Niveles', icon: faAward },
-          { id: 'challenges', label: 'Desafíos', icon: faBullseye },
-          { id: 'statistics', label: 'Estadísticas', icon: faTasks }
+          { id: 'overview', label: 'Resumen', icon: 'chart-line' },
+          { id: 'badges', label: 'Insignias', icon: 'medal' },
+          { id: 'levels', label: 'Niveles', icon: 'award' },
+          { id: 'challenges', label: 'Desafíos', icon: 'bullseye' },
+          { id: 'statistics', label: 'Estadísticas', icon: 'tasks' }
         ].map(tab => (
           <button
             key={tab.id}
@@ -206,7 +188,7 @@ export const UnifiedAchievementsHub = ({
                 : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/50'
             }`}
           >
-            <FontAwesomeIcon icon={tab.icon} className="text-sm" />
+            <Icon name={tab.icon} size="sm" className="text-sm" />
             {tab.label}
           </button>
         ))}
@@ -220,7 +202,7 @@ export const UnifiedAchievementsHub = ({
           {/* Recent Achievements */}
           <div className="rounded-xl border border-slate-700 bg-linear-to-b from-slate-900/50 to-slate-950/50 backdrop-blur-md p-8">
             <div className="flex items-center gap-3 mb-6">
-              <FontAwesomeIcon icon={faTasks} className="text-2xl text-cyan-400" />
+              <Icon name="tasks" size="2xl" className="text-2xl text-cyan-400" />
               <h2 className="text-2xl font-bold text-white">Logros Recientes</h2>
             </div>
 
@@ -235,9 +217,9 @@ export const UnifiedAchievementsHub = ({
                     <div className="relative rounded-lg overflow-hidden bg-slate-800 border border-slate-700 p-4 hover:border-cyan-500/50 transition-all duration-300 hover:shadow-lg hover:shadow-cyan-500/20">
                       <div className="aspect-square flex items-center justify-center text-4xl">
                         {badge.icon ? (
-                          <FontAwesomeIcon icon={badge.icon} className="text-amber-400" />
+                          <Icon name={typeof badge.icon === 'string' ? badge.icon : 'trophy'} className="text-amber-400" />
                         ) : (
-                          <FontAwesomeIcon icon={faTrophy} className="text-amber-400" />
+                          <Icon name="trophy" className="text-amber-400" />
                         )}
                       </div>
                       <div className="absolute inset-0 opacity-0 group-hover:opacity-100 bg-black/60 transition-opacity rounded-lg flex items-center justify-center">
@@ -249,7 +231,7 @@ export const UnifiedAchievementsHub = ({
               </div>
             ) : (
               <div className="text-center py-12">
-                <FontAwesomeIcon icon={faLock} className="text-4xl text-slate-600 mb-3" />
+                <Icon name="lock" size="2xl" className="text-4xl text-slate-600 mb-3" />
                 <p className="text-slate-400">Aún no has desbloqueado logros. ¡Comienza a estudiar!</p>
               </div>
             )}
@@ -260,7 +242,7 @@ export const UnifiedAchievementsHub = ({
             {/* Next Milestone */}
             <div className="rounded-xl border border-blue-500/30 bg-linear-to-br from-blue-900/20 to-blue-950/20 backdrop-blur-md p-8">
               <div className="flex items-center gap-3 mb-4">
-                <FontAwesomeIcon icon={faTasks} className="text-2xl text-blue-400" />
+                <Icon name="tasks" size="2xl" className="text-2xl text-blue-400" />
                 <h3 className="text-xl font-bold text-white">Próximo Hito</h3>
               </div>
               <div className="space-y-4">
@@ -278,7 +260,7 @@ export const UnifiedAchievementsHub = ({
             {/* Achievements Unlocked */}
             <div className="rounded-xl border border-green-500/30 bg-linear-to-br from-green-900/20 to-green-950/20 backdrop-blur-md p-8">
               <div className="flex items-center gap-3 mb-4">
-                <FontAwesomeIcon icon={faCheckCircle} className="text-2xl text-green-400" />
+                <Icon name="check-circle" size="2xl" className="text-2xl text-green-400" />
                 <h3 className="text-xl font-bold text-white">Logros Desbloqueados</h3>
               </div>
               <div className="space-y-4">
@@ -340,9 +322,9 @@ export const UnifiedAchievementsHub = ({
                         {/* Icon */}
                         <div className={`text-5xl ${config.textColor}`}>
                           {badge.icon ? (
-                            <FontAwesomeIcon icon={badge.icon} />
+                            <Icon name={typeof badge.icon === 'string' ? badge.icon : 'trophy'} />
                           ) : (
-                            <FontAwesomeIcon icon={faTrophy} />
+                            <Icon name="trophy" />
                           )}
                         </div>
 
@@ -357,7 +339,7 @@ export const UnifiedAchievementsHub = ({
                         {/* Status */}
                         {badge.unlocked ? (
                           <div className="flex items-center gap-1 text-green-300 text-xs">
-                            <FontAwesomeIcon icon={faCheckCircle} />
+                            <Icon name="check-circle" />
                             Desbloqueado
                           </div>
                         ) : badge.progress ? (
@@ -374,7 +356,7 @@ export const UnifiedAchievementsHub = ({
                           </div>
                         ) : (
                           <div className="flex items-center gap-1 text-red-300 text-xs">
-                            <FontAwesomeIcon icon={faLock} />
+                            <Icon name="lock" />
                             Bloqueado
                           </div>
                         )}
@@ -385,7 +367,7 @@ export const UnifiedAchievementsHub = ({
               })
             ) : (
               <div className="col-span-full text-center py-12">
-                <FontAwesomeIcon icon={faLock} className="text-4xl text-slate-600 mb-3" />
+                <Icon name="lock" size="2xl" className="text-4xl text-slate-600 mb-3" />
                 <p className="text-slate-400">No hay insignias disponibles en esta categoría</p>
               </div>
             )}
@@ -439,7 +421,7 @@ export const UnifiedAchievementsHub = ({
                       )}
                       {isCompleted && (
                         <span className="inline-block px-3 py-1 rounded-full bg-green-500/20 border border-green-500/50 text-green-400 text-sm font-semibold flex items-center gap-2">
-                          <FontAwesomeIcon icon={faCheckCircle} />
+                          <Icon name="check-circle" />
                           Completado
                         </span>
                       )}
@@ -487,9 +469,9 @@ export const UnifiedAchievementsHub = ({
                       <p className="text-sm text-slate-400">Recompensa: {challenge.reward}</p>
                     </div>
                     {challenge.completed ? (
-                      <FontAwesomeIcon icon={faCheckCircle} className="text-2xl text-green-400" />
+                      <Icon name="check-circle" size="2xl" className="text-2xl text-green-400" />
                     ) : (
-                      <FontAwesomeIcon icon={faCalendar} className="text-2xl text-blue-400" />
+                      <Icon name="calendar-alt" size="2xl" className="text-2xl text-blue-400" />
                     )}
                   </div>
                 </div>
@@ -505,7 +487,7 @@ export const UnifiedAchievementsHub = ({
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="rounded-xl border border-slate-700 bg-linear-to-b from-slate-900/50 to-slate-950/50 backdrop-blur-md p-8">
               <h3 className="text-xl font-bold text-white mb-6 flex items-center gap-2">
-                <FontAwesomeIcon icon={faChartLine} />
+                <Icon name="chart-line" />
                 Estadísticas Generales
               </h3>
               <div className="space-y-4">
@@ -530,7 +512,7 @@ export const UnifiedAchievementsHub = ({
 
             <div className="rounded-xl border border-slate-700 bg-linear-to-b from-slate-900/50 to-slate-950/50 backdrop-blur-md p-8">
               <h3 className="text-xl font-bold text-white mb-6 flex items-center gap-2">
-                <FontAwesomeIcon icon={faFire} />
+                <Icon name="fire" />
                 Actividad
               </h3>
               <div className="space-y-4">
@@ -568,7 +550,7 @@ export const UnifiedAchievementsHub = ({
           >
             <div className="text-center space-y-4">
               <div className="text-6xl">
-                <FontAwesomeIcon icon={selectedBadge.icon || faTrophy} className="text-amber-400" />
+                <Icon name={typeof selectedBadge?.icon === 'string' ? selectedBadge.icon : 'trophy'} className="text-amber-400" />
               </div>
               <div>
                 <h2 className="text-2xl font-bold text-white">{selectedBadge.name}</h2>

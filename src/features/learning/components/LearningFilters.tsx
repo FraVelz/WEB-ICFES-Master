@@ -1,5 +1,4 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faFilter, faChevronLeft, faChevronRight, faChevronDown, faChevronUp, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { Icon } from '@/shared/components/Icon';
 import { useRef, useState, useEffect } from 'react';
 
 export const LearningFilters = ({
@@ -107,17 +106,17 @@ export const LearningFilters = ({
           className="cursor-pointer flex items-center gap-3 text-2xl font-bold text-white hover:text-cyan-400 transition-colors w-full justify-between"
         >
           <span className="flex items-center gap-3">
-            <FontAwesomeIcon icon={faFilter} className="text-cyan-400" />
+            <Icon name="filter" className="text-cyan-400" />
             Filtros
           </span>
-          <FontAwesomeIcon icon={showFilters ? faChevronUp : faChevronDown} className="text-cyan-400" />
+          <Icon name={showFilters ? 'chevron-up' : 'chevron-down'} className="text-cyan-400" />
         </button>
         {(activeArea !== 'all' || selectedTopics.length > 0) && (
           <button
             onClick={onClearFilters}
             className="flex items-center gap-2 bg-red-500/30 hover:bg-red-500/50 text-red-300 px-4 py-2 rounded-lg transition-all shrink-0"
           >
-            <FontAwesomeIcon icon={faTimes} />
+            <Icon name="times" />
             Limpiar filtros
           </button>
         )}
@@ -149,7 +148,7 @@ export const LearningFilters = ({
                       : 'bg-white/10 text-gray-300 hover:bg-white/20'
                   }`}
                 >
-                  <FontAwesomeIcon icon={icon} className={color} />
+                  <Icon name={icon} className={color} />
                   <span className="inline">{label}</span>
                 </button>
               ))}
@@ -174,7 +173,7 @@ export const LearningFilters = ({
                     onClick={() => onSearchChange('')}
                     className="cursor-pointer absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-white transition-colors"
                   >
-                    <FontAwesomeIcon icon={faTimes} />
+                    <Icon name="times" />
                   </button>
                 )}
               </div>
@@ -229,7 +228,7 @@ export const LearningFilters = ({
                     onClick={() => scroll('left')}
                     className="cursor-pointer shrink-0 bg-blue-600 hover:bg-blue-700 text-white p-3 rounded-full transition-all shadow-lg active:scale-95"
                   >
-                    <FontAwesomeIcon icon={faChevronLeft} size="lg" />
+                    <Icon name="chevron-left" size="lg" />
                   </button>
 
                   {/* Carousel Progress Bar */}
@@ -251,7 +250,7 @@ export const LearningFilters = ({
                     onClick={() => scroll('right')}
                     className="cursor-pointer shrink-0 bg-blue-600 hover:bg-blue-700 text-white p-3 rounded-full transition-all shadow-lg active:scale-95"
                   >
-                    <FontAwesomeIcon icon={faChevronRight} size="lg" />
+                    <Icon name="chevron-right" size="lg" />
                   </button>
                 </div>
 
@@ -277,7 +276,7 @@ export const LearningFilters = ({
                           onClick={() => onTopicToggle(topic)}
                           className="hover:text-cyan-100 transition-colors"
                         >
-                          <FontAwesomeIcon icon={faTimes} className="text-xs" />
+                          <Icon name="times" size="sm" className="text-xs" />
                         </button>
                       </div>
                     ))}

@@ -1,6 +1,5 @@
 import Link from 'next/link';
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faRocket } from "@fortawesome/free-solid-svg-icons";
+import { Icon } from "@/shared/components/Icon";
 
 export const FinalCTASection = () => {
   return (
@@ -16,7 +15,7 @@ export const FinalCTASection = () => {
           href="/dashboard"
           className="inline-flex items-center gap-2 px-10 py-4 bg-linear-to-r from-cyan-500 to-blue-600 text-white font-bold text-lg rounded-lg hover:shadow-lg hover:shadow-cyan-500/50 transition-all duration-300 hover:scale-105"
         >
-          <FontAwesomeIcon icon={faRocket} />
+          <Icon name="rocket" />
           Comienza tu Preparación Gratis
         </Link>
       </div>

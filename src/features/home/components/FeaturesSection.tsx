@@ -1,4 +1,4 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Icon } from "@/shared/components/Icon";
 import { WHY_CHOOSE_US } from "@/features/home/data";
 import { getAnimationStyle } from "@/features/home/hooks/animations";
 
@@ -18,7 +18,7 @@ export const FeaturesSection = ({ isInitialLoad, whyChooseSection }) => {
             className={`bg-linear-to-br ${feature.color} rounded-xl p-8 border border-slate-700 hover:border-slate-500 transition-all duration-300 hover:shadow-lg hover:scale-105 group`}
           >
             <div className="text-5xl mb-4 text-white group-hover:scale-110 transition-transform">
-              <FontAwesomeIcon icon={feature.icon} />
+              <Icon name={feature.icon} size="2xl" />
             </div>
             <h3 className="text-xl font-bold text-white mb-3">{feature.title}</h3>
             <p className="text-white/80">{feature.description}</p>

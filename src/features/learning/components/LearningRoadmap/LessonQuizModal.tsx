@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCheck, faTimes, faCoins, faStar, faTrophy, faArrowLeft, faArrowRight } from '@fortawesome/free-solid-svg-icons';
+import { Icon } from '@/shared/components/Icon';
 import { useAuth } from '@/context/AuthContext';
 import GamificationServiceAdapter from '@/services/GamificationServiceAdapter';
 import { getCompletedLessons, markLessonAsCompleted } from '@/shared/utils/progressStorage';
@@ -325,7 +324,7 @@ export const LessonQuizModal = ({ isOpen, onClose, onComplete, questions, quiz, 
         {/* Header */}
         <div className="bg-slate-800/50 p-3.5 lg:p-6 border-b border-slate-800 shrink-0">
           <div className="flex items-center justify-center gap-2 mb-1">
-            <FontAwesomeIcon icon={faTrophy} className="text-yellow-400 text-base lg:text-lg" />
+            <Icon name="trophy" size="lg" className="text-yellow-400 text-base lg:text-lg" />
             <h3 className="text-base lg:text-xl font-bold text-white text-center">
               Prueba de Conocimiento
             </h3>
@@ -392,10 +391,10 @@ export const LessonQuizModal = ({ isOpen, onClose, onComplete, questions, quiz, 
                     <div className="flex-1 flex items-center justify-between gap-2 min-w-0">
                       <span className="flex-1 wrap-break-word leading-snug">{option.text}</span>
                       {isSubmitted && option.id === currentQuestion.correctAnswer && (
-                        <FontAwesomeIcon icon={faCheck} className="text-green-400 shrink-0 text-lg lg:text-xl ml-2" />
+                        <Icon name="check" size="xl" className="text-green-400 shrink-0 text-lg lg:text-xl ml-2" />
                       )}
                       {isSubmitted && option.id === selectedOption && option.id !== currentQuestion.correctAnswer && (
-                        <FontAwesomeIcon icon={faTimes} className="text-red-400 shrink-0 text-lg lg:text-xl ml-2" />
+                        <Icon name="times" size="xl" className="text-red-400 shrink-0 text-lg lg:text-xl ml-2" />
                       )}
                     </div>
                   </div>
@@ -423,9 +422,9 @@ export const LessonQuizModal = ({ isOpen, onClose, onComplete, questions, quiz, 
             }`}>
               <div className="flex items-center justify-center gap-2 mb-2">
                 {isCorrect ? (
-                  <FontAwesomeIcon icon={faCheck} className="text-green-400 text-xl lg:text-2xl" />
+                  <Icon name="check" size="2xl" className="text-green-400 text-xl lg:text-2xl" />
                 ) : (
-                  <FontAwesomeIcon icon={faTimes} className="text-red-400 text-xl lg:text-2xl" />
+                  <Icon name="times" size="2xl" className="text-red-400 text-xl lg:text-2xl" />
                 )}
                 <h5 className={`font-bold text-lg lg:text-xl ${isCorrect ? 'text-green-300' : 'text-red-300'}`}>
                   {isCorrect ? '¡Correcto!' : 'Incorrecto'}
@@ -435,11 +434,11 @@ export const LessonQuizModal = ({ isOpen, onClose, onComplete, questions, quiz, 
               {isCorrect && rewards && isLastQuestion && (
                 <div className="flex items-center justify-center gap-2.5 lg:gap-4 mt-3 flex-wrap">
                   <div className="flex items-center gap-2 text-yellow-300 font-bold bg-yellow-400/15 px-3 lg:px-4 py-1.5 lg:py-2 rounded-full text-sm lg:text-base border border-yellow-400/20 shadow-md">
-                    <FontAwesomeIcon icon={faCoins} className="text-sm lg:text-base" />
+                    <Icon name="coins" size="md" className="text-sm lg:text-base" />
                     <span>+{rewards.coins}</span>
                   </div>
                   <div className="flex items-center gap-2 text-blue-300 font-bold bg-blue-400/15 px-3 lg:px-4 py-1.5 lg:py-2 rounded-full text-sm lg:text-base border border-blue-400/20 shadow-md">
-                    <FontAwesomeIcon icon={faStar} className="text-sm lg:text-base" />
+                    <Icon name="star" size="md" className="text-sm lg:text-base" />
                     <span>+{rewards.xp} XP</span>
                   </div>
                 </div>
@@ -470,7 +469,7 @@ export const LessonQuizModal = ({ isOpen, onClose, onComplete, questions, quiz, 
                 className="cursor-pointer px-3.5 lg:px-4 py-3 min-h-[48px] lg:min-h-[44px] rounded-xl lg:rounded-xl font-bold text-slate-300 bg-slate-800/80 hover:bg-slate-700 active:bg-slate-600 active:scale-95 transition-all shadow-md"
                 aria-label="Pregunta anterior"
               >
-                <FontAwesomeIcon icon={faArrowLeft} className="text-base lg:text-lg" />
+                <Icon name="arrow-left" size="lg" className="text-base lg:text-lg" />
               </button>
             )}
 
@@ -525,7 +524,7 @@ export const LessonQuizModal = ({ isOpen, onClose, onComplete, questions, quiz, 
                   >
                     <span className="hidden lg:inline">Siguiente </span>
                     <span className="lg:hidden">Sig.</span>
-                    <FontAwesomeIcon icon={faArrowRight} className="ml-1 lg:ml-2 text-sm lg:text-base" />
+                    <Icon name="arrow-right" size="md" className="ml-1 lg:ml-2 text-sm lg:text-base" />
                   </button>
                 )}
               </>

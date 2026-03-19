@@ -1,12 +1,11 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCheckCircle, faLock } from '@fortawesome/free-solid-svg-icons';
+import { Icon } from '@/shared/components/Icon';
 import Link from 'next/link';
 import { DIFFICULTY_COLORS } from './constants';
 
 /**
  * Componente para mostrar un nivel individual del mapa ICFES
  */
-export const ICFESLevelCard = ({ level, index, totalLevels, icons }) => {
+export const ICFESLevelCard = ({ level, index, totalLevels }) => {
   const isCompleted = level.completed;
   const isLocked = !level.completed && level.progress === 0;
   const isInProgress = level.progress > 0 && level.progress < 100;
@@ -34,7 +33,7 @@ export const ICFESLevelCard = ({ level, index, totalLevels, icons }) => {
                     isLocked ? 'opacity-40' : 'opacity-100'
                   }`}
                 >
-                  <FontAwesomeIcon icon={icons[level.icon]} className="text-2xl" />
+                  <Icon name={level.icon} size="2xl" className="text-2xl" />
                 </div>
 
                 {/* Título y Descripción */}
@@ -68,7 +67,7 @@ export const ICFESLevelCard = ({ level, index, totalLevels, icons }) => {
                       : 'bg-blue-600/40 text-blue-400'
                   }`}
                 >
-                  <FontAwesomeIcon icon={icons[level.statusIcon]} />
+                  <Icon name={level.statusIcon} />
                 </div>
               </div>
             </div>
@@ -110,7 +109,7 @@ export const ICFESLevelCard = ({ level, index, totalLevels, icons }) => {
               {isCompleted && (
                 <div className="mb-4 p-4 bg-green-600/20 border border-green-600 rounded-lg">
                   <p className="text-sm font-semibold text-green-400 flex items-center gap-2">
-                    <FontAwesomeIcon icon={faCheckCircle} />
+                    <Icon name="check-circle" />
                     ¡Completado!
                   </p>
                 </div>
@@ -119,7 +118,7 @@ export const ICFESLevelCard = ({ level, index, totalLevels, icons }) => {
               {isLocked && (
                 <div className="mb-4 p-4 bg-slate-700/40 border border-slate-600 rounded-lg">
                   <p className="text-sm font-semibold text-slate-400 flex items-center gap-2">
-                    <FontAwesomeIcon icon={faLock} />
+                    <Icon name="lock" />
                     Bloqueado
                   </p>
                   <p className="text-xs text-slate-500 mt-1">Completa el nivel anterior para desbloquear</p>
@@ -133,7 +132,7 @@ export const ICFESLevelCard = ({ level, index, totalLevels, icons }) => {
                 href={`/practica/icfes?nivel=${level.id}`}
                 className="w-full px-4 py-3 bg-linear-to-r from-blue-600 to-blue-500 text-white font-semibold rounded-lg hover:shadow-lg hover:shadow-blue-500/50 transition-all duration-300 flex items-center justify-center gap-2 group"
               >
-                Continuar <FontAwesomeIcon icon={icons.faArrowRight} className="group-hover:translate-x-1 transition-transform" />
+                Continuar <Icon name="arrow-right" className="group-hover:translate-x-1 transition-transform" />
               </Link>
             )}
 
@@ -142,7 +141,7 @@ export const ICFESLevelCard = ({ level, index, totalLevels, icons }) => {
                 href={`/practica/icfes?nivel=${level.id}&review=true`}
                 className="w-full px-4 py-3 bg-linear-to-r from-slate-700 to-slate-600 text-white font-semibold rounded-lg hover:shadow-lg hover:shadow-slate-600/50 transition-all duration-300 flex items-center justify-center gap-2"
               >
-                Revisar <FontAwesomeIcon icon={icons.faArrowRight} />
+                Revisar <Icon name="arrow-right" />
               </Link>
             )}
           </div>

@@ -1,10 +1,8 @@
-import { faPlay } from '@fortawesome/free-solid-svg-icons';
-
 export const GAMIFICATION_BADGES = {
   BADGE_COLLECTOR: {
     id: 'BADGE_COLLECTOR',
     name: 'Coleccionista de Insignias',
-    icon: faPlay,
+    icon: 'play',
     description: 'Desbloquea 25 insignias',
     requirement: 'Desbloquea 25 logros diferentes',
     category: 'gamification'
@@ -12,7 +10,7 @@ export const GAMIFICATION_BADGES = {
   BADGE_COLLECTOR_ELITE: {
     id: 'BADGE_COLLECTOR_ELITE',
     name: 'Coleccionista Élite',
-    icon: faPlay,
+    icon: 'play',
     description: 'Desbloquea 50 insignias',
     requirement: 'Desbloquea 50 logros diferentes',
     category: 'gamification'
@@ -20,7 +18,7 @@ export const GAMIFICATION_BADGES = {
   BADGE_COLLECTOR_MASTER: {
     id: 'BADGE_COLLECTOR_MASTER',
     name: 'Maestro Coleccionista',
-    icon: faPlay,
+    icon: 'play',
     description: 'Desbloquea todas las insignias',
     requirement: 'Desbloquea todos los logros disponibles',
     category: 'gamification'
@@ -28,7 +26,7 @@ export const GAMIFICATION_BADGES = {
   STREAK_MASTER: {
     id: 'STREAK_MASTER',
     name: 'Maestro de Rachas',
-    icon: faPlay,
+    icon: 'play',
     description: 'Mantén 3 rachas diferentes activas',
     requirement: 'Alcanza 3 rachas distintas simultáneamente',
     category: 'gamification'
@@ -36,7 +34,7 @@ export const GAMIFICATION_BADGES = {
   PERFECT_WEEK: {
     id: 'PERFECT_WEEK',
     name: 'Semana Perfecta',
-    icon: faPlay,
+    icon: 'play',
     description: '7 días de 90%+ promedio',
     requirement: 'Obtén 90%+ cada día durante una semana',
     category: 'gamification'
@@ -44,7 +42,7 @@ export const GAMIFICATION_BADGES = {
   PERFECT_MONTH: {
     id: 'PERFECT_MONTH',
     name: 'Mes Perfecto',
-    icon: faPlay,
+    icon: 'play',
     description: '30 días de 90%+ promedio',
     requirement: 'Obtén 90%+ cada día durante un mes',
     category: 'gamification'
@@ -52,7 +50,7 @@ export const GAMIFICATION_BADGES = {
   COMEBACK_STORY: {
     id: 'COMEBACK_STORY',
     name: 'Historia de Regreso',
-    icon: faPlay,
+    icon: 'play',
     description: 'Recuperar después de 3 fallos seguidos',
     requirement: 'Obtén 100% después de 3 exámenes con <50%',
     category: 'gamification'
@@ -60,7 +58,7 @@ export const GAMIFICATION_BADGES = {
   VERSATILE_SCHOLAR: {
     id: 'VERSATILE_SCHOLAR',
     name: 'Erudito Versátil',
-    icon: faPlay,
+    icon: 'play',
     description: 'Alterna entre diferentes áreas exitosamente',
     requirement: 'Obtén 85%+ en 4 áreas diferentes',
     category: 'gamification'
@@ -68,7 +66,7 @@ export const GAMIFICATION_BADGES = {
   VERSATILE_MASTER: {
     id: 'VERSATILE_MASTER',
     name: 'Maestro Versátil',
-    icon: faPlay,
+    icon: 'play',
     description: 'Desbloquea logros en todas las categorías',
     requirement: 'Obtén al menos 1 logro de cada categoría',
     category: 'gamification'
@@ -76,7 +74,7 @@ export const GAMIFICATION_BADGES = {
   SCORE_BOOSTER: {
     id: 'SCORE_BOOSTER',
     name: 'Impulsador de Puntuación',
-    icon: faPlay,
+    icon: 'play',
     description: 'Obtén 3 bonificaciones de XP en una sesión',
     requirement: 'Alcanza 3 multiplicadores de XP en un día',
     category: 'gamification'
@@ -84,7 +82,7 @@ export const GAMIFICATION_BADGES = {
   COMBO_KING: {
     id: 'COMBO_KING',
     name: 'Rey de Combos',
-    icon: faPlay,
+    icon: 'play',
     description: 'Crea una cadena de 5 logros en una semana',
     requirement: 'Desbloquea 5 logros en 7 días consecutivos',
     category: 'gamification'
@@ -92,7 +90,7 @@ export const GAMIFICATION_BADGES = {
   LEADERBOARD_CHAMPION: {
     id: 'LEADERBOARD_CHAMPION',
     name: 'Campeón de Clasificación',
-    icon: faPlay,
+    icon: 'play',
     description: 'Lidera el ranking semanal',
     requirement: 'Obtén la puntuación más alta en la semana',
     category: 'gamification'
@@ -100,7 +98,7 @@ export const GAMIFICATION_BADGES = {
   REWARD_HUNTER: {
     id: 'REWARD_HUNTER',
     name: 'Cazador de Recompensas',
-    icon: faPlay,
+    icon: 'play',
     description: 'Acumula 100000 puntos totales',
     requirement: 'Gana 100000 puntos de experiencia en total',
     category: 'gamification'
@@ -108,7 +106,7 @@ export const GAMIFICATION_BADGES = {
   CHALLENGE_DOMINATOR: {
     id: 'CHALLENGE_DOMINATOR',
     name: 'Dominador de Desafíos',
-    icon: faPlay,
+    icon: 'play',
     description: 'Completa 25 desafíos especiales',
     requirement: 'Finaliza 25 desafíos de gamificación',
     category: 'gamification'

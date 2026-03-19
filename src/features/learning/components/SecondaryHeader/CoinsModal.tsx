@@ -1,5 +1,4 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTimes, faCoins } from '@fortawesome/free-solid-svg-icons';
+import { Icon } from '@/shared/components/Icon';
 
 /**
  * Dropdown que muestra el dinero virtual
@@ -15,11 +14,11 @@ export const CoinsModal = ({ isOpen, onClose, coins = 0 }) => {
         <div className="p-4">
           <div className="flex justify-between items-center mb-4 pb-3 border-b border-slate-800">
             <h2 className="text-sm font-bold text-slate-400 uppercase tracking-wider flex items-center gap-2">
-              <FontAwesomeIcon icon={faCoins} className="text-yellow-400" />
+              <Icon name="coins" className="text-yellow-400" />
               Mis Monedas
             </h2>
             <button onClick={onClose} className="cursor-pointer text-slate-500 hover:text-white">
-              <FontAwesomeIcon icon={faTimes} />
+              <Icon name="times" />
             </button>
           </div>
 

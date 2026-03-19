@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import ReactMarkdown from 'react-markdown';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
+import { Icon } from '@/shared/components/Icon';
 import { LessonQuizModal } from './LessonQuizModal';
 
 export const LessonContentModal = ({ isOpen, onClose, lesson }) => {
@@ -25,7 +24,7 @@ export const LessonContentModal = ({ isOpen, onClose, lesson }) => {
           onClick={onClose}
           className="p-2 -ml-2 text-slate-400 hover:text-white transition-colors rounded-full hover:bg-slate-800 cursor-pointer"
         >
-          <FontAwesomeIcon icon={faArrowLeft} className="text-lg" />
+          <Icon name="arrow-left" className="text-lg" />
         </button>
         <h2 className="ml-3 text-lg font-bold text-white truncate flex-1">
           {lesson.title}

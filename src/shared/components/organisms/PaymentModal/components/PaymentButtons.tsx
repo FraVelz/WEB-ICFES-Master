@@ -1,5 +1,4 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCreditCard, faCheck } from '@fortawesome/free-solid-svg-icons';
+import { Icon } from '@/shared/components/Icon';
 
 export const PaymentButtons = ({ isProcessing, isFormValid, onClose, price, plan }) => {
   const isFree = plan?.price === 'Gratis';
@@ -32,12 +31,12 @@ export const PaymentButtons = ({ isProcessing, isFormValid, onClose, price, plan
             </>
           ) : isFree ? (
             <>
-              <FontAwesomeIcon icon={faCheck} className="text-sm" />
+              <Icon name="check" size="sm" className="text-sm" />
               Activar Plan Gratis
             </>
           ) : (
             <>
-              <FontAwesomeIcon icon={faCreditCard} className="text-sm" />
+              <Icon name="credit-card" size="sm" className="text-sm" />
               Pagar {price}
             </>
           )}

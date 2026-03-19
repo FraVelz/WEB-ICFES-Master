@@ -1,5 +1,4 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
+import { Icon } from "@/shared/components/Icon";
 import { FAQS } from "@/features/home/data";
 import { getAnimationStyle } from "@/features/home/hooks/animations";
 
@@ -22,8 +21,8 @@ export const FAQSection = ({ isInitialLoad, faqSection, expandedFaq, setExpanded
               className="cursor-pointer w-full p-6 flex items-center justify-between gap-3 hover:bg-slate-700/50 transition-colors"
             >
               <p className="text-lg font-bold text-white text-left">{faq.q}</p>
-              <FontAwesomeIcon 
-                icon={faChevronRight}
+              <Icon 
+                name="chevron-right"
                 className={`text-slate-400 transition-transform ${expandedFaq === idx ? 'rotate-90' : ''}`}
               />
             </button>

@@ -1,17 +1,5 @@
 import { useState } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { 
-  faSquareRootVariable, 
-  faLock,
-  faCheckCircle,
-  faHourglass,
-  faFire,
-  faArrowRight,
-  faBook,
-  faFlask,
-  faGlobe,
-  faStar
-} from '@fortawesome/free-solid-svg-icons';
+import { Icon } from '@/shared/components/Icon';
 import Link from 'next/link';
 
 export const LearningPathMap = () => {
@@ -21,7 +9,7 @@ export const LearningPathMap = () => {
     {
       id: 'lectura',
       name: 'Lectura Crítica',
-      icon: faBook,
+      icon: 'book',
       color: 'from-blue-600 to-blue-400',
       icon_color: 'text-blue-400',
       completion: 65,
@@ -33,7 +21,7 @@ export const LearningPathMap = () => {
           status: 'completed', 
           xp: 500,
           lessons: 8,
-          icon: faCheckCircle 
+          icon: 'check-circle' 
         },
         { 
           id: 2, 
@@ -41,7 +29,7 @@ export const LearningPathMap = () => {
           status: 'in-progress', 
           xp: 500,
           lessons: 6,
-          icon: faHourglass,
+          icon: 'hourglass',
           progress: 60
         },
         { 
@@ -50,14 +38,14 @@ export const LearningPathMap = () => {
           status: 'locked', 
           xp: 750,
           lessons: 10,
-          icon: faLock 
+          icon: 'lock' 
         },
       ]
     },
     {
       id: 'matematicas',
       name: 'Matemáticas',
-      icon: faSquareRootVariable,
+      icon: 'square-root-variable',
       color: 'from-green-600 to-green-400',
       icon_color: 'text-green-400',
       completion: 45,
@@ -69,7 +57,7 @@ export const LearningPathMap = () => {
           status: 'completed', 
           xp: 600,
           lessons: 12,
-          icon: faCheckCircle 
+          icon: 'check-circle' 
         },
         { 
           id: 2, 
@@ -77,7 +65,7 @@ export const LearningPathMap = () => {
           status: 'in-progress', 
           xp: 750,
           lessons: 10,
-          icon: faHourglass,
+          icon: 'hourglass',
           progress: 40
         },
         { 
@@ -86,7 +74,7 @@ export const LearningPathMap = () => {
           status: 'locked', 
           xp: 1000,
           lessons: 15,
-          icon: faLock 
+          icon: 'lock' 
         },
         { 
           id: 4, 
@@ -94,14 +82,14 @@ export const LearningPathMap = () => {
           status: 'locked', 
           xp: 800,
           lessons: 8,
-          icon: faLock 
+          icon: 'lock' 
         },
       ]
     },
     {
       id: 'ciencias',
       name: 'Ciencias Naturales',
-      icon: faFlask,
+      icon: 'flask',
       color: 'from-purple-600 to-purple-400',
       icon_color: 'text-purple-400',
       completion: 30,
@@ -113,7 +101,7 @@ export const LearningPathMap = () => {
           status: 'completed', 
           xp: 500,
           lessons: 10,
-          icon: faCheckCircle 
+          icon: 'check-circle' 
         },
         { 
           id: 2, 
@@ -121,7 +109,7 @@ export const LearningPathMap = () => {
           status: 'in-progress', 
           xp: 700,
           lessons: 12,
-          icon: faHourglass,
+          icon: 'hourglass',
           progress: 30
         },
         { 
@@ -130,7 +118,7 @@ export const LearningPathMap = () => {
           status: 'locked', 
           xp: 800,
           lessons: 14,
-          icon: faLock 
+          icon: 'lock' 
         },
         { 
           id: 4, 
@@ -138,14 +126,14 @@ export const LearningPathMap = () => {
           status: 'locked', 
           xp: 600,
           lessons: 8,
-          icon: faLock 
+          icon: 'lock' 
         },
       ]
     },
     {
       id: 'sociales',
       name: 'Sociales y Ciudadanas',
-      icon: faGlobe,
+      icon: 'globe',
       color: 'from-orange-600 to-orange-400',
       icon_color: 'text-orange-400',
       completion: 50,
@@ -157,7 +145,7 @@ export const LearningPathMap = () => {
           status: 'completed', 
           xp: 500,
           lessons: 9,
-          icon: faCheckCircle 
+          icon: 'check-circle' 
         },
         { 
           id: 2, 
@@ -165,7 +153,7 @@ export const LearningPathMap = () => {
           status: 'in-progress', 
           xp: 600,
           lessons: 8,
-          icon: faHourglass,
+          icon: 'hourglass',
           progress: 50
         },
         { 
@@ -174,7 +162,7 @@ export const LearningPathMap = () => {
           status: 'locked', 
           xp: 700,
           lessons: 10,
-          icon: faLock 
+          icon: 'lock' 
         },
         { 
           id: 4, 
@@ -182,7 +170,7 @@ export const LearningPathMap = () => {
           status: 'locked', 
           xp: 650,
           lessons: 7,
-          icon: faLock 
+          icon: 'lock' 
         },
       ]
     },
@@ -199,10 +187,10 @@ export const LearningPathMap = () => {
 
   const getStatusIcon = (status) => {
     switch(status) {
-      case 'completed': return faCheckCircle;
-      case 'in-progress': return faHourglass;
-      case 'locked': return faLock;
-      default: return faStar;
+      case 'completed': return 'check-circle';
+      case 'in-progress': return 'hourglass';
+      case 'locked': return 'lock';
+      default: return 'star';
     }
   };
 
@@ -226,17 +214,17 @@ export const LearningPathMap = () => {
               <div className="flex items-start justify-between">
                 <div className="flex items-start gap-4 flex-1">
                   <div className={`bg-linear-to-br ${path.color} p-3 rounded-lg text-2xl`}>
-                    <FontAwesomeIcon icon={path.icon} className="text-white" />
+                    <Icon name={path.icon} className="text-white" />
                   </div>
                   <div className="flex-1">
                     <h3 className="text-xl font-bold text-white mb-1">{path.name}</h3>
                     <div className="flex gap-4 text-sm text-slate-400 mb-3">
                       <span className="flex items-center gap-1">
-                        <FontAwesomeIcon icon={faStar} className="text-yellow-400" />
+                        <Icon name="star" className="text-yellow-400" />
                         {path.modules.length} módulos
                       </span>
                       <span className="flex items-center gap-1">
-                        <FontAwesomeIcon icon={faFire} className="text-red-400" />
+                        <Icon name="fire" className="text-red-400" />
                         {path.difficulty}
                       </span>
                     </div>
@@ -252,8 +240,8 @@ export const LearningPathMap = () => {
                   </div>
                 </div>
                 
-                <FontAwesomeIcon 
-                  icon={faArrowRight} 
+                <Icon 
+                  name="arrow-right" 
                   className={`text-slate-400 text-lg transition-transform duration-300 ${expandedArea === path.id ? 'rotate-90' : ''}`}
                 />
               </div>
@@ -269,8 +257,8 @@ export const LearningPathMap = () => {
                   >
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-3 flex-1">
-                        <FontAwesomeIcon 
-                          icon={getStatusIcon(module.status)} 
+                        <Icon 
+                          name={getStatusIcon(module.status)} 
                           className={`text-lg ${
                             module.status === 'completed' ? 'text-green-400' :
                             module.status === 'in-progress' ? 'text-blue-400' :

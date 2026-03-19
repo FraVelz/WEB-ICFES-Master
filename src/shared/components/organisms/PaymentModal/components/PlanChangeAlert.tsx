@@ -1,5 +1,4 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faInfoCircle, faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
+import { Icon } from '@/shared/components/Icon';
 
 export const PlanChangeAlert = ({ currentPlan, newPlan }) => {
   const isFreeToPaid = currentPlan?.planType === 'free' && newPlan?.id !== 'free';
@@ -34,7 +33,7 @@ export const PlanChangeAlert = ({ currentPlan, newPlan }) => {
     if (isFreeToPaid) {
       return {
         type: 'upgrade',
-        icon: faInfoCircle,
+        icon: 'info-circle',
         bgColor: 'bg-blue-500/20',
         borderColor: 'border-blue-500',
         textColor: 'text-blue-300',
@@ -47,7 +46,7 @@ export const PlanChangeAlert = ({ currentPlan, newPlan }) => {
     if (isPaidToFree) {
       return {
         type: 'downgrade',
-        icon: faExclamationTriangle,
+        icon: 'exclamation-triangle',
         bgColor: 'bg-yellow-500/20',
         borderColor: 'border-yellow-500',
         textColor: 'text-yellow-300',
@@ -60,7 +59,7 @@ export const PlanChangeAlert = ({ currentPlan, newPlan }) => {
     if (isPaidToPaid) {
       return {
         type: 'change',
-        icon: faInfoCircle,
+        icon: 'info-circle',
         bgColor: 'bg-purple-500/20',
         borderColor: 'border-purple-500',
         textColor: 'text-purple-300',
@@ -80,8 +79,8 @@ export const PlanChangeAlert = ({ currentPlan, newPlan }) => {
   return (
     <div className={`p-4 rounded-lg border-l-4 ${alertConfig.bgColor} ${alertConfig.borderColor}`}>
       <div className="flex gap-3">
-        <FontAwesomeIcon 
-          icon={alertConfig.icon} 
+        <Icon 
+          name={alertConfig.icon} 
           className={`text-xl ${alertConfig.titleColor} shrink-0 mt-0.5`}
         />
         <div>

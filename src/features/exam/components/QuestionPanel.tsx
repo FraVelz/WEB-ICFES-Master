@@ -1,5 +1,4 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faLightbulb } from '@fortawesome/free-solid-svg-icons';
+import { Icon } from '@/shared/components/Icon';
 import { AnswerOption } from '@/shared/components';
 
 export const QuestionPanel = ({ 
@@ -40,7 +39,7 @@ export const QuestionPanel = ({
       {answered && showExplanation && (
         <div className="bg-linear-to-br from-yellow-100 to-amber-100 rounded-3xl p-8 md:p-10 border-2 border-yellow-400 shadow-2xl">
           <div className="flex items-start gap-6">
-              <div className="text-4xl shrink-0"><FontAwesomeIcon icon={faLightbulb} className="text-yellow-600" /></div>
+              <div className="text-4xl shrink-0"><Icon name="lightbulb" size="2xl" className="text-yellow-600" /></div>
             <div className="flex-1">
               <h4 className="text-xl md:text-2xl font-black text-yellow-900 mb-2 drop-shadow-lg">Explicación</h4>
               <p className="text-base md:text-lg text-yellow-800 font-medium leading-relaxed drop-shadow-lg">{question.explanation}</p>
