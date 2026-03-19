@@ -9,6 +9,8 @@
     "build": "next build",
     "preview": "next start",
     "lint": "eslint .",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
     "deploy": "pnpm run build && echo 'Build complete. Push out/ to GitHub Pages or gh-pages branch.'",
     "build:mobile": "pnpm run build && npx cap sync android",
     "build:release": "bash ./build-release.sh ambos",
@@ -37,9 +39,11 @@
     "@types/react": "^19.2.5",
     "@types/react-dom": "^19.2.3",
     "eslint": "^9.39.1",
+    "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-react-hooks": "^7.0.1",
     "globals": "^16.5.0",
     "postcss": "^8.4.49",
+    "prettier": "^3.8.1",
     "typescript": "^5.9.3"
   }
 }

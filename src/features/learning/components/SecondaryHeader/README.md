@@ -92,7 +92,7 @@ export const MiPagina = () => {
 
 ### Cambiar colores de áreas
 
-Edita `/src/core/constants/areaInfo.js`:
+Edita `src/shared/constants/areaInfo.js`:
 
 ```javascript
 export const AREA_INFO = {
