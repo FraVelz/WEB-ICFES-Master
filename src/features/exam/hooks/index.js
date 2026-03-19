@@ -1,3 +1,3 @@
 export * from './useExam';
-export * from './useExamFirestore';
+export * from './useExam';
 export * from './useQuizLogic';

@@ -1,134 +1,64 @@
 /**
- * useExam - Hook para gestionar exámenes
- * 
- * USO:
- * const { exam, loading, saveAnswer, completeExam, analysis } = useExam(examId);
+ * Hook para gestionar exámenes (Supabase o localStorage)
  */
-
 import { useState, useEffect, useCallback } from 'react';
-import { ExamService } from '@/services';
+import { useAuth } from '@/context/AuthContext';
+import API_CONFIG from '@/services/api.config';
+import ExamSupabaseService from '@/services/supabase/ExamSupabaseService';
+import { getStoredExams, clearExamsOnly } from '@/shared/utils/progressStorage';
 
 export function useExam(examId) {
+  const { user } = useAuth();
   const [exam, setExam] = useState(null);
-  const [analysis, setAnalysis] = useState(null);
-  const [wrongAnswers, setWrongAnswers] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
   const loadExam = useCallback(async () => {
-    try {
-      setLoading(true);
-      const examData = await ExamService.get(examId);
-      setExam(examData);
-      setError(null);
-    } catch (err) {
-      setError(err.message);
-      console.error('Error cargando examen:', err);
-    } finally {
-      setLoading(false);
+    if (!examId) return;
+    if (API_CONFIG.MODE === 'supabase' && user?.uid) {
+      const found = await ExamSupabaseService.getById(examId);
+      setExam(found || null);
+    } else {
+      const exams = getStoredExams();
+      const found = exams.find(e => e.id === examId);
+      setExam(found || null);
     }
-  }, [examId]);
+  }, [examId, user?.uid]);
 
-  // Cargar examen al montar o cuando cambia examId
   useEffect(() => {
-    if (examId) {
-      loadExam();
+    loadExam();
+  }, [loadExam]);
+
+  const resetUserExams = useCallback(async () => {
+    if (API_CONFIG.MODE === 'supabase' && user?.uid) {
+      await ExamSupabaseService.resetUserExams(user.uid);
+    } else {
+      clearExamsOnly();
     }
-  }, [examId, loadExam]);
-
-  const saveAnswer = async (questionId, selectedAnswer, correctAnswer, isCorrect, timeSpent) => {
-    try {
-      const updated = await ExamService.saveAnswer(examId, {
-        questionId,
-        selectedAnswer,
-        correctAnswer,
-        isCorrect,
-        timeSpent
-      });
-      setExam(updated);
-      return updated;
-    } catch (err) {
-      setError(err.message);
-      throw err;
-    }
-  };
-
-  const completeExam = async () => {
-    try {
-      const completed = await ExamService.completeExam(examId);
-      setExam(completed);
-
-      // Cargar análisis
-      const analysisData = await ExamService.getExamAnalysis(examId);
-      setAnalysis(analysisData);
-
-      // Cargar respuestas incorrectas
-      const wrongAnswersData = await ExamService.getWrongAnswers(examId);
-      setWrongAnswers(wrongAnswersData);
-
-      return completed;
-    } catch (err) {
-      setError(err.message);
-      throw err;
-    }
-  };
-
-  const abandonExam = async () => {
-    try {
-      const abandoned = await ExamService.abandonExam(examId);
-      setExam(abandoned);
-      return abandoned;
-    } catch (err) {
-      setError(err.message);
-      throw err;
-    }
-  };
-
-  const loadAnalysis = async () => {
-    try {
-      const analysisData = await ExamService.getExamAnalysis(examId);
-      setAnalysis(analysisData);
-      return analysisData;
-    } catch (err) {
-      setError(err.message);
-      throw err;
-    }
-  };
-
-  const loadWrongAnswers = async () => {
-    try {
-      const wrongAnswersData = await ExamService.getWrongAnswers(examId);
-      setWrongAnswers(wrongAnswersData);
-      return wrongAnswersData;
-    } catch (err) {
-      setError(err.message);
-      throw err;
-    }
-  };
-
-  const exportResults = async (format = 'json') => {
-    try {
-      return await ExamService.exportResults(examId, format);
-    } catch (err) {
-      setError(err.message);
-      throw err;
-    }
-  };
+    setExam(null);
+    return true;
+  }, [user?.uid]);
 
   return {
     exam,
-    analysis,
-    wrongAnswers,
+    analysis: null,
+    wrongAnswers: [],
     loading,
     error,
-    saveAnswer,
-    completeExam,
-    abandonExam,
-    loadAnalysis,
-    loadWrongAnswers,
-    exportResults,
-    reload: loadExam
+    createExam: async () => ({}),
+    saveAnswer: async () => ({}),
+    completeExam: async () => ({}),
+    abandonExam: async () => ({}),
+    getExamStats: async () => ({}),
+    getUserExams: async () => {
+      if (API_CONFIG.MODE === 'supabase' && user?.uid) {
+        return ExamSupabaseService.getByUserId(user.uid);
+      }
+      return getStoredExams();
+    },
+    compareExams: async () => ({}),
+    exportResults: async () => ({}),
+    resetUserExams,
+    refresh: loadExam
   };
 }
-
-export default useExam;

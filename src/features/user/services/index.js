@@ -1,2 +1,2 @@
 export * from './UserService';
-export * from './UserFirestoreService';
+export { default as UserLocalService } from './UserLocalService';

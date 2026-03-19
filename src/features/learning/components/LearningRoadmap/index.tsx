@@ -18,7 +18,7 @@ export const LearningRoadmap = ({ initialArea = 'lectura-critica' }) => {
   
   const currentAreaData = AREA_INFO[currentArea] || AREA_INFO['lectura-critica'];
   
-  // Hook para obtener datos de Firestore
+  // Hook para obtener datos de gamificación
   const { sections, loading, error } = useLearningPath(currentArea);
   
   const getColorClass = (gradient) => {

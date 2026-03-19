@@ -4,6 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
+    "start": "next start",
     "dev": "next dev",
     "build": "next build",
     "preview": "next start",
@@ -18,6 +19,7 @@
     "mobile:generate-key": "bash ./generate-keystore.sh"
   },
   "dependencies": {
+    "@supabase/supabase-js": "^2.49.0",
     "@fortawesome/fontawesome-svg-core": "^7.1.0",
     "@fortawesome/free-brands-svg-icons": "^7.1.0",
     "@fortawesome/free-solid-svg-icons": "^7.1.0",

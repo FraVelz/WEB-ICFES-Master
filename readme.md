@@ -1,6 +1,6 @@
 # Web Icfes Master
 
-Una plataforma interactiva para practicar preguntas y aprender temas del examen de estado ICFES (Saber 11). Diseñada con arquitectura **Feature-Based** y **Atomic Design** usando Next.js 15, React 19, Tailwind CSS 3 y Firebase.
+Una plataforma interactiva para practicar preguntas y aprender temas del examen de estado ICFES (Saber 11). Diseñada con arquitectura **Feature-Based** y **Atomic Design** usando Next.js 15, React 19, Tailwind CSS 3 y Supabase.
 
 ## Características Principales
 
@@ -12,6 +12,8 @@ Una plataforma interactiva para practicar preguntas y aprender temas del examen 
 - **Examen Simulado Completo**: Resuelve todas las preguntas con temporizador configurable
 - **Material de Estudio Avanzado**: Acceso a recursos educativos organizados por tema
 - **Seguimiento de Progreso**: Visualiza tus estadísticas y áreas de mejora
+- **Desafíos Diarios y Clasificatoria**: Compite y mantén rachas de estudio
+- **Autenticación**: Inicio de sesión con email/contraseña y Google (Supabase Auth)
 - **Sistema de Gamificación**: 40+ logros desbloqueables por categoría (Primeros Pasos, Rachas, Logros Académicos, Excelencia, Planes)
 - **Planes de Suscripción**: Gratuito, Pro, Premium y Anual con beneficios progresivos
 - **Sistema de Calificación**: Retroalimentación inmediata con explicaciones detalladas
@@ -94,6 +96,7 @@ src/
        pages/
     user/               # Feature de usuario
        hooks/
+    store/              # Feature de tienda y planes
     home/               # Feature de inicio
         pages/
  shared/                 # Componentes y utilidades compartidas
@@ -135,22 +138,22 @@ src/
     index.js
  hooks/                  # Hooks personalizados
     useQuizLogic.js
-    useGamificationFirestore.js
-    useUserDataFirestore.js
-    useProgressFirestore.js
-    useExamFirestore.js
- services/               # Servicios de Firebase
-    BaseService.js
-    ExamFirestoreService.js
-    GamificationFirestoreService.js
-    ProgressFirestoreService.js
-    UserFirestoreService.js
-    index.js
+    useGamification.js
+    useUserData.js
+    useProgress.js
+    useExam.js
+ services/               # Servicios (Supabase + API configurable)
+    api.config.js       # Modo supabase, localStorage o api
+    ExamService.js
+    GamificationService.js
+    ProgressService.js
+    UserService.js
  context/                # Context API
     AuthContext.jsx
  app/                    # Rutas Next.js (App Router)
     layout.tsx           # Layout raíz
-    [[...slug]]/         # Catch-all para SPA
+    (dashboard)/         # Rutas autenticadas (perfil, examen, logros, etc.)
+    (auth)/              # Rutas de autenticación (login, signup, onboarding)
     privacidad/          # Página legal
     terminos/            # Página legal
  components/
@@ -161,7 +164,7 @@ src/
     scrollAnimations.css
 ```
 
-## Sistema de Importaciones (Alias)
+## Instalación y Configuración
 
 ### Requisitos Previos
 
@@ -171,18 +174,14 @@ src/
 ### Instalación
 
 ```bash
-cd pruebas-icfes
+git clone <url-repo>
+cd WEB-ICFES-Master
 pnpm install
 ```
 
-### Configuración Firebase
+### Configuración
 
-Copia `.env.local.example` a `.env.local` y configura las variables `NEXT_PUBLIC_FIREBASE_*`:
-
-```bash
-cp .env.local.example .env.local
-# Edita .env.local con tus credenciales de Firebase
-```
+Crea un archivo `.env.local` en la raíz con las variables necesarias (Firebase, API, etc.). Consulta `docs/setup/configuration.md` para el listado completo.
 
 ### Desarrollo Local
 
@@ -204,50 +203,58 @@ pnpm run build
 pnpm run preview
 ```
 
+### Build Móvil (Android)
+
+```bash
+pnpm run build:apk    # Genera APK
+pnpm run build:aab    # Genera AAB para Play Store
+pnpm run mobile:sync  # Sincroniza con Capacitor
+```
+
 ## Uso de la Plataforma
 
 La aplicación está configurada para despliegue en GitHub Pages en el repositorio `WEB-ICFES-Master`:
 
 - **URL de producción**: `https://fravelz.github.io/WEB-ICFES-Master/` (o Firebase Hosting)
 - **Configuración**: `next.config.ts` con export estático, Tailwind y Firebase
-- **Routing**: Next.js App Router + React Router en cliente (SPA)
-- **Deploy Firebase**: `firebase deploy` (tras `pnpm run build`)
+- **Routing**: Next.js App Router con rutas agrupadas `(dashboard)` y `(auth)`
+- **Deploy**: `pnpm run build` y subir `out/` o usar Vercel/Netlify
+- **App móvil**: Capacitor para Android (APK/AAB)
 
-Ver documentación: `docs/setup/` y `firebase.json`
+Ver documentación: `docs/setup/` y `docs/integrations/playstore-deploy.md`
 
 ## Documentación Adicional
 
-Carpeta: `/Documentacion/`
+Carpeta: `docs/`
 
-### Inicio Rápido
-- **00_Inicio/DEVELOPMENT.md** - Guía de desarrollo
-- **00_Inicio/QUICK_REFERENCE.md** - Referencia rápida
+### Visión General
+- **overview/executive-summary.md** - Resumen ejecutivo
+- **overview/project-structure.md** - Estructura y arquitectura
 
-### Arquitectura
-- **01_Arquitectura/ARQUITECTURA_SERVICIOS.md** - Servicios y Firebase
-- **01_Arquitectura/ESTRUCTURA_ARCHIVOS.md** - Guía de navegación
-- **01_Arquitectura/ESTRUCTURA_COMPLETA.md** - Vista general
+### Configuración
+- **setup/installation.md** - Instalación paso a paso
+- **setup/configuration.md** - Variables de entorno y configuración
+- **setup/cheatsheet.md** - Comandos rápidos
 
-### Contenido
-- **02_Contenido/GUIA_CONTENIDO_PREGUNTAS.md** - Componentes de contenido
-- **02_Contenido/ESTRUCTURA_DATOS_PREGUNTAS.md** - Formato de preguntas
-- **02_Contenido/SISTEMA_CONTENIDO_AVANZADO.md** - Sistema completo
+### Frontend
+- **frontend/architecture.md** - Arquitectura Feature-Based
+- **frontend/components-guide.md** - Guía de componentes
+- **frontend/styles-guide.md** - Guía de estilos
 
-### Diseño
-- **04_Diseño/DESIGN_IMPROVEMENTS.md** - Mejoras implementadas
-- **04_Diseño/STYLES_GUIDE.md** - Guía de estilos
+### Backend y Datos
+- **Supabase** - Base de datos y autenticación
+- **backend/services-api.md** - API de servicios
+- **data/content-schema.md** - Esquema de contenido
 
-### Ejemplos
-- **06_Ejemplos/EJEMPLOS_PREGUNTAS_AVANZADAS.js** - 8 ejemplos funcionales
+### Integraciones
+- **integrations/playstore-deploy.md** - Despliegue en Play Store
+- **integrations/payments.md** - Pasarela de pagos
 
 ## Próximas Mejoras Recomendadas
 
--  Implementar gamificación (insignias, puntos) - **EN PROGRESO**
--  Agregar autenticación de usuarios con Firebase - **EN PROGRESO**
--  Almacenamiento en Firestore para resultados - **EN PROGRESO**
 - Crear sistema de reportes y analytics avanzado
 - Agregar videos tutoriales integrados
-- Crear aplicación móvil con React Native
+- Expandir app móvil a iOS (Capacitor)
 - Agregar exportación de resultados a PDF
 - Implementar sistema de notificaciones push
 - Integrar IA para recomendaciones personalizadas
@@ -267,23 +274,25 @@ Carpeta: `/Documentacion/`
 
 Para sugerencias o reporte de errores, crea un issue en el repositorio de GitHub.
 
-## Cambios Recientes (Diciembre 2025)
+## Cambios Recientes (Marzo 2026)
 
-- **Nuevas Características**:
+- **Arquitectura**:
+  - Next.js 15 App Router con rutas `(dashboard)` y `(auth)`
+  - API configurable: modo `localStorage` (desarrollo) o `api` (producción)
+  - Servicios centralizados en `src/services/` con soporte dual
+
+- **Características**:
   - Sistema de 3 niveles de aprendizaje (Fácil, Intermedio, Avanzado)
-  - 40+ logros desbloqueables con sistema de gamificación
-  - Integración con Firestore para persistencia de datos
-  - Logros por categoría: Primeros Pasos, Rachas, Académicos, Excelencia, Planes
-  - Soporte para 5 planes de suscripción distintos
+  - 40+ logros desbloqueables con gamificación
+  - Autenticación con Supabase y persistencia en PostgreSQL
+  - Planes de suscripción: Gratuito, Pro, Premium, Anual
+  - Build móvil con Capacitor (APK/AAB para Android)
 
-- **Mejoras de UI/UX**:
-  - Reemplazo de emojis por iconos FontAwesome
-  - Diseño moderno con gradientes y efectos de glow
-  - Interfaz responsiva mejorada
-  - Animaciones suaves en todas las transiciones
+- **Documentación**:
+  - Nueva estructura en `docs/` (overview, setup, frontend, backend, integrations)
 
 ---
 
-Desarrollo: Fravelz
-Última actualización: 13 de diciembre de 2025
+Desarrollo: Fravelz  
+Última actualización: 18 de marzo de 2026  
 Licencia: MIT

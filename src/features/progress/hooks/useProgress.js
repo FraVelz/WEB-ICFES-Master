@@ -1,132 +1,97 @@
 /**
- * useProgress - Hook para acceder a estadísticas y progreso
- * 
- * USO:
- * const { stats, loading, recommendations, getAreaStats } = useProgress(userId);
+ * Hook para gestionar progreso del usuario (Supabase o localStorage)
  */
-
 import { useState, useEffect, useCallback } from 'react';
-import { ProgressService } from '@/services';
+import { useAuth } from '@/context/AuthContext';
+import API_CONFIG from '@/services/api.config';
+import ProgressSupabaseService from '@/services/supabase/ProgressSupabaseService';
+import { getProgress, getStoredExams, getStoredPractices, clearAllData, getRecommendations } from '@/shared/utils/progressStorage';
 
-export function useProgress(userId) {
-  const [stats, setStats] = useState(null);
+export function useProgress() {
+  const { user } = useAuth();
+  const [progress, setProgress] = useState(null);
+  const [areaStats, setAreaStats] = useState(null);
   const [recommendations, setRecommendations] = useState([]);
-  const [analysis, setAnalysis] = useState(null);
+  const [attemptHistory, setAttemptHistory] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const loadStats = useCallback(async () => {
+  const loadProgressData = useCallback(async () => {
+    if (!user?.uid) {
+      setProgress(null);
+      setAreaStats(null);
+      setRecommendations([]);
+      setAttemptHistory([]);
+      setLoading(false);
+      return;
+    }
+
+    setLoading(true);
     try {
-      setLoading(true);
-      const [statsData, recs, analysisData] = await Promise.all([
-        ProgressService.getUserStats(userId),
-        ProgressService.getRecommendations(userId),
-        ProgressService.getPerformanceAnalysis(userId)
-      ]);
-      setStats(statsData);
-      setRecommendations(recs);
-      setAnalysis(analysisData);
+      if (API_CONFIG.MODE === 'supabase') {
+        const prog = await ProgressSupabaseService.getByUserId(user.uid);
+        const mapped = prog ? {
+          totalAttempts: prog.totalAttempts,
+          totalQuestions: prog.totalCorrect * 2,
+          totalCorrect: prog.totalCorrect,
+          percentage: prog.percentage,
+          streakDays: prog.streakDays,
+          areaStats: prog.areaStats || {}
+        } : null;
+        setProgress(mapped);
+        setAreaStats(mapped?.areaStats || null);
+        setRecommendations(getRecommendations(mapped || {}));
+        setAttemptHistory([]);
+      } else {
+        const prog = getProgress();
+        setProgress(prog);
+        setAreaStats(prog?.areaStats || null);
+        setRecommendations(getRecommendations(prog || {}));
+        const exams = getStoredExams();
+        const practices = getStoredPractices();
+        setAttemptHistory([...exams, ...practices].sort((a, b) => new Date(b.date) - new Date(a.date)).slice(0, 50));
+      }
       setError(null);
     } catch (err) {
-      setError(err.message);
-      console.error('Error cargando estadísticas:', err);
+      setError(err?.message || 'Error cargando progreso');
     } finally {
       setLoading(false);
     }
-  }, [userId]);
+  }, [user?.uid]);
 
-  // Cargar estadísticas al montar o cuando cambia userId
   useEffect(() => {
-    if (userId) {
-      loadStats();
-    }
-  }, [userId, loadStats]);
+    loadProgressData();
+  }, [loadProgressData]);
 
-  const updateAfterAnswer = async (answerData) => {
-    try {
-      const updated = await ProgressService.updateAfterAnswer(userId, answerData);
-      setStats(updated);
-      
-      // Actualizar recomendaciones y análisis
-      const [recs, analysisData] = await Promise.all([
-        ProgressService.getRecommendations(userId),
-        ProgressService.getPerformanceAnalysis(userId)
-      ]);
-      setRecommendations(recs);
-      setAnalysis(analysisData);
-      
-      return updated;
-    } catch (err) {
-      setError(err.message);
-      throw err;
+  const resetProgress = useCallback(async () => {
+    if (!user?.uid) return true;
+    if (API_CONFIG.MODE === 'supabase') {
+      await ProgressSupabaseService.upsert(user.uid, {
+        totalAttempts: 0,
+        totalCorrect: 0,
+        percentage: 0,
+        streakDays: 0,
+        areaStats: {}
+      });
+    } else {
+      clearAllData();
     }
-  };
-
-  const getAreaStats = async (area) => {
-    try {
-      return await ProgressService.getAreaStats(userId, area);
-    } catch (err) {
-      setError(err.message);
-      throw err;
-    }
-  };
-
-  const getAllAreaStats = async () => {
-    try {
-      return await ProgressService.getAllAreaStats(userId);
-    } catch (err) {
-      setError(err.message);
-      throw err;
-    }
-  };
-
-  const getStreak = async () => {
-    try {
-      return await ProgressService.getStreak(userId);
-    } catch (err) {
-      setError(err.message);
-      throw err;
-    }
-  };
-
-  const updateDailyStreak = async () => {
-    try {
-      const updated = await ProgressService.updateDailyStreak(userId);
-      setStats(updated);
-      return updated;
-    } catch (err) {
-      setError(err.message);
-      throw err;
-    }
-  };
-
-  const reset = async () => {
-    try {
-      const reset = await ProgressService.resetProgress(userId);
-      setStats(reset);
-      setRecommendations([]);
-      setAnalysis(null);
-      return reset;
-    } catch (err) {
-      setError(err.message);
-      throw err;
-    }
-  };
+    loadProgressData();
+    return true;
+  }, [user?.uid, loadProgressData]);
 
   return {
-    stats,
+    progress,
+    areaStats,
     recommendations,
-    analysis,
+    attemptHistory,
     loading,
     error,
-    updateAfterAnswer,
-    getAreaStats,
-    getAllAreaStats,
-    getStreak,
-    updateDailyStreak,
-    reset,
-    reload: loadStats
+    saveAttempt: async () => ({}),
+    getAreaStatistics: async () => ({}),
+    getPerformanceAnalysis: async () => ({}),
+    updateProgress: async () => ({}),
+    resetProgress,
+    refresh: loadProgressData
   };
 }
-
-export default useProgress;

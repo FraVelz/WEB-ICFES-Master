@@ -1,6 +1,6 @@
 import React from 'react';
 import { useAuth } from '@/context/AuthContext';
-import { useGamificationFirestore } from '@/features/logros/hooks/useGamificationFirestore';
+import { useGamification } from '@/features/logros/hooks/useGamification';
 import { AchievementsList } from '../components/AchievementsList';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSpinner, faTrophy, faStar, faMedal } from '@fortawesome/free-solid-svg-icons';
@@ -13,7 +13,7 @@ export const UnifiedAchievementsPage = () => {
     totalXP, 
     level, 
     completedCount 
-  } = useGamificationFirestore(user?.uid);
+  } = useGamification(user?.uid);
 
   if (loading) {
     return (

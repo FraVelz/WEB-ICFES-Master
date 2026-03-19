@@ -1,131 +1,149 @@
 /**
- * useUserData - Hook para acceder a datos del usuario
- * 
- * USO:
- * const { user, loading, error, updateProfile } = useUserData();
+ * Hook para gestionar datos del usuario (Supabase o localStorage)
  */
-
-import { useState, useEffect } from 'react';
-import { UserService } from '@/services';
+import { useState, useEffect, useCallback } from 'react';
+import { useAuth } from '@/context/AuthContext';
+import API_CONFIG from '@/services/api.config';
+import UserSupabaseService from '@/services/supabase/UserSupabaseService';
+import { getUserProfile, updateUserProfile, updateUsername, updateUserBio, updateProfileImage as updateProfileImageUtil, addVirtualMoney, removeVirtualMoney, getVirtualMoney } from '@/shared/utils/userProfile';
 
 export function useUserData() {
-  const [user, setUser] = useState(null);
+  const { user } = useAuth();
+  const [userData, setUserData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // Cargar perfil al montar
-  useEffect(() => {
-    loadUserProfile();
-  }, []);
+  const loadUserData = useCallback(async () => {
+    if (!user?.uid) {
+      setUserData(null);
+      setLoading(false);
+      return;
+    }
 
-  const loadUserProfile = async () => {
+    setLoading(true);
     try {
-      setLoading(true);
-      const profile = await UserService.getUserProfile();
-      setUser(profile);
+      if (API_CONFIG.MODE === 'supabase') {
+        const profile = await UserSupabaseService.getByUserId(user.uid);
+        if (!profile) {
+          await UserSupabaseService.createUser(user.uid, {
+            email: user.email,
+            displayName: user.displayName,
+            username: user.displayName
+          });
+          const created = await UserSupabaseService.getByUserId(user.uid);
+          setUserData(created);
+        } else {
+          setUserData(profile);
+        }
+      } else {
+        setUserData(getUserProfile());
+      }
       setError(null);
     } catch (err) {
-      setError(err.message);
-      console.error('Error cargando perfil:', err);
+      setError(err?.message || 'Error cargando datos');
+      setUserData(null);
     } finally {
       setLoading(false);
     }
-  };
+  }, [user?.uid, user?.email, user?.displayName]);
 
-  const updateProfile = async (updates) => {
-    try {
-      if (!user?.id) throw new Error('Usuario no cargado');
-      const updated = await UserService.updateProfile(user.id, updates);
-      setUser(updated);
+  useEffect(() => {
+    loadUserData();
+  }, [loadUserData]);
+
+  const updateProfile = useCallback(async (updates) => {
+    if (!user?.uid) return null;
+    if (API_CONFIG.MODE === 'supabase') {
+      const updated = await UserSupabaseService.updateProfile(user.uid, updates);
+      setUserData(updated);
       return updated;
-    } catch (err) {
-      setError(err.message);
-      throw err;
     }
-  };
+    const updated = updateUserProfile(updates);
+    setUserData(updated);
+    return updated;
+  }, [user?.uid]);
 
-  const updateUsername = async (username) => {
-    return updateProfile({ username });
-  };
-
-  const updatePersonalPhrase = async (phrase) => {
-    return updateProfile({ personalPhrase: phrase });
-  };
-
-  const updateProfileImage = async (imageBase64) => {
-    return updateProfile({ profileImage: imageBase64 });
-  };
-
-  const getSettings = async () => {
-    try {
-      if (!user?.id) throw new Error('Usuario no cargado');
-      return await UserService.getSettings(user.id);
-    } catch (err) {
-      setError(err.message);
-      throw err;
+  const updateProfileUsername = useCallback(async (username) => {
+    if (API_CONFIG.MODE === 'supabase') {
+      return updateProfile({ username });
     }
-  };
+    const updated = await updateUsername(username);
+    setUserData(getUserProfile());
+    return updated;
+  }, [updateProfile]);
 
-  const updateSettings = async (settings) => {
-    try {
-      if (!user?.id) throw new Error('Usuario no cargado');
-      const updated = await UserService.updateSettings(user.id, settings);
-      setUser(updated);
-      return updated;
-    } catch (err) {
-      setError(err.message);
-      throw err;
+  const updateBio = useCallback(async (bio) => {
+    if (API_CONFIG.MODE === 'supabase') {
+      return updateProfile({ bio });
     }
-  };
+    const updated = await updateUserBio(bio);
+    setUserData(getUserProfile());
+    return updated;
+  }, [updateProfile]);
 
-  const exportData = async () => {
-    try {
-      if (!user?.id) throw new Error('Usuario no cargado');
-      return await UserService.exportUserData(user.id);
-    } catch (err) {
-      setError(err.message);
-      throw err;
+  const updateProfileImage = useCallback(async (file) => {
+    if (API_CONFIG.MODE === 'supabase') {
+      const reader = new FileReader();
+      return new Promise((resolve, reject) => {
+        reader.onload = async () => {
+          if (!file) return updateProfile({ profileImage: null });
+          const updated = await UserSupabaseService.updateProfile(user.uid, { profileImage: reader.result });
+          setUserData(updated);
+          resolve(updated);
+        };
+        reader.onerror = () => reject(new Error('Error al leer la imagen'));
+        reader.readAsDataURL(file || new Blob());
+      });
     }
-  };
+    const updated = await updateProfileImageUtil(file);
+    setUserData(getUserProfile());
+    return updated;
+  }, [user?.uid, updateProfile]);
 
-  const importData = async (backupData) => {
-    try {
-      if (!user?.id) throw new Error('Usuario no cargado');
-      const imported = await UserService.importUserData(user.id, backupData);
-      setUser(imported);
-      return imported;
-    } catch (err) {
-      setError(err.message);
-      throw err;
+  const addMoney = useCallback(async (amount) => {
+    if (!user?.uid) return 0;
+    if (API_CONFIG.MODE === 'supabase') {
+      await UserSupabaseService.updateVirtualMoney(user.uid, amount);
+      const updated = await UserSupabaseService.getByUserId(user.uid);
+      setUserData(updated);
+      return updated?.virtualMoney ?? 0;
     }
-  };
+    addVirtualMoney(amount);
+    setUserData(getUserProfile());
+    return getVirtualMoney();
+  }, [user?.uid]);
 
-  const deleteAccount = async () => {
-    try {
-      if (!user?.id) throw new Error('Usuario no cargado');
-      await UserService.deleteAccount(user.id);
-      setUser(null);
-    } catch (err) {
-      setError(err.message);
-      throw err;
+  const spendMoney = useCallback(async (amount) => {
+    if (!user?.uid) return 0;
+    if (API_CONFIG.MODE === 'supabase') {
+      const profile = await UserSupabaseService.getByUserId(user.uid);
+      const current = profile?.virtualMoney ?? 0;
+      if (current < amount) throw new Error('Monedas insuficientes');
+      await UserSupabaseService.updateProfile(user.uid, { virtualMoney: current - amount });
+      const updated = await UserSupabaseService.getByUserId(user.uid);
+      setUserData(updated);
+      return updated?.virtualMoney ?? 0;
     }
-  };
+    removeVirtualMoney(amount);
+    setUserData(getUserProfile());
+    return getVirtualMoney();
+  }, [user?.uid]);
+
+  const addBadge = useCallback(() => [], []);
 
   return {
-    user,
+    user: userData,
     loading,
     error,
     updateProfile,
-    updateUsername,
-    updatePersonalPhrase,
+    updateUsername: updateProfileUsername,
+    updateBio,
     updateProfileImage,
-    getSettings,
-    updateSettings,
-    exportData,
-    importData,
-    deleteAccount,
-    reload: loadUserProfile
+    getPreferences: () => ({}),
+    updatePreferences: () => ({}),
+    addMoney,
+    spendMoney,
+    addBadge,
+    refresh: loadUserData
   };
 }
-
-export default useUserData;

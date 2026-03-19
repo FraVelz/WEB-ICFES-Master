@@ -6,10 +6,9 @@ import { addVirtualMoney } from '@/shared/utils/userProfile';
 const CHALLENGES_KEY = 'icfes_daily_challenges';
 
 /**
- * Hook de desafíos diarios - Versión local (localStorage)
- * Preparado para futura implementación de backend
+ * Hook de desafíos diarios (localStorage)
  */
-export const useDailyChallengesFirebase = (dateString) => {
+export const useDailyChallenges = (dateString) => {
   const { user } = useAuth();
   const targetDate = dateString || new Date().toISOString().split('T')[0];
   const today = new Date().toISOString().split('T')[0];

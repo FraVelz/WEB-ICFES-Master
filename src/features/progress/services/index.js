@@ -1,2 +1,2 @@
 export * from './ProgressService';
-export * from './ProgressFirestoreService';
+export { default as ProgressLocalService } from './ProgressLocalService';

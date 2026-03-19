@@ -106,7 +106,7 @@
  * selectedArea: string (areaKey)
  *   └─ Almacena el área actual seleccionada
  * 
- * Datos de Gamificación (useGamificationFirestore):
+ * Datos de Gamificación (useGamification):
  *   ├─ currentStreak: número de días
  *   ├─ maxStreak: racha máxima histórica
  *   ├─ coins: monedas disponibles

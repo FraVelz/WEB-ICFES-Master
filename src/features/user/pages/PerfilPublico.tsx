@@ -67,7 +67,7 @@ export const PerfilPublico = () => {
   };
 
   const handleReport = () => {
-    // Aquí iría la lógica real de reporte (ej: abrir modal o enviar a Firestore)
+    // Aquí iría la lógica real de reporte (ej: abrir modal o enviar a backend)
     if (window.confirm(`¿Deseas reportar al usuario ${name}?`)) {
       setReported(true);
       // Simulación de reporte enviado

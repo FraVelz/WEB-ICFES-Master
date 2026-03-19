@@ -4,7 +4,7 @@ import { useAuth } from '@/context/AuthContext';
 
 /**
  * Hook para manejar la lógica de la ruta de aprendizaje.
- * Transforma los datos planos de Firestore en la estructura de secciones que necesita el UI.
+ * Transforma los datos planos de Supabase/localStorage en la estructura de secciones que necesita el UI.
  */
 export const useLearningPath = (areaId) => {
   const [sections, setSections] = useState([]);

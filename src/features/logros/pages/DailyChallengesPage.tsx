@@ -8,7 +8,7 @@ import {
   faSpinner,
   faGift
 } from '@fortawesome/free-solid-svg-icons';
-import { useDailyChallengesFirebase } from '../hooks/useDailyChallengesFirebase';
+import { useDailyChallenges } from '../hooks/useDailyChallenges';
 import { ChallengeCard } from '../components/ChallengeCard';
 import { ConstructionAlert } from '@/shared/components';
 
@@ -18,7 +18,7 @@ export const DailyChallengesPage = () => {
   // Formato YYYY-MM-DD para el hook
   const dateString = selectedDate.toISOString().split('T')[0];
   
-  const { challenges, loading, stats, completeChallenge } = useDailyChallengesFirebase(dateString);
+  const { challenges, loading, stats, completeChallenge } = useDailyChallenges(dateString);
 
   const handlePrevDay = () => {
     const newDate = new Date(selectedDate);

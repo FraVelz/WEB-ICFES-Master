@@ -1,3 +1,3 @@
 export * from './GamificationService';
-export * from './GamificationFirestoreService';
+export { default as GamificationLocalService } from './GamificationLocalService';
 export * from './AchievementService';

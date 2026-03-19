@@ -130,7 +130,7 @@ const handleGoToStore = () => {
 
 ## 📊 Datos Utilizados
 
-El componente utiliza el hook `useGamificationFirestore` para obtener:
+El componente utiliza el hook `useGamification` para obtener:
 
 - `currentStreak`: Días consecutivos de racha
 - `maxStreak`: Racha máxima histórica
@@ -150,7 +150,7 @@ El componente utiliza el hook `useGamificationFirestore` para obtener:
 ## 🔗 Integraciones
 
 ### Hooks utilizados:
-- `useGamificationFirestore` - Obtener datos de gamificación
+- `useGamification` - Obtener datos de gamificación
 - `useNavigate` - Navegación en CoinsModal
 - `useState` - Manejo de estado de modales
 
@@ -210,7 +210,7 @@ const handleSelectArea = (areaKey) => {
 - Revisa que los hooks tengan datos disponibles
 
 ### Datos no se actualizan
-- Verifica que `useGamificationFirestore` esté funcionando
+- Verifica que `useGamification` esté funcionando
 - Revisa la conexión con Firebase
 - Comprueba que el usuario esté autenticado
 

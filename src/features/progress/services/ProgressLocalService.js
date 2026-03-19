@@ -1,10 +1,9 @@
 /**
  * Servicio de progreso - Versión local (localStorage)
- * Preparado para futura implementación de backend
  */
 import { getProgress, getStoredExams, getStoredPractices, clearAllData, getCompletedLessons, markLessonAsCompleted } from '@/shared/utils/progressStorage';
 
-class ProgressFirestoreService {
+class ProgressLocalService {
   async updateProgress(userId, data) { return getProgress(); }
   async getProgress(userId) { return getProgress(); }
   async getProgressByArea(userId) { return {}; }
@@ -20,4 +19,4 @@ class ProgressFirestoreService {
   async markLessonAsCompleted(userId, lessonId) { markLessonAsCompleted(userId, lessonId); }
 }
 
-export default new ProgressFirestoreService();
+export default new ProgressLocalService();

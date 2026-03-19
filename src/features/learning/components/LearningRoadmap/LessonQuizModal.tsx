@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck, faTimes, faCoins, faStar, faTrophy, faArrowLeft, faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import { useAuth } from '@/context/AuthContext';
-import GamificationFirestoreService from '@/features/logros/services/GamificationFirestoreService';
+import GamificationServiceAdapter from '@/services/GamificationServiceAdapter';
 import { getCompletedLessons, markLessonAsCompleted } from '@/shared/utils/progressStorage';
 
 export const LessonQuizModal = ({ isOpen, onClose, onComplete, questions, quiz, lessonId, lessonTitle, lessonXp, lessonCoins }) => {
@@ -235,11 +235,11 @@ export const LessonQuizModal = ({ isOpen, onClose, onComplete, questions, quiz, 
 
         // Otorgar XP y monedas
         console.log('Llamando addXP...');
-        const xpResult = await GamificationFirestoreService.addXP(user.uid, xpAmount, `lesson_quiz_${lessonId}`);
+        const xpResult = await GamificationServiceAdapter.addXP(user.uid, xpAmount, `lesson_quiz_${lessonId}`);
         console.log('XP otorgado:', xpResult);
         
         console.log('Llamando addCoins...');
-        const coinsResult = await GamificationFirestoreService.addCoins(user.uid, coinsAmount, `lesson_quiz_${lessonId}`);
+        const coinsResult = await GamificationServiceAdapter.addCoins(user.uid, coinsAmount, `lesson_quiz_${lessonId}`);
         console.log('Monedas otorgadas:', coinsResult);
         
         console.log('Resultados de recompensas:', { xpResult, coinsResult });
@@ -284,8 +284,8 @@ export const LessonQuizModal = ({ isOpen, onClose, onComplete, questions, quiz, 
         });
 
         // Otorgar XP y monedas
-        const xpResult = await GamificationFirestoreService.addXP(user.uid, xpAmount, `lesson_quiz_${lessonId}`);
-        const coinsResult = await GamificationFirestoreService.addCoins(user.uid, coinsAmount, `lesson_quiz_${lessonId}`);
+        const xpResult = await GamificationServiceAdapter.addXP(user.uid, xpAmount, `lesson_quiz_${lessonId}`);
+        const coinsResult = await GamificationServiceAdapter.addCoins(user.uid, coinsAmount, `lesson_quiz_${lessonId}`);
         
         console.log('Resultados de recompensas (pregunta única):', { xpResult, coinsResult });
 

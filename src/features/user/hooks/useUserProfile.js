@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '@/context/AuthContext';
-import { useGamificationFirestore } from '@/features/logros/hooks/useGamificationFirestore';
-import { getLevelInfo } from '@/features/logros/services/GamificationFirestoreService';
+import { useGamification } from '@/features/logros/hooks/useGamification';
+import { getLevelInfo } from '@/features/logros/utils/gamificationUtils';
 import { getUserProfile } from '@/shared/utils/userProfile';
 
 /**
@@ -11,7 +11,7 @@ export const useUserProfile = (targetUserId = null) => {
   const { user: authUser } = useAuth();
   const uid = targetUserId || authUser?.uid;
   const isOwnProfile = authUser?.uid && uid === authUser.uid;
-  const gamification = useGamificationFirestore(uid);
+  const gamification = useGamification(uid);
 
   const [profileData, setProfileData] = useState({
     photoUrl: null,

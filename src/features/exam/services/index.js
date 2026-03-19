@@ -1,4 +1,4 @@
 export * from './ExamService';
 export * from './ExamDataService';
-export * from './ExamFirestoreService';
+export { default as ExamLocalService } from './ExamLocalService';
 export * from './TestResultService';
