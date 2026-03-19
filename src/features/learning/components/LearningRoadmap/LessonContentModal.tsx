@@ -13,8 +13,9 @@ export const LessonContentModal = ({ isOpen, onClose, lesson }) => {
 
   if (!isOpen || !lesson) return null;
 
-  // Verificar si hay contenido para mostrar el botón
-  const hasContent = lesson?.content && lesson.content.trim().length > 0;
+  // Extraer contenido como string (evitar error si content es objeto)
+  const contentStr = typeof lesson.content === 'string' ? lesson.content : '';
+  const hasContent = contentStr.trim().length > 0;
 
   return (
     <div className="fixed inset-0 z-60 bg-slate-950 flex flex-col animate-in slide-in-from-bottom duration-300 w-full h-full">
@@ -61,7 +62,7 @@ export const LessonContentModal = ({ isOpen, onClose, lesson }) => {
               img: ({node, ...props}) => <img className="rounded-xl shadow-lg my-6 max-w-full h-auto border border-slate-800" {...props} />,
             }}
            >
-             {lesson.content || '_No hay contenido disponible para esta lección._'}
+             {contentStr || '_No hay contenido disponible para esta lección._'}
            </ReactMarkdown>
 
            {/* Quiz Section - Siempre mostrar si hay contenido */}
