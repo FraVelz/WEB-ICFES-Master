@@ -11,14 +11,7 @@
     "lint": "eslint .",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "deploy": "pnpm run build && echo 'Build complete. Push out/ to GitHub Pages or gh-pages branch.'",
-    "build:mobile": "pnpm run build && npx cap sync android",
-    "build:release": "bash ./build-release.sh ambos",
-    "build:apk": "bash ./build-release.sh apk",
-    "build:aab": "bash ./build-release.sh aab",
-    "mobile:sync": "npx cap sync android",
-    "mobile:open": "npx cap open android",
-    "mobile:generate-key": "bash ./generate-keystore.sh"
+    "deploy": "pnpm run build && echo 'Build complete. Push out/ to GitHub Pages or gh-pages branch.'"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.49.0",
@@ -31,9 +24,6 @@
     "tailwindcss": "^4.2.2"
   },
   "devDependencies": {
-    "@capacitor/android": "^8.0.0",
-    "@capacitor/cli": "^8.0.0",
-    "@capacitor/core": "^8.0.0",
     "@eslint/js": "^9.39.1",
     "@tailwindcss/postcss": "^4.2.2",
     "@types/react": "^19.2.5",

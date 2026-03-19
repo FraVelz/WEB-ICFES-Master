@@ -27,16 +27,6 @@ dist-ssr
 .DS_Store
 *.suo
 
-# Capacitor & Android
-android/
-.gradle/
-*.apk
-*.aab
-*.jks
-*.keystore
-signing.properties
-build/
-
 # Environment variables (incl. Supabase keys)
 .env
 .env.local

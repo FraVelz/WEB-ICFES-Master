@@ -71,13 +71,12 @@ La aplicación está configurada para despliegue en GitHub Pages en el repositor
 - **Configuración**: `next.config.ts` con export estático, Tailwind y Firebase
 - **Routing**: Next.js App Router con rutas agrupadas `(dashboard)` y `(auth)`
 - **Deploy**: `pnpm run build` y subir `out/` o usar Vercel/Netlify
-- **App móvil**: Capacitor para Android (APK/AAB)
 
-Ver documentación: `docs/setup/` y `docs/integrations/playstore-deploy.md`
+Ver documentación: `_docs/setup/` y `_docs/integrations/`
 
 ## Documentación Adicional
 
-Carpeta: `docs/`
+Carpeta: `_docs/`
 
 ### Visión General
 - **overview/executive-summary.md** - Resumen ejecutivo
@@ -99,14 +98,12 @@ Carpeta: `docs/`
 - **data/content-schema.md** - Esquema de contenido
 
 ### Integraciones
-- **integrations/playstore-deploy.md** - Despliegue en Play Store
 - **integrations/payments.md** - Pasarela de pagos
 
 ## Próximas Mejoras Recomendadas
 
 - Crear sistema de reportes y analytics avanzado
 - Agregar videos tutoriales integrados
-- Expandir app móvil a iOS (Capacitor)
 - Agregar exportación de resultados a PDF
 - Implementar sistema de notificaciones push
 - Integrar IA para recomendaciones personalizadas
