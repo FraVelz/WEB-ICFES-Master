@@ -10,7 +10,7 @@ import {
   updateUserBio,
   updateProfileImage,
 } from '@/shared/utils/userProfile';
-import { DonationSection } from '@/features/home';
+// import { DonationSection } from '@/features/home';
 
 // --- Internal Components for UI Consistency ---
 
