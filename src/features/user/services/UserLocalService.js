@@ -1,10 +1,9 @@
 /**
  * Servicio de usuario - Versión local (localStorage)
- * Preparado para futura implementación de backend
  */
 import { getUserProfile, updateUserProfile } from '@/shared/utils/userProfile';
 
-class UserFirestoreService {
+class UserLocalService {
   async getUserProfile(uid) {
     return getUserProfile();
   }
@@ -29,4 +28,4 @@ class UserFirestoreService {
   async addBadge(uid, badgeId) { return []; }
 }
 
-export default new UserFirestoreService();
+export default new UserLocalService();

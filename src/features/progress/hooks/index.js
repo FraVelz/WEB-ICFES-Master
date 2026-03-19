@@ -1,2 +1,2 @@
 export * from './useProgress';
-export * from './useProgressFirestore';
+export * from './useProgress';

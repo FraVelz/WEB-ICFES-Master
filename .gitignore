@@ -37,19 +37,10 @@ android/
 signing.properties
 build/
 
-# Environment variables
+# Environment variables (incl. Supabase keys)
 .env
 .env.local
 .env.*.local
-
-# Firebase
-.firebaserc
-firebase-debug.log
-
-# Firebase Admin SDK credentials (NUNCA subir al repo)
-**/firebase-adminsdk*.json
-**/service-account*.json
-scripts/*-adminsdk*.json
 
 # OS
 Thumbs.db

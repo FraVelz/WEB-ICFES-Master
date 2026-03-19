@@ -1,2 +1,2 @@
 export * from './useGamification';
-export * from './useGamificationFirestore';
+export * from './useDailyChallenges';

@@ -25,7 +25,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { useUser } from '@/features/user/hooks/useUser';
 import { useAuth } from '@/context/AuthContext';
-import { useUserDataFirestore, useProgressFirestore, useExamFirestore } from '@/hooks/FirestoreHooks';
+import { useUserData, useProgress, useExam } from '@/hooks/FirestoreHooks';
 import { updateUsername, updateUserBio, updateProfileImage } from '@/shared/utils/userProfile';
 import { DonationSection } from '@/features/home';
 
@@ -79,16 +79,16 @@ export const UserSettingsPage = () => {
   const router = useRouter();
   const { user, refreshUser } = useUser();
   const { logout } = useAuth();
-  const { user: firestoreUser } = useUserDataFirestore();
-  const { resetProgress } = useProgressFirestore();
-  const { resetUserExams } = useExamFirestore();
+  const { user: userData } = useUserData();
+  const { resetProgress } = useProgress();
+  const { resetUserExams } = useExam();
 
   const fileInputRef = useRef(null);
   const [message, setMessage] = useState('');
   const [messageType, setMessageType] = useState('success');
   const [loading, setLoading] = useState(false);
-  const [username, setUsername] = useState(user?.username || firestoreUser?.displayName || '');
-  const [bio, setBio] = useState(user?.bio || firestoreUser?.bio || '');
+  const [username, setUsername] = useState(user?.username || userData?.displayName || '');
+  const [bio, setBio] = useState(user?.bio || userData?.bio || '');
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [deleteConfirmation, setDeleteConfirmation] = useState('');
 
@@ -100,13 +100,13 @@ export const UserSettingsPage = () => {
   const [sendingSupport, setSendingSupport] = useState(false);
 
   useEffect(() => {
-    setUsername(user?.username || firestoreUser?.displayName || '');
+    setUsername(user?.username || userData?.displayName || '');
     setSupportEmail(user?.email || '');
-  }, [user?.username, firestoreUser?.displayName, user?.email]);
+  }, [user?.username, userData?.displayName, user?.email]);
 
   useEffect(() => {
-    setBio(user?.bio || firestoreUser?.bio || '');
-  }, [user?.bio, firestoreUser?.bio]);
+    setBio(user?.bio || userData?.bio || '');
+  }, [user?.bio, userData?.bio]);
 
   const showMessage = (msg, type = 'success') => {
     setMessage(msg);

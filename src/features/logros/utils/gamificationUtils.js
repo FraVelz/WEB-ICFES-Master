@@ -1,8 +1,6 @@
 /**
- * Servicio de gamificación - Versión local (localStorage)
- * Preparado para futura implementación de backend
+ * Utilidades de gamificación (niveles, badges, XP)
  */
-import { addVirtualMoney, removeVirtualMoney, getVirtualMoney } from '@/shared/utils/userProfile';
 
 export const BADGES = {
   FIRST_QUESTION: { id: 'first_question', name: 'Primera Pregunta', description: 'Responde tu primera pregunta', icon: '🚀' },
@@ -23,8 +21,6 @@ export const LEVELS = [
   { level: 4, name: 'Experto', icon: '🎓', minXP: 6000, maxXP: 10000, color: 'from-purple-400 to-purple-600' },
   { level: 5, name: 'Maestro', icon: '👑', minXP: 10000, maxXP: null, color: 'from-yellow-400 to-yellow-600' }
 ];
-
-const GAMIFICATION_KEY = 'icfes_gamification';
 
 export const calculateLevel = (totalXP) => {
   let level = 1;
@@ -53,50 +49,3 @@ export const getLevelInfo = (totalXP) => {
     progress: Math.min(100, Math.max(0, progress))
   };
 };
-
-class GamificationFirestoreService {
-  async createGamificationProfile(userId) {
-    const defaultProfile = {
-      userId,
-      totalXP: 0,
-      level: 1,
-      virtualMoney: 0,
-      achievements: {},
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString()
-    };
-    localStorage.setItem(GAMIFICATION_KEY, JSON.stringify(defaultProfile));
-    return defaultProfile;
-  }
-
-  async getProfile(userId) {
-    const stored = localStorage.getItem(GAMIFICATION_KEY);
-    return stored ? JSON.parse(stored) : { totalXP: 0, level: 1, virtualMoney: 0, achievements: {} };
-  }
-
-  async addXP(userId, points, reason = 'activity') {
-    const gam = JSON.parse(localStorage.getItem(GAMIFICATION_KEY) || '{}');
-    const newXP = (gam.totalXP || 0) + points;
-    const newLevel = calculateLevel(newXP);
-    const updated = {
-      ...gam,
-      totalXP: newXP,
-      level: newLevel,
-      updatedAt: new Date().toISOString()
-    };
-    localStorage.setItem(GAMIFICATION_KEY, JSON.stringify(updated));
-    return { totalXP: newXP, level: newLevel };
-  }
-
-  async addCoins(userId, amount, reason = 'reward') {
-    addVirtualMoney(amount);
-    return { coins: getVirtualMoney(), virtualMoney: getVirtualMoney() };
-  }
-
-  async spendCoins(userId, amount, item = 'purchase') {
-    removeVirtualMoney(amount);
-    return { coins: getVirtualMoney(), virtualMoney: getVirtualMoney() };
-  }
-}
-
-export default new GamificationFirestoreService();

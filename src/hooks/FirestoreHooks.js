@@ -1,9 +1,7 @@
 /**
- * Exportar todos los hooks de Firestore
+ * Hooks de datos - Supabase / localStorage
  */
-export { useUserDataFirestore } from '@/features/user/hooks/useUserDataFirestore';
-export { useProgressFirestore } from '@/features/progress/hooks/useProgressFirestore';
-export { useGamificationFirestore } from '@/features/logros/hooks/useGamificationFirestore';
-export { useExamFirestore } from '@/features/exam/hooks/useExamFirestore';
-
-
+export { useUserData } from '@/features/user/hooks/useUserData';
+export { useProgress } from '@/features/progress/hooks/useProgress';
+export { useGamification } from '@/features/logros/hooks/useGamification';
+export { useExam } from '@/features/exam/hooks/useExam';

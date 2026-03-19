@@ -1,15 +1,14 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '@/context/AuthContext';
 import { SHOP_ITEMS } from '../data/shopItems';
-import { getVirtualMoney, addVirtualMoney, removeVirtualMoney } from '@/shared/utils/userProfile';
+import { getVirtualMoney, removeVirtualMoney } from '@/shared/utils/userProfile';
 
 const PURCHASES_KEY = 'icfes_shop_purchases';
 
 /**
- * Hook de tienda - Versión local (localStorage)
- * Preparado para futura implementación de backend
+ * Hook de tienda (localStorage o Supabase según API_MODE)
  */
-export const useShopFirebase = () => {
+export const useShop = () => {
   const { user } = useAuth();
   const [coins, setCoins] = useState(0);
   const [purchases, setPurchases] = useState([]);

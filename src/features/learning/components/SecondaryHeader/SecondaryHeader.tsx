@@ -7,7 +7,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { AREA_INFO } from '@/shared/constants';
 import { useAuth } from '@/context/AuthContext';
-import { useGamificationFirestore } from '@/features/logros/hooks/useGamificationFirestore';
+import { useGamification } from '@/features/logros/hooks/useGamification';
 import { AreasModal } from './AreasModal';
 import { StreakModal } from './StreakModal';
 import { CoinsModal } from './CoinsModal';
@@ -29,7 +29,7 @@ export const SecondaryHeader = ({ currentArea = 'lectura-critica', onAreaChange 
     coins = 0,
     streak = [], // Array de fechas
     loading 
-  } = useGamificationFirestore(user?.uid);
+  } = useGamification(user?.uid);
 
   // Calcular si la insignia está desbloqueada
   const isBadgeUnlocked = useMemo(() => {

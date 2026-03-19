@@ -1,14 +1,20 @@
 /**
- * Servicio de materiales de aprendizaje - Versión local
- * Preparado para futura implementación de backend
+ * Servicio de materiales de aprendizaje - Supabase o local
  */
 import { BASICO_TOPICS } from '../data/roadmapData';
 import { getCompletedLessons, markLessonAsCompleted as markLesson } from '@/shared/utils/progressStorage';
+import API_CONFIG from '@/services/api.config';
+import LearningSupabaseService from '@/services/supabase/LearningSupabaseService';
 
 const AREA_MAP = { 'sociales-ciudadanas': 'sociales' };
 
 class LearningMaterialService {
   async getLessonsByArea(area) {
+    if (API_CONFIG.MODE === 'supabase') {
+      const lessons = await LearningSupabaseService.getLessonsByArea(area);
+      if (lessons?.length > 0) return lessons;
+    }
+
     const key = AREA_MAP[area] || area;
     const topics = BASICO_TOPICS[key] || [];
     return topics.map((t, i) => ({
@@ -20,6 +26,9 @@ class LearningMaterialService {
   }
 
   async getLesson(lessonId) {
+    if (API_CONFIG.MODE === 'supabase') {
+      return LearningSupabaseService.getLesson(lessonId);
+    }
     return null;
   }
 

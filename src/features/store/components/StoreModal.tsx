@@ -6,12 +6,12 @@ import {
   faShoppingBag, 
   faSpinner
 } from '@fortawesome/free-solid-svg-icons';
-import { useShopFirebase } from '../hooks/useShopFirebase';
+import { useShop } from '../hooks/useShop';
 import { ShopItemCard } from './ShopItemCard';
 import { ShopItemModal } from './ShopItemModal';
 
 export const StoreModal = ({ isOpen, onClose }) => {
-  const { coins, hasItem, loading, processing, buyItem, shopItems } = useShopFirebase();
+  const { coins, hasItem, loading, processing, buyItem, shopItems } = useShop();
   const [selectedItem, setSelectedItem] = useState(null);
   const [filter, setFilter] = useState('all'); // all, avatar, theme, powerup
 

@@ -1,10 +1,9 @@
 /**
  * Servicio de exámenes - Versión local (localStorage)
- * Preparado para futura implementación de backend
  */
-import { getStoredExams, saveFullExam } from '@/shared/utils/progressStorage';
+import { getStoredExams } from '@/shared/utils/progressStorage';
 
-class ExamFirestoreService {
+class ExamLocalService {
   async createExam(userId, examData) {
     const exam = { id: `exam_${Date.now()}`, ...examData, userId, status: 'in-progress' };
     return exam;
@@ -29,4 +28,4 @@ class ExamFirestoreService {
   }
 }
 
-export default new ExamFirestoreService();
+export default new ExamLocalService();

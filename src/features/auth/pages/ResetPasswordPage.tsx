@@ -1,14 +1,16 @@
 'use client';
 import { useState, useEffect } from 'react';
-import { useSearchParams, useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLock, faCheckCircle, faExclamationCircle, faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import { EMAIL_MESSAGES } from '@/config/emailMessages';
+import { useAuth } from '@/context/AuthContext';
+import { supabase } from '@/config/supabase';
 
 export const ResetPasswordPage = () => {
-  const searchParams = useSearchParams();
   const router = useRouter();
+  const { updatePassword } = useAuth();
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -17,27 +19,25 @@ export const ResetPasswordPage = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [verifying, setVerifying] = useState(true);
-  const [oobCode, setOobCode] = useState(null);
+  const [hasRecoverySession, setHasRecoverySession] = useState(false);
 
-  // Verificar código de reset al cargar
+  // Supabase: verificar si hay sesión de recuperación (hash en URL)
   useEffect(() => {
-    // Primero, intentar obtener el código del parámetro de URL
-    let code = searchParams.get('oobCode');
-    
-    // Si no está en el parámetro, intentar extraerlo del hash (si Firebase lo pone allí)
-    if (!code && window.location.hash) {
-      const hashParams = new URLSearchParams(window.location.hash.substring(1));
-      code = hashParams.get('oobCode');
-    }
-    
-    if (!code) {
-      setError('Código de recuperación inválido o expirado');
+    const checkSession = async () => {
+      if (!supabase) {
+        setError('Supabase no configurado');
+        setVerifying(false);
+        return;
+      }
+      const { data: { session } } = await supabase.auth.getSession();
+      setHasRecoverySession(!!session);
       setVerifying(false);
-      return;
-    }
-    setOobCode(code);
-    setVerifying(false);
-  }, [searchParams]);
+      if (!session) {
+        setError('Enlace de recuperación inválido o expirado. Solicita uno nuevo.');
+      }
+    };
+    checkSession();
+  }, []);
 
   const validatePassword = (pwd) => {
     if (pwd.length < 6) {
@@ -76,16 +76,11 @@ export const ResetPasswordPage = () => {
     setIsLoading(true);
 
     try {
-      // Modo visual: simula confirmación (backend pendiente)
-      await new Promise(r => setTimeout(r, 500));
+      await updatePassword(password);
       setSuccess(true);
-
-      // Redirigir a login después de 3 segundos
-      setTimeout(() => {
-        router.push('/login');
-      }, 3000);
+      setTimeout(() => router.push('/login'), 3000);
     } catch (err) {
-      setError(EMAIL_MESSAGES.resetPasswordPage.errorGeneric);
+      setError(err?.message || EMAIL_MESSAGES.resetPasswordPage.errorGeneric);
     } finally {
       setIsLoading(false);
     }

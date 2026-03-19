@@ -14,7 +14,7 @@ class AchievementService {
   }
 
   async unlockAchievement(userId, achievementId, metadata = {}) {
-    // No-op - useGamificationFirestore maneja esto con localStorage
+    // No-op - useGamification maneja esto con localStorage/Supabase
   }
 
   async getUserAchievements(userId) {
