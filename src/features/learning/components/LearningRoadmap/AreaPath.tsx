@@ -3,26 +3,31 @@ import { PathNode } from './PathNode';
 
 // Mapeo de iconos por área
 const AREA_ICONS = {
-  'matematicas': 'calculator',
+  matematicas: 'calculator',
   'lectura-critica': 'book',
   'ciencias-naturales': 'flask',
   'sociales-ciudadanas': 'landmark',
-  'ingles': 'globe',
-  'examen-completo': 'brain'
+  ingles: 'globe',
+  'examen-completo': 'brain',
 };
 
-export const AreaPath = ({ areaId, onNodeClick, colorClass, sections = [] }) => {
+export const AreaPath = ({
+  areaId,
+  onNodeClick,
+  colorClass,
+  sections = [],
+}) => {
   const areaIcon = AREA_ICONS[areaId] || 'book';
 
   return (
-    <div className="w-full max-w-md mx-auto pb-20 px-4">
+    <div className="mx-auto w-full max-w-md px-4 pb-20">
       {sections.map((section, index) => (
-        <div key={section.id} className="mb-12 relative">
+        <div key={section.id} className="relative mb-12">
           {/* Línea conectora vertical de la sección */}
-          <div className="absolute left-8 top-12 bottom-0 w-1 bg-slate-800 -z-10" />
+          <div className="absolute top-12 bottom-0 left-8 -z-10 w-1 bg-slate-800" />
 
           {/* Header de la Sección */}
-          <div className="mb-6 pl-4 border-l-4 border-slate-700 ml-2">
+          <div className="mb-6 ml-2 border-l-4 border-slate-700 pl-4">
             <h3 className="text-lg font-bold text-white">{section.title}</h3>
             <p className="text-sm text-slate-400">{section.description}</p>
           </div>
@@ -32,8 +37,8 @@ export const AreaPath = ({ areaId, onNodeClick, colorClass, sections = [] }) => 
             {section.nodes.map((node, nodeIndex) => (
               <div key={node.id} className="relative pl-2">
                 {/* Conector visual pequeño hacia el nodo */}
-                <div className="absolute left-2 top-1/2 w-6 h-1 bg-slate-800 -z-10" />
-                
+                <div className="absolute top-1/2 left-2 -z-10 h-1 w-6 bg-slate-800" />
+
                 <PathNode
                   {...node}
                   icon={node.type === 'checkpoint' ? 'trophy' : areaIcon}

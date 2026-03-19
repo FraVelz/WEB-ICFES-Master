@@ -1,9 +1,9 @@
 /**
  * SERVICES INDEX - Exporta todos los servicios de la aplicación
- * 
+ *
  * USO:
  * import { UserService, ProgressService, GamificationService, ExamService } from '@/services';
- * 
+ *
  * Ejemplo:
  * const user = await UserService.getUserProfile();
  * const stats = await ProgressService.getUserStats(userId);
@@ -22,8 +22,6 @@ export { default as LearningMaterialService } from '@/features/learning/services
 
 export { default as AchievementService } from '@/features/logros/services/AchievementService';
 export { default as TestResultService } from '@/features/exam/services/TestResultService';
-
-
 
 // Re-exportar constantes útiles
 import GamificationService from '@/features/logros/services/GamificationService';

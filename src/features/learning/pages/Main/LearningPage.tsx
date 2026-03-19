@@ -18,15 +18,15 @@ export const LearningPage = () => {
   const allTopics = useMemo(() => {
     const topics = new Set();
     if (activeArea === 'all') {
-      Object.values(LEARNING_MATERIALS).forEach(materials => {
-        materials.forEach(material => {
-          material.topics.forEach(topic => topics.add(topic));
+      Object.values(LEARNING_MATERIALS).forEach((materials) => {
+        materials.forEach((material) => {
+          material.topics.forEach((topic) => topics.add(topic));
         });
       });
     } else {
       const areaMaterials = LEARNING_MATERIALS[activeArea] || [];
-      areaMaterials.forEach(material => {
-        material.topics.forEach(topic => topics.add(topic));
+      areaMaterials.forEach((material) => {
+        material.topics.forEach((topic) => topics.add(topic));
       });
     }
     return Array.from(topics).sort();
@@ -35,7 +35,7 @@ export const LearningPage = () => {
   // Filter topics based on search term
   const filteredTopics = useMemo(() => {
     if (!searchTerm) return allTopics;
-    return allTopics.filter(topic =>
+    return allTopics.filter((topic) =>
       topic.toLowerCase().includes(searchTerm.toLowerCase())
     );
   }, [searchTerm, allTopics]);
@@ -47,9 +47,9 @@ export const LearningPage = () => {
     Object.entries(LEARNING_MATERIALS).forEach(([area, materials]) => {
       if (activeArea !== 'all' && area !== activeArea) return;
 
-      const filtered = materials.filter(material => {
+      const filtered = materials.filter((material) => {
         if (selectedTopics.length === 0) return true;
-        return material.topics.some(topic => selectedTopics.includes(topic));
+        return material.topics.some((topic) => selectedTopics.includes(topic));
       });
 
       if (filtered.length > 0) {
@@ -73,119 +73,139 @@ export const LearningPage = () => {
   };
 
   const toggleTopic = (topic) => {
-    setSelectedTopics(prev =>
-      prev.includes(topic)
-        ? prev.filter(t => t !== topic)
-        : [...prev, topic]
+    setSelectedTopics((prev) =>
+      prev.includes(topic) ? prev.filter((t) => t !== topic) : [...prev, topic]
     );
   };
 
   const areaIcons = {
-    mathematics: { icon: 'ruler', color: 'text-yellow-400', label: 'Matemáticas' },
+    mathematics: {
+      icon: 'ruler',
+      color: 'text-yellow-400',
+      label: 'Matemáticas',
+    },
     lenguaje: { icon: 'book', color: 'text-blue-400', label: 'Lenguaje' },
     science: { icon: 'flask', color: 'text-green-400', label: 'Ciencias' },
-    social: { icon: 'globe', color: 'text-orange-400', label: 'Sociales' }
+    social: { icon: 'globe', color: 'text-orange-400', label: 'Sociales' },
   };
 
   const learningLevels = {
     easy: {
       title: 'Nivel Fácil',
       subtitle: 'Aprende las Bases',
-      description: 'Domina los conceptos fundamentales de cada materia con materiales estructurados, explicaciones y ejercicios básicos.',
+      description:
+        'Domina los conceptos fundamentales de cada materia con materiales estructurados, explicaciones y ejercicios básicos.',
       icon: 'lightbulb',
       color: 'from-blue-500 to-cyan-500',
       textColor: 'text-blue-400',
       borderColor: 'border-blue-500/30',
       bgColor: 'bg-blue-500/10',
       hoverColor: 'hover:shadow-blue-500/30',
-      subjects: 5
+      subjects: 5,
     },
     intermediate: {
       title: 'Nivel Intermedio',
       subtitle: 'Practica por Materia',
-      description: 'Realiza exámenes individuales de cada materia para fortalecer tus conocimientos con preguntas tipo ICFES.',
+      description:
+        'Realiza exámenes individuales de cada materia para fortalecer tus conocimientos con preguntas tipo ICFES.',
       icon: 'bullseye',
       color: 'from-orange-500 to-yellow-500',
       textColor: 'text-orange-400',
       borderColor: 'border-orange-500/30',
       bgColor: 'bg-orange-500/10',
       hoverColor: 'hover:shadow-orange-500/30',
-      subjects: 5
+      subjects: 5,
     },
     advanced: {
       title: 'Nivel Avanzado',
       subtitle: 'Simulacro Global ICFES',
-      description: 'Completa un examen global que simula las condiciones reales del ICFES con todas las materias integradas.',
+      description:
+        'Completa un examen global que simula las condiciones reales del ICFES con todas las materias integradas.',
       icon: 'fire',
       color: 'from-red-500 to-pink-500',
       textColor: 'text-red-400',
       borderColor: 'border-red-500/30',
       bgColor: 'bg-red-500/10',
       hoverColor: 'hover:shadow-red-500/30',
-      subjects: 5
-    }
+      subjects: 5,
+    },
   };
 
   if (!activeLevel) {
     return (
-      <div className="min-h-dvh bg-linear-to-b from-black via-slate-950 to-black text-white overflow-hidden">
+      <div className="min-h-dvh overflow-hidden bg-linear-to-b from-black via-slate-950 to-black text-white">
         {/* Background glow effects */}
-        <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
-          <div className="absolute top-1/3 left-1/4 w-96 h-96 bg-blue-500/30 rounded-full blur-3xl animate-pulse"></div>
-          <div className="absolute bottom-1/3 right-1/4 w-96 h-96 bg-purple-500/30 rounded-full blur-3xl animate-pulse"></div>
-          <div className="absolute top-2/3 left-3/4 w-72 h-72 bg-indigo-500/20 rounded-full blur-3xl animate-pulse"></div>
+        <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
+          <div className="absolute top-1/3 left-1/4 h-96 w-96 animate-pulse rounded-full bg-blue-500/30 blur-3xl"></div>
+          <div className="absolute right-1/4 bottom-1/3 h-96 w-96 animate-pulse rounded-full bg-purple-500/30 blur-3xl"></div>
+          <div className="absolute top-2/3 left-3/4 h-72 w-72 animate-pulse rounded-full bg-indigo-500/20 blur-3xl"></div>
         </div>
 
-        <div className="relative z-10 max-w-7xl mx-auto px-6">
+        <div className="relative z-10 mx-auto max-w-7xl px-6">
           <div className="pt-20">
             {/* Hero Section */}
-            <header className="text-center mb-20">
-              <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-8 bg-linear-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-transparent">
+            <header className="mb-20 text-center">
+              <h1 className="mb-8 bg-linear-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-5xl font-bold text-transparent md:text-6xl lg:text-7xl">
                 📚 Modo Aprendizaje
               </h1>
-              <p className="text-base md:text-lg text-slate-300 max-w-3xl mx-auto leading-relaxed">
-                Elige tu nivel de dificultad y comienza tu camino hacia el dominio del ICFES
+              <p className="mx-auto max-w-3xl text-base leading-relaxed text-slate-300 md:text-lg">
+                Elige tu nivel de dificultad y comienza tu camino hacia el
+                dominio del ICFES
               </p>
             </header>
 
             {/* Level Selection Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-20">
+            <div className="mb-20 grid grid-cols-1 gap-8 md:grid-cols-3">
               {Object.entries(learningLevels).map(([levelKey, level]) => (
                 <div
                   key={levelKey}
                   onClick={() => setActiveLevel(levelKey)}
-                  className={`group relative p-8 rounded-2xl border-2 cursor-pointer transition-all duration-300 ${level.borderColor} ${level.bgColor} hover:scale-105 hover:shadow-2xl ${level.hoverColor}`}
+                  className={`group relative cursor-pointer rounded-2xl border-2 p-8 transition-all duration-300 ${level.borderColor} ${level.bgColor} hover:scale-105 hover:shadow-2xl ${level.hoverColor}`}
                 >
                   {/* Card Background Glow */}
-                  <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  <div className="absolute inset-0 rounded-2xl opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
 
                   <div className="relative z-10">
                     {/* Icon */}
-                    <div className={`text-5xl mb-6 ${level.textColor} group-hover:scale-110 transition-transform duration-300`}>
+                    <div
+                      className={`mb-6 text-5xl ${level.textColor} transition-transform duration-300 group-hover:scale-110`}
+                    >
                       <Icon name={level.icon} />
                     </div>
 
                     {/* Title */}
-                    <h2 className="text-2xl font-bold text-white mb-2">{level.title}</h2>
-                    <p className={`text-sm font-semibold ${level.textColor} mb-4`}>{level.subtitle}</p>
+                    <h2 className="mb-2 text-2xl font-bold text-white">
+                      {level.title}
+                    </h2>
+                    <p
+                      className={`text-sm font-semibold ${level.textColor} mb-4`}
+                    >
+                      {level.subtitle}
+                    </p>
 
                     {/* Description */}
-                    <p className="text-slate-300 text-sm leading-relaxed mb-6">{level.description}</p>
+                    <p className="mb-6 text-sm leading-relaxed text-slate-300">
+                      {level.description}
+                    </p>
 
                     {/* Stats */}
-                    <div className="flex items-center justify-between mb-6 p-3 rounded-lg bg-black/30">
+                    <div className="mb-6 flex items-center justify-between rounded-lg bg-black/30 p-3">
                       <div className="text-center">
-                        <p className="text-2xl font-bold text-white">{level.subjects}</p>
+                        <p className="text-2xl font-bold text-white">
+                          {level.subjects}
+                        </p>
                         <p className="text-xs text-slate-400">Materias</p>
                       </div>
-                      <div className={`text-3xl ${level.textColor} group-hover:translate-x-1 transition-transform duration-300`}>
+                      <div
+                        className={`text-3xl ${level.textColor} transition-transform duration-300 group-hover:translate-x-1`}
+                      >
                         <Icon name="arrow-right" />
                       </div>
                     </div>
 
                     {/* CTA Button */}
                     <button
-                      className={`w-full py-3 px-4 rounded-lg font-semibold transition-all duration-300 bg-linear-to-r ${level.color} text-white hover:shadow-lg group-hover:shadow-lg`}
+                      className={`w-full rounded-lg bg-linear-to-r px-4 py-3 font-semibold transition-all duration-300 ${level.color} text-white group-hover:shadow-lg hover:shadow-lg`}
                     >
                       Empezar Ahora
                     </button>
@@ -195,10 +215,10 @@ export const LearningPage = () => {
             </div>
 
             {/* Back Button */}
-            <div className="text-center pb-20">
+            <div className="pb-20 text-center">
               <Link
                 href="/"
-                className="cursor-pointer inline-block bg-linear-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-semibold py-3 px-8 rounded-xl transition-all duration-300 hover:shadow-lg hover:shadow-purple-500/30 hover:scale-105"
+                className="inline-block cursor-pointer rounded-xl bg-linear-to-r from-purple-600 to-pink-600 px-8 py-3 font-semibold text-white transition-all duration-300 hover:scale-105 hover:from-purple-700 hover:to-pink-700 hover:shadow-lg hover:shadow-purple-500/30"
               >
                 ← Volver al Inicio
               </Link>
@@ -212,16 +232,16 @@ export const LearningPage = () => {
   const currentLevel = learningLevels[activeLevel];
 
   return (
-    <div className="min-h-dvh bg-linear-to-b from-black via-slate-950 to-black text-white overflow-hidden">
+    <div className="min-h-dvh overflow-hidden bg-linear-to-b from-black via-slate-950 to-black text-white">
       {/* Background glow effects */}
-      <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
-        <div className="absolute top-1/3 left-1/4 w-96 h-96 bg-blue-500/30 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute bottom-1/3 right-1/4 w-96 h-96 bg-purple-500/30 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute top-2/3 left-3/4 w-72 h-72 bg-indigo-500/20 rounded-full blur-3xl animate-pulse"></div>
+      <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
+        <div className="absolute top-1/3 left-1/4 h-96 w-96 animate-pulse rounded-full bg-blue-500/30 blur-3xl"></div>
+        <div className="absolute right-1/4 bottom-1/3 h-96 w-96 animate-pulse rounded-full bg-purple-500/30 blur-3xl"></div>
+        <div className="absolute top-2/3 left-3/4 h-72 w-72 animate-pulse rounded-full bg-indigo-500/20 blur-3xl"></div>
       </div>
 
-      <div className="relative z-10 max-w-7xl mx-auto">
-        <div className="sm:px-6 pt-20">
+      <div className="relative z-10 mx-auto max-w-7xl">
+        <div className="pt-20 sm:px-6">
           {/* Header with Back Button */}
           <button
             onClick={() => {
@@ -230,21 +250,21 @@ export const LearningPage = () => {
               setSelectedTopics([]);
               setSearchTerm('');
             }}
-            className={`mb-8 flex items-center gap-2 px-4 py-2 rounded-lg transition-all duration-300 ${currentLevel.bgColor} ${currentLevel.borderColor} border hover:scale-105 hover:shadow-lg`}
+            className={`mb-8 flex items-center gap-2 rounded-lg px-4 py-2 transition-all duration-300 ${currentLevel.bgColor} ${currentLevel.borderColor} border hover:scale-105 hover:shadow-lg`}
           >
             <span className="text-lg">←</span>
             <span className="font-semibold">Volver a Niveles</span>
           </button>
 
           {/* Hero Section */}
-          <header className="text-center mb-20">
-            <div className={`text-5xl mb-4 ${currentLevel.textColor}`}>
+          <header className="mb-20 text-center">
+            <div className={`mb-4 text-5xl ${currentLevel.textColor}`}>
               <Icon name={currentLevel.icon} />
             </div>
-            <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-4 bg-linear-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-transparent">
+            <h1 className="mb-4 bg-linear-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-5xl font-bold text-transparent md:text-6xl lg:text-7xl">
               {currentLevel.title}
             </h1>
-            <p className="text-base md:text-lg text-slate-300 max-w-3xl mx-auto leading-relaxed">
+            <p className="mx-auto max-w-3xl text-base leading-relaxed text-slate-300 md:text-lg">
               {currentLevel.description}
             </p>
           </header>
@@ -284,21 +304,27 @@ export const LearningPage = () => {
           )}
 
           {activeLevel === 'intermediate' && (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-20">
+            <div className="mb-20 grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
               {Object.entries(areaIcons).map(([areaKey, areaData]) => (
                 <Link
                   key={areaKey}
                   href={`/exam/${areaKey}`}
-                  className="group p-8 rounded-2xl border-2 border-slate-700/50 bg-slate-800/20 hover:border-orange-500/60 hover:bg-orange-500/10 transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-orange-500/30"
+                  className="group rounded-2xl border-2 border-slate-700/50 bg-slate-800/20 p-8 transition-all duration-300 hover:scale-105 hover:border-orange-500/60 hover:bg-orange-500/10 hover:shadow-lg hover:shadow-orange-500/30"
                 >
-                  <div className="flex flex-col items-center text-center gap-4">
+                  <div className="flex flex-col items-center gap-4 text-center">
                     <div className={`text-5xl ${areaData.color}`}>
                       <Icon name={areaData.icon} />
                     </div>
                     <div>
-                      <h3 className="text-2xl font-bold text-white mb-2">{areaData.label}</h3>
-                      <p className="text-slate-400 text-sm mb-4">Practica con exámenes específicos</p>
-                      <p className="text-orange-400 font-semibold text-sm">Comenzar Examen →</p>
+                      <h3 className="mb-2 text-2xl font-bold text-white">
+                        {areaData.label}
+                      </h3>
+                      <p className="mb-4 text-sm text-slate-400">
+                        Practica con exámenes específicos
+                      </p>
+                      <p className="text-sm font-semibold text-orange-400">
+                        Comenzar Examen →
+                      </p>
                     </div>
                   </div>
                 </Link>
@@ -307,38 +333,58 @@ export const LearningPage = () => {
           )}
 
           {activeLevel === 'advanced' && (
-            <div className="max-w-2xl mx-auto mb-20">
-              <div className="p-12 rounded-2xl border-2 border-red-500/30 bg-red-500/10">
-                <div className="flex flex-col items-center text-center gap-6">
+            <div className="mx-auto mb-20 max-w-2xl">
+              <div className="rounded-2xl border-2 border-red-500/30 bg-red-500/10 p-12">
+                <div className="flex flex-col items-center gap-6 text-center">
                   <div className="text-6xl text-red-400">
                     <Icon name="fire" />
                   </div>
                   <div>
-                    <h3 className="text-3xl font-bold text-white mb-4">Simulacro Global ICFES</h3>
-                    <p className="text-slate-300 text-lg leading-relaxed mb-6">
-                      Completa un examen que simula las condiciones reales del ICFES. Incluye todas las materias integradas con el mismo formato, duración y dificultad del examen oficial.
+                    <h3 className="mb-4 text-3xl font-bold text-white">
+                      Simulacro Global ICFES
+                    </h3>
+                    <p className="mb-6 text-lg leading-relaxed text-slate-300">
+                      Completa un examen que simula las condiciones reales del
+                      ICFES. Incluye todas las materias integradas con el mismo
+                      formato, duración y dificultad del examen oficial.
                     </p>
-                    <div className="grid grid-cols-2 gap-4 mb-8 text-left">
-                      <div className="p-3 rounded-lg bg-black/30">
-                        <p className="text-red-400 font-semibold flex items-center gap-2"><Icon name="clock" /> Duración</p>
-                        <p className="text-slate-300 text-sm">3 horas aproximadamente</p>
+                    <div className="mb-8 grid grid-cols-2 gap-4 text-left">
+                      <div className="rounded-lg bg-black/30 p-3">
+                        <p className="flex items-center gap-2 font-semibold text-red-400">
+                          <Icon name="clock" /> Duración
+                        </p>
+                        <p className="text-sm text-slate-300">
+                          3 horas aproximadamente
+                        </p>
                       </div>
-                      <div className="p-3 rounded-lg bg-black/30">
-                        <p className="text-red-400 font-semibold flex items-center gap-2"><Icon name="chart-line" /> Preguntas</p>
-                        <p className="text-slate-300 text-sm">200 preguntas totales</p>
+                      <div className="rounded-lg bg-black/30 p-3">
+                        <p className="flex items-center gap-2 font-semibold text-red-400">
+                          <Icon name="chart-line" /> Preguntas
+                        </p>
+                        <p className="text-sm text-slate-300">
+                          200 preguntas totales
+                        </p>
                       </div>
-                      <div className="p-3 rounded-lg bg-black/30">
-                        <p className="text-red-400 font-semibold">🎯 Materias</p>
-                        <p className="text-slate-300 text-sm">5 áreas integradas</p>
+                      <div className="rounded-lg bg-black/30 p-3">
+                        <p className="font-semibold text-red-400">
+                          🎯 Materias
+                        </p>
+                        <p className="text-sm text-slate-300">
+                          5 áreas integradas
+                        </p>
                       </div>
-                      <div className="p-3 rounded-lg bg-black/30">
-                        <p className="text-red-400 font-semibold">📈 Resultados</p>
-                        <p className="text-slate-300 text-sm">Análisis detallado</p>
+                      <div className="rounded-lg bg-black/30 p-3">
+                        <p className="font-semibold text-red-400">
+                          📈 Resultados
+                        </p>
+                        <p className="text-sm text-slate-300">
+                          Análisis detallado
+                        </p>
                       </div>
                     </div>
                     <Link
                       href="/exam/full"
-                      className="inline-block w-full px-8 py-4 rounded-lg font-semibold transition-all duration-300 bg-linear-to-r from-red-500 to-pink-500 text-white hover:shadow-lg hover:shadow-red-500/30 hover:scale-105"
+                      className="inline-block w-full rounded-lg bg-linear-to-r from-red-500 to-pink-500 px-8 py-4 font-semibold text-white transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-red-500/30"
                     >
                       Iniciar Simulacro Global
                     </Link>
@@ -353,10 +399,10 @@ export const LearningPage = () => {
         {activeLevel === 'easy' && <AdditionalResources />}
 
         {/* Back Button */}
-        <div className="text-center pb-20">
+        <div className="pb-20 text-center">
           <Link
             href="/"
-            className="cursor-pointer inline-block bg-linear-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-semibold py-3 px-8 rounded-xl transition-all duration-300 hover:shadow-lg hover:shadow-purple-500/30 hover:scale-105"
+            className="inline-block cursor-pointer rounded-xl bg-linear-to-r from-purple-600 to-pink-600 px-8 py-3 font-semibold text-white transition-all duration-300 hover:scale-105 hover:from-purple-700 hover:to-pink-700 hover:shadow-lg hover:shadow-purple-500/30"
           >
             ← Volver al Inicio
           </Link>

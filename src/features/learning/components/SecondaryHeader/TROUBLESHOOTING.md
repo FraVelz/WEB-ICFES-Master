@@ -3,6 +3,7 @@
 ## Error: MIME Type Corrupted Content
 
 Si ves un error como:
+
 ```
 GET http://localhost:5173/src/features/learning/components/MobileHeader/index.jsx
 ERROR_CORRUPTED_CONTENT
@@ -12,6 +13,7 @@ Se bloqueó la carga de un módulo de "http://localhost:5173/src/features/learni
 ### ✅ Soluciones (en orden de prioridad)
 
 #### 1. **Limpiar Caché (Más Rápido)**
+
 ```bash
 # Presiona Ctrl+Shift+Delete en el navegador
 # O borra manualmente el caché de la pestaña
@@ -23,18 +25,21 @@ Se bloqueó la carga de un módulo de "http://localhost:5173/src/features/learni
 ```
 
 #### 2. **Hard Refresh del Navegador**
+
 ```
 Windows/Linux: Ctrl+Shift+R
 Mac: Cmd+Shift+R
 ```
 
 #### 3. **Limpiar Caché de Vite**
+
 ```bash
 cd /home/fravelz/Documentos/WEB-ICFES-Master
 rm -rf node_modules/.vite
 ```
 
 #### 4. **Reiniciar el Servidor de Desarrollo**
+
 ```bash
 # En la terminal donde corre Vite:
 # Presiona Ctrl+C para detener
@@ -45,6 +50,7 @@ pnpm dev
 ```
 
 #### 5. **Limpiar Todo**
+
 ```bash
 # Opción nuclear - limpia todo
 cd /home/fravelz/Documentos/WEB-ICFES-Master
@@ -84,12 +90,14 @@ ls -la src/features/learning/components/MobileHeader/
 Asegúrate de que las importaciones sean correctas:
 
 ### ✅ Correcto
+
 ```jsx
 import { MobileHeader } from '@/features/learning/components';
 import { MobileHeader } from '../components/MobileHeader';
 ```
 
 ### ❌ Incorrecto
+
 ```jsx
 import { MobileHeader } from '@/features/learning/components/MobileHeader/index.jsx';
 ```
@@ -107,6 +115,7 @@ import { MobileHeader } from '@/features/learning/components/MobileHeader/index.
    - 🔴 Rojo = Error
 
 Si ves errores MIME:
+
 - Haz Hard Refresh
 - Limpia caché
 - Reinicia servidor
@@ -148,6 +157,7 @@ MobileHeader/
 ## ✨ Si todo funciona correctamente
 
 Deberías ver:
+
 1. ✅ Compilación sin errores en consola
 2. ✅ Header móvil visible en dispositivos pequeños
 3. ✅ 3 botones clickeables en el header
@@ -170,7 +180,7 @@ console.log('Datos de gamificación cargados correctamente');
 ---
 
 **Si el error persiste después de estas acciones, revisa:**
+
 - Network tab del navegador → Busca requests fallidas
 - Console → Busca mensajes de error específicos
 - Reinicia completamente: cierra navegador y VS Code, abre nuevamente
-

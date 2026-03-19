@@ -11,7 +11,7 @@
 export const generateKey = async (password) => {
   const encoder = new TextEncoder();
   const data = encoder.encode(password);
-  
+
   // Crear una clave a partir de la contraseña
   const keyMaterial = await window.crypto.subtle.importKey(
     'raw',
@@ -45,7 +45,7 @@ export const generateKey = async (password) => {
 export const encryptData = async (data, password) => {
   try {
     const key = await generateKey(password);
-    
+
     // Convertir datos a JSON
     const jsonString = JSON.stringify(data);
     const encoder = new TextEncoder();
@@ -112,7 +112,9 @@ export const decryptData = async (encryptedBase64, password) => {
     const jsonString = decoder.decode(decryptedData);
     return JSON.parse(jsonString);
   } catch (error) {
-    throw new Error(`Error al descifrar datos. Contraseña incorrecta o datos corruptos: ${error.message}`);
+    throw new Error(
+      `Error al descifrar datos. Contraseña incorrecta o datos corruptos: ${error.message}`
+    );
   }
 };
 
@@ -125,10 +127,10 @@ export const createChecksum = async (data) => {
   const encoder = new TextEncoder();
   const encodedData = encoder.encode(JSON.stringify(data));
   const hashBuffer = await window.crypto.subtle.digest('SHA-256', encodedData);
-  
+
   // Convertir a hexadecimal
   const hashArray = Array.from(new Uint8Array(hashBuffer));
-  return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+  return hashArray.map((b) => b.toString(16).padStart(2, '0')).join('');
 };
 
 /**

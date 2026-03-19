@@ -23,7 +23,7 @@ const createMockUser = (overrides = {}) => ({
   email: overrides.email || 'usuario@icfes.local',
   displayName: overrides.displayName || 'Usuario ICFES',
   photoURL: overrides.photoURL || null,
-  ...overrides
+  ...overrides,
 });
 
 const mapSupabaseUser = (user) => {
@@ -32,8 +32,13 @@ const mapSupabaseUser = (user) => {
     uid: user.id,
     id: user.id,
     email: user.email,
-    displayName: user.user_metadata?.display_name || user.user_metadata?.full_name || user.email?.split('@')[0] || 'Usuario',
-    photoURL: user.user_metadata?.avatar_url || user.user_metadata?.picture || null
+    displayName:
+      user.user_metadata?.display_name ||
+      user.user_metadata?.full_name ||
+      user.email?.split('@')[0] ||
+      'Usuario',
+    photoURL:
+      user.user_metadata?.avatar_url || user.user_metadata?.picture || null,
   };
 };
 
@@ -43,14 +48,20 @@ export const AuthProvider = ({ children }) => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    if (API_CONFIG.MODE !== 'supabase' || !process.env.NEXT_PUBLIC_SUPABASE_URL || !supabase) {
+    if (
+      API_CONFIG.MODE !== 'supabase' ||
+      !process.env.NEXT_PUBLIC_SUPABASE_URL ||
+      !supabase
+    ) {
       try {
-        const stored = typeof window !== 'undefined' && localStorage.getItem(MOCK_USER_KEY);
+        const stored =
+          typeof window !== 'undefined' && localStorage.getItem(MOCK_USER_KEY);
         if (stored) {
           setUser(JSON.parse(stored));
         } else {
           const demoUser = createMockUser();
-          if (typeof window !== 'undefined') localStorage.setItem(MOCK_USER_KEY, JSON.stringify(demoUser));
+          if (typeof window !== 'undefined')
+            localStorage.setItem(MOCK_USER_KEY, JSON.stringify(demoUser));
           setUser(demoUser);
         }
       } catch {
@@ -60,7 +71,9 @@ export const AuthProvider = ({ children }) => {
       return;
     }
 
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
       setUser(session?.user ? mapSupabaseUser(session.user) : null);
       setLoading(false);
     });
@@ -77,14 +90,15 @@ export const AuthProvider = ({ children }) => {
     setError(null);
     if (API_CONFIG.MODE !== 'supabase') {
       const newUser = createMockUser({ email, displayName });
-      if (typeof window !== 'undefined') localStorage.setItem(MOCK_USER_KEY, JSON.stringify(newUser));
+      if (typeof window !== 'undefined')
+        localStorage.setItem(MOCK_USER_KEY, JSON.stringify(newUser));
       setUser(newUser);
       return newUser;
     }
     const { data, error: err } = await supabase.auth.signUp({
       email,
       password,
-      options: { data: { display_name: displayName } }
+      options: { data: { display_name: displayName } },
     });
     if (err) {
       setError(err.message);
@@ -95,7 +109,7 @@ export const AuthProvider = ({ children }) => {
         email: data.user.email,
         displayName: displayName || data.user.email?.split('@')[0],
         username: null,
-        bio: null
+        bio: null,
       });
       return mapSupabaseUser(data.user);
     }
@@ -105,18 +119,23 @@ export const AuthProvider = ({ children }) => {
   const login = async (email, password) => {
     setError(null);
     if (API_CONFIG.MODE !== 'supabase') {
-      const existing = typeof window !== 'undefined' && localStorage.getItem(MOCK_USER_KEY);
+      const existing =
+        typeof window !== 'undefined' && localStorage.getItem(MOCK_USER_KEY);
       if (existing) {
         const parsed = JSON.parse(existing);
         setUser({ ...parsed, email: email || parsed.email });
         return parsed;
       }
       const newUser = createMockUser({ email });
-      if (typeof window !== 'undefined') localStorage.setItem(MOCK_USER_KEY, JSON.stringify(newUser));
+      if (typeof window !== 'undefined')
+        localStorage.setItem(MOCK_USER_KEY, JSON.stringify(newUser));
       setUser(newUser);
       return newUser;
     }
-    const { data, error: err } = await supabase.auth.signInWithPassword({ email, password });
+    const { data, error: err } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
     if (err) {
       setError(err.message);
       throw err;
@@ -127,12 +146,18 @@ export const AuthProvider = ({ children }) => {
   const loginWithGoogle = async () => {
     setError(null);
     if (API_CONFIG.MODE !== 'supabase') {
-      const newUser = createMockUser({ displayName: 'Usuario Google', email: 'google@icfes.local' });
-      if (typeof window !== 'undefined') localStorage.setItem(MOCK_USER_KEY, JSON.stringify(newUser));
+      const newUser = createMockUser({
+        displayName: 'Usuario Google',
+        email: 'google@icfes.local',
+      });
+      if (typeof window !== 'undefined')
+        localStorage.setItem(MOCK_USER_KEY, JSON.stringify(newUser));
       setUser(newUser);
       return newUser;
     }
-    const { data, error: err } = await supabase.auth.signInWithOAuth({ provider: 'google' });
+    const { data, error: err } = await supabase.auth.signInWithOAuth({
+      provider: 'google',
+    });
     if (err) {
       setError(err.message);
       throw err;
@@ -163,7 +188,7 @@ export const AuthProvider = ({ children }) => {
     }
     const origin = typeof window !== 'undefined' ? window.location.origin : '';
     const { error: err } = await supabase.auth.resetPasswordForEmail(email, {
-      redirectTo: `${origin}/reset-password`
+      redirectTo: `${origin}/reset-password`,
     });
     if (err) {
       setError(err.message);
@@ -177,7 +202,9 @@ export const AuthProvider = ({ children }) => {
     if (API_CONFIG.MODE !== 'supabase') {
       return true;
     }
-    const { error: err } = await supabase.auth.updateUser({ password: newPassword });
+    const { error: err } = await supabase.auth.updateUser({
+      password: newPassword,
+    });
     if (err) {
       setError(err.message);
       throw err;
@@ -187,9 +214,18 @@ export const AuthProvider = ({ children }) => {
 
   const getUserData = async (uid) => {
     if (API_CONFIG.MODE !== 'supabase') {
-      const profile = typeof window !== 'undefined' ? JSON.parse(localStorage.getItem('icfes_user_profile') || '{}') : {};
-      const progress = typeof window !== 'undefined' ? JSON.parse(localStorage.getItem('icfes_progress') || 'null') : null;
-      const gamification = typeof window !== 'undefined' ? JSON.parse(localStorage.getItem('icfes_gamification') || '{}') : {};
+      const profile =
+        typeof window !== 'undefined'
+          ? JSON.parse(localStorage.getItem('icfes_user_profile') || '{}')
+          : {};
+      const progress =
+        typeof window !== 'undefined'
+          ? JSON.parse(localStorage.getItem('icfes_progress') || 'null')
+          : null;
+      const gamification =
+        typeof window !== 'undefined'
+          ? JSON.parse(localStorage.getItem('icfes_gamification') || '{}')
+          : {};
       return { profile, progress, gamification };
     }
     const profile = await UserSupabaseService.getByUserId(uid);
@@ -197,7 +233,7 @@ export const AuthProvider = ({ children }) => {
     const { GamificationSupabaseService } = await import('@/services/supabase');
     const [progress, gamification] = await Promise.all([
       ProgressSupabaseService.getByUserId(uid),
-      GamificationSupabaseService.getByUserId(uid)
+      GamificationSupabaseService.getByUserId(uid),
     ]);
     return { profile, progress, gamification };
   };
@@ -207,22 +243,41 @@ export const AuthProvider = ({ children }) => {
       planType: 'free',
       planName: 'Plan Gratuito',
       status: 'active',
-      features: { questionsPerDay: 5, simulationTests: false, advancedAnalytics: false }
+      features: {
+        questionsPerDay: 5,
+        simulationTests: false,
+        advancedAnalytics: false,
+      },
     };
     if (API_CONFIG.MODE !== 'supabase') {
-      const plan = typeof window !== 'undefined' ? JSON.parse(localStorage.getItem('icfes_user_plan') || 'null') : null;
+      const plan =
+        typeof window !== 'undefined'
+          ? JSON.parse(localStorage.getItem('icfes_user_plan') || 'null')
+          : null;
       return plan || defaultPlan;
     }
     const { supabase: sb } = await import('@/config/supabase');
-    const { data: { user: authUser } } = await sb.auth.getUser();
-    if (!authUser) return { planType: 'free', planName: 'Plan Gratuito', status: 'active', features: {} };
-    const { data } = await sb.from('user_plans').select('*').eq('user_id', authUser.id).maybeSingle();
+    const {
+      data: { user: authUser },
+    } = await sb.auth.getUser();
+    if (!authUser)
+      return {
+        planType: 'free',
+        planName: 'Plan Gratuito',
+        status: 'active',
+        features: {},
+      };
+    const { data } = await sb
+      .from('user_plans')
+      .select('*')
+      .eq('user_id', authUser.id)
+      .maybeSingle();
     if (data) {
       return {
         planType: data.plan_type || 'free',
         planName: data.plan_name || 'Plan Gratuito',
         status: data.status || 'active',
-        features: data.features || {}
+        features: data.features || {},
       };
     }
     return defaultPlan;
@@ -230,20 +285,31 @@ export const AuthProvider = ({ children }) => {
 
   const updateUserPlan = async (uid, planData) => {
     if (API_CONFIG.MODE !== 'supabase') {
-      const current = typeof window !== 'undefined' ? JSON.parse(localStorage.getItem('icfes_user_plan') || '{}') : {};
-      const updated = { ...current, ...planData, updatedAt: new Date().toISOString() };
-      if (typeof window !== 'undefined') localStorage.setItem('icfes_user_plan', JSON.stringify(updated));
+      const current =
+        typeof window !== 'undefined'
+          ? JSON.parse(localStorage.getItem('icfes_user_plan') || '{}')
+          : {};
+      const updated = {
+        ...current,
+        ...planData,
+        updatedAt: new Date().toISOString(),
+      };
+      if (typeof window !== 'undefined')
+        localStorage.setItem('icfes_user_plan', JSON.stringify(updated));
       return;
     }
     const { supabase: sb } = await import('@/config/supabase');
-    await sb.from('user_plans').upsert({
-      user_id: uid,
-      plan_type: planData.planType || planData.plan_type,
-      plan_name: planData.planName || planData.plan_name,
-      status: planData.status || 'active',
-      features: planData.features || {},
-      updated_at: new Date().toISOString()
-    }, { onConflict: 'user_id' });
+    await sb.from('user_plans').upsert(
+      {
+        user_id: uid,
+        plan_type: planData.planType || planData.plan_type,
+        plan_name: planData.planName || planData.plan_name,
+        status: planData.status || 'active',
+        features: planData.features || {},
+        updated_at: new Date().toISOString(),
+      },
+      { onConflict: 'user_id' }
+    );
   };
 
   const value = {

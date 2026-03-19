@@ -1,8 +1,8 @@
 /**
  * CompositeContent - Componente para combinar múltiples tipos de contenido
- * 
+ *
  * Permite crear preguntas complejas con texto, imágenes, tablas, etc.
- * 
+ *
  * Estructura de datos:
  * [
  *   { type: "text", content: "Pregunta inicial" },
@@ -10,7 +10,7 @@
  *   { type: "table", content: { headers: [...], rows: [...] } },
  *   { type: "text", content: "Pregunta final" }
  * ]
- * 
+ *
  * Uso:
  * <CompositeContent
  *   blocks={[
@@ -67,5 +67,9 @@ export const CompositeContent = ({ blocks }) => {
     }
   };
 
-  return <div className="space-y-4">{blocks.map((block, idx) => renderBlock(block, idx))}</div>;
+  return (
+    <div className="space-y-4">
+      {blocks.map((block, idx) => renderBlock(block, idx))}
+    </div>
+  );
 };

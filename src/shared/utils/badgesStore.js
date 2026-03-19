@@ -17,7 +17,7 @@ export const BADGES_CATALOG = [
     tier: 1,
     color: 'from-green-400 to-green-600',
     borderColor: 'border-green-500',
-    requiresPrevious: null
+    requiresPrevious: null,
   },
   {
     id: 2,
@@ -28,7 +28,7 @@ export const BADGES_CATALOG = [
     tier: 2,
     color: 'from-blue-400 to-blue-600',
     borderColor: 'border-blue-500',
-    requiresPrevious: 1
+    requiresPrevious: 1,
   },
   {
     id: 3,
@@ -39,7 +39,7 @@ export const BADGES_CATALOG = [
     tier: 3,
     color: 'from-yellow-400 to-yellow-600',
     borderColor: 'border-yellow-500',
-    requiresPrevious: 2
+    requiresPrevious: 2,
   },
   {
     id: 4,
@@ -50,7 +50,7 @@ export const BADGES_CATALOG = [
     tier: 3,
     color: 'from-cyan-400 to-cyan-600',
     borderColor: 'border-cyan-500',
-    requiresPrevious: 2
+    requiresPrevious: 2,
   },
   {
     id: 5,
@@ -61,7 +61,7 @@ export const BADGES_CATALOG = [
     tier: 3,
     color: 'from-green-400 to-green-600',
     borderColor: 'border-green-500',
-    requiresPrevious: 2
+    requiresPrevious: 2,
   },
   {
     id: 6,
@@ -72,7 +72,7 @@ export const BADGES_CATALOG = [
     tier: 3,
     color: 'from-orange-400 to-orange-600',
     borderColor: 'border-orange-500',
-    requiresPrevious: 2
+    requiresPrevious: 2,
   },
   {
     id: 7,
@@ -83,7 +83,7 @@ export const BADGES_CATALOG = [
     tier: 4,
     color: 'from-purple-400 to-purple-600',
     borderColor: 'border-purple-500',
-    requiresPrevious: 3
+    requiresPrevious: 3,
   },
   {
     id: 8,
@@ -94,8 +94,8 @@ export const BADGES_CATALOG = [
     tier: 5,
     color: 'from-yellow-300 to-yellow-500',
     borderColor: 'border-yellow-400',
-    requiresPrevious: 7
-  }
+    requiresPrevious: 7,
+  },
 ];
 
 /**
@@ -111,7 +111,7 @@ export const getUserBadges = () => {
  */
 export const getUserBadgesWithDetails = () => {
   const purchasedIds = getUserBadges();
-  return BADGES_CATALOG.filter(badge => purchasedIds.includes(badge.id));
+  return BADGES_CATALOG.filter((badge) => purchasedIds.includes(badge.id));
 };
 
 /**
@@ -126,7 +126,7 @@ export const isBadgePurchased = (badgeId) => {
  * (si ya tiene la insignia anterior o no requiere ninguna)
  */
 export const canPurchaseBadge = (badgeId) => {
-  const badge = BADGES_CATALOG.find(b => b.id === badgeId);
+  const badge = BADGES_CATALOG.find((b) => b.id === badgeId);
   if (!badge) return false;
 
   // Si ya la compró
@@ -143,11 +143,11 @@ export const canPurchaseBadge = (badgeId) => {
  * Obtiene todas las insignias disponibles con su estado
  */
 export const getAllBadgesWithStatus = () => {
-  return BADGES_CATALOG.map(badge => ({
+  return BADGES_CATALOG.map((badge) => ({
     ...badge,
     purchased: isBadgePurchased(badge.id),
     canPurchase: canPurchaseBadge(badge.id),
-    locked: !canPurchaseBadge(badge.id) && !isBadgePurchased(badge.id)
+    locked: !canPurchaseBadge(badge.id) && !isBadgePurchased(badge.id),
   }));
 };
 
@@ -155,7 +155,7 @@ export const getAllBadgesWithStatus = () => {
  * Compra una insignia
  */
 export const purchaseBadge = (badgeId) => {
-  const badge = BADGES_CATALOG.find(b => b.id === badgeId);
+  const badge = BADGES_CATALOG.find((b) => b.id === badgeId);
   if (!badge) {
     throw new Error('Insignia no encontrada');
   }
@@ -174,7 +174,9 @@ export const purchaseBadge = (badgeId) => {
   const currentMoney = getVirtualMoney();
 
   if (currentMoney < badge.price) {
-    throw new Error(`No tienes suficiente dinero. Necesitas ${badge.price} y tienes ${currentMoney}`);
+    throw new Error(
+      `No tienes suficiente dinero. Necesitas ${badge.price} y tienes ${currentMoney}`
+    );
   }
 
   // Restar dinero

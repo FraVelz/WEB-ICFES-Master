@@ -5,7 +5,7 @@ export const CHALLENGE_BADGES = {
     icon: 'play',
     description: 'Completa 5 exámenes en un fin de semana',
     requirement: 'Realiza 5 exámenes de viernes a domingo',
-    category: 'desafios'
+    category: 'desafios',
   },
   MIDNIGHT_SCHOLAR: {
     id: 'MIDNIGHT_SCHOLAR',
@@ -13,7 +13,7 @@ export const CHALLENGE_BADGES = {
     icon: 'play',
     description: 'Realiza exámenes después de media noche',
     requirement: 'Completa 3 exámenes después de las 12 AM',
-    category: 'desafios'
+    category: 'desafios',
   },
   EARLY_BIRD: {
     id: 'EARLY_BIRD',
@@ -21,7 +21,7 @@ export const CHALLENGE_BADGES = {
     icon: 'play',
     description: 'Estudia antes de las 6 AM',
     requirement: 'Completa 5 exámenes antes de las 6 AM',
-    category: 'desafios'
+    category: 'desafios',
   },
   CHALLENGE_ACCEPTED: {
     id: 'CHALLENGE_ACCEPTED',
@@ -29,7 +29,7 @@ export const CHALLENGE_BADGES = {
     icon: 'play',
     description: 'Completa un desafío semanal',
     requirement: 'Termina el desafío de la semana',
-    category: 'desafios'
+    category: 'desafios',
   },
   CHALLENGE_MASTER: {
     id: 'CHALLENGE_MASTER',
@@ -37,6 +37,6 @@ export const CHALLENGE_BADGES = {
     icon: 'play',
     description: 'Completa 20 desafíos semanales',
     requirement: 'Termina 20 desafíos semanales',
-    category: 'desafios'
-  }
+    category: 'desafios',
+  },
 };

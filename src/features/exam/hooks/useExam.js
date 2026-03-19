@@ -20,7 +20,7 @@ export function useExam(examId) {
       setExam(found || null);
     } else {
       const exams = getStoredExams();
-      const found = exams.find(e => e.id === examId);
+      const found = exams.find((e) => e.id === examId);
       setExam(found || null);
     }
   }, [examId, user?.uid]);
@@ -59,6 +59,6 @@ export function useExam(examId) {
     compareExams: async () => ({}),
     exportResults: async () => ({}),
     resetUserExams,
-    refresh: loadExam
+    refresh: loadExam,
   };
 }

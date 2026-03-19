@@ -9,7 +9,11 @@ import { useGSAPModalEntrance } from '@/hooks/useGSAPModalEntrance';
  * Se renderiza justo debajo del header secundario
  */
 export const AreasModal = ({ isOpen, onClose, onSelectArea, currentArea }) => {
-  const dropdownRef = useGSAPModalEntrance({ isOpen, type: 'slideFromTop', duration: 0.2 });
+  const dropdownRef = useGSAPModalEntrance({
+    isOpen,
+    type: 'slideFromTop',
+    duration: 0.2,
+  });
 
   if (!isOpen) return null;
 
@@ -18,22 +22,27 @@ export const AreasModal = ({ isOpen, onClose, onSelectArea, currentArea }) => {
   return (
     <>
       {/* Backdrop transparente para cerrar al hacer click fuera */}
-      <div 
-        className="fixed inset-0 z-40" 
-        onClick={onClose}
-      />
-      
+      <div className="fixed inset-0 z-40" onClick={onClose} />
+
       {/* Dropdown Container */}
-      <div ref={dropdownRef} className="absolute top-full left-0 w-full sm:w-80 bg-slate-900 border-b border-x border-slate-700 rounded-b-2xl shadow-2xl z-50">
+      <div
+        ref={dropdownRef}
+        className="absolute top-full left-0 z-50 w-full rounded-b-2xl border-x border-b border-slate-700 bg-slate-900 shadow-2xl sm:w-80"
+      >
         <div className="p-4">
-          <div className="flex justify-between items-center mb-3 pb-2 border-b border-slate-800">
-            <h3 className="text-sm font-bold text-slate-400 uppercase tracking-wider">Mis Cursos</h3>
-            <button onClick={onClose} className="text-slate-500 hover:text-white">
+          <div className="mb-3 flex items-center justify-between border-b border-slate-800 pb-2">
+            <h3 className="text-sm font-bold tracking-wider text-slate-400 uppercase">
+              Mis Cursos
+            </h3>
+            <button
+              onClick={onClose}
+              className="text-slate-500 hover:text-white"
+            >
               <Icon name="times" />
             </button>
           </div>
 
-          <div className="space-y-2 max-h-[60vh] overflow-y-auto">
+          <div className="max-h-[60vh] space-y-2 overflow-y-auto">
             {areas.map(([areaKey, areaData]) => (
               <button
                 key={areaKey}
@@ -41,21 +50,27 @@ export const AreasModal = ({ isOpen, onClose, onSelectArea, currentArea }) => {
                   onSelectArea(areaKey);
                   onClose();
                 }}
-                className={`w-full px-4 py-3 rounded-xl transition-all flex items-center gap-3 ${
+                className={`flex w-full items-center gap-3 rounded-xl px-4 py-3 transition-all ${
                   currentArea === areaKey
                     ? `bg-linear-to-r ${areaData.color} text-white shadow-lg`
-                    : 'bg-slate-800/50 hover:bg-slate-800 text-slate-300'
+                    : 'bg-slate-800/50 text-slate-300 hover:bg-slate-800'
                 }`}
               >
-                <div className={`w-8 h-8 rounded-lg flex items-center justify-center ${
-                  currentArea === areaKey ? 'bg-white/20' : 'bg-slate-700/50'
-                }`}>
-                  <Icon 
-                    name={areaData.icon} 
-                    className={currentArea === areaKey ? 'text-white' : 'text-slate-400'} 
+                <div
+                  className={`flex h-8 w-8 items-center justify-center rounded-lg ${
+                    currentArea === areaKey ? 'bg-white/20' : 'bg-slate-700/50'
+                  }`}
+                >
+                  <Icon
+                    name={areaData.icon}
+                    className={
+                      currentArea === areaKey ? 'text-white' : 'text-slate-400'
+                    }
                   />
                 </div>
-                <span className="font-semibold text-sm text-left">{areaData.name}</span>
+                <span className="text-left text-sm font-semibold">
+                  {areaData.name}
+                </span>
               </button>
             ))}
           </div>

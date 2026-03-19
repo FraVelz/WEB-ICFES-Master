@@ -15,13 +15,18 @@ export async function POST(request: NextRequest) {
     const apiKey = process.env.OPENAI_API_KEY;
     if (!apiKey) {
       return NextResponse.json(
-        { error: 'OpenAI API key no configurada. Añade OPENAI_API_KEY en .env.local' },
+        {
+          error:
+            'OpenAI API key no configurada. Añade OPENAI_API_KEY en .env.local',
+        },
         { status: 500 }
       );
     }
 
     const body = await request.json();
-    const { messages } = body as { messages: Array<{ role: string; content: string }> };
+    const { messages } = body as {
+      messages: Array<{ role: string; content: string }>;
+    };
 
     if (!messages || !Array.isArray(messages) || messages.length === 0) {
       return NextResponse.json(
@@ -66,10 +71,10 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const message = error instanceof Error ? error.message : 'Error al comunicarse con la API de OpenAI';
-    return NextResponse.json(
-      { error: message },
-      { status: 500 }
-    );
+    const message =
+      error instanceof Error
+        ? error.message
+        : 'Error al comunicarse con la API de OpenAI';
+    return NextResponse.json({ error: message }, { status: 500 });
   }
 }

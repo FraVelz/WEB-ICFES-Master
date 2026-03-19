@@ -156,7 +156,8 @@ section {
 
 /* Enhanced glow effect animations */
 @keyframes glowPulse {
-  0%, 100% {
+  0%,
+  100% {
     filter: blur(90px) opacity(0.3);
   }
   50% {
@@ -220,7 +221,8 @@ section {
 }
 
 /* Smooth transitions for interactive elements */
-button, a {
+button,
+a {
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 

@@ -19,13 +19,17 @@ const mapFromDb = (row) => {
     achievements: row.achievements || [],
     xpHistory: row.xp_history || [],
     coinsHistory: row.coins_history || [],
-    updatedAt: row.updated_at
+    updatedAt: row.updated_at,
   };
 };
 
 const GamificationSupabaseService = {
   async getByUserId(userId) {
-    const { data, error } = await supabase.from(TABLE).select('*').eq('user_id', userId).maybeSingle();
+    const { data, error } = await supabase
+      .from(TABLE)
+      .select('*')
+      .eq('user_id', userId)
+      .maybeSingle();
     if (error) throw new Error(`Error leyendo gamificación: ${error.message}`);
     return data ? mapFromDb(data) : null;
   },
@@ -43,10 +47,15 @@ const GamificationSupabaseService = {
         current_xp: 0,
         badges: [],
         achievements: [],
-        updated_at: new Date().toISOString()
+        updated_at: new Date().toISOString(),
       };
-      const { data, error } = await supabase.from(TABLE).upsert(payload, { onConflict: 'user_id' }).select().single();
-      if (error) throw new Error(`Error creando gamificación: ${error.message}`);
+      const { data, error } = await supabase
+        .from(TABLE)
+        .upsert(payload, { onConflict: 'user_id' })
+        .select()
+        .single();
+      if (error)
+        throw new Error(`Error creando gamificación: ${error.message}`);
       profile = mapFromDb(data);
     }
     return profile;
@@ -56,7 +65,10 @@ const GamificationSupabaseService = {
     const profile = await this.getOrCreate(userId);
     const newTotalXP = (profile.totalXP || 0) + points;
     const newLevel = this._calculateLevel(newTotalXP);
-    const xpHistory = [...(profile.xpHistory || []), { date: new Date().toISOString(), points, reason }];
+    const xpHistory = [
+      ...(profile.xpHistory || []),
+      { date: new Date().toISOString(), points, reason },
+    ];
 
     const payload = {
       user_id: userId,
@@ -65,9 +77,13 @@ const GamificationSupabaseService = {
       current_xp: newTotalXP,
       level: newLevel,
       xp_history: xpHistory,
-      updated_at: new Date().toISOString()
+      updated_at: new Date().toISOString(),
     };
-    const { data, error } = await supabase.from(TABLE).upsert(payload, { onConflict: 'user_id' }).select().single();
+    const { data, error } = await supabase
+      .from(TABLE)
+      .upsert(payload, { onConflict: 'user_id' })
+      .select()
+      .single();
     if (error) throw new Error(`Error añadiendo XP: ${error.message}`);
     return mapFromDb(data);
   },
@@ -75,15 +91,22 @@ const GamificationSupabaseService = {
   async addCoins(userId, amount, reason = 'reward') {
     const profile = await this.getOrCreate(userId);
     const newTotalCoins = (profile.totalCoins || 0) + amount;
-    const coinsHistory = [...(profile.coinsHistory || []), { date: new Date().toISOString(), amount, reason, type: 'earn' }];
+    const coinsHistory = [
+      ...(profile.coinsHistory || []),
+      { date: new Date().toISOString(), amount, reason, type: 'earn' },
+    ];
 
     const payload = {
       user_id: userId,
       total_coins: newTotalCoins,
       coins_history: coinsHistory,
-      updated_at: new Date().toISOString()
+      updated_at: new Date().toISOString(),
     };
-    const { data, error } = await supabase.from(TABLE).upsert(payload, { onConflict: 'user_id' }).select().single();
+    const { data, error } = await supabase
+      .from(TABLE)
+      .upsert(payload, { onConflict: 'user_id' })
+      .select()
+      .single();
     if (error) throw new Error(`Error añadiendo monedas: ${error.message}`);
     return mapFromDb(data);
   },
@@ -93,15 +116,23 @@ const GamificationSupabaseService = {
     const available = (profile.totalCoins || 0) - (profile.spentCoins || 0);
     if (available < amount) throw new Error('Monedas insuficientes');
     const newSpent = (profile.spentCoins || 0) + amount;
-    const coinsHistory = [...(profile.coinsHistory || []), { date: new Date().toISOString(), amount, item, type: 'spend' }];
+    const coinsHistory = [
+      ...(profile.coinsHistory || []),
+      { date: new Date().toISOString(), amount, item, type: 'spend' },
+    ];
 
     const payload = {
       user_id: userId,
       spent_coins: newSpent,
       coins_history: coinsHistory,
-      updated_at: new Date().toISOString()
+      updated_at: new Date().toISOString(),
     };
-    const { data, error } = await supabase.from(TABLE).update(payload).eq('user_id', userId).select().single();
+    const { data, error } = await supabase
+      .from(TABLE)
+      .update(payload)
+      .eq('user_id', userId)
+      .select()
+      .single();
     if (error) throw new Error(`Error gastando monedas: ${error.message}`);
     return mapFromDb(data);
   },
@@ -112,14 +143,14 @@ const GamificationSupabaseService = {
       { level: 2, xp: 100 },
       { level: 3, xp: 300 },
       { level: 4, xp: 600 },
-      { level: 5, xp: 1000 }
+      { level: 5, xp: 1000 },
     ];
     let level = 1;
     for (const l of levels) {
       if (totalXP >= l.xp) level = l.level;
     }
     return level;
-  }
+  },
 };
 
 export default GamificationSupabaseService;

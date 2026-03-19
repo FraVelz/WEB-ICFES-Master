@@ -27,9 +27,11 @@ export const useDailyChallenges = (dateString) => {
       localStorage.setItem(CHALLENGES_KEY, JSON.stringify(all));
     }
 
-    const completed = dayChallenges.filter(c => c.status === 'completed').length;
+    const completed = dayChallenges.filter(
+      (c) => c.status === 'completed'
+    ).length;
     const totalXP = dayChallenges
-      .filter(c => c.status === 'completed')
+      .filter((c) => c.status === 'completed')
       .reduce((acc, c) => acc + (c.xpReward || 0), 0);
 
     setChallenges(dayChallenges);
@@ -48,7 +50,7 @@ export const useDailyChallenges = (dateString) => {
 
   const completeChallenge = async (challengeId) => {
     if (!user?.uid || !challenges.length) return;
-    const idx = challenges.findIndex(c => c.id === challengeId);
+    const idx = challenges.findIndex((c) => c.id === challengeId);
     if (idx === -1 || challenges[idx].status === 'completed') return;
 
     const updated = [...challenges];
@@ -56,7 +58,7 @@ export const useDailyChallenges = (dateString) => {
       ...updated[idx],
       status: 'completed',
       progress: updated[idx].target,
-      completedAt: new Date().toISOString()
+      completedAt: new Date().toISOString(),
     };
 
     addVirtualMoney(updated[idx].coinsReward || 0);
@@ -65,7 +67,7 @@ export const useDailyChallenges = (dateString) => {
     all[targetDate] = { date: targetDate, challenges: updated };
     localStorage.setItem(CHALLENGES_KEY, JSON.stringify(all));
 
-    const allCompleted = updated.every(c => c.status === 'completed');
+    const allCompleted = updated.every((c) => c.status === 'completed');
     if (allCompleted) addVirtualMoney(50);
 
     loadChallenges();
@@ -81,6 +83,6 @@ export const useDailyChallenges = (dateString) => {
     stats,
     completeChallenge,
     updateChallengeProgress,
-    refreshChallenges: loadChallenges
+    refreshChallenges: loadChallenges,
   };
 };

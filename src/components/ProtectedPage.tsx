@@ -5,7 +5,11 @@ import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import SignInRequiredBlock from './SignInRequiredBlock';
 
-export default function ProtectedPage({ children }: { children: React.ReactNode }) {
+export default function ProtectedPage({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   const auth = useAuth() as { isAuthenticated: boolean; loading: boolean };
   const { isAuthenticated, loading } = auth;
   const router = useRouter();
@@ -27,10 +31,12 @@ export default function ProtectedPage({ children }: { children: React.ReactNode 
 
   if (loading || !checked) {
     return (
-      <div className="flex flex-col min-h-dvh bg-linear-to-b from-black via-slate-950 to-black text-white items-center justify-center">
+      <div className="flex min-h-dvh flex-col items-center justify-center bg-linear-to-b from-black via-slate-950 to-black text-white">
         <div className="text-center">
-          <div className="w-16 h-16 border-4 border-cyan-500/30 border-t-cyan-500 rounded-full animate-spin mb-4 mx-auto" />
-          <p className="text-lg font-semibold text-cyan-400">Verificando sesión...</p>
+          <div className="mx-auto mb-4 h-16 w-16 animate-spin rounded-full border-4 border-cyan-500/30 border-t-cyan-500" />
+          <p className="text-lg font-semibold text-cyan-400">
+            Verificando sesión...
+          </p>
         </div>
       </div>
     );

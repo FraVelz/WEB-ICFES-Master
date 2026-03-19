@@ -15,7 +15,12 @@ export const LearningService = {
       if (lessons?.length > 0) {
         return lessons.map((l, i) => {
           // Extraer el contenido como string (body, markdown, content o content.body)
-          const rawContent = l.body ?? l.markdown ?? (typeof l.content === 'string' ? l.content : l.content?.body ?? l.content?.markdown);
+          const rawContent =
+            l.body ??
+            l.markdown ??
+            (typeof l.content === 'string'
+              ? l.content
+              : (l.content?.body ?? l.content?.markdown));
           const contentStr = typeof rawContent === 'string' ? rawContent : '';
           return {
             id: l.id,
@@ -26,7 +31,7 @@ export const LearningService = {
             duration: l.duration,
             content: contentStr,
             questions: l.questions,
-            quiz: l.quiz
+            quiz: l.quiz,
           };
         });
       }
@@ -43,22 +48,26 @@ export const LearningService = {
         difficulty: 'facil',
         rewards: { xp: 50, coins: 25 },
         duration: t.duration,
-        content: t.content
+        content: t.content,
       })),
-      ...(intermedio ? [{
-        id: `${key}_intermedio`,
-        title: intermedio.title,
-        order: basics.length,
-        difficulty: 'intermedio',
-        rewards: { xp: 100, coins: 50 },
-        description: intermedio.description,
-        questions: intermedio.questions
-      }] : [])
+      ...(intermedio
+        ? [
+            {
+              id: `${key}_intermedio`,
+              title: intermedio.title,
+              order: basics.length,
+              difficulty: 'intermedio',
+              rewards: { xp: 100, coins: 50 },
+              description: intermedio.description,
+              questions: intermedio.questions,
+            },
+          ]
+        : []),
     ];
   },
 
   getUserProgress: async (userId, areaId) => {
     const completed = getCompletedLessons();
     return { completedLessons: completed, currentLevel: 0, totalXP: 0 };
-  }
+  },
 };

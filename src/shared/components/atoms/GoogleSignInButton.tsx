@@ -34,7 +34,7 @@ export const GoogleSignInButton = () => {
           <div className="w-full border-t border-slate-700"></div>
         </div>
         <div className="relative flex justify-center text-sm">
-          <span className="px-2 bg-black text-slate-400">O continúa con</span>
+          <span className="bg-black px-2 text-slate-400">O continúa con</span>
         </div>
       </div>
 
@@ -43,7 +43,7 @@ export const GoogleSignInButton = () => {
         onClick={handleGoogleSignIn}
         disabled={isLoading}
         type="button"
-        className="cursor-pointer w-full py-3 px-4 bg-white text-black font-bold rounded-lg hover:bg-gray-100 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 border border-gray-300"
+        className="flex w-full cursor-pointer items-center justify-center gap-2 rounded-lg border border-gray-300 bg-white px-4 py-3 font-bold text-black transition-all duration-300 hover:bg-gray-100 disabled:cursor-not-allowed disabled:opacity-50"
       >
         {isLoading ? (
           <>
@@ -60,8 +60,11 @@ export const GoogleSignInButton = () => {
 
       {/* Error Message */}
       {displayError && (
-        <div className="flex items-start gap-3 p-3 bg-red-500/20 border border-red-500/50 rounded-lg">
-          <Icon name="exclamation-circle" className="text-red-400 mt-0.5 shrink-0" />
+        <div className="flex items-start gap-3 rounded-lg border border-red-500/50 bg-red-500/20 p-3">
+          <Icon
+            name="exclamation-circle"
+            className="mt-0.5 shrink-0 text-red-400"
+          />
           <p className="text-sm text-red-400">{displayError}</p>
         </div>
       )}

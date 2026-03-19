@@ -6,14 +6,14 @@ export const DonationSection = () => {
   const [customAmount, setCustomAmount] = useState('');
   const [selectedMethod, setSelectedMethod] = useState('sprite');
   const [copied, setCopied] = useState(null);
-  
+
   // Card Form State
   const [cardData, setCardData] = useState({
     cardNumber: '',
     cardHolder: '',
     expiryMonth: '',
     expiryYear: '',
-    cvv: ''
+    cvv: '',
   });
   const [isProcessing, setIsProcessing] = useState(false);
   const [paymentSuccess, setPaymentSuccess] = useState(false);
@@ -49,7 +49,10 @@ export const DonationSection = () => {
     } else if (type === 'year') {
       value = value.replace(/\D/g, '').slice(0, 2);
     }
-    setCardData({ ...cardData, [`expiry${type.charAt(0).toUpperCase() + type.slice(1)}`]: value });
+    setCardData({
+      ...cardData,
+      [`expiry${type.charAt(0).toUpperCase() + type.slice(1)}`]: value,
+    });
   };
 
   const handleCVVChange = (e) => {
@@ -60,7 +63,7 @@ export const DonationSection = () => {
   const handlePayment = async (e) => {
     e.preventDefault();
     setIsProcessing(true);
-    
+
     // Simulate payment processing
     setTimeout(() => {
       setIsProcessing(false);
@@ -73,7 +76,7 @@ export const DonationSection = () => {
           cardHolder: '',
           expiryMonth: '',
           expiryYear: '',
-          cvv: ''
+          cvv: '',
         });
       }, 3000);
     }, 2000);
@@ -87,7 +90,8 @@ export const DonationSection = () => {
       info: 'Tarjeta Débito / Crédito',
       type: 'card',
       highlight: true,
-      description: 'Usa tu tarjeta para invitar una Sprite al creador de forma segura.'
+      description:
+        'Usa tu tarjeta para invitar una Sprite al creador de forma segura.',
     },
     {
       id: 'nequi',
@@ -96,7 +100,7 @@ export const DonationSection = () => {
       info: 'Transferencia instantánea',
       detail: '322 596 3277',
       type: 'copy',
-      owner: 'Marisol Otavo'
+      owner: 'Marisol Otavo',
     },
     {
       id: 'transferencia',
@@ -105,7 +109,7 @@ export const DonationSection = () => {
       info: 'Cuenta de Ahorros',
       detail: '03225963277',
       type: 'copy',
-      owner: 'Marisol Otavo'
+      owner: 'Marisol Otavo',
     },
     {
       id: 'paypal',
@@ -125,45 +129,50 @@ export const DonationSection = () => {
     },
   ];
 
-  const currentMethod = paymentMethods.find(m => m.id === selectedMethod);
-  const currentAmount = selectedAmount === 'custom' ? (customAmount || '0') : selectedAmount;
+  const currentMethod = paymentMethods.find((m) => m.id === selectedMethod);
+  const currentAmount =
+    selectedAmount === 'custom' ? customAmount || '0' : selectedAmount;
 
   return (
-    <div className="max-w-4xl mx-auto mt-16 px-4 sm:px-6 py-12 bg-linear-to-b from-gray-900 to-gray-800 rounded-2xl border border-white/10 shadow-2xl">
-      
+    <div className="mx-auto mt-16 max-w-4xl rounded-2xl border border-white/10 bg-linear-to-b from-gray-900 to-gray-800 px-4 py-12 shadow-2xl sm:px-6">
       {/* Header */}
-      <div className="text-center mb-10">
-        <div className="inline-flex items-center justify-center p-3 bg-purple-500/20 rounded-full mb-4">
-          <Icon name="heart" className="text-purple-400 text-xl animate-pulse" />
+      <div className="mb-10 text-center">
+        <div className="mb-4 inline-flex items-center justify-center rounded-full bg-purple-500/20 p-3">
+          <Icon
+            name="heart"
+            className="animate-pulse text-xl text-purple-400"
+          />
         </div>
-        <h3 className="text-3xl font-bold text-white mb-3">Apoya este Proyecto</h3>
-        <p className="text-gray-300 max-w-2xl mx-auto leading-relaxed">
-          Esta plataforma es completamente gratuita y se mantiene gracias al esfuerzo personal. 
-          <span className="block mt-2 text-purple-300 font-medium">
-            Incluso una donación pequeña (como 2.000 COP) ayuda a mantener los servidores y seguir mejorando.
+        <h3 className="mb-3 text-3xl font-bold text-white">
+          Apoya este Proyecto
+        </h3>
+        <p className="mx-auto max-w-2xl leading-relaxed text-gray-300">
+          Esta plataforma es completamente gratuita y se mantiene gracias al
+          esfuerzo personal.
+          <span className="mt-2 block font-medium text-purple-300">
+            Incluso una donación pequeña (como 2.000 COP) ayuda a mantener los
+            servidores y seguir mejorando.
           </span>
         </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-12 gap-8">
-        
+      <div className="grid grid-cols-1 gap-8 md:grid-cols-12">
         {/* Columna Izquierda: Selección de Monto y Método */}
-        <div className="md:col-span-7 space-y-8">
-          
+        <div className="space-y-8 md:col-span-7">
           {/* Selector de Monto */}
           <div>
-            <label className="block text-sm font-medium text-gray-400 mb-3 uppercase tracking-wider">
+            <label className="mb-3 block text-sm font-medium tracking-wider text-gray-400 uppercase">
               1. Elige un monto de apoyo
             </label>
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+            <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
               {[2000, 5000, 10000].map((amount) => (
                 <button
                   key={amount}
                   onClick={() => handleAmountSelect(amount)}
-                  className={`cursor-pointer py-3 px-2 rounded-xl border transition-all duration-200 font-semibold text-sm ${
+                  className={`cursor-pointer rounded-xl border px-2 py-3 text-sm font-semibold transition-all duration-200 ${
                     selectedAmount === amount
-                      ? 'bg-purple-600 border-purple-500 text-white shadow-lg shadow-purple-500/20 transform scale-105'
-                      : 'bg-white/5 border-white/10 text-gray-300 hover:bg-white/10 hover:border-white/20'
+                      ? 'scale-105 transform border-purple-500 bg-purple-600 text-white shadow-lg shadow-purple-500/20'
+                      : 'border-white/10 bg-white/5 text-gray-300 hover:border-white/20 hover:bg-white/10'
                   }`}
                 >
                   ${amount.toLocaleString()}
@@ -172,10 +181,10 @@ export const DonationSection = () => {
               <div className="relative">
                 <button
                   onClick={() => handleAmountSelect('custom')}
-                  className={`cursor-pointer w-full h-full py-3 px-2 rounded-xl border transition-all duration-200 font-semibold text-sm ${
+                  className={`h-full w-full cursor-pointer rounded-xl border px-2 py-3 text-sm font-semibold transition-all duration-200 ${
                     selectedAmount === 'custom'
-                      ? 'bg-purple-600 border-purple-500 text-white shadow-lg shadow-purple-500/20'
-                      : 'bg-white/5 border-white/10 text-gray-300 hover:bg-white/10 hover:border-white/20'
+                      ? 'border-purple-500 bg-purple-600 text-white shadow-lg shadow-purple-500/20'
+                      : 'border-white/10 bg-white/5 text-gray-300 hover:border-white/20 hover:bg-white/10'
                   }`}
                 >
                   Otro
@@ -183,15 +192,17 @@ export const DonationSection = () => {
               </div>
             </div>
             {selectedAmount === 'custom' && (
-              <div className="mt-3 animate-fadeIn">
+              <div className="animate-fadeIn mt-3">
                 <div className="relative">
-                  <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">$</span>
+                  <span className="absolute top-1/2 left-4 -translate-y-1/2 text-gray-400">
+                    $
+                  </span>
                   <input
                     type="text"
                     value={customAmount}
                     onChange={handleCustomAmountChange}
                     placeholder="Ingresa el valor (COP)"
-                    className="w-full bg-black/20 border border-white/10 rounded-xl py-3 pl-8 pr-4 text-white placeholder-gray-500 focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition-all"
+                    className="w-full rounded-xl border border-white/10 bg-black/20 py-3 pr-4 pl-8 text-white placeholder-gray-500 transition-all focus:border-purple-500 focus:ring-1 focus:ring-purple-500 focus:outline-none"
                   />
                 </div>
               </div>
@@ -200,33 +211,39 @@ export const DonationSection = () => {
 
           {/* Selector de Método */}
           <div>
-            <label className="block text-sm font-medium text-gray-400 mb-3 uppercase tracking-wider">
+            <label className="mb-3 block text-sm font-medium tracking-wider text-gray-400 uppercase">
               2. Elige el medio de donación
             </label>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
               {paymentMethods.map((method) => (
                 <button
                   key={method.id}
                   onClick={() => setSelectedMethod(method.id)}
-                  className={`cursor-pointer relative p-4 rounded-xl border text-left transition-all duration-200 group ${
+                  className={`group relative cursor-pointer rounded-xl border p-4 text-left transition-all duration-200 ${
                     selectedMethod === method.id
-                      ? 'bg-white/10 border-purple-500 ring-1 ring-purple-500/50'
-                      : 'bg-white/5 border-white/10 hover:bg-white/10 hover:border-white/20'
+                      ? 'border-purple-500 bg-white/10 ring-1 ring-purple-500/50'
+                      : 'border-white/10 bg-white/5 hover:border-white/20 hover:bg-white/10'
                   } ${method.highlight ? 'sm:col-span-2' : ''}`}
                 >
                   {method.highlight && (
-                    <div className="absolute -top-3 -right-2 bg-linear-to-r from-yellow-400 to-orange-500 text-black text-[10px] font-bold px-2 py-1 rounded-full shadow-lg transform rotate-3">
+                    <div className="absolute -top-3 -right-2 rotate-3 transform rounded-full bg-linear-to-r from-yellow-400 to-orange-500 px-2 py-1 text-[10px] font-bold text-black shadow-lg">
                       RECOMENDADO
                     </div>
                   )}
                   <div className="flex items-center gap-3">
-                    <div className={`w-10 h-10 rounded-full flex items-center justify-center ${
-                      method.highlight ? 'bg-green-500/20 text-green-400' : 'bg-white/10 text-gray-300'
-                    }`}>
+                    <div
+                      className={`flex h-10 w-10 items-center justify-center rounded-full ${
+                        method.highlight
+                          ? 'bg-green-500/20 text-green-400'
+                          : 'bg-white/10 text-gray-300'
+                      }`}
+                    >
                       <Icon name={method.icon} className="text-lg" />
                     </div>
                     <div>
-                      <h4 className={`font-bold ${selectedMethod === method.id ? 'text-white' : 'text-gray-300'}`}>
+                      <h4
+                        className={`font-bold ${selectedMethod === method.id ? 'text-white' : 'text-gray-300'}`}
+                      >
                         {method.name}
                       </h4>
                       <p className="text-xs text-gray-400">{method.info}</p>
@@ -236,104 +253,142 @@ export const DonationSection = () => {
               ))}
             </div>
           </div>
-
         </div>
 
         {/* Columna Derecha: Detalles y Acción */}
         <div className="md:col-span-5">
-          <div className="h-full bg-black/20 rounded-2xl p-6 border border-white/5 flex flex-col justify-between relative overflow-hidden">
+          <div className="relative flex h-full flex-col justify-between overflow-hidden rounded-2xl border border-white/5 bg-black/20 p-6">
             {/* Background decoration */}
-            <div className="absolute top-0 right-0 w-32 h-32 bg-purple-500/10 rounded-full blur-3xl -mr-16 -mt-16 pointer-events-none"></div>
-            
+            <div className="pointer-events-none absolute top-0 right-0 -mt-16 -mr-16 h-32 w-32 rounded-full bg-purple-500/10 blur-3xl"></div>
+
             <div>
-              <h4 className="text-lg font-bold text-white mb-1 flex items-center gap-2">
+              <h4 className="mb-1 flex items-center gap-2 text-lg font-bold text-white">
                 <Icon name={currentMethod?.icon} className="text-purple-400" />
                 {currentMethod?.name}
               </h4>
-              <p className="text-sm text-gray-400 mb-6 border-b border-white/10 pb-4">
-                {currentMethod?.description || 'Sigue los pasos para completar tu donación.'}
+              <p className="mb-6 border-b border-white/10 pb-4 text-sm text-gray-400">
+                {currentMethod?.description ||
+                  'Sigue los pasos para completar tu donación.'}
               </p>
 
               <div className="space-y-4">
-                <div className="bg-white/5 rounded-xl p-4 border border-white/10">
-                  <p className="text-xs text-gray-500 uppercase mb-1">Monto a donar</p>
+                <div className="rounded-xl border border-white/10 bg-white/5 p-4">
+                  <p className="mb-1 text-xs text-gray-500 uppercase">
+                    Monto a donar
+                  </p>
                   <p className="text-2xl font-bold text-white">
-                    ${Number(currentAmount).toLocaleString()} <span className="text-sm font-normal text-gray-400">COP</span>
+                    ${Number(currentAmount).toLocaleString()}{' '}
+                    <span className="text-sm font-normal text-gray-400">
+                      COP
+                    </span>
                   </p>
                 </div>
 
                 {/* FORMULARIO DE TARJETA */}
                 {currentMethod?.type === 'card' && (
-                  <form onSubmit={handlePayment} className="space-y-4 animate-fadeIn">
+                  <form
+                    onSubmit={handlePayment}
+                    className="animate-fadeIn space-y-4"
+                  >
                     {paymentSuccess ? (
-                      <div className="bg-green-500/20 border border-green-500/50 rounded-xl p-6 text-center">
-                        <Icon name="check" className="text-4xl text-green-400 mb-3" />
-                        <h5 className="text-white font-bold text-lg">¡Gracias por tu Sprite!</h5>
-                        <p className="text-gray-300 text-sm">Tu apoyo ha sido recibido.</p>
+                      <div className="rounded-xl border border-green-500/50 bg-green-500/20 p-6 text-center">
+                        <Icon
+                          name="check"
+                          className="mb-3 text-4xl text-green-400"
+                        />
+                        <h5 className="text-lg font-bold text-white">
+                          ¡Gracias por tu Sprite!
+                        </h5>
+                        <p className="text-sm text-gray-300">
+                          Tu apoyo ha sido recibido.
+                        </p>
                       </div>
                     ) : (
                       <>
                         <div>
-                          <label className="block text-xs font-medium text-gray-400 mb-1">Número de Tarjeta</label>
+                          <label className="mb-1 block text-xs font-medium text-gray-400">
+                            Número de Tarjeta
+                          </label>
                           <div className="relative">
                             <input
                               type="text"
                               placeholder="0000 0000 0000 0000"
                               value={cardData.cardNumber}
                               onChange={handleCardNumberChange}
-                              className="w-full bg-black/30 border border-white/10 rounded-lg py-2.5 pl-10 pr-4 text-white text-sm placeholder-gray-600 focus:outline-none focus:border-purple-500 transition-colors"
+                              className="w-full rounded-lg border border-white/10 bg-black/30 py-2.5 pr-4 pl-10 text-sm text-white placeholder-gray-600 transition-colors focus:border-purple-500 focus:outline-none"
                               required
                             />
-                            <Icon name="credit-card" className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500" />
+                            <Icon
+                              name="credit-card"
+                              className="absolute top-1/2 left-3 -translate-y-1/2 text-gray-500"
+                            />
                           </div>
                         </div>
 
                         <div className="grid grid-cols-2 gap-3">
                           <div>
-                            <label className="block text-xs font-medium text-gray-400 mb-1">Vencimiento</label>
+                            <label className="mb-1 block text-xs font-medium text-gray-400">
+                              Vencimiento
+                            </label>
                             <div className="flex gap-2">
                               <input
                                 type="text"
                                 placeholder="MM"
                                 value={cardData.expiryMonth}
-                                onChange={(e) => handleExpiryChange('month', e.target.value)}
-                                className="w-full bg-black/30 border border-white/10 rounded-lg py-2.5 px-3 text-center text-white text-sm placeholder-gray-600 focus:outline-none focus:border-purple-500 transition-colors"
+                                onChange={(e) =>
+                                  handleExpiryChange('month', e.target.value)
+                                }
+                                className="w-full rounded-lg border border-white/10 bg-black/30 px-3 py-2.5 text-center text-sm text-white placeholder-gray-600 transition-colors focus:border-purple-500 focus:outline-none"
                                 required
                               />
                               <input
                                 type="text"
                                 placeholder="AA"
                                 value={cardData.expiryYear}
-                                onChange={(e) => handleExpiryChange('year', e.target.value)}
-                                className="w-full bg-black/30 border border-white/10 rounded-lg py-2.5 px-3 text-center text-white text-sm placeholder-gray-600 focus:outline-none focus:border-purple-500 transition-colors"
+                                onChange={(e) =>
+                                  handleExpiryChange('year', e.target.value)
+                                }
+                                className="w-full rounded-lg border border-white/10 bg-black/30 px-3 py-2.5 text-center text-sm text-white placeholder-gray-600 transition-colors focus:border-purple-500 focus:outline-none"
                                 required
                               />
                             </div>
                           </div>
                           <div>
-                            <label className="block text-xs font-medium text-gray-400 mb-1">CVC</label>
+                            <label className="mb-1 block text-xs font-medium text-gray-400">
+                              CVC
+                            </label>
                             <div className="relative">
                               <input
                                 type="text"
                                 placeholder="123"
                                 value={cardData.cvv}
                                 onChange={handleCVVChange}
-                                className="w-full bg-black/30 border border-white/10 rounded-lg py-2.5 pl-3 pr-8 text-white text-sm placeholder-gray-600 focus:outline-none focus:border-purple-500 transition-colors"
+                                className="w-full rounded-lg border border-white/10 bg-black/30 py-2.5 pr-8 pl-3 text-sm text-white placeholder-gray-600 transition-colors focus:border-purple-500 focus:outline-none"
                                 required
                               />
-                              <Icon name="lock" className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 text-xs" />
+                              <Icon
+                                name="lock"
+                                className="absolute top-1/2 right-3 -translate-y-1/2 text-xs text-gray-500"
+                              />
                             </div>
                           </div>
                         </div>
 
                         <div>
-                          <label className="block text-xs font-medium text-gray-400 mb-1">Nombre en la Tarjeta</label>
+                          <label className="mb-1 block text-xs font-medium text-gray-400">
+                            Nombre en la Tarjeta
+                          </label>
                           <input
                             type="text"
                             placeholder="COMO APARECE EN LA TARJETA"
                             value={cardData.cardHolder}
-                            onChange={(e) => setCardData({...cardData, cardHolder: e.target.value.toUpperCase()})}
-                            className="w-full bg-black/30 border border-white/10 rounded-lg py-2.5 px-4 text-white text-sm placeholder-gray-600 focus:outline-none focus:border-purple-500 transition-colors"
+                            onChange={(e) =>
+                              setCardData({
+                                ...cardData,
+                                cardHolder: e.target.value.toUpperCase(),
+                              })
+                            }
+                            className="w-full rounded-lg border border-white/10 bg-black/30 px-4 py-2.5 text-sm text-white placeholder-gray-600 transition-colors focus:border-purple-500 focus:outline-none"
                             required
                           />
                         </div>
@@ -341,7 +396,7 @@ export const DonationSection = () => {
                         <button
                           type="submit"
                           disabled={isProcessing}
-                          className="w-full mt-4 bg-linear-to-r from-purple-600 to-purple-700 hover:from-purple-500 hover:to-purple-600 text-white font-bold py-3 px-4 rounded-xl transition-all transform hover:scale-[1.02] shadow-lg shadow-purple-500/25 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                          className="mt-4 flex w-full transform items-center justify-center gap-2 rounded-xl bg-linear-to-r from-purple-600 to-purple-700 px-4 py-3 font-bold text-white shadow-lg shadow-purple-500/25 transition-all hover:scale-[1.02] hover:from-purple-500 hover:to-purple-600 disabled:cursor-not-allowed disabled:opacity-50"
                         >
                           {isProcessing ? (
                             <>
@@ -355,8 +410,8 @@ export const DonationSection = () => {
                             </>
                           )}
                         </button>
-                        
-                        <div className="flex justify-center gap-2 text-gray-500 text-lg mt-2">
+
+                        <div className="mt-2 flex justify-center gap-2 text-lg text-gray-500">
                           <Icon name="cc-visa" />
                           <Icon name="cc-mastercard" />
                           <Icon name="cc-amex" />
@@ -367,38 +422,51 @@ export const DonationSection = () => {
                 )}
 
                 {currentMethod?.type === 'copy' && (
-                  <div className="bg-white/5 rounded-xl p-4 border border-white/10 animate-fadeIn">
-                    <p className="text-xs text-gray-500 uppercase mb-2">Número de cuenta / Billetera</p>
-                    <div className="flex items-center gap-2 mb-2">
-                      <code className="flex-1 bg-black/30 p-3 rounded-lg text-purple-300 font-mono text-sm break-all">
+                  <div className="animate-fadeIn rounded-xl border border-white/10 bg-white/5 p-4">
+                    <p className="mb-2 text-xs text-gray-500 uppercase">
+                      Número de cuenta / Billetera
+                    </p>
+                    <div className="mb-2 flex items-center gap-2">
+                      <code className="flex-1 rounded-lg bg-black/30 p-3 font-mono text-sm break-all text-purple-300">
                         {currentMethod.detail}
                       </code>
                       <button
-                        onClick={() => copyToClipboard(currentMethod.detail, currentMethod.id)}
-                        className="p-3 bg-purple-600 hover:bg-purple-700 text-white rounded-lg transition-colors"
+                        onClick={() =>
+                          copyToClipboard(
+                            currentMethod.detail,
+                            currentMethod.id
+                          )
+                        }
+                        className="rounded-lg bg-purple-600 p-3 text-white transition-colors hover:bg-purple-700"
                         title="Copiar"
                       >
-                        <Icon name={copied === currentMethod.id ? 'check' : 'copy'} />
+                        <Icon
+                          name={copied === currentMethod.id ? 'check' : 'copy'}
+                        />
                       </button>
                     </div>
                     {currentMethod.owner && (
                       <p className="text-xs text-gray-400">
-                        Titular: <span className="text-gray-300">{currentMethod.owner}</span>
+                        Titular:{' '}
+                        <span className="text-gray-300">
+                          {currentMethod.owner}
+                        </span>
                       </p>
                     )}
                   </div>
                 )}
 
                 {currentMethod?.type === 'url' && (
-                  <div className="bg-white/5 rounded-xl p-4 border border-white/10 text-center animate-fadeIn">
-                    <p className="text-sm text-gray-300 mb-4">
-                      Serás redirigido a la plataforma segura de {currentMethod.name} para completar la donación.
+                  <div className="animate-fadeIn rounded-xl border border-white/10 bg-white/5 p-4 text-center">
+                    <p className="mb-4 text-sm text-gray-300">
+                      Serás redirigido a la plataforma segura de{' '}
+                      {currentMethod.name} para completar la donación.
                     </p>
                     <a
                       href={currentMethod.detail}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="block w-full py-3 bg-purple-600 hover:bg-purple-700 text-white font-bold rounded-xl transition-all transform hover:scale-105 shadow-lg shadow-purple-500/25"
+                      className="block w-full transform rounded-xl bg-purple-600 py-3 font-bold text-white shadow-lg shadow-purple-500/25 transition-all hover:scale-105 hover:bg-purple-700"
                     >
                       Ir a Donar
                     </a>
@@ -407,28 +475,40 @@ export const DonationSection = () => {
               </div>
             </div>
 
-            <div className="mt-8 pt-4 border-t border-white/10 text-center">
+            <div className="mt-8 border-t border-white/10 pt-4 text-center">
               <p className="text-xs text-gray-500 italic">
                 "¡Gracias por ser parte de este proyecto y ayudarnos a crecer!"
               </p>
             </div>
           </div>
         </div>
-
       </div>
 
       {/* Footer Links */}
-      <div className="text-center mt-12 pt-6 border-t border-white/10 flex flex-col sm:flex-row items-center justify-center gap-4 text-xs text-gray-500">
+      <div className="mt-12 flex flex-col items-center justify-center gap-4 border-t border-white/10 pt-6 text-center text-xs text-gray-500 sm:flex-row">
         <div className="flex items-center gap-2">
           <Icon name="envelope" />
-          <a href="mailto:fravelz@proton.me" className="hover:text-purple-400 transition-colors">
+          <a
+            href="mailto:fravelz@proton.me"
+            className="transition-colors hover:text-purple-400"
+          >
             fravelz@proton.me
           </a>
         </div>
         <span className="hidden sm:inline">|</span>
         <div className="flex gap-4">
-          <a href="/privacidad" className="hover:text-purple-400 transition-colors">Privacidad</a>
-          <a href="/terminos" className="hover:text-purple-400 transition-colors">Términos</a>
+          <a
+            href="/privacidad"
+            className="transition-colors hover:text-purple-400"
+          >
+            Privacidad
+          </a>
+          <a
+            href="/terminos"
+            className="transition-colors hover:text-purple-400"
+          >
+            Términos
+          </a>
         </div>
       </div>
     </div>

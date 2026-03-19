@@ -5,7 +5,7 @@ export const GAMIFICATION_BADGES = {
     icon: 'play',
     description: 'Desbloquea 25 insignias',
     requirement: 'Desbloquea 25 logros diferentes',
-    category: 'gamification'
+    category: 'gamification',
   },
   BADGE_COLLECTOR_ELITE: {
     id: 'BADGE_COLLECTOR_ELITE',
@@ -13,7 +13,7 @@ export const GAMIFICATION_BADGES = {
     icon: 'play',
     description: 'Desbloquea 50 insignias',
     requirement: 'Desbloquea 50 logros diferentes',
-    category: 'gamification'
+    category: 'gamification',
   },
   BADGE_COLLECTOR_MASTER: {
     id: 'BADGE_COLLECTOR_MASTER',
@@ -21,7 +21,7 @@ export const GAMIFICATION_BADGES = {
     icon: 'play',
     description: 'Desbloquea todas las insignias',
     requirement: 'Desbloquea todos los logros disponibles',
-    category: 'gamification'
+    category: 'gamification',
   },
   STREAK_MASTER: {
     id: 'STREAK_MASTER',
@@ -29,7 +29,7 @@ export const GAMIFICATION_BADGES = {
     icon: 'play',
     description: 'Mantén 3 rachas diferentes activas',
     requirement: 'Alcanza 3 rachas distintas simultáneamente',
-    category: 'gamification'
+    category: 'gamification',
   },
   PERFECT_WEEK: {
     id: 'PERFECT_WEEK',
@@ -37,7 +37,7 @@ export const GAMIFICATION_BADGES = {
     icon: 'play',
     description: '7 días de 90%+ promedio',
     requirement: 'Obtén 90%+ cada día durante una semana',
-    category: 'gamification'
+    category: 'gamification',
   },
   PERFECT_MONTH: {
     id: 'PERFECT_MONTH',
@@ -45,7 +45,7 @@ export const GAMIFICATION_BADGES = {
     icon: 'play',
     description: '30 días de 90%+ promedio',
     requirement: 'Obtén 90%+ cada día durante un mes',
-    category: 'gamification'
+    category: 'gamification',
   },
   COMEBACK_STORY: {
     id: 'COMEBACK_STORY',
@@ -53,7 +53,7 @@ export const GAMIFICATION_BADGES = {
     icon: 'play',
     description: 'Recuperar después de 3 fallos seguidos',
     requirement: 'Obtén 100% después de 3 exámenes con <50%',
-    category: 'gamification'
+    category: 'gamification',
   },
   VERSATILE_SCHOLAR: {
     id: 'VERSATILE_SCHOLAR',
@@ -61,7 +61,7 @@ export const GAMIFICATION_BADGES = {
     icon: 'play',
     description: 'Alterna entre diferentes áreas exitosamente',
     requirement: 'Obtén 85%+ en 4 áreas diferentes',
-    category: 'gamification'
+    category: 'gamification',
   },
   VERSATILE_MASTER: {
     id: 'VERSATILE_MASTER',
@@ -69,7 +69,7 @@ export const GAMIFICATION_BADGES = {
     icon: 'play',
     description: 'Desbloquea logros en todas las categorías',
     requirement: 'Obtén al menos 1 logro de cada categoría',
-    category: 'gamification'
+    category: 'gamification',
   },
   SCORE_BOOSTER: {
     id: 'SCORE_BOOSTER',
@@ -77,7 +77,7 @@ export const GAMIFICATION_BADGES = {
     icon: 'play',
     description: 'Obtén 3 bonificaciones de XP en una sesión',
     requirement: 'Alcanza 3 multiplicadores de XP en un día',
-    category: 'gamification'
+    category: 'gamification',
   },
   COMBO_KING: {
     id: 'COMBO_KING',
@@ -85,7 +85,7 @@ export const GAMIFICATION_BADGES = {
     icon: 'play',
     description: 'Crea una cadena de 5 logros en una semana',
     requirement: 'Desbloquea 5 logros en 7 días consecutivos',
-    category: 'gamification'
+    category: 'gamification',
   },
   LEADERBOARD_CHAMPION: {
     id: 'LEADERBOARD_CHAMPION',
@@ -93,7 +93,7 @@ export const GAMIFICATION_BADGES = {
     icon: 'play',
     description: 'Lidera el ranking semanal',
     requirement: 'Obtén la puntuación más alta en la semana',
-    category: 'gamification'
+    category: 'gamification',
   },
   REWARD_HUNTER: {
     id: 'REWARD_HUNTER',
@@ -101,7 +101,7 @@ export const GAMIFICATION_BADGES = {
     icon: 'play',
     description: 'Acumula 100000 puntos totales',
     requirement: 'Gana 100000 puntos de experiencia en total',
-    category: 'gamification'
+    category: 'gamification',
   },
   CHALLENGE_DOMINATOR: {
     id: 'CHALLENGE_DOMINATOR',
@@ -109,6 +109,6 @@ export const GAMIFICATION_BADGES = {
     icon: 'play',
     description: 'Completa 25 desafíos especiales',
     requirement: 'Finaliza 25 desafíos de gamificación',
-    category: 'gamification'
-  }
+    category: 'gamification',
+  },
 };

@@ -7,14 +7,16 @@ El **MobileHeader** es un componente interactivo tipo Duolingo creado para la p�
 ## 🎯 Características
 
 ### 1. **Área Actual** (Primer Elemento)
+
 - **Ícono**: Representa el área de estudio seleccionada
 - **Funcionalidad**: Al hacer click, muestra modal con todas las áreas disponibles
-- **Interactividad**: 
+- **Interactividad**:
   - Selecciona un área diferente
   - El color del ícono cambia según el área
   - Muestra nombre abreviado del área
 
 **Áreas disponibles:**
+
 - 📚 Lectura Crítica (Azul)
 - 🔢 Matemáticas (Verde)
 - 🧪 Ciencias Naturales (Púrpura)
@@ -22,6 +24,7 @@ El **MobileHeader** es un componente interactivo tipo Duolingo creado para la p�
 - 📋 Examen Completo ICFES (Rosa)
 
 ### 2. **Racha de Días** (Segundo Elemento)
+
 - **Ícono**: 🔥 (Fuego)
 - **Funcionalidad**: Muestra información detallada de la racha del usuario
 - **Modal incluye:**
@@ -34,11 +37,13 @@ El **MobileHeader** es un componente interactivo tipo Duolingo creado para la p�
   - 🏆 Insignia visible cuando está desbloqueada
 
 **Insignia de 7 Días - Beneficios:**
+
 - +50% XP en lecciones
 - +25% monedas virtuales
 - Acceso a área premium
 
 ### 3. **Dinero Virtual** (Tercer Elemento)
+
 - **Ícono**: 💰 (Monedas)
 - **Funcionalidad**: Muestra saldo y opciones relacionadas
 - **Modal incluye:**
@@ -84,8 +89,8 @@ export const MiPagina = () => {
 
 ### Props
 
-| Prop | Tipo | Default | Descripción |
-|------|------|---------|-------------|
+| Prop          | Tipo   | Default           | Descripción                   |
+| ------------- | ------ | ----------------- | ----------------------------- |
 | `currentArea` | string | 'lectura-critica' | Área seleccionada actualmente |
 
 ## 🔧 Personalización
@@ -96,9 +101,9 @@ Edita `src/shared/constants/areaInfo.js`:
 
 ```javascript
 export const AREA_INFO = {
-  'lectura-critica': { 
-    name: 'Lectura Crítica', 
-    color: 'from-blue-400 to-blue-600'  // Cambiar aquí
+  'lectura-critica': {
+    name: 'Lectura Crítica',
+    color: 'from-blue-400 to-blue-600', // Cambiar aquí
   },
   // ...
 };
@@ -109,7 +114,7 @@ export const AREA_INFO = {
 En `StreakModal.jsx`, línea ~115:
 
 ```jsx
-<ul className="text-sm text-slate-300 space-y-1">
+<ul className="space-y-1 text-sm text-slate-300">
   <li className="flex items-center gap-2">
     <span className="text-amber-400">✓</span> +50% XP en lecciones
   </li>
@@ -123,7 +128,7 @@ En `CoinsModal.jsx`, modifica la función `handleGoToStore`:
 
 ```javascript
 const handleGoToStore = () => {
-  navigate('/store');  // Cambiar ruta aquí
+  navigate('/store'); // Cambiar ruta aquí
   onClose();
 };
 ```
@@ -150,11 +155,13 @@ El componente utiliza el hook `useGamification` para obtener:
 ## 🔗 Integraciones
 
 ### Hooks utilizados:
+
 - `useGamification` - Obtener datos de gamificación
 - `useNavigate` - Navegación en CoinsModal
 - `useState` - Manejo de estado de modales
 
 ### Iconos de FontAwesome:
+
 - `faBook` - Área
 - `faFire` - Racha
 - `faCoins` - Dinero virtual
@@ -171,11 +178,11 @@ El componente utiliza el hook `useGamification` para obtener:
 En `StreakModal.jsx`:
 
 ```jsx
-{isBadgeUnlocked && (
-  <div className="bg-linear-to-r... animate-pulse">
-    {/* Contenido */}
-  </div>
-)}
+{
+  isBadgeUnlocked && (
+    <div className="bg-linear-to-r... animate-pulse">{/* Contenido */}</div>
+  );
+}
 ```
 
 ### Conectar con ruta de área
@@ -200,16 +207,19 @@ const handleSelectArea = (areaKey) => {
 ## 🐛 Troubleshooting
 
 ### El header no aparece
+
 - Verifica que esté importado correctamente
 - Asegúrate de estar viendo en dispositivo móvil o ventana pequeña
 - Revisa que no esté oculto por CSS
 
 ### Los modales no se abren
+
 - Confirma que `useNavigate` está disponible (dentro de Router)
 - Verifica la consola para errores
 - Revisa que los hooks tengan datos disponibles
 
 ### Datos no se actualizan
+
 - Verifica que `useGamification` esté funcionando
 - Revisa la conexión con Firebase
 - Comprueba que el usuario esté autenticado
@@ -222,4 +232,3 @@ const handleSelectArea = (areaKey) => {
 - [ ] Tienda integrada en el modal
 - [ ] Push notifications para hitos
 - [ ] Comparativa con amigos
-

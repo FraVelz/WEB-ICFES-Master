@@ -9,10 +9,14 @@ export const DemoTimerBanner = ({ isDemoMode = false }) => {
 
   return (
     <div
-      className="fixed top-0 md:top-auto md:bottom-0 left-0 right-0 z-50 border-b-2 md:border-b-0 md:border-t-2 bg-cyan-500/90 border-cyan-400 transition-all duration-300"
-      style={{ paddingTop: '1rem', paddingBottom: '1rem', maxHeight: 'fit-content' }}
+      className="fixed top-0 right-0 left-0 z-50 border-b-2 border-cyan-400 bg-cyan-500/90 transition-all duration-300 md:top-auto md:bottom-0 md:border-t-2 md:border-b-0"
+      style={{
+        paddingTop: '1rem',
+        paddingBottom: '1rem',
+        maxHeight: 'fit-content',
+      }}
     >
-      <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-center">
+      <div className="mx-auto flex max-w-7xl items-center justify-center px-4 py-3">
         <div className="flex items-center gap-3">
           <Icon name="play" className="text-xl text-cyan-100" />
           <p className="text-sm font-semibold text-cyan-100">

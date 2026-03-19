@@ -1,4 +1,4 @@
-#  Learning Feature Structure
+# Learning Feature Structure
 
 ## Organización de archivos
 
@@ -49,7 +49,8 @@ learning/
 
 ## Características
 
-###  Pages (Páginas)
+### Pages (Páginas)
+
 Cada página está organizada en su propia carpeta:
 
 - **Main**: Selector de niveles de aprendizaje
@@ -64,29 +65,34 @@ Cada página está organizada en su propia carpeta:
 
 - **ProgressiveICFES**: Mapa progresivo de 0 a 500 puntos
 
-###  Components (Componentes)
+### Components (Componentes)
 
 #### Roadmap Components
+
 - `LearningRoadmap`: Componente principal con 3 niveles
 - `BasicoComponents`: Componentes para nivel básico (materias y tópicos)
 - `IntermediaComponents`: Componentes para nivel intermedio (exámenes)
 - `LevelComponents`: Componentes para nivel avanzado (simulacro)
 
 #### Otros Componentes
+
 - `LearningFilters`: Filtrado de materiales por área y tópico
 - `MaterialsGrid`: Grid de visualización de materiales
 - `AdditionalResources`: Recursos adicionales
 - `LearningPathMap`: Mapa de ruta de aprendizaje
 - `ProgressiveICFESMap`: Mapa progresivo ICFES
 
-###  Data (Datos)
-- `roadmapData.js`: 
+### Data (Datos)
+
+- `roadmapData.js`:
   - `SUBJECTS`: Definición de las 5 materias
   - `BASICO_TOPICS`: Tópicos del nivel básico
   - `INTERMEDIO_TOPICS`: Información del nivel intermedio
 
-###  Lessons (Lecciones)
+### Lessons (Lecciones)
+
 Lecciones organizadas por categoría:
+
 - Lenguaje: Comprensión, Gramática, Literatura, Ortografía, Semántica
 - Matemáticas: Álgebra, Cálculo, Geometría, Números Complejos, Trigonometría
 - Ciencias: Biología, Ecología, Física, Química, Termodinámica
@@ -95,18 +101,24 @@ Lecciones organizadas por categoría:
 ## Imports
 
 ### Desde componentes
+
 ```javascript
 import { LearningRoadmap } from '@/features/learning/components';
 ```
 
 ### Desde páginas
+
 ```javascript
-import { LearningPage, LearningRoadmapPage, ProgressiveICFESMapPage } from '@/features/learning/pages';
+import {
+  LearningPage,
+  LearningRoadmapPage,
+  ProgressiveICFESMapPage,
+} from '@/features/learning/pages';
 ```
 
 ## Ventajas de esta estructura
 
- **Modular**: Cada página tiene sus propios componentes  
+**Modular**: Cada página tiene sus propios componentes  
  **Escalable**: Fácil de agregar nuevas páginas o componentes  
  **Mantenible**: Organización clara y lógica  
  **Reutilizable**: Componentes compartidos en la carpeta principal  

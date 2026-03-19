@@ -5,7 +5,7 @@ export const MILESTONE_BADGES = {
     icon: 'play',
     description: 'Alcanza 50 XP',
     requirement: 'Acumula 50 puntos de experiencia',
-    category: 'hitos'
+    category: 'hitos',
   },
   MILESTONE_100: {
     id: 'MILESTONE_100',
@@ -13,7 +13,7 @@ export const MILESTONE_BADGES = {
     icon: 'play',
     description: 'Alcanza 100 XP',
     requirement: 'Acumula 100 puntos de experiencia',
-    category: 'hitos'
+    category: 'hitos',
   },
   MILESTONE_500: {
     id: 'MILESTONE_500',
@@ -21,7 +21,7 @@ export const MILESTONE_BADGES = {
     icon: 'play',
     description: 'Alcanza 500 XP',
     requirement: 'Acumula 500 puntos de experiencia',
-    category: 'hitos'
+    category: 'hitos',
   },
   LEVEL_5: {
     id: 'LEVEL_5',
@@ -29,7 +29,7 @@ export const MILESTONE_BADGES = {
     icon: 'play',
     description: 'Sube al nivel 5',
     requirement: 'Completa suficientes exámenes para llegar a nivel 5',
-    category: 'hitos'
+    category: 'hitos',
   },
   LEVEL_10: {
     id: 'LEVEL_10',
@@ -37,7 +37,7 @@ export const MILESTONE_BADGES = {
     icon: 'play',
     description: 'Sube al nivel 10',
     requirement: 'Completa suficientes exámenes para llegar a nivel 10',
-    category: 'hitos'
+    category: 'hitos',
   },
   LEVEL_20: {
     id: 'LEVEL_20',
@@ -45,7 +45,7 @@ export const MILESTONE_BADGES = {
     icon: 'play',
     description: 'Sube al nivel 20',
     requirement: 'Completa suficientes exámenes para llegar a nivel 20',
-    category: 'hitos'
+    category: 'hitos',
   },
   LEVEL_50: {
     id: 'LEVEL_50',
@@ -53,7 +53,7 @@ export const MILESTONE_BADGES = {
     icon: 'play',
     description: 'Sube al nivel 50',
     requirement: 'Completa suficientes exámenes para llegar a nivel 50',
-    category: 'hitos'
+    category: 'hitos',
   },
   LEVEL_100: {
     id: 'LEVEL_100',
@@ -61,7 +61,7 @@ export const MILESTONE_BADGES = {
     icon: 'play',
     description: 'Sube al nivel máximo',
     requirement: 'Completa suficientes exámenes para llegar a nivel 100',
-    category: 'hitos'
+    category: 'hitos',
   },
   MILESTONE_1000: {
     id: 'MILESTONE_1000',
@@ -69,7 +69,7 @@ export const MILESTONE_BADGES = {
     icon: 'play',
     description: 'Alcanza 1000 XP',
     requirement: 'Acumula 1000 puntos de experiencia',
-    category: 'hitos'
+    category: 'hitos',
   },
   MILESTONE_5000: {
     id: 'MILESTONE_5000',
@@ -77,7 +77,7 @@ export const MILESTONE_BADGES = {
     icon: 'play',
     description: 'Alcanza 5000 XP',
     requirement: 'Acumula 5000 puntos de experiencia',
-    category: 'hitos'
+    category: 'hitos',
   },
   MILESTONE_10000: {
     id: 'MILESTONE_10000',
@@ -85,7 +85,7 @@ export const MILESTONE_BADGES = {
     icon: 'play',
     description: 'Alcanza 10000 XP',
     requirement: 'Acumula 10000 puntos de experiencia',
-    category: 'hitos'
+    category: 'hitos',
   },
   EXAM_CENTENNIAL: {
     id: 'EXAM_CENTENNIAL',
@@ -93,7 +93,7 @@ export const MILESTONE_BADGES = {
     icon: 'play',
     description: 'Completa 100 exámenes',
     requirement: 'Realiza un total de 100 exámenes',
-    category: 'hitos'
+    category: 'hitos',
   },
   EXAM_MILLENNIAL: {
     id: 'EXAM_MILLENNIAL',
@@ -101,7 +101,7 @@ export const MILESTONE_BADGES = {
     icon: 'play',
     description: 'Completa 1000 exámenes',
     requirement: 'Realiza un total de 1000 exámenes',
-    category: 'hitos'
+    category: 'hitos',
   },
   QUESTION_MASTER_500: {
     id: 'QUESTION_MASTER_500',
@@ -109,7 +109,7 @@ export const MILESTONE_BADGES = {
     icon: 'play',
     description: 'Responde 500 preguntas en una sesión',
     requirement: 'Contesta 500 preguntas sin descansar',
-    category: 'hitos'
+    category: 'hitos',
   },
   ONE_YEAR_WARRIOR: {
     id: 'ONE_YEAR_WARRIOR',
@@ -117,6 +117,6 @@ export const MILESTONE_BADGES = {
     icon: 'play',
     description: 'Estudia durante un año completo',
     requirement: 'Mantén actividad de aprendizaje durante 365 días',
-    category: 'hitos'
-  }
+    category: 'hitos',
+  },
 };

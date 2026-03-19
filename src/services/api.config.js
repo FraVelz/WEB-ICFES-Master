@@ -8,7 +8,7 @@
 const API_CONFIG = {
   // 'supabase' para Supabase (producción)
   // 'localStorage' para desarrollo local sin backend
-  MODE: process.env.NEXT_PUBLIC_API_MODE || 'supabase'
+  MODE: process.env.NEXT_PUBLIC_API_MODE || 'supabase',
 };
 
 // Validar configuración

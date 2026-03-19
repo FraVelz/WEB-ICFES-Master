@@ -26,7 +26,7 @@ export const MobileNavMenu = ({ onNavigate }) => {
       {/* FAB Button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="fixed bottom-6 right-6 z-40 w-14 h-14 rounded-full bg-linear-to-r from-blue-600 to-purple-600 flex items-center justify-center text-white shadow-lg hover:shadow-xl transition-shadow"
+        className="fixed right-6 bottom-6 z-40 flex h-14 w-14 items-center justify-center rounded-full bg-linear-to-r from-blue-600 to-purple-600 text-white shadow-lg transition-shadow hover:shadow-xl"
         aria-label="Menú de navegación"
       >
         <Icon name={isOpen ? 'times' : 'bars'} size="lg" />
@@ -34,13 +34,13 @@ export const MobileNavMenu = ({ onNavigate }) => {
 
       {/* Menu Panel */}
       {isOpen && (
-        <div className="fixed bottom-24 right-6 z-40 bg-slate-900/95 backdrop-blur-sm rounded-2xl shadow-2xl p-2 w-56 animate-slideUp">
+        <div className="animate-slideUp fixed right-6 bottom-24 z-40 w-56 rounded-2xl bg-slate-900/95 p-2 shadow-2xl backdrop-blur-sm">
           <div className="space-y-2">
             {menuItems.map((item) => (
               <button
                 key={item.id}
                 onClick={() => handleNavigate(item.id)}
-                className="w-full flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-blue-600/20 transition-colors text-left text-white hover:text-blue-400"
+                className="flex w-full items-center gap-3 rounded-lg px-4 py-3 text-left text-white transition-colors hover:bg-blue-600/20 hover:text-blue-400"
               >
                 <Icon name={item.icon} />
                 <span>{item.label}</span>

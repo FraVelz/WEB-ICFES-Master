@@ -2,18 +2,18 @@ import { Icon } from '@/shared/components/Icon';
 import Link from 'next/link';
 
 export const TopicItem = ({ topic, idx, subject }) => (
-  <div className="flex items-start justify-between p-3 bg-slate-800/50 rounded-lg hover:bg-slate-800 transition-colors">
+  <div className="flex items-start justify-between rounded-lg bg-slate-800/50 p-3 transition-colors hover:bg-slate-800">
     <div className="flex-1">
       <p className="font-semibold text-white">{topic.title}</p>
       <p className="text-sm text-slate-400">{topic.content}</p>
     </div>
-    <div className="flex items-center gap-3 ml-4">
-      <span className="text-xs bg-slate-700/50 px-3 py-1 rounded text-slate-300">
+    <div className="ml-4 flex items-center gap-3">
+      <span className="rounded bg-slate-700/50 px-3 py-1 text-xs text-slate-300">
         {topic.duration}
       </span>
       <Link
         href={`/aprender/${subject}/basico/${idx}`}
-        className="px-3 py-1 bg-green-600 hover:bg-green-700 text-white text-sm rounded transition-colors"
+        className="rounded bg-green-600 px-3 py-1 text-sm text-white transition-colors hover:bg-green-700"
       >
         Aprender
       </Link>
@@ -22,7 +22,7 @@ export const TopicItem = ({ topic, idx, subject }) => (
 );
 
 export const BasicoTopicsList = ({ topics, subject }) => (
-  <div className="border-t border-slate-700 bg-slate-900/50 p-4 space-y-3">
+  <div className="space-y-3 border-t border-slate-700 bg-slate-900/50 p-4">
     {topics.map((topic, idx) => (
       <TopicItem key={idx} topic={topic} idx={idx} subject={subject} />
     ))}
@@ -32,12 +32,16 @@ export const BasicoTopicsList = ({ topics, subject }) => (
 export const SubjectButton = ({ subject, isExpanded, onClick, bgColor }) => (
   <button
     onClick={onClick}
-    className={`w-full p-4 flex items-center justify-between ${
+    className={`flex w-full items-center justify-between p-4 ${
       isExpanded ? bgColor : 'hover:bg-slate-700/50'
     } transition-colors`}
   >
     <div className="flex items-center gap-3 text-left">
-      <Icon name={subject.icon} size="xl" className={`text-xl ${subject.color}`} />
+      <Icon
+        name={subject.icon}
+        size="xl"
+        className={`text-xl ${subject.color}`}
+      />
       <div>
         <h3 className="text-lg font-semibold text-white">{subject.name}</h3>
         <p className="text-xs text-slate-400">8 horas de contenido • 500 XP</p>
@@ -53,7 +57,7 @@ export const SubjectButton = ({ subject, isExpanded, onClick, bgColor }) => (
 );
 
 export const SubjectCard = ({ subject, isExpanded, topics, onToggle }) => (
-  <div className="border border-slate-700 rounded-xl overflow-hidden">
+  <div className="overflow-hidden rounded-xl border border-slate-700">
     <SubjectButton
       subject={subject}
       isExpanded={isExpanded}

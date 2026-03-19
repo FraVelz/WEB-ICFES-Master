@@ -14,72 +14,72 @@ class GamificationService extends BaseService {
 
   static BADGES = {
     // Badges por milestones de preguntas
-    'first_question': {
+    first_question: {
       id: 'first_question',
       name: 'Primer Paso',
       description: 'Responder tu primera pregunta',
       icon: '🎯',
-      points: 10
+      points: 10,
     },
-    'hundred_questions': {
+    hundred_questions: {
       id: 'hundred_questions',
       name: 'Centenario',
       description: 'Responder 100 preguntas',
       icon: '💯',
-      points: 100
+      points: 100,
     },
-    'thousand_questions': {
+    thousand_questions: {
       id: 'thousand_questions',
       name: 'Millenial',
       description: 'Responder 1000 preguntas',
       icon: '🏆',
-      points: 500
+      points: 500,
     },
     // Badges por precisión
-    'perfect_area': {
+    perfect_area: {
       id: 'perfect_area',
       name: 'Especialista',
       description: 'Lograr 100% en un área completa',
       icon: '⭐',
-      points: 200
+      points: 200,
     },
-    'high_accuracy': {
+    high_accuracy: {
       id: 'high_accuracy',
       name: 'Precisión',
       description: 'Mantener 90%+ de precisión',
       icon: '🎯',
-      points: 150
+      points: 150,
     },
     // Badges por racha
-    'week_streak': {
+    week_streak: {
       id: 'week_streak',
       name: 'Consistencia',
       description: 'Mantener racha de 7 días',
       icon: '🔥',
-      points: 100
+      points: 100,
     },
-    'month_streak': {
+    month_streak: {
       id: 'month_streak',
       name: 'Dedicación',
       description: 'Mantener racha de 30 días',
       icon: '💪',
-      points: 300
+      points: 300,
     },
     // Badges por tiempo
-    'early_bird': {
+    early_bird: {
       id: 'early_bird',
       name: 'Madrugador',
       description: 'Estudiar entre 5-7 AM',
       icon: '🌅',
-      points: 50
+      points: 50,
     },
-    'night_owl': {
+    night_owl: {
       id: 'night_owl',
       name: 'Búho Nocturno',
       description: 'Estudiar entre 10 PM-12 AM',
       icon: '🌙',
-      points: 50
-    }
+      points: 50,
+    },
   };
 
   // ============ NIVELES ============
@@ -89,7 +89,7 @@ class GamificationService extends BaseService {
     { level: 2, xpRequired: 100, title: 'Estudiante', icon: '✏️' },
     { level: 3, xpRequired: 300, title: 'Investigador', icon: '🔍' },
     { level: 4, xpRequired: 600, title: 'Experto', icon: '🧠' },
-    { level: 5, xpRequired: 1000, title: 'Maestro', icon: '👑' }
+    { level: 5, xpRequired: 1000, title: 'Maestro', icon: '👑' },
   ];
 
   /**
@@ -116,7 +116,7 @@ class GamificationService extends BaseService {
    */
   async addXP(userId, points, reason = 'actividad') {
     const profile = await this.getProfile(userId);
-    
+
     profile.totalXP = (profile.totalXP || 0) + points;
     profile.currentXP = (profile.currentXP || 0) + points;
 
@@ -126,7 +126,7 @@ class GamificationService extends BaseService {
       profile.level = newLevel;
       profile.levelUpNotification = {
         message: `¡Felicidades! Alcanzaste nivel ${newLevel}: ${GamificationService.LEVELS[newLevel - 1].title}`,
-        timestamp: new Date().toISOString()
+        timestamp: new Date().toISOString(),
       };
     }
 
@@ -135,7 +135,7 @@ class GamificationService extends BaseService {
     profile.xpHistory.push({
       date: new Date().toISOString(),
       points,
-      reason
+      reason,
     });
 
     return this.update(userId, profile);
@@ -150,17 +150,17 @@ class GamificationService extends BaseService {
    */
   async addCoins(userId, coins, reason = 'recompensa') {
     const profile = await this.getProfile(userId);
-    
+
     profile.totalCoins = (profile.totalCoins || 0) + coins;
-    profile.spentCoins = (profile.spentCoins || 0);
-    
+    profile.spentCoins = profile.spentCoins || 0;
+
     // Registrar transacción
     if (!profile.coinsHistory) profile.coinsHistory = [];
     profile.coinsHistory.push({
       date: new Date().toISOString(),
       amount: coins,
       reason,
-      type: 'earn'
+      type: 'earn',
     });
 
     return this.update(userId, profile);
@@ -189,7 +189,7 @@ class GamificationService extends BaseService {
       date: new Date().toISOString(),
       amount: coins,
       item,
-      type: 'spend'
+      type: 'spend',
     });
 
     return this.update(userId, profile);
@@ -210,7 +210,7 @@ class GamificationService extends BaseService {
     const profile = await this.getProfile(userId);
 
     // Verificar si ya tiene el badge
-    if (profile.badges?.some(b => b.id === badgeId)) {
+    if (profile.badges?.some((b) => b.id === badgeId)) {
       return profile; // Ya desbloqueado
     }
 
@@ -218,7 +218,7 @@ class GamificationService extends BaseService {
     if (!profile.badges) profile.badges = [];
     profile.badges.push({
       ...badge,
-      unlockedAt: new Date().toISOString()
+      unlockedAt: new Date().toISOString(),
     });
 
     // Añadir puntos XP por desbloquear badge
@@ -245,24 +245,30 @@ class GamificationService extends BaseService {
   async getLevel(userId) {
     const profile = await this.getProfile(userId);
     const levelInfo = GamificationService.LEVELS[profile.level - 1];
-    const nextLevel = GamificationService.LEVELS[profile.level] || GamificationService.LEVELS[GamificationService.LEVELS.length - 1];
+    const nextLevel =
+      GamificationService.LEVELS[profile.level] ||
+      GamificationService.LEVELS[GamificationService.LEVELS.length - 1];
 
     return {
       current: {
         level: profile.level,
         title: levelInfo?.title,
-        icon: levelInfo?.icon
+        icon: levelInfo?.icon,
       },
       next: {
         level: nextLevel.level,
         title: nextLevel.title,
         icon: nextLevel.icon,
-        xpRequired: nextLevel.xpRequired
+        xpRequired: nextLevel.xpRequired,
       },
       totalXP: profile.totalXP,
       currentXP: profile.currentXP,
-      xpProgress: ((profile.totalXP - GamificationService.LEVELS[profile.level - 1].xpRequired) / 
-                   (nextLevel.xpRequired - GamificationService.LEVELS[profile.level - 1].xpRequired)) * 100
+      xpProgress:
+        ((profile.totalXP -
+          GamificationService.LEVELS[profile.level - 1].xpRequired) /
+          (nextLevel.xpRequired -
+            GamificationService.LEVELS[profile.level - 1].xpRequired)) *
+        100,
     };
   }
 
@@ -276,7 +282,7 @@ class GamificationService extends BaseService {
     return {
       total: profile.totalCoins || 0,
       available: (profile.totalCoins || 0) - (profile.spentCoins || 0),
-      spent: profile.spentCoins || 0
+      spent: profile.spentCoins || 0,
     };
   }
 
@@ -329,7 +335,7 @@ class GamificationService extends BaseService {
           userId: profile.id,
           level: profile.level,
           totalXP: profile.totalXP || 0,
-          badges: profile.badges?.length || 0
+          badges: profile.badges?.length || 0,
         }));
     } catch (error) {
       console.error('Error obteniendo leaderboard:', error);
@@ -361,7 +367,7 @@ class GamificationService extends BaseService {
       xpHistory: [],
       coinsHistory: [],
       createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString()
+      updatedAt: new Date().toISOString(),
     };
   }
 

@@ -26,18 +26,20 @@ export const ForgotPasswordPage = () => {
       setStep(2);
       setEmail('');
     } catch (err) {
-      setError(err.message || EMAIL_MESSAGES.forgotPasswordPage.errorSendingEmail);
+      setError(
+        err.message || EMAIL_MESSAGES.forgotPasswordPage.errorSendingEmail
+      );
     } finally {
       setIsLoading(false);
     }
   };
 
   return (
-    <div className="min-h-dvh bg-linear-to-b from-black via-slate-950 to-black text-white flex items-center justify-center px-6 overflow-hidden">
+    <div className="flex min-h-dvh items-center justify-center overflow-hidden bg-linear-to-b from-black via-slate-950 to-black px-6 text-white">
       {/* Background glow effects */}
-      <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
-        <div className="absolute top-1/3 left-1/4 w-96 h-96 bg-blue-500/30 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute bottom-1/3 right-1/4 w-96 h-96 bg-purple-500/30 rounded-full blur-3xl animate-pulse"></div>
+      <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
+        <div className="absolute top-1/3 left-1/4 h-96 w-96 animate-pulse rounded-full bg-blue-500/30 blur-3xl"></div>
+        <div className="absolute right-1/4 bottom-1/3 h-96 w-96 animate-pulse rounded-full bg-purple-500/30 blur-3xl"></div>
       </div>
 
       {/* Card */}
@@ -45,15 +47,15 @@ export const ForgotPasswordPage = () => {
         {/* Back Link */}
         <Link
           href="/login"
-          className="inline-flex items-center gap-2 text-slate-400 hover:text-slate-300 transition-colors mb-8"
+          className="mb-8 inline-flex items-center gap-2 text-slate-400 transition-colors hover:text-slate-300"
         >
           <Icon name="arrow-left" />
           Volver al login
         </Link>
 
         {/* Header */}
-        <div className="text-center mb-8">
-          <h1 className="text-3xl md:text-4xl font-black mb-4 bg-linear-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-transparent">
+        <div className="mb-8 text-center">
+          <h1 className="mb-4 bg-linear-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-3xl font-black text-transparent md:text-4xl">
             {EMAIL_MESSAGES.forgotPasswordPage.headerTitle}
           </h1>
           <p className="text-slate-400">
@@ -66,72 +68,92 @@ export const ForgotPasswordPage = () => {
           <>
             {/* Form */}
             <form onSubmit={handleSubmit} className="space-y-6">
-            {/* Email */}
-            <div>
-              <label htmlFor="email" className="block text-sm font-semibold mb-2">
-                {EMAIL_MESSAGES.forgotPasswordPage.emailLabel}
-              </label>
-              <div className="relative">
-                <Icon
-                  name="envelope"
-                  className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"
-                />
-                <input
-                  id="email"
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder={EMAIL_MESSAGES.forgotPasswordPage.emailPlaceholder}
-                  className="w-full pl-10 pr-4 py-3 bg-slate-800/50 border border-slate-700 rounded-lg focus:outline-none focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/30 transition-all"
-                  required
-                />
+              {/* Email */}
+              <div>
+                <label
+                  htmlFor="email"
+                  className="mb-2 block text-sm font-semibold"
+                >
+                  {EMAIL_MESSAGES.forgotPasswordPage.emailLabel}
+                </label>
+                <div className="relative">
+                  <Icon
+                    name="envelope"
+                    className="absolute top-1/2 left-4 -translate-y-1/2 text-slate-400"
+                  />
+                  <input
+                    id="email"
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder={
+                      EMAIL_MESSAGES.forgotPasswordPage.emailPlaceholder
+                    }
+                    className="w-full rounded-lg border border-slate-700 bg-slate-800/50 py-3 pr-4 pl-10 transition-all focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/30 focus:outline-none"
+                    required
+                  />
+                </div>
               </div>
-            </div>
 
-            {/* Error Message */}
-            {error && (
-              <div className="flex items-start gap-3 p-4 bg-red-500/20 border border-red-500/50 rounded-lg">
-                <Icon name="exclamation-circle" className="text-red-400 mt-0.5 shrink-0" />
-                <p className="text-sm text-red-400">{error}</p>
-              </div>
-            )}
+              {/* Error Message */}
+              {error && (
+                <div className="flex items-start gap-3 rounded-lg border border-red-500/50 bg-red-500/20 p-4">
+                  <Icon
+                    name="exclamation-circle"
+                    className="mt-0.5 shrink-0 text-red-400"
+                  />
+                  <p className="text-sm text-red-400">{error}</p>
+                </div>
+              )}
 
-            {/* Submit Button */}
-            <button
-              type="submit"
-              disabled={isLoading}
-              className="cursor-pointer w-full py-3 px-4 bg-linear-to-r from-cyan-500 to-blue-600 text-white font-bold rounded-lg hover:shadow-lg hover:shadow-cyan-500/50 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              {isLoading ? EMAIL_MESSAGES.forgotPasswordPage.buttonLoadingText : EMAIL_MESSAGES.forgotPasswordPage.buttonText}
-            </button>
-          </form>
+              {/* Submit Button */}
+              <button
+                type="submit"
+                disabled={isLoading}
+                className="w-full cursor-pointer rounded-lg bg-linear-to-r from-cyan-500 to-blue-600 px-4 py-3 font-bold text-white transition-all duration-300 hover:shadow-lg hover:shadow-cyan-500/50 disabled:cursor-not-allowed disabled:opacity-50"
+              >
+                {isLoading
+                  ? EMAIL_MESSAGES.forgotPasswordPage.buttonLoadingText
+                  : EMAIL_MESSAGES.forgotPasswordPage.buttonText}
+              </button>
+            </form>
           </>
         )}
 
         {/* Step 2: Success Message */}
         {step === 2 && success && (
           <div className="space-y-6">
-            <div className="flex justify-center mb-6">
-              <div className="w-20 h-20 rounded-full bg-green-500/20 border border-green-500/50 flex items-center justify-center">
-                <Icon name="check-circle" size="2xl" className="text-green-400 text-4xl" />
+            <div className="mb-6 flex justify-center">
+              <div className="flex h-20 w-20 items-center justify-center rounded-full border border-green-500/50 bg-green-500/20">
+                <Icon
+                  name="check-circle"
+                  size="2xl"
+                  className="text-4xl text-green-400"
+                />
               </div>
             </div>
-            
+
             <div>
-              <h2 className="text-2xl font-bold text-white text-center mb-3">{EMAIL_MESSAGES.forgotPasswordPage.successTitle}</h2>
-              <p className="text-slate-400 text-center">
+              <h2 className="mb-3 text-center text-2xl font-bold text-white">
+                {EMAIL_MESSAGES.forgotPasswordPage.successTitle}
+              </h2>
+              <p className="text-center text-slate-400">
                 {EMAIL_MESSAGES.forgotPasswordPage.successMessage}
               </p>
             </div>
 
-            <div className="bg-slate-800/50 border border-slate-700 rounded-lg p-4 space-y-2">
+            <div className="space-y-2 rounded-lg border border-slate-700 bg-slate-800/50 p-4">
               <p className="text-sm text-slate-300">
-                <strong>{EMAIL_MESSAGES.forgotPasswordPage.importantLabel}</strong>
+                <strong>
+                  {EMAIL_MESSAGES.forgotPasswordPage.importantLabel}
+                </strong>
               </p>
-              <ul className="text-sm text-slate-400 space-y-1 list-disc list-inside">
-                {EMAIL_MESSAGES.forgotPasswordPage.importanceList.map((item, idx) => (
-                  <li key={idx}>{item}</li>
-                ))}
+              <ul className="list-inside list-disc space-y-1 text-sm text-slate-400">
+                {EMAIL_MESSAGES.forgotPasswordPage.importanceList.map(
+                  (item, idx) => (
+                    <li key={idx}>{item}</li>
+                  )
+                )}
               </ul>
             </div>
 
@@ -142,13 +164,13 @@ export const ForgotPasswordPage = () => {
                   setSuccess(false);
                   setError('');
                 }}
-                className="cursor-pointer w-full py-3 px-4 text-cyan-400 hover:text-cyan-300 font-bold transition-colors"
+                className="w-full cursor-pointer px-4 py-3 font-bold text-cyan-400 transition-colors hover:text-cyan-300"
               >
                 {EMAIL_MESSAGES.forgotPasswordPage.useAnotherEmailButton}
               </button>
               <Link
                 href="/login"
-                className="block w-full py-3 px-4 bg-slate-800 text-white font-bold rounded-lg hover:bg-slate-700 transition-all text-center"
+                className="block w-full rounded-lg bg-slate-800 px-4 py-3 text-center font-bold text-white transition-all hover:bg-slate-700"
               >
                 {EMAIL_MESSAGES.forgotPasswordPage.backToLogin}
               </Link>

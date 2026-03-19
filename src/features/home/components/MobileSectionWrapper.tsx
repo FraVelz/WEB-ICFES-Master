@@ -2,14 +2,16 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Icon } from '@/shared/components/Icon';
 
 export const MobileSectionWrapper = ({
-  children, 
-  title, 
+  children,
+  title,
   defaultOpen = false,
-  sectionId 
+  sectionId,
 }) => {
   const [isOpen, setIsOpen] = useState(defaultOpen);
   const contentRef = useRef(null);
-  const [maxHeight, setMaxHeight] = React.useState(defaultOpen ? 'none' : '0px');
+  const [maxHeight, setMaxHeight] = React.useState(
+    defaultOpen ? 'none' : '0px'
+  );
 
   // Actualizar altura máxima cuando se abre/cierra
   useEffect(() => {
@@ -43,16 +45,14 @@ export const MobileSectionWrapper = ({
     <div id={sectionId} className="border-b border-slate-700/50">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="w-full flex items-center justify-between p-4 hover:bg-slate-900/50 transition-colors"
+        className="flex w-full items-center justify-between p-4 transition-colors hover:bg-slate-900/50"
         aria-expanded={isOpen}
         aria-controls={`section-${sectionId}`}
       >
-        <h2 className="text-xl font-bold text-blue-400 text-left">
-          {title}
-        </h2>
-        <Icon 
+        <h2 className="text-left text-xl font-bold text-blue-400">{title}</h2>
+        <Icon
           name="chevron-down"
-          className={`transition-transform duration-300 text-blue-400 ${
+          className={`text-blue-400 transition-transform duration-300 ${
             isOpen ? 'rotate-180' : ''
           }`}
         />
@@ -65,12 +65,10 @@ export const MobileSectionWrapper = ({
         style={{
           maxHeight,
           overflow: 'hidden',
-          transition: 'max-height 0.3s ease-out'
+          transition: 'max-height 0.3s ease-out',
         }}
       >
-        <div className="px-4 pb-4">
-          {children}
-        </div>
+        <div className="px-4 pb-4">{children}</div>
       </div>
     </div>
   );

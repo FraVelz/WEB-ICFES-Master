@@ -1,9 +1,12 @@
 import { Icon } from '@/shared/components/Icon';
 
 export const PlanChangeAlert = ({ currentPlan, newPlan }) => {
-  const isFreeToPaid = currentPlan?.planType === 'free' && newPlan?.id !== 'free';
-  const isPaidToFree = currentPlan?.planType !== 'free' && newPlan?.id === 'free';
-  const isPaidToPaid = currentPlan?.planType !== 'free' && newPlan?.id !== 'free';
+  const isFreeToPaid =
+    currentPlan?.planType === 'free' && newPlan?.id !== 'free';
+  const isPaidToFree =
+    currentPlan?.planType !== 'free' && newPlan?.id === 'free';
+  const isPaidToPaid =
+    currentPlan?.planType !== 'free' && newPlan?.id !== 'free';
 
   // Convertir nextBillingDate correctamente
   const getFormattedDate = (date) => {
@@ -39,10 +42,10 @@ export const PlanChangeAlert = ({ currentPlan, newPlan }) => {
         textColor: 'text-blue-300',
         titleColor: 'text-blue-400',
         title: 'Actualización de Plan',
-        message: `Estás actualizando de "${currentPlan?.planName}" a "${newPlan?.name}". El nuevo plan se activará inmediatamente.`
+        message: `Estás actualizando de "${currentPlan?.planName}" a "${newPlan?.name}". El nuevo plan se activará inmediatamente.`,
       };
     }
-    
+
     if (isPaidToFree) {
       return {
         type: 'downgrade',
@@ -52,10 +55,10 @@ export const PlanChangeAlert = ({ currentPlan, newPlan }) => {
         textColor: 'text-yellow-300',
         titleColor: 'text-yellow-400',
         title: 'Cambio a Plan Gratuito',
-        message: `Vas a cambiar de "${currentPlan?.planName}" a "${newPlan?.name}". El cambio se realizará cuando finalice tu plan actual.`
+        message: `Vas a cambiar de "${currentPlan?.planName}" a "${newPlan?.name}". El cambio se realizará cuando finalice tu plan actual.`,
       };
     }
-    
+
     if (isPaidToPaid) {
       return {
         type: 'change',
@@ -65,7 +68,7 @@ export const PlanChangeAlert = ({ currentPlan, newPlan }) => {
         textColor: 'text-purple-300',
         titleColor: 'text-purple-400',
         title: 'Cambio de Plan',
-        message: `Estás cambiando de "${currentPlan?.planName}" a "${newPlan?.name}". El nuevo plan se activará cuando finalice tu plan actual.`
+        message: `Estás cambiando de "${currentPlan?.planName}" a "${newPlan?.name}". El nuevo plan se activará cuando finalice tu plan actual.`,
       };
     }
 
@@ -77,11 +80,13 @@ export const PlanChangeAlert = ({ currentPlan, newPlan }) => {
   if (!alertConfig) return null;
 
   return (
-    <div className={`p-4 rounded-lg border-l-4 ${alertConfig.bgColor} ${alertConfig.borderColor}`}>
+    <div
+      className={`rounded-lg border-l-4 p-4 ${alertConfig.bgColor} ${alertConfig.borderColor}`}
+    >
       <div className="flex gap-3">
-        <Icon 
-          name={alertConfig.icon} 
-          className={`text-xl ${alertConfig.titleColor} shrink-0 mt-0.5`}
+        <Icon
+          name={alertConfig.icon}
+          className={`text-xl ${alertConfig.titleColor} mt-0.5 shrink-0`}
         />
         <div>
           <h4 className={`font-bold ${alertConfig.titleColor} mb-1`}>
@@ -91,11 +96,16 @@ export const PlanChangeAlert = ({ currentPlan, newPlan }) => {
             {alertConfig.message}
           </p>
           {isPaidToPaid && currentPlan?.nextBillingDate && (
-            <div className={`text-xs ${alertConfig.textColor} mt-3 pt-3 border-t border-current/20`}>
+            <div
+              className={`text-xs ${alertConfig.textColor} mt-3 border-t border-current/20 pt-3`}
+            >
               <p className="opacity-75">
-                Tu plan actual finaliza el <span className="font-semibold">{getFormattedDate(currentPlan.nextBillingDate)}</span>
+                Tu plan actual finaliza el{' '}
+                <span className="font-semibold">
+                  {getFormattedDate(currentPlan.nextBillingDate)}
+                </span>
               </p>
-              <p className="opacity-60 mt-1">
+              <p className="mt-1 opacity-60">
                 El nuevo plan se activará automáticamente después de esa fecha.
               </p>
             </div>

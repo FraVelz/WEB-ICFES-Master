@@ -57,7 +57,9 @@ export const debugLocalStorage = () => {
  * Limpia todos los datos de localStorage (CUIDADO: esto elimina TODO)
  */
 export const clearAllData = () => {
-  if (confirm('⚠️  ADVERTENCIA: Esto eliminará TODOS los datos. ¿Estás seguro?')) {
+  if (
+    confirm('⚠️  ADVERTENCIA: Esto eliminará TODOS los datos. ¿Estás seguro?')
+  ) {
     localStorage.removeItem('icfes_exams');
     localStorage.removeItem('icfes_practice');
     localStorage.removeItem('icfes_progress');
@@ -85,7 +87,7 @@ export const testSaveAndLoad = () => {
   const testData = {
     test: true,
     timestamp: new Date().toISOString(),
-    data: 'prueba de guardado'
+    data: 'prueba de guardado',
   };
 
   console.log('📝 Guardando datos de prueba...');

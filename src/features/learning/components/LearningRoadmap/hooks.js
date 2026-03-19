@@ -8,7 +8,7 @@ export const useLevelExpansion = () => {
   const [expandedSubject, setExpandedSubject] = useState({
     basico: 'matematicas',
     intermedio: null,
-    avanzado: null
+    avanzado: null,
   });
 
   const handleToggleLevel = (level) => {
@@ -16,9 +16,9 @@ export const useLevelExpansion = () => {
   };
 
   const handleToggleSubject = (level, subject) => {
-    setExpandedSubject(prev => ({
+    setExpandedSubject((prev) => ({
       ...prev,
-      [level]: prev[level] === subject ? null : subject
+      [level]: prev[level] === subject ? null : subject,
     }));
   };
 
@@ -26,6 +26,6 @@ export const useLevelExpansion = () => {
     expandedLevel,
     expandedSubject,
     handleToggleLevel,
-    handleToggleSubject
+    handleToggleSubject,
   };
 };

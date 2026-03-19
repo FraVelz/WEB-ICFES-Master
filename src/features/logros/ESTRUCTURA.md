@@ -1,6 +1,6 @@
 # Estructura de Logros - Organización Modular
 
-##  Árbol de Directorios
+## Árbol de Directorios
 
 ```
 /src/features/logros/
@@ -29,7 +29,7 @@
          strategy.js                # 5 logros
 ```
 
-##  Flujo de Importaciones
+## Flujo de Importaciones
 
 ```
 badges.js (re-exports)
@@ -50,60 +50,69 @@ badges.js (re-exports)
                → gamification.js
                → rigor.js
                → strategy.js
-    
+
     → categoriesConfig.js (configuración de categorías)
-    
+
     → index.js (consolida todo)
         → LOGROS_DISPONIBLES (todos los logros combinados)
         → BADGE_CATEGORIES (todas las categorías)
 ```
 
-##  Estadísticas
+## Estadísticas
 
-| Categoría | Logros | Archivo |
-|-----------|--------|---------|
-| Primeros Pasos | 4 | firstSteps.js |
-| Rachas | 4 | streaks.js |
-| Logros Académicos | 6 | academic.js |
-| Excelencia | 4 | excellence.js |
-| Planes y Suscripciones | 13 | plans.js |
-| Colaboración | 5 | collaboration.js |
-| Desafíos Especiales | 5 | challenges.js |
-| Mejora Continua | 4 | improvement.js |
-| Conocimiento Profundo | 6 | knowledge.js |
-| Hitos Especiales | 8 | milestones.js |
-| Gamificación Avanzada | 8 | gamification.js |
-| Rigor Académico | 6 | rigor.js |
-| Estrategia y Táctica | 5 | strategy.js |
-| **TOTAL** | **100+** | **13 archivos** |
+| Categoría              | Logros   | Archivo          |
+| ---------------------- | -------- | ---------------- |
+| Primeros Pasos         | 4        | firstSteps.js    |
+| Rachas                 | 4        | streaks.js       |
+| Logros Académicos      | 6        | academic.js      |
+| Excelencia             | 4        | excellence.js    |
+| Planes y Suscripciones | 13       | plans.js         |
+| Colaboración           | 5        | collaboration.js |
+| Desafíos Especiales    | 5        | challenges.js    |
+| Mejora Continua        | 4        | improvement.js   |
+| Conocimiento Profundo  | 6        | knowledge.js     |
+| Hitos Especiales       | 8        | milestones.js    |
+| Gamificación Avanzada  | 8        | gamification.js  |
+| Rigor Académico        | 6        | rigor.js         |
+| Estrategia y Táctica   | 5        | strategy.js      |
+| **TOTAL**              | **100+** | **13 archivos**  |
 
-##  Ventajas de la Nueva Estructura
+## Ventajas de la Nueva Estructura
 
- **Modularidad**: Cada categoría en su propio archivo
- **Escalabilidad**: Fácil agregar nuevos logros a cualquier categoría
- **Mantenibilidad**: Cada archivo es pequeño y enfocado (~40-60 líneas)
- **Reutilización**: Los módulos pueden importarse independientemente
- **Claridad**: La estructura refleja la organización de categorías
- **Performance**: Los imports se pueden optimizar según necesidad
+**Modularidad**: Cada categoría en su propio archivo
+**Escalabilidad**: Fácil agregar nuevos logros a cualquier categoría
+**Mantenibilidad**: Cada archivo es pequeño y enfocado (~40-60 líneas)
+**Reutilización**: Los módulos pueden importarse independientemente
+**Claridad**: La estructura refleja la organización de categorías
+**Performance**: Los imports se pueden optimizar según necesidad
 
-##  Cómo Usar
+## Cómo Usar
 
 ### Importar todos los logros:
+
 ```javascript
-import { LOGROS_DISPONIBLES, BADGE_CATEGORIES } from '@/features/logros/constants';
+import {
+  LOGROS_DISPONIBLES,
+  BADGE_CATEGORIES,
+} from '@/features/logros/constants';
 ```
 
 ### Importar una categoría específica:
+
 ```javascript
 import { FIRST_STEPS_BADGES } from '@/features/logros/constants/categories/firstSteps';
 ```
 
 ### Importar múltiples categorías:
+
 ```javascript
-import { ACADEMIC_BADGES, EXCELLENCE_BADGES } from '@/features/logros/constants/categories';
+import {
+  ACADEMIC_BADGES,
+  EXCELLENCE_BADGES,
+} from '@/features/logros/constants/categories';
 ```
 
-##  Agregar Nuevo Logro
+## Agregar Nuevo Logro
 
 1. Abre el archivo de categoría correspon.js
 2. Agrega el nuevo logro al objeto exportado
@@ -111,6 +120,7 @@ import { ACADEMIC_BADGES, EXCELLENCE_BADGES } from '@/features/logros/constants/
 4. El logro estará disponible automáticamente en todo el sistema
 
 Ejemplo:
+
 ```javascript
 // En categories/firstSteps.js
 NEW_ACHIEVEMENT: {
@@ -123,7 +133,7 @@ NEW_ACHIEVEMENT: {
 }
 ```
 
-##  Dependencias Entre Archivos
+## Dependencias Entre Archivos
 
 - `index.jsx` → importa desde `./constants` → usa `LOGROS_DISPONIBLES` y `BADGE_CATEGORIES`
 - `constants/index.js` → consolida todos los exports
@@ -131,7 +141,7 @@ NEW_ACHIEVEMENT: {
 - `constants/categoriesConfig.js` → define estilos y configuración
 - `categories/*.js` → cada archivo define un conjunto de logros
 
-##  Notas Importantes
+## Notas Importantes
 
 - Todos los iconos usan FontAwesome Free Solid
 - Cada logro debe tener un `id` único

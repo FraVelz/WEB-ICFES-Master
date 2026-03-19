@@ -5,7 +5,7 @@ export const IMPROVEMENT_BADGES = {
     icon: 'play',
     description: 'Mejora tu puntuación en 20 puntos',
     requirement: 'Aumenta tu promedio 20 puntos',
-    category: 'mejora'
+    category: 'mejora',
   },
   COMEBACK_KING: {
     id: 'COMEBACK_KING',
@@ -13,7 +13,7 @@ export const IMPROVEMENT_BADGES = {
     icon: 'play',
     description: 'Recuperarte de una mala puntuación',
     requirement: 'Obtén 90%+ después de un resultado bajo',
-    category: 'mejora'
+    category: 'mejora',
   },
   STEADY_CLIMBER: {
     id: 'STEADY_CLIMBER',
@@ -21,7 +21,7 @@ export const IMPROVEMENT_BADGES = {
     icon: 'play',
     description: 'Mejora tu puntuación cada semana',
     requirement: 'Aumenta puntuación 4 semanas consecutivas',
-    category: 'mejora'
+    category: 'mejora',
   },
   FOCUS_FINDER: {
     id: 'FOCUS_FINDER',
@@ -29,7 +29,7 @@ export const IMPROVEMENT_BADGES = {
     icon: 'play',
     description: 'Completa 10 exámenes sin descansar',
     requirement: 'Realiza 10 exámenes en sesión',
-    category: 'mejora'
+    category: 'mejora',
   },
   THIRTY_POINT_JUMP: {
     id: 'THIRTY_POINT_JUMP',
@@ -37,7 +37,7 @@ export const IMPROVEMENT_BADGES = {
     icon: 'play',
     description: 'Mejora 30 puntos en una materia',
     requirement: 'Aumenta tu promedio 30 puntos en una área',
-    category: 'mejora'
+    category: 'mejora',
   },
   TRIPLE_RECOVERY: {
     id: 'TRIPLE_RECOVERY',
@@ -45,7 +45,7 @@ export const IMPROVEMENT_BADGES = {
     icon: 'play',
     description: 'Supera 3 rachas bajas en una semana',
     requirement: 'Obtén 90%+ en 3 exámenes tras resultados bajos',
-    category: 'mejora'
+    category: 'mejora',
   },
   MOMENTUM_BUILDER: {
     id: 'MOMENTUM_BUILDER',
@@ -53,7 +53,7 @@ export const IMPROVEMENT_BADGES = {
     icon: 'play',
     description: 'Logra 5 mejoras consecutivas',
     requirement: 'Aumenta puntuación en 5 exámenes seguidos',
-    category: 'mejora'
+    category: 'mejora',
   },
   CONSISTENCY_MASTER: {
     id: 'CONSISTENCY_MASTER',
@@ -61,7 +61,7 @@ export const IMPROVEMENT_BADGES = {
     icon: 'play',
     description: 'Mantén 85%+ durante 30 exámenes',
     requirement: 'Promedio 85%+ en 30 exámenes consecutivos',
-    category: 'mejora'
+    category: 'mejora',
   },
   BREAKTHROUGH_ACHIEVER: {
     id: 'BREAKTHROUGH_ACHIEVER',
@@ -69,7 +69,7 @@ export const IMPROVEMENT_BADGES = {
     icon: 'play',
     description: 'Alcanza tu mejor puntuación de todos los tiempos',
     requirement: 'Supera tu récord personal en cualquier área',
-    category: 'mejora'
+    category: 'mejora',
   },
   ENDURANCE_TRAINER: {
     id: 'ENDURANCE_TRAINER',
@@ -77,6 +77,6 @@ export const IMPROVEMENT_BADGES = {
     icon: 'play',
     description: 'Completa 50 exámenes manteniéndote motivado',
     requirement: 'Realiza 50 exámenes sin bajar de 80%',
-    category: 'mejora'
-  }
+    category: 'mejora',
+  },
 };

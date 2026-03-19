@@ -11,7 +11,7 @@ class ExamDataService {
 
   async getExam(examId) {
     const exams = getStoredExams();
-    return exams.find(e => e.id === examId) || null;
+    return exams.find((e) => e.id === examId) || null;
   }
 
   async getAllExams() {
@@ -19,9 +19,15 @@ class ExamDataService {
   }
 
   async saveExamAnswers(userId, examId, answers) {}
-  async getUserExamAnswers(userId, examId) { return null; }
-  async getUserExamHistory(userId) { return getStoredExams(); }
-  calculateScore(answers) { return 0; }
+  async getUserExamAnswers(userId, examId) {
+    return null;
+  }
+  async getUserExamHistory(userId) {
+    return getStoredExams();
+  }
+  calculateScore(answers) {
+    return 0;
+  }
 }
 
 export default new ExamDataService();

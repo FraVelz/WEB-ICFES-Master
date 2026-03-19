@@ -4,7 +4,7 @@ import { useUser } from '@/features/user/hooks/useUser';
 import {
   getAllBadgesWithStatus,
   purchaseBadge,
-  getUserBadgesWithDetails
+  getUserBadgesWithDetails,
 } from '@/shared/utils/badgesStore';
 
 export const BadgesStore = ({ isOpen, onClose }) => {
@@ -45,40 +45,42 @@ export const BadgesStore = ({ isOpen, onClose }) => {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4">
-      <div className="bg-linear-to-br from-gray-800 to-gray-900 border-2 border-purple-500/50 rounded-3xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4 backdrop-blur-sm">
+      <div className="max-h-[90vh] w-full max-w-4xl overflow-y-auto rounded-3xl border-2 border-purple-500/50 bg-linear-to-br from-gray-800 to-gray-900">
         {/* Header */}
-        <div className="sticky top-0 bg-linear-to-r from-purple-600 to-pink-600 p-6 border-b border-white/10 flex items-center justify-between">
-          <h2 className="text-3xl font-black text-white flex items-center gap-3">
+        <div className="sticky top-0 flex items-center justify-between border-b border-white/10 bg-linear-to-r from-purple-600 to-pink-600 p-6">
+          <h2 className="flex items-center gap-3 text-3xl font-black text-white">
             <span className="text-4xl">🎖️</span>
             Tienda de Insignias
           </h2>
           <button
             onClick={onClose}
-            className="text-white hover:bg-white/20 p-2 rounded-full transition-colors"
+            className="rounded-full p-2 text-white transition-colors hover:bg-white/20"
           >
             <Icon name="times" className="text-2xl" />
           </button>
         </div>
 
         {/* Current Money and Badges Display */}
-        <div className="p-6 border-b border-white/10 bg-gray-900/50">
-          <div className="flex flex-col md:flex-row gap-8">
+        <div className="border-b border-white/10 bg-gray-900/50 p-6">
+          <div className="flex flex-col gap-8 md:flex-row">
             {/* Money Display */}
-            <div className="flex items-center gap-4 bg-linear-to-r from-yellow-500/20 to-orange-500/20 border border-yellow-500/30 rounded-xl p-4 flex-1">
-              <Icon name="coins" className="text-yellow-400 text-3xl" />
+            <div className="flex flex-1 items-center gap-4 rounded-xl border border-yellow-500/30 bg-linear-to-r from-yellow-500/20 to-orange-500/20 p-4">
+              <Icon name="coins" className="text-3xl text-yellow-400" />
               <div>
-                <p className="text-gray-400 text-sm">Tu Dinero Virtual</p>
-                <p className="text-white font-bold text-2xl">{virtualMoney}</p>
+                <p className="text-sm text-gray-400">Tu Dinero Virtual</p>
+                <p className="text-2xl font-bold text-white">{virtualMoney}</p>
               </div>
             </div>
 
             {/* Badges Count */}
-            <div className="flex items-center gap-4 bg-linear-to-r from-purple-500/20 to-pink-500/20 border border-purple-500/30 rounded-xl p-4 flex-1">
+            <div className="flex flex-1 items-center gap-4 rounded-xl border border-purple-500/30 bg-linear-to-r from-purple-500/20 to-pink-500/20 p-4">
               <span className="text-4xl">🎖️</span>
               <div>
-                <p className="text-gray-400 text-sm">Insignias Compradas</p>
-                <p className="text-white font-bold text-2xl">{userBadges.length}/{badges.length}</p>
+                <p className="text-sm text-gray-400">Insignias Compradas</p>
+                <p className="text-2xl font-bold text-white">
+                  {userBadges.length}/{badges.length}
+                </p>
               </div>
             </div>
           </div>
@@ -87,10 +89,10 @@ export const BadgesStore = ({ isOpen, onClose }) => {
         {/* Message */}
         {purchaseMessage && (
           <div
-            className={`mx-6 mt-6 p-4 rounded-lg border-l-4 ${
+            className={`mx-6 mt-6 rounded-lg border-l-4 p-4 ${
               messageType === 'success'
-                ? 'bg-green-500/20 border-green-500 text-green-300'
-                : 'bg-red-500/20 border-red-500 text-red-300'
+                ? 'border-green-500 bg-green-500/20 text-green-300'
+                : 'border-red-500 bg-red-500/20 text-red-300'
             }`}
           >
             {purchaseMessage}
@@ -98,73 +100,86 @@ export const BadgesStore = ({ isOpen, onClose }) => {
         )}
 
         {/* Badges Grid */}
-        <div className="p-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 gap-6 p-6 md:grid-cols-2 lg:grid-cols-3">
           {badges.map((badge) => (
             <div
               key={badge.id}
               className={`relative rounded-2xl border-2 p-6 transition-all duration-300 ${
                 badge.purchased
-                  ? `bg-linear-to-br ${badge.color} ${badge.borderColor} opacity-100 hover:scale-105 cursor-default`
+                  ? `bg-linear-to-br ${badge.color} ${badge.borderColor} cursor-default opacity-100 hover:scale-105`
                   : badge.canPurchase
-                  ? `bg-gray-800 border-white/20 hover:border-purple-500 hover:bg-gray-700/50 hover:scale-105 cursor-pointer`
-                  : `bg-gray-800/50 border-gray-600/50 opacity-60 cursor-not-allowed`
+                    ? `cursor-pointer border-white/20 bg-gray-800 hover:scale-105 hover:border-purple-500 hover:bg-gray-700/50`
+                    : `cursor-not-allowed border-gray-600/50 bg-gray-800/50 opacity-60`
               }`}
             >
               {/* Lock Icon for Locked Badges */}
               {badge.locked && (
-                <div className="absolute top-2 right-2 bg-red-600 rounded-full p-2">
-                  <Icon name="lock" className="text-white text-lg" />
+                <div className="absolute top-2 right-2 rounded-full bg-red-600 p-2">
+                  <Icon name="lock" className="text-lg text-white" />
                 </div>
               )}
 
               {/* Purchased Badge */}
               {badge.purchased && (
-                <div className="absolute top-2 right-2 bg-green-600 rounded-full px-3 py-1 text-white text-xs font-bold flex items-center gap-1">
+                <div className="absolute top-2 right-2 flex items-center gap-1 rounded-full bg-green-600 px-3 py-1 text-xs font-bold text-white">
                   <Icon name="check" size="sm" className="text-xs" />
                   COMPRADA
                 </div>
               )}
 
               {/* Badge Icon */}
-              <div className="text-5xl mb-4 text-center flex justify-center">
-                {typeof badge.icon === 'string' ? <Icon name={badge.icon} size="2xl" /> : badge.icon}
+              <div className="mb-4 flex justify-center text-center text-5xl">
+                {typeof badge.icon === 'string' ? (
+                  <Icon name={badge.icon} size="2xl" />
+                ) : (
+                  badge.icon
+                )}
               </div>
 
               {/* Badge Info */}
-              <h3 className={`font-bold text-lg mb-2 ${badge.purchased ? 'text-white' : 'text-white'}`}>
+              <h3
+                className={`mb-2 text-lg font-bold ${badge.purchased ? 'text-white' : 'text-white'}`}
+              >
                 {badge.name}
               </h3>
 
-              <p className={`text-sm mb-4 ${badge.purchased ? 'text-white/80' : 'text-gray-400'}`}>
+              <p
+                className={`mb-4 text-sm ${badge.purchased ? 'text-white/80' : 'text-gray-400'}`}
+              >
                 {badge.description}
               </p>
 
               {/* Tier Info */}
-              <div className={`text-xs font-semibold mb-4 ${badge.purchased ? 'text-white/70' : 'text-gray-500'}`}>
+              <div
+                className={`mb-4 text-xs font-semibold ${badge.purchased ? 'text-white/70' : 'text-gray-500'}`}
+              >
                 Nivel {badge.tier}
               </div>
 
               {/* Purchase Button or Status */}
               {badge.purchased ? (
-                <div className="text-center text-white font-bold">Tu insignia</div>
+                <div className="text-center font-bold text-white">
+                  Tu insignia
+                </div>
               ) : badge.canPurchase ? (
                 <button
                   onClick={() => handlePurchase(badge)}
-                  className="w-full bg-linear-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-bold py-3 rounded-lg transition-all duration-300 flex items-center justify-center gap-2"
+                  className="flex w-full items-center justify-center gap-2 rounded-lg bg-linear-to-r from-purple-600 to-pink-600 py-3 font-bold text-white transition-all duration-300 hover:from-purple-700 hover:to-pink-700"
                 >
                   <Icon name="coins" />
                   <span>{badge.price}</span>
                 </button>
               ) : (
-                <div className="w-full bg-gray-600/50 text-gray-300 font-bold py-3 rounded-lg text-center cursor-not-allowed opacity-50">
+                <div className="w-full cursor-not-allowed rounded-lg bg-gray-600/50 py-3 text-center font-bold text-gray-300 opacity-50">
                   Bloqueada
                 </div>
               )}
 
               {/* Requirements Info */}
               {badge.locked && badge.requiresPrevious && (
-                <div className="mt-4 text-xs text-yellow-300 bg-yellow-500/20 border border-yellow-500/30 rounded p-2 text-center">
-                  Requiere: "{badges.find(b => b.id === badge.requiresPrevious)?.name}"
+                <div className="mt-4 rounded border border-yellow-500/30 bg-yellow-500/20 p-2 text-center text-xs text-yellow-300">
+                  Requiere: "
+                  {badges.find((b) => b.id === badge.requiresPrevious)?.name}"
                 </div>
               )}
             </div>

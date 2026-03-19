@@ -4,7 +4,7 @@ export const ALL_QUESTIONS = QUESTIONS;
 
 export const calculateScore = (results = []) => {
   if (results.length === 0) return 0;
-  const correctCount = results.filter(r => r.correct).length;
+  const correctCount = results.filter((r) => r.correct).length;
   return Math.round((correctCount / results.length) * 100);
 };
 
@@ -13,10 +13,10 @@ export const getAreaResults = (results = []) => {
     mathematics: { total: 0, correct: 0 },
     lenguaje: { total: 0, correct: 0 },
     science: { total: 0, correct: 0 },
-    social: { total: 0, correct: 0 }
+    social: { total: 0, correct: 0 },
   };
 
-  results.forEach(result => {
+  results.forEach((result) => {
     const area = result.question.area;
     areas[area].total += 1;
     if (result.correct) areas[area].correct += 1;
@@ -35,13 +35,13 @@ export const shuffleArray = (array) => {
 };
 
 export const getQuestionsByArea = (questions, area) => {
-  return questions.filter(q => q.area === area);
+  return questions.filter((q) => q.area === area);
 };
 
 export const getDifficultyStats = (questions = []) => {
   return {
-    easy: questions.filter(q => q.difficulty === 'fácil').length,
-    medium: questions.filter(q => q.difficulty === 'medio').length,
-    hard: questions.filter(q => q.difficulty === 'difícil').length
+    easy: questions.filter((q) => q.difficulty === 'fácil').length,
+    medium: questions.filter((q) => q.difficulty === 'medio').length,
+    hard: questions.filter((q) => q.difficulty === 'difícil').length,
   };
 };

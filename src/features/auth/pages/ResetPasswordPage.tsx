@@ -28,11 +28,15 @@ export const ResetPasswordPage = () => {
         setVerifying(false);
         return;
       }
-      const { data: { session } } = await supabase.auth.getSession();
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
       setHasRecoverySession(!!session);
       setVerifying(false);
       if (!session) {
-        setError('Enlace de recuperación inválido o expirado. Solicita uno nuevo.');
+        setError(
+          'Enlace de recuperación inválido o expirado. Solicita uno nuevo.'
+        );
       }
     };
     checkSession();
@@ -87,10 +91,10 @@ export const ResetPasswordPage = () => {
 
   if (verifying) {
     return (
-      <div className="min-h-dvh bg-linear-to-b from-black via-slate-950 to-black text-white flex items-center justify-center px-6 overflow-hidden">
-        <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
-          <div className="absolute top-1/3 left-1/4 w-96 h-96 bg-blue-500/30 rounded-full blur-3xl animate-pulse"></div>
-          <div className="absolute bottom-1/3 right-1/4 w-96 h-96 bg-purple-500/30 rounded-full blur-3xl animate-pulse"></div>
+      <div className="flex min-h-dvh items-center justify-center overflow-hidden bg-linear-to-b from-black via-slate-950 to-black px-6 text-white">
+        <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
+          <div className="absolute top-1/3 left-1/4 h-96 w-96 animate-pulse rounded-full bg-blue-500/30 blur-3xl"></div>
+          <div className="absolute right-1/4 bottom-1/3 h-96 w-96 animate-pulse rounded-full bg-purple-500/30 blur-3xl"></div>
         </div>
 
         <div className="relative z-10 text-center">
@@ -101,26 +105,30 @@ export const ResetPasswordPage = () => {
   }
 
   return (
-    <div className="min-h-dvh bg-linear-to-b from-black via-slate-950 to-black text-white flex items-center justify-center px-6 overflow-hidden">
+    <div className="flex min-h-dvh items-center justify-center overflow-hidden bg-linear-to-b from-black via-slate-950 to-black px-6 text-white">
       {/* Background glow effects */}
-      <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
-        <div className="absolute top-1/3 left-1/4 w-96 h-96 bg-blue-500/30 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute bottom-1/3 right-1/4 w-96 h-96 bg-purple-500/30 rounded-full blur-3xl animate-pulse"></div>
+      <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
+        <div className="absolute top-1/3 left-1/4 h-96 w-96 animate-pulse rounded-full bg-blue-500/30 blur-3xl"></div>
+        <div className="absolute right-1/4 bottom-1/3 h-96 w-96 animate-pulse rounded-full bg-purple-500/30 blur-3xl"></div>
       </div>
 
       {/* Card */}
       <div className="relative z-10 w-full max-w-md">
         {/* Success State */}
         {success ? (
-          <div className="text-center space-y-6">
-            <div className="flex justify-center mb-6">
-              <div className="w-20 h-20 rounded-full bg-green-500/20 border border-green-500/50 flex items-center justify-center animate-pulse">
-                <Icon name="check-circle" size="2xl" className="text-green-400 text-4xl" />
+          <div className="space-y-6 text-center">
+            <div className="mb-6 flex justify-center">
+              <div className="flex h-20 w-20 animate-pulse items-center justify-center rounded-full border border-green-500/50 bg-green-500/20">
+                <Icon
+                  name="check-circle"
+                  size="2xl"
+                  className="text-4xl text-green-400"
+                />
               </div>
             </div>
 
             <div>
-              <h1 className="text-3xl md:text-4xl font-black mb-4 bg-linear-to-r from-green-400 via-cyan-400 to-blue-400 bg-clip-text text-transparent">
+              <h1 className="mb-4 bg-linear-to-r from-green-400 via-cyan-400 to-blue-400 bg-clip-text text-3xl font-black text-transparent md:text-4xl">
                 {EMAIL_MESSAGES.resetPasswordPage.successTitle}
               </h1>
               <p className="text-slate-400">
@@ -130,7 +138,7 @@ export const ResetPasswordPage = () => {
 
             <Link
               href="/login"
-              className="block py-3 px-4 bg-linear-to-r from-cyan-500 to-blue-600 text-white font-bold rounded-lg hover:shadow-lg hover:shadow-cyan-500/50 transition-all text-center"
+              className="block rounded-lg bg-linear-to-r from-cyan-500 to-blue-600 px-4 py-3 text-center font-bold text-white transition-all hover:shadow-lg hover:shadow-cyan-500/50"
             >
               {EMAIL_MESSAGES.resetPasswordPage.goToLoginButton}
             </Link>
@@ -138,13 +146,17 @@ export const ResetPasswordPage = () => {
         ) : (
           <>
             {/* Header */}
-            <div className="text-center mb-8">
-              <div className="flex justify-center mb-4">
-                <div className="w-16 h-16 rounded-full bg-cyan-500/20 border border-cyan-500/50 flex items-center justify-center">
-                  <Icon name="lock" size="2xl" className="text-cyan-400 text-2xl" />
+            <div className="mb-8 text-center">
+              <div className="mb-4 flex justify-center">
+                <div className="flex h-16 w-16 items-center justify-center rounded-full border border-cyan-500/50 bg-cyan-500/20">
+                  <Icon
+                    name="lock"
+                    size="2xl"
+                    className="text-2xl text-cyan-400"
+                  />
                 </div>
               </div>
-              <h1 className="text-3xl md:text-4xl font-black mb-4 bg-linear-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-transparent">
+              <h1 className="mb-4 bg-linear-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-3xl font-black text-transparent md:text-4xl">
                 {EMAIL_MESSAGES.resetPasswordPage.title}
               </h1>
               <p className="text-slate-400">
@@ -154,8 +166,11 @@ export const ResetPasswordPage = () => {
 
             {/* Error Message */}
             {error && (
-              <div className="mb-6 flex items-start gap-3 p-4 bg-red-500/20 border border-red-500/50 rounded-lg">
-                <Icon name="exclamation-circle" className="text-red-400 mt-0.5 shrink-0" />
+              <div className="mb-6 flex items-start gap-3 rounded-lg border border-red-500/50 bg-red-500/20 p-4">
+                <Icon
+                  name="exclamation-circle"
+                  className="mt-0.5 shrink-0 text-red-400"
+                />
                 <p className="text-sm text-red-400">{error}</p>
               </div>
             )}
@@ -164,26 +179,31 @@ export const ResetPasswordPage = () => {
             <form onSubmit={handleSubmit} className="space-y-6">
               {/* Password Field */}
               <div>
-                <label htmlFor="password" className="block text-sm font-semibold mb-2">
+                <label
+                  htmlFor="password"
+                  className="mb-2 block text-sm font-semibold"
+                >
                   {EMAIL_MESSAGES.resetPasswordPage.newPasswordLabel}
                 </label>
                 <div className="relative">
-                <Icon
-                  name="lock"
-                  className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"
-                />
+                  <Icon
+                    name="lock"
+                    className="absolute top-1/2 left-4 -translate-y-1/2 text-slate-400"
+                  />
                   <input
                     id="password"
                     type={showPassword ? 'text' : 'password'}
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    placeholder={EMAIL_MESSAGES.resetPasswordPage.passwordPlaceholder}
-                    className="w-full pl-10 pr-10 py-3 bg-slate-800/50 border border-slate-700 rounded-lg focus:outline-none focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/30 transition-all"
+                    placeholder={
+                      EMAIL_MESSAGES.resetPasswordPage.passwordPlaceholder
+                    }
+                    className="w-full rounded-lg border border-slate-700 bg-slate-800/50 py-3 pr-10 pl-10 transition-all focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/30 focus:outline-none"
                   />
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-300"
+                    className="absolute top-1/2 right-4 -translate-y-1/2 text-slate-400 hover:text-slate-300"
                   >
                     <Icon name={showPassword ? 'eye-slash' : 'eye'} />
                   </button>
@@ -192,26 +212,31 @@ export const ResetPasswordPage = () => {
 
               {/* Confirm Password Field */}
               <div>
-                <label htmlFor="confirmPassword" className="block text-sm font-semibold mb-2">
+                <label
+                  htmlFor="confirmPassword"
+                  className="mb-2 block text-sm font-semibold"
+                >
                   {EMAIL_MESSAGES.resetPasswordPage.confirmPasswordLabel}
                 </label>
                 <div className="relative">
-                <Icon
-                  name="lock"
-                  className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"
-                />
+                  <Icon
+                    name="lock"
+                    className="absolute top-1/2 left-4 -translate-y-1/2 text-slate-400"
+                  />
                   <input
                     id="confirmPassword"
                     type={showConfirmPassword ? 'text' : 'password'}
                     value={confirmPassword}
                     onChange={(e) => setConfirmPassword(e.target.value)}
-                    placeholder={EMAIL_MESSAGES.resetPasswordPage.passwordPlaceholder}
-                    className="w-full pl-10 pr-10 py-3 bg-slate-800/50 border border-slate-700 rounded-lg focus:outline-none focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/30 transition-all"
+                    placeholder={
+                      EMAIL_MESSAGES.resetPasswordPage.passwordPlaceholder
+                    }
+                    className="w-full rounded-lg border border-slate-700 bg-slate-800/50 py-3 pr-10 pl-10 transition-all focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/30 focus:outline-none"
                   />
                   <button
                     type="button"
                     onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                    className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-300"
+                    className="absolute top-1/2 right-4 -translate-y-1/2 text-slate-400 hover:text-slate-300"
                   >
                     <Icon name={showConfirmPassword ? 'eye-slash' : 'eye'} />
                   </button>
@@ -219,19 +244,31 @@ export const ResetPasswordPage = () => {
               </div>
 
               {/* Password Requirements */}
-              <div className="bg-slate-800/30 border border-slate-700 rounded-lg p-4">
-                <p className="text-xs font-semibold text-slate-300 mb-2">{EMAIL_MESSAGES.resetPasswordPage.requirementsTitle}</p>
-                <ul className="text-xs text-slate-400 space-y-1">
+              <div className="rounded-lg border border-slate-700 bg-slate-800/30 p-4">
+                <p className="mb-2 text-xs font-semibold text-slate-300">
+                  {EMAIL_MESSAGES.resetPasswordPage.requirementsTitle}
+                </p>
+                <ul className="space-y-1 text-xs text-slate-400">
                   <li className={password.length >= 6 ? 'text-green-400' : ''}>
                     ✓ {EMAIL_MESSAGES.resetPasswordPage.requirement1}
                   </li>
-                  <li className={/[A-Z]/.test(password) ? 'text-green-400' : ''}>
+                  <li
+                    className={/[A-Z]/.test(password) ? 'text-green-400' : ''}
+                  >
                     ✓ {EMAIL_MESSAGES.resetPasswordPage.requirement2}
                   </li>
-                  <li className={/[0-9]/.test(password) ? 'text-green-400' : ''}>
+                  <li
+                    className={/[0-9]/.test(password) ? 'text-green-400' : ''}
+                  >
                     ✓ {EMAIL_MESSAGES.resetPasswordPage.requirement3}
                   </li>
-                  <li className={password === confirmPassword && password ? 'text-green-400' : ''}>
+                  <li
+                    className={
+                      password === confirmPassword && password
+                        ? 'text-green-400'
+                        : ''
+                    }
+                  >
                     ✓ {EMAIL_MESSAGES.resetPasswordPage.requirement4}
                   </li>
                 </ul>
@@ -241,9 +278,11 @@ export const ResetPasswordPage = () => {
               <button
                 type="submit"
                 disabled={isLoading}
-                className="w-full py-3 px-4 bg-linear-to-r from-cyan-500 to-blue-600 text-white font-bold rounded-lg hover:shadow-lg hover:shadow-cyan-500/50 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full rounded-lg bg-linear-to-r from-cyan-500 to-blue-600 px-4 py-3 font-bold text-white transition-all duration-300 hover:shadow-lg hover:shadow-cyan-500/50 disabled:cursor-not-allowed disabled:opacity-50"
               >
-                {isLoading ? EMAIL_MESSAGES.resetPasswordPage.buttonLoadingText : EMAIL_MESSAGES.resetPasswordPage.buttonText}
+                {isLoading
+                  ? EMAIL_MESSAGES.resetPasswordPage.buttonLoadingText
+                  : EMAIL_MESSAGES.resetPasswordPage.buttonText}
               </button>
             </form>
           </>

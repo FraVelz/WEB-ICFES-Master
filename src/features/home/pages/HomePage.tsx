@@ -1,8 +1,8 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect } from 'react';
 
-import { useIsMobile } from "@/hooks/useIsMobile";
-import { HomePageDesktop } from "./HomePageDesktop";
-import { HomePageMobile } from "./HomePageMobile";
+import { useIsMobile } from '@/hooks/useIsMobile';
+import { HomePageDesktop } from './HomePageDesktop';
+import { HomePageMobile } from './HomePageMobile';
 
 export const HomePage = () => {
   const { isMobile } = useIsMobile();

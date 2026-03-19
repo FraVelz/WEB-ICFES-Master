@@ -19,7 +19,7 @@ export const PaymentModal = ({ isOpen, onClose, plan }) => {
     cardHolder: '',
     expiryMonth: '',
     expiryYear: '',
-    cvv: ''
+    cvv: '',
   });
   const [isProcessing, setIsProcessing] = useState(false);
   const [paymentSuccess, setPaymentSuccess] = useState(false);
@@ -32,7 +32,9 @@ export const PaymentModal = ({ isOpen, onClose, plan }) => {
 
   const validateScheduling = useCallback(async () => {
     try {
-      const validation = await PlanScheduleService.validatePlanScheduling(user.uid);
+      const validation = await PlanScheduleService.validatePlanScheduling(
+        user.uid
+      );
       setCanSchedulePlan(validation.canSchedule);
       if (!validation.canSchedule) {
         setScheduleError(validation.reason);
@@ -46,7 +48,9 @@ export const PaymentModal = ({ isOpen, onClose, plan }) => {
   const loadCurrentPlan = useCallback(async () => {
     try {
       setLoadingPlan(true);
-      const userCurrentPlan = await SubscriptionPlanService.getUserPlan(user.uid);
+      const userCurrentPlan = await SubscriptionPlanService.getUserPlan(
+        user.uid
+      );
       setCurrentPlan(userCurrentPlan);
     } catch (err) {
       console.error('Error al cargar plan actual:', err);
@@ -81,7 +85,10 @@ export const PaymentModal = ({ isOpen, onClose, plan }) => {
     } else if (type === 'year') {
       value = value.slice(0, 2);
     }
-    setCardData({ ...cardData, [`expiry${type.charAt(0).toUpperCase() + type.slice(1)}`]: value });
+    setCardData({
+      ...cardData,
+      [`expiry${type.charAt(0).toUpperCase() + type.slice(1)}`]: value,
+    });
   };
 
   const handleCVVChange = (e) => {
@@ -111,13 +118,13 @@ export const PaymentModal = ({ isOpen, onClose, plan }) => {
           billingPeriod: 'free',
           features: plan.features || [],
           purchaseDate: new Date(),
-          nextBillingDate: null
+          nextBillingDate: null,
         };
 
         await SubscriptionPlanService.updateUserPlan(user.uid, planData);
       } else {
         // Simular procesamiento de pago para planes de pago (en producción: Stripe/PayPal)
-        await new Promise(resolve => setTimeout(resolve, 2000));
+        await new Promise((resolve) => setTimeout(resolve, 2000));
 
         const planData = {
           planType: plan.id || 'premium',
@@ -126,12 +133,15 @@ export const PaymentModal = ({ isOpen, onClose, plan }) => {
           billingPeriod: billingPeriod,
           originalPrice: plan.price,
           features: plan.features || [],
-          purchaseDate: new Date()
+          purchaseDate: new Date(),
         };
 
         // Si ya tiene un plan activo y diferente, programar para después
-        const hasActivePlan = currentPlan && currentPlan.status === 'active' && currentPlan.planType !== plan.id;
-        
+        const hasActivePlan =
+          currentPlan &&
+          currentPlan.status === 'active' &&
+          currentPlan.planType !== plan.id;
+
         if (hasActivePlan) {
           // Programar el plan para después
           planData.nextBillingDate = currentPlan.nextBillingDate;
@@ -140,7 +150,10 @@ export const PaymentModal = ({ isOpen, onClose, plan }) => {
           // Activar directamente
           planData.status = 'active';
           planData.nextBillingDate = new Date(
-            Date.now() + (billingPeriod === 'annual' ? 365 * 24 * 60 * 60 * 1000 : 30 * 24 * 60 * 60 * 1000)
+            Date.now() +
+              (billingPeriod === 'annual'
+                ? 365 * 24 * 60 * 60 * 1000
+                : 30 * 24 * 60 * 60 * 1000)
           );
           await SubscriptionPlanService.updateUserPlan(user.uid, planData);
         }
@@ -156,109 +169,125 @@ export const PaymentModal = ({ isOpen, onClose, plan }) => {
   };
 
   // Detectar si el plan es el mismo que ya tiene activo
-  const isSamePlanActive = currentPlan && plan?.id && currentPlan.planType === plan.id && currentPlan.status === 'active';
+  const isSamePlanActive =
+    currentPlan &&
+    plan?.id &&
+    currentPlan.planType === plan.id &&
+    currentPlan.status === 'active';
 
   // Para planes gratuitos, no necesita validar tarjeta
-  const isFormValid = !canSchedulePlan || isSamePlanActive
-    ? false
-    : plan?.price === 'Gratis' 
-    ? true 
-    : cardData.cardNumber.replace(/\s/g, '').length === 16 &&
-      cardData.cardHolder.trim().length > 0 &&
-      cardData.expiryMonth &&
-      cardData.expiryYear &&
-      cardData.cvv.length === 3;
+  const isFormValid =
+    !canSchedulePlan || isSamePlanActive
+      ? false
+      : plan?.price === 'Gratis'
+        ? true
+        : cardData.cardNumber.replace(/\s/g, '').length === 16 &&
+          cardData.cardHolder.trim().length > 0 &&
+          cardData.expiryMonth &&
+          cardData.expiryYear &&
+          cardData.cvv.length === 3;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center lg:items-end bg-black/50 backdrop-blur-sm p-0 lg:p-4 lg:pt-20">
-      <div className="flex flex-col w-full sm:w-auto h-dvh max-h-[90vh] bg-slate-900 sm:rounded-xl border-t lg:border border-slate-700 shadow-2xl max-w-md rounded-t-2xl lg:rounded-b-2xl mb-20 lg:mb-0">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-0 backdrop-blur-sm lg:items-end lg:p-4 lg:pt-20">
+      <div className="mb-20 flex h-dvh max-h-[90vh] w-full max-w-md flex-col rounded-t-2xl border-t border-slate-700 bg-slate-900 shadow-2xl sm:w-auto sm:rounded-xl lg:mb-0 lg:rounded-b-2xl lg:border">
         <PaymentHeader plan={plan} onClose={onClose} />
 
         <div className="flex-1 overflow-y-auto p-6">
           {!canSchedulePlan && !isSamePlanActive ? (
-            <div className="text-center py-12">
-              <div className="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6 bg-red-500/20 border-2 border-red-500">
-                <Icon 
-                  name="exclamation-triangle" 
+            <div className="py-12 text-center">
+              <div className="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full border-2 border-red-500 bg-red-500/20">
+                <Icon
+                  name="exclamation-triangle"
                   size="2xl"
                   className="text-4xl text-red-400"
                 />
               </div>
-              <h3 className="text-2xl font-bold text-white mb-4">
+              <h3 className="mb-4 text-2xl font-bold text-white">
                 No se puede comprar este plan
               </h3>
-              <p className="text-slate-300 mb-4">
-                {scheduleError}
-              </p>
-              <p className="text-slate-400 text-sm mb-8">
+              <p className="mb-4 text-slate-300">{scheduleError}</p>
+              <p className="mb-8 text-sm text-slate-400">
                 Solo puedes tener un plan activo y uno en espera de activación.
               </p>
               <button
                 onClick={onClose}
-                className="cursor-pointer w-full px-6 py-3 bg-slate-700 hover:bg-slate-600 text-white font-bold rounded-lg transition-all duration-200"
+                className="w-full cursor-pointer rounded-lg bg-slate-700 px-6 py-3 font-bold text-white transition-all duration-200 hover:bg-slate-600"
               >
                 Cerrar
               </button>
             </div>
           ) : paymentSuccess ? (
-            <SuccessMessage plan={plan} currentPlan={currentPlan} onClose={() => {
-              setPaymentSuccess(false);
-              setCardData({
-                cardNumber: '',
-                cardHolder: '',
-                expiryMonth: '',
-                expiryYear: '',
-                cvv: ''
-              });
-              onClose();
-            }} />
+            <SuccessMessage
+              plan={plan}
+              currentPlan={currentPlan}
+              onClose={() => {
+                setPaymentSuccess(false);
+                setCardData({
+                  cardNumber: '',
+                  cardHolder: '',
+                  expiryMonth: '',
+                  expiryYear: '',
+                  cvv: '',
+                });
+                onClose();
+              }}
+            />
           ) : isSamePlanActive ? (
-            <div className="text-center py-12">
-              <div className="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6 bg-blue-500/20 border-2 border-blue-500">
-                <Icon 
-                  name="check-circle" 
+            <div className="py-12 text-center">
+              <div className="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full border-2 border-blue-500 bg-blue-500/20">
+                <Icon
+                  name="check-circle"
                   size="2xl"
                   className="text-4xl text-blue-400"
                 />
               </div>
-              <h3 className="text-2xl font-bold text-white mb-4">
+              <h3 className="mb-4 text-2xl font-bold text-white">
                 Plan ya Activo
               </h3>
-              <p className="text-slate-300 mb-4">
-                Ya tienes el plan <span className="font-semibold text-blue-400">{plan?.name}</span> activo en tu cuenta.
+              <p className="mb-4 text-slate-300">
+                Ya tienes el plan{' '}
+                <span className="font-semibold text-blue-400">
+                  {plan?.name}
+                </span>{' '}
+                activo en tu cuenta.
               </p>
-              <p className="text-slate-400 text-sm mb-8">
-                No es necesario volver a comprar este plan. Si deseas cambiar a otro plan, selecciona uno diferente.
+              <p className="mb-8 text-sm text-slate-400">
+                No es necesario volver a comprar este plan. Si deseas cambiar a
+                otro plan, selecciona uno diferente.
               </p>
               <button
                 onClick={onClose}
-                className="cursor-pointer w-full px-6 py-3 bg-slate-700 hover:bg-slate-600 text-white font-bold rounded-lg transition-all duration-200"
+                className="w-full cursor-pointer rounded-lg bg-slate-700 px-6 py-3 font-bold text-white transition-all duration-200 hover:bg-slate-600"
               >
                 Cerrar
               </button>
             </div>
           ) : (
-            <form id="payment-form" onSubmit={handleSubmit} className="space-y-4">
+            <form
+              id="payment-form"
+              onSubmit={handleSubmit}
+              className="space-y-4"
+            >
               {/* Alerta de plan actual si existe */}
               {!loadingPlan && currentPlan && !isSamePlanActive && (
                 <PlanChangeAlert currentPlan={currentPlan} newPlan={plan} />
               )}
 
               {plan?.price !== 'Gratis' && (
-                <BillingPeriodSelector 
-                  billingPeriod={billingPeriod} 
-                  setBillingPeriod={setBillingPeriod} 
+                <BillingPeriodSelector
+                  billingPeriod={billingPeriod}
+                  setBillingPeriod={setBillingPeriod}
                 />
               )}
 
-              <PlanInfo 
+              <PlanInfo
                 plan={plan}
                 billingPeriod={billingPeriod}
                 priceCalculation={priceCalculation}
               />
 
               {error && (
-                <div className="p-3 bg-red-500/10 border border-red-500/50 rounded-lg text-red-400 text-sm">
+                <div className="rounded-lg border border-red-500/50 bg-red-500/10 p-3 text-sm text-red-400">
                   {error}
                 </div>
               )}

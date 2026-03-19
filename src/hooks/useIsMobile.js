@@ -1,9 +1,10 @@
-"use client";
+'use client';
 
 import { useState, useEffect } from 'react';
 
 const getDevice = () => {
-  if (typeof window === "undefined") return { isMobile: false, isTablet: false };
+  if (typeof window === 'undefined')
+    return { isMobile: false, isTablet: false };
 
   return {
     isMobile: window.innerWidth < 768,
@@ -19,8 +20,8 @@ export const useIsMobile = () => {
       setDevice(getDevice());
     };
 
-    window.addEventListener("resize", checkScreenSize);
-    return () => window.removeEventListener("resize", checkScreenSize);
+    window.addEventListener('resize', checkScreenSize);
+    return () => window.removeEventListener('resize', checkScreenSize);
   }, []);
 
   return { isMobile, isTablet, isDesktop: !isMobile && !isTablet };

@@ -8,7 +8,7 @@ export const LevelSection = ({
   isExpanded,
   onToggle,
   children,
-  icon
+  icon,
 }) => {
   const colorMap = {
     green: {
@@ -17,7 +17,7 @@ export const LevelSection = ({
       hoverBg: 'hover:bg-green-600/30',
       iconBg: 'bg-green-600/30',
       iconColor: 'text-green-400',
-      chevronColor: 'text-green-400'
+      chevronColor: 'text-green-400',
     },
     yellow: {
       borderColor: 'border-yellow-600',
@@ -25,7 +25,7 @@ export const LevelSection = ({
       hoverBg: 'hover:bg-yellow-600/30',
       iconBg: 'bg-yellow-600/30',
       iconColor: 'text-yellow-400',
-      chevronColor: 'text-yellow-400'
+      chevronColor: 'text-yellow-400',
     },
     red: {
       borderColor: 'border-red-600',
@@ -33,17 +33,19 @@ export const LevelSection = ({
       hoverBg: 'hover:bg-red-600/30',
       iconBg: 'bg-red-600/30',
       iconColor: 'text-red-400',
-      chevronColor: 'text-red-400'
-    }
+      chevronColor: 'text-red-400',
+    },
   };
 
   const colors = colorMap[config.color];
 
   return (
-    <div className={`border-2 ${colors.borderColor} ${colors.bgColor} rounded-2xl overflow-hidden`}>
+    <div
+      className={`border-2 ${colors.borderColor} ${colors.bgColor} overflow-hidden rounded-2xl`}
+    >
       <div
         onClick={onToggle}
-        className={`w-full p-6 flex items-center justify-between ${colors.hoverBg} transition-colors cursor-pointer`}
+        className={`flex w-full items-center justify-between p-6 ${colors.hoverBg} cursor-pointer transition-colors`}
         role="button"
         tabIndex={0}
         onKeyDown={(e) => {
@@ -54,8 +56,12 @@ export const LevelSection = ({
         }}
       >
         <div className="flex items-center gap-4">
-          <div className={colors.iconBg + ' p-4 rounded-xl'}>
-            <Icon name={icon} size="3xl" className={`text-3xl ${colors.iconColor}`} />
+          <div className={colors.iconBg + ' rounded-xl p-4'}>
+            <Icon
+              name={icon}
+              size="3xl"
+              className={`text-3xl ${colors.iconColor}`}
+            />
           </div>
           <div className="text-left">
             <h2 className="text-2xl font-bold text-white">{config.title}</h2>
@@ -72,7 +78,9 @@ export const LevelSection = ({
       </div>
 
       {isExpanded && (
-        <div className={`border-t ${colors.borderColor} p-6 space-y-4`}>{children}</div>
+        <div className={`border-t ${colors.borderColor} space-y-4 p-6`}>
+          {children}
+        </div>
       )}
     </div>
   );

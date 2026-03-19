@@ -14,7 +14,7 @@ export const PricingPlans = ({ plans = [] }) => {
   useEffect(() => {
     const savedPlan = localStorage.getItem('selectedPlan');
     const fromPricing = localStorage.getItem('fromPricing');
-    
+
     if (fromPricing) {
       // Scroll a esta sección
       const pricingSection = document.getElementById('planes');
@@ -25,7 +25,7 @@ export const PricingPlans = ({ plans = [] }) => {
       }
       localStorage.removeItem('fromPricing');
     }
-    
+
     if (savedPlan && isAuthenticated) {
       try {
         const plan = JSON.parse(savedPlan);
@@ -62,46 +62,54 @@ export const PricingPlans = ({ plans = [] }) => {
   }
 
   return (
-    <section id="planes" className="max-w-7xl mx-auto px-6 md:px-8 py-20">
-      <div className="text-center mb-16">
-        <h2 className="text-4xl md:text-5xl font-bold mb-4">Planes Transparentes</h2>
-        <p className="text-slate-400 text-lg">Sin sorpresas, cancela cuando quieras (Planes Mensuales y Anuales)</p>
+    <section id="planes" className="mx-auto max-w-7xl px-6 py-20 md:px-8">
+      <div className="mb-16 text-center">
+        <h2 className="mb-4 text-4xl font-bold md:text-5xl">
+          Planes Transparentes
+        </h2>
+        <p className="text-lg text-slate-400">
+          Sin sorpresas, cancela cuando quieras (Planes Mensuales y Anuales)
+        </p>
 
-        <p>Nota: La compra de planes no esta disponible en dispositivos moviles.</p>
+        <p>
+          Nota: La compra de planes no esta disponible en dispositivos moviles.
+        </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-10">
+      <div className="grid grid-cols-1 gap-10 md:grid-cols-2 xl:grid-cols-3">
         {plans.map((plan, idx) => (
           <div
             key={idx}
             className={`rounded-xl border transition-all duration-300 ${
               plan.popular
-                ? 'border-cyan-500/50 bg-linear-to-br from-cyan-600/20 to-blue-600/20 shadow-lg shadow-cyan-500/20 scale-105'
+                ? 'scale-105 border-cyan-500/50 bg-linear-to-br from-cyan-600/20 to-blue-600/20 shadow-lg shadow-cyan-500/20'
                 : 'border-slate-700 bg-slate-800/50 hover:border-slate-600'
             } p-8`}
           >
             {plan.popular && (
-              <div className="text-center mb-4">
-                <span className="inline-flex items-center gap-1 bg-cyan-500/30 border border-cyan-500/50 px-4 py-1 rounded-full text-sm font-bold text-cyan-400">
+              <div className="mb-4 text-center">
+                <span className="inline-flex items-center gap-1 rounded-full border border-cyan-500/50 bg-cyan-500/30 px-4 py-1 text-sm font-bold text-cyan-400">
                   <Icon name="crown" />
                   Más Popular
                 </span>
               </div>
             )}
 
-            <h3 className="text-2xl font-bold text-white mb-2">{plan.name}</h3>
-            <p className="text-slate-400 mb-6">{plan.description}</p>
+            <h3 className="mb-2 text-2xl font-bold text-white">{plan.name}</h3>
+            <p className="mb-6 text-slate-400">{plan.description}</p>
 
             <div className="mb-6">
               <p className="text-4xl font-bold text-white">{plan.price}</p>
               {plan.originalPrice && (
-                <p className="text-sm text-slate-400 line-through">{plan.originalPrice}</p>
+                <p className="text-sm text-slate-400 line-through">
+                  {plan.originalPrice}
+                </p>
               )}
             </div>
 
             <button
               onClick={() => handlePlanClick(plan)}
-              className={`cursor-pointer w-full py-3 px-4 rounded-lg font-bold mb-8 transition-all duration-300 ${
+              className={`mb-8 w-full cursor-pointer rounded-lg px-4 py-3 font-bold transition-all duration-300 ${
                 plan.popular
                   ? 'bg-linear-to-r from-cyan-500 to-blue-500 text-white hover:shadow-lg hover:shadow-cyan-500/50'
                   : 'bg-slate-700 text-white hover:bg-slate-600'
@@ -112,8 +120,14 @@ export const PricingPlans = ({ plans = [] }) => {
 
             <ul className="space-y-3">
               {plan.features.map((feature, fidx) => (
-                <li key={fidx} className="flex items-start gap-3 text-slate-300">
-                  <Icon name="check-circle" className="text-green-400 mt-1 shrink-0" />
+                <li
+                  key={fidx}
+                  className="flex items-start gap-3 text-slate-300"
+                >
+                  <Icon
+                    name="check-circle"
+                    className="mt-1 shrink-0 text-green-400"
+                  />
                   {feature}
                 </li>
               ))}

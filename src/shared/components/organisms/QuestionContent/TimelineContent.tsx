@@ -1,13 +1,13 @@
 /**
  * TimelineContent - Componente para mostrar líneas de tiempo
- * 
+ *
  * Estructura de datos:
  * [
  *   { year: "1492", event: "Descubrimiento de América" },
  *   { year: "1776", event: "Independencia de EE.UU." },
  *   { year: "1810", event: "Independencia de Colombia" }
  * ]
- * 
+ *
  * Uso:
  * <TimelineContent
  *   events={[
@@ -17,28 +17,32 @@
  *   title="Historia de América"
  * />
  */
-export const TimelineContent = ({ events, title, orientation = "vertical" }) => {
-  if (orientation === "vertical") {
+export const TimelineContent = ({
+  events,
+  title,
+  orientation = 'vertical',
+}) => {
+  if (orientation === 'vertical') {
     return (
-      <div className="my-6 p-6 bg-linear-to-r from-slate-700/20 to-slate-800/20 rounded-lg border border-orange-500/20">
+      <div className="my-6 rounded-lg border border-orange-500/20 bg-linear-to-r from-slate-700/20 to-slate-800/20 p-6">
         {title && (
-          <h4 className="text-sm font-semibold text-orange-300 mb-6 text-center">
+          <h4 className="mb-6 text-center text-sm font-semibold text-orange-300">
             {title}
           </h4>
         )}
 
-        <div className="space-y-4 relative">
+        <div className="relative space-y-4">
           {/* Línea vertical */}
-          <div className="absolute left-6 top-0 bottom-0 w-0.5 bg-linear-to-b from-orange-500/50 to-orange-500/20"></div>
+          <div className="absolute top-0 bottom-0 left-6 w-0.5 bg-linear-to-b from-orange-500/50 to-orange-500/20"></div>
 
           {events.map((event, idx) => (
-            <div key={idx} className="pl-20 relative">
+            <div key={idx} className="relative pl-20">
               {/* Punto en la línea */}
-              <div className="absolute left-0 top-2 w-14 h-14 bg-linear-to-br from-orange-500 to-red-500 rounded-full flex items-center justify-center text-white font-bold text-sm shadow-lg">
+              <div className="absolute top-2 left-0 flex h-14 w-14 items-center justify-center rounded-full bg-linear-to-br from-orange-500 to-red-500 text-sm font-bold text-white shadow-lg">
                 {event.year}
               </div>
               {/* Contenido del evento */}
-              <div className="bg-white/5 p-3 rounded-lg border border-orange-500/20">
+              <div className="rounded-lg border border-orange-500/20 bg-white/5 p-3">
                 <p className="text-sm text-gray-200">{event.event}</p>
               </div>
             </div>
@@ -50,17 +54,17 @@ export const TimelineContent = ({ events, title, orientation = "vertical" }) => 
 
   // Horizontal timeline
   return (
-    <div className="my-6 p-6 bg-linear-to-r from-slate-700/20 to-slate-800/20 rounded-lg border border-orange-500/20 overflow-x-auto">
+    <div className="my-6 overflow-x-auto rounded-lg border border-orange-500/20 bg-linear-to-r from-slate-700/20 to-slate-800/20 p-6">
       {title && (
-        <h4 className="text-sm font-semibold text-orange-300 mb-6 text-center">
+        <h4 className="mb-6 text-center text-sm font-semibold text-orange-300">
           {title}
         </h4>
       )}
 
-      <div className="flex gap-4 min-w-max">
+      <div className="flex min-w-max gap-4">
         {events.map((event, idx) => (
-          <div key={idx} className="shrink-0 w-40 text-center">
-            <div className="h-12 bg-linear-to-br from-orange-500 to-red-500 rounded-lg flex items-center justify-center text-white font-bold text-sm mb-2 shadow-lg">
+          <div key={idx} className="w-40 shrink-0 text-center">
+            <div className="mb-2 flex h-12 items-center justify-center rounded-lg bg-linear-to-br from-orange-500 to-red-500 text-sm font-bold text-white shadow-lg">
               {event.year}
             </div>
             <p className="text-xs text-gray-300">{event.event}</p>

@@ -13,17 +13,20 @@ import { StoreModal } from '@/features/store/components/StoreModal';
  * Visible en móvil y desktop
  * Contiene 3 elementos interactivos principales
  */
-export const SecondaryHeader = ({ currentArea = 'lectura-critica', onAreaChange }) => {
+export const SecondaryHeader = ({
+  currentArea = 'lectura-critica',
+  onAreaChange,
+}) => {
   const [activeModal, setActiveModal] = useState(null);
   const { user } = useAuth();
-  
+
   // Hook de gamificación para obtener datos del usuario
-  const { 
-    currentStreak = 0, 
+  const {
+    currentStreak = 0,
     longestStreak = 0,
     coins = 0,
     streak = [], // Array de fechas
-    loading 
+    loading,
   } = useGamification(user?.uid);
 
   // Calcular si la insignia está desbloqueada
@@ -37,7 +40,8 @@ export const SecondaryHeader = ({ currentArea = 'lectura-critica', onAreaChange 
   }, [currentStreak]);
 
   // Obtener información del área actual
-  const currentAreaInfo = AREA_INFO[currentArea] || AREA_INFO['lectura-critica'];
+  const currentAreaInfo =
+    AREA_INFO[currentArea] || AREA_INFO['lectura-critica'];
 
   // Datos de racha
   const streakData = {
@@ -57,7 +61,7 @@ export const SecondaryHeader = ({ currentArea = 'lectura-critica', onAreaChange 
 
   if (loading) {
     return (
-      <div className="h-16 bg-linear-to-b from-slate-950 to-slate-900 border-b border-slate-700 flex items-center justify-center sticky top-0 z-50">
+      <div className="sticky top-0 z-50 flex h-16 items-center justify-center border-b border-slate-700 bg-linear-to-b from-slate-950 to-slate-900">
         <div className="animate-pulse text-slate-400">Cargando...</div>
       </div>
     );
@@ -66,55 +70,66 @@ export const SecondaryHeader = ({ currentArea = 'lectura-critica', onAreaChange 
   return (
     <div className="relative z-50">
       {/* Header Secundario - Sticky, Visible en móvil y desktop */}
-      <div className="h-16 bg-slate-950/90 backdrop-blur-md border-b border-slate-800 flex items-center justify-between px-4 shadow-lg sticky top-0 z-50">
-        
+      <div className="sticky top-0 z-50 flex h-16 items-center justify-between border-b border-slate-800 bg-slate-950/90 px-4 shadow-lg backdrop-blur-md">
         {/* Elemento 1: Área Actual */}
         <button
-          onClick={() => setActiveModal(activeModal === 'areas' ? null : 'areas')}
-          className="cursor-pointer flex items-center gap-3 hover:bg-slate-800/50 p-2 rounded-xl transition-colors"
+          onClick={() =>
+            setActiveModal(activeModal === 'areas' ? null : 'areas')
+          }
+          className="flex cursor-pointer items-center gap-3 rounded-xl p-2 transition-colors hover:bg-slate-800/50"
           title="Cambiar área"
         >
           {/* Ícono del área */}
-          <div className={`w-8 h-8 rounded-lg bg-linear-to-br ${currentAreaInfo.color} flex items-center justify-center shadow-lg`}>
-            <Icon name={currentAreaInfo.icon} className="text-white text-xs" />
+          <div
+            className={`h-8 w-8 rounded-lg bg-linear-to-br ${currentAreaInfo.color} flex items-center justify-center shadow-lg`}
+          >
+            <Icon name={currentAreaInfo.icon} className="text-xs text-white" />
           </div>
           {/* Nombre del área - Oculto en móvil muy pequeño */}
-          <div className="hidden sm:flex flex-col items-start">
-            <span className="text-xs text-slate-400 uppercase font-bold tracking-wider">Área actual</span>
-            <span className="text-sm font-bold text-slate-200">{currentAreaInfo.name}</span>
+          <div className="hidden flex-col items-start sm:flex">
+            <span className="text-xs font-bold tracking-wider text-slate-400 uppercase">
+              Área actual
+            </span>
+            <span className="text-sm font-bold text-slate-200">
+              {currentAreaInfo.name}
+            </span>
           </div>
-          <Icon name="chevron-down" className={`text-slate-500 text-xs ml-1 transition-transform ${activeModal === 'areas' ? 'rotate-180' : ''}`} />
+          <Icon
+            name="chevron-down"
+            className={`ml-1 text-xs text-slate-500 transition-transform ${activeModal === 'areas' ? 'rotate-180' : ''}`}
+          />
         </button>
 
         <div className="flex items-center gap-3">
           {/* Elemento 2: Racha de Días */}
           <button
-            onClick={() => setActiveModal(activeModal === 'streak' ? null : 'streak')}
-            className="cursor-pointer flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-900 border border-slate-800 hover:border-orange-500/50 transition-colors group"
+            onClick={() =>
+              setActiveModal(activeModal === 'streak' ? null : 'streak')
+            }
+            className="group flex cursor-pointer items-center gap-2 rounded-full border border-slate-800 bg-slate-900 px-3 py-1.5 transition-colors hover:border-orange-500/50"
             title="Ver información de racha"
           >
             <Icon
               name="fire"
               className={`text-sm transition-colors ${currentStreak > 0 ? 'text-orange-500' : 'text-slate-600 group-hover:text-orange-500/50'}`}
             />
-            <span className={`text-sm font-bold ${currentStreak > 0 ? 'text-orange-500' : 'text-slate-400 group-hover:text-orange-500/50'}`}>
+            <span
+              className={`text-sm font-bold ${currentStreak > 0 ? 'text-orange-500' : 'text-slate-400 group-hover:text-orange-500/50'}`}
+            >
               {currentStreak}
             </span>
           </button>
 
           {/* Elemento 3: Monedas / Tienda */}
           <button
-            onClick={() => setActiveModal(activeModal === 'store' ? null : 'store')}
-            className="cursor-pointer flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-900 border border-slate-800 hover:border-yellow-500/50 transition-colors group"
+            onClick={() =>
+              setActiveModal(activeModal === 'store' ? null : 'store')
+            }
+            className="group flex cursor-pointer items-center gap-2 rounded-full border border-slate-800 bg-slate-900 px-3 py-1.5 transition-colors hover:border-yellow-500/50"
             title="Abrir tienda"
           >
-            <Icon
-              name="coins"
-              className="text-yellow-500 text-sm"
-            />
-            <span className="text-sm font-bold text-yellow-500">
-              {coins}
-            </span>
+            <Icon name="coins" className="text-sm text-yellow-500" />
+            <span className="text-sm font-bold text-yellow-500">{coins}</span>
           </button>
         </div>
       </div>
@@ -139,10 +154,7 @@ export const SecondaryHeader = ({ currentArea = 'lectura-critica', onAreaChange 
         coins={coins}
       />
 
-      <StoreModal
-        isOpen={activeModal === 'store'}
-        onClose={closeModals}
-      />
+      <StoreModal isOpen={activeModal === 'store'} onClose={closeModals} />
     </div>
   );
 };

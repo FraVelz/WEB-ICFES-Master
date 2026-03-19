@@ -5,7 +5,13 @@ import { useState, useEffect, useCallback } from 'react';
 import { useAuth } from '@/context/AuthContext';
 import API_CONFIG from '@/services/api.config';
 import ProgressSupabaseService from '@/services/supabase/ProgressSupabaseService';
-import { getProgress, getStoredExams, getStoredPractices, clearAllData, getRecommendations } from '@/shared/utils/progressStorage';
+import {
+  getProgress,
+  getStoredExams,
+  getStoredPractices,
+  clearAllData,
+  getRecommendations,
+} from '@/shared/utils/progressStorage';
 
 export function useProgress() {
   const { user } = useAuth();
@@ -30,14 +36,16 @@ export function useProgress() {
     try {
       if (API_CONFIG.MODE === 'supabase') {
         const prog = await ProgressSupabaseService.getByUserId(user.uid);
-        const mapped = prog ? {
-          totalAttempts: prog.totalAttempts,
-          totalQuestions: prog.totalCorrect * 2,
-          totalCorrect: prog.totalCorrect,
-          percentage: prog.percentage,
-          streakDays: prog.streakDays,
-          areaStats: prog.areaStats || {}
-        } : null;
+        const mapped = prog
+          ? {
+              totalAttempts: prog.totalAttempts,
+              totalQuestions: prog.totalCorrect * 2,
+              totalCorrect: prog.totalCorrect,
+              percentage: prog.percentage,
+              streakDays: prog.streakDays,
+              areaStats: prog.areaStats || {},
+            }
+          : null;
         setProgress(mapped);
         setAreaStats(mapped?.areaStats || null);
         setRecommendations(getRecommendations(mapped || {}));
@@ -49,7 +57,11 @@ export function useProgress() {
         setRecommendations(getRecommendations(prog || {}));
         const exams = getStoredExams();
         const practices = getStoredPractices();
-        setAttemptHistory([...exams, ...practices].sort((a, b) => new Date(b.date) - new Date(a.date)).slice(0, 50));
+        setAttemptHistory(
+          [...exams, ...practices]
+            .sort((a, b) => new Date(b.date) - new Date(a.date))
+            .slice(0, 50)
+        );
       }
       setError(null);
     } catch (err) {
@@ -71,7 +83,7 @@ export function useProgress() {
         totalCorrect: 0,
         percentage: 0,
         streakDays: 0,
-        areaStats: {}
+        areaStats: {},
       });
     } else {
       clearAllData();
@@ -92,6 +104,6 @@ export function useProgress() {
     getPerformanceAnalysis: async () => ({}),
     updateProgress: async () => ({}),
     resetProgress,
-    refresh: loadProgressData
+    refresh: loadProgressData,
   };
 }
