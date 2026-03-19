@@ -5,12 +5,12 @@ import { MobileSectionWrapper } from './MobileSectionWrapper';
  * Componente que envuelve secciones para hacerlas colapsables en móvil
  * En desktop se muestran normalmente
  */
-export const ResponsiveSectionWrapper = ({ 
-  children, 
-  title, 
+export const ResponsiveSectionWrapper = ({
+  children,
+  title,
   sectionId,
   defaultOpen = true,
-  isFirstSection = false
+  isFirstSection = false,
 }) => {
   const { isMobile } = useIsMobile();
 
@@ -21,8 +21,8 @@ export const ResponsiveSectionWrapper = ({
 
   // En móvil, envolver en colapsable
   return (
-    <MobileSectionWrapper 
-      title={title} 
+    <MobileSectionWrapper
+      title={title}
       sectionId={sectionId}
       defaultOpen={defaultOpen}
     >

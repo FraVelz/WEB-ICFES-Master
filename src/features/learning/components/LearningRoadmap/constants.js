@@ -10,14 +10,18 @@ export const ICFES_LEVELS = [
     description: 'Fundamentos y conceptos básicos',
     difficulty: 'Fácil',
     estimatedHours: 40,
-    topics: ['Números básicos', 'Operaciones fundamentales', 'Vocabulario básico'],
+    topics: [
+      'Números básicos',
+      'Operaciones fundamentales',
+      'Vocabulario básico',
+    ],
     colorGradient: 'from-green-600 to-green-400',
     colorBorder: 'border-green-600',
     colorBg20: 'bg-green-600/20',
     icon: 'book',
     statusIcon: 'check-circle',
     completed: true,
-    progress: 100
+    progress: 100,
   },
   {
     id: 'intermediate-low',
@@ -26,14 +30,18 @@ export const ICFES_LEVELS = [
     description: 'Aplicación de conceptos y análisis básico',
     difficulty: 'Intermedio',
     estimatedHours: 50,
-    topics: ['Aplicaciones prácticas', 'Análisis simple', 'Comprensión detallada'],
+    topics: [
+      'Aplicaciones prácticas',
+      'Análisis simple',
+      'Comprensión detallada',
+    ],
     colorGradient: 'from-blue-600 to-blue-400',
     colorBorder: 'border-blue-600',
     colorBg20: 'bg-blue-600/20',
     icon: 'bullseye',
     statusIcon: 'check-circle',
     completed: true,
-    progress: 100
+    progress: 100,
   },
   {
     id: 'intermediate-high',
@@ -42,14 +50,18 @@ export const ICFES_LEVELS = [
     description: 'Razonamiento complejo y síntesis',
     difficulty: 'Avanzado',
     estimatedHours: 60,
-    topics: ['Razonamiento lógico', 'Síntesis de información', 'Pensamiento crítico'],
+    topics: [
+      'Razonamiento lógico',
+      'Síntesis de información',
+      'Pensamiento crítico',
+    ],
     colorGradient: 'from-purple-600 to-purple-400',
     colorBorder: 'border-purple-600',
     colorBg20: 'bg-purple-600/20',
     icon: 'cog',
     statusIcon: 'fire',
     completed: true,
-    progress: 75
+    progress: 75,
   },
   {
     id: 'advanced',
@@ -65,7 +77,7 @@ export const ICFES_LEVELS = [
     icon: 'square-root-variable',
     statusIcon: 'arrow-right',
     completed: false,
-    progress: 45
+    progress: 45,
   },
   {
     id: 'expert',
@@ -81,16 +93,16 @@ export const ICFES_LEVELS = [
     icon: 'trophy',
     statusIcon: 'lock',
     completed: false,
-    progress: 0
-  }
+    progress: 0,
+  },
 ];
 
 export const DIFFICULTY_COLORS = {
-  'Fácil': 'bg-green-900/40 text-green-300',
-  'Intermedio': 'bg-yellow-900/40 text-yellow-300',
-  'Avanzado': 'bg-orange-900/40 text-orange-300',
+  Fácil: 'bg-green-900/40 text-green-300',
+  Intermedio: 'bg-yellow-900/40 text-yellow-300',
+  Avanzado: 'bg-orange-900/40 text-orange-300',
   'Muy Avanzado': 'bg-red-900/40 text-red-300',
-  'Experto': 'bg-purple-900/40 text-purple-300'
+  Experto: 'bg-purple-900/40 text-purple-300',
 };
 
 export const LEVEL_CONFIG = {
@@ -98,18 +110,18 @@ export const LEVEL_CONFIG = {
     color: 'green',
     icon: 'lightbulb',
     title: 'NIVEL BÁSICO',
-    subtitle: 'Aprende los fundamentos de cada materia'
+    subtitle: 'Aprende los fundamentos de cada materia',
   },
   intermedio: {
     color: 'yellow',
     icon: 'book',
     title: 'NIVEL INTERMEDIO',
-    subtitle: 'Exámenes individuales de cada materia'
+    subtitle: 'Exámenes individuales de cada materia',
   },
   avanzado: {
     color: 'red',
     icon: 'trophy',
     title: 'NIVEL AVANZADO',
-    subtitle: 'Simulacro completo del examen ICFES'
-  }
+    subtitle: 'Simulacro completo del examen ICFES',
+  },
 };

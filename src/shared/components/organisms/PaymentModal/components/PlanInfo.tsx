@@ -4,28 +4,30 @@ export const PlanInfo = ({ plan, billingPeriod, priceCalculation }) => {
   const getMonthlyPrice = () => priceCalculation.monthlyPrice;
 
   return (
-    <div className="bg-linear-to-r from-slate-800/50 to-slate-800/30 rounded-lg p-4 mb-6 border border-slate-700/50">
-      <div className="flex justify-between items-center mb-3">
-        <span className="text-slate-300 font-medium">{plan?.name}</span>
+    <div className="mb-6 rounded-lg border border-slate-700/50 bg-linear-to-r from-slate-800/50 to-slate-800/30 p-4">
+      <div className="mb-3 flex items-center justify-between">
+        <span className="font-medium text-slate-300">{plan?.name}</span>
         <span className="text-3xl font-bold text-cyan-400">{getPrice()}</span>
       </div>
       <div className="space-y-2">
-        <div className="flex justify-between items-center text-sm">
+        <div className="flex items-center justify-between text-sm">
           <span className="text-slate-400">Período:</span>
-          <span className="text-slate-300 font-semibold">
+          <span className="font-semibold text-slate-300">
             {billingPeriod === 'monthly' ? 'Mensual' : 'Anual'}
           </span>
         </div>
         {billingPeriod === 'annual' && (
-          <div className="flex justify-between items-center text-sm pt-2 border-t border-slate-700/50">
+          <div className="flex items-center justify-between border-t border-slate-700/50 pt-2 text-sm">
             <span className="text-slate-400">Precio mensual:</span>
             <span className="text-slate-300">{getMonthlyPrice()}</span>
           </div>
         )}
         {getSavings() && (
-          <div className="flex justify-between items-center text-sm pt-2 border-t border-slate-700/50">
+          <div className="flex items-center justify-between border-t border-slate-700/50 pt-2 text-sm">
             <span className="text-slate-400">Ahorras:</span>
-            <span className="text-green-400 font-semibold text-base">${getSavings()}</span>
+            <span className="text-base font-semibold text-green-400">
+              ${getSavings()}
+            </span>
           </div>
         )}
       </div>

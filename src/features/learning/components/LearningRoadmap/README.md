@@ -29,7 +29,9 @@ src/features/learning/components/Roadmap/
 ## 📋 Descripción de Archivos
 
 ### `index.jsx` - Componente Principal
+
 **Responsabilidad:** Orquestar y renderizar todas las secciones
+
 - Importa y utiliza todos los componentes específicos
 - Maneja el estado de expansión de niveles
 - Renderiza: Header → Mapa ICFES → Básico → Intermedio → Avanzado → CTA
@@ -37,7 +39,9 @@ src/features/learning/components/Roadmap/
 **Líneas de código:** ~130
 
 ### `constants.js` - Configuración Centralizada
+
 **Responsabilidad:** Almacenar datos que no cambian
+
 ```javascript
 export const ICFES_LEVELS = [...] // 5 niveles ICFES
 export const DIFFICULTY_COLORS = {...} // Mapeo de colores por dificultad
@@ -45,53 +49,66 @@ export const LEVEL_CONFIG = {...} // Config de Básico, Intermedio, Avanzado
 ```
 
 ### `hooks.js` - Lógica de Estado
+
 **Responsabilidad:** Hooks personalizados reutilizables
+
 ```javascript
 export const useLevelExpansion = () // Maneja estado de expansión
 ```
 
 **Devuelve:**
+
 ```javascript
 {
-  expandedLevel,       // nivel actualmente expandido
-  expandedSubject,     // sujetos expandidos por nivel
-  handleToggleLevel,   // función para alternar nivel
-  handleToggleSubject  // función para alternar sujeto
+  (expandedLevel, // nivel actualmente expandido
+    expandedSubject, // sujetos expandidos por nivel
+    handleToggleLevel, // función para alternar nivel
+    handleToggleSubject); // función para alternar sujeto
 }
 ```
 
 ### `iconMap.js` - Mapeo de Iconos
+
 **Responsabilidad:** Centralizar todos los imports de FontAwesome
+
 - Evita imports esparcidos en todo el código
 - Permite usar iconos dinámicamente con strings
 - Fácil de actualizar cuando cambian las dependencias
 
 ### `ICFESLevelCard.jsx` - Card Individual
+
 **Responsabilidad:** Renderizar un nivel ICFES individual
 **Recibe:**
+
 - `level` - datos del nivel
 - `index` - posición en la lista
 - `totalLevels` - cantidad total de niveles
 - `icons` - mapeo de iconos
 
 **Renderiza:**
+
 - Información del nivel (nombre, descripción, dificultad)
 - Barra de progreso
 - Estado (Completado/En Progreso/Bloqueado)
 - Botones de acción
 
 ### `ProgressOverview.jsx` - Estadísticas
+
 **Responsabilidad:** Mostrar el resumen de progreso general
+
 - Nivel actual del usuario
 - Porcentaje completado
 - Horas estimadas para meta
 
 ### `RoadmapHeader.jsx` - Encabezado
+
 **Responsabilidad:** Mostrar título y descripción del mapa
 
 ### `LevelSection.jsx` - Sección Collapsible
+
 **Responsabilidad:** Componente genérico para secciones expandibles
 **Recibe:**
+
 - `levelKey` - clave del nivel
 - `config` - configuración (color, títulos)
 - `isExpanded` - si está expandida
@@ -100,20 +117,25 @@ export const useLevelExpansion = () // Maneja estado de expansión
 - `icon` - icono a mostrar
 
 **Características:**
+
 - Colores dinámicos según nivel
 - Chevron rotativo
 - Transiciones suaves
 
 ### `CTASection.jsx` - Call to Action
+
 **Responsabilidad:** Sección final motivacional
+
 - Muestra mascota celebrando
 - Texto motivacional
 - Invita a empezar
 
 ### `SectionContent.jsx` - Contenido Dinámico
+
 **Responsabilidad:** Renderizar contenido específico de cada sección
 
 **Exports:**
+
 ```javascript
 <AdvancedContent />      // Sección Avanzado
 <BasicContent />         // Sección Básico
@@ -123,6 +145,7 @@ export const useLevelExpansion = () // Maneja estado de expansión
 ## 🎯 Ventajas de la Refactorización
 
 ### ✅ Antes (Un archivo de 400+ líneas)
+
 ```
 LearningRoadmap.jsx → TODO mezclado
 - Estado
@@ -133,6 +156,7 @@ LearningRoadmap.jsx → TODO mezclado
 ```
 
 ### ✅ Después (Archivos pequeños y focalizados)
+
 ```
 LearningRoadmap/
 ├── index.jsx (130 líneas) → Orquestación
@@ -168,29 +192,33 @@ Roadmap/index.js
 
 ## 📊 Métricas
 
-| Métrica | Antes | Después |
-|---------|-------|---------|
-| Líneas por archivo | 400+ | 15-130 |
-| Responsabilidades por archivo | 8+ | 1-2 |
-| Archivos | 1 | 10 |
-| Mantenibilidad | 40% | 95% |
-| Reutilización de componentes | 20% | 80% |
+| Métrica                       | Antes | Después |
+| ----------------------------- | ----- | ------- |
+| Líneas por archivo            | 400+  | 15-130  |
+| Responsabilidades por archivo | 8+    | 1-2     |
+| Archivos                      | 1     | 10      |
+| Mantenibilidad                | 40%   | 95%     |
+| Reutilización de componentes  | 20%   | 80%     |
 
 ## 🚀 Cómo Mantener la Estructura
 
 ### Agregar nuevo nivel ICFES:
+
 1. Actualizar `ICFES_LEVELS` en `constants.js`
 2. Listo (no cambiar nada más)
 
 ### Cambiar colores de un nivel:
+
 1. Editar `ICFES_LEVELS` o `LEVEL_CONFIG` en `constants.js`
 
 ### Agregar nueva sección:
+
 1. Crear `NuevaSection.jsx` en la carpeta
 2. Importar en `index.jsx`
 3. Renderizar en el JSX
 
 ### Cambiar lógica de expansión:
+
 1. Editar `hooks.js`
 2. Cambios se reflejan automáticamente
 

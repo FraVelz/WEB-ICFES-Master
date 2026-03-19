@@ -11,15 +11,15 @@ const getSupabase = () => {
 };
 
 const AREA_MAP = {
-  'matematicas': 'matematicas',
-  'mathematics': 'matematicas',
+  matematicas: 'matematicas',
+  mathematics: 'matematicas',
   'lectura-critica': 'lectura_critica',
-  'lenguaje': 'lectura_critica',
+  lenguaje: 'lectura_critica',
   'ciencias-naturales': 'ciencias_naturales',
-  'ciencias': 'ciencias_naturales',
+  ciencias: 'ciencias_naturales',
   'sociales-ciudadanas': 'sociales',
-  'sociales': 'sociales',
-  'ingles': 'ingles'
+  sociales: 'sociales',
+  ingles: 'ingles',
 };
 
 const LearningSupabaseService = {
@@ -37,11 +37,12 @@ const LearningSupabaseService = {
       .eq('published', true)
       .order('order_index', { ascending: true });
 
-    if (error) throw new Error(`Error leyendo learning_content: ${error.message}`);
+    if (error)
+      throw new Error(`Error leyendo learning_content: ${error.message}`);
 
     if (!data || data.length === 0) return [];
 
-    return data.map(row => {
+    return data.map((row) => {
       const content = row.content || {};
       return {
         id: row.id,
@@ -52,7 +53,7 @@ const LearningSupabaseService = {
         quiz: content.quiz,
         type: content.type || 'lesson',
         order: row.order_index ?? 0,
-        ...content
+        ...content,
       };
     });
   },
@@ -63,7 +64,11 @@ const LearningSupabaseService = {
   async getLesson(lessonId) {
     const sb = getSupabase();
     if (!sb) return null;
-    const { data, error } = await sb.from(TABLE).select('*').eq('id', lessonId).maybeSingle();
+    const { data, error } = await sb
+      .from(TABLE)
+      .select('*')
+      .eq('id', lessonId)
+      .maybeSingle();
     if (error) throw new Error(`Error leyendo lección: ${error.message}`);
     if (!data) return null;
     const content = data.content || {};
@@ -74,9 +79,9 @@ const LearningSupabaseService = {
       summary: content.summary,
       questions: content.questions || [],
       quiz: content.quiz,
-      ...content
+      ...content,
     };
-  }
+  },
 };
 
 export default LearningSupabaseService;

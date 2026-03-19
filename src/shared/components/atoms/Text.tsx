@@ -1,17 +1,17 @@
-export const Text = ({ 
-  children, 
-  as = 'p', 
+export const Text = ({
+  children,
+  as = 'p',
   variant = 'default',
-  className = ''
+  className = '',
 }) => {
   const Component = as;
-  
+
   const variants = {
     default: 'text-white text-base md:text-base',
     small: 'text-gray-300 text-sm md:text-sm',
     large: 'text-white text-lg md:text-xl',
     muted: 'text-gray-400 text-base',
-    bold: 'text-white font-bold text-base md:text-lg'
+    bold: 'text-white font-bold text-base md:text-lg',
   };
 
   return (
@@ -28,7 +28,7 @@ export const Title = ({ children, level = 1, className = '' }) => {
     3: 'text-xl md:text-2xl',
     4: 'text-lg md:text-xl',
     5: 'text-base md:text-lg',
-    6: 'text-sm md:text-base'
+    6: 'text-sm md:text-base',
   };
 
   return (

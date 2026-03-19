@@ -14,8 +14,8 @@ const defaultPlan = {
     questionsPerDay: 5,
     simulationTests: false,
     advancedAnalytics: false,
-    prioritySupport: false
-  }
+    prioritySupport: false,
+  },
 };
 
 class SubscriptionPlanService {
@@ -23,7 +23,7 @@ class SubscriptionPlanService {
     const planData = {
       ...defaultPlan,
       createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString()
+      updatedAt: new Date().toISOString(),
     };
     localStorage.setItem(PLAN_KEY, JSON.stringify(planData));
     return planData;
@@ -39,7 +39,7 @@ class SubscriptionPlanService {
     const updated = {
       ...current,
       ...planData,
-      updatedAt: new Date().toISOString()
+      updatedAt: new Date().toISOString(),
     };
     localStorage.setItem(PLAN_KEY, JSON.stringify(updated));
   }

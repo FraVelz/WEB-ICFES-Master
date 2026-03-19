@@ -53,7 +53,7 @@ class ProgressService extends BaseService {
         area: answerData.area,
         questionsAnswered: 0,
         correctAnswers: 0,
-        difficulty: { facil: 0, media: 0, dificil: 0 }
+        difficulty: { facil: 0, media: 0, dificil: 0 },
       };
     }
 
@@ -61,11 +61,15 @@ class ProgressService extends BaseService {
     if (answerData.isCorrect) {
       stats.areaStats[answerData.area].correctAnswers++;
     }
-    stats.areaStats[answerData.area].difficulty[answerData.difficulty || 'media']++;
+    stats.areaStats[answerData.area].difficulty[
+      answerData.difficulty || 'media'
+    ]++;
 
     // Calcular porcentaje correctas por área
     const area = stats.areaStats[answerData.area];
-    area.percentage = Math.round((area.correctAnswers / area.questionsAnswered) * 100);
+    area.percentage = Math.round(
+      (area.correctAnswers / area.questionsAnswered) * 100
+    );
 
     return this.update(userId, stats);
   }
@@ -101,7 +105,7 @@ class ProgressService extends BaseService {
     return {
       current: stats.currentStreak || 0,
       max: stats.maxStreak || 0,
-      lastUpdated: stats.lastStreakUpdate || null
+      lastUpdated: stats.lastStreakUpdate || null,
     };
   }
 
@@ -113,7 +117,9 @@ class ProgressService extends BaseService {
   async updateDailyStreak(userId) {
     const stats = await this.getUserStats(userId);
     const today = new Date().toDateString();
-    const lastUpdate = stats.lastStreakUpdate ? new Date(stats.lastStreakUpdate).toDateString() : null;
+    const lastUpdate = stats.lastStreakUpdate
+      ? new Date(stats.lastStreakUpdate).toDateString()
+      : null;
 
     if (lastUpdate !== today) {
       stats.currentStreak = (stats.currentStreak || 0) + 1;
@@ -134,14 +140,14 @@ class ProgressService extends BaseService {
     const recommendations = [];
 
     // Analizar áreas débiles
-    Object.values(stats.areaStats || {}).forEach(area => {
+    Object.values(stats.areaStats || {}).forEach((area) => {
       if (area.percentage < 60) {
         recommendations.push({
           type: 'priority',
           area: area.area,
           message: `Necesitas reforzar ${area.area}. Tu desempeño es del ${area.percentage}%`,
           priority: 100 - area.percentage,
-          icon: '🎯'
+          icon: '🎯',
         });
       } else if (area.percentage < 80) {
         recommendations.push({
@@ -149,7 +155,7 @@ class ProgressService extends BaseService {
           area: area.area,
           message: `${area.area} va bien (${area.percentage}%), pero puede mejorar`,
           priority: 80 - area.percentage,
-          icon: '📈'
+          icon: '📈',
         });
       }
     });
@@ -166,18 +172,20 @@ class ProgressService extends BaseService {
    */
   async getPerformanceAnalysis(userId, days = 7) {
     const stats = await this.getUserStats(userId);
-    
+
     return {
       totalQuestions: stats.totalQuestionsAnswered || 0,
       correctAnswers: stats.correctAnswers || 0,
-      accuracy: stats.totalQuestionsAnswered 
-        ? Math.round((stats.correctAnswers / stats.totalQuestionsAnswered) * 100)
+      accuracy: stats.totalQuestionsAnswered
+        ? Math.round(
+            (stats.correctAnswers / stats.totalQuestionsAnswered) * 100
+          )
         : 0,
       streak: stats.currentStreak || 0,
       maxStreak: stats.maxStreak || 0,
       topArea: this._getTopArea(stats.areaStats),
       weakArea: this._getWeakestArea(stats.areaStats),
-      period: `Últimos ${days} días`
+      period: `Últimos ${days} días`,
     };
   }
 
@@ -203,7 +211,7 @@ class ProgressService extends BaseService {
       areaStats: {},
       lastStreakUpdate: new Date().toISOString(),
       createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString()
+      updatedAt: new Date().toISOString(),
     };
   }
 

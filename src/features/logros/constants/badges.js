@@ -17,7 +17,7 @@ export {
   MILESTONE_BADGES,
   GAMIFICATION_BADGES,
   RIGOR_BADGES,
-  STRATEGY_BADGES
+  STRATEGY_BADGES,
 } from './badgesByCategory';
 
 export { BADGE_CATEGORIES_CONFIG } from './categoriesConfig';

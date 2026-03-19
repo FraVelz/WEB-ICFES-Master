@@ -20,27 +20,35 @@ export const useUserProfile = (targetUserId = null) => {
     createdAt: 'Reciente',
     coursesProgress: {},
     loading: true,
-    exists: false
+    exists: false,
   });
 
   useEffect(() => {
     if (!uid) {
-      setProfileData(prev => ({ ...prev, loading: false, exists: false }));
+      setProfileData((prev) => ({ ...prev, loading: false, exists: false }));
       return;
     }
     const profile = getUserProfile();
     setProfileData({
-      photoUrl: profile.profileImage || (isOwnProfile ? authUser?.photoURL : null),
+      photoUrl:
+        profile.profileImage || (isOwnProfile ? authUser?.photoURL : null),
       name: profile.username || authUser?.displayName || 'Usuario',
       personalPhrase: profile.bio || '¡Preparándome para el éxito!',
-      createdAt: profile.createdAt ? new Date(profile.createdAt).toLocaleDateString('es-CO', { year: 'numeric', month: 'long', day: 'numeric' }) : 'Reciente',
+      createdAt: profile.createdAt
+        ? new Date(profile.createdAt).toLocaleDateString('es-CO', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+          })
+        : 'Reciente',
       coursesProgress: profile.coursesProgress || {},
       loading: false,
-      exists: true
+      exists: true,
     });
   }, [uid, authUser, isOwnProfile]);
 
-  const totalXPFromDB = typeof gamification.totalXP === 'number' ? gamification.totalXP : 0;
+  const totalXPFromDB =
+    typeof gamification.totalXP === 'number' ? gamification.totalXP : 0;
   const levelInfo = getLevelInfo(totalXPFromDB);
 
   return {
@@ -56,7 +64,7 @@ export const useUserProfile = (targetUserId = null) => {
       levelColor: levelInfo.levelData.color,
       xpForNextLevel: levelInfo.xpForNextLevel,
       xpProgress: levelInfo.progress,
-      nextLevelName: levelInfo.nextLevelData?.name || null
-    }
+      nextLevelName: levelInfo.nextLevelData?.name || null,
+    },
   };
 };

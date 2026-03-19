@@ -1,4 +1,3 @@
-
 export type MascotaCircleSize = 'sm' | 'md' | 'lg' | 'xl';
 
 export type MascotaCircleProps = {
@@ -9,7 +8,7 @@ export type MascotaCircleProps = {
   centered?: boolean;
   className?: string;
   circleClassName?: string;
-}
+};
 
 /**
  * Muestra la imagen de la mascota dentro de un círculo con fondo oscuro.
@@ -22,13 +21,13 @@ export const MascotaCircle = ({
   imgSize = 'w-full h-full',
   centered = true,
   className = '',
-  circleClassName = ''
+  circleClassName = '',
 }: MascotaCircleProps) => {
   const sizeMap = {
     sm: 'w-32 h-32',
     md: 'w-40 h-40',
     lg: 'w-48 h-48',
-    xl: 'w-56 h-56'
+    xl: 'w-56 h-56',
   };
 
   const containerClass = centered ? 'flex justify-center' : '';
@@ -36,12 +35,14 @@ export const MascotaCircle = ({
 
   return (
     <div className={`${containerClass} ${className}`}>
-      <div className={`${circleClass} bg-linear-to-br from-slate-800 to-slate-900 rounded-full flex items-center justify-center shadow-lg overflow-hidden ${circleClassName}`}>
+      <div
+        className={`${circleClass} flex items-center justify-center overflow-hidden rounded-full bg-linear-to-br from-slate-800 to-slate-900 shadow-lg ${circleClassName}`}
+      >
         <img
           draggable="false"
           src={src}
           alt={alt}
-          className={`${imgSize} select-none object-cover drop-shadow-lg`}
+          className={`${imgSize} object-cover drop-shadow-lg select-none`}
         />
       </div>
     </div>

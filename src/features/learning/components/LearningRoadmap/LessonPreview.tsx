@@ -5,46 +5,66 @@ import { Icon } from '@/shared/components/Icon';
 import { useGSAPModalEntrance } from '@/hooks/useGSAPModalEntrance';
 
 export const LessonPreview = ({ isOpen, onClose, lesson, onStart }) => {
-  const backdropRef = useGSAPModalEntrance({ isOpen, type: 'fade', duration: 0.2 });
-  const contentRef = useGSAPModalEntrance({ isOpen, type: 'slideUp', duration: 0.3 });
+  const backdropRef = useGSAPModalEntrance({
+    isOpen,
+    type: 'fade',
+    duration: 0.2,
+  });
+  const contentRef = useGSAPModalEntrance({
+    isOpen,
+    type: 'slideUp',
+    duration: 0.3,
+  });
 
   if (!isOpen || !lesson) return null;
 
   return (
     <div className="fixed inset-0 z-50 flex items-end justify-center sm:items-center">
       {/* Backdrop */}
-      <div 
+      <div
         ref={backdropRef}
         className="absolute inset-0 bg-black/60 backdrop-blur-sm"
         onClick={onClose}
       />
 
       {/* Content */}
-      <div ref={contentRef} className="relative w-screen mb-20 max-w-md bg-slate-900 border-t border-slate-700 sm:border sm:rounded-2xl p-6 shadow-2xl">
-        
+      <div
+        ref={contentRef}
+        className="relative mb-20 w-screen max-w-md border-t border-slate-700 bg-slate-900 p-6 shadow-2xl sm:rounded-2xl sm:border"
+      >
         {/* Close Button */}
-        <button 
+        <button
           onClick={onClose}
-          className="cursor-pointer absolute top-4 right-4 p-2 text-slate-400 hover:text-white transition-colors"
+          className="absolute top-4 right-4 cursor-pointer p-2 text-slate-400 transition-colors hover:text-white"
         >
           <Icon name="times" />
         </button>
 
         {/* Header */}
-        <div className="text-center mb-6">
-          <h3 className="text-xl font-bold text-white mb-2 mr-8">{lesson.title}</h3>
-          <p className="text-slate-400 text-sm">{lesson.description}</p>
+        <div className="mb-6 text-center">
+          <h3 className="mr-8 mb-2 text-xl font-bold text-white">
+            {lesson.title}
+          </h3>
+          <p className="text-sm text-slate-400">{lesson.description}</p>
         </div>
 
         {/* Rewards */}
-        <div className="flex justify-center gap-4 mb-8">
-          <div className="flex flex-col items-center bg-slate-800/50 p-3 rounded-xl border border-slate-700 min-w-[100px]">
-            <span className="text-orange-400 font-bold text-lg">+{lesson?.xp ?? 0}</span>
-            <span className="text-slate-500 text-xs uppercase tracking-wider">XP</span>
+        <div className="mb-8 flex justify-center gap-4">
+          <div className="flex min-w-[100px] flex-col items-center rounded-xl border border-slate-700 bg-slate-800/50 p-3">
+            <span className="text-lg font-bold text-orange-400">
+              +{lesson?.xp ?? 0}
+            </span>
+            <span className="text-xs tracking-wider text-slate-500 uppercase">
+              XP
+            </span>
           </div>
-          <div className="flex flex-col items-center bg-slate-800/50 p-3 rounded-xl border border-slate-700 min-w-[100px]">
-            <span className="text-yellow-400 font-bold text-lg">+{lesson?.coins ?? 0}</span>
-            <span className="text-slate-500 text-xs uppercase tracking-wider">Monedas</span>
+          <div className="flex min-w-[100px] flex-col items-center rounded-xl border border-slate-700 bg-slate-800/50 p-3">
+            <span className="text-lg font-bold text-yellow-400">
+              +{lesson?.coins ?? 0}
+            </span>
+            <span className="text-xs tracking-wider text-slate-500 uppercase">
+              Monedas
+            </span>
           </div>
         </div>
 
@@ -54,7 +74,7 @@ export const LessonPreview = ({ isOpen, onClose, lesson, onStart }) => {
             onStart(lesson);
             onClose();
           }}
-          className="cursor-pointer w-full py-4 bg-green-500 hover:bg-green-400 text-slate-900 font-bold rounded-xl shadow-lg shadow-green-500/20 transition-all active:scale-95 flex items-center justify-center gap-2"
+          className="flex w-full cursor-pointer items-center justify-center gap-2 rounded-xl bg-green-500 py-4 font-bold text-slate-900 shadow-lg shadow-green-500/20 transition-all hover:bg-green-400 active:scale-95"
         >
           <Icon name="play" />
           COMENZAR LECCIÓN

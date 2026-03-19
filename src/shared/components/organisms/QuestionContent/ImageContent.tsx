@@ -1,15 +1,15 @@
 /**
  * ImageContent - Componente para mostrar imágenes en las preguntas
- * 
+ *
  * Uso:
- * <ImageContent 
+ * <ImageContent
  *   src="/path/to/image.png"
  *   alt="Descripción de la imagen"
  *   caption="Pie de imagen opcional"
  *   maxWidth="600px"
  * />
  */
-export const ImageContent = ({ src, alt, caption, maxWidth = "100%" }) => {
+export const ImageContent = ({ src, alt, caption, maxWidth = '100%' }) => {
   return (
     <figure className="my-6 flex flex-col items-center">
       <img
@@ -19,7 +19,7 @@ export const ImageContent = ({ src, alt, caption, maxWidth = "100%" }) => {
         className="rounded-lg border border-white/20 shadow-lg"
       />
       {caption && (
-        <figcaption className="mt-3 text-xs text-gray-400 italic text-center">
+        <figcaption className="mt-3 text-center text-xs text-gray-400 italic">
           {caption}
         </figcaption>
       )}

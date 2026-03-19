@@ -1,5 +1,5 @@
 Excelente reflexión.
-Lo que estás pensando **es exactamente la pregunta correcta** para el inicio de *ICFES Master*.
+Lo que estás pensando **es exactamente la pregunta correcta** para el inicio de _ICFES Master_.
 
 Voy a responderte **no como “empresa fría”**, sino como **producto educativo que quiere crecer, ser accesible y luego volverse app**.
 
@@ -15,8 +15,8 @@ El estudiante debe entrar y pensar en **5 segundos**:
 
 No:
 
-* “Qué empresa tan bonita”
-* “Qué branding tan serio”
+- “Qué empresa tan bonita”
+- “Qué branding tan serio”
 
 📌 **Primero utilidad, luego formalidad**.
 
@@ -26,15 +26,15 @@ No:
 
 Recuerda a tu usuario:
 
-* Está estresado
-* No quiere leer
-* Quiere practicar ya
+- Está estresado
+- No quiere leer
+- Quiere practicar ya
 
 Tu web debe ser:
 
-* 1 clic → practicar
-* 0 fricción
-* 0 registro obligatorio al inicio
+- 1 clic → practicar
+- 0 fricción
+- 0 registro obligatorio al inicio
 
 ---
 
@@ -42,10 +42,10 @@ Tu web debe ser:
 
 No solo “gratis”, sino:
 
-* Ligera
-* Rápida
-* Funciona en celular viejo
-* Poco consumo de datos
+- Ligera
+- Rápida
+- Funciona en celular viejo
+- Poco consumo de datos
 
 Eso te da **usuarios masivos**.
 
@@ -57,21 +57,21 @@ Eso te da **usuarios masivos**.
 
 Piensa más en:
 
-* Duolingo
-* Khan Academy
-* Quizlet
+- Duolingo
+- Khan Academy
+- Quizlet
 
 Y menos en:
 
-* Página corporativa
-* SaaS empresarial
-* Landing fría
+- Página corporativa
+- SaaS empresarial
+- Landing fría
 
 📌 Porque:
 
-* Vas a convertirlo en app
-* El usuario es joven
-* El uso es diario
+- Vas a convertirlo en app
+- El usuario es joven
+- El uso es diario
 
 ---
 
@@ -79,9 +79,9 @@ Y menos en:
 
 ### 🟢 Pantalla principal
 
-* Botón grande: **“Practicar ahora”**
-* Botón secundario: **“Ver mi progreso”**
-* Nada más
+- Botón grande: **“Practicar ahora”**
+- Botón secundario: **“Ver mi progreso”**
+- Nada más
 
 ❌ No 10 secciones
 ❌ No textos largos
@@ -90,9 +90,9 @@ Y menos en:
 
 ### 🟢 Práctica
 
-* Pregunta clara
-* Respuesta rápida
-* Feedback inmediato
+- Pregunta clara
+- Respuesta rápida
+- Feedback inmediato
 
 Esto crea **adicción positiva**.
 
@@ -102,9 +102,9 @@ Esto crea **adicción positiva**.
 
 ### ❌ Lo que NO debes hacer
 
-* Ventana emergente molesta
-* “Paga o no sigues”
-* Mostrarlo antes de que aprendan
+- Ventana emergente molesta
+- “Paga o no sigues”
+- Mostrarlo antes de que aprendan
 
 ---
 
@@ -112,14 +112,14 @@ Esto crea **adicción positiva**.
 
 Donación:
 
-* Visible
-* Opcional
-* Natural
+- Visible
+- Opcional
+- Natural
 
 Ejemplos:
 
-* “Si esto te ayudó, apóyanos”
-* “Ayuda a que otros estudien gratis”
+- “Si esto te ayudó, apóyanos”
+- “Ayuda a que otros estudien gratis”
 
 📌 **Primero valor → luego donación**.
 
@@ -129,21 +129,21 @@ Ejemplos:
 
 ### 🟢 Gratis
 
-* Practicar
-* Algunas estadísticas
-* Online
+- Practicar
+- Algunas estadísticas
+- Online
 
 ### 🔵 Apoyo / Donación
 
-* Cantidad libre
-* Mensaje humano
-* Sin bloqueo
+- Cantidad libre
+- Mensaje humano
+- Sin bloqueo
 
 ### 🟣 Premium (después)
 
-* Offline
-* Más contenido
-* Historial completo
+- Offline
+- Más contenido
+- Historial completo
 
 ---
 
@@ -161,11 +161,11 @@ Regla:
 
 Aunque sea web:
 
-* Botones grandes
-* Navegación clara
-* Sin hover dependiente
-* Tipografía legible
-* Nada pequeño
+- Botones grandes
+- Navegación clara
+- Sin hover dependiente
+- Tipografía legible
+- Nada pequeño
 
 📌 Así el paso a app es natural.
 
@@ -175,11 +175,11 @@ Aunque sea web:
 
 No “empresa grande”, sino:
 
-* Cercano
-* Claro
-* Justo
-* Accesible
-* Hecho por alguien que entiende al estudiante
+- Cercano
+- Claro
+- Justo
+- Accesible
+- Hecho por alguien que entiende al estudiante
 
 Eso **conecta más** que un logo perfecto.
 
@@ -197,9 +197,9 @@ Eso **conecta más** que un logo perfecto.
 
 Si quieres, en el próximo mensaje puedo:
 
-* Diseñarte **la primera pantalla exacta**
-* Proponerte **copys humanos** (textos)
-* Ayudarte a definir **qué NO poner**
-* Pensar contigo la **transición web → app**
+- Diseñarte **la primera pantalla exacta**
+- Proponerte **copys humanos** (textos)
+- Ayudarte a definir **qué NO poner**
+- Pensar contigo la **transición web → app**
 
 Vas muy bien. Estás pensando como creador, no solo como desarrollador 👊

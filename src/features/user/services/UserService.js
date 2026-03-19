@@ -33,7 +33,7 @@ class UserService extends BaseService {
   async updateProfile(userId, profileData) {
     return this.update(userId, {
       ...profileData,
-      lastProfileUpdate: new Date().toISOString()
+      lastProfileUpdate: new Date().toISOString(),
     });
   }
 
@@ -59,8 +59,8 @@ class UserService extends BaseService {
       ...user,
       settings: {
         ...user?.settings,
-        ...settings
-      }
+        ...settings,
+      },
     });
   }
 
@@ -73,7 +73,7 @@ class UserService extends BaseService {
   async updateProfileImage(userId, imageBase64) {
     return this.update(userId, {
       profileImage: imageBase64,
-      lastImageUpdate: new Date().toISOString()
+      lastImageUpdate: new Date().toISOString(),
     });
   }
 
@@ -117,7 +117,7 @@ class UserService extends BaseService {
   async importUserData(userId, backupData) {
     return this.update(userId, {
       ...backupData,
-      lastImport: new Date().toISOString()
+      lastImport: new Date().toISOString(),
     });
   }
 
@@ -140,7 +140,8 @@ class UserService extends BaseService {
       username: userData.username || 'Usuario ICFES',
       email: userData.email || null,
       profileImage: userData.profileImage || null,
-      personalPhrase: userData.personalPhrase || 'Preparándome para ser el mejor',
+      personalPhrase:
+        userData.personalPhrase || 'Preparándome para ser el mejor',
       points: 0,
       level: 0,
       streak: 0,
@@ -148,15 +149,15 @@ class UserService extends BaseService {
         notifications: true,
         soundEnabled: true,
         darkMode: true,
-        ...userData.settings
+        ...userData.settings,
       },
       stats: {
         totalExams: 0,
         totalQuestions: 0,
         correctAnswers: 0,
-        ...userData.stats
+        ...userData.stats,
       },
-      ...userData
+      ...userData,
     });
   }
 }

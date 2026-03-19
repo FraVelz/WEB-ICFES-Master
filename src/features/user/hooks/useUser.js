@@ -1,5 +1,11 @@
 import { useState, useEffect } from 'react';
-import { getUserProfile, getUserRank, getVirtualMoney, addVirtualMoney, removeVirtualMoney } from '@/shared/utils/userProfile';
+import {
+  getUserProfile,
+  getUserRank,
+  getVirtualMoney,
+  addVirtualMoney,
+  removeVirtualMoney,
+} from '@/shared/utils/userProfile';
 import { useAuth } from '@/context/AuthContext';
 
 /**
@@ -17,7 +23,11 @@ export const useUser = () => {
       try {
         let profile = getUserProfile();
         if (authUser?.displayName) {
-          profile = { ...profile, username: authUser.displayName, displayName: authUser.displayName };
+          profile = {
+            ...profile,
+            username: authUser.displayName,
+            displayName: authUser.displayName,
+          };
         }
         const userRank = getUserRank();
         const money = getVirtualMoney();
@@ -70,6 +80,6 @@ export const useUser = () => {
     isLoading,
     refreshUser,
     addMoney,
-    removeMoney
+    removeMoney,
   };
 };

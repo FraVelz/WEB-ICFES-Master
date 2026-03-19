@@ -9,9 +9,9 @@ Una plataforma interactiva para practicar preguntas y aprender temas del examen 
 ## Características Principales
 
 - **3 Niveles de Aprendizaje**:
-  -  **Nivel Fácil**: Aprende bases con materiales estructurados y ejercicios básicos
-  -  **Nivel Intermedio**: Practica exámenes individuales por materia
-  -  **Nivel Avanzado**: Simulacro global ICFES de 200 preguntas en 3 horas
+  - **Nivel Fácil**: Aprende bases con materiales estructurados y ejercicios básicos
+  - **Nivel Intermedio**: Practica exámenes individuales por materia
+  - **Nivel Avanzado**: Simulacro global ICFES de 200 preguntas en 3 horas
 - **Práctica por Áreas**: Matemáticas, Lenguaje, Ciencias Naturales, Ciencias Sociales e Inglés
 - **Examen Simulado Completo**: Resuelve todas las preguntas con temporizador configurable
 - **Material de Estudio Avanzado**: Acceso a recursos educativos organizados por tema
@@ -79,25 +79,30 @@ Ver documentación: `_docs/setup/` y `_docs/integrations/`
 Carpeta: `_docs/`
 
 ### Visión General
+
 - **overview/executive-summary.md** - Resumen ejecutivo
 - **overview/project-structure.md** - Estructura y arquitectura
 
 ### Configuración
+
 - **setup/installation.md** - Instalación paso a paso
 - **setup/configuration.md** - Variables de entorno y configuración
 - **setup/cheatsheet.md** - Comandos rápidos
 
 ### Frontend
+
 - **frontend/architecture.md** - Arquitectura Feature-Based
 - **frontend/components-guide.md** - Guía de componentes
 - **frontend/styles-guide.md** - Guía de estilos
 
 ### Backend y Datos
+
 - **Supabase** - Base de datos y autenticación
 - **backend/services-api.md** - API de servicios
 - **data/content-schema.md** - Esquema de contenido
 
 ### Integraciones
+
 - **integrations/payments.md** - Pasarela de pagos
 
 ## Próximas Mejoras Recomendadas
@@ -125,6 +130,6 @@ Para sugerencias o reporte de errores, crea un issue en el repositorio de GitHub
 
 ---
 
-**Desarrollo:** Fravelz  
+**Desarrollo:** Fravelz
 
 **Licencia:** Apache License 2.0

@@ -10,7 +10,7 @@ class AchievementService {
   }
 
   async getAchievement(achievementId) {
-    return ACHIEVEMENTS_DATA.find(a => a.id === achievementId) || null;
+    return ACHIEVEMENTS_DATA.find((a) => a.id === achievementId) || null;
   }
 
   async unlockAchievement(userId, achievementId, metadata = {}) {

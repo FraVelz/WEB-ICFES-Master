@@ -71,13 +71,17 @@ export class BaseService {
         const parsed = data ? JSON.parse(data) : [];
 
         if (id) {
-          const item = parsed.find(item => item.id === id);
+          const item = parsed.find((item) => item.id === id);
           resolve(item || null);
         } else {
           resolve(parsed);
         }
       } catch (error) {
-        reject(new Error(`Error leyendo ${this.resourceName} de localStorage: ${error.message}`));
+        reject(
+          new Error(
+            `Error leyendo ${this.resourceName} de localStorage: ${error.message}`
+          )
+        );
       }
     });
   }
@@ -85,21 +89,25 @@ export class BaseService {
   _createInLocalStorage(data) {
     return new Promise((resolve, reject) => {
       try {
-        const items = JSON.parse(localStorage.getItem(this.localStorageKey) || '[]');
-        
+        const items = JSON.parse(
+          localStorage.getItem(this.localStorageKey) || '[]'
+        );
+
         const newItem = {
           id: `${this.resourceName}_${Date.now()}_${Math.random()}`,
           ...data,
           createdAt: new Date().toISOString(),
-          updatedAt: new Date().toISOString()
+          updatedAt: new Date().toISOString(),
         };
 
         items.push(newItem);
         localStorage.setItem(this.localStorageKey, JSON.stringify(items));
-        
+
         resolve(newItem);
       } catch (error) {
-        reject(new Error(`Error creando ${this.resourceName}: ${error.message}`));
+        reject(
+          new Error(`Error creando ${this.resourceName}: ${error.message}`)
+        );
       }
     });
   }
@@ -107,8 +115,10 @@ export class BaseService {
   _updateInLocalStorage(id, data) {
     return new Promise((resolve, reject) => {
       try {
-        const items = JSON.parse(localStorage.getItem(this.localStorageKey) || '[]');
-        const index = items.findIndex(item => item.id === id);
+        const items = JSON.parse(
+          localStorage.getItem(this.localStorageKey) || '[]'
+        );
+        const index = items.findIndex((item) => item.id === id);
 
         if (index === -1) {
           reject(new Error(`${this.resourceName} con ID ${id} no encontrado`));
@@ -118,13 +128,15 @@ export class BaseService {
         items[index] = {
           ...items[index],
           ...data,
-          updatedAt: new Date().toISOString()
+          updatedAt: new Date().toISOString(),
         };
 
         localStorage.setItem(this.localStorageKey, JSON.stringify(items));
         resolve(items[index]);
       } catch (error) {
-        reject(new Error(`Error actualizando ${this.resourceName}: ${error.message}`));
+        reject(
+          new Error(`Error actualizando ${this.resourceName}: ${error.message}`)
+        );
       }
     });
   }
@@ -132,8 +144,10 @@ export class BaseService {
   _deleteFromLocalStorage(id) {
     return new Promise((resolve, reject) => {
       try {
-        const items = JSON.parse(localStorage.getItem(this.localStorageKey) || '[]');
-        const filtered = items.filter(item => item.id !== id);
+        const items = JSON.parse(
+          localStorage.getItem(this.localStorageKey) || '[]'
+        );
+        const filtered = items.filter((item) => item.id !== id);
 
         if (items.length === filtered.length) {
           reject(new Error(`${this.resourceName} con ID ${id} no encontrado`));
@@ -143,7 +157,9 @@ export class BaseService {
         localStorage.setItem(this.localStorageKey, JSON.stringify(filtered));
         resolve({ success: true, message: `${this.resourceName} eliminado` });
       } catch (error) {
-        reject(new Error(`Error eliminando ${this.resourceName}: ${error.message}`));
+        reject(
+          new Error(`Error eliminando ${this.resourceName}: ${error.message}`)
+        );
       }
     });
   }

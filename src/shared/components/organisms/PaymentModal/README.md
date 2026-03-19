@@ -28,11 +28,7 @@ import { PaymentModal } from '@/shared/components';
 const [isOpen, setIsOpen] = useState(false);
 const plan = { name: 'Pro', price: '$50' };
 
-<PaymentModal
- isOpen={isOpen}
- onClose={() => setIsOpen(false)}
- plan={plan}
-/>
+<PaymentModal isOpen={isOpen} onClose={() => setIsOpen(false)} plan={plan} />;
 ```
 
 ## Características
@@ -47,8 +43,8 @@ const plan = { name: 'Pro', price: '$50' };
 
 ## Props
 
-| Prop | Tipo | Descripción |
-|------|------|-------------|
-| `isOpen` | boolean | Controla si el modal está abierto |
-| `onClose` | function | Callback para cerrar el modal |
-| `plan` | object | Objeto con `name` y `price` del plan |
+| Prop      | Tipo     | Descripción                          |
+| --------- | -------- | ------------------------------------ |
+| `isOpen`  | boolean  | Controla si el modal está abierto    |
+| `onClose` | function | Callback para cerrar el modal        |
+| `plan`    | object   | Objeto con `name` y `price` del plan |

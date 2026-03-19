@@ -1,14 +1,18 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Icon } from '@/shared/components/Icon';
-import { ExamConfigModal, AnswerSheet, ResultsAnalysis } from '@/features/exam/components';
+import {
+  ExamConfigModal,
+  AnswerSheet,
+  ResultsAnalysis,
+} from '@/features/exam/components';
 import { formatTimeExtended } from '@/shared/utils';
 import { AREA_INFO } from '@/shared/constants';
-import { 
+import {
   MATHEMATICS_QUESTIONS,
   LANGUAGE_QUESTIONS,
   SCIENCE_QUESTIONS,
-  SOCIAL_QUESTIONS
+  SOCIAL_QUESTIONS,
 } from '@/shared/data';
 
 export const FullExamPage = () => {
@@ -16,7 +20,7 @@ export const FullExamPage = () => {
     ...MATHEMATICS_QUESTIONS,
     ...LANGUAGE_QUESTIONS,
     ...SCIENCE_QUESTIONS,
-    ...SOCIAL_QUESTIONS
+    ...SOCIAL_QUESTIONS,
   ];
 
   const areaInfo = AREA_INFO['examen-completo'];
@@ -59,7 +63,7 @@ export const FullExamPage = () => {
   const handleAnswer = (questionId, answer) => {
     setAnswers((prev) => ({
       ...prev,
-      [questionId]: answer
+      [questionId]: answer,
     }));
   };
 
@@ -69,14 +73,21 @@ export const FullExamPage = () => {
   };
 
   if (!examConfig) {
-    return <ExamConfigModal area={areaInfo.name} totalQuestions={allQuestions.length} onStart={handleExamStart} isFullExam={true} />;
+    return (
+      <ExamConfigModal
+        area={areaInfo.name}
+        totalQuestions={allQuestions.length}
+        onStart={handleExamStart}
+        isFullExam={true}
+      />
+    );
   }
 
   if (isFinished || showResults) {
     const results = questions.map((q) => ({
       question: q,
       correct: answers[q.id] === q.correctAnswer,
-      userAnswer: answers[q.id]
+      userAnswer: answers[q.id],
     }));
 
     const correctCount = results.filter((r) => r.correct).length;
@@ -84,47 +95,51 @@ export const FullExamPage = () => {
 
     return (
       <div className="min-h-dvh bg-linear-to-br from-gray-900 via-slate-900 to-gray-900 text-white">
-        <div className="fixed inset-0 overflow-hidden pointer-events-none">
-          <div className="absolute top-0 left-1/4 w-96 h-96 bg-blue-500/20 rounded-full blur-3xl animate-pulse"></div>
-          <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-purple-500/20 rounded-full blur-3xl animate-pulse"></div>
+        <div className="pointer-events-none fixed inset-0 overflow-hidden">
+          <div className="absolute top-0 left-1/4 h-96 w-96 animate-pulse rounded-full bg-blue-500/20 blur-3xl"></div>
+          <div className="absolute right-1/4 bottom-0 h-96 w-96 animate-pulse rounded-full bg-purple-500/20 blur-3xl"></div>
         </div>
 
         <div className="relative z-10">
           {/* Header */}
-          <div className="sticky top-0 z-40 bg-linear-to-b from-gray-900 via-gray-900 to-transparent backdrop-blur-md border-b border-white/10 py-4">
-            <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
+          <div className="sticky top-0 z-40 border-b border-white/10 bg-linear-to-b from-gray-900 via-gray-900 to-transparent py-4 backdrop-blur-md">
+            <div className="mx-auto flex max-w-7xl items-center justify-between px-6">
               <div>
-                <div className={`inline-block bg-linear-to-r ${areaInfo.color} text-white px-3 py-1 rounded-lg font-semibold text-xs mb-2`}>
+                <div
+                  className={`inline-block bg-linear-to-r ${areaInfo.color} mb-2 rounded-lg px-3 py-1 text-xs font-semibold text-white`}
+                >
                   {areaInfo.name}
                 </div>
-                <p className="text-sm text-gray-400">
-                  Análisis de Resultados
-                </p>
+                <p className="text-sm text-gray-400">Análisis de Resultados</p>
               </div>
 
               {/* Desktop Exit Button */}
               <Link
                 to="/"
-                className="hidden md:block bg-white/10 hover:bg-white/20 text-white px-4 py-2 rounded-lg text-sm transition-all duration-300"
+                className="hidden rounded-lg bg-white/10 px-4 py-2 text-sm text-white transition-all duration-300 hover:bg-white/20 md:block"
               >
                 Salir
               </Link>
 
               {/* Mobile Menu Button */}
-              <div className="md:hidden relative">
+              <div className="relative md:hidden">
                 <button
                   onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                  className="text-white p-2"
+                  className="p-2 text-white"
                 >
-                  <Icon name="ellipsis-vertical" size="xl" className="text-xl" />
+                  <Icon
+                    name="ellipsis-vertical"
+                    size="xl"
+                    className="text-xl"
+                  />
                 </button>
 
                 {/* Mobile Menu */}
                 {mobileMenuOpen && (
-                  <div className="fixed right-4 top-20 bg-gray-800 border border-white/20 rounded-lg shadow-xl overflow-hidden z-50 w-48">
+                  <div className="fixed top-20 right-4 z-50 w-48 overflow-hidden rounded-lg border border-white/20 bg-gray-800 shadow-xl">
                     <button
                       onClick={() => setShowAnswerSheetMobile(true)}
-                      className="w-full flex items-center gap-3 px-4 py-3 text-white hover:bg-white/10 transition-colors border-b border-white/10"
+                      className="flex w-full items-center gap-3 border-b border-white/10 px-4 py-3 text-white transition-colors hover:bg-white/10"
                     >
                       <Icon name="clipboard" size="sm" className="text-sm" />
                       <span>Ver Respuestas</span>
@@ -132,9 +147,13 @@ export const FullExamPage = () => {
                     <Link
                       to="/"
                       onClick={() => setMobileMenuOpen(false)}
-                      className="flex items-center gap-3 px-4 py-3 text-white hover:bg-white/10 transition-colors"
+                      className="flex items-center gap-3 px-4 py-3 text-white transition-colors hover:bg-white/10"
                     >
-                      <Icon name="arrow-right-from-bracket" size="sm" className="text-sm" />
+                      <Icon
+                        name="arrow-right-from-bracket"
+                        size="sm"
+                        className="text-sm"
+                      />
                       <span>Salir</span>
                     </Link>
                   </div>
@@ -144,8 +163,8 @@ export const FullExamPage = () => {
           </div>
 
           {/* Main Content */}
-          <div className="max-w-7xl mx-auto sm:px-6 py-8">
-            <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+          <div className="mx-auto max-w-7xl py-8 sm:px-6">
+            <div className="grid grid-cols-1 gap-6 lg:grid-cols-4">
               {/* Results Column */}
               <div className="lg:col-span-3">
                 <ResultsAnalysis
@@ -184,22 +203,24 @@ export const FullExamPage = () => {
     timeRemaining < 300
       ? 'text-red-400'
       : timeRemaining < 600
-      ? 'text-yellow-400'
-      : 'text-cyan-300';
+        ? 'text-yellow-400'
+        : 'text-cyan-300';
 
   return (
     <div className="min-h-dvh bg-linear-to-br from-gray-900 via-slate-900 to-gray-900 text-white">
-      <div className="fixed inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-0 left-1/4 w-96 h-96 bg-blue-500/20 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-purple-500/20 rounded-full blur-3xl animate-pulse"></div>
+      <div className="pointer-events-none fixed inset-0 overflow-hidden">
+        <div className="absolute top-0 left-1/4 h-96 w-96 animate-pulse rounded-full bg-blue-500/20 blur-3xl"></div>
+        <div className="absolute right-1/4 bottom-0 h-96 w-96 animate-pulse rounded-full bg-purple-500/20 blur-3xl"></div>
       </div>
 
       <div className="relative z-10">
         {/* Header */}
-        <div className="sticky top-0 z-40 bg-linear-to-b from-gray-900 via-gray-900 to-transparent backdrop-blur-md border-b border-white/10 py-4">
-          <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
+        <div className="sticky top-0 z-40 border-b border-white/10 bg-linear-to-b from-gray-900 via-gray-900 to-transparent py-4 backdrop-blur-md">
+          <div className="mx-auto flex max-w-7xl items-center justify-between px-6">
             <div>
-              <div className={`inline-block bg-linear-to-r ${areaInfo.color} text-white px-3 py-1 rounded-lg font-semibold text-xs mb-2`}>
+              <div
+                className={`inline-block bg-linear-to-r ${areaInfo.color} mb-2 rounded-lg px-3 py-1 text-xs font-semibold text-white`}
+              >
                 {areaInfo.name}
               </div>
               <p className="text-sm text-gray-400">
@@ -208,7 +229,7 @@ export const FullExamPage = () => {
             </div>
 
             {examConfig.useTimer && (
-              <div className={`text-2xl font-bold font-mono ${timeColor}`}>
+              <div className={`font-mono text-2xl font-bold ${timeColor}`}>
                 {formatTimeExtended(timeRemaining)}
               </div>
             )}
@@ -216,29 +237,29 @@ export const FullExamPage = () => {
             {/* Desktop Exit Button */}
             <Link
               to="/"
-              className="hidden md:block bg-white/10 hover:bg-white/20 text-white px-4 py-2 rounded-lg text-sm transition-all duration-300"
+              className="hidden rounded-lg bg-white/10 px-4 py-2 text-sm text-white transition-all duration-300 hover:bg-white/20 md:block"
             >
               Salir
             </Link>
 
             {/* Mobile Menu Button */}
-            <div className="md:hidden relative">
+            <div className="relative md:hidden">
               <button
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className="text-white p-2"
+                className="p-2 text-white"
               >
                 <Icon name="ellipsis-vertical" size="xl" className="text-xl" />
               </button>
 
               {/* Mobile Menu */}
               {mobileMenuOpen && (
-                <div className="fixed right-4 top-20 bg-gray-800 border border-white/20 rounded-lg shadow-xl overflow-hidden z-50 w-48">
+                <div className="fixed top-20 right-4 z-50 w-48 overflow-hidden rounded-lg border border-white/20 bg-gray-800 shadow-xl">
                   <button
                     onClick={() => {
                       setShowAnswerSheetMobile(true);
                       setMobileMenuOpen(false);
                     }}
-                    className="w-full flex items-center gap-3 px-4 py-3 text-white hover:bg-white/10 transition-colors border-b border-white/10"
+                    className="flex w-full items-center gap-3 border-b border-white/10 px-4 py-3 text-white transition-colors hover:bg-white/10"
                   >
                     <Icon name="clipboard" size="sm" className="text-sm" />
                     <span>Ver Respuestas</span>
@@ -246,9 +267,13 @@ export const FullExamPage = () => {
                   <Link
                     to="/"
                     onClick={() => setMobileMenuOpen(false)}
-                    className="flex items-center gap-3 px-4 py-3 text-white hover:bg-white/10 transition-colors"
+                    className="flex items-center gap-3 px-4 py-3 text-white transition-colors hover:bg-white/10"
                   >
-                    <Icon name="arrow-right-from-bracket" size="sm" className="text-sm" />
+                    <Icon
+                      name="arrow-right-from-bracket"
+                      size="sm"
+                      className="text-sm"
+                    />
                     <span>Salir</span>
                   </Link>
                 </div>
@@ -258,43 +283,48 @@ export const FullExamPage = () => {
         </div>
 
         {/* Main Content */}
-        <div className="max-w-7xl mx-auto sm:px-6 py-8">
-          <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+        <div className="mx-auto max-w-7xl py-8 sm:px-6">
+          <div className="grid grid-cols-1 gap-6 lg:grid-cols-4">
             {/* Questions Column */}
-            <div className="lg:col-span-3 space-y-6">
+            <div className="space-y-6 lg:col-span-3">
               {questions.map((question, index) => (
                 <div
                   key={question.id}
                   id={`question-${index}`}
-                  className="bg-linear-to-br from-gray-800/40 via-gray-900/40 to-gray-950/40 backdrop-blur-md sm:border border-white/10 sm:rounded-xl p-6 shadow-lg hover:shadow-xl hover:border-white/20 transition-all duration-300"
+                  className="border-white/10 bg-linear-to-br from-gray-800/40 via-gray-900/40 to-gray-950/40 p-6 shadow-lg backdrop-blur-md transition-all duration-300 hover:border-white/20 hover:shadow-xl sm:rounded-xl sm:border"
                 >
                   {/* Question Number and Title */}
                   <div className="mb-6">
                     <div className="flex items-start gap-4">
-                      <div className="shrink-0 w-10 h-10 bg-linear-to-r from-cyan-500 to-blue-500 rounded-lg flex items-center justify-center font-bold text-sm">
+                      <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-linear-to-r from-cyan-500 to-blue-500 text-sm font-bold">
                         {index + 1}
                       </div>
                       <div className="flex-1">
-                        <p className="text-white font-semibold text-lg leading-relaxed">
+                        <p className="text-lg leading-relaxed font-semibold text-white">
                           {question.text}
                         </p>
-                        <p className="text-xs text-gray-500 mt-2">
-                          Dificultad: <span className="text-cyan-300">{question.difficulty}</span>
+                        <p className="mt-2 text-xs text-gray-500">
+                          Dificultad:{' '}
+                          <span className="text-cyan-300">
+                            {question.difficulty}
+                          </span>
                         </p>
                       </div>
                     </div>
                   </div>
 
                   {/* Answer Options */}
-                  <div className="space-y-3 ml-14">
+                  <div className="ml-14 space-y-3">
                     {question.options.map((option) => {
                       const isSelected = answers[question.id] === option.letter;
 
                       return (
                         <button
                           key={option.letter}
-                          onClick={() => handleAnswer(question.id, option.letter)}
-                          className={`w-full text-left p-4 rounded-lg border-2 transition-all duration-300 ${
+                          onClick={() =>
+                            handleAnswer(question.id, option.letter)
+                          }
+                          className={`w-full rounded-lg border-2 p-4 text-left transition-all duration-300 ${
                             isSelected
                               ? 'border-cyan-400 bg-cyan-500/20 text-cyan-100'
                               : 'border-white/20 bg-white/5 text-white hover:border-cyan-400/50 hover:bg-cyan-500/10'
@@ -302,7 +332,7 @@ export const FullExamPage = () => {
                         >
                           <div className="flex items-center gap-3">
                             <div
-                              className={`shrink-0 w-8 h-8 rounded-full border-2 flex items-center justify-center font-bold text-sm ${
+                              className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full border-2 text-sm font-bold ${
                                 isSelected
                                   ? 'border-cyan-400 bg-cyan-500 text-white'
                                   : 'border-white/30'
@@ -318,12 +348,18 @@ export const FullExamPage = () => {
                   </div>
 
                   {/* Explanation - Only shown after exam finishes */}
-                  {showResults && examConfig.showExplanations && answers[question.id] && (
-                    <div className="mt-6 ml-14 p-4 bg-blue-500/10 border border-blue-500/30 rounded-lg">
-                      <p className="text-xs font-semibold text-blue-300 mb-2">EXPLICACIÓN:</p>
-                      <p className="text-sm text-gray-200">{question.explanation}</p>
-                    </div>
-                  )}
+                  {showResults &&
+                    examConfig.showExplanations &&
+                    answers[question.id] && (
+                      <div className="mt-6 ml-14 rounded-lg border border-blue-500/30 bg-blue-500/10 p-4">
+                        <p className="mb-2 text-xs font-semibold text-blue-300">
+                          EXPLICACIÓN:
+                        </p>
+                        <p className="text-sm text-gray-200">
+                          {question.explanation}
+                        </p>
+                      </div>
+                    )}
                 </div>
               ))}
 
@@ -331,7 +367,7 @@ export const FullExamPage = () => {
               <div className="flex justify-center pt-8">
                 <button
                   onClick={() => setShowResults(true)}
-                  className="bg-linear-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white font-bold py-4 px-12 rounded-xl transition-all duration-300 hover:shadow-lg hover:shadow-green-500/50 text-lg"
+                  className="rounded-xl bg-linear-to-r from-green-500 to-emerald-500 px-12 py-4 text-lg font-bold text-white transition-all duration-300 hover:from-green-600 hover:to-emerald-600 hover:shadow-lg hover:shadow-green-500/50"
                 >
                   Finalizar Examen
                 </button>
@@ -353,13 +389,13 @@ export const FullExamPage = () => {
 
       {/* Mobile Answer Sheet Modal */}
       {showAnswerSheetMobile && (
-        <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 md:hidden">
-          <div className="bg-gray-800 rounded-xl border border-white/20 w-full max-w-md max-h-[80vh] overflow-y-auto">
-            <div className="sticky top-0 bg-gray-900 border-b border-white/10 p-4 flex items-center justify-between">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4 backdrop-blur-sm md:hidden">
+          <div className="max-h-[80vh] w-full max-w-md overflow-y-auto rounded-xl border border-white/20 bg-gray-800">
+            <div className="sticky top-0 flex items-center justify-between border-b border-white/10 bg-gray-900 p-4">
               <h3 className="font-bold text-white">Hoja de Respuestas</h3>
               <button
                 onClick={() => setShowAnswerSheetMobile(false)}
-                className="text-gray-400 hover:text-white transition-colors"
+                className="text-gray-400 transition-colors hover:text-white"
               >
                 ✕
               </button>

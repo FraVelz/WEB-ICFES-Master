@@ -1,5 +1,5 @@
 export const SHOP_ITEMS = [
- {
+  {
     id: 'avatar_robot',
     name: 'Robo-Tutor',
     description: 'La inteligencia artificial de tu lado.',
@@ -7,7 +7,7 @@ export const SHOP_ITEMS = [
     category: 'avatar',
     icon: 'robot',
     color: 'from-gray-500 to-slate-600',
-    image: 'https://api.dicebear.com/7.x/bottts/svg?seed=Robo'
+    image: 'https://api.dicebear.com/7.x/bottts/svg?seed=Robo',
   },
   {
     id: 'avatar_dragon',
@@ -17,7 +17,8 @@ export const SHOP_ITEMS = [
     category: 'avatar',
     icon: 'fire',
     color: 'from-red-500 to-orange-600',
-    image: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Dragon&clothing=graphicShirt'
+    image:
+      'https://api.dicebear.com/7.x/avataaars/svg?seed=Dragon&clothing=graphicShirt',
   },
   {
     id: 'theme_dark_purple',
@@ -26,7 +27,7 @@ export const SHOP_ITEMS = [
     price: 1500,
     category: 'theme',
     icon: 'lightbulb',
-    color: 'from-purple-500 to-pink-600'
+    color: 'from-purple-500 to-pink-600',
   },
   {
     id: 'powerup_double_xp',
@@ -35,7 +36,7 @@ export const SHOP_ITEMS = [
     price: 300,
     category: 'powerup',
     icon: 'bolt',
-    color: 'from-yellow-400 to-orange-500'
+    color: 'from-yellow-400 to-orange-500',
   },
   {
     id: 'powerup_shield',
@@ -44,7 +45,7 @@ export const SHOP_ITEMS = [
     price: 400,
     category: 'powerup',
     icon: 'shield-alt',
-    color: 'from-green-400 to-emerald-600'
+    color: 'from-green-400 to-emerald-600',
   },
   {
     id: 'badge_vip',
@@ -53,6 +54,6 @@ export const SHOP_ITEMS = [
     price: 5000,
     category: 'badge',
     icon: 'crown',
-    color: 'from-yellow-300 to-yellow-600'
-  }
+    color: 'from-yellow-300 to-yellow-600',
+  },
 ];

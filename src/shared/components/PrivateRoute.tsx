@@ -5,7 +5,9 @@ import { useEffect } from 'react';
 export const PrivateRoute = ({ children }) => {
   const { isAuthenticated, loading } = useAuth();
   const router = useRouter();
-  useEffect(() => { if (!loading && !isAuthenticated) router.replace('/login'); }, [loading, isAuthenticated, router]);
+  useEffect(() => {
+    if (!loading && !isAuthenticated) router.replace('/login');
+  }, [loading, isAuthenticated, router]);
   if (loading || !isAuthenticated) return null;
   return children;
 };

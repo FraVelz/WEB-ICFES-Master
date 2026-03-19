@@ -24,5 +24,10 @@ export const OnboardingPage = () => {
     }, 1000);
   };
 
-  return <OnboardingQuiz onComplete={handleQuizComplete} avatarConfig={avatarConfig} />;
+  return (
+    <OnboardingQuiz
+      onComplete={handleQuizComplete}
+      avatarConfig={avatarConfig}
+    />
+  );
 };

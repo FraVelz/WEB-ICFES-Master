@@ -5,7 +5,7 @@ export const COLLABORATION_BADGES = {
     icon: 'play',
     description: 'Invita a un amigo a estudiar',
     requirement: 'Refiere a 1 persona exitosamente',
-    category: 'colaboracion'
+    category: 'colaboracion',
   },
   SQUAD_LEADER: {
     id: 'SQUAD_LEADER',
@@ -13,7 +13,7 @@ export const COLLABORATION_BADGES = {
     icon: 'play',
     description: 'Forma un grupo de 5 estudiantes',
     requirement: 'Refiere a 5 personas exitosamente',
-    category: 'colaboracion'
+    category: 'colaboracion',
   },
   SOCIAL_BUTTERFLY: {
     id: 'SOCIAL_BUTTERFLY',
@@ -21,7 +21,7 @@ export const COLLABORATION_BADGES = {
     icon: 'play',
     description: 'Comparte tu progreso 10 veces',
     requirement: 'Comparte tus logros 10 veces',
-    category: 'colaboracion'
+    category: 'colaboracion',
   },
   COMMUNITY_HERO: {
     id: 'COMMUNITY_HERO',
@@ -29,7 +29,7 @@ export const COLLABORATION_BADGES = {
     icon: 'play',
     description: 'Ayuda a 10 estudiantes con preguntas',
     requirement: 'Responde correctamente 10 preguntas de otros',
-    category: 'colaboracion'
+    category: 'colaboracion',
   },
   NETWORK_MASTER: {
     id: 'NETWORK_MASTER',
@@ -37,6 +37,6 @@ export const COLLABORATION_BADGES = {
     icon: 'play',
     description: 'Conecta con 50 estudiantes',
     requirement: 'Agrega 50 amigos en la plataforma',
-    category: 'colaboracion'
-  }
+    category: 'colaboracion',
+  },
 };

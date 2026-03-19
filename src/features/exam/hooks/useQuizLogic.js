@@ -9,17 +9,20 @@ export const useQuizLogic = (questions = []) => {
   const currentQuestion = questions[currentQuestionIndex];
   const answered = answers[currentQuestion?.id] !== undefined;
 
-  const handleAnswer = useCallback((selectedAnswer) => {
-    setAnswers(prev => ({
-      ...prev,
-      [currentQuestion.id]: selectedAnswer
-    }));
-    setShowExplanation(true);
-  }, [currentQuestion]);
+  const handleAnswer = useCallback(
+    (selectedAnswer) => {
+      setAnswers((prev) => ({
+        ...prev,
+        [currentQuestion.id]: selectedAnswer,
+      }));
+      setShowExplanation(true);
+    },
+    [currentQuestion]
+  );
 
   const handleNextQuestion = useCallback(() => {
     if (currentQuestionIndex < questions.length - 1) {
-      setCurrentQuestionIndex(prev => prev + 1);
+      setCurrentQuestionIndex((prev) => prev + 1);
       setShowExplanation(false);
     } else {
       setIsFinished(true);
@@ -28,16 +31,16 @@ export const useQuizLogic = (questions = []) => {
 
   const handlePreviousQuestion = useCallback(() => {
     if (currentQuestionIndex > 0) {
-      setCurrentQuestionIndex(prev => prev - 1);
+      setCurrentQuestionIndex((prev) => prev - 1);
       setShowExplanation(true);
     }
   }, [currentQuestionIndex]);
 
   const getResults = useCallback(() => {
-    return questions.map(question => ({
+    return questions.map((question) => ({
       question,
       correct: answers[question.id] === question.correctAnswer,
-      userAnswer: answers[question.id]
+      userAnswer: answers[question.id],
     }));
   }, [questions, answers]);
 
@@ -61,6 +64,6 @@ export const useQuizLogic = (questions = []) => {
       setAnswers({});
       setShowExplanation(false);
       setIsFinished(false);
-    }
+    },
   };
 };

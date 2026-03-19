@@ -12,7 +12,10 @@ interface UseGSAPModalEntranceOptions {
   duration?: number;
 }
 
-const PRESETS: Record<ModalEntranceType, { from: gsap.TweenVars; to: gsap.TweenVars }> = {
+const PRESETS: Record<
+  ModalEntranceType,
+  { from: gsap.TweenVars; to: gsap.TweenVars }
+> = {
   fade: {
     from: { opacity: 0 },
     to: { opacity: 1, duration: 0.2 },
@@ -31,9 +34,11 @@ const PRESETS: Record<ModalEntranceType, { from: gsap.TweenVars; to: gsap.TweenV
   },
 };
 
-export const useGSAPModalEntrance = (
-  { isOpen, type = 'fade', duration }: UseGSAPModalEntranceOptions
-) => {
+export const useGSAPModalEntrance = ({
+  isOpen,
+  type = 'fade',
+  duration,
+}: UseGSAPModalEntranceOptions) => {
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {

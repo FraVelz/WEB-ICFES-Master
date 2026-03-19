@@ -1,4 +1,9 @@
-export const Progress = ({ value = 0, max = 100, className = '', showPercentage = true }) => {
+export const Progress = ({
+  value = 0,
+  max = 100,
+  className = '',
+  showPercentage = true,
+}) => {
   const percentage = (value / max) * 100;
 
   const getColor = () => {
@@ -9,18 +14,18 @@ export const Progress = ({ value = 0, max = 100, className = '', showPercentage 
 
   return (
     <div className={`w-full ${className}`}>
-      <div className="w-full bg-gray-300 dark:bg-gray-600 rounded-full h-6 overflow-hidden shadow-xl border-2 border-gray-400 dark:border-gray-500">
+      <div className="h-6 w-full overflow-hidden rounded-full border-2 border-gray-400 bg-gray-300 shadow-xl dark:border-gray-500 dark:bg-gray-600">
         <div
-          className={`h-full ${getColor()} transition-all duration-500 ease-out shadow-lg`}
+          className={`h-full ${getColor()} shadow-lg transition-all duration-500 ease-out`}
           style={{ width: `${percentage}%` }}
         />
       </div>
       {showPercentage && (
-        <div className="flex justify-between items-center mt-4">
+        <div className="mt-4 flex items-center justify-between">
           <p className="text-xl font-black text-gray-100 drop-shadow-lg">
             {value} de {max}
           </p>
-          <p className="text-3xl font-black bg-linear-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent drop-shadow-lg">
+          <p className="bg-linear-to-r from-blue-400 to-purple-400 bg-clip-text text-3xl font-black text-transparent drop-shadow-lg">
             {Math.round(percentage)}%
           </p>
         </div>

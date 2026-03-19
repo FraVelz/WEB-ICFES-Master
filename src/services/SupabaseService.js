@@ -14,7 +14,9 @@ export class SupabaseService {
    * Obtener sesión actual (para user_id)
    */
   async getSession() {
-    const { data: { session } } = await supabase.auth.getSession();
+    const {
+      data: { session },
+    } = await supabase.auth.getSession();
     return session;
   }
 
@@ -31,15 +33,15 @@ export class SupabaseService {
         .eq(column, id)
         .maybeSingle();
 
-      if (error) throw new Error(`Error leyendo ${this.tableName}: ${error.message}`);
+      if (error)
+        throw new Error(`Error leyendo ${this.tableName}: ${error.message}`);
       return data;
     }
 
-    const { data, error } = await supabase
-      .from(this.tableName)
-      .select('*');
+    const { data, error } = await supabase.from(this.tableName).select('*');
 
-    if (error) throw new Error(`Error leyendo ${this.tableName}: ${error.message}`);
+    if (error)
+      throw new Error(`Error leyendo ${this.tableName}: ${error.message}`);
     return data || [];
   }
 
@@ -53,7 +55,8 @@ export class SupabaseService {
       .eq('user_id', userId)
       .maybeSingle();
 
-    if (error) throw new Error(`Error leyendo ${this.tableName}: ${error.message}`);
+    if (error)
+      throw new Error(`Error leyendo ${this.tableName}: ${error.message}`);
     return data;
   }
 
@@ -67,7 +70,8 @@ export class SupabaseService {
       .select()
       .single();
 
-    if (error) throw new Error(`Error creando ${this.tableName}: ${error.message}`);
+    if (error)
+      throw new Error(`Error creando ${this.tableName}: ${error.message}`);
     return this._toCamelCase(inserted);
   }
 
@@ -76,7 +80,10 @@ export class SupabaseService {
    */
   async update(id, data, options = {}) {
     const { column = 'id' } = options;
-    const payload = { ...this._toSnakeCase(data), updated_at: new Date().toISOString() };
+    const payload = {
+      ...this._toSnakeCase(data),
+      updated_at: new Date().toISOString(),
+    };
 
     const { data: updated, error } = await supabase
       .from(this.tableName)
@@ -85,7 +92,8 @@ export class SupabaseService {
       .select()
       .single();
 
-    if (error) throw new Error(`Error actualizando ${this.tableName}: ${error.message}`);
+    if (error)
+      throw new Error(`Error actualizando ${this.tableName}: ${error.message}`);
     return this._toCamelCase(updated);
   }
 
@@ -99,7 +107,8 @@ export class SupabaseService {
       .delete()
       .eq(column, id);
 
-    if (error) throw new Error(`Error eliminando ${this.tableName}: ${error.message}`);
+    if (error)
+      throw new Error(`Error eliminando ${this.tableName}: ${error.message}`);
     return { success: true };
   }
 
@@ -107,7 +116,7 @@ export class SupabaseService {
     if (!obj || typeof obj !== 'object') return obj;
     const result = {};
     for (const [k, v] of Object.entries(obj)) {
-      const snake = k.replace(/[A-Z]/g, l => `_${l.toLowerCase()}`);
+      const snake = k.replace(/[A-Z]/g, (l) => `_${l.toLowerCase()}`);
       result[snake] = v;
     }
     return result;

@@ -66,11 +66,16 @@ export function LessonPageClient() {
 
   if (!Component) {
     return (
-      <div className="flex items-center justify-center min-h-[60vh] text-white">
+      <div className="flex min-h-[60vh] items-center justify-center text-white">
         <div className="text-center">
-          <h2 className="text-2xl font-bold mb-2">Lección no encontrada</h2>
-          <p className="text-slate-400">No se encontró la lección para {area}/{topic}</p>
-          <a href="/ruta-aprendizaje" className="mt-4 inline-block text-cyan-400 hover:underline">
+          <h2 className="mb-2 text-2xl font-bold">Lección no encontrada</h2>
+          <p className="text-slate-400">
+            No se encontró la lección para {area}/{topic}
+          </p>
+          <a
+            href="/ruta-aprendizaje"
+            className="mt-4 inline-block text-cyan-400 hover:underline"
+          >
             Volver a la ruta de aprendizaje
           </a>
         </div>

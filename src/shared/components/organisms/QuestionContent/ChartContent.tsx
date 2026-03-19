@@ -1,8 +1,8 @@
 /**
  * ChartContent - Componente para mostrar gráficas/gráficos en preguntas
- * 
+ *
  * Tipos soportados: "bar", "line", "pie"
- * 
+ *
  * Estructura de datos:
  * {
  *   type: "bar",
@@ -16,7 +16,7 @@
  *   ],
  *   title: "Título del gráfico"
  * }
- * 
+ *
  * Uso:
  * <ChartContent
  *   type="bar"
@@ -24,26 +24,32 @@
  *   datasets={[{ label: "Ingresos", data: [1000, 1500, 2000] }]}
  *   title="Ingresos por trimestre"
  * />
- * 
+ *
  * Nota: Esta es una versión simplificada. Para gráficas complejas
  * se recomienda instalar: npm install chart.js react-chartjs-2
  */
-export const ChartContent = ({ type = "bar", labels, datasets, title, description = "" }) => {
+export const ChartContent = ({
+  type = 'bar',
+  labels,
+  datasets,
+  title,
+  description = '',
+}) => {
   // Versión simplificada con barras ASCII/visual
   const renderSimpleBar = () => {
-    const maxValue = Math.max(...datasets.flatMap(d => d.data));
+    const maxValue = Math.max(...datasets.flatMap((d) => d.data));
     const scale = 200 / maxValue;
 
     return (
       <div className="space-y-4">
         {datasets[0].data.map((value, idx) => (
           <div key={idx} className="flex items-center gap-4">
-            <span className="text-sm font-semibold text-gray-300 w-16 text-right">
+            <span className="w-16 text-right text-sm font-semibold text-gray-300">
               {labels[idx]}
             </span>
-            <div className="flex items-center gap-2 flex-1">
+            <div className="flex flex-1 items-center gap-2">
               <div
-                className="bg-linear-to-r from-cyan-500 to-blue-500 rounded h-8"
+                className="h-8 rounded bg-linear-to-r from-cyan-500 to-blue-500"
                 style={{ width: `${value * scale}px` }}
               ></div>
               <span className="text-sm text-gray-400">{value}</span>
@@ -55,22 +61,22 @@ export const ChartContent = ({ type = "bar", labels, datasets, title, descriptio
   };
 
   return (
-    <div className="my-6 p-6 bg-linear-to-r from-slate-700/20 to-slate-800/20 rounded-lg border border-cyan-500/20">
+    <div className="my-6 rounded-lg border border-cyan-500/20 bg-linear-to-r from-slate-700/20 to-slate-800/20 p-6">
       {title && (
-        <h4 className="text-sm font-semibold text-cyan-300 mb-4 text-center">
+        <h4 className="mb-4 text-center text-sm font-semibold text-cyan-300">
           {title}
         </h4>
       )}
 
-      {type === "bar" && renderSimpleBar()}
+      {type === 'bar' && renderSimpleBar()}
 
       {description && (
-        <p className="text-xs text-gray-400 mt-4 text-center italic">
+        <p className="mt-4 text-center text-xs text-gray-400 italic">
           {description}
         </p>
       )}
 
-      <p className="text-xs text-gray-500 mt-3 text-center">
+      <p className="mt-3 text-center text-xs text-gray-500">
         💡 Para gráficas interactivas avanzadas, usa Chart.js
       </p>
     </div>

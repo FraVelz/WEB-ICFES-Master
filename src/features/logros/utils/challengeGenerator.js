@@ -7,7 +7,7 @@ const CHALLENGE_TEMPLATES = [
     area: 'matematicas',
     xpReward: 100,
     coinsReward: 20,
-    target: 3
+    target: 3,
   },
   {
     type: 'reading',
@@ -17,7 +17,7 @@ const CHALLENGE_TEMPLATES = [
     area: 'lectura-critica',
     xpReward: 80,
     coinsReward: 15,
-    target: 2
+    target: 2,
   },
   {
     type: 'science',
@@ -27,7 +27,7 @@ const CHALLENGE_TEMPLATES = [
     area: 'ciencias-naturales',
     xpReward: 120,
     coinsReward: 25,
-    target: 5
+    target: 5,
   },
   {
     type: 'social',
@@ -37,7 +37,7 @@ const CHALLENGE_TEMPLATES = [
     area: 'sociales',
     xpReward: 90,
     coinsReward: 15,
-    target: 1
+    target: 1,
   },
   {
     type: 'quick',
@@ -47,7 +47,7 @@ const CHALLENGE_TEMPLATES = [
     area: 'general',
     xpReward: 150,
     coinsReward: 30,
-    target: 10
+    target: 10,
   },
   {
     type: 'streak',
@@ -57,8 +57,8 @@ const CHALLENGE_TEMPLATES = [
     area: 'general',
     xpReward: 200,
     coinsReward: 50,
-    target: 5
-  }
+    target: 5,
+  },
 ];
 
 export const generateDailyChallenges = () => {
@@ -71,6 +71,6 @@ export const generateDailyChallenges = () => {
     ...template,
     status: 'pending', // pending, in_progress, completed
     progress: 0,
-    createdAt: new Date().toISOString()
+    createdAt: new Date().toISOString(),
   }));
 };

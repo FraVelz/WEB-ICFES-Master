@@ -15,13 +15,15 @@ export const useLearningPath = (areaId) => {
   useEffect(() => {
     const fetchPath = async () => {
       if (!areaId) return;
-      
+
       setLoading(true);
       try {
         // 1. Obtener lecciones y progreso en paralelo
         const [lessons, progress] = await Promise.all([
           LearningService.getLearningPath(areaId),
-          user ? LearningService.getUserProgress(user.uid, areaId) : Promise.resolve(null)
+          user
+            ? LearningService.getUserProgress(user.uid, areaId)
+            : Promise.resolve(null),
         ]);
 
         // 2. Agrupar lecciones por dificultad para mantener el diseño de "Secciones"
@@ -30,40 +32,42 @@ export const useLearningPath = (areaId) => {
             id: 'facil',
             title: 'Nivel Básico – Fundamentos',
             description: 'Domina los conceptos esenciales',
-            nodes: []
+            nodes: [],
           },
           {
             id: 'intermedio',
             title: 'Nivel Intermedio – Práctica',
             description: 'Aplica lo aprendido en preguntas tipo ICFES',
-            nodes: []
+            nodes: [],
           },
           {
             id: 'dificil',
             title: 'Nivel Avanzado – Maestría',
             description: 'Retos complejos para expertos',
-            nodes: []
-          }
+            nodes: [],
+          },
         ];
 
         // 3. Distribuir lecciones en las secciones
-        lessons.forEach(lesson => {
+        lessons.forEach((lesson) => {
           // Normalizar dificultad a minúsculas por si acaso
           const difficulty = lesson.difficulty?.toLowerCase() || 'facil';
-          const sectionIndex = groupedSections.findIndex(s => s.id === difficulty);
-          
+          const sectionIndex = groupedSections.findIndex(
+            (s) => s.id === difficulty
+          );
+
           if (sectionIndex !== -1) {
             // Calcular estado basado en progreso
             let status = 'locked';
             const isCompleted = progress?.completedLessons?.includes(lesson.id);
-            
+
             if (isCompleted) {
               status = 'completed';
             } else {
               // Lógica simple: si no está completada, verificar si es la primera disponible
               // Por defecto dejamos 'available' para que el usuario pueda verlas
               // En una implementación estricta, verificaríamos si la anterior está completada
-              status = 'available'; 
+              status = 'available';
             }
 
             // Aplanar recompensas para que el UI las entienda
@@ -75,14 +79,16 @@ export const useLearningPath = (areaId) => {
               xp,
               coins,
               type: 'lesson', // Asegurar que el UI sepa que es lección
-              status
+              status,
             });
           }
         });
 
         // Filtrar secciones vacías
-        const activeSections = groupedSections.filter(s => s.nodes.length > 0);
-        
+        const activeSections = groupedSections.filter(
+          (s) => s.nodes.length > 0
+        );
+
         setSections(activeSections);
       } catch (err) {
         console.error(err);

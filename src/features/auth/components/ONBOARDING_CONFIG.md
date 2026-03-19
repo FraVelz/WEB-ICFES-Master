@@ -1,13 +1,13 @@
-/* GUÍA DE CONFIGURACIÓN DE AVATARES EN ONBOARDING */
+/_ GUÍA DE CONFIGURACIÓN DE AVATARES EN ONBOARDING _/
 
 // En OnboardingPage.jsx, puedes personalizar los avatares:
 
 const avatarConfig = {
-  // Avatar para la primera sección "Hola, Yo soy Zeus"
-  intro1: '/avatars/logo.webp', // Cambiar a ruta de avatar con libro
-  
-  // Avatar para la segunda sección "Responde 5 preguntas..."
-  intro2: '/avatars/logo.webp', // Cambiar a ruta de avatar saludando
+// Avatar para la primera sección "Hola, Yo soy Zeus"
+intro1: '/avatars/logo.webp', // Cambiar a ruta de avatar con libro
+
+// Avatar para la segunda sección "Responde 5 preguntas..."
+intro2: '/avatars/logo.webp', // Cambiar a ruta de avatar saludando
 };
 
 // Ejemplos de rutas de avatares que puedes usar:
@@ -15,7 +15,7 @@ const avatarConfig = {
 // - '/avatars/zeus-wave.webp' - Avatar Zeus saludando (para intro2)
 // - '/avatars/logo.webp' - Logo por defecto
 
-/* FLUJO DEL ONBOARDING */
+/_ FLUJO DEL ONBOARDING _/
 
 1. INTRODUCCIÓN 1 (Avatar + Mensaje)
    - Muestra avatar personalizados (intro1)
@@ -41,7 +41,7 @@ const avatarConfig = {
    - Botón: Ir al Registro
    - Redirecciona a SignupPage
 
-/* CARACTERÍSTICAS */
+/_ CARACTERÍSTICAS _/
 
 ✅ 2 Secciones de introducción con avatar dinámico
 ✅ Avatar personalizable para cada sección
@@ -54,15 +54,16 @@ const avatarConfig = {
 ✅ Guardado de respuestas en sessionStorage
 ✅ Redirección automática al registro
 
-/* TIPS PARA PERSONALIZAR AVATARES */
+/_ TIPS PARA PERSONALIZAR AVATARES _/
 
 Para cambiar los avatares, necesitas:
+
 1. Tener los archivos de imagen en la carpeta /public/avatars/
 2. Actualizar las rutas en OnboardingPage.jsx:
 
    const avatarConfig = {
-     intro1: '/avatars/tu-avatar-1.webp',
-     intro2: '/avatars/tu-avatar-2.webp',
+   intro1: '/avatars/tu-avatar-1.webp',
+   intro2: '/avatars/tu-avatar-2.webp',
    };
 
 3. Los avatares se mostrarán usando el componente MascotaCircle

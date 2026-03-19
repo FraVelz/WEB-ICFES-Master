@@ -4,37 +4,64 @@ import React, { useEffect, useRef } from 'react';
 import { Icon } from '@/shared/components/Icon';
 import { gsap } from '@/lib/gsap';
 
-export const ShopItemModal = ({ item, isOpen, onClose, onBuy, processing, canAfford, isPurchased }) => {
+export const ShopItemModal = ({
+  item,
+  isOpen,
+  onClose,
+  onBuy,
+  processing,
+  canAfford,
+  isPurchased,
+}) => {
   const overlayRef = useRef(null);
   const contentRef = useRef(null);
 
   useEffect(() => {
     if (!isOpen || !overlayRef.current || !contentRef.current) return;
-    gsap.fromTo(overlayRef.current, { opacity: 0 }, { opacity: 1, duration: 0.2 });
-    gsap.fromTo(contentRef.current, { opacity: 0, scale: 0.95 }, { opacity: 1, scale: 1, duration: 0.3, ease: 'power2.out' });
+    gsap.fromTo(
+      overlayRef.current,
+      { opacity: 0 },
+      { opacity: 1, duration: 0.2 }
+    );
+    gsap.fromTo(
+      contentRef.current,
+      { opacity: 0, scale: 0.95 },
+      { opacity: 1, scale: 1, duration: 0.3, ease: 'power2.out' }
+    );
   }, [isOpen]);
 
   if (!isOpen || !item) return null;
 
   return (
-    <div ref={overlayRef} className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
-      <div ref={contentRef} className="bg-slate-900 border border-slate-700 rounded-3xl max-w-md w-full overflow-hidden shadow-2xl relative">
-        
+    <div
+      ref={overlayRef}
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4 backdrop-blur-sm"
+    >
+      <div
+        ref={contentRef}
+        className="relative w-full max-w-md overflow-hidden rounded-3xl border border-slate-700 bg-slate-900 shadow-2xl"
+      >
         {/* Close Button */}
-        <button 
+        <button
           onClick={onClose}
-          className="absolute top-4 right-4 w-8 h-8 rounded-full bg-slate-800 text-slate-400 hover:bg-slate-700 hover:text-white flex items-center justify-center transition-colors z-10"
+          className="absolute top-4 right-4 z-10 flex h-8 w-8 items-center justify-center rounded-full bg-slate-800 text-slate-400 transition-colors hover:bg-slate-700 hover:text-white"
         >
           <Icon name="times" />
         </button>
 
         {/* Header Image */}
-        <div className={`h-32 bg-linear-to-br ${item.color} relative flex items-center justify-center`}>
+        <div
+          className={`h-32 bg-linear-to-br ${item.color} relative flex items-center justify-center`}
+        >
           <div className="absolute inset-0 bg-black/20"></div>
-          <div className="w-24 h-24 rounded-2xl bg-slate-900 p-1 shadow-2xl translate-y-8 relative z-10">
-            <div className="w-full h-full rounded-xl overflow-hidden flex items-center justify-center bg-slate-800">
+          <div className="relative z-10 h-24 w-24 translate-y-8 rounded-2xl bg-slate-900 p-1 shadow-2xl">
+            <div className="flex h-full w-full items-center justify-center overflow-hidden rounded-xl bg-slate-800">
               {item.image ? (
-                <img src={item.image} alt={item.name} className="w-full h-full object-cover" />
+                <img
+                  src={item.image}
+                  alt={item.name}
+                  className="h-full w-full object-cover"
+                />
               ) : (
                 <Icon name={item.icon} className="text-4xl text-white" />
               )}
@@ -43,19 +70,19 @@ export const ShopItemModal = ({ item, isOpen, onClose, onBuy, processing, canAff
         </div>
 
         {/* Content */}
-        <div className="pt-12 pb-8 px-8 text-center">
-          <h2 className="text-2xl font-bold text-white mb-2">{item.name}</h2>
-          <div className="inline-block px-3 py-1 rounded-full bg-slate-800 text-xs font-bold text-slate-400 uppercase tracking-wider mb-4">
+        <div className="px-8 pt-12 pb-8 text-center">
+          <h2 className="mb-2 text-2xl font-bold text-white">{item.name}</h2>
+          <div className="mb-4 inline-block rounded-full bg-slate-800 px-3 py-1 text-xs font-bold tracking-wider text-slate-400 uppercase">
             {item.category === 'powerup' ? 'Consumible' : 'Cosmético'}
           </div>
-          
-          <p className="text-slate-300 mb-8 leading-relaxed">
+
+          <p className="mb-8 leading-relaxed text-slate-300">
             {item.description}
           </p>
 
           {/* Action Button */}
           {isPurchased && item.category !== 'powerup' ? (
-            <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4 flex items-center justify-center gap-3 text-green-400 font-bold">
+            <div className="flex items-center justify-center gap-3 rounded-xl border border-green-500/30 bg-green-500/10 p-4 font-bold text-green-400">
               <Icon name="check-circle" className="text-xl" />
               <span>¡Ya tienes este artículo!</span>
             </div>
@@ -63,12 +90,12 @@ export const ShopItemModal = ({ item, isOpen, onClose, onBuy, processing, canAff
             <button
               onClick={() => onBuy(item)}
               disabled={!canAfford || processing}
-              className={`w-full py-4 rounded-xl font-bold text-lg flex items-center justify-center gap-3 transition-all ${
-                processing 
-                  ? 'bg-slate-700 text-slate-400 cursor-wait'
+              className={`flex w-full items-center justify-center gap-3 rounded-xl py-4 text-lg font-bold transition-all ${
+                processing
+                  ? 'cursor-wait bg-slate-700 text-slate-400'
                   : canAfford
-                    ? 'bg-linear-to-r from-yellow-500 to-orange-500 hover:from-yellow-400 hover:to-orange-400 text-black shadow-lg shadow-orange-500/20 hover:shadow-orange-500/40 transform hover:-translate-y-0.5'
-                    : 'bg-slate-800 text-slate-500 cursor-not-allowed'
+                    ? 'transform bg-linear-to-r from-yellow-500 to-orange-500 text-black shadow-lg shadow-orange-500/20 hover:-translate-y-0.5 hover:from-yellow-400 hover:to-orange-400 hover:shadow-orange-500/40'
+                    : 'cursor-not-allowed bg-slate-800 text-slate-500'
               }`}
             >
               {processing ? (
@@ -79,7 +106,7 @@ export const ShopItemModal = ({ item, isOpen, onClose, onBuy, processing, canAff
               ) : canAfford ? (
                 <>
                   <span>Comprar por</span>
-                  <span className="flex items-center gap-1 bg-black/20 px-2 py-0.5 rounded-lg">
+                  <span className="flex items-center gap-1 rounded-lg bg-black/20 px-2 py-0.5">
                     <Icon name="coins" /> {item.price}
                   </span>
                 </>
@@ -91,10 +118,11 @@ export const ShopItemModal = ({ item, isOpen, onClose, onBuy, processing, canAff
               )}
             </button>
           )}
-          
+
           {!canAfford && !isPurchased && (
-            <p className="text-red-400 text-sm mt-3 font-medium">
-              Te faltan {item.price - (canAfford ? 0 : 999999)} monedas para comprar esto.
+            <p className="mt-3 text-sm font-medium text-red-400">
+              Te faltan {item.price - (canAfford ? 0 : 999999)} monedas para
+              comprar esto.
             </p>
           )}
         </div>

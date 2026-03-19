@@ -79,7 +79,7 @@ export default function RootLayout({
         <meta name="color-scheme" content="dark" />
       </head>
 
-      <body className="m-0 p-0 box-border min-h-dvh bg-black text-white font-sans antialiased">
+      <body className="m-0 box-border min-h-dvh bg-black p-0 font-sans text-white antialiased">
         <Providers>{children}</Providers>
       </body>
     </html>

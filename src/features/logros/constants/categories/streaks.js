@@ -5,7 +5,7 @@ export const STREAK_BADGES = {
     icon: 'fire',
     description: 'Racha de 7 días consecutivos',
     requirement: 'Accede durante 7 días seguidos',
-    category: 'streak'
+    category: 'streak',
   },
   STREAK_30: {
     id: 'STREAK_30',
@@ -13,7 +13,7 @@ export const STREAK_BADGES = {
     icon: 'star',
     description: 'Racha de 30 días consecutivos',
     requirement: 'Accede durante 30 días seguidos',
-    category: 'streak'
+    category: 'streak',
   },
   STREAK_100: {
     id: 'STREAK_100',
@@ -21,7 +21,7 @@ export const STREAK_BADGES = {
     icon: 'crown',
     description: 'Racha de 100 días consecutivos',
     requirement: 'Accede durante 100 días seguidos',
-    category: 'streak'
+    category: 'streak',
   },
   STREAK_365: {
     id: 'STREAK_365',
@@ -29,6 +29,6 @@ export const STREAK_BADGES = {
     icon: 'gem',
     description: 'Racha de 365 días consecutivos',
     requirement: 'Accede durante 365 días seguidos',
-    category: 'streak'
-  }
+    category: 'streak',
+  },
 };

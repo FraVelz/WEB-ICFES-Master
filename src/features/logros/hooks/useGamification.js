@@ -21,7 +21,7 @@ const getLocalDateString = (date = new Date()) => {
 const getDefaultGamification = () => ({
   totalXP: 0,
   level: 1,
-  achievements: {}
+  achievements: {},
 });
 
 export const useGamification = (userId) => {
@@ -37,7 +37,9 @@ export const useGamification = (userId) => {
 
   const calculateStreakFromDates = (dates) => {
     if (!dates?.length) return 0;
-    const sorted = [...new Set(dates)].sort((a, b) => new Date(b) - new Date(a));
+    const sorted = [...new Set(dates)].sort(
+      (a, b) => new Date(b) - new Date(a)
+    );
     const today = getLocalDateString();
     const yesterday = getLocalDateString(new Date(Date.now() - 86400000));
     if (!sorted.includes(today) && !sorted.includes(yesterday)) return 0;
@@ -65,7 +67,7 @@ export const useGamification = (userId) => {
         setCoins((profile?.totalCoins ?? 0) - (profile?.spentCoins ?? 0));
 
         const achProgress = profile?.achievements || {};
-        const merged = ACHIEVEMENTS_DATA.map(a => {
+        const merged = ACHIEVEMENTS_DATA.map((a) => {
           const p = achProgress[a.id] || {};
           const current = p.current ?? 0;
           const unlocked = p.unlocked ?? false;
@@ -73,16 +75,22 @@ export const useGamification = (userId) => {
             ...a,
             progress: current,
             unlockedAt: p.unlockedAt || null,
-            status: unlocked ? 'completed' : (current > 0 ? 'in_progress' : 'incomplete')
+            status: unlocked
+              ? 'completed'
+              : current > 0
+                ? 'in_progress'
+                : 'incomplete',
           };
         });
         setAchievements(merged);
-        setCompletedCount(merged.filter(m => m.status === 'completed').length);
+        setCompletedCount(
+          merged.filter((m) => m.status === 'completed').length
+        );
       } else {
         const gam = JSON.parse(localStorage.getItem(GAMIFICATION_KEY) || '{}');
         const g = { ...getDefaultGamification(), ...gam };
         const achProgress = g.achievements || {};
-        const merged = ACHIEVEMENTS_DATA.map(a => {
+        const merged = ACHIEVEMENTS_DATA.map((a) => {
           const p = achProgress[a.id] || {};
           const current = p.current ?? 0;
           const unlocked = p.unlocked ?? false;
@@ -90,13 +98,19 @@ export const useGamification = (userId) => {
             ...a,
             progress: current,
             unlockedAt: p.unlockedAt || null,
-            status: unlocked ? 'completed' : (current > 0 ? 'in_progress' : 'incomplete')
+            status: unlocked
+              ? 'completed'
+              : current > 0
+                ? 'in_progress'
+                : 'incomplete',
           };
         });
         setAchievements(merged);
         setTotalXP(g.totalXP ?? 0);
         setLevel(g.level ?? 1);
-        setCompletedCount(merged.filter(m => m.status === 'completed').length);
+        setCompletedCount(
+          merged.filter((m) => m.status === 'completed').length
+        );
         setCoins(getVirtualMoney());
       }
 
@@ -104,7 +118,10 @@ export const useGamification = (userId) => {
       setStreak(streakDates);
       const cs = calculateStreakFromDates(streakDates);
       setCurrentStreak(cs);
-      const gam = API_CONFIG.MODE === 'supabase' ? {} : JSON.parse(localStorage.getItem(GAMIFICATION_KEY) || '{}');
+      const gam =
+        API_CONFIG.MODE === 'supabase'
+          ? {}
+          : JSON.parse(localStorage.getItem(GAMIFICATION_KEY) || '{}');
       setLongestStreak(Math.max(gam.longestStreak || 0, cs));
     } catch (err) {
       console.error('Error loading gamification:', err);
@@ -119,7 +136,7 @@ export const useGamification = (userId) => {
 
   const updateAchievementProgress = async (achievementId, amount = 1) => {
     if (!userId) return;
-    const ach = ACHIEVEMENTS_DATA.find(a => a.id === achievementId);
+    const ach = ACHIEVEMENTS_DATA.find((a) => a.id === achievementId);
     if (!ach) return;
 
     if (API_CONFIG.MODE === 'supabase') {
@@ -133,14 +150,23 @@ export const useGamification = (userId) => {
       achProgress[achievementId] = {
         current: newCurrent,
         unlocked,
-        unlockedAt: unlocked ? new Date().toISOString() : null
+        unlockedAt: unlocked ? new Date().toISOString() : null,
       };
 
-      let newTotalXP = (profile?.totalXP ?? 0) + (unlocked ? (ach.xpReward || 0) : 0);
+      let newTotalXP =
+        (profile?.totalXP ?? 0) + (unlocked ? ach.xpReward || 0 : 0);
       if (unlocked) {
-        await GamificationSupabaseService.addCoins(userId, ach.coinsReward || 0, 'achievement');
+        await GamificationSupabaseService.addCoins(
+          userId,
+          ach.coinsReward || 0,
+          'achievement'
+        );
       }
-      await GamificationSupabaseService.addXP(userId, unlocked ? (ach.xpReward || 0) : 0, 'achievement');
+      await GamificationSupabaseService.addXP(
+        userId,
+        unlocked ? ach.xpReward || 0 : 0,
+        'achievement'
+      );
       loadData();
       return;
     }
@@ -155,24 +181,27 @@ export const useGamification = (userId) => {
     achProgress[achievementId] = {
       current: newCurrent,
       unlocked,
-      unlockedAt: unlocked ? new Date().toISOString() : null
+      unlockedAt: unlocked ? new Date().toISOString() : null,
     };
 
     let newTotalXP = gam.totalXP || 0;
     if (unlocked) {
-      newTotalXP += (ach.xpReward || 0);
+      newTotalXP += ach.xpReward || 0;
       const { addVirtualMoney } = await import('@/shared/utils/userProfile');
       addVirtualMoney(ach.coinsReward || 0);
     }
 
     const newLevel = Math.min(5, Math.floor(newTotalXP / 2000) + 1);
-    localStorage.setItem(GAMIFICATION_KEY, JSON.stringify({
-      ...gam,
-      achievements: achProgress,
-      totalXP: newTotalXP,
-      level: newLevel,
-      longestStreak: gam.longestStreak || 0
-    }));
+    localStorage.setItem(
+      GAMIFICATION_KEY,
+      JSON.stringify({
+        ...gam,
+        achievements: achProgress,
+        totalXP: newTotalXP,
+        level: newLevel,
+        longestStreak: gam.longestStreak || 0,
+      })
+    );
 
     loadData();
   };
@@ -188,6 +217,6 @@ export const useGamification = (userId) => {
     streak,
     currentStreak,
     longestStreak,
-    refreshData: loadData
+    refreshData: loadData,
   };
 };

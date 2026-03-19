@@ -8,18 +8,18 @@ import { useAuth } from '@/context/AuthContext';
 export const PerfilNormal = () => {
   const router = useRouter();
   const { user } = useAuth();
-  const { 
+  const {
     uid,
-    photoUrl, 
-    name, 
-    personalPhrase, 
-    createdAt, 
-    level, 
-    totalXP, 
+    photoUrl,
+    name,
+    personalPhrase,
+    createdAt,
+    level,
+    totalXP,
     levelInfo,
     achievements,
     coursesProgress,
-    loading
+    loading,
   } = useUserProfile();
 
   const [copied, setCopied] = useState(false);
@@ -34,68 +34,76 @@ export const PerfilNormal = () => {
 
   if (loading) {
     return (
-      <div className="min-h-dvh bg-slate-950 flex items-center justify-center">
-        <div className="text-center space-y-4">
+      <div className="flex min-h-dvh items-center justify-center bg-slate-950">
+        <div className="space-y-4 text-center">
           <div className="animate-spin text-4xl text-cyan-400">
             <Icon name="spinner" />
           </div>
-          <p className="text-slate-300 text-lg">Cargando tu perfil...</p>
+          <p className="text-lg text-slate-300">Cargando tu perfil...</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-dvh bg-slate-950 text-white pb-24 md:pb-0">
+    <div className="min-h-dvh bg-slate-950 pb-24 text-white md:pb-0">
       {/* Background Effects */}
-      <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
-        <div className="absolute top-0 left-0 w-full h-96 bg-linear-to-b from-cyan-900/20 to-transparent"></div>
-        <div className="absolute top-1/4 right-0 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl"></div>
+      <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
+        <div className="absolute top-0 left-0 h-96 w-full bg-linear-to-b from-cyan-900/20 to-transparent"></div>
+        <div className="absolute top-1/4 right-0 h-96 w-96 rounded-full bg-purple-500/10 blur-3xl"></div>
       </div>
 
-      <div className="relative z-10 container mx-auto px-4 py-8 max-w-6xl">
-
+      <div className="relative z-10 container mx-auto max-w-6xl px-4 py-8">
         {/* Header Profile Card */}
-        <div className="bg-slate-900/80 backdrop-blur-xl border border-slate-800 rounded-3xl p-6 md:p-10 mb-8 shadow-2xl relative overflow-hidden">
-          <div className="absolute top-0 right-0 p-4 flex gap-2">
-            <button 
+        <div className="relative mb-8 overflow-hidden rounded-3xl border border-slate-800 bg-slate-900/80 p-6 shadow-2xl backdrop-blur-xl md:p-10">
+          <div className="absolute top-0 right-0 flex gap-2 p-4">
+            <button
               onClick={handleShare}
-              className="cursor-pointer bg-slate-800 hover:bg-slate-700 text-cyan-400 transition-colors p-2 rounded-lg flex items-center gap-2 text-sm font-medium"
+              className="flex cursor-pointer items-center gap-2 rounded-lg bg-slate-800 p-2 text-sm font-medium text-cyan-400 transition-colors hover:bg-slate-700"
               title="Copiar enlace público"
             >
               <Icon name={copied ? 'check' : 'share-nodes'} />
-              <span className="hidden sm:inline">{copied ? '¡Copiado!' : 'Compartir'}</span>
+              <span className="hidden sm:inline">
+                {copied ? '¡Copiado!' : 'Compartir'}
+              </span>
             </button>
-            <button 
+            <button
               onClick={() => router.push('/configuracion')}
-              className="cursor-pointer bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white transition-colors p-2 rounded-lg"
+              className="cursor-pointer rounded-lg bg-slate-800 p-2 text-slate-300 transition-colors hover:bg-slate-700 hover:text-white"
               title="Editar Perfil"
             >
               <Icon name="edit" />
             </button>
           </div>
 
-          <div className="flex flex-col md:flex-row items-center gap-8">
+          <div className="flex flex-col items-center gap-8 md:flex-row">
             {/* Avatar */}
-            <div className="relative group">
-              <div className="w-32 h-32 md:w-40 md:h-40 rounded-full border-4 border-cyan-500/30 p-1 bg-slate-950 shadow-lg shadow-cyan-500/20">
-                <img 
-                  src={photoUrl || `https://api.dicebear.com/7.x/avataaars/svg?seed=${name}`} 
+            <div className="group relative">
+              <div className="h-32 w-32 rounded-full border-4 border-cyan-500/30 bg-slate-950 p-1 shadow-lg shadow-cyan-500/20 md:h-40 md:w-40">
+                <img
+                  src={
+                    photoUrl ||
+                    `https://api.dicebear.com/7.x/avataaars/svg?seed=${name}`
+                  }
                   alt={name}
-                  className="w-full h-full rounded-full object-cover bg-slate-800"
+                  className="h-full w-full rounded-full bg-slate-800 object-cover"
                 />
               </div>
-              <div className="absolute -bottom-2 -right-2 bg-slate-900 border border-slate-700 rounded-full px-3 py-1 text-xs font-bold text-cyan-400 shadow-lg">
+              <div className="absolute -right-2 -bottom-2 rounded-full border border-slate-700 bg-slate-900 px-3 py-1 text-xs font-bold text-cyan-400 shadow-lg">
                 {levelInfo?.levelIcon} Nivel {levelInfo?.level || level}
               </div>
             </div>
 
             {/* Info */}
-            <div className="flex-1 text-center md:text-left space-y-3">
-              <h1 className="text-3xl md:text-4xl font-bold text-white">{name}</h1>
-              <p className="text-slate-400 italic text-lg">"{personalPhrase}"</p>
-              
-              <div className="flex items-center justify-center md:justify-start gap-4 text-sm text-slate-500 pt-2">
+            <div className="flex-1 space-y-3 text-center md:text-left">
+              <h1 className="text-3xl font-bold text-white md:text-4xl">
+                {name}
+              </h1>
+              <p className="text-lg text-slate-400 italic">
+                "{personalPhrase}"
+              </p>
+
+              <div className="flex items-center justify-center gap-4 pt-2 text-sm text-slate-500 md:justify-start">
                 <span className="flex items-center gap-2">
                   <Icon name="calendar-alt" />
                   Miembro desde: {createdAt}
@@ -103,40 +111,52 @@ export const PerfilNormal = () => {
               </div>
 
               {/* XP Bar */}
-              <div className="max-w-md mt-4">
-                <div className="flex justify-between items-center text-xs font-bold mb-2">
+              <div className="mt-4 max-w-md">
+                <div className="mb-2 flex items-center justify-between text-xs font-bold">
                   <div className="flex items-center gap-2">
-                    <span 
-                      className="text-cyan-400 font-bold text-base" 
+                    <span
+                      className="text-base font-bold text-cyan-400"
                       title={`XP Total: ${totalXP || 0}`}
                     >
                       {typeof totalXP === 'number' ? totalXP : 0}
                     </span>
                     <span className="text-slate-400">XP Total</span>
                   </div>
-                  {levelInfo?.xpForNextLevel != null && levelInfo?.xpForNextLevel > 0 ? (
+                  {levelInfo?.xpForNextLevel != null &&
+                  levelInfo?.xpForNextLevel > 0 ? (
                     <span className="text-slate-500">
-                      {levelInfo.xpForNextLevel} XP para Nivel {(levelInfo?.level || level) + 1}
+                      {levelInfo.xpForNextLevel} XP para Nivel{' '}
+                      {(levelInfo?.level || level) + 1}
                     </span>
                   ) : (
-                    <span className="text-yellow-400 font-semibold">Nivel Máximo</span>
+                    <span className="font-semibold text-yellow-400">
+                      Nivel Máximo
+                    </span>
                   )}
                 </div>
-                <div className="h-4 bg-slate-800 rounded-full overflow-hidden border border-slate-700 shadow-inner">
-                  <div 
-                    className={`h-full bg-linear-to-r ${levelInfo?.levelColor || 'from-cyan-500 to-blue-500'} transition-all duration-1000 shadow-lg`}
+                <div className="h-4 overflow-hidden rounded-full border border-slate-700 bg-slate-800 shadow-inner">
+                  <div
+                    className={`h-full bg-linear-to-r ${levelInfo?.levelColor || 'from-cyan-500 to-blue-500'} shadow-lg transition-all duration-1000`}
                     style={{ width: `${levelInfo?.xpProgress ?? 0}%` }}
                   />
                 </div>
-                <div className="flex justify-between items-center text-xs mt-2">
+                <div className="mt-2 flex items-center justify-between text-xs">
                   <div className="flex items-center gap-2">
-                    <span className="text-slate-300 font-semibold">Nivel {levelInfo?.level ?? level}</span>
+                    <span className="font-semibold text-slate-300">
+                      Nivel {levelInfo?.level ?? level}
+                    </span>
                     <span className="text-slate-500">•</span>
-                    <span className="text-slate-400">{levelInfo?.levelName || 'Aprendiz'}</span>
-                    {levelInfo?.levelIcon && <span className="text-lg">{levelInfo.levelIcon}</span>}
+                    <span className="text-slate-400">
+                      {levelInfo?.levelName || 'Aprendiz'}
+                    </span>
+                    {levelInfo?.levelIcon && (
+                      <span className="text-lg">{levelInfo.levelIcon}</span>
+                    )}
                   </div>
                   {levelInfo?.xpProgress != null && (
-                    <span className="text-slate-500">{Math.round(levelInfo.xpProgress ?? 0)}%</span>
+                    <span className="text-slate-500">
+                      {Math.round(levelInfo.xpProgress ?? 0)}%
+                    </span>
                   )}
                 </div>
               </div>
@@ -144,39 +164,44 @@ export const PerfilNormal = () => {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
           {/* Left Column: Stats & Courses */}
-          <div className="lg:col-span-2 space-y-8">
-            
+          <div className="space-y-8 lg:col-span-2">
             {/* Courses Progress */}
-            <div className="bg-slate-900/50 border border-slate-800 rounded-2xl p-6">
-              <h2 className="text-xl font-bold mb-6 flex items-center gap-3">
+            <div className="rounded-2xl border border-slate-800 bg-slate-900/50 p-6">
+              <h2 className="mb-6 flex items-center gap-3 text-xl font-bold">
                 <Icon name="book-open" className="text-purple-400" />
                 Mis Cursos
               </h2>
-              
+
               <div className="space-y-6">
                 {Object.entries(coursesProgress).length > 0 ? (
-                  Object.entries(coursesProgress).map(([courseId, progress]) => (
-                    <div key={courseId} className="group">
-                      <div className="flex justify-between mb-2">
-                        <span className="font-medium text-slate-200 capitalize">{courseId.replace('-', ' ')}</span>
-                        <span className="text-purple-400 font-bold">{progress}%</span>
+                  Object.entries(coursesProgress).map(
+                    ([courseId, progress]) => (
+                      <div key={courseId} className="group">
+                        <div className="mb-2 flex justify-between">
+                          <span className="font-medium text-slate-200 capitalize">
+                            {courseId.replace('-', ' ')}
+                          </span>
+                          <span className="font-bold text-purple-400">
+                            {progress}%
+                          </span>
+                        </div>
+                        <div className="h-2.5 overflow-hidden rounded-full bg-slate-800">
+                          <div
+                            className="h-full rounded-full bg-purple-500 transition-all duration-500 group-hover:bg-purple-400"
+                            style={{ width: `${progress}%` }}
+                          />
+                        </div>
                       </div>
-                      <div className="h-2.5 bg-slate-800 rounded-full overflow-hidden">
-                        <div 
-                          className="h-full bg-purple-500 rounded-full transition-all duration-500 group-hover:bg-purple-400"
-                          style={{ width: `${progress}%` }}
-                        />
-                      </div>
-                    </div>
-                  ))
+                    )
+                  )
                 ) : (
-                  <div className="text-center py-8 text-slate-500">
+                  <div className="py-8 text-center text-slate-500">
                     <p>Aún no has iniciado ningún curso.</p>
-                    <button 
+                    <button
                       onClick={() => router.push('/ruta-aprendizaje')}
-                      className="cursor-pointer mt-4 px-4 py-2 bg-purple-500/10 text-purple-400 rounded-lg hover:bg-purple-500/20 transition-colors"
+                      className="mt-4 cursor-pointer rounded-lg bg-purple-500/10 px-4 py-2 text-purple-400 transition-colors hover:bg-purple-500/20"
                     >
                       Comenzar a aprender
                     </button>
@@ -186,29 +211,42 @@ export const PerfilNormal = () => {
             </div>
 
             {/* Recent Activity / Stats */}
-            <div className="bg-slate-900/50 border border-slate-800 rounded-2xl p-6">
-              <h2 className="text-xl font-bold mb-6 flex items-center gap-3">
+            <div className="rounded-2xl border border-slate-800 bg-slate-900/50 p-6">
+              <h2 className="mb-6 flex items-center gap-3 text-xl font-bold">
                 <Icon name="chart-line" className="text-green-400" />
                 Estadísticas Rápidas
               </h2>
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-                <div className="bg-slate-800/50 p-4 rounded-xl text-center">
-                  <div className="text-2xl font-bold text-white">{achievements.filter(a => a.status === 'completed').length}</div>
-                  <div className="text-xs text-slate-400 uppercase mt-1">Logros</div>
+              <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
+                <div className="rounded-xl bg-slate-800/50 p-4 text-center">
+                  <div className="text-2xl font-bold text-white">
+                    {
+                      achievements.filter((a) => a.status === 'completed')
+                        .length
+                    }
+                  </div>
+                  <div className="mt-1 text-xs text-slate-400 uppercase">
+                    Logros
+                  </div>
                 </div>
-                <div className="bg-slate-800/50 p-4 rounded-xl text-center">
+                <div className="rounded-xl bg-slate-800/50 p-4 text-center">
                   <div className="text-2xl font-bold text-white">{level}</div>
-                  <div className="text-xs text-slate-400 uppercase mt-1">Nivel</div>
+                  <div className="mt-1 text-xs text-slate-400 uppercase">
+                    Nivel
+                  </div>
                 </div>
-                <div className="bg-slate-800/50 p-4 rounded-xl text-center">
+                <div className="rounded-xl bg-slate-800/50 p-4 text-center">
                   <div className="text-2xl font-bold text-white">
                     {typeof totalXP === 'number' ? totalXP : 0}
                   </div>
-                  <div className="text-xs text-slate-400 uppercase mt-1">XP Total</div>
+                  <div className="mt-1 text-xs text-slate-400 uppercase">
+                    XP Total
+                  </div>
                 </div>
-                <div className="bg-slate-800/50 p-4 rounded-xl text-center">
+                <div className="rounded-xl bg-slate-800/50 p-4 text-center">
                   <div className="text-2xl font-bold text-white">Top 10%</div>
-                  <div className="text-xs text-slate-400 uppercase mt-1">Ranking</div>
+                  <div className="mt-1 text-xs text-slate-400 uppercase">
+                    Ranking
+                  </div>
                 </div>
               </div>
             </div>
@@ -216,15 +254,15 @@ export const PerfilNormal = () => {
 
           {/* Right Column: Achievements */}
           <div className="lg:col-span-1">
-            <div className="bg-slate-900/50 border border-slate-800 rounded-2xl p-6 sticky top-24">
-              <div className="flex justify-between items-center mb-6">
-                <h2 className="text-xl font-bold flex items-center gap-3">
+            <div className="sticky top-24 rounded-2xl border border-slate-800 bg-slate-900/50 p-6">
+              <div className="mb-6 flex items-center justify-between">
+                <h2 className="flex items-center gap-3 text-xl font-bold">
                   <Icon name="trophy" className="text-yellow-400" />
                   Logros
                 </h2>
-                <button 
+                <button
                   onClick={() => router.push('/logros')}
-                  className="cursor-pointer text-xs text-cyan-400 hover:text-cyan-300 font-bold uppercase tracking-wider"
+                  className="cursor-pointer text-xs font-bold tracking-wider text-cyan-400 uppercase hover:text-cyan-300"
                 >
                   Ver todos
                 </button>
@@ -234,24 +272,29 @@ export const PerfilNormal = () => {
                 {achievements.slice(0, 9).map((achievement) => {
                   const isUnlocked = achievement.status === 'completed';
                   return (
-                    <div 
+                    <div
                       key={achievement.id}
-                      className={`aspect-square rounded-xl flex flex-col items-center justify-center p-2 border transition-all ${
-                        isUnlocked 
-                          ? 'bg-yellow-500/10 border-yellow-500/30 text-yellow-400' 
-                          : 'bg-slate-800/50 border-slate-700 text-slate-600 grayscale opacity-50'
+                      className={`flex aspect-square flex-col items-center justify-center rounded-xl border p-2 transition-all ${
+                        isUnlocked
+                          ? 'border-yellow-500/30 bg-yellow-500/10 text-yellow-400'
+                          : 'border-slate-700 bg-slate-800/50 text-slate-600 opacity-50 grayscale'
                       }`}
                       title={achievement.title}
                     >
-                      <Icon name={achievement.icon} className="text-2xl mb-1" />
-                      {isUnlocked && <Icon name="star" className="text-[8px] text-yellow-200 absolute top-2 right-2" />}
+                      <Icon name={achievement.icon} className="mb-1 text-2xl" />
+                      {isUnlocked && (
+                        <Icon
+                          name="star"
+                          className="absolute top-2 right-2 text-[8px] text-yellow-200"
+                        />
+                      )}
                     </div>
                   );
                 })}
               </div>
-              
+
               {achievements.length === 0 && (
-                <p className="text-center text-slate-500 text-sm py-4">
+                <p className="py-4 text-center text-sm text-slate-500">
                   Completa lecciones para desbloquear logros.
                 </p>
               )}

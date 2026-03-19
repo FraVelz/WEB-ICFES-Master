@@ -18,12 +18,13 @@ export const LearningRoadmap = ({ initialArea = 'lectura-critica' }) => {
   const [currentArea, setCurrentArea] = useState(initialArea);
   const [selectedLesson, setSelectedLesson] = useState(null);
   const [viewingLesson, setViewingLesson] = useState(null);
-  
-  const currentAreaData = AREA_INFO[currentArea] || AREA_INFO['lectura-critica'];
-  
+
+  const currentAreaData =
+    AREA_INFO[currentArea] || AREA_INFO['lectura-critica'];
+
   // Hook para obtener datos de gamificación
   const { sections, loading, error } = useLearningPath(currentArea);
-  
+
   const getColorClass = (gradient) => {
     if (gradient.includes('blue')) return 'bg-blue-500';
     if (gradient.includes('green')) return 'bg-green-500';
@@ -46,43 +47,43 @@ export const LearningRoadmap = ({ initialArea = 'lectura-critica' }) => {
   };
 
   return (
-    <div className={`bg-slate-950 flex flex-col relative ${viewingLesson ? 'h-dvh overflow-hidden' : 'min-h-dvh'}`}>
+    <div
+      className={`relative flex flex-col bg-slate-950 ${viewingLesson ? 'h-dvh overflow-hidden' : 'min-h-dvh'}`}
+    >
       {/* Header Secundario Sticky - Ahora parte del componente */}
       <div className="sticky top-0 z-50">
-        <SecondaryHeader 
-          currentArea={currentArea} 
-          onAreaChange={setCurrentArea} 
+        <SecondaryHeader
+          currentArea={currentArea}
+          onAreaChange={setCurrentArea}
         />
       </div>
 
-      <div className="flex-1 relative pb-24 pt-8 px-4">
+      <div className="relative flex-1 px-4 pt-8 pb-24">
         {/* Título del Área (Contexto) */}
-        <AnimatedOnMount className="text-center mb-8" duration={0.7} y={16}>
-          <h2 className={`text-3xl font-bold bg-clip-text text-transparent bg-linear-to-r ${currentAreaData.color}`}>
+        <AnimatedOnMount className="mb-8 text-center" duration={0.7} y={16}>
+          <h2
+            className={`bg-linear-to-r bg-clip-text text-3xl font-bold text-transparent ${currentAreaData.color}`}
+          >
             {currentAreaData.name}
           </h2>
-          <p className="text-slate-400 text-sm mt-2 font-medium tracking-wide uppercase">
+          <p className="mt-2 text-sm font-medium tracking-wide text-slate-400 uppercase">
             Ruta de Aprendizaje
           </p>
         </AnimatedOnMount>
 
         {/* Estado de Carga y Error */}
         {loading && (
-          <div className="flex justify-center items-center py-20">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-white"></div>
+          <div className="flex items-center justify-center py-20">
+            <div className="h-12 w-12 animate-spin rounded-full border-b-2 border-white"></div>
           </div>
         )}
 
-        {error && (
-          <div className="text-center text-red-400 py-10">
-            {error}
-          </div>
-        )}
+        {error && <div className="py-10 text-center text-red-400">{error}</div>}
 
         {/* Camino Visual */}
         {!loading && !error && (
-          <AreaPath 
-            areaId={currentArea} 
+          <AreaPath
+            areaId={currentArea}
             onNodeClick={handleNodeClick}
             colorClass={colorClass}
             sections={sections}
@@ -90,7 +91,7 @@ export const LearningRoadmap = ({ initialArea = 'lectura-critica' }) => {
         )}
 
         {/* Modal de Previsualización */}
-        <LessonPreview 
+        <LessonPreview
           isOpen={!!selectedLesson}
           onClose={() => setSelectedLesson(null)}
           lesson={selectedLesson}
@@ -98,7 +99,7 @@ export const LearningRoadmap = ({ initialArea = 'lectura-critica' }) => {
         />
 
         {/* Modal de Contenido de Lección */}
-        <LessonContentModal 
+        <LessonContentModal
           isOpen={!!viewingLesson}
           onClose={() => setViewingLesson(null)}
           lesson={viewingLesson}

@@ -4,7 +4,9 @@
  */
 class TestResultService {
   async saveResult(userId, resultData) {}
-  async getResults(userId) { return []; }
+  async getResults(userId) {
+    return [];
+  }
 }
 
 export default new TestResultService();

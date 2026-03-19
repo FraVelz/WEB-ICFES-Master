@@ -18,12 +18,7 @@ export const useGSAPReveal = (
   options: UseGSAPRevealOptions = {}
 ) => {
   const ref = useRef<HTMLDivElement>(null);
-  const {
-    delay = 0,
-    duration = 0.8,
-    y = 40,
-    ease = 'power2.out',
-  } = options;
+  const { delay = 0, duration = 0.8, y = 40, ease = 'power2.out' } = options;
 
   useEffect(() => {
     const el = ref.current;

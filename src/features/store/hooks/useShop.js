@@ -1,7 +1,10 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '@/context/AuthContext';
 import { SHOP_ITEMS } from '../data/shopItems';
-import { getVirtualMoney, removeVirtualMoney } from '@/shared/utils/userProfile';
+import {
+  getVirtualMoney,
+  removeVirtualMoney,
+} from '@/shared/utils/userProfile';
 
 const PURCHASES_KEY = 'icfes_shop_purchases';
 
@@ -41,9 +44,10 @@ export const useShop = () => {
     setProcessing(true);
     try {
       removeVirtualMoney(item.price);
-      const newPurchases = item.category === 'powerup'
-        ? [...purchases, `${item.id}_${Date.now()}`]
-        : [...purchases, item.id];
+      const newPurchases =
+        item.category === 'powerup'
+          ? [...purchases, `${item.id}_${Date.now()}`]
+          : [...purchases, item.id];
       localStorage.setItem(PURCHASES_KEY, JSON.stringify(newPurchases));
       setPurchases(newPurchases);
       setCoins(getVirtualMoney());
@@ -56,7 +60,8 @@ export const useShop = () => {
     }
   };
 
-  const hasItem = (itemId) => purchases.some(p => p === itemId || p.startsWith(`${itemId}_`));
+  const hasItem = (itemId) =>
+    purchases.some((p) => p === itemId || p.startsWith(`${itemId}_`));
 
   return {
     coins,
@@ -66,6 +71,6 @@ export const useShop = () => {
     processing,
     buyItem,
     shopItems: SHOP_ITEMS,
-    refreshData
+    refreshData,
   };
 };

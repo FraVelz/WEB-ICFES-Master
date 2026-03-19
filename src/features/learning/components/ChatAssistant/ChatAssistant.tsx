@@ -14,7 +14,11 @@ interface Message {
 
 export const ChatAssistant = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const chatPanelRef = useGSAPModalEntrance({ isOpen, type: 'slideUp', duration: 0.3 });
+  const chatPanelRef = useGSAPModalEntrance({
+    isOpen,
+    type: 'slideUp',
+    duration: 0.3,
+  });
   const [messages, setMessages] = useState<Message[]>([]);
   const [inputValue, setInputValue] = useState('');
   const [isTyping, setIsTyping] = useState(false);
@@ -99,7 +103,7 @@ export const ChatAssistant = () => {
       {/* Botón flotante */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full bg-linear-to-r from-cyan-500 to-blue-600 shadow-lg shadow-cyan-500/30 hover:shadow-cyan-500/50 hover:scale-110 transition-all duration-300 flex items-center justify-center text-white border-2 border-cyan-400/50"
+        className="fixed right-6 bottom-6 z-50 flex h-14 w-14 items-center justify-center rounded-full border-2 border-cyan-400/50 bg-linear-to-r from-cyan-500 to-blue-600 text-white shadow-lg shadow-cyan-500/30 transition-all duration-300 hover:scale-110 hover:shadow-cyan-500/50"
         aria-label="Abrir asistente de chat"
       >
         <Icon name="message" size="xl" />
@@ -107,11 +111,14 @@ export const ChatAssistant = () => {
 
       {/* Panel de chat */}
       {isOpen && (
-        <div ref={chatPanelRef} className="fixed bottom-24 right-6 z-50 w-[min(400px,calc(100vw-3rem))] h-[min(500px,70vh)] bg-slate-900/98 backdrop-blur-xl border border-cyan-500/30 rounded-2xl shadow-2xl shadow-cyan-500/20 flex flex-col overflow-hidden">
+        <div
+          ref={chatPanelRef}
+          className="fixed right-6 bottom-24 z-50 flex h-[min(500px,70vh)] w-[min(400px,calc(100vw-3rem))] flex-col overflow-hidden rounded-2xl border border-cyan-500/30 bg-slate-900/98 shadow-2xl shadow-cyan-500/20 backdrop-blur-xl"
+        >
           {/* Header */}
-          <div className="flex items-center justify-between px-4 py-3 bg-linear-to-r from-cyan-600/30 to-blue-600/30 border-b border-cyan-500/20">
+          <div className="flex items-center justify-between border-b border-cyan-500/20 bg-linear-to-r from-cyan-600/30 to-blue-600/30 px-4 py-3">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-full bg-linear-to-r from-cyan-500 to-blue-600 flex items-center justify-center">
+              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-linear-to-r from-cyan-500 to-blue-600">
                 <Icon name="robot" className="text-white" />
               </div>
               <div>
@@ -121,7 +128,7 @@ export const ChatAssistant = () => {
             </div>
             <button
               onClick={() => setIsOpen(false)}
-              className="p-2 rounded-lg text-slate-400 hover:text-white hover:bg-white/10 transition-colors"
+              className="rounded-lg p-2 text-slate-400 transition-colors hover:bg-white/10 hover:text-white"
               aria-label="Cerrar chat"
             >
               <Icon name="times" size="lg" />
@@ -129,14 +136,18 @@ export const ChatAssistant = () => {
           </div>
 
           {/* Área de mensajes */}
-          <div className="flex-1 overflow-y-auto p-4 space-y-4 custom-scrollbar">
+          <div className="custom-scrollbar flex-1 space-y-4 overflow-y-auto p-4">
             {messages.length === 0 && (
-              <div className="flex flex-col items-center justify-center h-full text-center px-4">
-                <div className="w-16 h-16 rounded-full bg-cyan-500/20 flex items-center justify-center mb-4">
+              <div className="flex h-full flex-col items-center justify-center px-4 text-center">
+                <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-cyan-500/20">
                   <Icon name="message" size="xl" className="text-cyan-400" />
                 </div>
-                <p className="text-slate-400 text-sm mb-2">¿Tienes preguntas sobre el ICFES?</p>
-                <p className="text-slate-500 text-xs">Escribe aquí y te ayudaré con tus dudas</p>
+                <p className="mb-2 text-sm text-slate-400">
+                  ¿Tienes preguntas sobre el ICFES?
+                </p>
+                <p className="text-xs text-slate-500">
+                  Escribe aquí y te ayudaré con tus dudas
+                </p>
               </div>
             )}
 
@@ -146,30 +157,32 @@ export const ChatAssistant = () => {
                 className={`flex gap-3 ${msg.role === 'user' ? 'flex-row-reverse' : ''}`}
               >
                 <div
-                  className={`w-8 h-8 rounded-full shrink-0 flex items-center justify-center ${
-                    msg.role === 'user'
-                      ? 'bg-blue-500/30'
-                      : 'bg-cyan-500/30'
+                  className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full ${
+                    msg.role === 'user' ? 'bg-blue-500/30' : 'bg-cyan-500/30'
                   }`}
                 >
                   <Icon
                     name={msg.role === 'user' ? 'user' : 'robot'}
-                    className={msg.role === 'user' ? 'text-blue-400' : 'text-cyan-400'}
+                    className={
+                      msg.role === 'user' ? 'text-blue-400' : 'text-cyan-400'
+                    }
                   />
                 </div>
                 <div
                   className={`max-w-[85%] rounded-2xl px-4 py-2.5 ${
                     msg.role === 'user'
-                      ? 'bg-blue-500/30 border border-blue-500/30 rounded-br-md'
-                      : 'bg-slate-800/80 border border-slate-700/50 rounded-bl-md'
+                      ? 'rounded-br-md border border-blue-500/30 bg-blue-500/30'
+                      : 'rounded-bl-md border border-slate-700/50 bg-slate-800/80'
                   }`}
                 >
                   {msg.role === 'assistant' ? (
-                    <div className="text-sm text-white leading-relaxed [&_p]:my-1 [&_ul]:my-2 [&_ol]:my-2 [&_li]:ml-4 [&_code]:bg-slate-700/50 [&_code]:px-1 [&_code]:rounded [&_strong]:font-semibold">
+                    <div className="text-sm leading-relaxed text-white [&_code]:rounded [&_code]:bg-slate-700/50 [&_code]:px-1 [&_li]:ml-4 [&_ol]:my-2 [&_p]:my-1 [&_strong]:font-semibold [&_ul]:my-2">
                       <ReactMarkdown>{msg.content}</ReactMarkdown>
                     </div>
                   ) : (
-                    <p className="text-sm text-white leading-relaxed">{msg.content}</p>
+                    <p className="text-sm leading-relaxed text-white">
+                      {msg.content}
+                    </p>
                   )}
                 </div>
               </div>
@@ -177,14 +190,23 @@ export const ChatAssistant = () => {
 
             {isTyping && (
               <div className="flex gap-3">
-                <div className="w-8 h-8 rounded-full shrink-0 bg-cyan-500/30 flex items-center justify-center">
+                <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-cyan-500/30">
                   <Icon name="robot" className="text-cyan-400" />
                 </div>
-                <div className="bg-slate-800/80 border border-slate-700/50 rounded-2xl rounded-bl-md px-4 py-3">
+                <div className="rounded-2xl rounded-bl-md border border-slate-700/50 bg-slate-800/80 px-4 py-3">
                   <div className="flex gap-1.5">
-                    <span className="w-2 h-2 rounded-full bg-cyan-400 animate-bounce" style={{ animationDelay: '0ms' }} />
-                    <span className="w-2 h-2 rounded-full bg-cyan-400 animate-bounce" style={{ animationDelay: '150ms' }} />
-                    <span className="w-2 h-2 rounded-full bg-cyan-400 animate-bounce" style={{ animationDelay: '300ms' }} />
+                    <span
+                      className="h-2 w-2 animate-bounce rounded-full bg-cyan-400"
+                      style={{ animationDelay: '0ms' }}
+                    />
+                    <span
+                      className="h-2 w-2 animate-bounce rounded-full bg-cyan-400"
+                      style={{ animationDelay: '150ms' }}
+                    />
+                    <span
+                      className="h-2 w-2 animate-bounce rounded-full bg-cyan-400"
+                      style={{ animationDelay: '300ms' }}
+                    />
                   </div>
                 </div>
               </div>
@@ -193,7 +215,7 @@ export const ChatAssistant = () => {
           </div>
 
           {/* Input */}
-          <div className="p-4 border-t border-slate-700/50 bg-slate-900/50">
+          <div className="border-t border-slate-700/50 bg-slate-900/50 p-4">
             <div className="flex gap-2">
               <input
                 ref={inputRef}
@@ -202,12 +224,12 @@ export const ChatAssistant = () => {
                 onChange={(e) => setInputValue(e.target.value)}
                 onKeyDown={handleKeyDown}
                 placeholder="Escribe tu pregunta..."
-                className="flex-1 px-4 py-3 bg-slate-800 border border-slate-600 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/30 transition-all"
+                className="flex-1 rounded-xl border border-slate-600 bg-slate-800 px-4 py-3 text-white placeholder-slate-500 transition-all focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/30 focus:outline-none"
               />
               <button
                 onClick={handleSend}
                 disabled={!inputValue.trim() || isTyping}
-                className="px-4 py-3 bg-linear-to-r from-cyan-500 to-blue-600 rounded-xl text-white hover:from-cyan-600 hover:to-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+                className="rounded-xl bg-linear-to-r from-cyan-500 to-blue-600 px-4 py-3 text-white transition-all hover:from-cyan-600 hover:to-blue-700 disabled:cursor-not-allowed disabled:opacity-50"
               >
                 <Icon name="paper-plane" />
               </button>

@@ -16,16 +16,36 @@ class UserLocalService {
     return updateUserProfile(data);
   }
 
-  async userExists(uid) { return false; }
-  async userExistsByEmail(email) { return false; }
-  async updateUsername(uid, username) { return updateUserProfile({ username }); }
-  async updateUserBio(uid, bio) { return updateUserProfile({ bio }); }
-  async updateProfileImage(uid, url) { return updateUserProfile({ profileImage: url }); }
-  async getUserPreferences(uid) { return {}; }
-  async updateUserPreferences(uid, prefs) { return {}; }
-  async addVirtualMoney(uid, amount) { return {}; }
-  async spendVirtualMoney(uid, amount) { return {}; }
-  async addBadge(uid, badgeId) { return []; }
+  async userExists(uid) {
+    return false;
+  }
+  async userExistsByEmail(email) {
+    return false;
+  }
+  async updateUsername(uid, username) {
+    return updateUserProfile({ username });
+  }
+  async updateUserBio(uid, bio) {
+    return updateUserProfile({ bio });
+  }
+  async updateProfileImage(uid, url) {
+    return updateUserProfile({ profileImage: url });
+  }
+  async getUserPreferences(uid) {
+    return {};
+  }
+  async updateUserPreferences(uid, prefs) {
+    return {};
+  }
+  async addVirtualMoney(uid, amount) {
+    return {};
+  }
+  async spendVirtualMoney(uid, amount) {
+    return {};
+  }
+  async addBadge(uid, badgeId) {
+    return [];
+  }
 }
 
 export default new UserLocalService();

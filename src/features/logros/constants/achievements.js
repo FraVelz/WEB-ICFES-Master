@@ -7,7 +7,7 @@ export const ACHIEVEMENTS_DATA = [
     icon: 'book',
     target: 5,
     xpReward: 100,
-    coinsReward: 50
+    coinsReward: 50,
   },
   {
     id: 'study_2',
@@ -17,7 +17,7 @@ export const ACHIEVEMENTS_DATA = [
     icon: 'graduation-cap',
     target: 20,
     xpReward: 500,
-    coinsReward: 200
+    coinsReward: 200,
   },
   {
     id: 'perf_1',
@@ -27,7 +27,7 @@ export const ACHIEVEMENTS_DATA = [
     icon: 'brain',
     target: 1,
     xpReward: 300,
-    coinsReward: 150
+    coinsReward: 150,
   },
   {
     id: 'const_1',
@@ -37,7 +37,7 @@ export const ACHIEVEMENTS_DATA = [
     icon: 'fire',
     target: 7,
     xpReward: 200,
-    coinsReward: 100
+    coinsReward: 100,
   },
   {
     id: 'meta_1',
@@ -47,7 +47,7 @@ export const ACHIEVEMENTS_DATA = [
     icon: 'trophy',
     target: 10,
     xpReward: 1000,
-    coinsReward: 500
+    coinsReward: 500,
   },
   {
     id: 'time_1',
@@ -57,8 +57,8 @@ export const ACHIEVEMENTS_DATA = [
     icon: 'clock',
     target: 120, // minutos
     xpReward: 150,
-    coinsReward: 75
-  }
+    coinsReward: 75,
+  },
 ];
 
 export const ACHIEVEMENT_CATEGORIES = {
@@ -66,5 +66,5 @@ export const ACHIEVEMENT_CATEGORIES = {
   estudio: { label: 'Estudio', icon: 'book' },
   rendimiento: { label: 'Rendimiento', icon: 'bolt' },
   constancia: { label: 'Constancia', icon: 'fire' },
-  metas: { label: 'Metas', icon: 'trophy' }
+  metas: { label: 'Metas', icon: 'trophy' },
 };

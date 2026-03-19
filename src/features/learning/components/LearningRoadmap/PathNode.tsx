@@ -22,16 +22,15 @@ const SHADOW_COLORS = {
   slate: 'shadow-slate-500/30',
 };
 
-export const PathNode = ({ 
+export const PathNode = ({
   status = 'incomplete', // incomplete, available, completed
-  type = 'lesson',       // lesson, checkpoint
+  type = 'lesson', // lesson, checkpoint
   title,
   description,
   icon,
   onClick,
-  colorClass = 'bg-blue-500' 
+  colorClass = 'bg-blue-500',
 }) => {
-  
   const isCheckpoint = type === 'checkpoint';
   const isAvailable = status === 'available';
   const isCompleted = status === 'completed';
@@ -47,67 +46,68 @@ export const PathNode = ({
       return {
         container: 'bg-slate-800 border-slate-700 text-slate-500',
         iconColor: 'text-slate-600',
-        lineColor: 'bg-slate-800'
+        lineColor: 'bg-slate-800',
       };
     }
     if (isCompleted) {
       return {
         container: 'bg-yellow-500 border-yellow-600 text-yellow-900',
         iconColor: 'text-yellow-900',
-        lineColor: 'bg-yellow-500'
+        lineColor: 'bg-yellow-500',
       };
     }
     // Available
     return {
       container: `${colorClass} border-white/20 text-white shadow-lg ${shadowColor}`,
       iconColor: 'text-white',
-      lineColor: colorClass
+      lineColor: colorClass,
     };
   };
 
   const styles = getStyles();
-  
+
   return (
-    <div 
+    <div
       onClick={onClick}
-      className={`
-        relative flex items-center gap-4 p-4 rounded-2xl border-2 transition-all duration-200 cursor-pointer group w-full
-        ${status === 'incomplete' ? 'border-slate-800 hover:border-slate-700 bg-slate-900/50' : ''}
-        ${isAvailable ? `${borderColor} bg-slate-900 hover:bg-slate-800` : ''}
-        ${isCompleted ? 'border-yellow-500/30 bg-slate-900/50 hover:bg-slate-900' : ''}
-      `}
+      className={`group relative flex w-full cursor-pointer items-center gap-4 rounded-2xl border-2 p-4 transition-all duration-200 ${status === 'incomplete' ? 'border-slate-800 bg-slate-900/50 hover:border-slate-700' : ''} ${isAvailable ? `${borderColor} bg-slate-900 hover:bg-slate-800` : ''} ${isCompleted ? 'border-yellow-500/30 bg-slate-900/50 hover:bg-slate-900' : ''} `}
     >
       {/* Indicador de Estado (Círculo Izquierdo) */}
-      <div className={`
-        relative shrink-0 flex items-center justify-center rounded-full border-b-4 transition-transform group-hover:scale-105
-        ${isCheckpoint ? 'w-16 h-16 text-2xl' : 'w-12 h-12 text-lg'}
-        ${styles.container}
-      `}>
-        <Icon name={isCompleted ? 'check' : (icon || 'star')} className={styles.iconColor} />
-        
+      <div
+        className={`relative flex shrink-0 items-center justify-center rounded-full border-b-4 transition-transform group-hover:scale-105 ${isCheckpoint ? 'h-16 w-16 text-2xl' : 'h-12 w-12 text-lg'} ${styles.container} `}
+      >
+        <Icon
+          name={isCompleted ? 'check' : icon || 'star'}
+          className={styles.iconColor}
+        />
+
         {/* Ping animation for available */}
         {isAvailable && (
-          <div className={`absolute inset-0 rounded-full ${colorClass} opacity-20 animate-ping`} />
+          <div
+            className={`absolute inset-0 rounded-full ${colorClass} animate-ping opacity-20`}
+          />
         )}
       </div>
 
       {/* Contenido de Texto */}
-      <div className="flex-1 min-w-0">
-        <h4 className={`font-bold text-base truncate ${isCompleted ? 'text-yellow-500' : (isAvailable ? 'text-white' : 'text-slate-500')}`}>
+      <div className="min-w-0 flex-1">
+        <h4
+          className={`truncate text-base font-bold ${isCompleted ? 'text-yellow-500' : isAvailable ? 'text-white' : 'text-slate-500'}`}
+        >
           {title}
         </h4>
-        <p className="text-xs text-slate-400 truncate">
-          {description}
-        </p>
+        <p className="truncate text-xs text-slate-400">{description}</p>
       </div>
 
       {/* Botón de Acción (Solo visible si disponible o completado) */}
       {(isAvailable || isCompleted) && (
-        <div className={`
-          w-8 h-8 rounded-full flex items-center justify-center
-          ${isAvailable ? 'bg-white text-slate-900' : 'bg-slate-800 text-yellow-500'}
-        `}>
-          <Icon name={isAvailable ? 'play' : 'check'} size="sm" className={isAvailable ? 'text-slate-900' : 'text-yellow-500'} />
+        <div
+          className={`flex h-8 w-8 items-center justify-center rounded-full ${isAvailable ? 'bg-white text-slate-900' : 'bg-slate-800 text-yellow-500'} `}
+        >
+          <Icon
+            name={isAvailable ? 'play' : 'check'}
+            size="sm"
+            className={isAvailable ? 'text-slate-900' : 'text-yellow-500'}
+          />
         </div>
       )}
     </div>
