@@ -1,6 +1,5 @@
 import React from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faStar, faCheck, faTrophy, faPlay } from '@fortawesome/free-solid-svg-icons';
+import { Icon } from '@/shared/components/Icon';
 
 // Mapeo de colores para bordes y sombras para asegurar que Tailwind los detecte
 const BORDER_COLORS = {
@@ -84,7 +83,7 @@ export const PathNode = ({
         ${isCheckpoint ? 'w-16 h-16 text-2xl' : 'w-12 h-12 text-lg'}
         ${styles.container}
       `}>
-        <FontAwesomeIcon icon={isCompleted ? faCheck : (icon || faStar)} />
+        <Icon name={isCompleted ? 'check' : (icon || 'star')} className={styles.iconColor} />
         
         {/* Ping animation for available */}
         {isAvailable && (
@@ -108,7 +107,7 @@ export const PathNode = ({
           w-8 h-8 rounded-full flex items-center justify-center
           ${isAvailable ? 'bg-white text-slate-900' : 'bg-slate-800 text-yellow-500'}
         `}>
-          <FontAwesomeIcon icon={isAvailable ? faPlay : faCheck} className="text-xs" />
+          <Icon name={isAvailable ? 'play' : 'check'} size="sm" className={isAvailable ? 'text-slate-900' : 'text-yellow-500'} />
         </div>
       )}
     </div>

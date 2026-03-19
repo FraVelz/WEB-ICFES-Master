@@ -1,5 +1,4 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlay } from '@fortawesome/free-solid-svg-icons';
+import { Icon } from '@/shared/components/Icon';
 
 /**
  * Componente que indica que el usuario está en modo demo
@@ -15,7 +14,7 @@ export const DemoTimerBanner = ({ isDemoMode = false }) => {
     >
       <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-center">
         <div className="flex items-center gap-3">
-          <FontAwesomeIcon icon={faPlay} className="text-xl text-cyan-100" />
+          <Icon name="play" className="text-xl text-cyan-100" />
           <p className="text-sm font-semibold text-cyan-100">
             Modo Demo Activo
           </p>

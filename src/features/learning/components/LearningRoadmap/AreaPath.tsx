@@ -1,19 +1,18 @@
 import React from 'react';
 import { PathNode } from './PathNode';
-import { faBook, faCalculator, faFlask, faGlobe, faLandmark, faBrain, faTrophy } from '@fortawesome/free-solid-svg-icons';
 
 // Mapeo de iconos por área
 const AREA_ICONS = {
-  'matematicas': faCalculator,
-  'lectura-critica': faBook,
-  'ciencias-naturales': faFlask,
-  'sociales-ciudadanas': faLandmark,
-  'ingles': faGlobe,
-  'examen-completo': faBrain
+  'matematicas': 'calculator',
+  'lectura-critica': 'book',
+  'ciencias-naturales': 'flask',
+  'sociales-ciudadanas': 'landmark',
+  'ingles': 'globe',
+  'examen-completo': 'brain'
 };
 
 export const AreaPath = ({ areaId, onNodeClick, colorClass, sections = [] }) => {
-  const areaIcon = AREA_ICONS[areaId] || faBook;
+  const areaIcon = AREA_ICONS[areaId] || 'book';
 
   return (
     <div className="w-full max-w-md mx-auto pb-20 px-4">
@@ -37,7 +36,7 @@ export const AreaPath = ({ areaId, onNodeClick, colorClass, sections = [] }) => 
                 
                 <PathNode
                   {...node}
-                  icon={node.type === 'checkpoint' ? faTrophy : areaIcon}
+                  icon={node.type === 'checkpoint' ? 'trophy' : areaIcon}
                   colorClass={colorClass}
                   onClick={() => onNodeClick(node)}
                 />

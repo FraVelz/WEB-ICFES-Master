@@ -1,8 +1,7 @@
 'use client';
 import { useState } from 'react';
 import Link from 'next/link';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEnvelope, faArrowLeft, faCheckCircle, faExclamationCircle } from '@fortawesome/free-solid-svg-icons';
+import { Icon } from '@/shared/components/Icon';
 import { useAuth } from '@/context/AuthContext';
 import { EMAIL_MESSAGES } from '@/config/emailMessages';
 
@@ -48,7 +47,7 @@ export const ForgotPasswordPage = () => {
           href="/login"
           className="inline-flex items-center gap-2 text-slate-400 hover:text-slate-300 transition-colors mb-8"
         >
-          <FontAwesomeIcon icon={faArrowLeft} />
+          <Icon name="arrow-left" />
           Volver al login
         </Link>
 
@@ -73,8 +72,8 @@ export const ForgotPasswordPage = () => {
                 {EMAIL_MESSAGES.forgotPasswordPage.emailLabel}
               </label>
               <div className="relative">
-                <FontAwesomeIcon
-                  icon={faEnvelope}
+                <Icon
+                  name="envelope"
                   className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"
                 />
                 <input
@@ -92,7 +91,7 @@ export const ForgotPasswordPage = () => {
             {/* Error Message */}
             {error && (
               <div className="flex items-start gap-3 p-4 bg-red-500/20 border border-red-500/50 rounded-lg">
-                <FontAwesomeIcon icon={faExclamationCircle} className="text-red-400 mt-0.5 shrink-0" />
+                <Icon name="exclamation-circle" className="text-red-400 mt-0.5 shrink-0" />
                 <p className="text-sm text-red-400">{error}</p>
               </div>
             )}
@@ -114,7 +113,7 @@ export const ForgotPasswordPage = () => {
           <div className="space-y-6">
             <div className="flex justify-center mb-6">
               <div className="w-20 h-20 rounded-full bg-green-500/20 border border-green-500/50 flex items-center justify-center">
-                <FontAwesomeIcon icon={faCheckCircle} className="text-green-400 text-4xl" />
+                <Icon name="check-circle" size="2xl" className="text-green-400 text-4xl" />
               </div>
             </div>
             

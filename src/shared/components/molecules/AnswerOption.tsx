@@ -1,5 +1,4 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCheck, faXmark } from '@fortawesome/free-solid-svg-icons';
+import { Icon } from '@/shared/components/Icon';
 import { Button } from '../atoms/Button';
 import { Card } from '../atoms/Card';
 import { Text } from '../atoms/Text';
@@ -58,7 +57,7 @@ export const AnswerOption = ({
       </div>
       {(correct || incorrect) && (
         <div className={`shrink-0 ${correct ? 'animate-bounce text-green-400' : 'text-red-400'}`}>
-          <FontAwesomeIcon icon={correct ? faCheck : faXmark} className="text-2xl" />
+          <Icon name={correct ? 'check' : 'times'} className="text-2xl" />
         </div>
       )}
     </button>

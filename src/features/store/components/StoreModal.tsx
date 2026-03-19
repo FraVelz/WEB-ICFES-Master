@@ -1,11 +1,5 @@
 import React, { useState } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { 
-  faTimes, 
-  faCoins, 
-  faShoppingBag, 
-  faSpinner
-} from '@fortawesome/free-solid-svg-icons';
+import { Icon } from '@/shared/components/Icon';
 import { useShop } from '../hooks/useShop';
 import { ShopItemCard } from './ShopItemCard';
 import { ShopItemModal } from './ShopItemModal';
@@ -41,7 +35,7 @@ export const StoreModal = ({ isOpen, onClose }) => {
           <div className="flex-1 flex items-center justify-center gap-3">
             <h2 className="text-xl lg:text-2xl font-bold text-white">Tienda</h2>
             <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-yellow-500/10 border border-yellow-500/30">
-              <FontAwesomeIcon icon={faCoins} className="text-yellow-400 text-sm lg:text-base" />
+              <Icon name="coins" size="md" className="text-yellow-400 text-sm lg:text-base" />
               <span className="text-yellow-400 font-bold text-sm lg:text-base">{coins}</span>
             </div>
           </div>
@@ -49,7 +43,7 @@ export const StoreModal = ({ isOpen, onClose }) => {
             onClick={onClose}
             className="cursor-pointer p-2 -mr-2 text-slate-400 hover:text-white transition-colors rounded-full hover:bg-slate-800"
           >
-            <FontAwesomeIcon icon={faTimes} className="text-lg lg:text-xl" />
+            <Icon name="times" size="xl" className="text-lg lg:text-xl" />
           </button>
         </div>
 
@@ -58,7 +52,7 @@ export const StoreModal = ({ isOpen, onClose }) => {
           {loading ? (
             <div className="flex items-center justify-center py-20">
               <div className="text-center space-y-4">
-                <FontAwesomeIcon icon={faSpinner} className="animate-spin text-4xl text-cyan-400" />
+                <Icon name="spinner" size="2xl" className="animate-spin text-4xl text-cyan-400" />
                 <p className="text-slate-300">Cargando tienda...</p>
               </div>
             </div>
@@ -108,7 +102,7 @@ export const StoreModal = ({ isOpen, onClose }) => {
               {/* Empty State */}
               {filteredItems.length === 0 && (
                 <div className="text-center py-20 bg-slate-900/30 rounded-3xl border border-slate-800 border-dashed">
-                  <FontAwesomeIcon icon={faShoppingBag} className="text-4xl text-slate-600 mb-4" />
+                  <Icon name="shopping-bag" size="2xl" className="text-4xl text-slate-600 mb-4" />
                   <p className="text-slate-400 text-lg">No hay artículos en esta categoría aún.</p>
                 </div>
               )}

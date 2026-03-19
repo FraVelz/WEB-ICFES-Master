@@ -1,6 +1,5 @@
 import { useState } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faGift, faTimes, faHeart } from '@fortawesome/free-solid-svg-icons';
+import { Icon } from '@/shared/components/Icon';
 
 export const QuickDonationCard = ({ isVisible = true }) => {
   const [isExpanded, setIsExpanded] = useState(false);
@@ -20,14 +19,14 @@ export const QuickDonationCard = ({ isVisible = true }) => {
         <div className="bg-linear-to-t from-slate-900 to-slate-800 rounded-t-3xl p-6 border-t border-slate-700 shadow-2xl max-w-md mx-auto md:max-w-none">
           <div className="flex items-center justify-between mb-4">
             <h3 className="text-xl font-bold text-white flex items-center gap-2">
-              <FontAwesomeIcon icon={faHeart} className="text-red-500" />
+              <Icon name="heart" className="text-red-500" />
               Apoya nuestro proyecto
             </h3>
             <button
               onClick={() => setIsExpanded(false)}
               className="text-slate-400 hover:text-white transition-colors"
             >
-              <FontAwesomeIcon icon={faTimes} size="lg" />
+              <Icon name="times" size="lg" />
             </button>
           </div>
 
@@ -56,7 +55,7 @@ export const QuickDonationCard = ({ isVisible = true }) => {
           onClick={() => setIsExpanded(true)}
           className="bg-linear-to-r from-red-500 to-pink-600 rounded-full p-4 shadow-lg hover:shadow-red-500/50 text-white font-bold flex items-center gap-2 hover:scale-110 transition-transform"
         >
-          <FontAwesomeIcon icon={faGift} size="lg" />
+          <Icon name="gift" size="lg" />
           <span className="hidden sm:inline">Donar</span>
         </button>
       )}

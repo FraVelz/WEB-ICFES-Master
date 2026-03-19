@@ -1,6 +1,5 @@
 import React from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCheckCircle, faClock, faCoins, faBolt, faArrowRight } from '@fortawesome/free-solid-svg-icons';
+import { Icon } from '@/shared/components/Icon';
 import { useRouter } from 'next/navigation';
 
 export const ChallengeCard = ({ challenge, onComplete }) => {
@@ -52,7 +51,7 @@ export const ChallengeCard = ({ challenge, onComplete }) => {
             ? 'bg-green-500/20 text-green-400' 
             : 'bg-slate-700/50 text-cyan-400'
         }`}>
-          <FontAwesomeIcon icon={challenge.icon || faBolt} />
+          <Icon name={challenge.icon || 'bolt'} />
         </div>
 
         {/* Content */}
@@ -63,7 +62,7 @@ export const ChallengeCard = ({ challenge, onComplete }) => {
             </h3>
             {isCompleted && (
               <span className="text-green-400 text-sm flex items-center gap-1">
-                <FontAwesomeIcon icon={faCheckCircle} />
+                <Icon name="check-circle" />
                 Hecho
               </span>
             )}
@@ -77,10 +76,10 @@ export const ChallengeCard = ({ challenge, onComplete }) => {
           <div className="flex items-center justify-between mt-2">
             <div className="flex gap-3 text-xs font-bold uppercase tracking-wider">
               <span className={`flex items-center gap-1 ${isCompleted ? 'text-slate-500' : 'text-yellow-400'}`}>
-                <FontAwesomeIcon icon={faBolt} /> +{challenge.xpReward} XP
+                <Icon name="bolt" /> +{challenge.xpReward} XP
               </span>
               <span className={`flex items-center gap-1 ${isCompleted ? 'text-slate-500' : 'text-amber-400'}`}>
-                <FontAwesomeIcon icon={faCoins} /> +{challenge.coinsReward}
+                <Icon name="coins" /> +{challenge.coinsReward}
               </span>
             </div>
 
@@ -89,7 +88,7 @@ export const ChallengeCard = ({ challenge, onComplete }) => {
                 onClick={handleStart}
                 className="px-4 py-1.5 bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-400 rounded-lg text-sm font-medium transition-colors flex items-center gap-2"
               >
-                Comenzar <FontAwesomeIcon icon={faArrowRight} className="text-xs" />
+                Comenzar <Icon name="arrow-right" className="text-xs" />
               </button>
             )}
           </div>

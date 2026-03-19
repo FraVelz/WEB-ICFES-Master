@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBullseye, faBolt } from '@fortawesome/free-solid-svg-icons';
+import { Icon } from '@/shared/components/Icon';
 
 // Mascota Avatar de la App
 const MASCOT_AVATARS = [
@@ -191,14 +190,14 @@ export const AppMascot = ({
  {interactive && size !== 'sm' && (
  <div className="flex gap-6 pt-4">
  <div className="flex flex-col items-center">
- <FontAwesomeIcon icon={faBolt} className="text-yellow-400 text-xl mb-1" />
+ <Icon name="bolt" className="text-yellow-400 text-xl mb-1" />
  <span className="text-xs text-slate-300">Energía</span>
  <div className="w-16 h-2 bg-slate-700 rounded-full mt-1 overflow-hidden">
  <div className="w-4/5 h-full bg-linear-to-r from-yellow-400 to-orange-400 rounded-full"></div>
  </div>
  </div>
  <div className="flex flex-col items-center">
- <FontAwesomeIcon icon={faBullseye} className="text-cyan-400 text-xl mb-1" />
+ <Icon name="bullseye" className="text-cyan-400 text-xl mb-1" />
  <span className="text-xs text-slate-300">Enfoque</span>
  <div className="w-16 h-2 bg-slate-700 rounded-full mt-1 overflow-hidden">
  <div className="w-3/5 h-full bg-linear-to-r from-cyan-400 to-blue-400 rounded-full"></div>

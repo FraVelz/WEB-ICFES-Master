@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
+import { Icon } from '@/shared/components/Icon';
 
 export const MobileSectionWrapper = ({
   children, 
@@ -51,8 +50,8 @@ export const MobileSectionWrapper = ({
         <h2 className="text-xl font-bold text-blue-400 text-left">
           {title}
         </h2>
-        <FontAwesomeIcon 
-          icon={faChevronDown}
+        <Icon 
+          name="chevron-down"
           className={`transition-transform duration-300 text-blue-400 ${
             isOpen ? 'rotate-180' : ''
           }`}

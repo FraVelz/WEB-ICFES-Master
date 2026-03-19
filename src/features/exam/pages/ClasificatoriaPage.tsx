@@ -1,16 +1,7 @@
 'use client';
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { 
-  faTrophy, 
-  faArrowUp, 
-  faArrowDown, 
-  faMinus, 
-  faInfoCircle,
-  faSpinner,
-  faCrown
-} from '@fortawesome/free-solid-svg-icons';
+import { Icon } from '@/shared/components/Icon';
 import { useAuth } from '@/context/AuthContext';
 import { useLeaderboard } from '@/features/logros/hooks/useLeaderboard';
 import { RANKS, getRankInfo } from '@/features/logros/constants/ranks';
@@ -40,7 +31,7 @@ export const ClasificatoriaPage = () => {
     if (currentRankInfo.promoteCount > 0 && position <= currentRankInfo.promoteCount) {
       return { 
         status: 'promote', 
-        icon: faArrowUp, 
+        icon: 'arrow-up', 
         color: 'text-green-400', 
         bg: 'bg-green-500/10 border-green-500/30',
         label: 'Zona de Ascenso'
@@ -51,7 +42,7 @@ export const ClasificatoriaPage = () => {
     if (currentRankInfo.demoteCount > 0 && position > (totalUsers - currentRankInfo.demoteCount)) {
       return { 
         status: 'demote', 
-        icon: faArrowDown, 
+        icon: 'arrow-down', 
         color: 'text-red-400', 
         bg: 'bg-red-500/10 border-red-500/30',
         label: 'Zona de Descenso'
@@ -60,7 +51,7 @@ export const ClasificatoriaPage = () => {
 
     return { 
       status: 'stable', 
-      icon: faMinus, 
+      icon: 'minus', 
       color: 'text-slate-400', 
       bg: 'bg-slate-800/30 border-slate-700/50',
       label: 'Zona Segura'
@@ -79,7 +70,7 @@ export const ClasificatoriaPage = () => {
         {/* Header */}
         <div className="text-center mb-8">
           <h1 className="text-4xl font-bold mb-2 flex items-center justify-center gap-3">
-            <FontAwesomeIcon icon={faTrophy} className="text-yellow-400" />
+            <Icon name="trophy" className="text-yellow-400" />
             Clasificatoria Semanal
           </h1>
           <p className="text-slate-400">
@@ -136,7 +127,7 @@ export const ClasificatoriaPage = () => {
         <div className="space-y-3">
           {loading ? (
             <div className="text-center py-12">
-              <FontAwesomeIcon icon={faSpinner} className="animate-spin text-4xl text-cyan-400 mb-4" />
+              <Icon name="spinner" className="animate-spin text-4xl text-cyan-400 mb-4" />
               <p className="text-slate-400">Cargando clasificación...</p>
             </div>
           ) : error ? (
@@ -180,7 +171,7 @@ export const ClasificatoriaPage = () => {
                     </div>
                     {index === 0 && (
                       <div className="absolute -top-2 -right-1 text-yellow-400 text-lg drop-shadow-lg">
-                        <FontAwesomeIcon icon={faCrown} />
+                        <Icon name="crown" />
                       </div>
                     )}
                   </div>
@@ -198,7 +189,7 @@ export const ClasificatoriaPage = () => {
                       )}
                     </div>
                     <div className={`text-xs flex items-center gap-1 ${style.color}`}>
-                      <FontAwesomeIcon icon={style.icon} />
+                      <Icon name={style.icon} />
                       {style.label}
                     </div>
                   </div>

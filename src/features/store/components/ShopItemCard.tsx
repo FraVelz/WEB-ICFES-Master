@@ -1,6 +1,5 @@
 import React from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCoins, faCheck, faLock } from '@fortawesome/free-solid-svg-icons';
+import { Icon } from '@/shared/components/Icon';
 
 export const ShopItemCard = ({ item, isPurchased, canAfford, onClick }) => {
   return (
@@ -21,12 +20,12 @@ export const ShopItemCard = ({ item, isPurchased, canAfford, onClick }) => {
       <div className="absolute top-3 right-3">
         {isPurchased ? (
           <span className="bg-green-500/20 text-green-400 text-xs font-bold px-2 py-1 rounded-full flex items-center gap-1 border border-green-500/30">
-            <FontAwesomeIcon icon={faCheck} />
+            <Icon name="check" />
             ADQUIRIDO
           </span>
         ) : !canAfford && (
           <span className="bg-red-500/20 text-red-400 text-xs font-bold px-2 py-1 rounded-full flex items-center gap-1 border border-red-500/30">
-            <FontAwesomeIcon icon={faLock} />
+            <Icon name="lock" />
             FALTAN MONEDAS
           </span>
         )}
@@ -39,7 +38,7 @@ export const ShopItemCard = ({ item, isPurchased, canAfford, onClick }) => {
             {item.image ? (
               <img src={item.image} alt={item.name} className="w-full h-full object-cover" />
             ) : (
-              <FontAwesomeIcon icon={item.icon} className="text-4xl text-white" />
+              <Icon name={item.icon} className="text-4xl text-white" />
             )}
           </div>
         </div>
@@ -66,7 +65,7 @@ export const ShopItemCard = ({ item, isPurchased, canAfford, onClick }) => {
             <span>En inventario</span>
           ) : (
             <>
-              <FontAwesomeIcon icon={faCoins} />
+              <Icon name="coins" />
               {item.price}
             </>
           )}

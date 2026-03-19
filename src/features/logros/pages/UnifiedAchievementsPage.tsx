@@ -2,8 +2,7 @@ import React from 'react';
 import { useAuth } from '@/context/AuthContext';
 import { useGamification } from '@/features/logros/hooks/useGamification';
 import { AchievementsList } from '../components/AchievementsList';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSpinner, faTrophy, faStar, faMedal } from '@fortawesome/free-solid-svg-icons';
+import { Icon } from '@/shared/components/Icon';
 
 export const UnifiedAchievementsPage = () => {
   const { user } = useAuth();
@@ -20,7 +19,7 @@ export const UnifiedAchievementsPage = () => {
       <div className="min-h-dvh bg-slate-950 flex items-center justify-center">
         <div className="text-center space-y-4">
           <div className="animate-spin text-4xl text-cyan-400">
-            <FontAwesomeIcon icon={faSpinner} />
+            <Icon name="spinner" />
           </div>
           <p className="text-slate-300 text-lg">Cargando logros...</p>
         </div>
@@ -36,7 +35,7 @@ export const UnifiedAchievementsPage = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div className="bg-slate-900/50 border border-slate-800 p-6 rounded-2xl flex items-center gap-4">
             <div className="w-12 h-12 rounded-full bg-yellow-500/20 flex items-center justify-center text-yellow-400 text-xl">
-              <FontAwesomeIcon icon={faTrophy} />
+              <Icon name="trophy" />
             </div>
             <div>
               <p className="text-slate-400 text-sm">Nivel Actual</p>
@@ -46,7 +45,7 @@ export const UnifiedAchievementsPage = () => {
 
           <div className="bg-slate-900/50 border border-slate-800 p-6 rounded-2xl flex items-center gap-4">
             <div className="w-12 h-12 rounded-full bg-cyan-500/20 flex items-center justify-center text-cyan-400 text-xl">
-              <FontAwesomeIcon icon={faStar} />
+              <Icon name="star" />
             </div>
             <div>
               <p className="text-slate-400 text-sm">Experiencia Total</p>
@@ -56,7 +55,7 @@ export const UnifiedAchievementsPage = () => {
 
           <div className="bg-slate-900/50 border border-slate-800 p-6 rounded-2xl flex items-center gap-4">
             <div className="w-12 h-12 rounded-full bg-purple-500/20 flex items-center justify-center text-purple-400 text-xl">
-              <FontAwesomeIcon icon={faMedal} />
+              <Icon name="medal" />
             </div>
             <div>
               <p className="text-slate-400 text-sm">Logros Completados</p>

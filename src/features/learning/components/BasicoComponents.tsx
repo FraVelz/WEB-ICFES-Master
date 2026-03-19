@@ -1,5 +1,4 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
+import { Icon } from '@/shared/components/Icon';
 import Link from 'next/link';
 
 export const TopicItem = ({ topic, idx, subject }) => (
@@ -38,14 +37,14 @@ export const SubjectButton = ({ subject, isExpanded, onClick, bgColor }) => (
     } transition-colors`}
   >
     <div className="flex items-center gap-3 text-left">
-      <FontAwesomeIcon icon={subject.icon} className={`text-xl ${subject.color}`} />
+      <Icon name={subject.icon} size="xl" className={`text-xl ${subject.color}`} />
       <div>
         <h3 className="text-lg font-semibold text-white">{subject.name}</h3>
         <p className="text-xs text-slate-400">8 horas de contenido • 500 XP</p>
       </div>
     </div>
-    <FontAwesomeIcon
-      icon={faChevronDown}
+    <Icon
+      name="chevron-down"
       className={`text-slate-400 transition-transform duration-300 ${
         isExpanded ? 'rotate-180' : ''
       }`}

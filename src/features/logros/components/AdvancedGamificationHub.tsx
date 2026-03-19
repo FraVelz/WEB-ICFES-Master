@@ -1,18 +1,6 @@
 import { useState } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Icon } from '@/shared/components/Icon';
 import { AppMascot } from '@/shared/components';
-import {
-  faTrophy,
-  faStar,
-  faFire,
-  faGem,
-  faMedal,
-  faZap,
-  faCrown,
-  faBullseye,
-  faLock,
-  faCheckCircle
-} from '@fortawesome/free-solid-svg-icons';
 
 /**
  * Sistema mejorado de gamificación con badges, niveles y recompensas
@@ -31,7 +19,7 @@ export const AdvancedGamificationHub = () => {
     {
       id: 'first-step',
       name: 'Primer Paso',
-      icon: faStar,
+      icon: 'star',
       color: 'text-yellow-400',
       bgColor: 'from-yellow-600 to-yellow-400',
       description: 'Completa tu primera pregunta',
@@ -42,7 +30,7 @@ export const AdvancedGamificationHub = () => {
     {
       id: 'fire-streak',
       name: 'Racha de Fuego',
-      icon: faFire,
+      icon: 'fire',
       color: 'text-red-400',
       bgColor: 'from-red-600 to-orange-400',
       description: 'Mantén una racha de 10 días',
@@ -53,7 +41,7 @@ export const AdvancedGamificationHub = () => {
     {
       id: 'math-master',
       name: 'Maestro de Matemáticas',
-      icon: faZap,
+      icon: 'zap',
       color: 'text-blue-400',
       bgColor: 'from-blue-600 to-cyan-400',
       description: 'Completa todos los niveles de Matemáticas',
@@ -65,7 +53,7 @@ export const AdvancedGamificationHub = () => {
     {
       id: 'perfect-score',
       name: 'Puntuación Perfecta',
-      icon: faBullseye,
+      icon: 'bullseye',
       color: 'text-green-400',
       bgColor: 'from-green-600 to-emerald-400',
       description: '100% en un examen simulado',
@@ -77,7 +65,7 @@ export const AdvancedGamificationHub = () => {
     {
       id: 'marathon',
       name: 'Maratonista',
-      icon: faZap,
+      icon: 'zap',
       color: 'text-purple-400',
       bgColor: 'from-purple-600 to-pink-400',
       description: '100 horas de estudio',
@@ -88,7 +76,7 @@ export const AdvancedGamificationHub = () => {
     {
       id: 'social-scholar',
       name: 'Erudito Social',
-      icon: faMedal,
+      icon: 'medal',
       color: 'text-orange-400',
       bgColor: 'from-orange-600 to-yellow-400',
       description: 'Completa todos los niveles de Sociales',
@@ -100,7 +88,7 @@ export const AdvancedGamificationHub = () => {
     {
       id: 'reading-guru',
       name: 'Gurú de Lectura',
-      icon: faStar,
+      icon: 'star',
       color: 'text-cyan-400',
       bgColor: 'from-cyan-600 to-blue-400',
       description: 'Completa todos los niveles de Lectura Crítica',
@@ -112,7 +100,7 @@ export const AdvancedGamificationHub = () => {
     {
       id: 'science-explorer',
       name: 'Explorador Científico',
-      icon: faZap,
+      icon: 'zap',
       color: 'text-pink-400',
       bgColor: 'from-pink-600 to-purple-400',
       description: 'Completa todos los niveles de Ciencias Naturales',
@@ -124,7 +112,7 @@ export const AdvancedGamificationHub = () => {
     {
       id: 'ultimate-500',
       name: 'La Meta ICFES 500',
-      icon: faCrown,
+      icon: 'crown',
       color: 'text-yellow-300',
       bgColor: 'from-yellow-600 to-amber-400',
       description: 'Alcanza un puntaje de 500 en un examen simulado',
@@ -241,7 +229,7 @@ export const AdvancedGamificationHub = () => {
                     {milestone.name}
                   </p>
                   {isReached && (
-                    <FontAwesomeIcon icon={faCheckCircle} className="text-green-400 text-sm mt-1" />
+                    <Icon name="check-circle" className="text-green-400 text-sm mt-1" />
                   )}
                 </div>
               );
@@ -253,9 +241,9 @@ export const AdvancedGamificationHub = () => {
       {/* Tabs */}
       <div className="flex gap-2 border-b border-slate-700">
         {[
-          { id: 'badges', label: 'Badges', icon: faTrophy },
-          { id: 'rewards', label: 'Recompensas', icon: faGem },
-          { id: 'achievements', label: 'Logros', icon: faMedal }
+          { id: 'badges', label: 'Badges', icon: 'trophy' },
+          { id: 'rewards', label: 'Recompensas', icon: 'gem' },
+          { id: 'achievements', label: 'Logros', icon: 'medal' }
         ].map(tab => (
           <button
             key={tab.id}
@@ -266,7 +254,7 @@ export const AdvancedGamificationHub = () => {
                 : 'text-slate-400 border-b-transparent hover:text-slate-300'
             }`}
           >
-            <FontAwesomeIcon icon={tab.icon} />
+            <Icon name={tab.icon} />
             {tab.label}
           </button>
         ))}
@@ -279,7 +267,7 @@ export const AdvancedGamificationHub = () => {
           {unlockedBadges.length > 0 && (
             <div>
               <h3 className="text-2xl font-bold text-white mb-6 flex items-center gap-2">
-                <FontAwesomeIcon icon={faCheckCircle} className="text-green-400" />
+                <Icon name="check-circle" className="text-green-400" />
                 Desbloqueados ({unlockedBadges.length})
               </h3>
               <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
@@ -289,7 +277,7 @@ export const AdvancedGamificationHub = () => {
                     className="group relative bg-slate-800/50 border border-slate-700 rounded-lg p-6 text-center hover:border-slate-600 transition-all duration-300 hover:shadow-lg"
                   >
                     <div className={`inline-block p-4 rounded-lg bg-linear-to-br ${badge.bgColor} mb-3 group-hover:scale-110 transition-transform duration-300`}>
-                      <FontAwesomeIcon icon={badge.icon} className="text-3xl text-white" />
+                      <Icon name={badge.icon} className="text-3xl text-white" />
                     </div>
                     <h4 className="font-bold text-white mb-1">{badge.name}</h4>
                     <p className="text-xs text-slate-400 mb-3">{badge.description}</p>
@@ -309,7 +297,7 @@ export const AdvancedGamificationHub = () => {
           {lockedBadges.length > 0 && (
             <div>
               <h3 className="text-2xl font-bold text-white mb-6 flex items-center gap-2">
-                <FontAwesomeIcon icon={faLock} className="text-slate-400" />
+                <Icon name="lock" className="text-slate-400" />
                 Por Desbloquear ({lockedBadges.length})
               </h3>
               <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
@@ -319,7 +307,7 @@ export const AdvancedGamificationHub = () => {
                     className="relative bg-slate-800/30 border border-slate-700 rounded-lg p-6 text-center opacity-60 hover:opacity-100 transition-all duration-300"
                   >
                     <div className={`inline-block p-4 rounded-lg bg-linear-to-br ${badge.bgColor} mb-3 opacity-40`}>
-                      <FontAwesomeIcon icon={badge.icon} className="text-3xl text-white" />
+                      <Icon name={badge.icon} className="text-3xl text-white" />
                     </div>
                     <h4 className="font-bold text-white mb-1">{badge.name}</h4>
                     <p className="text-xs text-slate-400 mb-3">{badge.description}</p>
@@ -351,28 +339,28 @@ export const AdvancedGamificationHub = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {[
             {
-              icon: faGem,
+              icon: 'gem',
               title: 'Gemas',
               color: 'from-pink-600 to-purple-600',
               current: 2450,
               description: 'Desbloquea contenido premium'
             },
             {
-              icon: faZap,
+              icon: 'zap',
               title: 'XP Especial',
               color: 'from-yellow-600 to-orange-600',
               current: 500,
               description: 'Puntos bonus por desafíos'
             },
             {
-              icon: faStar,
+              icon: 'star',
               title: 'Estrellas',
               color: 'from-blue-600 to-cyan-600',
               current: 28,
               description: 'Cambia por items exclusivos'
             },
             {
-              icon: faTrophy,
+              icon: 'trophy',
               title: 'Trofeos',
               color: 'from-amber-600 to-yellow-600',
               current: 12,
@@ -388,7 +376,7 @@ export const AdvancedGamificationHub = () => {
                   <h3 className="text-lg font-bold text-white mb-1">{reward.title}</h3>
                   <p className="text-sm text-slate-400">{reward.description}</p>
                 </div>
-                <FontAwesomeIcon icon={reward.icon} className="text-3xl opacity-60" />
+                <Icon name={typeof reward.icon === 'string' ? reward.icon : 'star'} className="text-3xl opacity-60" />
               </div>
               <div className="text-3xl font-bold text-white">
                 {reward.current.toLocaleString('es-CO')}
@@ -441,7 +429,7 @@ export const AdvancedGamificationHub = () => {
               <div className="flex items-start justify-between mb-2">
                 <h3 className="font-bold text-white text-lg">{achievement.title}</h3>
                 {achievement.completed && (
-                  <FontAwesomeIcon icon={faCheckCircle} className="text-green-400 text-xl" />
+                  <Icon name="check-circle" className="text-green-400 text-xl" />
                 )}
               </div>
               <p className="text-sm text-slate-400 mb-3">{achievement.description}</p>

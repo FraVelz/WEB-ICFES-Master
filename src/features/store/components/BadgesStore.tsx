@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCoins, faLock, faCheck, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { Icon } from '@/shared/components/Icon';
 import { useUser } from '@/features/user/hooks/useUser';
 import {
   getAllBadgesWithStatus,
@@ -58,7 +57,7 @@ export const BadgesStore = ({ isOpen, onClose }) => {
             onClick={onClose}
             className="text-white hover:bg-white/20 p-2 rounded-full transition-colors"
           >
-            <FontAwesomeIcon icon={faTimes} className="text-2xl" />
+            <Icon name="times" className="text-2xl" />
           </button>
         </div>
 
@@ -67,7 +66,7 @@ export const BadgesStore = ({ isOpen, onClose }) => {
           <div className="flex flex-col md:flex-row gap-8">
             {/* Money Display */}
             <div className="flex items-center gap-4 bg-linear-to-r from-yellow-500/20 to-orange-500/20 border border-yellow-500/30 rounded-xl p-4 flex-1">
-              <FontAwesomeIcon icon={faCoins} className="text-yellow-400 text-3xl" />
+              <Icon name="coins" className="text-yellow-400 text-3xl" />
               <div>
                 <p className="text-gray-400 text-sm">Tu Dinero Virtual</p>
                 <p className="text-white font-bold text-2xl">{virtualMoney}</p>
@@ -114,20 +113,22 @@ export const BadgesStore = ({ isOpen, onClose }) => {
               {/* Lock Icon for Locked Badges */}
               {badge.locked && (
                 <div className="absolute top-2 right-2 bg-red-600 rounded-full p-2">
-                  <FontAwesomeIcon icon={faLock} className="text-white text-lg" />
+                  <Icon name="lock" className="text-white text-lg" />
                 </div>
               )}
 
               {/* Purchased Badge */}
               {badge.purchased && (
                 <div className="absolute top-2 right-2 bg-green-600 rounded-full px-3 py-1 text-white text-xs font-bold flex items-center gap-1">
-                  <FontAwesomeIcon icon={faCheck} className="text-xs" />
+                  <Icon name="check" size="sm" className="text-xs" />
                   COMPRADA
                 </div>
               )}
 
               {/* Badge Icon */}
-              <div className="text-5xl mb-4 text-center">{badge.icon}</div>
+              <div className="text-5xl mb-4 text-center flex justify-center">
+                {typeof badge.icon === 'string' ? <Icon name={badge.icon} size="2xl" /> : badge.icon}
+              </div>
 
               {/* Badge Info */}
               <h3 className={`font-bold text-lg mb-2 ${badge.purchased ? 'text-white' : 'text-white'}`}>
@@ -151,7 +152,7 @@ export const BadgesStore = ({ isOpen, onClose }) => {
                   onClick={() => handlePurchase(badge)}
                   className="w-full bg-linear-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-bold py-3 rounded-lg transition-all duration-300 flex items-center justify-center gap-2"
                 >
-                  <FontAwesomeIcon icon={faCoins} />
+                  <Icon name="coins" />
                   <span>{badge.price}</span>
                 </button>
               ) : (

@@ -1,15 +1,8 @@
-import { 
-  faBook, 
-  faSquareRootVariable, 
-  faFlask, 
-  faGlobe 
-} from "@fortawesome/free-solid-svg-icons";
-
 export const AREAS = [
   {
     id: "lectura-critica",
     name: "Lectura Crítica",
-    icon: faBook,
+    icon: 'book',
     color: "text-blue-400",
     bgColor: "bg-blue-600",
     gradient: "from-blue-600 to-blue-400",
@@ -20,7 +13,7 @@ export const AREAS = [
   {
     id: "matematicas",
     name: "Matemáticas",
-    icon: faSquareRootVariable,
+    icon: 'square-root-variable',
     color: "text-green-400",
     bgColor: "bg-green-600",
     gradient: "from-green-600 to-green-400",
@@ -31,7 +24,7 @@ export const AREAS = [
   {
     id: "ciencias-naturales",
     name: "Ciencias Naturales",
-    icon: faFlask,
+    icon: 'flask',
     color: "text-purple-400",
     bgColor: "bg-purple-600",
     gradient: "from-purple-600 to-purple-400",
@@ -42,7 +35,7 @@ export const AREAS = [
   {
     id: "sociales-ciudadanas",
     name: "Sociales y Ciudadanas",
-    icon: faGlobe,
+    icon: 'globe',
     color: "text-orange-400",
     bgColor: "bg-orange-600",
     gradient: "from-orange-600 to-orange-400",
@@ -53,7 +46,7 @@ export const AREAS = [
   {
     id: "ingles",
     name: "Inglés",
-    icon: faBook,
+    icon: 'book',
     color: "text-pink-400",
     bgColor: "bg-pink-600",
     gradient: "from-pink-600 to-pink-400",

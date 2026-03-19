@@ -1,10 +1,8 @@
-import { faRocket, faFlask, faZap, faMedal, faGem, faCrown, faTrophy, faStar, faCalendarDays, faHandshake, faGraduationCap } from '@fortawesome/free-solid-svg-icons';
-
 export const PLAN_BADGES = {
   FREE_PLAN_USER: {
     id: 'FREE_PLAN_USER',
     name: 'Usuario Gratuito',
-    icon: faRocket,
+    icon: 'rocket',
     description: 'Acceso al plan gratuito',
     requirement: 'Registrarse con plan gratuito',
     category: 'planes'
@@ -12,7 +10,7 @@ export const PLAN_BADGES = {
   FREE_PLAN_ACTIVE: {
     id: 'FREE_PLAN_ACTIVE',
     name: 'Explorador',
-    icon: faFlask,
+    icon: 'flask',
     description: 'Mantén 30 días de actividad en plan gratuito',
     requirement: 'Accede durante 30 días en plan gratuito',
     category: 'planes'
@@ -28,7 +26,7 @@ export const PLAN_BADGES = {
   PRO_PLAN_POWER: {
     id: 'PRO_PLAN_POWER',
     name: 'Poder Pro',
-    icon: faZap,
+    icon: 'zap',
     description: 'Usa todas las funciones Pro durante 30 días',
     requirement: 'Accede durante 30 días en plan Pro',
     category: 'planes'
@@ -36,7 +34,7 @@ export const PLAN_BADGES = {
   PRO_MILESTONES: {
     id: 'PRO_MILESTONES',
     name: 'Pro Avanzado',
-    icon: faMedal,
+    icon: 'medal',
     description: 'Completa 25 exámenes con plan Pro',
     requirement: 'Realiza 25 exámenes en plan Pro',
     category: 'planes'
@@ -44,7 +42,7 @@ export const PLAN_BADGES = {
   PREMIUM_PLAN_USER: {
     id: 'PREMIUM_PLAN_USER',
     name: 'Usuario Premium',
-    icon: faGem,
+    icon: 'gem',
     description: 'Acceso al plan Premium',
     requirement: 'Actualizar a plan Premium',
     category: 'planes'
@@ -52,7 +50,7 @@ export const PLAN_BADGES = {
   PREMIUM_ELITE: {
     id: 'PREMIUM_ELITE',
     name: 'Élite Premium',
-    icon: faCrown,
+    icon: 'crown',
     description: 'Mantén plan Premium durante 60 días',
     requirement: 'Accede durante 60 días en plan Premium',
     category: 'planes'
@@ -60,7 +58,7 @@ export const PLAN_BADGES = {
   PREMIUM_MASTERY: {
     id: 'PREMIUM_MASTERY',
     name: 'Maestría Premium',
-    icon: faTrophy,
+    icon: 'trophy',
     description: 'Completa 75 exámenes con plan Premium',
     requirement: 'Realiza 75 exámenes en plan Premium',
     category: 'planes'
@@ -68,7 +66,7 @@ export const PLAN_BADGES = {
   PREMIUM_HUNDRED: {
     id: 'PREMIUM_HUNDRED',
     name: 'Centinela Premium',
-    icon: faStar,
+    icon: 'star',
     description: 'Completa 100 exámenes con plan Premium',
     requirement: 'Realiza 100 exámenes en plan Premium',
     category: 'planes'
@@ -76,7 +74,7 @@ export const PLAN_BADGES = {
   ANNUAL_SUBSCRIBER: {
     id: 'ANNUAL_SUBSCRIBER',
     name: 'Suscriptor Anual',
-    icon: faCalendarDays,
+    icon: 'calendar-alt',
     description: 'Suscripción anual activada',
     requirement: 'Adquirir suscripción de 1 año',
     category: 'planes'
@@ -84,7 +82,7 @@ export const PLAN_BADGES = {
   ANNUAL_COMMITMENT: {
     id: 'ANNUAL_COMMITMENT',
     name: 'Compromiso Anual',
-    icon: faHandshake,
+    icon: 'handshake',
     description: 'Mantén suscripción anual activa',
     requirement: 'Acceder durante 90 días consecutivos en plan anual',
     category: 'planes'
@@ -92,7 +90,7 @@ export const PLAN_BADGES = {
   ANNUAL_LEGEND: {
     id: 'ANNUAL_LEGEND',
     name: 'Leyenda Anual',
-    icon: faStar,
+    icon: 'star',
     description: 'Usuario anual premium con 200+ exámenes',
     requirement: 'Completa 200 exámenes en plan anual',
     category: 'planes'
@@ -100,7 +98,7 @@ export const PLAN_BADGES = {
   LIFETIME_LEARNER: {
     id: 'LIFETIME_LEARNER',
     name: 'Aprendiz de Vida',
-    icon: faGraduationCap,
+    icon: 'graduation-cap',
     description: 'Completó los primeros 365 días de suscripción anual',
     requirement: 'Mantén plan anual durante 365 días',
     category: 'planes'

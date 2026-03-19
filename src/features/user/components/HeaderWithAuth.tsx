@@ -1,20 +1,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { useRouter, usePathname } from 'next/navigation';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { 
-  faHome, 
-  faBook, 
-  faBarChart, 
-  faCircleUser, 
-  faBars, 
-  faTimes, 
-  faCoins, 
-  faSignOut,
-  faUser,
-  faCog,
-  faChevronDown
-} from '@fortawesome/free-solid-svg-icons';
+import { Icon } from '@/shared/components/Icon';
 import { useUser } from '@/features/user/hooks/useUser';
 import { useAuth } from '@/context/AuthContext';
 
@@ -27,9 +14,9 @@ export const HeaderWithAuth = () => {
   const [profileMenuOpen, setProfileMenuOpen] = useState(false);
 
   const mainOptions = [
-    { path: '/', label: 'Inicio', icon: faHome },
-    { path: '/aprendizaje', label: 'Aprendizaje', icon: faBook },
-    { path: '/progreso', label: 'Progreso', icon: faBarChart }
+    { path: '/', label: 'Inicio', icon: 'home' },
+    { path: '/aprendizaje', label: 'Aprendizaje', icon: 'book' },
+    { path: '/progreso', label: 'Progreso', icon: 'bar-chart' }
   ];
 
   const handleLogout = async () => {
@@ -69,7 +56,7 @@ export const HeaderWithAuth = () => {
                       : 'text-slate-300 border-b-transparent hover:text-white hover:border-b-cyan-400/50'
                   }`}
                 >
-                  <FontAwesomeIcon icon={option.icon} className="text-sm" />
+                  <Icon name={option.icon} size="sm" className="text-sm" />
                   <span>{option.label}</span>
                 </Link>
               ))}
@@ -80,7 +67,7 @@ export const HeaderWithAuth = () => {
               {/* Virtual Money - Desktop Only */}
               {user && (
                 <div className="hidden md:flex items-center gap-2 bg-yellow-500/10 px-4 py-2 rounded-lg border border-yellow-500/30">
-                  <FontAwesomeIcon icon={faCoins} className="text-yellow-400" />
+                  <Icon name="coins" className="text-yellow-400" />
                   <span className="font-bold text-yellow-400">{virtualMoney || 0}</span>
                 </div>
               )}
@@ -91,8 +78,9 @@ export const HeaderWithAuth = () => {
                   onClick={() => setProfileMenuOpen(!profileMenuOpen)}
                   className="flex items-center gap-2 px-4 py-2 rounded-lg hover:bg-slate-800/50 transition-colors"
                 >
-                  <FontAwesomeIcon 
-                    icon={faCircleUser} 
+                  <Icon 
+                    name="circle-user" 
+                    size="2xl"
                     className="text-2xl text-cyan-400" 
                   />
                   {authUser && (
@@ -105,8 +93,9 @@ export const HeaderWithAuth = () => {
                           <p className="text-xs text-slate-400">Rango: {rank}</p>
                         )}
                       </div>
-                      <FontAwesomeIcon 
-                        icon={faChevronDown} 
+                      <Icon 
+                        name="chevron-down" 
+                        size="sm"
                         className={`text-xs transition-transform ${profileMenuOpen ? 'rotate-180' : ''}`}
                       />
                     </>
@@ -133,7 +122,7 @@ export const HeaderWithAuth = () => {
                         onClick={() => setProfileMenuOpen(false)}
                         className="flex items-center gap-3 px-4 py-2 text-slate-300 hover:text-white hover:bg-slate-800/50 transition-colors"
                       >
-                        <FontAwesomeIcon icon={faUser} />
+                        <Icon name="user" />
                         <span>Mi Perfil</span>
                       </Link>
                       <Link
@@ -141,7 +130,7 @@ export const HeaderWithAuth = () => {
                         onClick={() => setProfileMenuOpen(false)}
                         className="flex items-center gap-3 px-4 py-2 text-slate-300 hover:text-white hover:bg-slate-800/50 transition-colors"
                       >
-                        <FontAwesomeIcon icon={faCog} />
+                        <Icon name="cog" />
                         <span>Configuración</span>
                       </Link>
                     </div>
@@ -152,7 +141,7 @@ export const HeaderWithAuth = () => {
                         onClick={handleLogout}
                         className="w-full flex items-center gap-3 px-4 py-2 text-red-400 hover:text-red-300 hover:bg-red-500/10 transition-colors font-semibold"
                       >
-                        <FontAwesomeIcon icon={faSignOut} />
+                        <Icon name="sign-out" />
                         <span>Cerrar Sesión</span>
                       </button>
                     </div>
@@ -165,8 +154,9 @@ export const HeaderWithAuth = () => {
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
                 className="md:hidden flex items-center justify-center w-10 h-10 rounded-lg hover:bg-slate-800 transition-colors"
               >
-                <FontAwesomeIcon 
-                  icon={mobileMenuOpen ? faTimes : faBars} 
+                <Icon 
+                  name={mobileMenuOpen ? 'times' : 'bars'} 
+                  size="xl"
                   className="text-xl text-cyan-400" 
                 />
               </button>
@@ -190,14 +180,14 @@ export const HeaderWithAuth = () => {
                     : 'text-slate-300 hover:text-white hover:bg-slate-800/50'
                 }`}
               >
-                <FontAwesomeIcon icon={option.icon} />
+                <Icon name={option.icon} />
                 <span>{option.label}</span>
               </Link>
             ))}
             
             {user && (
               <div className="flex items-center gap-2 px-4 py-3 bg-yellow-500/10 rounded-lg border border-yellow-500/30 my-2">
-                <FontAwesomeIcon icon={faCoins} className="text-yellow-400" />
+                <Icon name="coins" className="text-yellow-400" />
                 <span className="font-bold text-yellow-400">{virtualMoney || 0}</span>
               </div>
             )}

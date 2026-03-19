@@ -2,8 +2,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEnvelope, faLock, faRocket, faEye, faEyeSlash, faExclamationCircle, faXmark, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { Icon } from '@/shared/components/Icon';
 import { useAuth } from '@/context/AuthContext';
 import { GoogleSignInButton } from '@/shared/components/atoms/GoogleSignInButton';
 
@@ -62,7 +61,7 @@ export const LoginPage = () => {
             href="/"
             className="text-slate-400 hover:text-slate-300 transition-colors"
           >
-            <FontAwesomeIcon icon={faXmark} className="text-2xl" />
+            <Icon name="times" className="text-2xl" />
           </Link>
           <h2 className="text-lg font-semibold">Ingresa tus datos</h2>
           <div className="w-6"></div>
@@ -76,7 +75,7 @@ export const LoginPage = () => {
           {/* Header */}
           <div className="text-center mb-8">
           <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-linear-to-r from-cyan-500 to-blue-600 mb-4">
-            <FontAwesomeIcon icon={faRocket} className="text-2xl" />
+            <Icon name="rocket" className="text-2xl" />
           </div>
           <h1 className="text-3xl md:text-4xl font-black mb-2 bg-linear-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-transparent">
             ICFES Master
@@ -92,8 +91,8 @@ export const LoginPage = () => {
               Email
             </label>
             <div className="relative">
-              <FontAwesomeIcon
-                icon={faEnvelope}
+              <Icon
+                name="envelope"
                 className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"
               />
               <input
@@ -114,8 +113,8 @@ export const LoginPage = () => {
               Contraseña
             </label>
             <div className="relative">
-              <FontAwesomeIcon
-                icon={faLock}
+              <Icon
+                name="lock"
                 className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"
               />
               <input
@@ -132,7 +131,7 @@ export const LoginPage = () => {
                 onClick={() => setShowPassword(!showPassword)}
                 className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-300"
               >
-                <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
+                <Icon name={showPassword ? 'eye-slash' : 'eye'} />
               </button>
             </div>
           </div>
@@ -140,7 +139,7 @@ export const LoginPage = () => {
           {/* Error Message */}
           {error && (
             <div className="flex items-start gap-3 p-4 bg-red-500/20 border border-red-500/50 rounded-lg">
-              <FontAwesomeIcon icon={faExclamationCircle} className="text-red-400 mt-0.5 shrink-0" />
+              <Icon name="exclamation-circle" className="text-red-400 mt-0.5 shrink-0" />
               <p className="text-sm text-red-400">{error}</p>
             </div>
           )}
@@ -158,7 +157,7 @@ export const LoginPage = () => {
               </>
             ) : (
               <>
-                <FontAwesomeIcon icon={faRocket} />
+                <Icon name="rocket" />
                 Iniciar Sesión
               </>
             )}
@@ -189,9 +188,9 @@ export const LoginPage = () => {
                     router.replace('/');
                   }
                 }}
-                className="text-slate-400 text-sm hover:text-slate-300 transition-colors inline-flex items-center gap-2"
+                className="cursor-pointer text-slate-400 text-sm hover:text-slate-300 transition-colors inline-flex items-center gap-2"
               >
-                <FontAwesomeIcon icon={faTimes} />
+                <Icon name="times" />
                 Cerrar Demo
               </button>
             </p>

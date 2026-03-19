@@ -1,18 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 import { useRouter } from 'next/navigation';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { 
-  faTrophy, 
-  faStar, 
-  faCalendarAlt, 
-  faEdit, 
-  faBookOpen,
-  faChartLine,
-  faSpinner,
-  faShareNodes,
-  faCheck
-} from '@fortawesome/free-solid-svg-icons';
+import { Icon } from '@/shared/components/Icon';
 import { useUserProfile } from '../hooks/useUserProfile';
 import { useAuth } from '@/context/AuthContext';
 
@@ -48,7 +37,7 @@ export const PerfilNormal = () => {
       <div className="min-h-dvh bg-slate-950 flex items-center justify-center">
         <div className="text-center space-y-4">
           <div className="animate-spin text-4xl text-cyan-400">
-            <FontAwesomeIcon icon={faSpinner} />
+            <Icon name="spinner" />
           </div>
           <p className="text-slate-300 text-lg">Cargando tu perfil...</p>
         </div>
@@ -74,7 +63,7 @@ export const PerfilNormal = () => {
               className="cursor-pointer bg-slate-800 hover:bg-slate-700 text-cyan-400 transition-colors p-2 rounded-lg flex items-center gap-2 text-sm font-medium"
               title="Copiar enlace público"
             >
-              <FontAwesomeIcon icon={copied ? faCheck : faShareNodes} />
+              <Icon name={copied ? 'check' : 'share-nodes'} />
               <span className="hidden sm:inline">{copied ? '¡Copiado!' : 'Compartir'}</span>
             </button>
             <button 
@@ -82,7 +71,7 @@ export const PerfilNormal = () => {
               className="cursor-pointer bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white transition-colors p-2 rounded-lg"
               title="Editar Perfil"
             >
-              <FontAwesomeIcon icon={faEdit} />
+              <Icon name="edit" />
             </button>
           </div>
 
@@ -108,7 +97,7 @@ export const PerfilNormal = () => {
               
               <div className="flex items-center justify-center md:justify-start gap-4 text-sm text-slate-500 pt-2">
                 <span className="flex items-center gap-2">
-                  <FontAwesomeIcon icon={faCalendarAlt} />
+                  <Icon name="calendar-alt" />
                   Miembro desde: {createdAt}
                 </span>
               </div>
@@ -162,7 +151,7 @@ export const PerfilNormal = () => {
             {/* Courses Progress */}
             <div className="bg-slate-900/50 border border-slate-800 rounded-2xl p-6">
               <h2 className="text-xl font-bold mb-6 flex items-center gap-3">
-                <FontAwesomeIcon icon={faBookOpen} className="text-purple-400" />
+                <Icon name="book-open" className="text-purple-400" />
                 Mis Cursos
               </h2>
               
@@ -199,7 +188,7 @@ export const PerfilNormal = () => {
             {/* Recent Activity / Stats */}
             <div className="bg-slate-900/50 border border-slate-800 rounded-2xl p-6">
               <h2 className="text-xl font-bold mb-6 flex items-center gap-3">
-                <FontAwesomeIcon icon={faChartLine} className="text-green-400" />
+                <Icon name="chart-line" className="text-green-400" />
                 Estadísticas Rápidas
               </h2>
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
@@ -230,7 +219,7 @@ export const PerfilNormal = () => {
             <div className="bg-slate-900/50 border border-slate-800 rounded-2xl p-6 sticky top-24">
               <div className="flex justify-between items-center mb-6">
                 <h2 className="text-xl font-bold flex items-center gap-3">
-                  <FontAwesomeIcon icon={faTrophy} className="text-yellow-400" />
+                  <Icon name="trophy" className="text-yellow-400" />
                   Logros
                 </h2>
                 <button 
@@ -254,8 +243,8 @@ export const PerfilNormal = () => {
                       }`}
                       title={achievement.title}
                     >
-                      <FontAwesomeIcon icon={achievement.icon} className="text-2xl mb-1" />
-                      {isUnlocked && <FontAwesomeIcon icon={faStar} className="text-[8px] text-yellow-200 absolute top-2 right-2" />}
+                      <Icon name={achievement.icon} className="text-2xl mb-1" />
+                      {isUnlocked && <Icon name="star" className="text-[8px] text-yellow-200 absolute top-2 right-2" />}
                     </div>
                   );
                 })}

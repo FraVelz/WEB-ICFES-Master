@@ -1,18 +1,5 @@
 import { useState } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { 
-  faMobileAlt, 
-  faBank, 
-  faEnvelope, 
-  faGlassWater, 
-  faCopy, 
-  faCheck, 
-  faHeart, 
-  faCreditCard,
-  faSpinner,
-  faLock
-} from '@fortawesome/free-solid-svg-icons';
-import { faBitcoin, faPaypal, faCcVisa, faCcMastercard, faCcAmex } from '@fortawesome/free-brands-svg-icons';
+import { Icon } from '@/shared/components/Icon';
 
 export const DonationSection = () => {
   const [selectedAmount, setSelectedAmount] = useState(2000);
@@ -96,7 +83,7 @@ export const DonationSection = () => {
     {
       id: 'sprite',
       name: 'Invítame una Sprite',
-      icon: faGlassWater,
+      icon: 'droplet',
       info: 'Tarjeta Débito / Crédito',
       type: 'card',
       highlight: true,
@@ -105,7 +92,7 @@ export const DonationSection = () => {
     {
       id: 'nequi',
       name: 'Nequi',
-      icon: faMobileAlt,
+      icon: 'device-phone-mobile',
       info: 'Transferencia instantánea',
       detail: '322 596 3277',
       type: 'copy',
@@ -114,7 +101,7 @@ export const DonationSection = () => {
     {
       id: 'transferencia',
       name: 'Bancolombia / A la mano',
-      icon: faBank,
+      icon: 'landmark',
       info: 'Cuenta de Ahorros',
       detail: '03225963277',
       type: 'copy',
@@ -123,7 +110,7 @@ export const DonationSection = () => {
     {
       id: 'paypal',
       name: 'PayPal',
-      icon: faPaypal,
+      icon: 'paypal',
       info: 'Pago internacional',
       detail: 'paypal.me/fravelz',
       type: 'url',
@@ -131,7 +118,7 @@ export const DonationSection = () => {
     {
       id: 'crypto',
       name: 'Criptomonedas',
-      icon: faBitcoin,
+      icon: 'bitcoin',
       info: 'BTC, ETH, etc.',
       detail: 'bc1qh50kpz5x0snvk6sg56jn6lamqy3ltmmu5f7ncn',
       type: 'copy',
@@ -147,7 +134,7 @@ export const DonationSection = () => {
       {/* Header */}
       <div className="text-center mb-10">
         <div className="inline-flex items-center justify-center p-3 bg-purple-500/20 rounded-full mb-4">
-          <FontAwesomeIcon icon={faHeart} className="text-purple-400 text-xl animate-pulse" />
+          <Icon name="heart" className="text-purple-400 text-xl animate-pulse" />
         </div>
         <h3 className="text-3xl font-bold text-white mb-3">Apoya este Proyecto</h3>
         <p className="text-gray-300 max-w-2xl mx-auto leading-relaxed">
@@ -236,7 +223,7 @@ export const DonationSection = () => {
                     <div className={`w-10 h-10 rounded-full flex items-center justify-center ${
                       method.highlight ? 'bg-green-500/20 text-green-400' : 'bg-white/10 text-gray-300'
                     }`}>
-                      <FontAwesomeIcon icon={method.icon} className="text-lg" />
+                      <Icon name={method.icon} className="text-lg" />
                     </div>
                     <div>
                       <h4 className={`font-bold ${selectedMethod === method.id ? 'text-white' : 'text-gray-300'}`}>
@@ -260,7 +247,7 @@ export const DonationSection = () => {
             
             <div>
               <h4 className="text-lg font-bold text-white mb-1 flex items-center gap-2">
-                <FontAwesomeIcon icon={currentMethod?.icon} className="text-purple-400" />
+                <Icon name={currentMethod?.icon} className="text-purple-400" />
                 {currentMethod?.name}
               </h4>
               <p className="text-sm text-gray-400 mb-6 border-b border-white/10 pb-4">
@@ -280,7 +267,7 @@ export const DonationSection = () => {
                   <form onSubmit={handlePayment} className="space-y-4 animate-fadeIn">
                     {paymentSuccess ? (
                       <div className="bg-green-500/20 border border-green-500/50 rounded-xl p-6 text-center">
-                        <FontAwesomeIcon icon={faCheck} className="text-4xl text-green-400 mb-3" />
+                        <Icon name="check" className="text-4xl text-green-400 mb-3" />
                         <h5 className="text-white font-bold text-lg">¡Gracias por tu Sprite!</h5>
                         <p className="text-gray-300 text-sm">Tu apoyo ha sido recibido.</p>
                       </div>
@@ -297,7 +284,7 @@ export const DonationSection = () => {
                               className="w-full bg-black/30 border border-white/10 rounded-lg py-2.5 pl-10 pr-4 text-white text-sm placeholder-gray-600 focus:outline-none focus:border-purple-500 transition-colors"
                               required
                             />
-                            <FontAwesomeIcon icon={faCreditCard} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500" />
+                            <Icon name="credit-card" className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500" />
                           </div>
                         </div>
 
@@ -334,7 +321,7 @@ export const DonationSection = () => {
                                 className="w-full bg-black/30 border border-white/10 rounded-lg py-2.5 pl-3 pr-8 text-white text-sm placeholder-gray-600 focus:outline-none focus:border-purple-500 transition-colors"
                                 required
                               />
-                              <FontAwesomeIcon icon={faLock} className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 text-xs" />
+                              <Icon name="lock" className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 text-xs" />
                             </div>
                           </div>
                         </div>
@@ -358,21 +345,21 @@ export const DonationSection = () => {
                         >
                           {isProcessing ? (
                             <>
-                              <FontAwesomeIcon icon={faSpinner} className="animate-spin" />
+                              <Icon name="spinner" className="animate-spin" />
                               Procesando...
                             </>
                           ) : (
                             <>
-                              <FontAwesomeIcon icon={faHeart} />
+                              <Icon name="heart" />
                               Donar ${Number(currentAmount).toLocaleString()}
                             </>
                           )}
                         </button>
                         
                         <div className="flex justify-center gap-2 text-gray-500 text-lg mt-2">
-                          <FontAwesomeIcon icon={faCcVisa} />
-                          <FontAwesomeIcon icon={faCcMastercard} />
-                          <FontAwesomeIcon icon={faCcAmex} />
+                          <Icon name="cc-visa" />
+                          <Icon name="cc-mastercard" />
+                          <Icon name="cc-amex" />
                         </div>
                       </>
                     )}
@@ -391,7 +378,7 @@ export const DonationSection = () => {
                         className="p-3 bg-purple-600 hover:bg-purple-700 text-white rounded-lg transition-colors"
                         title="Copiar"
                       >
-                        <FontAwesomeIcon icon={copied === currentMethod.id ? faCheck : faCopy} />
+                        <Icon name={copied === currentMethod.id ? 'check' : 'copy'} />
                       </button>
                     </div>
                     {currentMethod.owner && (
@@ -433,7 +420,7 @@ export const DonationSection = () => {
       {/* Footer Links */}
       <div className="text-center mt-12 pt-6 border-t border-white/10 flex flex-col sm:flex-row items-center justify-center gap-4 text-xs text-gray-500">
         <div className="flex items-center gap-2">
-          <FontAwesomeIcon icon={faEnvelope} />
+          <Icon name="envelope" />
           <a href="mailto:fravelz@proton.me" className="hover:text-purple-400 transition-colors">
             fravelz@proton.me
           </a>

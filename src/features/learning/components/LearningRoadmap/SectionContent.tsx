@@ -7,8 +7,7 @@ import {
   AvanzadoNote,
   AvanzadoButton
 } from '../LevelComponents';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMicrochip } from '@fortawesome/free-solid-svg-icons';
+import { Icon } from '@/shared/components/Icon';
 
 /**
  * Componente para la sección de contenido Avanzado
@@ -17,7 +16,7 @@ export const AdvancedContent = () => {
   return (
     <div className="bg-slate-900/50 rounded-xl p-6 mb-6">
       <div className="flex items-center gap-3 mb-4">
-        <FontAwesomeIcon icon={faMicrochip} className="text-2xl text-red-400" />
+        <Icon name="microchip" size="lg" className="text-red-400" />
         <h3 className="text-xl font-bold text-white">Examen Completo ICFES 500</h3>
       </div>
       <p className="text-slate-300 mb-6">

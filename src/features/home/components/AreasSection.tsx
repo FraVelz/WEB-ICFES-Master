@@ -1,6 +1,5 @@
 import Link from 'next/link';
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowRight, faFire, faBullseye } from "@fortawesome/free-solid-svg-icons";
+import { Icon } from '@/shared/components/Icon';
 import { AREAS } from "@/features/home/data";
 import { getAnimationStyle } from "@/features/home/hooks/animations";
 
@@ -23,14 +22,14 @@ export const AreasSection = ({ isInitialLoad, areasSection }) => {
             <div className={`bg-linear-to-br ${area.gradient} rounded-xl p-8 border border-slate-700 hover:border-slate-500 transition-all duration-300 hover:shadow-lg hover:shadow-slate-900/50 hover:scale-105 cursor-pointer h-full`}>
               {/* Icon Background */}
               <div className="absolute top-6 right-6 text-5xl opacity-20">
-                <FontAwesomeIcon icon={area.icon} />
+                <Icon name={area.icon} size="xl" className="text-white" />
               </div>
 
               {/* Content */}
               <div className="relative z-10">
                 <div className="flex items-center gap-3 mb-4">
                   <div className="text-4xl">
-                    <FontAwesomeIcon icon={area.icon} className="text-white" />
+                    <Icon name={area.icon} size="xl" className="text-white" />
                   </div>
                   <h3 className="text-2xl font-bold text-white">{area.name}</h3>
                 </div>
@@ -48,7 +47,7 @@ export const AreasSection = ({ isInitialLoad, areasSection }) => {
 
                 <div className="flex items-center gap-2 text-white font-bold group-hover:gap-4 transition-all duration-300">
                   Empezar
-                  <FontAwesomeIcon icon={faArrowRight} className="group-hover:translate-x-2 transition-transform" />
+                  <Icon name="arrow-right" className="group-hover:translate-x-2 transition-transform shrink-0" />
                 </div>
               </div>
             </div>
@@ -59,7 +58,7 @@ export const AreasSection = ({ isInitialLoad, areasSection }) => {
       {/* Call to action para simulacro */}
       <div className="mt-16 bg-linear-to-r from-red-600/20 to-pink-600/20 border-2 border-red-500/50 rounded-xl p-8 text-center">
         <h3 className="text-3xl font-bold text-white mb-4 flex items-center justify-center gap-2">
-          <FontAwesomeIcon icon={faFire} className="text-red-400" />
+          <Icon name="fire" className="text-red-400 shrink-0" />
           ¿Listo para el Desafío Real?
         </h3>
         <p className="text-slate-300 mb-6 max-w-2xl mx-auto">
@@ -69,7 +68,7 @@ export const AreasSection = ({ isInitialLoad, areasSection }) => {
           href="/examen-completo"
           className="inline-flex items-center gap-2 px-8 py-4 bg-linear-to-r from-red-600 to-pink-600 text-white font-bold rounded-lg hover:shadow-lg hover:shadow-red-500/50 transition-all duration-300 hover:scale-105"
         >
-          <FontAwesomeIcon icon={faBullseye} />
+          <Icon name="bullseye" />
           Hacer Simulacro Completo
         </Link>
       </div>

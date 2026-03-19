@@ -1,6 +1,5 @@
 import Link from 'next/link';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faRuler, faArrowLeft, faBook } from '@fortawesome/free-solid-svg-icons';
+import { Icon } from '@/shared/components/Icon';
 
 export const Algebra = () => {
   const content = {
@@ -80,7 +79,7 @@ export const Algebra = () => {
         {/* Header */}
         <div className="flex items-center justify-between mb-12">
           <Link href="/aprendizaje" className="flex items-center gap-3 text-gray-400 hover:text-blue-400 transition-colors">
-            <FontAwesomeIcon icon={faArrowLeft} className="text-xl" />
+            <Icon name="arrow-left" className="text-xl" />
             Volver
           </Link>
           <div className="text-right">
@@ -91,14 +90,14 @@ export const Algebra = () => {
         {/* Hero Section */}
         <header className="mb-16 text-center">
           <div className="flex items-center justify-center gap-4 mb-6">
-            <FontAwesomeIcon icon={faRuler} className="text-5xl text-yellow-400" />
+            <Icon name="ruler" className="text-5xl text-yellow-400" />
             <h1 className="text-5xl md:text-6xl font-bold bg-linear-to-r from-yellow-400 to-orange-400 bg-clip-text text-transparent">
               {content.title}
             </h1>
           </div>
           <div className="flex justify-center gap-8 text-gray-300 mb-8">
-            <span className="flex items-center gap-2"><FontAwesomeIcon icon={faRuler} /> {content.duration}</span>
-            <span className="flex items-center gap-2"><FontAwesomeIcon icon={faBook} /> {content.lessons} lecciones</span>
+            <span className="flex items-center gap-2"><Icon name="ruler" /> {content.duration}</span>
+            <span className="flex items-center gap-2"><Icon name="book" /> {content.lessons} lecciones</span>
             <span className={`px-4 py-1 rounded-full ${content.difficulty === 'fácil' ? 'bg-green-500/30' : 'bg-yellow-500/30'} text-sm`}>
               {content.difficulty}
             </span>

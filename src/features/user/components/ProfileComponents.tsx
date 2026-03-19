@@ -1,5 +1,4 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCheckCircle } from '@fortawesome/free-solid-svg-icons';
+import { Icon } from '@/shared/components/Icon';
 
 export const ProfileCard = ({ user }) => (
   <div className="bg-white/5 backdrop-blur-xl border border-cyan-500/20 rounded-2xl p-8 hover:border-cyan-500/50 hover:shadow-lg hover:shadow-cyan-500/20 transition-all duration-300">
@@ -93,7 +92,7 @@ export const RanksGrid = ({ allRanks, currentRank }) => (
           <div className="text-xs text-slate-400">+{r.minScore}%</div>
           {isCurrentRank && (
             <div className="flex items-center gap-1 text-cyan-400 text-xs mt-3 font-semibold">
-              <FontAwesomeIcon icon={faCheckCircle} />
+              <Icon name="check-circle" />
               Actual
             </div>
           )}

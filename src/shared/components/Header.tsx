@@ -2,8 +2,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCircleUser, faCoins, faShoppingBag, faRocket, faGraduationCap, faGear, faMedal, faTrophy, faEllipsisVertical, faFire } from '@fortawesome/free-solid-svg-icons';
+import { Icon } from '@/shared/components/Icon';
 import { useUser } from '@/features/user/hooks/useUser';
 
 export const Header = () => {
@@ -13,15 +12,15 @@ export const Header = () => {
   const [mobileOptionsMenuOpen, setMobileOptionsMenuOpen] = useState(false);
 
   const mainOptions = [
-    { path: '/ruta-aprendizaje', label: 'Aprendizaje', icon: faGraduationCap },
-    { path: '/logros', label: 'Logros', icon: faMedal },
-    { path: '/clasificatoria', label: 'Clasificatoria', icon: faTrophy }
+    { path: '/ruta-aprendizaje', label: 'Aprendizaje', icon: 'graduation-cap' },
+    { path: '/logros', label: 'Logros', icon: 'medal' },
+    { path: '/clasificatoria', label: 'Clasificatoria', icon: 'trophy' }
   ];
 
   const mobileMenuOptions = [
-    { path: '/perfil', label: 'Perfil', icon: faCircleUser },
-    { path: '/desafios-diarios', label: 'Desafíos Diarios', icon: faFire },
-    { path: '/configuracion', label: 'Configuración', icon: faGear }
+    { path: '/perfil', label: 'Perfil', icon: 'circle-user' },
+    { path: '/desafios-diarios', label: 'Desafíos Diarios', icon: 'fire' },
+    { path: '/configuracion', label: 'Configuración', icon: 'cog' }
   ];
 
   return (
@@ -33,7 +32,7 @@ export const Header = () => {
         <div className="h-24 flex items-center justify-center border-b border-cyan-500/10 relative shrink-0">
           <Link href="/" className="flex items-center gap-3 absolute left-[18px] transition-all duration-300">
             <div className="w-11 h-11 bg-linear-to-br from-cyan-500 via-blue-500 to-purple-600 rounded-xl flex items-center justify-center shadow-lg shadow-cyan-500/30 shrink-0 z-10">
-              <FontAwesomeIcon icon={faRocket} className="text-white text-lg" />
+              <Icon name="rocket" size="lg" className="text-white" />
             </div>
             <span className="font-bold text-xl bg-linear-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap pl-2">
               ICFES Master
@@ -55,7 +54,7 @@ export const Header = () => {
               }`}
             >
               <div className="w-6 flex justify-center shrink-0">
-                <FontAwesomeIcon icon={option.icon} className="text-lg" />
+                <Icon name={option.icon} size="lg" />
               </div>
               <span className="font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap absolute left-14">
                 {option.label}
@@ -80,7 +79,7 @@ export const Header = () => {
               }`}
             >
               <div className="w-6 flex justify-center shrink-0">
-                <FontAwesomeIcon icon={faFire} className="text-lg" />
+                <Icon name="fire" size="lg" />
               </div>
               <span className="font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap absolute left-14">
                 Desafíos
@@ -93,10 +92,10 @@ export const Header = () => {
             {/* Coins Display */}
             <div className="mb-4 flex items-center h-10 bg-slate-800/50 rounded-lg border border-amber-500/20 relative overflow-hidden">
                 <div className="w-full flex justify-center shrink-0 absolute left-0 group-hover:-left-full transition-all duration-300">
-                     <FontAwesomeIcon icon={faCoins} className="text-amber-400" />
+                     <Icon name="coins" className="text-amber-400" />
                 </div>
                 <div className="flex items-center gap-3 px-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300 w-full">
-                    <FontAwesomeIcon icon={faCoins} className="text-amber-400" />
+                    <Icon name="coins" className="text-amber-400" />
                     <span className="font-bold text-amber-400 whitespace-nowrap">
                         {virtualMoney}
                     </span>
@@ -110,7 +109,7 @@ export const Header = () => {
                         <img src={user.profileImage} alt="Profile" className="w-full h-full object-cover" />
                      ) : (
                         <div className="w-full h-full flex items-center justify-center">
-                            <FontAwesomeIcon icon={faCircleUser} className="text-slate-400" />
+                            <Icon name="circle-user" size="lg" className="text-slate-400" />
                         </div>
                      )}
                 </div>
@@ -122,7 +121,7 @@ export const Header = () => {
             
             {/* Settings Link */}
              <Link href="/configuracion" className="mt-2 flex items-center justify-center p-2 text-slate-500 hover:text-cyan-400 transition-colors h-10">
-                <FontAwesomeIcon icon={faGear} className="text-lg" />
+                <Icon name="cog" size="lg" />
              </Link>
         </div>
       </header>
@@ -140,14 +139,14 @@ export const Header = () => {
                   : 'text-slate-400 hover:text-white'
               }`}
             >
-              <FontAwesomeIcon icon={option.icon} className="text-2xl mb-1" />
+              <Icon name={option.icon} size="xl" className="mb-1" />
             </Link>
           ))}
           <button
             onClick={() => setMobileOptionsMenuOpen(!mobileOptionsMenuOpen)}
             className="flex flex-col items-center justify-center w-16 h-20 transition-all duration-300 text-slate-400 hover:text-white relative"
           >
-            <FontAwesomeIcon icon={faEllipsisVertical} className="text-2xl mb-1" />
+            <Icon name="ellipsis-vertical" size="xl" className="mb-1" />
           </button>
         </div>
       </nav>
@@ -171,7 +170,7 @@ export const Header = () => {
                 className="flex items-center gap-4 px-6 py-4 text-slate-300 hover:bg-cyan-500/10 transition-colors active:bg-cyan-500/20"
                 onClick={() => setMobileOptionsMenuOpen(false)}
               >
-                <FontAwesomeIcon icon={option.icon} className="text-cyan-400 text-xl" />
+                <Icon name={option.icon} size="xl" className="text-cyan-400" />
                 <span className="text-lg font-semibold">{option.label}</span>
               </Link>
             ))}

@@ -1,18 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { 
-  faTrophy, 
-  faStar, 
-  faCalendarAlt, 
-  faFlag, 
-  faBookOpen,
-  faChartLine,
-  faSpinner,
-  faShareNodes,
-  faCheck,
-  faUserSlash
-} from '@fortawesome/free-solid-svg-icons';
+import { Icon } from '@/shared/components/Icon';
 import { useUserProfile } from '../hooks/useUserProfile';
 
 export const PerfilPublico = () => {
@@ -40,7 +28,7 @@ export const PerfilPublico = () => {
       <div className="min-h-dvh bg-slate-950 flex items-center justify-center text-white">
         <div className="text-center space-y-6 max-w-md px-4">
           <div className="text-6xl text-slate-700">
-            <FontAwesomeIcon icon={faUserSlash} />
+            <Icon name="user-slash" />
           </div>
           <h2 className="text-2xl font-bold">Enlace inválido</h2>
           <p className="text-slate-400">
@@ -80,7 +68,7 @@ export const PerfilPublico = () => {
       <div className="min-h-dvh bg-slate-950 flex items-center justify-center">
         <div className="text-center space-y-4">
           <div className="animate-spin text-4xl text-cyan-400">
-            <FontAwesomeIcon icon={faSpinner} />
+            <Icon name="spinner" />
           </div>
           <p className="text-slate-300 text-lg">Cargando perfil público...</p>
         </div>
@@ -93,7 +81,7 @@ export const PerfilPublico = () => {
       <div className="min-h-dvh bg-slate-950 flex items-center justify-center text-white">
         <div className="text-center space-y-6 max-w-md px-4">
           <div className="text-6xl text-slate-700">
-            <FontAwesomeIcon icon={faUserSlash} />
+            <Icon name="user-slash" />
           </div>
           <h2 className="text-2xl font-bold">Usuario no encontrado</h2>
           <p className="text-slate-400">
@@ -128,7 +116,7 @@ export const PerfilPublico = () => {
               className="cursor-pointer bg-slate-800 hover:bg-slate-700 text-cyan-400 transition-colors p-2 rounded-lg flex items-center gap-2 text-sm font-medium"
               title="Copiar enlace"
             >
-              <FontAwesomeIcon icon={copied ? faCheck : faShareNodes} />
+              <Icon name={copied ? 'check' : 'share-nodes'} />
               <span className="hidden sm:inline">{copied ? '¡Copiado!' : 'Compartir'}</span>
             </button>
             <button 
@@ -136,7 +124,7 @@ export const PerfilPublico = () => {
               className={`cursor-pointer bg-slate-800 hover:bg-red-900/30 transition-colors p-2 rounded-lg ${reported ? 'text-red-500' : 'text-slate-400 hover:text-red-400'}`}
               title="Reportar usuario"
             >
-              <FontAwesomeIcon icon={faFlag} />
+              <Icon name="flag" />
             </button>
           </div>
 
@@ -162,7 +150,7 @@ export const PerfilPublico = () => {
               
               <div className="flex items-center justify-center md:justify-start gap-4 text-sm text-slate-500 pt-2">
                 <span className="flex items-center gap-2">
-                  <FontAwesomeIcon icon={faCalendarAlt} />
+                  <Icon name="calendar-alt" />
                   Miembro desde: {createdAt}
                 </span>
               </div>
@@ -221,7 +209,7 @@ export const PerfilPublico = () => {
             {/* Recent Activity / Stats */}
             <div className="bg-slate-900/50 border border-slate-800 rounded-2xl p-6">
               <h2 className="text-xl font-bold mb-6 flex items-center gap-3">
-                <FontAwesomeIcon icon={faChartLine} className="text-green-400" />
+                <Icon name="chart-line" className="text-green-400" />
                 Estadísticas
               </h2>
               <div className="grid grid-cols-3 gap-4">
@@ -245,7 +233,7 @@ export const PerfilPublico = () => {
             {/* Courses Progress (Read Only) */}
             <div className="bg-slate-900/50 border border-slate-800 rounded-2xl p-6">
               <h2 className="text-xl font-bold mb-6 flex items-center gap-3">
-                <FontAwesomeIcon icon={faBookOpen} className="text-purple-400" />
+                <Icon name="book-open" className="text-purple-400" />
                 Progreso en Cursos
               </h2>
               
@@ -279,7 +267,7 @@ export const PerfilPublico = () => {
             <div className="bg-slate-900/50 border border-slate-800 rounded-2xl p-6 sticky top-24">
               <div className="flex justify-between items-center mb-6">
                 <h2 className="text-xl font-bold flex items-center gap-3">
-                  <FontAwesomeIcon icon={faTrophy} className="text-yellow-400" />
+                  <Icon name="trophy" className="text-yellow-400" />
                   Logros
                 </h2>
               </div>
@@ -297,8 +285,8 @@ export const PerfilPublico = () => {
                       }`}
                       title={achievement.title}
                     >
-                      <FontAwesomeIcon icon={achievement.icon} className="text-2xl mb-1" />
-                      {isUnlocked && <FontAwesomeIcon icon={faStar} className="text-[8px] text-yellow-200 absolute top-2 right-2" />}
+                      <Icon name={typeof achievement.icon === 'string' ? achievement.icon : 'star'} className="text-2xl mb-1" />
+                      {isUnlocked && <Icon name="star" size="sm" className="text-[8px] text-yellow-200 absolute top-2 right-2" />}
                     </div>
                   );
                 })}

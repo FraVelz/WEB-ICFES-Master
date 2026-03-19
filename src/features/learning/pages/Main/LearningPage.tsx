@@ -1,6 +1,5 @@
 import Link from 'next/link';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowRight, faLightbulb, faFire, faBullseye, faRuler, faBook, faFlask, faGlobe, faClock, faChartLine } from '@fortawesome/free-solid-svg-icons';
+import { Icon } from '@/shared/components/Icon';
 import { useState, useMemo } from 'react';
 import { LearningFilters } from '@/features/learning/components';
 import { MaterialsGrid } from '@/features/learning/components';
@@ -82,10 +81,10 @@ export const LearningPage = () => {
   };
 
   const areaIcons = {
-    mathematics: { icon: faRuler, color: 'text-yellow-400', label: 'Matemáticas' },
-    lenguaje: { icon: faBook, color: 'text-blue-400', label: 'Lenguaje' },
-    science: { icon: faFlask, color: 'text-green-400', label: 'Ciencias' },
-    social: { icon: faGlobe, color: 'text-orange-400', label: 'Sociales' }
+    mathematics: { icon: 'ruler', color: 'text-yellow-400', label: 'Matemáticas' },
+    lenguaje: { icon: 'book', color: 'text-blue-400', label: 'Lenguaje' },
+    science: { icon: 'flask', color: 'text-green-400', label: 'Ciencias' },
+    social: { icon: 'globe', color: 'text-orange-400', label: 'Sociales' }
   };
 
   const learningLevels = {
@@ -93,7 +92,7 @@ export const LearningPage = () => {
       title: 'Nivel Fácil',
       subtitle: 'Aprende las Bases',
       description: 'Domina los conceptos fundamentales de cada materia con materiales estructurados, explicaciones y ejercicios básicos.',
-      icon: faLightbulb,
+      icon: 'lightbulb',
       color: 'from-blue-500 to-cyan-500',
       textColor: 'text-blue-400',
       borderColor: 'border-blue-500/30',
@@ -105,7 +104,7 @@ export const LearningPage = () => {
       title: 'Nivel Intermedio',
       subtitle: 'Practica por Materia',
       description: 'Realiza exámenes individuales de cada materia para fortalecer tus conocimientos con preguntas tipo ICFES.',
-      icon: faBullseye,
+      icon: 'bullseye',
       color: 'from-orange-500 to-yellow-500',
       textColor: 'text-orange-400',
       borderColor: 'border-orange-500/30',
@@ -117,7 +116,7 @@ export const LearningPage = () => {
       title: 'Nivel Avanzado',
       subtitle: 'Simulacro Global ICFES',
       description: 'Completa un examen global que simula las condiciones reales del ICFES con todas las materias integradas.',
-      icon: faFire,
+      icon: 'fire',
       color: 'from-red-500 to-pink-500',
       textColor: 'text-red-400',
       borderColor: 'border-red-500/30',
@@ -163,7 +162,7 @@ export const LearningPage = () => {
                   <div className="relative z-10">
                     {/* Icon */}
                     <div className={`text-5xl mb-6 ${level.textColor} group-hover:scale-110 transition-transform duration-300`}>
-                      <FontAwesomeIcon icon={level.icon} />
+                      <Icon name={level.icon} />
                     </div>
 
                     {/* Title */}
@@ -180,7 +179,7 @@ export const LearningPage = () => {
                         <p className="text-xs text-slate-400">Materias</p>
                       </div>
                       <div className={`text-3xl ${level.textColor} group-hover:translate-x-1 transition-transform duration-300`}>
-                        <FontAwesomeIcon icon={faArrowRight} />
+                        <Icon name="arrow-right" />
                       </div>
                     </div>
 
@@ -240,7 +239,7 @@ export const LearningPage = () => {
           {/* Hero Section */}
           <header className="text-center mb-20">
             <div className={`text-5xl mb-4 ${currentLevel.textColor}`}>
-              <FontAwesomeIcon icon={currentLevel.icon} />
+              <Icon name={currentLevel.icon} />
             </div>
             <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-4 bg-linear-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-transparent">
               {currentLevel.title}
@@ -294,7 +293,7 @@ export const LearningPage = () => {
                 >
                   <div className="flex flex-col items-center text-center gap-4">
                     <div className={`text-5xl ${areaData.color}`}>
-                      <FontAwesomeIcon icon={areaData.icon} />
+                      <Icon name={areaData.icon} />
                     </div>
                     <div>
                       <h3 className="text-2xl font-bold text-white mb-2">{areaData.label}</h3>
@@ -312,7 +311,7 @@ export const LearningPage = () => {
               <div className="p-12 rounded-2xl border-2 border-red-500/30 bg-red-500/10">
                 <div className="flex flex-col items-center text-center gap-6">
                   <div className="text-6xl text-red-400">
-                    <FontAwesomeIcon icon={faFire} />
+                    <Icon name="fire" />
                   </div>
                   <div>
                     <h3 className="text-3xl font-bold text-white mb-4">Simulacro Global ICFES</h3>
@@ -321,11 +320,11 @@ export const LearningPage = () => {
                     </p>
                     <div className="grid grid-cols-2 gap-4 mb-8 text-left">
                       <div className="p-3 rounded-lg bg-black/30">
-                        <p className="text-red-400 font-semibold flex items-center gap-2"><FontAwesomeIcon icon={faClock} /> Duración</p>
+                        <p className="text-red-400 font-semibold flex items-center gap-2"><Icon name="clock" /> Duración</p>
                         <p className="text-slate-300 text-sm">3 horas aproximadamente</p>
                       </div>
                       <div className="p-3 rounded-lg bg-black/30">
-                        <p className="text-red-400 font-semibold flex items-center gap-2"><FontAwesomeIcon icon={faChartLine} /> Preguntas</p>
+                        <p className="text-red-400 font-semibold flex items-center gap-2"><Icon name="chart-line" /> Preguntas</p>
                         <p className="text-slate-300 text-sm">200 preguntas totales</p>
                       </div>
                       <div className="p-3 rounded-lg bg-black/30">

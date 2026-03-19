@@ -1,8 +1,4 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faChevronDown,
-  faTrophy
-} from '@fortawesome/free-solid-svg-icons';
+import { Icon } from '@/shared/components/Icon';
 import Link from 'next/link';
 
 export const LevelHeader = ({ icon, color, title, subtitle, isExpanded, onClick }) => (
@@ -12,15 +8,15 @@ export const LevelHeader = ({ icon, color, title, subtitle, isExpanded, onClick 
   >
     <div className="flex items-center gap-4">
       <div className={`p-4 rounded-xl bg-${color}/30`}>
-        <FontAwesomeIcon icon={icon} className={`text-3xl text-${color}`} />
+        <Icon name={icon} className={`text-3xl text-${color}`} />
       </div>
       <div className="text-left">
         <h2 className="text-2xl font-bold text-white">{title}</h2>
         <p className={`text-${color}`}>{subtitle}</p>
       </div>
     </div>
-    <FontAwesomeIcon
-      icon={faChevronDown}
+    <Icon
+      name="chevron-down"
       className={`text-${color} text-2xl transition-transform duration-300 ${
         isExpanded ? 'rotate-180' : ''
       }`}
@@ -34,7 +30,7 @@ export const AvanzadoExamComposition = ({ subjects }) => (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
       {subjects.map(subject => (
         <div key={subject.id} className="flex items-center gap-3 p-3 bg-slate-800/50 rounded-lg">
-          <FontAwesomeIcon icon={subject.icon} className={`text-lg ${subject.color}`} />
+          <Icon name={subject.icon} className={`text-lg ${subject.color}`} />
           <div className="flex-1">
             <p className="text-white font-medium">{subject.name}</p>
             <p className="text-xs text-slate-400">24 preguntas</p>
@@ -79,7 +75,7 @@ export const AvanzadoButton = () => (
     href="/examen/simulacro/completo"
     className="block w-full py-4 bg-linear-to-r from-red-600 to-purple-600 hover:from-red-700 hover:to-purple-700 text-white font-bold rounded-lg transition-all duration-300 text-center text-lg hover:shadow-lg hover:shadow-red-600/50"
   >
-    <FontAwesomeIcon icon={faTrophy} className="mr-2" />
+    <Icon name="trophy" className="mr-2" />
     Iniciar Simulacro Completo
   </Link>
 );

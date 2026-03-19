@@ -2,8 +2,7 @@
 
 import { useState, useRef, useEffect } from 'react';
 import ReactMarkdown from 'react-markdown';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMessage, faXmark, faPaperPlane, faRobot, faUser } from '@fortawesome/free-solid-svg-icons';
+import { Icon } from '@/shared/components/Icon';
 
 interface Message {
   id: string;
@@ -101,7 +100,7 @@ export const ChatAssistant = () => {
         className="fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full bg-linear-to-r from-cyan-500 to-blue-600 shadow-lg shadow-cyan-500/30 hover:shadow-cyan-500/50 hover:scale-110 transition-all duration-300 flex items-center justify-center text-white border-2 border-cyan-400/50"
         aria-label="Abrir asistente de chat"
       >
-        <FontAwesomeIcon icon={faMessage} className="text-xl" />
+        <Icon name="message" size="xl" />
       </button>
 
       {/* Panel de chat */}
@@ -111,7 +110,7 @@ export const ChatAssistant = () => {
           <div className="flex items-center justify-between px-4 py-3 bg-linear-to-r from-cyan-600/30 to-blue-600/30 border-b border-cyan-500/20">
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-full bg-linear-to-r from-cyan-500 to-blue-600 flex items-center justify-center">
-                <FontAwesomeIcon icon={faRobot} className="text-white" />
+                <Icon name="robot" className="text-white" />
               </div>
               <div>
                 <h3 className="font-bold text-white">Asistente ICFES</h3>
@@ -123,7 +122,7 @@ export const ChatAssistant = () => {
               className="p-2 rounded-lg text-slate-400 hover:text-white hover:bg-white/10 transition-colors"
               aria-label="Cerrar chat"
             >
-              <FontAwesomeIcon icon={faXmark} className="text-lg" />
+              <Icon name="times" size="lg" />
             </button>
           </div>
 
@@ -132,7 +131,7 @@ export const ChatAssistant = () => {
             {messages.length === 0 && (
               <div className="flex flex-col items-center justify-center h-full text-center px-4">
                 <div className="w-16 h-16 rounded-full bg-cyan-500/20 flex items-center justify-center mb-4">
-                  <FontAwesomeIcon icon={faMessage} className="text-2xl text-cyan-400" />
+                  <Icon name="message" size="xl" className="text-cyan-400" />
                 </div>
                 <p className="text-slate-400 text-sm mb-2">¿Tienes preguntas sobre el ICFES?</p>
                 <p className="text-slate-500 text-xs">Escribe aquí y te ayudaré con tus dudas</p>
@@ -151,8 +150,8 @@ export const ChatAssistant = () => {
                       : 'bg-cyan-500/30'
                   }`}
                 >
-                  <FontAwesomeIcon
-                    icon={msg.role === 'user' ? faUser : faRobot}
+                  <Icon
+                    name={msg.role === 'user' ? 'user' : 'robot'}
                     className={msg.role === 'user' ? 'text-blue-400' : 'text-cyan-400'}
                   />
                 </div>
@@ -177,7 +176,7 @@ export const ChatAssistant = () => {
             {isTyping && (
               <div className="flex gap-3">
                 <div className="w-8 h-8 rounded-full shrink-0 bg-cyan-500/30 flex items-center justify-center">
-                  <FontAwesomeIcon icon={faRobot} className="text-cyan-400" />
+                  <Icon name="robot" className="text-cyan-400" />
                 </div>
                 <div className="bg-slate-800/80 border border-slate-700/50 rounded-2xl rounded-bl-md px-4 py-3">
                   <div className="flex gap-1.5">
@@ -208,7 +207,7 @@ export const ChatAssistant = () => {
                 disabled={!inputValue.trim() || isTyping}
                 className="px-4 py-3 bg-linear-to-r from-cyan-500 to-blue-600 rounded-xl text-white hover:from-cyan-600 hover:to-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
               >
-                <FontAwesomeIcon icon={faPaperPlane} />
+                <Icon name="paper-plane" />
               </button>
             </div>
           </div>

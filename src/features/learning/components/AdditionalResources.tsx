@@ -1,12 +1,11 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBook } from '@fortawesome/free-solid-svg-icons';
+import { Icon } from '@/shared/components/Icon';
 
 export const AdditionalResources = () => {
   return (
     <section className="mb-24">
       <div className="bg-linear-to-br from-blue-600 via-purple-600 to-cyan-600 sm:rounded-3xl p-12 shadow-2xl sm:mx-6 sm:border-4 border-cyan-400">
         <h2 className="text-4xl font-black text-white mb-6 drop-shadow-lg">
-          <FontAwesomeIcon icon={faBook} className="mr-4 text-cyan-300" />
+          <Icon name="book" size="xl" className="mr-4 text-cyan-300" />
           Recursos Adicionales
         </h2>
         <p className="text-lg text-blue-100 mb-8 leading-relaxed max-w-3xl">

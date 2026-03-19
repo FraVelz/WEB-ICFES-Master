@@ -1,15 +1,8 @@
-import {
-  faChartLine,
-  faBook,
-  faZap,
-  faBullseye
-} from '@fortawesome/free-solid-svg-icons';
-
 export const SUBJECTS = [
   {
     id: 'matematicas',
     name: 'Matemáticas',
-    icon: faChartLine,
+    icon: 'chart-line',
     color: 'text-green-400',
     bgColor: 'bg-green-600/20',
     borderColor: 'border-green-600',
@@ -18,7 +11,7 @@ export const SUBJECTS = [
   {
     id: 'lectura-critica',
     name: 'Lectura Crítica',
-    icon: faBook,
+    icon: 'book',
     color: 'text-blue-400',
     bgColor: 'bg-blue-600/20',
     borderColor: 'border-blue-600',
@@ -27,7 +20,7 @@ export const SUBJECTS = [
   {
     id: 'ciencias-naturales',
     name: 'Ciencias Naturales',
-    icon: faZap,
+    icon: 'bolt',
     color: 'text-purple-400',
     bgColor: 'bg-purple-600/20',
     borderColor: 'border-purple-600',
@@ -36,7 +29,7 @@ export const SUBJECTS = [
   {
     id: 'sociales',
     name: 'Sociales y Ciudadanas',
-    icon: faBullseye,
+    icon: 'bullseye',
     color: 'text-orange-400',
     bgColor: 'bg-orange-600/20',
     borderColor: 'border-orange-600',
@@ -45,7 +38,7 @@ export const SUBJECTS = [
   {
     id: 'ingles',
     name: 'Inglés',
-    icon: faBook,
+    icon: 'book',
     color: 'text-red-400',
     bgColor: 'bg-red-600/20',
     borderColor: 'border-red-600',

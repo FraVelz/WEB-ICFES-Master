@@ -1,5 +1,4 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
+import { Icon } from '@/shared/components/Icon';
 
 /**
  * Componente para la sección collapsible de Básico, Intermedio o Avanzado
@@ -56,15 +55,16 @@ export const LevelSection = ({
       >
         <div className="flex items-center gap-4">
           <div className={colors.iconBg + ' p-4 rounded-xl'}>
-            <FontAwesomeIcon icon={icon} className={`text-3xl ${colors.iconColor}`} />
+            <Icon name={icon} size="3xl" className={`text-3xl ${colors.iconColor}`} />
           </div>
           <div className="text-left">
             <h2 className="text-2xl font-bold text-white">{config.title}</h2>
             <p className={`${colors.iconColor}`}>{config.subtitle}</p>
           </div>
         </div>
-        <FontAwesomeIcon
-          icon={faChevronDown}
+        <Icon
+          name="chevron-down"
+          size="2xl"
           className={`${colors.chevronColor} text-2xl transition-transform duration-300 ${
             isExpanded ? 'rotate-180' : ''
           }`}

@@ -1,28 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faArrowLeft,
-  faTrash,
-  faCamera,
-  faUser,
-  faQuoteLeft,
-  faSignOut,
-  faLock,
-  faCloud,
-  faCheckCircle,
-  faQuestion,
-  faWarning,
-  faCheck,
-  faGear,
-  faHeadset,
-  faPaperPlane,
-  faBug,
-  faHeart,
-  faChevronRight,
-  faShieldAlt
-} from '@fortawesome/free-solid-svg-icons';
+import { Icon } from '@/shared/components/Icon';
 import { useUser } from '@/features/user/hooks/useUser';
 import { useAuth } from '@/context/AuthContext';
 import { useUserData, useProgress, useExam } from '@/hooks/FirestoreHooks';
@@ -36,7 +15,7 @@ const SettingsSection = ({ title, icon, children, className = "" }) => (
     {title && (
       <h2 className="text-lg sm:text-xl font-bold mb-6 flex items-center gap-3 text-white border-b border-slate-800 pb-4">
         <div className="w-8 h-8 rounded-lg bg-slate-800 flex items-center justify-center text-cyan-400 shadow-inner">
-          <FontAwesomeIcon icon={icon} />
+          <Icon name={icon} />
         </div>
         {title}
       </h2>
@@ -61,7 +40,7 @@ const SettingOption = ({ label, description, icon, action, danger = false, onCli
         <div className={`w-10 h-10 rounded-full flex items-center justify-center shrink-0 transition-colors ${
           danger ? 'bg-red-500/10 text-red-400 group-hover:bg-red-500/20' : 'bg-slate-700/50 text-slate-400 group-hover:text-cyan-400 group-hover:bg-slate-700'
         }`}>
-          <FontAwesomeIcon icon={icon} />
+          <Icon name={icon} />
         </div>
       )}
       <div>
@@ -267,7 +246,7 @@ export const UserSettingsPage = () => {
         <div className="sticky top-0 z-50 backdrop-blur-xl border-b border-slate-800/60 bg-slate-950/80">
           <div className="max-w-6xl mx-auto px-4 py-4 flex items-center gap-4">
             <Link href="/perfil" className="p-2 hover:bg-slate-800 rounded-full transition-colors text-slate-400 hover:text-white">
-              <FontAwesomeIcon icon={faArrowLeft} className="text-lg" />
+              <Icon name="arrow-left" className="text-lg" />
             </Link>
             <h1 className="text-xl font-bold text-white">Configuración</h1>
           </div>
@@ -282,7 +261,7 @@ export const UserSettingsPage = () => {
                 : 'bg-red-500/10 border-red-500/30 text-red-400'
             }`}>
               <div className="flex items-center gap-3">
-                <FontAwesomeIcon icon={messageType === 'success' ? faCheckCircle : faWarning} />
+                <Icon name={messageType === 'success' ? 'check-circle' : 'warning'} />
                 <p className="font-medium text-sm">{message}</p>
               </div>
             </div>
@@ -302,7 +281,7 @@ export const UserSettingsPage = () => {
                         <img src={user.profileImage} alt="Profile" className="w-full h-full object-cover" />
                       ) : (
                         <div className="w-full h-full flex items-center justify-center bg-slate-700 text-slate-500">
-                          <FontAwesomeIcon icon={faUser} className="text-4xl" />
+                          <Icon name="user" className="text-4xl" />
                         </div>
                       )}
                     </div>
@@ -310,7 +289,7 @@ export const UserSettingsPage = () => {
                       onClick={() => fileInputRef.current?.click()}
                       className="cursor-pointer absolute bottom-0 right-0 w-10 h-10 bg-cyan-500 hover:bg-cyan-400 text-white rounded-full flex items-center justify-center shadow-lg transition-transform hover:scale-110 border-4 border-slate-900"
                     >
-                      <FontAwesomeIcon icon={faCamera} className="text-sm" />
+                      <Icon name="camera" className="text-sm" />
                     </button>
                     <input ref={fileInputRef} type="file" accept="image/*" onChange={handleImageUpload} className="hidden" />
                   </div>
@@ -331,7 +310,7 @@ export const UserSettingsPage = () => {
                           disabled={loading}
                           className="cursor-pointer px-3 py-2 bg-slate-800 hover:bg-cyan-500/20 hover:text-cyan-400 text-slate-400 rounded-lg transition-colors"
                         >
-                          <FontAwesomeIcon icon={faCheck} />
+                          <Icon name="check" />
                         </button>
                       </div>
                     </div>
@@ -350,7 +329,7 @@ export const UserSettingsPage = () => {
                           disabled={loading}
                           className="cursor-pointer absolute bottom-2 right-2 w-8 h-8 bg-slate-800 hover:bg-cyan-500/20 hover:text-cyan-400 text-slate-400 rounded-md transition-colors flex items-center justify-center text-xs"
                         >
-                          <FontAwesomeIcon icon={faCheck} />
+                          <Icon name="check" />
                         </button>
                       </div>
                       <p className="text-right text-xs text-slate-600 mt-1">{bio.length}/150</p>
@@ -373,11 +352,11 @@ export const UserSettingsPage = () => {
             <div className="lg:col-span-8 space-y-6">
               
               {/* Account Management */}
-              <SettingsSection title="Gestión de Cuenta" icon={faLock}>
+              <SettingsSection title="Gestión de Cuenta" icon="lock">
                 <SettingOption
                   label="Cerrar Sesión"
                   description="Finaliza tu sesión actual en este dispositivo"
-                  icon={faSignOut}
+                  icon="sign-out"
                   action={
                     <button 
                       onClick={handleLogout}
@@ -392,28 +371,28 @@ export const UserSettingsPage = () => {
                 <SettingOption
                   label="Borrar mis Datos"
                   description="Elimina progreso y exámenes. Mantiene la cuenta."
-                  icon={faTrash}
+                  icon="trash"
                   danger={true}
                   onClick={() => setShowDeleteModal(true)}
                   action={
-                    <FontAwesomeIcon icon={faChevronRight} className="text-slate-600" />
+                    <Icon name="chevron-right" className="text-slate-600" />
                   }
                 />
 
                 <SettingOption
                   label="Eliminar Cuenta"
                   description="Acción permanente. Elimina todo."
-                  icon={faWarning}
+                  icon="warning"
                   danger={true}
                   onClick={() => setShowDeleteModal(true)}
                   action={
-                    <FontAwesomeIcon icon={faChevronRight} className="text-slate-600" />
+                    <Icon name="chevron-right" className="text-slate-600" />
                   }
                 />
               </SettingsSection>
 
               {/* Support Section */}
-              <SettingsSection title="Ayuda y Soporte" icon={faHeadset}>
+              <SettingsSection title="Ayuda y Soporte" icon="headset">
                 <div className="bg-slate-950/50 rounded-xl p-1 flex mb-6 border border-slate-800">
                   <button
                     onClick={() => setSupportMode('response')}
@@ -423,7 +402,7 @@ export const UserSettingsPage = () => {
                         : 'text-slate-400 hover:text-white'
                     }`}
                   >
-                    <FontAwesomeIcon icon={faPaperPlane} className="mr-2" />
+                    <Icon name="paper-plane" className="mr-2" />
                     Contactar
                   </button>
                   <button
@@ -434,7 +413,7 @@ export const UserSettingsPage = () => {
                         : 'text-slate-400 hover:text-white'
                     }`}
                   >
-                    <FontAwesomeIcon icon={faBug} className="mr-2" />
+                    <Icon name="bug" className="mr-2" />
                     Reportar Bug
                   </button>
                 </div>
@@ -491,11 +470,11 @@ export const UserSettingsPage = () => {
               </SettingsSection>
 
               {/* Info Section */}
-              <SettingsSection title="Información" icon={faShieldAlt}>
+              <SettingsSection title="Información" icon="shield-alt">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div className="p-4 rounded-xl bg-slate-950/50 border border-slate-800">
                     <h3 className="font-bold text-white mb-2 flex items-center gap-2">
-                      <FontAwesomeIcon icon={faCloud} className="text-cyan-400" />
+                      <Icon name="cloud" className="text-cyan-400" />
                       Cloud Sync
                     </h3>
                     <p className="text-xs text-slate-400 leading-relaxed">
@@ -504,7 +483,7 @@ export const UserSettingsPage = () => {
                   </div>
                   <div className="p-4 rounded-xl bg-slate-950/50 border border-slate-800">
                     <h3 className="font-bold text-white mb-2 flex items-center gap-2">
-                      <FontAwesomeIcon icon={faLock} className="text-cyan-400" />
+                      <Icon name="lock" className="text-cyan-400" />
                       Privacidad
                     </h3>
                     <p className="text-xs text-slate-400 leading-relaxed">
@@ -524,7 +503,7 @@ export const UserSettingsPage = () => {
           <div className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-60 p-4">
             <div className="bg-slate-900 border border-slate-800 rounded-2xl max-w-md w-full p-6 shadow-2xl animate-scaleIn">
               <div className="w-12 h-12 rounded-full bg-red-500/10 flex items-center justify-center text-red-500 mx-auto mb-4">
-                <FontAwesomeIcon icon={faWarning} className="text-xl" />
+                <Icon name="warning" className="text-xl" />
               </div>
               <h2 className="text-xl font-bold text-white text-center mb-2">Zona de Peligro</h2>
               <p className="text-slate-400 text-center text-sm mb-6">
@@ -576,7 +555,7 @@ export const UserSettingsPage = () => {
           }}
           className="cursor-pointer fixed bottom-6 right-6 z-40 p-4 bg-linear-to-r from-pink-500 to-rose-500 text-white rounded-full shadow-lg shadow-pink-500/30 hover:scale-110 transition-transform duration-300 lg:hidden"
         >
-          <FontAwesomeIcon icon={faHeart} className="text-xl" />
+          <Icon name="heart" className="text-xl" />
         </button>
       </div>
     </div>

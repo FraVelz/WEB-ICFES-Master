@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCheck, faLock } from '@fortawesome/free-solid-svg-icons';
+import { Icon } from '@/shared/components/Icon';
 import { ACHIEVEMENT_CATEGORIES } from '../constants/achievements';
 
 export const AchievementsList = ({ achievements = [] }) => {
@@ -44,7 +43,7 @@ export const AchievementsList = ({ achievements = [] }) => {
                   : 'bg-slate-800/50 border-slate-700 text-slate-400 hover:bg-slate-800 hover:border-slate-600'
               }`}
             >
-              <FontAwesomeIcon icon={icon} />
+              <Icon name={icon} />
               {label}
             </button>
           ))}
@@ -72,7 +71,7 @@ export const AchievementsList = ({ achievements = [] }) => {
               <div className="flex items-start gap-4">
                 {/* Icon Box */}
                 <div className={`w-12 h-12 rounded-lg flex items-center justify-center text-xl border ${getStatusColor(achievement.status)}`}>
-                  <FontAwesomeIcon icon={achievement.icon} />
+                  <Icon name={achievement.icon} />
                 </div>
 
                 {/* Content */}
@@ -82,10 +81,10 @@ export const AchievementsList = ({ achievements = [] }) => {
                       {achievement.title}
                     </h3>
                     {isCompleted && (
-                      <FontAwesomeIcon icon={faCheck} className="text-yellow-400 text-sm" />
+                      <Icon name="check" className="text-yellow-400 text-sm" />
                     )}
                     {isIncomplete && (
-                      <FontAwesomeIcon icon={faLock} className="text-slate-600 text-sm" />
+                      <Icon name="lock" className="text-slate-600 text-sm" />
                     )}
                   </div>
                   

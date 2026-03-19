@@ -1,6 +1,5 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Icon } from '@/shared/components/Icon';
 import Link from 'next/link';
-import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
 
 export const QuickStatCard = ({ stat, value, icon, color }) => (
   <div 
@@ -8,7 +7,7 @@ export const QuickStatCard = ({ stat, value, icon, color }) => (
   >
     <div className="flex items-center justify-between mb-3">
       <p className="text-sm font-semibold opacity-90">{stat}</p>
-      <FontAwesomeIcon icon={icon} className="text-xl opacity-70" />
+      <Icon name={icon} className="text-xl opacity-70" />
     </div>
     <p className="text-3xl font-bold">{value}</p>
   </div>
@@ -67,7 +66,7 @@ export const NavigationCard = ({ card }) => (
     )}
     
     <div className={`p-3 rounded-lg bg-linear-to-br ${card.color} text-white mb-3 inline-block group-hover:scale-110 transition-transform duration-300`}>
-      <FontAwesomeIcon icon={card.icon} className="text-xl" />
+      <Icon name={card.icon} className="text-xl" />
     </div>
     
     <h3 className="font-bold text-white mb-1">{card.title}</h3>
@@ -75,7 +74,7 @@ export const NavigationCard = ({ card }) => (
     
     <div className="flex items-center gap-2 mt-4 text-blue-400 group-hover:text-blue-300 transition-colors">
       <span className="text-xs font-semibold">Ir</span>
-      <FontAwesomeIcon icon={faArrowRight} className="group-hover:translate-x-1 transition-transform" />
+      <Icon name="arrow-right" className="group-hover:translate-x-1 transition-transform" />
     </div>
   </Link>
 );

@@ -2,8 +2,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faLock, faCheckCircle, faExclamationCircle, faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
+import { Icon } from '@/shared/components/Icon';
 import { EMAIL_MESSAGES } from '@/config/emailMessages';
 import { useAuth } from '@/context/AuthContext';
 import { supabase } from '@/config/supabase';
@@ -116,7 +115,7 @@ export const ResetPasswordPage = () => {
           <div className="text-center space-y-6">
             <div className="flex justify-center mb-6">
               <div className="w-20 h-20 rounded-full bg-green-500/20 border border-green-500/50 flex items-center justify-center animate-pulse">
-                <FontAwesomeIcon icon={faCheckCircle} className="text-green-400 text-4xl" />
+                <Icon name="check-circle" size="2xl" className="text-green-400 text-4xl" />
               </div>
             </div>
 
@@ -142,7 +141,7 @@ export const ResetPasswordPage = () => {
             <div className="text-center mb-8">
               <div className="flex justify-center mb-4">
                 <div className="w-16 h-16 rounded-full bg-cyan-500/20 border border-cyan-500/50 flex items-center justify-center">
-                  <FontAwesomeIcon icon={faLock} className="text-cyan-400 text-2xl" />
+                  <Icon name="lock" size="2xl" className="text-cyan-400 text-2xl" />
                 </div>
               </div>
               <h1 className="text-3xl md:text-4xl font-black mb-4 bg-linear-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-transparent">
@@ -156,7 +155,7 @@ export const ResetPasswordPage = () => {
             {/* Error Message */}
             {error && (
               <div className="mb-6 flex items-start gap-3 p-4 bg-red-500/20 border border-red-500/50 rounded-lg">
-                <FontAwesomeIcon icon={faExclamationCircle} className="text-red-400 mt-0.5 shrink-0" />
+                <Icon name="exclamation-circle" className="text-red-400 mt-0.5 shrink-0" />
                 <p className="text-sm text-red-400">{error}</p>
               </div>
             )}
@@ -169,10 +168,10 @@ export const ResetPasswordPage = () => {
                   {EMAIL_MESSAGES.resetPasswordPage.newPasswordLabel}
                 </label>
                 <div className="relative">
-                  <FontAwesomeIcon
-                    icon={faLock}
-                    className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"
-                  />
+                <Icon
+                  name="lock"
+                  className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"
+                />
                   <input
                     id="password"
                     type={showPassword ? 'text' : 'password'}
@@ -186,7 +185,7 @@ export const ResetPasswordPage = () => {
                     onClick={() => setShowPassword(!showPassword)}
                     className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-300"
                   >
-                    <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
+                    <Icon name={showPassword ? 'eye-slash' : 'eye'} />
                   </button>
                 </div>
               </div>
@@ -197,10 +196,10 @@ export const ResetPasswordPage = () => {
                   {EMAIL_MESSAGES.resetPasswordPage.confirmPasswordLabel}
                 </label>
                 <div className="relative">
-                  <FontAwesomeIcon
-                    icon={faLock}
-                    className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"
-                  />
+                <Icon
+                  name="lock"
+                  className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"
+                />
                   <input
                     id="confirmPassword"
                     type={showConfirmPassword ? 'text' : 'password'}
@@ -214,7 +213,7 @@ export const ResetPasswordPage = () => {
                     onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                     className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-300"
                   >
-                    <FontAwesomeIcon icon={showConfirmPassword ? faEyeSlash : faEye} />
+                    <Icon name={showConfirmPassword ? 'eye-slash' : 'eye'} />
                   </button>
                 </div>
               </div>

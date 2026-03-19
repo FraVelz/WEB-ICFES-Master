@@ -1,10 +1,8 @@
-import { faPlay } from '@fortawesome/free-solid-svg-icons';
-
 export const IMPROVEMENT_BADGES = {
   IMPROVEMENT_CHAMPION: {
     id: 'IMPROVEMENT_CHAMPION',
     name: 'Campeón de Mejora',
-    icon: faPlay,
+    icon: 'play',
     description: 'Mejora tu puntuación en 20 puntos',
     requirement: 'Aumenta tu promedio 20 puntos',
     category: 'mejora'
@@ -12,7 +10,7 @@ export const IMPROVEMENT_BADGES = {
   COMEBACK_KING: {
     id: 'COMEBACK_KING',
     name: 'Rey del Regreso',
-    icon: faPlay,
+    icon: 'play',
     description: 'Recuperarte de una mala puntuación',
     requirement: 'Obtén 90%+ después de un resultado bajo',
     category: 'mejora'
@@ -20,7 +18,7 @@ export const IMPROVEMENT_BADGES = {
   STEADY_CLIMBER: {
     id: 'STEADY_CLIMBER',
     name: 'Escalador Constante',
-    icon: faPlay,
+    icon: 'play',
     description: 'Mejora tu puntuación cada semana',
     requirement: 'Aumenta puntuación 4 semanas consecutivas',
     category: 'mejora'
@@ -28,7 +26,7 @@ export const IMPROVEMENT_BADGES = {
   FOCUS_FINDER: {
     id: 'FOCUS_FINDER',
     name: 'Buscador de Enfoque',
-    icon: faPlay,
+    icon: 'play',
     description: 'Completa 10 exámenes sin descansar',
     requirement: 'Realiza 10 exámenes en sesión',
     category: 'mejora'
@@ -36,7 +34,7 @@ export const IMPROVEMENT_BADGES = {
   THIRTY_POINT_JUMP: {
     id: 'THIRTY_POINT_JUMP',
     name: 'Salto de 30 Puntos',
-    icon: faPlay,
+    icon: 'play',
     description: 'Mejora 30 puntos en una materia',
     requirement: 'Aumenta tu promedio 30 puntos en una área',
     category: 'mejora'
@@ -44,7 +42,7 @@ export const IMPROVEMENT_BADGES = {
   TRIPLE_RECOVERY: {
     id: 'TRIPLE_RECOVERY',
     name: 'Triple Recuperación',
-    icon: faPlay,
+    icon: 'play',
     description: 'Supera 3 rachas bajas en una semana',
     requirement: 'Obtén 90%+ en 3 exámenes tras resultados bajos',
     category: 'mejora'
@@ -52,7 +50,7 @@ export const IMPROVEMENT_BADGES = {
   MOMENTUM_BUILDER: {
     id: 'MOMENTUM_BUILDER',
     name: 'Constructor de Impulso',
-    icon: faPlay,
+    icon: 'play',
     description: 'Logra 5 mejoras consecutivas',
     requirement: 'Aumenta puntuación en 5 exámenes seguidos',
     category: 'mejora'
@@ -60,7 +58,7 @@ export const IMPROVEMENT_BADGES = {
   CONSISTENCY_MASTER: {
     id: 'CONSISTENCY_MASTER',
     name: 'Maestro de Consistencia',
-    icon: faPlay,
+    icon: 'play',
     description: 'Mantén 85%+ durante 30 exámenes',
     requirement: 'Promedio 85%+ en 30 exámenes consecutivos',
     category: 'mejora'
@@ -68,7 +66,7 @@ export const IMPROVEMENT_BADGES = {
   BREAKTHROUGH_ACHIEVER: {
     id: 'BREAKTHROUGH_ACHIEVER',
     name: 'Logrador de Avances',
-    icon: faPlay,
+    icon: 'play',
     description: 'Alcanza tu mejor puntuación de todos los tiempos',
     requirement: 'Supera tu récord personal en cualquier área',
     category: 'mejora'
@@ -76,7 +74,7 @@ export const IMPROVEMENT_BADGES = {
   ENDURANCE_TRAINER: {
     id: 'ENDURANCE_TRAINER',
     name: 'Entrenador de Resistencia',
-    icon: faPlay,
+    icon: 'play',
     description: 'Completa 50 exámenes manteniéndote motivado',
     requirement: 'Realiza 50 exámenes sin bajar de 80%',
     category: 'mejora'

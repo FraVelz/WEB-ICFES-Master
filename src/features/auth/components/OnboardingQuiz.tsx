@@ -1,8 +1,7 @@
 'use client';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronRight, faCheckCircle, faArrowRight } from '@fortawesome/free-solid-svg-icons';
+import { Icon } from '@/shared/components/Icon';
 import { MascotaCircle } from '@/shared/components/MascotaCircle';
 
 // Secciones de introducción
@@ -189,7 +188,7 @@ export const OnboardingQuiz = ({ onComplete, avatarConfig = {} }) => {
                         className="cursor-pointer p-2 hover:bg-slate-800 rounded-lg transition-all duration-200"
                         title="Volver atrás"
                     >
-                        <FontAwesomeIcon icon={faChevronRight} className="text-xl text-cyan-400 rotate-180" />
+                        <Icon name="chevron-left" className="text-xl text-cyan-400" />
                     </button>
                 </div>
 
@@ -221,7 +220,7 @@ export const OnboardingQuiz = ({ onComplete, avatarConfig = {} }) => {
                         className="cursor-pointer w-full py-4 px-6 bg-linear-to-r from-cyan-500 to-blue-600 text-white font-bold rounded-lg hover:shadow-lg hover:shadow-cyan-500/50 transition-all duration-300 flex items-center justify-center gap-2 text-lg"
                     >
                         <span>Continuar</span>
-                        <FontAwesomeIcon icon={faArrowRight} />
+                        <Icon name="arrow-right" />
                     </button>
                 </footer>
             </OnboardingLayout>
@@ -233,7 +232,7 @@ export const OnboardingQuiz = ({ onComplete, avatarConfig = {} }) => {
             <OnboardingLayout className="items-center justify-center">
                 <main className="flex-1 flex flex-col items-center justify-center px-6 py-12 w-full max-w-md mx-auto text-center space-y-8">
                     <div className="inline-flex items-center justify-center w-24 h-24 rounded-full bg-linear-to-r from-green-500 to-emerald-600 mx-auto shadow-lg shadow-green-500/30">
-                        <FontAwesomeIcon icon={faCheckCircle} className="text-5xl" />
+                        <Icon name="check-circle" className="text-5xl" />
                     </div>
 
                     <div className="space-y-4">
@@ -250,7 +249,7 @@ export const OnboardingQuiz = ({ onComplete, avatarConfig = {} }) => {
                         onClick={handleContinue}
                         className="cursor-pointer w-full py-4 px-6 bg-linear-to-r from-cyan-500 to-blue-600 text-white font-bold rounded-lg hover:shadow-lg hover:shadow-cyan-500/50 transition-all duration-300 flex items-center justify-center gap-2 text-lg"
                     >
-                        <FontAwesomeIcon icon={faArrowRight} />
+                        <Icon name="arrow-right" />
                         Ir al Registro
                     </button>
                 </main>
@@ -268,7 +267,7 @@ export const OnboardingQuiz = ({ onComplete, avatarConfig = {} }) => {
                         className="cursor-pointer p-2 hover:bg-slate-800 rounded-lg transition-all duration-200"
                         title="Volver atrás"
                     >
-                        <FontAwesomeIcon icon={faChevronRight} className="text-xl text-cyan-400 rotate-180" />
+                        <Icon name="chevron-left" className="text-xl text-cyan-400" />
                     </button>
                     <div className="flex items-center justify-center gap-6 flex-1">
                         <h3 className="text-sm font-semibold text-slate-400 hidden sm:block">
@@ -349,12 +348,12 @@ export const OnboardingQuiz = ({ onComplete, avatarConfig = {} }) => {
                     {currentQuestionIndex === ONBOARDING_QUESTIONS.length - 1 ? (
                         <>
                             Finalizar
-                            <FontAwesomeIcon icon={faCheckCircle} />
+                            <Icon name="check-circle" />
                         </>
                     ) : (
                         <>
                             Continuar
-                            <FontAwesomeIcon icon={faArrowRight} />
+                            <Icon name="arrow-right" />
                         </>
                     )}
                 </button>

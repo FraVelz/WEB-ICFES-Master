@@ -1,6 +1,5 @@
 import React from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHardHat } from '@fortawesome/free-solid-svg-icons';
+import { Icon } from '@/shared/components/Icon';
 
 /**
  * Componente de alerta para secciones en construcción
@@ -11,7 +10,7 @@ export const ConstructionAlert = ({ moduleName, className = '' }) => {
     <div className={`bg-yellow-500/10 border-l-4 border-yellow-500 p-4 mb-6 mx-4 md:mx-auto max-w-7xl rounded-r-lg backdrop-blur-sm ${className}`}>
       <div className="flex items-start">
         <div className="shrink-0">
-          <FontAwesomeIcon icon={faHardHat} className="h-5 w-5 text-yellow-500" />
+          <Icon name="hard-hat" size="md" className="h-5 w-5 text-yellow-500" />
         </div>
         <div className="ml-3">
           <h3 className="text-sm font-medium text-yellow-500">
