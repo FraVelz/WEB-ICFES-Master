@@ -13,17 +13,22 @@ export const LearningService = {
     if (API_CONFIG.MODE === 'supabase') {
       const lessons = await LearningSupabaseService.getLessonsByArea(areaId);
       if (lessons?.length > 0) {
-        return lessons.map((l, i) => ({
-          id: l.id,
-          title: l.title,
-          order: i,
-          difficulty: l.difficulty || 'facil',
-          rewards: l.quiz?.rewards || { xp: 50, coins: 25 },
-          duration: l.duration,
-          content: l,
-          questions: l.questions,
-          quiz: l.quiz
-        }));
+        return lessons.map((l, i) => {
+          // Extraer el contenido como string (body, markdown, content o content.body)
+          const rawContent = l.body ?? l.markdown ?? (typeof l.content === 'string' ? l.content : l.content?.body ?? l.content?.markdown);
+          const contentStr = typeof rawContent === 'string' ? rawContent : '';
+          return {
+            id: l.id,
+            title: l.title,
+            order: i,
+            difficulty: l.difficulty || 'facil',
+            rewards: l.quiz?.rewards || { xp: 50, coins: 25 },
+            duration: l.duration,
+            content: contentStr,
+            questions: l.questions,
+            quiz: l.quiz
+          };
+        });
       }
     }
 

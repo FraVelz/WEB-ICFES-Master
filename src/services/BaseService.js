@@ -1,7 +1,8 @@
 /**
- * SERVICE BASE - Clase abstracta para todos los servicios
+ * SERVICE BASE - Clase abstracta para servicios en modo localStorage
  * Proporciona métodos comunes para CRUD operations
- * Maneja tanto localStorage como API automáticamente
+ * Solo se usa cuando API_CONFIG.MODE === 'localStorage'
+ * Con MODE === 'supabase' se usan los servicios Supabase directamente
  */
 
 import API_CONFIG from './api.config';
@@ -12,17 +13,22 @@ export class BaseService {
     this.localStorageKey = `icfes_${resourceName}`;
   }
 
+  _ensureLocalStorageMode() {
+    if (API_CONFIG.MODE !== 'localStorage') {
+      throw new Error(
+        `BaseService solo se usa con MODE='localStorage'. Con MODE='supabase' usa los servicios Supabase directamente.`
+      );
+    }
+  }
+
   /**
    * GET - Obtener uno o múltiples registros
    * @param {string} id - ID del registro (opcional)
    * @returns {Promise}
    */
   async get(id = null) {
-    if (API_CONFIG.MODE === 'localStorage') {
-      return this._getFromLocalStorage(id);
-    } else {
-      return this._getFromAPI(id);
-    }
+    this._ensureLocalStorageMode();
+    return this._getFromLocalStorage(id);
   }
 
   /**
@@ -31,11 +37,8 @@ export class BaseService {
    * @returns {Promise}
    */
   async create(data) {
-    if (API_CONFIG.MODE === 'localStorage') {
-      return this._createInLocalStorage(data);
-    } else {
-      return this._createInAPI(data);
-    }
+    this._ensureLocalStorageMode();
+    return this._createInLocalStorage(data);
   }
 
   /**
@@ -45,11 +48,8 @@ export class BaseService {
    * @returns {Promise}
    */
   async update(id, data) {
-    if (API_CONFIG.MODE === 'localStorage') {
-      return this._updateInLocalStorage(id, data);
-    } else {
-      return this._updateInAPI(id, data);
-    }
+    this._ensureLocalStorageMode();
+    return this._updateInLocalStorage(id, data);
   }
 
   /**
@@ -58,11 +58,8 @@ export class BaseService {
    * @returns {Promise}
    */
   async delete(id) {
-    if (API_CONFIG.MODE === 'localStorage') {
-      return this._deleteFromLocalStorage(id);
-    } else {
-      return this._deleteFromAPI(id);
-    }
+    this._ensureLocalStorageMode();
+    return this._deleteFromLocalStorage(id);
   }
 
   // ============ MÉTODOS PRIVADOS - localStorage ============
@@ -149,60 +146,6 @@ export class BaseService {
         reject(new Error(`Error eliminando ${this.resourceName}: ${error.message}`));
       }
     });
-  }
-
-  // ============ MÉTODOS PRIVADOS - API REST ============
-
-  async _getFromAPI(id) {
-    const endpoint = id ? `${API_CONFIG.API_URL}/${this.resourceName}/${id}` : `${API_CONFIG.API_URL}/${this.resourceName}`;
-    return this._fetchWithAuth('GET', endpoint);
-  }
-
-  async _createInAPI(data) {
-    return this._fetchWithAuth('POST', `${API_CONFIG.API_URL}/${this.resourceName}`, data);
-  }
-
-  async _updateInAPI(id, data) {
-    return this._fetchWithAuth('PUT', `${API_CONFIG.API_URL}/${this.resourceName}/${id}`, data);
-  }
-
-  async _deleteFromAPI(id) {
-    return this._fetchWithAuth('DELETE', `${API_CONFIG.API_URL}/${this.resourceName}/${id}`);
-  }
-
-  async _fetchWithAuth(method, endpoint, body = null) {
-    try {
-      const options = {
-        method,
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      };
-
-      // Agregar token si existe
-      if (API_CONFIG.API_TOKEN) {
-        options.headers['Authorization'] = `Bearer ${API_CONFIG.API_TOKEN}`;
-      }
-
-      if (body) {
-        options.body = JSON.stringify(body);
-      }
-
-      const response = await Promise.race([
-        fetch(endpoint, options),
-        new Promise((_, reject) =>
-          setTimeout(() => reject(new Error('Timeout')), API_CONFIG.TIMEOUT)
-        )
-      ]);
-
-      if (!response.ok) {
-        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-      }
-
-      return await response.json();
-    } catch (error) {
-      throw new Error(`Error de API en ${this.resourceName}: ${error.message}`);
-    }
   }
 }
 
