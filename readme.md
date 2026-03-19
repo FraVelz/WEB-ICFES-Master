@@ -1,6 +1,10 @@
 # Web Icfes Master
 
-Una plataforma interactiva para practicar preguntas y aprender temas del examen de estado ICFES (Saber 11). Diseñada con arquitectura **Feature-Based** y **Atomic Design** usando Next.js 15, React 19, Tailwind CSS 3 y Supabase.
+Una plataforma interactiva para practicar preguntas y aprender temas del examen de estado ICFES (Saber 11) en colombia. Diseñada con arquitectura **Feature-Based** y **Atomic Design** usando Next.js 15, React 19, Tailwind CSS 3 y Supabase.
+
+> se buscaba abarcar muchos mas paises, aparte de colombia, pero cada pais maneja la educacion de forma diferente, las preguntas, los temas, las materias cambian, incruso, hay paises donde el examen no es obligatorio o es inexistente.
+
+![Hero section de la plataforma ICFES - Domina el ICFES desde Cero](public/images/screenshot.png)
 
 ## Características Principales
 
@@ -30,7 +34,7 @@ Una plataforma interactiva para practicar preguntas y aprender temas del examen 
 
 Total: 40+ preguntas con contenido avanzado (imágenes, tablas, fórmulas, gráficas)
 
-## Sistema de Logros (Gamificación)
+## Sistema de Logros
 
 ### Categorías de Logros (40+ total)
 
@@ -58,158 +62,6 @@ Total: 40+ preguntas con contenido avanzado (imágenes, tablas, fórmulas, gráf
 - Sistema de niveles progresivos basado en XP
 - Desbloqueables según planes y actividad del usuario
 - Visualización de progreso hacia el siguiente nivel
-
-## Estructura del Proyecto (Feature-Based)
-
-```bash
-src/
- features/               # Características organizadas por dominio
-    exam/               # Feature de exámenes
-       components/
-          ExamConfigModal/
-          AnswerSheet/
-          ResultsAnalysis/
-       pages/
-          PracticePage/
-          FullExamPage/
-       hooks/
-       utils/
-    learning/           # Feature de aprendizaje con 3 niveles
-       components/
-          LearningFilters/
-          MaterialsGrid/
-          AdditionalResources/
-       pages/
-          LearningPage/  # Selector de niveles + contenido dinámico
-       lessons/
-       utils/
-    logros/             # Feature de gamificación y badges
-       pages/
-          LogrosPage/     # 40+ logros por categoría
-       hooks/
-    progress/           # Feature de progreso
-       pages/
-    gamification/       # Feature de gamificación
-       hooks/
-    auth/               # Feature de autenticación
-       components/
-       pages/
-    user/               # Feature de usuario
-       hooks/
-    store/              # Feature de tienda y planes
-    home/               # Feature de inicio
-        pages/
- shared/                 # Componentes y utilidades compartidas
-    components/
-       atoms/          # Componentes básicos
-          Badge
-          Button
-          Card
-          Progress
-          Text
-       molecules/      # Componentes compuestos
-          AnswerOption
-          FloatingFilterButton
-          QuestionCard
-          ResultsSummary
-       organisms/      # Componentes complejos
-           QuestionContent/  # Soporte para contenido avanzado
-               TextContent
-               ImageContent
-               TableContent
-               FormulaContent
-               ChartContent
-               TimelineContent
-               CodeContent
-               MapContent
-               QuoteContent
-               CompositeContent
-    utils/              # Funciones utilitarias
-        formatters.js
-        index.js
- core/                   # Datos y constantes globales
-    data/
-       questions.js
-       learningMaterials.js
-       index.js
-    constants/
-       areaInfo.js
-       index.js
-    index.js
- hooks/                  # Hooks personalizados
-    useQuizLogic.js
-    useGamification.js
-    useUserData.js
-    useProgress.js
-    useExam.js
- services/               # Servicios (Supabase + API configurable)
-    api.config.js       # Modo supabase, localStorage o api
-    ExamService.js
-    GamificationService.js
-    ProgressService.js
-    UserService.js
- context/                # Context API
-    AuthContext.jsx
- app/                    # Rutas Next.js (App Router)
-    layout.tsx           # Layout raíz
-    (dashboard)/         # Rutas autenticadas (perfil, examen, logros, etc.)
-    (auth)/              # Rutas de autenticación (login, signup, onboarding)
-    privacidad/          # Página legal
-    terminos/            # Página legal
- components/
-    AppWithProviders.jsx # Wrapper React con providers
- App.jsx                 # Componente principal con rutas React
- styles/
-    global.css           # Tailwind + estilos globales
-    scrollAnimations.css
-```
-
-## Instalación y Configuración
-
-### Requisitos Previos
-
-- Node.js (v18 o superior)
-- pnpm
-
-### Instalación
-
-```bash
-git clone <url-repo>
-cd WEB-ICFES-Master
-pnpm install
-```
-
-### Configuración
-
-Crea un archivo `.env.local` en la raíz con las variables necesarias (Firebase, API, etc.). Consulta `docs/setup/configuration.md` para el listado completo.
-
-### Desarrollo Local
-
-```bash
-pnpm run dev
-```
-
-La aplicación se abrirá en `http://localhost:3000/`
-
-### Compilar para Producción
-
-```bash
-pnpm run build
-```
-
-### Preview del Build de Producción
-
-```bash
-pnpm run preview
-```
-
-### Build Móvil (Android)
-
-```bash
-pnpm run build:apk    # Genera APK
-pnpm run build:aab    # Genera AAB para Play Store
-pnpm run mobile:sync  # Sincroniza con Capacitor
-```
 
 ## Uso de la Plataforma
 
@@ -274,25 +126,8 @@ Carpeta: `docs/`
 
 Para sugerencias o reporte de errores, crea un issue en el repositorio de GitHub.
 
-## Cambios Recientes (Marzo 2026)
-
-- **Arquitectura**:
-  - Next.js 15 App Router con rutas `(dashboard)` y `(auth)`
-  - API configurable: modo `localStorage` (desarrollo) o `api` (producción)
-  - Servicios centralizados en `src/services/` con soporte dual
-
-- **Características**:
-  - Sistema de 3 niveles de aprendizaje (Fácil, Intermedio, Avanzado)
-  - 40+ logros desbloqueables con gamificación
-  - Autenticación con Supabase y persistencia en PostgreSQL
-  - Planes de suscripción: Gratuito, Pro, Premium, Anual
-  - Build móvil con Capacitor (APK/AAB para Android)
-
-- **Documentación**:
-  - Nueva estructura en `docs/` (overview, setup, frontend, backend, integrations)
-
 ---
 
-Desarrollo: Fravelz  
-Última actualización: 18 de marzo de 2026  
-Licencia: MIT
+**Desarrollo:** Fravelz  
+
+**Licencia:** Apache License 2.0
