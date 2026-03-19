@@ -1,10 +1,14 @@
+'use client';
+
 import React, { useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 import { Icon } from '@/shared/components/Icon';
 import { LessonQuizModal } from './LessonQuizModal';
+import { useGSAPModalEntrance } from '@/hooks/useGSAPModalEntrance';
 
 export const LessonContentModal = ({ isOpen, onClose, lesson }) => {
   const [isQuizOpen, setIsQuizOpen] = useState(false);
+  const modalRef = useGSAPModalEntrance({ isOpen, type: 'slideUp', duration: 0.3 });
 
   // Normalizar preguntas: puede venir como questions (array) o quiz (objeto único)
   const hasQuestions = lesson?.questions && Array.isArray(lesson.questions) && lesson.questions.length > 0;
@@ -18,7 +22,7 @@ export const LessonContentModal = ({ isOpen, onClose, lesson }) => {
   const hasContent = contentStr.trim().length > 0;
 
   return (
-    <div className="fixed inset-0 z-60 bg-slate-950 flex flex-col animate-in slide-in-from-bottom duration-300 w-full h-full">
+    <div ref={modalRef} className="fixed inset-0 z-60 bg-slate-950 flex flex-col w-full h-full">
       {/* Header */}
       <div className="flex items-center p-4 border-b border-slate-800 bg-slate-900/95 backdrop-blur-md shrink-0">
         <button 

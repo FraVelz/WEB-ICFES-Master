@@ -4,7 +4,7 @@ export { FeaturesSection } from './FeaturesSection';
 export { TestimonialsSection } from './TestimonialsSection';
 export { FAQSection } from './FAQSection';
 export { FinalCTASection } from './FinalCTASection';
-export { DonationSection } from './DonationSection';
+export { DonationSection } from './DonationSection/DonationSection';
 export { MobileNavMenu } from './MobileNavMenu';
 export { MobileSectionWrapper } from './MobileSectionWrapper';
 export { ResponsiveSectionWrapper } from './ResponsiveSectionWrapper';

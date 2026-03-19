@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect } from 'react';
 import ReactMarkdown from 'react-markdown';
 import { Icon } from '@/shared/components/Icon';
+import { useGSAPModalEntrance } from '@/hooks/useGSAPModalEntrance';
 
 interface Message {
   id: string;
@@ -13,6 +14,7 @@ interface Message {
 
 export const ChatAssistant = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const chatPanelRef = useGSAPModalEntrance({ isOpen, type: 'slideUp', duration: 0.3 });
   const [messages, setMessages] = useState<Message[]>([]);
   const [inputValue, setInputValue] = useState('');
   const [isTyping, setIsTyping] = useState(false);
@@ -105,7 +107,7 @@ export const ChatAssistant = () => {
 
       {/* Panel de chat */}
       {isOpen && (
-        <div className="fixed bottom-24 right-6 z-50 w-[min(400px,calc(100vw-3rem))] h-[min(500px,70vh)] bg-slate-900/98 backdrop-blur-xl border border-cyan-500/30 rounded-2xl shadow-2xl shadow-cyan-500/20 flex flex-col overflow-hidden animate-in slide-in-from-bottom-4 fade-in duration-300">
+        <div ref={chatPanelRef} className="fixed bottom-24 right-6 z-50 w-[min(400px,calc(100vw-3rem))] h-[min(500px,70vh)] bg-slate-900/98 backdrop-blur-xl border border-cyan-500/30 rounded-2xl shadow-2xl shadow-cyan-500/20 flex flex-col overflow-hidden">
           {/* Header */}
           <div className="flex items-center justify-between px-4 py-3 bg-linear-to-r from-cyan-600/30 to-blue-600/30 border-b border-cyan-500/20">
             <div className="flex items-center gap-3">

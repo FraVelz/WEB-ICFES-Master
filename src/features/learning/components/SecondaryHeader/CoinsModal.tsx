@@ -1,16 +1,21 @@
+'use client';
+
 import { Icon } from '@/shared/components/Icon';
+import { useGSAPModalEntrance } from '@/hooks/useGSAPModalEntrance';
 
 /**
  * Dropdown que muestra el dinero virtual
  */
 export const CoinsModal = ({ isOpen, onClose, coins = 0 }) => {
+  const dropdownRef = useGSAPModalEntrance({ isOpen, type: 'slideFromTop', duration: 0.2 });
+
   if (!isOpen) return null;
 
   return (
     <>
       <div className="fixed inset-0 z-40" onClick={onClose} />
       
-      <div className="absolute top-full right-0 w-full sm:w-80 bg-slate-900 border-b border-x border-slate-700 rounded-b-2xl shadow-2xl z-50 animate-in slide-in-from-top-2 duration-200">
+      <div ref={dropdownRef} className="absolute top-full right-0 w-full sm:w-80 bg-slate-900 border-b border-x border-slate-700 rounded-b-2xl shadow-2xl z-50">
         <div className="p-4">
           <div className="flex justify-between items-center mb-4 pb-3 border-b border-slate-800">
             <h2 className="text-sm font-bold text-slate-400 uppercase tracking-wider flex items-center gap-2">

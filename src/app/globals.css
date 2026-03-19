@@ -70,3 +70,8 @@
     transform: scale(1);
   }
 }
+
+/* Utilidad mínima para componentes que aún usan animate-fadeIn (legacy) */
+.animate-fadeIn {
+  animation: fadeIn 0.3s ease-in-out;
+}

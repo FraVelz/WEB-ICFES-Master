@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState } from 'react';
 import { AreaPath } from './AreaPath';
 import { LessonPreview } from './LessonPreview';
@@ -5,6 +7,7 @@ import { LessonContentModal } from './LessonContentModal';
 import { SecondaryHeader } from '../SecondaryHeader';
 import { AREA_INFO } from '@/shared/constants';
 import { useLearningPath } from '../../hooks/useLearningPath';
+import { AnimatedOnMount } from '@/shared/components/AnimatedOnMount';
 
 /**
  * Componente principal de la Ruta de Aprendizaje
@@ -54,14 +57,14 @@ export const LearningRoadmap = ({ initialArea = 'lectura-critica' }) => {
 
       <div className="flex-1 relative pb-24 pt-8 px-4">
         {/* Título del Área (Contexto) */}
-        <div className="text-center mb-8 animate-in fade-in slide-in-from-top-4 duration-700">
+        <AnimatedOnMount className="text-center mb-8" duration={0.7} y={16}>
           <h2 className={`text-3xl font-bold bg-clip-text text-transparent bg-linear-to-r ${currentAreaData.color}`}>
             {currentAreaData.name}
           </h2>
           <p className="text-slate-400 text-sm mt-2 font-medium tracking-wide uppercase">
             Ruta de Aprendizaje
           </p>
-        </div>
+        </AnimatedOnMount>
 
         {/* Estado de Carga y Error */}
         {loading && (

@@ -1,36 +1,38 @@
-import PropTypes from 'prop-types';
+
+export type MascotaCircleSize = 'sm' | 'md' | 'lg' | 'xl';
+
+export type MascotaCircleProps = {
+  src: string;
+  alt?: string;
+  size?: MascotaCircleSize;
+  imgSize?: string;
+  centered?: boolean;
+  className?: string;
+  circleClassName?: string;
+}
 
 /**
- * Componente MascotaCircle
- * Muestra la imagen de la mascota dentro de un círculo con fondo oscuro
- * Componente reutilizable con props personalizables
- *
- * @param {string} src - URL de la imagen de la mascota
- * @param {string} alt - Texto alternativo para la imagen
- * @param {string} size - Tamaño del círculo: 'small', 'medium', 'large', 'xlarge'
- * @param {string} imgSize - Tamaño de la imagen dentro del círculo
- * @param {boolean} centered - Si el círculo debe estar centrado
- * @param {string} className - Clases adicionales para el contenedor externo
- * @param {string} circleClassName - Clases adicionales para el círculo
+ * Muestra la imagen de la mascota dentro de un círculo con fondo oscuro.
+ * Componente reutilizable con props personalizables.
  */
 export const MascotaCircle = ({
   src,
   alt = 'Mascota',
-  size = 'large',
+  size = 'lg',
   imgSize = 'w-full h-full',
   centered = true,
   className = '',
   circleClassName = ''
-}) => {
+}: MascotaCircleProps) => {
   const sizeMap = {
-    small: 'w-32 h-32',
-    medium: 'w-40 h-40',
-    large: 'w-48 h-48',
-    xlarge: 'w-56 h-56'
+    sm: 'w-32 h-32',
+    md: 'w-40 h-40',
+    lg: 'w-48 h-48',
+    xl: 'w-56 h-56'
   };
 
   const containerClass = centered ? 'flex justify-center' : '';
-  const circleClass = sizeMap[size] || sizeMap.large;
+  const circleClass = sizeMap[size] || sizeMap.lg;
 
   return (
     <div className={`${containerClass} ${className}`}>
@@ -44,14 +46,4 @@ export const MascotaCircle = ({
       </div>
     </div>
   );
-};
-
-MascotaCircle.propTypes = {
-  src: PropTypes.string.isRequired,
-  alt: PropTypes.string,
-  size: PropTypes.oneOf(['small', 'medium', 'large', 'xlarge']),
-  imgSize: PropTypes.string,
-  centered: PropTypes.bool,
-  className: PropTypes.string,
-  circleClassName: PropTypes.string
 };

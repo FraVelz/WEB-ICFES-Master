@@ -1,12 +1,13 @@
 import { useState, useEffect } from "react";
+
 import { useIsMobile } from "@/hooks/useIsMobile";
 import { HomePageDesktop } from "./HomePageDesktop";
 import { HomePageMobile } from "./HomePageMobile";
 
 export const HomePage = () => {
   const { isMobile } = useIsMobile();
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [expandedFaq, setExpandedFaq] = useState(null);
+
+  const [expandedFaq, setExpandedFaq] = useState<number | null>(null);
   const [isInitialLoad, setIsInitialLoad] = useState(true);
 
   // Marcar fin de carga inicial después de 3 segundos
@@ -23,20 +24,11 @@ export const HomePage = () => {
   };
 
   return isMobile ? (
-    <HomePageMobile
-      isInitialLoad={isInitialLoad}
-      onDemoAccess={handleDemoAccess}
-      isModalOpen={isModalOpen}
-      setIsModalOpen={setIsModalOpen}
-      expandedFaq={expandedFaq}
-      setExpandedFaq={setExpandedFaq}
-    />
+    <HomePageMobile />
   ) : (
     <HomePageDesktop
       isInitialLoad={isInitialLoad}
       onDemoAccess={handleDemoAccess}
-      isModalOpen={isModalOpen}
-      setIsModalOpen={setIsModalOpen}
       expandedFaq={expandedFaq}
       setExpandedFaq={setExpandedFaq}
     />

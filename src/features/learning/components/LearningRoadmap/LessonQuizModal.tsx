@@ -1,11 +1,15 @@
+'use client';
+
 import React, { useState, useEffect } from 'react';
 import { Icon } from '@/shared/components/Icon';
 import { useAuth } from '@/context/AuthContext';
+import { useGSAPModalEntrance } from '@/hooks/useGSAPModalEntrance';
 import GamificationServiceAdapter from '@/services/GamificationServiceAdapter';
 import { getCompletedLessons, markLessonAsCompleted } from '@/shared/utils/progressStorage';
 
 export const LessonQuizModal = ({ isOpen, onClose, onComplete, questions, quiz, lessonId, lessonTitle, lessonXp, lessonCoins }) => {
   const { user } = useAuth();
+  const overlayRef = useGSAPModalEntrance({ isOpen, type: 'fade', duration: 0.2 });
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [selectedOption, setSelectedOption] = useState(null);
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -318,7 +322,7 @@ export const LessonQuizModal = ({ isOpen, onClose, onComplete, questions, quiz, 
   if (!isOpen || !currentQuestion) return null;
 
   return (
-    <div className="fixed inset-0 z-70 bg-black/80 backdrop-blur-sm flex items-end lg:items-center justify-center p-0 lg:p-4 pb-20 lg:pb-4 animate-in fade-in duration-200">
+    <div ref={overlayRef} className="fixed inset-0 z-70 bg-black/80 backdrop-blur-sm flex items-end lg:items-center justify-center p-0 lg:p-4 pb-20 lg:pb-4">
       <div className="bg-slate-900 border-t lg:border border-slate-800 rounded-t-2xl lg:rounded-2xl max-w-lg w-full max-h-[calc(95vh-5rem)] lg:max-h-[90vh] overflow-hidden shadow-2xl transform transition-all scale-100 flex flex-col">
         
         {/* Header */}

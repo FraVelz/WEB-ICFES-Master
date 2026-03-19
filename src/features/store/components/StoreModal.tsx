@@ -1,13 +1,17 @@
+'use client';
+
 import React, { useState } from 'react';
 import { Icon } from '@/shared/components/Icon';
 import { useShop } from '../hooks/useShop';
 import { ShopItemCard } from './ShopItemCard';
 import { ShopItemModal } from './ShopItemModal';
+import { useGSAPModalEntrance } from '@/hooks/useGSAPModalEntrance';
 
 export const StoreModal = ({ isOpen, onClose }) => {
   const { coins, hasItem, loading, processing, buyItem, shopItems } = useShop();
   const [selectedItem, setSelectedItem] = useState(null);
   const [filter, setFilter] = useState('all'); // all, avatar, theme, powerup
+  const modalRef = useGSAPModalEntrance({ isOpen, type: 'fade', duration: 0.2 });
 
   const handleBuy = async (item) => {
     try {
@@ -27,7 +31,7 @@ export const StoreModal = ({ isOpen, onClose }) => {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-100 bg-slate-950 flex flex-col animate-in fade-in duration-200">
+    <div ref={modalRef} className="fixed inset-0 z-100 bg-slate-950 flex flex-col">
       <div className="w-full h-full overflow-hidden flex flex-col bg-slate-900">
         
         {/* Header */}

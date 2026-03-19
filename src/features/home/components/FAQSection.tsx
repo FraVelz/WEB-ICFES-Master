@@ -1,19 +1,28 @@
 import { Icon } from "@/shared/components/Icon";
 import { FAQS } from "@/features/home/data";
-import { getAnimationStyle } from "@/features/home/hooks/animations";
+import { AnimatedReveal } from "@/shared/components/AnimatedReveal";
 
-export const FAQSection = ({ isInitialLoad, faqSection, expandedFaq, setExpandedFaq }) => {
+export const FAQSection = ({ isInitialLoad, faqSection, expandedFaq, setExpandedFaq }:
+  {
+    isInitialLoad: boolean;
+    faqSection: any;
+    expandedFaq: number | null;
+    setExpandedFaq: React.Dispatch<React.SetStateAction<number | null>>;
+  }
+) => {
   return (
     <section ref={faqSection.elementRef} className="max-w-4xl mx-auto px-6 md:px-8 py-20">
-      <div style={getAnimationStyle(faqSection.isVisible, isInitialLoad)} className="text-center mb-16">
+      <AnimatedReveal isVisible={faqSection.isVisible} isInitialLoad={isInitialLoad} className="text-center mb-16">
         <h2 className="text-4xl md:text-5xl font-bold mb-4">Preguntas Frecuentes</h2>
-      </div>
+      </AnimatedReveal>
 
       <div className="space-y-4">
         {FAQS.map((faq, idx) => (
-          <div
+          <AnimatedReveal
             key={idx}
-            style={getAnimationStyle(faqSection.isVisible, isInitialLoad, idx * 0.12)}
+            isVisible={faqSection.isVisible}
+            isInitialLoad={isInitialLoad}
+            delay={idx * 0.12}
             className="bg-slate-800 border border-slate-700 rounded-lg overflow-hidden"
           >
             <button
@@ -31,7 +40,7 @@ export const FAQSection = ({ isInitialLoad, faqSection, expandedFaq, setExpanded
                 {faq.a}
               </div>
             )}
-          </div>
+          </AnimatedReveal>
         ))}
       </div>
     </section>

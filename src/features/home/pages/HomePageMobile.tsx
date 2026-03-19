@@ -1,7 +1,7 @@
 'use client';
 import { MascotaCircle } from "@/shared/components/MascotaCircle";
 
-export const HomePageMobile = ({ isInitialLoad, onDemoAccess, isModalOpen, setIsModalOpen, expandedFaq, setExpandedFaq }) => {
+export const HomePageMobile = () => {
   return (
     <div className="h-dvh w-screen bg-linear-to-b from-black via-slate-950 to-black text-white flex flex-col">
       {/* Background glow effects - Optimizado para móvil */}
@@ -15,9 +15,7 @@ export const HomePageMobile = ({ isInitialLoad, onDemoAccess, isModalOpen, setIs
       <div className="relative z-10 flex-1 flex items-center justify-center">
         <div className="flex flex-col items-center justify-center gap-4 px-6">
           {/* Logo */}
-          <MascotaCircle 
-          src='/avatars/logo.webp'
-          size="md" interactive={false} bobbing={true} className="" />
+          <MascotaCircle src='/avatars/logo.webp' size="md" />
          
           {/* App Name */}
           <h1 className="text-3xl font-bold text-white">ICFES Master</h1>

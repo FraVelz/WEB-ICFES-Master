@@ -1,11 +1,16 @@
+'use client';
+
 import { Icon } from '@/shared/components/Icon';
 import { AREA_INFO } from '@/shared/constants';
+import { useGSAPModalEntrance } from '@/hooks/useGSAPModalEntrance';
 
 /**
  * Dropdown que muestra todas las áreas disponibles
  * Se renderiza justo debajo del header secundario
  */
 export const AreasModal = ({ isOpen, onClose, onSelectArea, currentArea }) => {
+  const dropdownRef = useGSAPModalEntrance({ isOpen, type: 'slideFromTop', duration: 0.2 });
+
   if (!isOpen) return null;
 
   const areas = Object.entries(AREA_INFO);
@@ -19,7 +24,7 @@ export const AreasModal = ({ isOpen, onClose, onSelectArea, currentArea }) => {
       />
       
       {/* Dropdown Container */}
-      <div className="absolute top-full left-0 w-full sm:w-80 bg-slate-900 border-b border-x border-slate-700 rounded-b-2xl shadow-2xl z-50 animate-in slide-in-from-top-2 duration-200">
+      <div ref={dropdownRef} className="absolute top-full left-0 w-full sm:w-80 bg-slate-900 border-b border-x border-slate-700 rounded-b-2xl shadow-2xl z-50">
         <div className="p-4">
           <div className="flex justify-between items-center mb-3 pb-2 border-b border-slate-800">
             <h3 className="text-sm font-bold text-slate-400 uppercase tracking-wider">Mis Cursos</h3>
