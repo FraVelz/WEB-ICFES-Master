@@ -5,7 +5,7 @@ export const DonationSection = () => {
   const [selectedAmount, setSelectedAmount] = useState(2000);
   const [customAmount, setCustomAmount] = useState('');
   const [selectedMethod, setSelectedMethod] = useState('sprite');
-  const [copied, setCopied] = useState(null);
+  const [copied, setCopied] = useState<string | null>(null);
 
   // Card Form State
   const [cardData, setCardData] = useState({
@@ -18,7 +18,7 @@ export const DonationSection = () => {
   const [isProcessing, setIsProcessing] = useState(false);
   const [paymentSuccess, setPaymentSuccess] = useState(false);
 
-  const copyToClipboard = (text, id) => {
+  const copyToClipboard = (text: string, id: string) => {
     navigator.clipboard.writeText(text);
     setCopied(id);
     setTimeout(() => setCopied(null), 2000);
