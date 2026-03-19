@@ -1,8 +1,10 @@
+'use client';
+
 import { memo } from "react";
+
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
-import { DonationSection } from "@/features/home/components";
-import { PricingPlans, Footer } from "@/shared/components";
-import { PRICING_PLANS } from "@/features/home/data";
+import { Footer } from "@/shared/components";
+import { GSAPGlowBlob } from "@/shared/components/GSAPGlowBlob";
 
 import { 
   HeroSection, 
@@ -12,51 +14,23 @@ import {
   FAQSection, 
   FinalCTASection
 } from "@/features/home/components";
-import "@/styles/scrollAnimations.css";
 
-// Glow effect configuration with animation delays for better visual effect
 const GLOW_EFFECTS = [
-  { 
-    position: "top-1/3 left-1/4", 
-    size: "w-96 h-96", 
-    color: "bg-blue-500/30",
-    animation: "animate-pulse"
-  },
-  { 
-    position: "bottom-1/3 right-1/4", 
-    size: "w-96 h-96", 
-    color: "bg-purple-500/30",
-    animation: "animate-pulse delay-1000"
-  },
-  { 
-    position: "top-2/3 left-3/4", 
-    size: "w-72 h-72", 
-    color: "bg-indigo-500/20",
-    animation: "animate-pulse delay-500"
-  },
+  { position: "top-1/3 left-1/4", size: "w-96 h-96", color: "bg-blue-500/30", delay: 0 },
+  { position: "bottom-1/3 right-1/4", size: "w-96 h-96", color: "bg-purple-500/30", delay: 1 },
+  { position: "top-2/3 left-3/4", size: "w-72 h-72", color: "bg-indigo-500/20", delay: 0.5 },
 ];
 
-// Component sections configuration
-const MAIN_SECTIONS = [
-  { Component: "HeroSection", props: { isInitialLoad: true, onDemoAccess: true } },
-  { Component: "AreasSection", props: { isInitialLoad: true, areasSection: true } },
-  { Component: "FeaturesSection", props: { isInitialLoad: true, whyChooseSection: true } },
-  { Component: "TestimonialsSection", props: { isInitialLoad: true, testimonialSection: true } },
-];
-
-/**
- * Desktop version of the home page with hero, sections, pricing
- * @component
- * @param {Object} props - Component props
- * @param {boolean} props.isInitialLoad - Initial load state for animations
- * @param {number} props.expandedFaq - Currently expanded FAQ item
- * @param {Function} props.setExpandedFaq - Setter for expanded FAQ
- */
 const HomePageDesktopComponent = ({
   isInitialLoad,
   expandedFaq,
   setExpandedFaq,
   onDemoAccess,
+}: {
+  isInitialLoad: boolean;
+  expandedFaq: number | null;
+  setExpandedFaq: React.Dispatch<React.SetStateAction<number | null>>;
+  onDemoAccess: () => void;
 }) => {
   // Scroll animation refs
   const areasSection = useScrollAnimation();
@@ -70,14 +44,10 @@ const HomePageDesktopComponent = ({
       <div className="lg:mx-20 fixed inset-0 overflow-hidden pointer-events-none z-0" role="presentation">
         <div className="absolute inset-0 bg-linear-to-b from-transparent via-transparent to-black/50" />
         {GLOW_EFFECTS.map((effect, index) => (
-          <div
+          <GSAPGlowBlob
             key={`glow-${index}`}
-            className={`absolute ${effect.position} ${effect.size} ${effect.color} rounded-full blur-3xl ${effect.animation} transition-all duration-1000`}
-            aria-hidden="true"
-            style={{
-              filter: "blur(90px)",
-              willChange: "transform",
-            }}
+            className={`absolute ${effect.position} ${effect.size} ${effect.color} rounded-full blur-3xl`}
+            delay={effect.delay}
           />
         ))}
         {/* Radial gradient overlay */}
@@ -108,12 +78,6 @@ const HomePageDesktopComponent = ({
           <TestimonialsSection isInitialLoad={isInitialLoad} testimonialSection={testimonialSection} />
         </section>
 
-        {/* Pricing Section */}
-        {/* <section className="relative py-12 md:py-16 overflow-hidden">
-          <div className="absolute top-0 left-0 right-0 h-1 bg-linear-to-r from-transparent via-indigo-500/50 to-transparent" />
-          <PricingPlans plans={PRICING_PLANS} />
-        </section> */}
-
         {/* FAQ Section */}
         <section className="relative py-12 md:py-16 overflow-hidden">
           <FAQSection 
@@ -130,15 +94,9 @@ const HomePageDesktopComponent = ({
           <FinalCTASection />
         </section>
 
-        {/* Donation Section */}
-        {/* <section className="relative py-12 md:py-16 overflow-hidden">
-          <DonationSection />
-        </section> */}
-
         <Footer />
 
       </div> 
-
     </div>
   );
 };

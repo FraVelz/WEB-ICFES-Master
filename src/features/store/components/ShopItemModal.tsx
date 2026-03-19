@@ -1,12 +1,24 @@
-import React from 'react';
+'use client';
+
+import React, { useEffect, useRef } from 'react';
 import { Icon } from '@/shared/components/Icon';
+import { gsap } from '@/lib/gsap';
 
 export const ShopItemModal = ({ item, isOpen, onClose, onBuy, processing, canAfford, isPurchased }) => {
+  const overlayRef = useRef(null);
+  const contentRef = useRef(null);
+
+  useEffect(() => {
+    if (!isOpen || !overlayRef.current || !contentRef.current) return;
+    gsap.fromTo(overlayRef.current, { opacity: 0 }, { opacity: 1, duration: 0.2 });
+    gsap.fromTo(contentRef.current, { opacity: 0, scale: 0.95 }, { opacity: 1, scale: 1, duration: 0.3, ease: 'power2.out' });
+  }, [isOpen]);
+
   if (!isOpen || !item) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-fadeIn">
-      <div className="bg-slate-900 border border-slate-700 rounded-3xl max-w-md w-full overflow-hidden shadow-2xl relative animate-scaleIn">
+    <div ref={overlayRef} className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
+      <div ref={contentRef} className="bg-slate-900 border border-slate-700 rounded-3xl max-w-md w-full overflow-hidden shadow-2xl relative">
         
         {/* Close Button */}
         <button 

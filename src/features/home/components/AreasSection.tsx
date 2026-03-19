@@ -1,23 +1,31 @@
 import Link from 'next/link';
 import { Icon } from '@/shared/components/Icon';
 import { AREAS } from "@/features/home/data";
-import { getAnimationStyle } from "@/features/home/hooks/animations";
+import { AnimatedReveal } from "@/shared/components/AnimatedReveal";
 
-export const AreasSection = ({ isInitialLoad, areasSection }) => {
+export const AreasSection = ({ isInitialLoad, areasSection }:
+  {
+    isInitialLoad: boolean;
+    areasSection: any 
+  }) => {
   return (
     <section ref={areasSection.elementRef} className="max-w-7xl mx-auto px-6 md:px-8 py-20">
-      <div style={getAnimationStyle(areasSection.isVisible, isInitialLoad, 0.8)} className="text-center mb-16">
+      <AnimatedReveal isVisible={areasSection.isVisible} isInitialLoad={isInitialLoad} delay={0.8} className="text-center mb-16">
         <h2 className="text-4xl md:text-5xl font-bold mb-4">Domina Cada Área</h2>
         <p className="text-slate-400 text-lg max-w-2xl mx-auto">Contenido especializado, preguntas ICFES de simulacro y cursos para temas básicos, para las 5 áreas principales del ICFES</p>
-      </div>
+      </AnimatedReveal>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
         {AREAS.map((area, idx) => (
-          <Link
+          <AnimatedReveal
             key={area.id}
+            isVisible={areasSection.isVisible}
+            isInitialLoad={isInitialLoad}
+            delay={0.9 + idx * 0.15}
+          >
+          <Link
             href={`/practica/${area.id}`}
-            style={getAnimationStyle(areasSection.isVisible, isInitialLoad, 0.9 + idx * 0.15)}
-            className="group relative"
+            className="group relative block"
           >
             <div className={`bg-linear-to-br ${area.gradient} rounded-xl p-8 border border-slate-700 hover:border-slate-500 transition-all duration-300 hover:shadow-lg hover:shadow-slate-900/50 hover:scale-105 cursor-pointer h-full`}>
               {/* Icon Background */}
@@ -52,6 +60,7 @@ export const AreasSection = ({ isInitialLoad, areasSection }) => {
               </div>
             </div>
           </Link>
+          </AnimatedReveal>
         ))}
       </div>
 

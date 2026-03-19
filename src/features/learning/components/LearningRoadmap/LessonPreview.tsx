@@ -1,19 +1,26 @@
+'use client';
+
 import React from 'react';
 import { Icon } from '@/shared/components/Icon';
+import { useGSAPModalEntrance } from '@/hooks/useGSAPModalEntrance';
 
 export const LessonPreview = ({ isOpen, onClose, lesson, onStart }) => {
+  const backdropRef = useGSAPModalEntrance({ isOpen, type: 'fade', duration: 0.2 });
+  const contentRef = useGSAPModalEntrance({ isOpen, type: 'slideUp', duration: 0.3 });
+
   if (!isOpen || !lesson) return null;
 
   return (
     <div className="fixed inset-0 z-50 flex items-end justify-center sm:items-center">
       {/* Backdrop */}
       <div 
-        className="absolute inset-0 bg-black/60 backdrop-blur-sm animate-in fade-in duration-200"
+        ref={backdropRef}
+        className="absolute inset-0 bg-black/60 backdrop-blur-sm"
         onClick={onClose}
       />
 
       {/* Content */}
-      <div className="relative w-screen mb-20 max-w-md bg-slate-900 border-t border-slate-700 sm:border sm:rounded-2xl p-6 shadow-2xl animate-in slide-in-from-bottom duration-300">
+      <div ref={contentRef} className="relative w-screen mb-20 max-w-md bg-slate-900 border-t border-slate-700 sm:border sm:rounded-2xl p-6 shadow-2xl">
         
         {/* Close Button */}
         <button 
