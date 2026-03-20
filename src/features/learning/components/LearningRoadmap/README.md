@@ -14,7 +14,7 @@ src/features/learning/components/Roadmap/
 ├── LevelComponents.jsx (existente)
 │
 └── LearningRoadmap/ (NUEVA CARPETA MODULARIZADA)
-    ├── index.jsx ⭐ Componente principal
+    ├── index.tsx ⭐ Componente principal
     ├── constants.js
     ├── hooks.js
     ├── iconMap.js
@@ -28,7 +28,7 @@ src/features/learning/components/Roadmap/
 
 ## 📋 Descripción de Archivos
 
-### `index.jsx` - Componente Principal
+### `index.tsx` - Componente Principal
 
 **Responsabilidad:** Orquestar y renderizar todas las secciones
 
@@ -159,7 +159,7 @@ LearningRoadmap.jsx → TODO mezclado
 
 ```
 LearningRoadmap/
-├── index.jsx (130 líneas) → Orquestación
+├── index.tsx (130 líneas) → Orquestación
 ├── constants.js (50 líneas) → Datos
 ├── hooks.js (25 líneas) → Lógica
 ├── iconMap.js (20 líneas) → Iconos
@@ -174,11 +174,11 @@ LearningRoadmap/
 ## 🔄 Flujo de Importación
 
 ```
-Roadmap/index.js
+Roadmap/index.ts
   └─> export LearningRoadmap from './LearningRoadmap'
       └─> LearningRoadmap.jsx (wrapper)
           └─> import { LearningRoadmap } from './LearningRoadmap/index'
-              └─> LearningRoadmap/index.jsx (COMPONENTE REAL)
+              └─> LearningRoadmap/index.tsx (COMPONENTE REAL)
                   ├─> imports constants.js
                   ├─> imports hooks.js
                   ├─> imports iconMap.js
@@ -214,7 +214,7 @@ Roadmap/index.js
 ### Agregar nueva sección:
 
 1. Crear `NuevaSection.jsx` en la carpeta
-2. Importar en `index.jsx`
+2. Importar en `index.tsx`
 3. Renderizar en el JSX
 
 ### Cambiar lógica de expansión:

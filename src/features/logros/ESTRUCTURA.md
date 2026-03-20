@@ -4,16 +4,16 @@
 
 ```
 /src/features/logros/
- index.jsx                          # Componente principal
+ index.tsx                          # Componente principal
  utils/
     badgeUtils.js                 # Utilidades de categorización
  constants/
      badges.js                      # Re-exports principales
      categoriesConfig.js            # Configuración de categorías
-     index.js                       # Consolidador de logros
+     index.ts                       # Consolidador de logros
      badgesByCategory.js            # Re-exports por categoría
      categories/                    # Módulos individuales por categoría
-         index.js                   # Index de categorías
+         index.ts                   # Index de categorías
          firstSteps.js              # 4 logros
          streaks.js                 # 4 logros
          academic.js                # 6 logros
@@ -36,7 +36,7 @@ badges.js (re-exports)
     ↓
     → badgesByCategory.js (agrupa por categoría)
            ↓
-           → categories/index.js
+           → categories/index.ts
                → firstSteps.js
                → streaks.js
                → academic.js
@@ -53,7 +53,7 @@ badges.js (re-exports)
 
     → categoriesConfig.js (configuración de categorías)
 
-    → index.js (consolida todo)
+    → index.ts (consolida todo)
         → LOGROS_DISPONIBLES (todos los logros combinados)
         → BADGE_CATEGORIES (todas las categorías)
 ```
@@ -135,8 +135,8 @@ NEW_ACHIEVEMENT: {
 
 ## Dependencias Entre Archivos
 
-- `index.jsx` → importa desde `./constants` → usa `LOGROS_DISPONIBLES` y `BADGE_CATEGORIES`
-- `constants/index.js` → consolida todos los exports
+- `index.tsx` → importa desde `./constants` → usa `LOGROS_DISPONIBLES` y `BADGE_CATEGORIES`
+- `constants/index.ts` → consolida todos los exports
 - `constants/badgesByCategory.js` → re-exporta desde `categories/`
 - `constants/categoriesConfig.js` → define estilos y configuración
 - `categories/*.js` → cada archivo define un conjunto de logros
@@ -147,4 +147,4 @@ NEW_ACHIEVEMENT: {
 - Cada logro debe tener un `id` único
 - La `category` debe coincidir con la clave en `BADGE_CATEGORIES`
 - Los archivos de categoría no tienen dependencias internas
-- Los imports se propagan hacia arriba a través de `index.js`
+- Los imports se propagan hacia arriba a través de `index.ts`

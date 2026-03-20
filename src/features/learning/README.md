@@ -7,36 +7,36 @@ La funcionalidad de Learning está organizada de la siguiente manera:
 ```
 learning/
  pages/                          # Páginas principales
-    index.js                    # Exporta todas las páginas
+    index.ts                    # Exporta todas las páginas
     Main/                       # Página principal de aprendizaje
-       index.js
-       LearningPage.jsx        # Selector de niveles (Básico, Intermedio, Avanzado)
+       index.ts
+       LearningPage.tsx        # Selector de niveles (Básico, Intermedio, Avanzado)
        components/             # Componentes específicos de esta página
     Roadmap/                    # Página de ruta de aprendizaje
-       index.js
-       LearningRoadmapPage.jsx
+       index.ts
+       LearningRoadmapPage.tsx
        components/             # Componentes específicos
     ProgressiveICFES/           # Página del mapa progresivo ICFES
-        index.js
-        ProgressiveICFESMapPage.jsx
+        index.ts
+        ProgressiveICFESMapPage.tsx
         components/             # Componentes específicos
 
  components/                     # Componentes reutilizables
-    index.js                    # Exporta componentes principales
+    index.ts                    # Exporta componentes principales
     Roadmap/                    # Componentes del Roadmap
-       index.js
-       LearningRoadmap.jsx     # Componente principal
-       BasicoComponents.jsx    # Componentes del nivel básico
-       IntermediaComponents.jsx # Componentes del nivel intermedio
-       LevelComponents.jsx     # Componentes del nivel avanzado
-    LearningFilters.jsx         # Filtros de materiales
-    MaterialsGrid.jsx           # Grid de materiales
-    AdditionalResources.jsx     # Recursos adicionales
-    LearningPathMap.jsx         # Mapa de ruta
-    ProgressiveICFESMap.jsx     # Mapa progresivo
+       index.ts
+       LearningRoadmap.tsx     # Componente principal
+       BasicoComponents.tsx    # Componentes del nivel básico
+       IntermediaComponents.tsx # Componentes del nivel intermedio
+       LevelComponents.tsx     # Componentes del nivel avanzado
+    LearningFilters.tsx         # Filtros de materiales
+    MaterialsGrid.tsx           # Grid de materiales
+    AdditionalResources.tsx     # Recursos adicionales
+    LearningPathMap.tsx         # Mapa de ruta
+    ProgressiveICFESMap.tsx     # Mapa progresivo
 
  data/                           # Datos estáticos
-    roadmapData.js              # Datos del roadmap (materias, tópicos)
+    roadmapData.ts              # Datos del roadmap (materias, tópicos)
 
  lessons/                        # Lecciones por categoría
     lenguaje/                   # Lecciones de lenguaje
@@ -44,7 +44,7 @@ learning/
     science/                    # Lecciones de ciencias
     social/                     # Lecciones de sociales
 
- index.js                        # Exporta la feature
+ index.ts                        # Exporta la feature
 ```
 
 ## Características
@@ -84,7 +84,7 @@ Cada página está organizada en su propia carpeta:
 
 ### Data (Datos)
 
-- `roadmapData.js`:
+- `roadmapData.ts`:
   - `SUBJECTS`: Definición de las 5 materias
   - `BASICO_TOPICS`: Tópicos del nivel básico
   - `INTERMEDIO_TOPICS`: Información del nivel intermedio

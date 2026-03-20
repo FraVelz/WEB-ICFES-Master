@@ -5,9 +5,9 @@
 Si ves un error como:
 
 ```
-GET http://localhost:5173/src/features/learning/components/MobileHeader/index.jsx
+GET http://localhost:5173/src/features/learning/components/MobileHeader/index.tsx
 ERROR_CORRUPTED_CONTENT
-Se bloqueó la carga de un módulo de "http://localhost:5173/src/features/learning/components/MobileHeader/index.jsx"
+Se bloqueó la carga de un módulo de "http://localhost:5173/src/features/learning/components/MobileHeader/index.tsx"
 ```
 
 ### ✅ Soluciones (en orden de prioridad)
@@ -76,7 +76,7 @@ ls -la src/features/learning/components/MobileHeader/
 # - AreasModal.jsx
 # - CoinsModal.jsx
 # - ESTRUCTURA.txt
-# - index.jsx
+# - index.tsx
 # - index.js
 # - package.json
 # - README.md
@@ -99,7 +99,7 @@ import { MobileHeader } from '../components/MobileHeader';
 ### ❌ Incorrecto
 
 ```jsx
-import { MobileHeader } from '@/features/learning/components/MobileHeader/index.jsx';
+import { MobileHeader } from '@/features/learning/components/MobileHeader/index.tsx';
 ```
 
 ---
@@ -142,7 +142,7 @@ No requiere cambios adicionales.
 
 ```
 MobileHeader/
-├── index.jsx           ✓ Componente principal (IMPORTANTE)
+├── index.tsx           ✓ Componente principal (IMPORTANTE)
 ├── index.js            ✓ Exportaciones
 ├── AreasModal.jsx      ✓ Modal para seleccionar áreas
 ├── StreakModal.jsx     ✓ Modal para información de racha
