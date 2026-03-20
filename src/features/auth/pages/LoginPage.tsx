@@ -1,5 +1,6 @@
 'use client';
-import { useState, useEffect } from 'react';
+
+import { useState } from 'react';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Icon } from '@/shared/components/Icon';
@@ -12,19 +13,12 @@ export const LoginPage = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
-  const [isDemoMode, setIsDemoMode] = useState(false);
   const { login } = useAuth();
   const router = useRouter();
-
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      setIsDemoMode(localStorage.getItem('demoMode') === 'true');
-    }
-  }, []);
   const searchParams = useSearchParams();
   const from = searchParams.get('from');
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
     setIsLoading(true);
@@ -32,15 +26,14 @@ export const LoginPage = () => {
     try {
       await login(email, password);
 
-      // Si viene desde pricing, guardar flag y redirigir a home
       if (from === 'pricing') {
         localStorage.setItem('fromPricing', 'true');
         router.replace('/');
       } else {
-        router.push('/perfil');
+        router.push('/ruta-aprendizaje');
       }
     } catch (err) {
-      setError(err.message);
+      setError(err instanceof Error ? err.message : 'Error al iniciar sesión');
     } finally {
       setIsLoading(false);
     }
@@ -61,7 +54,7 @@ export const LoginPage = () => {
             href="/"
             className="text-slate-400 transition-colors hover:text-slate-300"
           >
-            <Icon name="times" className="text-2xl" />
+            <Icon name="times" size="2xl" className="text-2xl" />
           </Link>
           <h2 className="text-lg font-semibold">Ingresa tus datos</h2>
           <div className="w-6"></div>
@@ -75,7 +68,7 @@ export const LoginPage = () => {
           {/* Header */}
           <div className="mb-8 text-center">
             <div className="mb-4 inline-flex h-16 w-16 items-center justify-center rounded-full bg-linear-to-r from-cyan-500 to-blue-600">
-              <Icon name="rocket" className="text-2xl" />
+              <Icon name="rocket" size="2xl" className="text-2xl" />
             </div>
             <h1 className="mb-2 bg-linear-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-3xl font-black text-transparent md:text-4xl">
               ICFES Master
@@ -187,23 +180,6 @@ export const LoginPage = () => {
                 ¿Olvidaste tu contraseña?
               </Link>
             </p>
-            {/* Cerrar Demo - solo visible en modo demo */}
-            {isDemoMode && (
-              <p className="text-center">
-                <button
-                  onClick={() => {
-                    if (typeof window !== 'undefined') {
-                      localStorage.removeItem('demoMode');
-                      router.replace('/');
-                    }
-                  }}
-                  className="inline-flex cursor-pointer items-center gap-2 text-sm text-slate-400 transition-colors hover:text-slate-300"
-                >
-                  <Icon name="times" />
-                  Cerrar Demo
-                </button>
-              </p>
-            )}
           </div>
         </div>
       </div>

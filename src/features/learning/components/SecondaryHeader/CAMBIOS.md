@@ -16,7 +16,7 @@
 
 ### 3. **Integración en Ruta de Aprendizaje**
 
-- ✅ `LearningRoadmapPage.jsx` actualizado
+- ✅ `LearningRoadmapPage.tsx` actualizado
 - ✅ Importación correcta de `SecondaryHeader`
 - ✅ Header ahora visible encima del contenido
 
@@ -24,11 +24,11 @@
 
 ```
 SecondaryHeader/
-├── index.jsx              ← Componente principal (SecondaryHeader)
-├── index.js               ← Exportaciones
-├── AreasModal.jsx         ← Modal de áreas
-├── StreakModal.jsx        ← Modal de racha
-├── CoinsModal.jsx         ← Modal de dinero
+├── index.tsx              ← Componente principal (SecondaryHeader)
+├── index.ts               ← Exportaciones
+├── AreasModal.tsx         ← Modal de áreas
+├── StreakModal.tsx        ← Modal de racha
+├── CoinsModal.tsx         ← Modal de dinero
 ├── package.json           ← Descriptor
 ├── README.md              ← Documentación
 ├── ESTRUCTURA.txt         ← Visualización

@@ -56,11 +56,11 @@ El **MobileHeader** es un componente interactivo tipo Duolingo creado para la p�
 
 ```
 src/features/learning/components/MobileHeader/
-├── index.jsx          # Componente principal
-├── index.js           # Archivo de exportación
-├── AreasModal.jsx     # Modal para seleccionar áreas
-├── StreakModal.jsx    # Modal para información de racha
-└── CoinsModal.jsx     # Modal para dinero virtual
+├── index.tsx          # Componente principal
+├── index.ts           # Archivo de exportación
+├── AreasModal.tsx     # Modal para seleccionar áreas
+├── StreakModal.tsx    # Modal para información de racha
+└── CoinsModal.tsx     # Modal para dinero virtual
 ```
 
 ## 🚀 Uso
@@ -97,7 +97,7 @@ export const MiPagina = () => {
 
 ### Cambiar colores de áreas
 
-Edita `src/shared/constants/areaInfo.js`:
+Edita `src/shared/constants/areaInfo.ts`:
 
 ```javascript
 export const AREA_INFO = {
@@ -111,7 +111,7 @@ export const AREA_INFO = {
 
 ### Modificar beneficios de insignia
 
-En `StreakModal.jsx`, línea ~115:
+En `StreakModal.tsx`, línea ~115:
 
 ```jsx
 <ul className="space-y-1 text-sm text-slate-300">
@@ -124,7 +124,7 @@ En `StreakModal.jsx`, línea ~115:
 
 ### Cambiar rutas de navegación
 
-En `CoinsModal.jsx`, modifica la función `handleGoToStore`:
+En `CoinsModal.tsx`, modifica la función `handleGoToStore`:
 
 ```javascript
 const handleGoToStore = () => {
@@ -175,7 +175,7 @@ El componente utiliza el hook `useGamification` para obtener:
 
 ### Agregar animación al desbloquear insignia
 
-En `StreakModal.jsx`:
+En `StreakModal.tsx`:
 
 ```jsx
 {

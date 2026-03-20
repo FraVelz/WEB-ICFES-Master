@@ -11,28 +11,28 @@
 
 ```
 logros/
- index.jsx                  # Componente principal
- utils/badgeUtils.js        # Funciones de utilidad
+ index.tsx                  # Componente principal
+ utils/badgeUtils.ts        # Funciones de utilidad
  constants/
-    badges.js              # Re-exports principales
-    index.js               # Consolidador
-    badgesByCategory.js    # Agrupa por categoría
-    categoriesConfig.js    # Config de categorías
+    badges.ts              # Re-exports principales
+    index.ts               # Consolidador
+    badgesByCategory.ts    # Agrupa por categoría
+    categoriesConfig.ts    # Config de categorías
     categories/
-        firstSteps.js      # Primeros Pasos
-        streaks.js         # Rachas
-        academic.js        # Logros Académicos
-        excellence.js      # Excelencia
-        plans.js           # Planes
-        collaboration.js   # Colaboración
-        challenges.js      # Desafíos
-        improvement.js     # Mejora Continua
-        knowledge.js       # Conocimiento
-        milestones.js      # Hitos
-        gamification.js    # Gamificación
-        rigor.js           # Rigor
-        strategy.js        # Estrategia
-        index.js           # Index
+        firstSteps.ts      # Primeros Pasos
+        streaks.ts         # Rachas
+        academic.ts        # Logros Académicos
+        excellence.ts      # Excelencia
+        plans.ts           # Planes
+        collaboration.ts   # Colaboración
+        challenges.ts      # Desafíos
+        improvement.ts     # Mejora Continua
+        knowledge.ts       # Conocimiento
+        milestones.ts      # Hitos
+        gamification.ts    # Gamificación
+        rigor.ts           # Rigor
+        strategy.ts        # Estrategia
+        index.ts           # Index
  ESTRUCTURA.md              # Esta documentación
 ```
 
@@ -76,7 +76,7 @@ const badges = { ...ACADEMIC_BADGES, ...EXCELLENCE_BADGES };
 
 ### 1. En categoría existente
 
-Abre el archivo de categoría (ej: `constants/categories/academic.js`):
+Abre el archivo de categoría (ej: `constants/categories/academic.ts`):
 
 ```javascript
 import { faPlay } from '@fortawesome/free-solid-svg-icons';
@@ -98,7 +98,7 @@ export const ACADEMIC_BADGES = {
 
 ### 2. En nueva categoría
 
-1. Crea archivo: `constants/categories/myCategory.js`
+1. Crea archivo: `constants/categories/myCategory.ts`
 
 ```javascript
 import { faPlay } from '@fortawesome/free-solid-svg-icons';
@@ -115,13 +115,13 @@ export const MY_CATEGORY_BADGES = {
 };
 ```
 
-2. Agrega export en `categories/index.js`:
+2. Agrega export en `categories/index.ts`:
 
 ```javascript
 export { MY_CATEGORY_BADGES } from './myCategory';
 ```
 
-3. Agrega categoría en `categoriesConfig.js`:
+3. Agrega categoría en `categoriesConfig.ts`:
 
 ```javascript
 export const BADGE_CATEGORIES_CONFIG = {
@@ -139,7 +139,7 @@ export const BADGE_CATEGORIES_CONFIG = {
 
 ### Cambiar nombre de categoría
 
-En `constants/categoriesConfig.js`:
+En `constants/categoriesConfig.ts`:
 
 ```javascript
 const categoryKey = {
@@ -171,7 +171,7 @@ BADGE_ID: {
 
 ### Cambiar colores
 
-En `constants/categoriesConfig.js`:
+En `constants/categoriesConfig.ts`:
 
 ```javascript
 nombreCategoria: {
@@ -223,8 +223,8 @@ Para más: https://fontawesome.com/search?o=r&m=free&s=solid
 - [ ] Descripción clara
 - [ ] Requisito específico
 - [ ] Categoría correcta
-- [ ] Exportado en `categories/index.js` (si es nueva categoría)
-- [ ] Categoría en `categoriesConfig.js` (si es nueva)
+- [ ] Exportado en `categories/index.ts` (si es nueva categoría)
+- [ ] Categoría en `categoriesConfig.ts` (si es nueva)
 
 ## Verificación
 
@@ -233,10 +233,10 @@ Para más: https://fontawesome.com/search?o=r&m=free&s=solid
 npm run lint
 
 # Ver estructura de archivos
-find src/features/logros -type f -name "*.js"
+find src/features/logros -type f -name "*.ts"
 
 # Contar total de logros
-grep -r "id: '" src/features/logros/constants/categories --include="*.js" | wc -l
+grep -r "id: '" src/features/logros/constants/categories --include="*.ts" | wc -l
 ```
 
 ## Soporte
