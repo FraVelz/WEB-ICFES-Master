@@ -2,7 +2,18 @@ import { Icon } from '@/shared/components/Icon';
 import { TESTIMONIALS } from '@/features/home/data';
 import { AnimatedReveal } from '@/shared/components/AnimatedReveal';
 
-export const TestimonialsSection = ({ isInitialLoad, testimonialSection }) => {
+import { RefObject } from 'react';
+
+export const TestimonialsSection = ({
+  isInitialLoad,
+  testimonialSection,
+}: {
+  isInitialLoad: boolean;
+  testimonialSection: {
+    elementRef: RefObject<null>;
+    isVisible: boolean;
+  };
+}) => {
   return (
     <section
       ref={testimonialSection.elementRef}

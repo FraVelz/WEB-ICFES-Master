@@ -1,0 +1,46 @@
+export const paymentMethods = [
+  {
+    id: 'sprite',
+    name: 'Invítame una Sprite',
+    icon: 'droplet',
+    info: 'Tarjeta Débito / Crédito',
+    type: 'card',
+    highlight: true,
+    description:
+      'Usa tu tarjeta para invitar una Sprite al creador de forma segura.',
+  },
+  {
+    id: 'nequi',
+    name: 'Nequi',
+    icon: 'device-phone-mobile',
+    info: 'Transferencia instantánea',
+    detail: '322 596 3277',
+    type: 'copy',
+    owner: 'Marisol Otavo',
+  },
+  {
+    id: 'transferencia',
+    name: 'Bancolombia / A la mano',
+    icon: 'landmark',
+    info: 'Cuenta de Ahorros',
+    detail: '03225963277',
+    type: 'copy',
+    owner: 'Marisol Otavo',
+  },
+  {
+    id: 'paypal',
+    name: 'PayPal',
+    icon: 'paypal',
+    info: 'Pago internacional',
+    detail: 'paypal.me/fravelz',
+    type: 'url',
+  },
+  {
+    id: 'crypto',
+    name: 'Criptomonedas',
+    icon: 'bitcoin',
+    info: 'BTC, ETH, etc.',
+    detail: 'bc1qh50kpz5x0snvk6sg56jn6lamqy3ltmmu5f7ncn',
+    type: 'copy',
+  },
+];

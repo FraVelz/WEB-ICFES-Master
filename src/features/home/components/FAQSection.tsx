@@ -2,6 +2,8 @@ import { Icon } from '@/shared/components/Icon';
 import { FAQS } from '@/features/home/data';
 import { AnimatedReveal } from '@/shared/components/AnimatedReveal';
 
+import { RefObject } from 'react';
+
 export const FAQSection = ({
   isInitialLoad,
   faqSection,
@@ -9,7 +11,10 @@ export const FAQSection = ({
   setExpandedFaq,
 }: {
   isInitialLoad: boolean;
-  faqSection: any;
+  faqSection: {
+    elementRef: RefObject<null>;
+    isVisible: boolean;
+  };
   expandedFaq: number | null;
   setExpandedFaq: React.Dispatch<React.SetStateAction<number | null>>;
 }) => {

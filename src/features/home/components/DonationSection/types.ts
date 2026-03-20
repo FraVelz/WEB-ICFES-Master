@@ -1,0 +1,1 @@
+export type selectedAmountType = '2000' | '5000' | '10000' | 'custom';
