@@ -4,7 +4,13 @@ import Link from 'next/link';
 import { Icon } from '@/shared/components/Icon';
 import { AnimatedReveal } from '@/shared/components/AnimatedReveal';
 
-export const HeroSection = ({ isInitialLoad, onDemoAccess }) => {
+export const HeroSection = ({
+  isInitialLoad,
+  onDemoAccess,
+}: {
+  isInitialLoad: boolean;
+  onDemoAccess: () => void;
+}) => {
   const handleDemoClick = () => {
     if (onDemoAccess) {
       onDemoAccess();

@@ -2,7 +2,18 @@ import { Icon } from '@/shared/components/Icon';
 import { WHY_CHOOSE_US } from '@/features/home/data';
 import { AnimatedReveal } from '@/shared/components/AnimatedReveal';
 
-export const FeaturesSection = ({ isInitialLoad, whyChooseSection }) => {
+import { RefObject } from 'react';
+
+export const FeaturesSection = ({
+  isInitialLoad,
+  whyChooseSection,
+}: {
+  isInitialLoad: boolean;
+  whyChooseSection: {
+    elementRef: RefObject<null>;
+    isVisible: boolean;
+  };
+}) => {
   return (
     <section
       ref={whyChooseSection.elementRef}
