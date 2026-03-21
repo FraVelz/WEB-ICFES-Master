@@ -11,14 +11,14 @@ import { ResultsSummary } from '@/shared/components/molecules';
 import { LEARNING_MATERIALS } from '@/shared/data';
 
 export const LearningPage = () => {
-  const [activeLevel, setActiveLevel] = useState(null); // null | 'easy' | 'intermediate' | 'advanced'
+  const [activeLevel, setActiveLevel] = useState<'easy' | 'intermediate' | 'advanced' | null>(null);
   const [activeArea, setActiveArea] = useState('all');
-  const [selectedTopics, setSelectedTopics] = useState([]);
+  const [selectedTopics, setSelectedTopics] = useState<string[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
 
   // Get all unique topics based on active area
   const allTopics = useMemo(() => {
-    const topics = new Set();
+    const topics = new Set<string>();
     if (activeArea === 'all') {
       Object.values(LEARNING_MATERIALS).forEach((materials) => {
         materials.forEach((material) => {
@@ -26,7 +26,7 @@ export const LearningPage = () => {
         });
       });
     } else {
-      const areaMaterials = LEARNING_MATERIALS[activeArea] || [];
+      const areaMaterials = LEARNING_MATERIALS[activeArea] ?? [];
       areaMaterials.forEach((material) => {
         material.topics.forEach((topic) => topics.add(topic));
       });
@@ -37,14 +37,14 @@ export const LearningPage = () => {
   // Filter topics based on search term
   const filteredTopics = useMemo(() => {
     if (!searchTerm) return allTopics;
-    return allTopics.filter((topic) =>
+    return allTopics.filter((topic: string) =>
       topic.toLowerCase().includes(searchTerm.toLowerCase())
     );
   }, [searchTerm, allTopics]);
 
   // Filter materials based on selected area and topics
   const filteredMaterials = useMemo(() => {
-    let result = {};
+    const result: Record<string, typeof LEARNING_MATERIALS[string]> = {};
 
     Object.entries(LEARNING_MATERIALS).forEach(([area, materials]) => {
       if (activeArea !== 'all' && area !== activeArea) return;
@@ -62,7 +62,7 @@ export const LearningPage = () => {
     return result;
   }, [activeArea, selectedTopics]);
 
-  const handleAreaChange = (area) => {
+  const handleAreaChange = (area: string) => {
     setActiveArea(area);
     setSelectedTopics([]);
     setSearchTerm('');
@@ -74,7 +74,7 @@ export const LearningPage = () => {
     setSearchTerm('');
   };
 
-  const toggleTopic = (topic) => {
+  const toggleTopic = (topic: string) => {
     setSelectedTopics((prev) =>
       prev.includes(topic) ? prev.filter((t) => t !== topic) : [...prev, topic]
     );
@@ -91,7 +91,8 @@ export const LearningPage = () => {
     social: { icon: 'globe', color: 'text-orange-400', label: 'Sociales' },
   };
 
-  const learningLevels = {
+  type LevelKey = 'easy' | 'intermediate' | 'advanced';
+  const learningLevels: Record<LevelKey, { title: string; subtitle: string; description: string; icon: string; color: string; textColor: string; borderColor: string; bgColor: string; hoverColor: string; subjects: number }> = {
     easy: {
       title: 'Nivel Fácil',
       subtitle: 'Aprende las Bases',
@@ -161,7 +162,7 @@ export const LearningPage = () => {
               {Object.entries(learningLevels).map(([levelKey, level]) => (
                 <div
                   key={levelKey}
-                  onClick={() => setActiveLevel(levelKey)}
+                  onClick={() => setActiveLevel(levelKey as 'easy' | 'intermediate' | 'advanced')}
                   className={`group relative cursor-pointer rounded-2xl border-2 p-8 transition-all duration-300 ${level.borderColor} ${level.bgColor} hover:scale-105 hover:shadow-2xl ${level.hoverColor}`}
                 >
                   {/* Card Background Glow */}
@@ -231,7 +232,7 @@ export const LearningPage = () => {
     );
   }
 
-  const currentLevel = learningLevels[activeLevel];
+  const currentLevel = learningLevels[activeLevel!];
 
   return (
     <div className="min-h-dvh overflow-hidden bg-linear-to-b from-black via-slate-950 to-black text-white">

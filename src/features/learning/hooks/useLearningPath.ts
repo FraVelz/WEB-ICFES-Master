@@ -6,10 +6,14 @@ import { useAuth } from '@/context/AuthContext';
  * Hook para manejar la lógica de la ruta de aprendizaje.
  * Transforma los datos planos de Supabase/localStorage en la estructura de secciones que necesita el UI.
  */
-export const useLearningPath = (areaId) => {
-  const [sections, setSections] = useState([]);
+import type { PathSection, PathNodeData } from '@/features/learning/components/LearningRoadmap/AreaPath';
+
+export type { PathSection, PathNodeData };
+
+export const useLearningPath = (areaId: string | undefined) => {
+  const [sections, setSections] = useState<PathSection[]>([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<string | null>(null);
   const { user } = useAuth();
 
   useEffect(() => {
@@ -27,7 +31,7 @@ export const useLearningPath = (areaId) => {
         ]);
 
         // 2. Agrupar lecciones por dificultad para mantener el diseño de "Secciones"
-        const groupedSections = [
+        const groupedSections: PathSection[] = [
           {
             id: 'facil',
             title: 'Nivel Básico – Fundamentos',
@@ -49,7 +53,8 @@ export const useLearningPath = (areaId) => {
         ];
 
         // 3. Distribuir lecciones en las secciones
-        lessons.forEach((lesson) => {
+        const completedIds = (progress as { completedLessons?: string[] } | null)?.completedLessons ?? [];
+        lessons.forEach((lesson: { id?: string; difficulty?: string; rewards?: { xp?: number; coins?: number }; xp?: number; coins?: number }) => {
           // Normalizar dificultad a minúsculas por si acaso
           const difficulty = lesson.difficulty?.toLowerCase() || 'facil';
           const sectionIndex = groupedSections.findIndex(
@@ -59,7 +64,7 @@ export const useLearningPath = (areaId) => {
           if (sectionIndex !== -1) {
             // Calcular estado basado en progreso
             let status = 'locked';
-            const isCompleted = progress?.completedLessons?.includes(lesson.id);
+            const isCompleted = completedIds.includes(lesson.id ?? '');
 
             if (isCompleted) {
               status = 'completed';
@@ -76,11 +81,14 @@ export const useLearningPath = (areaId) => {
 
             groupedSections[sectionIndex].nodes.push({
               ...lesson,
+              id: lesson.id ?? '',
+              title: (lesson as { title?: string }).title,
+              description: (lesson as { description?: string }).description,
               xp,
               coins,
-              type: 'lesson', // Asegurar que el UI sepa que es lección
+              type: 'lesson',
               status,
-            });
+            } as PathNodeData);
           }
         });
 

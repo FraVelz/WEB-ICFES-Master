@@ -1,4 +1,23 @@
 import Link from 'next/link';
+import type { ExamQuestion } from '@/shared/types/question';
+import type { ExamConfig } from '@/features/exam/types';
+
+interface ResultItem {
+  question: ExamQuestion;
+  correct: boolean;
+  userAnswer: string;
+}
+
+interface ResultsAnalysisProps {
+  results: ResultItem[];
+  questions: ExamQuestion[];
+  percentage: number;
+  correctCount: number;
+  examConfig: ExamConfig | null;
+  onRetry: () => void;
+  returnTo?: string;
+  areaInfo?: { name: string; color: string; icon?: string };
+}
 
 export const ResultsAnalysis = ({
   results,
@@ -7,7 +26,9 @@ export const ResultsAnalysis = ({
   correctCount,
   examConfig,
   onRetry,
-}) => {
+  returnTo,
+  areaInfo,
+}: ResultsAnalysisProps) => {
   return (
     <div className="space-y-6">
       {/* Results Summary */}
@@ -109,7 +130,8 @@ export const ResultsAnalysis = ({
                         </span>{' '}
                         {
                           result.question.options.find(
-                            (o) => o.letter === result.userAnswer
+                            (o) =>
+                              (o.letter ?? o.id) === result.userAnswer
                           )?.text
                         }
                       </p>
@@ -131,7 +153,9 @@ export const ResultsAnalysis = ({
                         </span>{' '}
                         {
                           result.question.options.find(
-                            (o) => o.letter === result.question.correctAnswer
+                            (o) =>
+                              (o.letter ?? o.id) ===
+                              result.question.correctAnswer
                           )?.text
                         }
                       </p>
@@ -140,7 +164,7 @@ export const ResultsAnalysis = ({
                 )}
 
                 {/* Explanation */}
-                {examConfig.showExplanations && (
+                {examConfig?.showExplanations && (
                   <div>
                     <p className="mb-2 text-sm font-semibold text-blue-300">
                       Explicación:

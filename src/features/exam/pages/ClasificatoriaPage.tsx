@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { Icon } from '@/shared/components/Icon';
 import { useAuth } from '@/context/AuthContext';
-import { useLeaderboard } from '@/features/logros/hooks/useLeaderboard';
+import { useLeaderboard, type LeaderboardPlayer } from '@/features/logros/hooks/useLeaderboard';
 import { RANKS, getRankInfo } from '@/features/logros/constants/ranks';
 import { ConstructionAlert } from '@/shared/components';
 import { useUserProfile } from '@/features/user/hooks/useUserProfile';
@@ -24,7 +24,7 @@ export const ClasificatoriaPage = () => {
     }
   }, [myRank]);
 
-  const getPositionStyle = (index, totalUsers) => {
+  const getPositionStyle = (index: number, totalUsers: number) => {
     const position = index + 1;
 
     // Zona de Ascenso
@@ -162,13 +162,13 @@ export const ClasificatoriaPage = () => {
                 Error al cargar
               </h3>
               <p className="px-4 text-slate-400">
-                {error.message.includes('index')
+                {error?.message?.includes('index')
                   ? 'Estamos optimizando la base de datos. Por favor espera unos minutos.'
                   : 'Hubo un problema al cargar la clasificación.'}
               </p>
             </div>
           ) : leaderboardData.length > 0 ? (
-            leaderboardData.map((player, index) => {
+            leaderboardData.map((player: LeaderboardPlayer, index: number) => {
               const isCurrentUser = user?.uid === player.id;
               const style = getPositionStyle(index, leaderboardData.length);
 

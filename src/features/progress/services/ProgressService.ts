@@ -5,6 +5,34 @@
 
 import BaseService from '@/services/BaseService';
 
+export interface AreaStat {
+  area: string;
+  questionsAnswered: number;
+  correctAnswers: number;
+  percentage?: number;
+  difficulty?: Record<string, number>;
+}
+
+export interface ProgressStats {
+  id?: string;
+  userId?: string;
+  totalQuestionsAnswered?: number;
+  correctAnswers?: number;
+  currentStreak?: number;
+  maxStreak?: number;
+  areaStats?: Record<string, AreaStat>;
+  lastStreakUpdate?: string;
+  createdAt?: string;
+  updatedAt?: string;
+}
+
+interface AnswerData {
+  isCorrect: boolean;
+  area: string;
+  difficulty?: string;
+  timeSpent?: number;
+}
+
 class ProgressService extends BaseService {
   constructor() {
     super('progress');
@@ -12,13 +40,11 @@ class ProgressService extends BaseService {
 
   /**
    * Obtener estadísticas completas del usuario
-   * @param {string} userId
-   * @returns {Promise<Object>}
    */
-  async getUserStats(userId) {
+  async getUserStats(userId: string): Promise<ProgressStats> {
     try {
-      const stats = await this.get(userId);
-      return stats || this._initializeDefaultStats(userId);
+      const stats = (await this.get(userId)) as ProgressStats | null;
+      return stats ?? this._initializeDefaultStats(userId);
     } catch (error) {
       console.error('Error obteniendo estadísticas:', error);
       throw error;
@@ -27,26 +53,21 @@ class ProgressService extends BaseService {
 
   /**
    * Actualizar estadísticas después de completar una pregunta
-   * @param {string} userId
-   * @param {Object} answerData - {isCorrect, area, difficulty, timeSpent}
-   * @returns {Promise<Object>}
    */
-  async updateAfterAnswer(userId, answerData) {
+  async updateAfterAnswer(userId: string, answerData: AnswerData) {
     const stats = await this.getUserStats(userId);
 
-    // Actualizar contadores generales
-    stats.totalQuestionsAnswered = (stats.totalQuestionsAnswered || 0) + 1;
+    stats.totalQuestionsAnswered = (stats.totalQuestionsAnswered ?? 0) + 1;
     if (answerData.isCorrect) {
-      stats.correctAnswers = (stats.correctAnswers || 0) + 1;
-      stats.currentStreak = (stats.currentStreak || 0) + 1;
+      stats.correctAnswers = (stats.correctAnswers ?? 0) + 1;
+      stats.currentStreak = (stats.currentStreak ?? 0) + 1;
     } else {
       stats.currentStreak = 0;
     }
 
     // Actualizar racha máxima
-    stats.maxStreak = Math.max(stats.maxStreak || 0, stats.currentStreak || 0);
+    stats.maxStreak = Math.max(stats.maxStreak ?? 0, stats.currentStreak ?? 0);
 
-    // Actualizar estadísticas por área
     if (!stats.areaStats) stats.areaStats = {};
     if (!stats.areaStats[answerData.area]) {
       stats.areaStats[answerData.area] = {
@@ -61,9 +82,14 @@ class ProgressService extends BaseService {
     if (answerData.isCorrect) {
       stats.areaStats[answerData.area].correctAnswers++;
     }
-    stats.areaStats[answerData.area].difficulty[
-      answerData.difficulty || 'media'
-    ]++;
+    const diffKey = answerData.difficulty ?? 'media';
+    const diff = stats.areaStats[answerData.area].difficulty ?? {
+      facil: 0,
+      media: 0,
+      dificil: 0,
+    };
+    diff[diffKey] = (diff[diffKey] ?? 0) + 1;
+    stats.areaStats[answerData.area].difficulty = diff;
 
     // Calcular porcentaje correctas por área
     const area = stats.areaStats[answerData.area];
@@ -76,31 +102,24 @@ class ProgressService extends BaseService {
 
   /**
    * Obtener estadísticas por área específica
-   * @param {string} userId
-   * @param {string} area
-   * @returns {Promise<Object>}
    */
-  async getAreaStats(userId, area) {
+  async getAreaStats(userId: string, area: string) {
     const stats = await this.getUserStats(userId);
     return stats.areaStats?.[area] || null;
   }
 
   /**
    * Obtener todas las estadísticas por área
-   * @param {string} userId
-   * @returns {Promise<Array>}
    */
-  async getAllAreaStats(userId) {
+  async getAllAreaStats(userId: string) {
     const stats = await this.getUserStats(userId);
     return Object.values(stats.areaStats || {});
   }
 
   /**
    * Obtener racha actual
-   * @param {string} userId
-   * @returns {Promise<Object>}
    */
-  async getStreak(userId) {
+  async getStreak(userId: string) {
     const stats = await this.getUserStats(userId);
     return {
       current: stats.currentStreak || 0,
@@ -111,10 +130,8 @@ class ProgressService extends BaseService {
 
   /**
    * Actualizar racha diaria
-   * @param {string} userId
-   * @returns {Promise<Object>}
    */
-  async updateDailyStreak(userId) {
+  async updateDailyStreak(userId: string) {
     const stats = await this.getUserStats(userId);
     const today = new Date().toDateString();
     const lastUpdate = stats.lastStreakUpdate
@@ -122,8 +139,8 @@ class ProgressService extends BaseService {
       : null;
 
     if (lastUpdate !== today) {
-      stats.currentStreak = (stats.currentStreak || 0) + 1;
-      stats.maxStreak = Math.max(stats.maxStreak || 0, stats.currentStreak);
+      stats.currentStreak = (stats.currentStreak ?? 0) + 1;
+      stats.maxStreak = Math.max(stats.maxStreak ?? 0, stats.currentStreak ?? 0);
       stats.lastStreakUpdate = new Date().toISOString();
     }
 
@@ -132,29 +149,27 @@ class ProgressService extends BaseService {
 
   /**
    * Obtener recomendaciones basadas en desempeño
-   * @param {string} userId
-   * @returns {Promise<Array>}
    */
-  async getRecommendations(userId) {
+  async getRecommendations(userId: string) {
     const stats = await this.getUserStats(userId);
-    const recommendations = [];
+    const recommendations: { type: string; area: string; message: string; priority: number; icon: string }[] = [];
 
-    // Analizar áreas débiles
-    Object.values(stats.areaStats || {}).forEach((area) => {
-      if (area.percentage < 60) {
+    Object.values(stats.areaStats ?? {}).forEach((area: AreaStat) => {
+      const pct = area.percentage ?? 0;
+      if (pct < 60) {
         recommendations.push({
           type: 'priority',
           area: area.area,
-          message: `Necesitas reforzar ${area.area}. Tu desempeño es del ${area.percentage}%`,
-          priority: 100 - area.percentage,
+          message: `Necesitas reforzar ${area.area}. Tu desempeño es del ${pct}%`,
+          priority: 100 - pct,
           icon: '🎯',
         });
-      } else if (area.percentage < 80) {
+      } else if (pct < 80) {
         recommendations.push({
           type: 'improvement',
           area: area.area,
-          message: `${area.area} va bien (${area.percentage}%), pero puede mejorar`,
-          priority: 80 - area.percentage,
+          message: `${area.area} va bien (${pct}%), pero puede mejorar`,
+          priority: 80 - pct,
           icon: '📈',
         });
       }
@@ -166,23 +181,20 @@ class ProgressService extends BaseService {
 
   /**
    * Obtener análisis de desempeño temporal
-   * @param {string} userId
-   * @param {number} days - Últimos N días
-   * @returns {Promise<Object>}
    */
-  async getPerformanceAnalysis(userId, days = 7) {
+  async getPerformanceAnalysis(userId: string, days = 7) {
     const stats = await this.getUserStats(userId);
 
     return {
-      totalQuestions: stats.totalQuestionsAnswered || 0,
-      correctAnswers: stats.correctAnswers || 0,
-      accuracy: stats.totalQuestionsAnswered
+      totalQuestions: stats.totalQuestionsAnswered ?? 0,
+      correctAnswers: stats.correctAnswers ?? 0,
+      accuracy: (stats.totalQuestionsAnswered ?? 0) > 0
         ? Math.round(
-            (stats.correctAnswers / stats.totalQuestionsAnswered) * 100
+            ((stats.correctAnswers ?? 0) / (stats.totalQuestionsAnswered ?? 1)) * 100
           )
         : 0,
-      streak: stats.currentStreak || 0,
-      maxStreak: stats.maxStreak || 0,
+      streak: stats.currentStreak ?? 0,
+      maxStreak: stats.maxStreak ?? 0,
       topArea: this._getTopArea(stats.areaStats),
       weakArea: this._getWeakestArea(stats.areaStats),
       period: `Últimos ${days} días`,
@@ -191,16 +203,14 @@ class ProgressService extends BaseService {
 
   /**
    * Resetear progreso (para pruebas)
-   * @param {string} userId
-   * @returns {Promise<Object>}
    */
-  async resetProgress(userId) {
+  async resetProgress(userId: string) {
     return this.update(userId, this._initializeDefaultStats(userId));
   }
 
   // ============ MÉTODOS PRIVADOS ============
 
-  _initializeDefaultStats(userId) {
+  _initializeDefaultStats(userId: string): ProgressStats {
     return {
       id: userId,
       userId,
@@ -215,18 +225,20 @@ class ProgressService extends BaseService {
     };
   }
 
-  _getTopArea(areaStats) {
+  _getTopArea(areaStats: Record<string, AreaStat> | undefined): AreaStat | null {
     if (!areaStats || Object.keys(areaStats).length === 0) return null;
-    return Object.values(areaStats).reduce((max, area) =>
-      (area.percentage || 0) > (max.percentage || 0) ? area : max
-    );
+    const values = Object.values(areaStats);
+    return values.reduce((max, area) =>
+      (area.percentage ?? 0) > (max.percentage ?? 0) ? area : max
+    , values[0]!);
   }
 
-  _getWeakestArea(areaStats) {
+  _getWeakestArea(areaStats: Record<string, AreaStat> | undefined): AreaStat | null {
     if (!areaStats || Object.keys(areaStats).length === 0) return null;
-    return Object.values(areaStats).reduce((min, area) =>
-      (area.percentage || 100) < (min.percentage || 100) ? area : min
-    );
+    const values = Object.values(areaStats);
+    return values.reduce((min, area) =>
+      (area.percentage ?? 100) < (min.percentage ?? 100) ? area : min
+    , values[0]!);
   }
 }
 

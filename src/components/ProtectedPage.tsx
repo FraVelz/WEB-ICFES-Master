@@ -10,8 +10,7 @@ export default function ProtectedPage({
 }: {
   children: React.ReactNode;
 }) {
-  const auth = useAuth() as { isAuthenticated: boolean; loading: boolean };
-  const { isAuthenticated, loading } = auth;
+  const { isAuthenticated, loading } = useAuth();
   const router = useRouter();
   const [isDemoMode, setIsDemoMode] = useState(false);
   const [checked, setChecked] = useState(false);

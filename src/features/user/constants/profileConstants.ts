@@ -1,25 +1,25 @@
 export const QUICK_STATS = [
   {
     label: 'Racha',
-    value: (streak) => `${streak}d`,
+    value: (streak: number) => `${streak}d`,
     icon: 'fire',
     color: 'from-red-600 to-orange-600',
   },
   {
     label: 'Precisión',
-    value: (accuracy) => `${accuracy}%`,
+    value: (accuracy: number) => `${accuracy}%`,
     icon: 'bullseye',
     color: 'from-green-600 to-emerald-600',
   },
   {
     label: 'Horas',
-    value: (hours) => `${hours}h`,
+    value: (hours: number) => `${hours}h`,
     icon: 'clock',
     color: 'from-blue-600 to-cyan-600',
   },
   {
     label: 'XP Hoy',
-    value: (xp) => Math.floor(xp),
+    value: (xp: number) => Math.floor(xp),
     icon: 'zap',
     color: 'from-purple-600 to-pink-600',
   },

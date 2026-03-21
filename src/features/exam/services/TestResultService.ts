@@ -3,8 +3,8 @@
  * Preparado para futura implementación de backend
  */
 class TestResultService {
-  async saveResult(userId, resultData) {}
-  async getResults(userId) {
+  async saveResult(_userId: string, _resultData: Record<string, unknown>) {}
+  async getResults(_userId: string) {
     return [];
   }
 }

@@ -22,23 +22,33 @@ const SHADOW_COLORS = {
   slate: 'shadow-slate-500/30',
 };
 
+export interface PathNodeProps {
+  status?: 'incomplete' | 'available' | 'completed';
+  type?: 'lesson' | 'checkpoint' | string;
+  title?: string;
+  description?: string;
+  icon?: string;
+  onClick?: () => void;
+  colorClass?: string;
+}
+
 export const PathNode = ({
-  status = 'incomplete', // incomplete, available, completed
-  type = 'lesson', // lesson, checkpoint
+  status = 'incomplete',
+  type = 'lesson',
   title,
   description,
   icon,
   onClick,
   colorClass = 'bg-blue-500',
-}) => {
+}: PathNodeProps) => {
   const isCheckpoint = type === 'checkpoint';
   const isAvailable = status === 'available';
   const isCompleted = status === 'completed';
 
   // Extraer el nombre del color (ej: 'blue' de 'bg-blue-500')
-  const colorName = colorClass.split('-')[1] || 'slate';
-  const borderColor = BORDER_COLORS[colorName] || BORDER_COLORS.slate;
-  const shadowColor = SHADOW_COLORS[colorName] || SHADOW_COLORS.slate;
+  const colorName = (colorClass.split('-')[1] || 'slate') as keyof typeof BORDER_COLORS;
+  const borderColor = (BORDER_COLORS as Record<string, string>)[colorName] ?? BORDER_COLORS.slate;
+  const shadowColor = (SHADOW_COLORS as Record<string, string>)[colorName] ?? SHADOW_COLORS.slate;
 
   // Configuración de estilos base
   const getStyles = () => {

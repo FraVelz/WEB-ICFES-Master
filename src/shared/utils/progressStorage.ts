@@ -1,5 +1,39 @@
 // Utilidades para almacenar y recuperar datos de progreso en localStorage
 
+export interface AreaStatItem {
+  name: string;
+  correct: number;
+  total: number;
+  percentage: number;
+  icon: string;
+  color: string;
+}
+
+export interface ProgressData {
+  totalAttempts: number;
+  totalQuestions: number;
+  totalCorrect: number;
+  percentage: number;
+  streakDays: number;
+  lastAttemptDate: string | null;
+  bestArea?: AreaStatItem | null;
+  weakArea?: AreaStatItem | null;
+  areaStats: Record<string, AreaStatItem>;
+}
+
+interface AttemptQuestion {
+  id: string;
+  areaLabel?: string;
+  correctAnswer: string;
+}
+
+export interface AttemptWithQuestions {
+  id?: string | number;
+  questions?: AttemptQuestion[];
+  answers?: Record<string, string>;
+  date?: string;
+}
+
 const STORAGE_KEYS = {
   EXAMS: 'icfes_exams',
   PRACTICE: 'icfes_practice',
@@ -7,12 +41,12 @@ const STORAGE_KEYS = {
   COMPLETED_LESSONS: 'icfes_completed_lessons',
 };
 
-export const getCompletedLessons = () => {
+export const getCompletedLessons = (): string[] => {
   const stored = localStorage.getItem(STORAGE_KEYS.COMPLETED_LESSONS);
   return stored ? JSON.parse(stored) : [];
 };
 
-export const markLessonAsCompleted = (userId, lessonId) => {
+export const markLessonAsCompleted = (_userId: string, lessonId: string): void => {
   const completed = getCompletedLessons();
   if (!completed.includes(lessonId)) completed.push(lessonId);
   localStorage.setItem(
@@ -24,7 +58,7 @@ export const markLessonAsCompleted = (userId, lessonId) => {
 /**
  * Obtiene los exámenes almacenados
  */
-export const getStoredExams = () => {
+export const getStoredExams = (): AttemptWithQuestions[] => {
   const stored = localStorage.getItem(STORAGE_KEYS.EXAMS);
   return stored ? JSON.parse(stored) : [];
 };
@@ -32,7 +66,7 @@ export const getStoredExams = () => {
 /**
  * Guarda un nuevo examen completo
  */
-export const saveFullExam = (examData) => {
+export const saveFullExam = (examData: Record<string, unknown>): AttemptWithQuestions & { id: number; type: string; date: string } => {
   const exams = getStoredExams();
   const newExam = {
     id: Date.now(),
@@ -49,7 +83,7 @@ export const saveFullExam = (examData) => {
 /**
  * Obtiene las prácticas almacenadas
  */
-export const getStoredPractices = () => {
+export const getStoredPractices = (): AttemptWithQuestions[] => {
   const stored = localStorage.getItem(STORAGE_KEYS.PRACTICE);
   return stored ? JSON.parse(stored) : [];
 };
@@ -57,7 +91,7 @@ export const getStoredPractices = () => {
 /**
  * Guarda una nueva práctica
  */
-export const savePractice = (practiceData) => {
+export const savePractice = (practiceData: Record<string, unknown>): AttemptWithQuestions & { id: number; type: string; date: string } => {
   const practices = getStoredPractices();
   const newPractice = {
     id: Date.now(),
@@ -74,11 +108,11 @@ export const savePractice = (practiceData) => {
 /**
  * Calcula y almacena el progreso total
  */
-export const updateProgress = () => {
+export const updateProgress = (): ProgressData => {
   const exams = getStoredExams();
   const practices = getStoredPractices();
 
-  const allAttempts = [...exams, ...practices];
+  const allAttempts: AttemptWithQuestions[] = [...exams, ...practices];
 
   if (allAttempts.length === 0) {
     localStorage.removeItem(STORAGE_KEYS.PROGRESS);
@@ -88,17 +122,17 @@ export const updateProgress = () => {
   // Calcular estadísticas generales
   let totalQuestions = 0;
   let totalCorrect = 0;
-  const areaStats = {
+  const areaStats: Record<string, { total: number; correct: number }> = {
     Matemáticas: { total: 0, correct: 0 },
     'Lectura Crítica': { total: 0, correct: 0 },
     'Ciencias Naturales': { total: 0, correct: 0 },
     'Sociales y Ciudadanas': { total: 0, correct: 0 },
   };
 
-  allAttempts.forEach((attempt) => {
+  allAttempts.forEach((attempt: AttemptWithQuestions) => {
     const { questions = [], answers = {} } = attempt;
 
-    questions.forEach((question) => {
+    questions.forEach((question: AttemptQuestion) => {
       const areaLabel = question.areaLabel || 'Desconocido';
       totalQuestions++;
 
@@ -118,7 +152,7 @@ export const updateProgress = () => {
   // Calcular racha de días
   const streakDays = calculateStreak(allAttempts);
 
-  const progress = {
+  const progress: ProgressData = {
     totalAttempts: allAttempts.length,
     totalQuestions,
     totalCorrect,
@@ -194,13 +228,15 @@ export const updateProgress = () => {
   };
 
   // Encontrar mejor y peor área
-  const areas = Object.values(progress.areaStats).filter((a) => a.total > 0);
+  const areas = Object.values(progress.areaStats).filter((a: AreaStatItem) => a.total > 0);
   if (areas.length > 0) {
-    progress.bestArea = areas.reduce((prev, current) =>
-      prev.percentage > current.percentage ? prev : current
+    progress.bestArea = areas.reduce<AreaStatItem>(
+      (prev, current) => (prev.percentage > current.percentage ? prev : current),
+      areas[0]
     );
-    progress.weakArea = areas.reduce((prev, current) =>
-      prev.percentage < current.percentage ? prev : current
+    progress.weakArea = areas.reduce<AreaStatItem>(
+      (prev, current) => (prev.percentage < current.percentage ? prev : current),
+      areas[0]
     );
   }
 
@@ -211,7 +247,7 @@ export const updateProgress = () => {
 /**
  * Obtiene el progreso almacenado
  */
-export const getProgress = () => {
+export const getProgress = (): ProgressData => {
   const stored = localStorage.getItem(STORAGE_KEYS.PROGRESS);
   return stored ? JSON.parse(stored) : getDefaultProgress();
 };
@@ -219,7 +255,7 @@ export const getProgress = () => {
 /**
  * Progreso por defecto
  */
-export const getDefaultProgress = () => {
+export const getDefaultProgress = (): ProgressData => {
   return {
     totalAttempts: 0,
     totalQuestions: 0,
@@ -269,13 +305,13 @@ export const getDefaultProgress = () => {
 /**
  * Calcula la racha de días consecutivos estudiando
  */
-const calculateStreak = (attempts) => {
+const calculateStreak = (attempts: AttemptWithQuestions[]): number => {
   if (attempts.length === 0) return 0;
 
   // Ordenar por fecha descendente
   const sorted = attempts
-    .map((a) => new Date(a.date).toDateString())
-    .sort((a, b) => new Date(b) - new Date(a));
+    .map((a) => new Date(a.date ?? 0).toDateString())
+    .sort((a, b) => new Date(b).getTime() - new Date(a).getTime());
 
   const uniqueDates = [...new Set(sorted)];
 
@@ -283,7 +319,8 @@ const calculateStreak = (attempts) => {
 
   let streak = 1;
   const today = new Date();
-  let currentDate = new Date(uniqueDates[0]);
+  const firstDate = uniqueDates[0];
+  let currentDate = new Date(firstDate ?? today.toDateString());
   const todayString = today.toDateString();
 
   // Si el último intento no fue hoy, reinicia la racha
@@ -314,7 +351,7 @@ const calculateStreak = (attempts) => {
 /**
  * Limpia todos los datos almacenados
  */
-export const clearAllData = () => {
+export const clearAllData = (): void => {
   localStorage.removeItem(STORAGE_KEYS.EXAMS);
   localStorage.removeItem(STORAGE_KEYS.PRACTICE);
   localStorage.removeItem(STORAGE_KEYS.PROGRESS);
@@ -323,7 +360,7 @@ export const clearAllData = () => {
 /**
  * Limpia solo los exámenes guardados
  */
-export const clearExamsOnly = () => {
+export const clearExamsOnly = (): void => {
   localStorage.removeItem(STORAGE_KEYS.EXAMS);
   updateProgress();
 };
@@ -331,8 +368,8 @@ export const clearExamsOnly = () => {
 /**
  * Obtiene recomendaciones basadas en el progreso
  */
-export const getRecommendations = (progress) => {
-  const recommendations = [];
+export const getRecommendations = (progress: ProgressData): string[] => {
+  const recommendations: string[] = [];
 
   if (progress.weakArea) {
     recommendations.push(

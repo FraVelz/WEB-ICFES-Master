@@ -1,12 +1,47 @@
 'use client';
 
+import type { ReactNode } from 'react';
 import { createContext, useContext, useEffect, useState } from 'react';
 import { supabase } from '@/config/supabase';
 import API_CONFIG from '@/services/api.config';
 import UserSupabaseService from '@/services/supabase/UserSupabaseService';
 
+export interface AuthUser {
+  uid: string;
+  id: string;
+  email: string | null;
+  displayName: string | null;
+  photoURL: string | null;
+}
+
+export interface PlanData {
+  planType?: string;
+  plan_type?: string;
+  planName?: string;
+  plan_name?: string;
+  status?: string;
+  features?: Record<string, unknown>;
+}
+
 type AuthContextType = {
-  login: () => void;
+  user: AuthUser | null;
+  loading: boolean;
+  error: string | null;
+  isAuthenticated: boolean;
+  signup: (
+    email: string,
+    password: string,
+    displayName?: string
+  ) => Promise<AuthUser | null>;
+  login: (email: string, password: string) => Promise<AuthUser | null>;
+  loginWithGoogle: () => Promise<AuthUser | null>;
+  logout: () => Promise<void>;
+  resetPassword: (email: string) => Promise<boolean>;
+  updatePassword: (newPassword: string) => Promise<boolean>;
+  verifyEmailExists: () => Promise<boolean>;
+  getUserData: (uid: string) => Promise<Record<string, unknown>>;
+  getUserPlan: () => Promise<Record<string, unknown>>;
+  updateUserPlan: (uid: string, planData: PlanData) => Promise<void>;
 };
 
 const AuthContext = createContext<AuthContextType | null>(null);
@@ -21,21 +56,32 @@ export const useAuth = () => {
 
 const MOCK_USER_KEY = 'icfes_mock_user';
 
-const createMockUser = (overrides = {}) => ({
+const createMockUser = (overrides: Partial<AuthUser> = {}): AuthUser => ({
   uid: `user_${Date.now()}`,
   id: `user_${Date.now()}`,
-  email: overrides.email || 'usuario@icfes.local',
-  displayName: overrides.displayName || 'Usuario ICFES',
-  photoURL: overrides.photoURL || null,
+  email: overrides.email ?? 'usuario@icfes.local',
+  displayName: overrides.displayName ?? 'Usuario ICFES',
+  photoURL: overrides.photoURL ?? null,
   ...overrides,
 });
 
-const mapSupabaseUser = (user) => {
+interface SupabaseUserLike {
+  id: string;
+  email?: string | null;
+  user_metadata?: {
+    display_name?: string;
+    full_name?: string;
+    avatar_url?: string;
+    picture?: string;
+  };
+}
+
+const mapSupabaseUser = (user: SupabaseUserLike | null): AuthUser | null => {
   if (!user) return null;
   return {
     uid: user.id,
     id: user.id,
-    email: user.email,
+    email: user.email ?? null,
     displayName:
       user.user_metadata?.display_name ||
       user.user_metadata?.full_name ||
@@ -46,10 +92,10 @@ const mapSupabaseUser = (user) => {
   };
 };
 
-export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
+export const AuthProvider = ({ children }: { children: ReactNode }) => {
+  const [user, setUser] = useState<AuthUser | null>(null);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     if (
@@ -90,7 +136,11 @@ export const AuthProvider = ({ children }) => {
     return () => subscription?.unsubscribe();
   }, []);
 
-  const signup = async (email, password, displayName) => {
+  const signup = async (
+    email: string,
+    password: string,
+    displayName?: string
+  ): Promise<AuthUser | null> => {
     setError(null);
     if (API_CONFIG.MODE !== 'supabase') {
       const newUser = createMockUser({ email, displayName });
@@ -99,6 +149,7 @@ export const AuthProvider = ({ children }) => {
       setUser(newUser);
       return newUser;
     }
+    if (!supabase) throw new Error('Supabase no configurado');
     const { data, error: err } = await supabase.auth.signUp({
       email,
       password,
@@ -120,7 +171,10 @@ export const AuthProvider = ({ children }) => {
     throw new Error('Error en el registro');
   };
 
-  const login = async (email, password) => {
+  const login = async (
+    email: string,
+    password: string
+  ): Promise<AuthUser | null> => {
     setError(null);
     if (API_CONFIG.MODE !== 'supabase') {
       const existing =
@@ -136,6 +190,7 @@ export const AuthProvider = ({ children }) => {
       setUser(newUser);
       return newUser;
     }
+    if (!supabase) throw new Error('Supabase no configurado');
     const { data, error: err } = await supabase.auth.signInWithPassword({
       email,
       password,
@@ -159,6 +214,7 @@ export const AuthProvider = ({ children }) => {
       setUser(newUser);
       return newUser;
     }
+    if (!supabase) throw new Error('Supabase no configurado');
     const { data, error: err } = await supabase.auth.signInWithOAuth({
       provider: 'google',
     });
@@ -173,9 +229,9 @@ export const AuthProvider = ({ children }) => {
     throw new Error('Error al iniciar con Google');
   };
 
-  const logout = async () => {
+  const logout = async (): Promise<void> => {
     setError(null);
-    if (API_CONFIG.MODE === 'supabase') {
+    if (API_CONFIG.MODE === 'supabase' && supabase) {
       await supabase.auth.signOut();
     } else if (typeof window !== 'undefined') {
       localStorage.removeItem(MOCK_USER_KEY);
@@ -183,13 +239,14 @@ export const AuthProvider = ({ children }) => {
     setUser(null);
   };
 
-  const verifyEmailExists = async () => false;
+  const verifyEmailExists = async (): Promise<boolean> => false;
 
-  const resetPassword = async (email) => {
+  const resetPassword = async (email: string): Promise<boolean> => {
     setError(null);
     if (API_CONFIG.MODE !== 'supabase') {
       return true;
     }
+    if (!supabase) throw new Error('Supabase no configurado');
     const origin = typeof window !== 'undefined' ? window.location.origin : '';
     const { error: err } = await supabase.auth.resetPasswordForEmail(email, {
       redirectTo: `${origin}/reset-password`,
@@ -201,11 +258,12 @@ export const AuthProvider = ({ children }) => {
     return true;
   };
 
-  const updatePassword = async (newPassword) => {
+  const updatePassword = async (newPassword: string): Promise<boolean> => {
     setError(null);
     if (API_CONFIG.MODE !== 'supabase') {
       return true;
     }
+    if (!supabase) throw new Error('Supabase no configurado');
     const { error: err } = await supabase.auth.updateUser({
       password: newPassword,
     });
@@ -216,7 +274,7 @@ export const AuthProvider = ({ children }) => {
     return true;
   };
 
-  const getUserData = async (uid) => {
+  const getUserData = async (uid: string): Promise<Record<string, unknown>> => {
     if (API_CONFIG.MODE !== 'supabase') {
       const profile =
         typeof window !== 'undefined'
@@ -242,7 +300,7 @@ export const AuthProvider = ({ children }) => {
     return { profile, progress, gamification };
   };
 
-  const getUserPlan = async () => {
+  const getUserPlan = async (): Promise<Record<string, unknown>> => {
     const defaultPlan = {
       planType: 'free',
       planName: 'Plan Gratuito',
@@ -261,6 +319,7 @@ export const AuthProvider = ({ children }) => {
       return plan || defaultPlan;
     }
     const { supabase: sb } = await import('@/config/supabase');
+    if (!sb) return defaultPlan;
     const {
       data: { user: authUser },
     } = await sb.auth.getUser();
@@ -287,7 +346,10 @@ export const AuthProvider = ({ children }) => {
     return defaultPlan;
   };
 
-  const updateUserPlan = async (uid, planData) => {
+  const updateUserPlan = async (
+    uid: string,
+    planData: PlanData
+  ): Promise<void> => {
     if (API_CONFIG.MODE !== 'supabase') {
       const current =
         typeof window !== 'undefined'
@@ -303,6 +365,7 @@ export const AuthProvider = ({ children }) => {
       return;
     }
     const { supabase: sb } = await import('@/config/supabase');
+    if (!sb) return;
     await sb.from('user_plans').upsert(
       {
         user_id: uid,

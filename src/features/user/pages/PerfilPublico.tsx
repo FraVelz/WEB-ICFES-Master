@@ -279,13 +279,13 @@ export const PerfilPublico = () => {
                             {courseId.replace('-', ' ')}
                           </span>
                           <span className="font-bold text-purple-400">
-                            {progress}%
+                            {Number(progress)}%
                           </span>
                         </div>
                         <div className="h-2.5 overflow-hidden rounded-full bg-slate-800">
                           <div
                             className="h-full rounded-full bg-purple-500"
-                            style={{ width: `${progress}%` }}
+                            style={{ width: `${Number(progress)}%` }}
                           />
                         </div>
                       </div>

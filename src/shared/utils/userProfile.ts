@@ -12,8 +12,35 @@ const STORAGE_KEYS = {
   USER_SETTINGS: 'icfes_user_settings',
 };
 
+export interface UserProfile {
+  id: number | string;
+  username: string;
+  displayName?: string;
+  email?: string;
+  bio?: string;
+  profileImage?: string | null;
+  virtualMoney?: number;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface UserSettings {
+  language: string;
+  theme: string;
+  notifications: boolean;
+  soundEnabled: boolean;
+  privacyLevel: string;
+}
+
+export interface RankInfo {
+  name: string;
+  icon: string;
+  color: string;
+  minScore: number;
+}
+
 // Sistema de rangos basado en porcentaje de desempeño
-const RANK_SYSTEM = {
+const RANK_SYSTEM: Record<number, RankInfo> = {
   0: {
     name: 'Novato',
     icon: '🥚',
@@ -55,7 +82,7 @@ const RANK_SYSTEM = {
 /**
  * Obtiene el perfil del usuario o crea uno por defecto
  */
-export const getUserProfile = () => {
+export const getUserProfile = (): UserProfile => {
   const stored = localStorage.getItem(STORAGE_KEYS.USER_PROFILE);
   return stored ? JSON.parse(stored) : getDefaultProfile();
 };
@@ -63,7 +90,7 @@ export const getUserProfile = () => {
 /**
  * Perfil de usuario por defecto
  */
-export const getDefaultProfile = () => {
+export const getDefaultProfile = (): UserProfile => {
   return {
     id: Date.now(),
     username: 'Usuario ICFES',
@@ -78,7 +105,7 @@ export const getDefaultProfile = () => {
 /**
  * Actualiza el perfil del usuario
  */
-export const updateUserProfile = (profileData) => {
+export const updateUserProfile = (profileData: Partial<UserProfile>): UserProfile => {
   const profile = {
     ...getUserProfile(),
     ...profileData,
@@ -88,13 +115,18 @@ export const updateUserProfile = (profileData) => {
   return profile;
 };
 
+export interface UserRank extends RankInfo {
+  percentage: number;
+  nextRankPercentage: number | null;
+}
+
 /**
  * Obtiene el rango del usuario basado en su desempeño
  */
-export const getUserRank = () => {
+export const getUserRank = (): UserRank => {
   try {
-    const progress = JSON.parse(localStorage.getItem('icfes_progress'));
-    const percentage = progress ? progress.percentage : 0;
+    const progress = JSON.parse(localStorage.getItem('icfes_progress') ?? 'null') as { percentage?: number } | null;
+    const percentage = progress?.percentage ?? 0;
 
     // Encontrar el rango apropiado
     let currentRank = RANK_SYSTEM[0];
@@ -125,7 +157,7 @@ export const getUserRank = () => {
 /**
  * Actualiza el nombre de usuario (localStorage)
  */
-export const updateUsername = async (username) => {
+export const updateUsername = async (username: string): Promise<UserProfile> => {
   if (!username || username.trim().length === 0) {
     throw new Error('El nombre de usuario no puede estar vacío');
   }
@@ -138,7 +170,7 @@ export const updateUsername = async (username) => {
 /**
  * Actualiza la biografía del usuario (localStorage)
  */
-export const updateUserBio = async (bio) => {
+export const updateUserBio = async (bio: string | null): Promise<UserProfile> => {
   if (bio && bio.length > 150) {
     throw new Error('La biografía no puede exceder 150 caracteres');
   }
@@ -148,7 +180,7 @@ export const updateUserBio = async (bio) => {
 /**
  * Actualiza la foto de perfil (base64 en localStorage)
  */
-export const updateProfileImage = async (file) => {
+export const updateProfileImage = async (file: File | null): Promise<UserProfile> => {
   if (!file) {
     return updateUserProfile({ profileImage: null });
   }
@@ -161,7 +193,9 @@ export const updateProfileImage = async (file) => {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
     reader.onload = () => {
-      const result = updateUserProfile({ profileImage: reader.result });
+      const data = reader.result;
+      const profileImage = typeof data === 'string' ? data : null;
+      const result = updateUserProfile({ profileImage });
       resolve(result);
     };
     reader.onerror = () => reject(new Error('Error al leer la imagen'));
@@ -172,7 +206,7 @@ export const updateProfileImage = async (file) => {
 /**
  * Borra toda la información del usuario y su progreso
  */
-export const deleteUserAccount = () => {
+export const deleteUserAccount = (): boolean => {
   const confirmed = window.confirm(
     '⚠️ ¿Estás seguro? Esta acción no se puede deshacer.\n\n' +
       'Se borrará:\n' +
@@ -213,7 +247,7 @@ export const deleteUserAccount = () => {
 /**
  * Obtiene los ajustes del usuario
  */
-export const getUserSettings = () => {
+export const getUserSettings = (): UserSettings => {
   const stored = localStorage.getItem(STORAGE_KEYS.USER_SETTINGS);
   return stored ? JSON.parse(stored) : getDefaultSettings();
 };
@@ -221,7 +255,7 @@ export const getUserSettings = () => {
 /**
  * Ajustes por defecto
  */
-export const getDefaultSettings = () => {
+export const getDefaultSettings = (): UserSettings => {
   return {
     language: 'es',
     theme: 'dark',
@@ -234,7 +268,7 @@ export const getDefaultSettings = () => {
 /**
  * Actualiza los ajustes del usuario
  */
-export const updateUserSettings = (settingsData) => {
+export const updateUserSettings = (settingsData: Partial<UserSettings>): UserSettings => {
   const settings = {
     ...getUserSettings(),
     ...settingsData,
@@ -252,7 +286,7 @@ export const getCompleteUserData = () => {
   const settings = getUserSettings();
 
   try {
-    const progress = JSON.parse(localStorage.getItem('icfes_progress'));
+    const progress = JSON.parse(localStorage.getItem('icfes_progress') ?? 'null');
     return {
       profile,
       rank,
@@ -282,7 +316,7 @@ export const getCompleteUserData = () => {
 /**
  * Exporta datos del usuario a JSON
  */
-export const exportUserData = async (password) => {
+export const exportUserData = async (password: string): Promise<void> => {
   if (!password) {
     throw new Error('Se requiere una contraseña para exportar datos');
   }
@@ -323,13 +357,18 @@ export const exportUserData = async (password) => {
   URL.revokeObjectURL(url);
 };
 
+export interface ImportedUserData {
+  profile?: unknown;
+  settings?: unknown;
+  exams?: unknown;
+  practices?: unknown;
+  progress?: unknown;
+}
+
 /**
  * Importa datos de usuario desde un archivo exportado
- * @param {File} file - Archivo JSON exportado
- * @param {string} password - Contraseña para descifrar
- * @returns {Promise<object>} - Datos importados
  */
-export const importUserData = async (file, password) => {
+export const importUserData = async (file: File, password: string): Promise<ImportedUserData> => {
   if (!password) {
     throw new Error('Se requiere una contraseña para importar datos');
   }
@@ -337,10 +376,11 @@ export const importUserData = async (file, password) => {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
 
-    reader.onload = async (e) => {
+    reader.onload = async (e: ProgressEvent<FileReader>) => {
       try {
-        const fileContent = e.target.result;
-        const exportObject = JSON.parse(fileContent);
+        const fileContent = e.target?.result;
+        if (typeof fileContent !== 'string') throw new Error('Archivo no legible');
+        const exportObject = JSON.parse(fileContent) as { encrypted?: boolean; data?: unknown; version?: string; checksum?: string };
 
         // Validar estructura del archivo
         if (!exportObject.encrypted || !exportObject.data) {
@@ -352,12 +392,16 @@ export const importUserData = async (file, password) => {
         }
 
         // Descifrar datos
-        const decryptedData = await decryptData(exportObject.data, password);
+        const dataToDecrypt = exportObject.data;
+        if (typeof dataToDecrypt !== 'string') throw new Error('Datos de exportación inválidos');
+        const decryptedData = await decryptData(dataToDecrypt, password);
 
         // Validar checksum
+        const checksum = exportObject.checksum;
+        if (typeof checksum !== 'string') throw new Error('Checksum inválido');
         const isValid = await verifyChecksum(
           decryptedData,
-          exportObject.checksum
+          checksum
         );
         if (!isValid) {
           throw new Error('Los datos han sido modificados o están corruptos');
@@ -395,9 +439,10 @@ export const importUserData = async (file, password) => {
           );
         }
 
-        resolve(decryptedData);
-      } catch (error) {
-        reject(new Error(`Error al importar datos: ${error.message}`));
+        resolve(decryptedData as ImportedUserData);
+      } catch (err) {
+        const msg = err instanceof Error ? err.message : 'Error desconocido';
+        reject(new Error(`Error al importar datos: ${msg}`));
       }
     };
 
@@ -412,14 +457,14 @@ export const importUserData = async (file, password) => {
 /**
  * Retorna todos los rangos disponibles
  */
-export const getAllRanks = () => {
+export const getAllRanks = (): RankInfo[] => {
   return Object.values(RANK_SYSTEM);
 };
 
 /**
  * Obtiene el dinero virtual del usuario
  */
-export const getVirtualMoney = () => {
+export const getVirtualMoney = (): number => {
   const profile = getUserProfile();
   return profile.virtualMoney || 0;
 };
@@ -427,7 +472,7 @@ export const getVirtualMoney = () => {
 /**
  * Suma dinero virtual al usuario
  */
-export const addVirtualMoney = (amount) => {
+export const addVirtualMoney = (amount: number): UserProfile => {
   if (amount < 0) {
     throw new Error('No se puede añadir una cantidad negativa');
   }
@@ -440,7 +485,7 @@ export const addVirtualMoney = (amount) => {
 /**
  * Resta dinero virtual del usuario
  */
-export const removeVirtualMoney = (amount) => {
+export const removeVirtualMoney = (amount: number): UserProfile => {
   if (amount < 0) {
     throw new Error('No se puede restar una cantidad negativa');
   }
@@ -459,7 +504,7 @@ export const removeVirtualMoney = (amount) => {
 /**
  * Obtiene dinero bonus por completar un examen
  */
-export const getExamReward = (correctAnswers, totalQuestions) => {
+export const getExamReward = (correctAnswers: number, totalQuestions: number): number => {
   const percentage = (correctAnswers / totalQuestions) * 100;
   let reward = 0;
 

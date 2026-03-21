@@ -1,4 +1,15 @@
-export const SHOP_ITEMS = [
+export interface ShopItem {
+  id: string;
+  name: string;
+  description: string;
+  price: number;
+  category: string;
+  icon: string;
+  color: string;
+  image?: string;
+}
+
+export const SHOP_ITEMS: ShopItem[] = [
   {
     id: 'avatar_robot',
     name: 'Robo-Tutor',

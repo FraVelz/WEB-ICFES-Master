@@ -11,16 +11,19 @@ import {
   getStoredPractices,
   clearAllData,
   getRecommendations,
+  getDefaultProgress,
+  type ProgressData,
+  type AttemptWithQuestions,
 } from '@/shared/utils/progressStorage';
 
 export function useProgress() {
   const { user } = useAuth();
-  const [progress, setProgress] = useState(null);
-  const [areaStats, setAreaStats] = useState(null);
-  const [recommendations, setRecommendations] = useState([]);
-  const [attemptHistory, setAttemptHistory] = useState([]);
+  const [progress, setProgress] = useState<ProgressData | null>(null);
+  const [areaStats, setAreaStats] = useState<Record<string, unknown> | null>(null);
+  const [recommendations, setRecommendations] = useState<string[]>([]);
+  const [attemptHistory, setAttemptHistory] = useState<AttemptWithQuestions[]>([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<string | null>(null);
 
   const loadProgressData = useCallback(async () => {
     if (!user?.uid) {
@@ -36,36 +39,37 @@ export function useProgress() {
     try {
       if (API_CONFIG.MODE === 'supabase') {
         const prog = await ProgressSupabaseService.getByUserId(user.uid);
-        const mapped = prog
+        const mapped: ProgressData | null = prog
           ? {
               totalAttempts: prog.totalAttempts,
               totalQuestions: prog.totalCorrect * 2,
               totalCorrect: prog.totalCorrect,
               percentage: prog.percentage,
               streakDays: prog.streakDays,
-              areaStats: prog.areaStats || {},
+              lastAttemptDate: (prog as { lastAttemptDate?: string | null }).lastAttemptDate ?? null,
+              areaStats: (prog.areaStats || {}) as ProgressData['areaStats'],
             }
           : null;
         setProgress(mapped);
         setAreaStats(mapped?.areaStats || null);
-        setRecommendations(getRecommendations(mapped || {}));
+        setRecommendations(getRecommendations(mapped ?? getDefaultProgress()));
         setAttemptHistory([]);
       } else {
         const prog = getProgress();
         setProgress(prog);
         setAreaStats(prog?.areaStats || null);
-        setRecommendations(getRecommendations(prog || {}));
+        setRecommendations(getRecommendations(prog ?? getDefaultProgress()));
         const exams = getStoredExams();
         const practices = getStoredPractices();
         setAttemptHistory(
           [...exams, ...practices]
-            .sort((a, b) => new Date(b.date) - new Date(a.date))
+            .sort((a, b) => new Date(b.date ?? 0).getTime() - new Date(a.date ?? 0).getTime())
             .slice(0, 50)
         );
       }
       setError(null);
     } catch (err) {
-      setError(err?.message || 'Error cargando progreso');
+      setError((err instanceof Error ? err.message : 'Error cargando progreso') ?? 'Error cargando progreso');
     } finally {
       setLoading(false);
     }

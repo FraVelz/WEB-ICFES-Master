@@ -25,13 +25,27 @@
  *   description="Territorios destacados"
  * />
  */
+interface MapRegion {
+  name?: string;
+  highlight?: boolean;
+  info?: string;
+}
+
+interface MapContentProps {
+  title?: string;
+  description?: string;
+  imageSrc?: string;
+  regions?: MapRegion[];
+  svgContent?: string;
+}
+
 export const MapContent = ({
   title,
   description,
   imageSrc,
   regions = [],
   svgContent,
-}) => {
+}: MapContentProps) => {
   return (
     <figure className="my-6 rounded-lg border border-purple-500/20 bg-linear-to-r from-slate-700/20 to-slate-800/20 p-6">
       {title && (
@@ -60,7 +74,7 @@ export const MapContent = ({
       {/* Lista de regiones */}
       {regions.length > 0 && (
         <div className="mt-4 grid grid-cols-1 gap-2 md:grid-cols-2">
-          {regions.map((region, idx) => (
+          {regions.map((region: MapRegion, idx: number) => (
             <div
               key={idx}
               className={`rounded p-2 px-3 text-xs font-medium transition-colors ${

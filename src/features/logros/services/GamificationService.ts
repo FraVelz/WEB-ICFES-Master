@@ -5,6 +5,22 @@
 
 import BaseService from '@/services/BaseService';
 
+export interface GamificationProfile {
+  id?: string;
+  userId?: string;
+  level?: number;
+  totalXP?: number;
+  currentXP?: number;
+  totalCoins?: number;
+  spentCoins?: number;
+  badges?: { id: string; [key: string]: unknown }[];
+  xpHistory?: { date: string; points: number; reason: string }[];
+  coinsHistory?: { date: string; amount: number; reason?: string; item?: string; type: string }[];
+  levelUpNotification?: { message: string; timestamp: string };
+  createdAt?: string;
+  updatedAt?: string;
+}
+
 class GamificationService extends BaseService {
   constructor() {
     super('gamification');
@@ -94,13 +110,11 @@ class GamificationService extends BaseService {
 
   /**
    * Obtener perfil de gamificación del usuario
-   * @param {string} userId
-   * @returns {Promise<Object>}
    */
-  async getProfile(userId) {
+  async getProfile(userId: string): Promise<GamificationProfile> {
     try {
-      const profile = await this.get(userId);
-      return profile || this._initializeGamificationProfile(userId);
+      const profile = (await this.get(userId)) as GamificationProfile | null;
+      return profile ?? this._initializeGamificationProfile(userId);
     } catch (error) {
       console.error('Error obteniendo perfil de gamificación:', error);
       throw error;
@@ -109,23 +123,19 @@ class GamificationService extends BaseService {
 
   /**
    * Añadir puntos XP al usuario
-   * @param {string} userId
-   * @param {number} points
-   * @param {string} reason
-   * @returns {Promise<Object>}
    */
-  async addXP(userId, points, reason = 'actividad') {
+  async addXP(userId: string, points: number, reason = 'actividad') {
     const profile = await this.getProfile(userId);
 
-    profile.totalXP = (profile.totalXP || 0) + points;
-    profile.currentXP = (profile.currentXP || 0) + points;
+    profile.totalXP = (profile.totalXP ?? 0) + points;
+    profile.currentXP = (profile.currentXP ?? 0) + points;
 
-    // Verificar si sube de nivel
-    const newLevel = this._calculateLevel(profile.totalXP);
-    if (newLevel > profile.level) {
+    const newLevel = this._calculateLevel(profile.totalXP ?? 0);
+    if (newLevel > (profile.level ?? 0)) {
       profile.level = newLevel;
+      const levelInfo = GamificationService.LEVELS[newLevel - 1];
       profile.levelUpNotification = {
-        message: `¡Felicidades! Alcanzaste nivel ${newLevel}: ${GamificationService.LEVELS[newLevel - 1].title}`,
+        message: `¡Felicidades! Alcanzaste nivel ${newLevel}: ${levelInfo?.title ?? ''}`,
         timestamp: new Date().toISOString(),
       };
     }
@@ -143,12 +153,8 @@ class GamificationService extends BaseService {
 
   /**
    * Añadir monedas al usuario
-   * @param {string} userId
-   * @param {number} coins
-   * @param {string} reason
-   * @returns {Promise<Object>}
    */
-  async addCoins(userId, coins, reason = 'recompensa') {
+  async addCoins(userId: string, coins: number, reason = 'recompensa') {
     const profile = await this.getProfile(userId);
 
     profile.totalCoins = (profile.totalCoins || 0) + coins;
@@ -168,20 +174,16 @@ class GamificationService extends BaseService {
 
   /**
    * Gastar monedas
-   * @param {string} userId
-   * @param {number} coins
-   * @param {string} item
-   * @returns {Promise<Object>}
    */
-  async spendCoins(userId, coins, item = 'item') {
+  async spendCoins(userId: string, coins: number, item = 'item') {
     const profile = await this.getProfile(userId);
-    const availableCoins = profile.totalCoins - profile.spentCoins;
+    const availableCoins = (profile.totalCoins ?? 0) - (profile.spentCoins ?? 0);
 
     if (availableCoins < coins) {
       throw new Error('Monedas insuficientes');
     }
 
-    profile.spentCoins = (profile.spentCoins || 0) + coins;
+    profile.spentCoins = (profile.spentCoins ?? 0) + coins;
 
     // Registrar transacción
     if (!profile.coinsHistory) profile.coinsHistory = [];
@@ -197,12 +199,9 @@ class GamificationService extends BaseService {
 
   /**
    * Desbloquear un badge
-   * @param {string} userId
-   * @param {string} badgeId
-   * @returns {Promise<Object>}
    */
-  async unlockBadge(userId, badgeId) {
-    const badge = GamificationService.BADGES[badgeId];
+  async unlockBadge(userId: string, badgeId: string) {
+    const badge = (GamificationService.BADGES as Record<string, { id: string; points: number }>)[badgeId];
     if (!badge) {
       throw new Error(`Badge ${badgeId} no existe`);
     }
@@ -221,63 +220,59 @@ class GamificationService extends BaseService {
       unlockedAt: new Date().toISOString(),
     });
 
-    // Añadir puntos XP por desbloquear badge
-    profile.totalXP = (profile.totalXP || 0) + badge.points;
+    profile.totalXP = (profile.totalXP ?? 0) + (badge?.points ?? 0);
 
     return this.update(userId, profile);
   }
 
   /**
    * Obtener todos los badges desbloqueados
-   * @param {string} userId
-   * @returns {Promise<Array>}
    */
-  async getBadges(userId) {
+  async getBadges(userId: string) {
     const profile = await this.getProfile(userId);
     return profile.badges || [];
   }
 
   /**
    * Obtener nivel actual del usuario
-   * @param {string} userId
-   * @returns {Promise<Object>}
    */
-  async getLevel(userId) {
+  async getLevel(userId: string) {
     const profile = await this.getProfile(userId);
-    const levelInfo = GamificationService.LEVELS[profile.level - 1];
+    const currentLevel = profile.level ?? 1;
+    const levelInfo = GamificationService.LEVELS[currentLevel - 1];
     const nextLevel =
-      GamificationService.LEVELS[profile.level] ||
+      GamificationService.LEVELS[currentLevel] ??
       GamificationService.LEVELS[GamificationService.LEVELS.length - 1];
+    const prevXp = levelInfo?.xpRequired ?? 0;
+    const nextXp = nextLevel?.xpRequired ?? 0;
+    const totalXP = profile.totalXP ?? 0;
+    const xpProgress =
+      nextXp > prevXp
+        ? ((totalXP - prevXp) / (nextXp - prevXp)) * 100
+        : 100;
 
     return {
       current: {
-        level: profile.level,
+        level: currentLevel,
         title: levelInfo?.title,
         icon: levelInfo?.icon,
       },
       next: {
-        level: nextLevel.level,
-        title: nextLevel.title,
-        icon: nextLevel.icon,
-        xpRequired: nextLevel.xpRequired,
+        level: nextLevel?.level,
+        title: nextLevel?.title,
+        icon: nextLevel?.icon,
+        xpRequired: nextXp,
       },
-      totalXP: profile.totalXP,
-      currentXP: profile.currentXP,
-      xpProgress:
-        ((profile.totalXP -
-          GamificationService.LEVELS[profile.level - 1].xpRequired) /
-          (nextLevel.xpRequired -
-            GamificationService.LEVELS[profile.level - 1].xpRequired)) *
-        100,
+      totalXP,
+      currentXP: profile.currentXP ?? 0,
+      xpProgress,
     };
   }
 
   /**
    * Obtener información de monedas
-   * @param {string} userId
-   * @returns {Promise<Object>}
    */
-  async getCoinsInfo(userId) {
+  async getCoinsInfo(userId: string) {
     const profile = await this.getProfile(userId);
     return {
       total: profile.totalCoins || 0,
@@ -288,12 +283,12 @@ class GamificationService extends BaseService {
 
   /**
    * Verificar y asignar badges automáticos basado en eventos
-   * @param {string} userId
-   * @param {Object} context - Información del evento (área, preguntas respondidas, etc)
-   * @returns {Promise<Array>} - Badges desbloqueados en esta llamada
    */
-  async checkAndUnlockAchievements(userId, context = {}) {
-    const unlockedBadges = [];
+  async checkAndUnlockAchievements(
+    userId: string,
+    context: { totalQuestionsAnswered?: number; streak?: number } = {}
+  ) {
+    const unlockedBadges: string[] = [];
 
     // Verificar logros basado en contexto
     if (context.totalQuestionsAnswered === 1) {
@@ -322,13 +317,13 @@ class GamificationService extends BaseService {
 
   /**
    * Obtener leaderboard (top 10 usuarios)
-   * @returns {Promise<Array>}
    */
   async getLeaderboard() {
     try {
-      const allProfiles = await this.get();
-      return allProfiles
-        .sort((a, b) => (b.totalXP || 0) - (a.totalXP || 0))
+      const allProfiles = (await this.get()) as GamificationProfile[];
+      const profiles = Array.isArray(allProfiles) ? allProfiles : [];
+      return profiles
+        .sort((a, b) => (b.totalXP ?? 0) - (a.totalXP ?? 0))
         .slice(0, 10)
         .map((profile, index) => ({
           rank: index + 1,
@@ -345,16 +340,14 @@ class GamificationService extends BaseService {
 
   /**
    * Resetear gamificación (para pruebas)
-   * @param {string} userId
-   * @returns {Promise<Object>}
    */
-  async reset(userId) {
+  async reset(userId: string) {
     return this.update(userId, this._initializeGamificationProfile(userId));
   }
 
   // ============ MÉTODOS PRIVADOS ============
 
-  _initializeGamificationProfile(userId) {
+  _initializeGamificationProfile(userId: string): GamificationProfile {
     return {
       id: userId,
       userId,
@@ -371,9 +364,9 @@ class GamificationService extends BaseService {
     };
   }
 
-  _calculateLevel(totalXP) {
+  _calculateLevel(totalXP: number): number {
     let level = 1;
-    for (let lvlInfo of GamificationService.LEVELS) {
+    for (const lvlInfo of GamificationService.LEVELS) {
       if (totalXP >= lvlInfo.xpRequired) {
         level = lvlInfo.level;
       } else {
@@ -384,4 +377,6 @@ class GamificationService extends BaseService {
   }
 }
 
-export default new GamificationService();
+const gamificationServiceInstance = new GamificationService();
+export default gamificationServiceInstance;
+export { GamificationService };

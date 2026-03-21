@@ -4,7 +4,14 @@ import React from 'react';
 import { Icon } from '@/shared/components/Icon';
 import { useGSAPModalEntrance } from '@/hooks/useGSAPModalEntrance';
 
-export const LessonPreview = ({ isOpen, onClose, lesson, onStart }) => {
+export interface LessonPreviewProps {
+  isOpen: boolean;
+  onClose: () => void;
+  lesson: { id?: string; title?: string; content?: string; description?: string; xp?: number; coins?: number } | null;
+  onStart: (lesson?: { id?: string }) => void;
+}
+
+export const LessonPreview = ({ isOpen, onClose, lesson, onStart }: LessonPreviewProps) => {
   const backdropRef = useGSAPModalEntrance({
     isOpen,
     type: 'fade',

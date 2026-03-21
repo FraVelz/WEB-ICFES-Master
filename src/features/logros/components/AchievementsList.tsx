@@ -4,7 +4,23 @@ import React, { useState } from 'react';
 import { Icon } from '@/shared/components/Icon';
 import { ACHIEVEMENT_CATEGORIES } from '../constants/achievements';
 
-export const AchievementsList = ({ achievements = [] }) => {
+export interface AchievementItem {
+  id: string;
+  category?: string;
+  status?: string;
+  progress?: number;
+  target?: number;
+  title?: string;
+  description?: string;
+  icon?: string;
+  xpReward?: number;
+}
+
+export interface AchievementsListProps {
+  achievements?: AchievementItem[];
+}
+
+export const AchievementsList = ({ achievements = [] }: AchievementsListProps) => {
   const [activeCategory, setActiveCategory] = useState('all');
 
   const filteredAchievements =
@@ -12,7 +28,7 @@ export const AchievementsList = ({ achievements = [] }) => {
       ? achievements
       : achievements.filter((a) => a.category === activeCategory);
 
-  const getStatusColor = (status) => {
+  const getStatusColor = (status: string) => {
     switch (status) {
       case 'completed':
         return 'text-yellow-400 border-yellow-500/50 bg-yellow-500/10';
@@ -23,7 +39,7 @@ export const AchievementsList = ({ achievements = [] }) => {
     }
   };
 
-  const getProgressBarColor = (status) => {
+  const getProgressBarColor = (status: string) => {
     if (status === 'completed') return 'bg-yellow-400';
     if (status === 'incomplete') return 'bg-slate-600';
     return 'bg-cyan-400';
@@ -60,12 +76,12 @@ export const AchievementsList = ({ achievements = [] }) => {
 
       {/* Achievements Grid */}
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {filteredAchievements.map((achievement) => {
+        {filteredAchievements.map((achievement: AchievementItem) => {
           const isCompleted = achievement.status === 'completed';
           const isIncomplete = achievement.status === 'incomplete';
           const percent = Math.min(
             100,
-            Math.max(0, (achievement.progress / achievement.target) * 100)
+            Math.max(0, ((achievement.progress ?? 0) / (achievement.target ?? 1)) * 100)
           );
 
           return (
@@ -82,9 +98,9 @@ export const AchievementsList = ({ achievements = [] }) => {
               <div className="flex items-start gap-4">
                 {/* Icon Box */}
                 <div
-                  className={`flex h-12 w-12 items-center justify-center rounded-lg border text-xl ${getStatusColor(achievement.status)}`}
+                  className={`flex h-12 w-12 items-center justify-center rounded-lg border text-xl ${getStatusColor(achievement.status ?? 'incomplete')}`}
                 >
-                  <Icon name={achievement.icon} />
+                  <Icon name={achievement.icon ?? 'trophy'} />
                 </div>
 
                 {/* Content */}
@@ -119,15 +135,15 @@ export const AchievementsList = ({ achievements = [] }) => {
                       >
                         {isCompleted
                           ? '¡Completado!'
-                          : `${achievement.progress} / ${achievement.target}`}
+                          : `${achievement.progress ?? 0} / ${achievement.target ?? 0}`}
                       </span>
                       <span className="text-slate-500">
-                        +${achievement.xpReward} XP
+                        +{achievement.xpReward ?? 0} XP
                       </span>
                     </div>
                     <div className="h-1.5 w-full overflow-hidden rounded-full bg-slate-950">
                       <div
-                        className={`h-full rounded-full transition-all duration-500 ${getProgressBarColor(achievement.status)}`}
+                        className={`h-full rounded-full transition-all duration-500 ${getProgressBarColor(achievement.status ?? 'incomplete')}`}
                         style={{ width: `${percent}%` }}
                       />
                     </div>

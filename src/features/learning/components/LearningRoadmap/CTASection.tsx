@@ -21,7 +21,7 @@ export const CTASection = () => {
         <MascotaCircle
           src="/avatars/celebrando.webp"
           alt="Mascota feliz"
-          size="xlarge"
+          size="large"
           centered
           className="mb-4"
         />

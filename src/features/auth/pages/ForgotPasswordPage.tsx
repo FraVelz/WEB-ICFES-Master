@@ -13,7 +13,7 @@ export const ForgotPasswordPage = () => {
   const [step, setStep] = useState(1); // 1: pedir email, 2: confirmación enviada
   const { resetPassword, verifyEmailExists } = useAuth();
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError('');
     setSuccess(false);
@@ -27,7 +27,8 @@ export const ForgotPasswordPage = () => {
       setEmail('');
     } catch (err) {
       setError(
-        err.message || EMAIL_MESSAGES.forgotPasswordPage.errorSendingEmail
+        (err instanceof Error ? err.message : undefined) ||
+          EMAIL_MESSAGES.forgotPasswordPage.errorSendingEmail
       );
     } finally {
       setIsLoading(false);

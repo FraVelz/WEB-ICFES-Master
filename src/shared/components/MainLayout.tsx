@@ -1,7 +1,7 @@
 import React from 'react';
 import { Header } from '@/shared/components/Header';
 
-export const MainLayout = ({ children }) => {
+export const MainLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <div className="relative flex min-h-screen overflow-hidden bg-linear-to-b from-black via-slate-950 to-black">
       {/* Background glow effects - Fixed to viewport */}

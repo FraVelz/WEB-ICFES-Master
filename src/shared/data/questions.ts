@@ -1,12 +1,14 @@
 // Datos de preguntas por área ICFES
 // Este archivo contiene todas las preguntas organizadas por área
 
-export const MATHEMATICS_QUESTIONS = [];
-export const LANGUAGE_QUESTIONS = [];
-export const SCIENCE_QUESTIONS = [];
-export const SOCIAL_QUESTIONS = [];
+import type { ExamQuestion } from '@/shared/types/question';
 
-export const ALL_QUESTIONS = [
+export const MATHEMATICS_QUESTIONS: ExamQuestion[] = [];
+export const LANGUAGE_QUESTIONS: ExamQuestion[] = [];
+export const SCIENCE_QUESTIONS: ExamQuestion[] = [];
+export const SOCIAL_QUESTIONS: ExamQuestion[] = [];
+
+export const ALL_QUESTIONS: ExamQuestion[] = [
   ...MATHEMATICS_QUESTIONS,
   ...LANGUAGE_QUESTIONS,
   ...SCIENCE_QUESTIONS,

@@ -2,58 +2,67 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+
+import { OnboardingLayout } from './OndboardingLayout';
+
 import { Icon } from '@/shared/components/Icon';
 import { MascotaCircle } from '@/shared/components/MascotaCircle';
 
 import { INTRODUCTION_SECTIONS, ONBOARDING_QUESTIONS } from './data';
 
-// Componente de Layout reutilizable para mantener consistencia
-const OnboardingLayout = ({ children, className = '' }) => (
-  <div
-    className={`relative flex min-h-dvh flex-col bg-linear-to-b from-black via-slate-950 to-black text-white ${className}`}
-  >
-    {/* Background glow effects - Fixed position */}
-    <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
-      <div className="absolute top-1/3 left-1/4 h-96 w-96 animate-pulse rounded-full bg-blue-500/30 blur-3xl"></div>
-      <div className="absolute right-1/4 bottom-1/3 h-96 w-96 animate-pulse rounded-full bg-purple-500/30 blur-3xl"></div>
-    </div>
-    {/* Content wrapper */}
-    <div className="relative z-10 flex w-full flex-1 flex-col">{children}</div>
-  </div>
-);
+interface OnboardingQuestion {
+  id: number;
+  question: string;
+  type: string;
+  options: { value: string; label: string }[];
+}
 
-export const OnboardingQuiz = ({ onComplete, avatarConfig = {} }) => {
+interface OnboardingQuizProps {
+  onComplete: (answers: Record<string, unknown>) => void;
+  avatarConfig?: { intro1?: string; intro2?: string };
+}
+
+export const OnboardingQuiz = ({
+  onComplete,
+  avatarConfig = {},
+}: OnboardingQuizProps) => {
   const router = useRouter();
   const [stage, setStage] = useState('intro'); // 'intro', 'quiz', 'completed'
   const [introIndex, setIntroIndex] = useState(0);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-  const [answers, setAnswers] = useState({});
+  const [answers, setAnswers] = useState<Record<string, unknown>>({});
 
   // Configuración de avatares - permitir personalización
   const avatarSettings = {
-    intro1: avatarConfig.intro1 || '/avatars/logo.webp',
-    intro2: avatarConfig.intro2 || '/avatars/logo.webp',
+    intro1: avatarConfig.intro1 ?? '/avatars/logo.webp',
+    intro2: avatarConfig.intro2 ?? '/avatars/logo.webp',
   };
 
-  const currentQuestion = ONBOARDING_QUESTIONS[currentQuestionIndex];
+  const currentQuestion = (ONBOARDING_QUESTIONS as OnboardingQuestion[])[
+    currentQuestionIndex
+  ];
   const isMultiple = currentQuestion?.type === 'multiple';
-  const currentAnswer = answers[currentQuestion?.id] || (isMultiple ? [] : '');
+  const rawAnswer = currentQuestion ? answers[String(currentQuestion.id)] : undefined;
+  const currentAnswer: string | string[] =
+    typeof rawAnswer === 'string' || Array.isArray(rawAnswer)
+      ? rawAnswer
+      : (isMultiple ? [] : '');
   const progress =
     ((currentQuestionIndex + 1) / ONBOARDING_QUESTIONS.length) * 100;
 
-  const handleSelectOption = (value) => {
-    if (isMultiple) {
+  const handleSelectOption = (value: string) => {
+    if (isMultiple && currentQuestion) {
       const currentAnswers = Array.isArray(currentAnswer) ? currentAnswer : [];
       setAnswers((prev) => ({
         ...prev,
-        [currentQuestion.id]: currentAnswers.includes(value)
+        [String(currentQuestion.id)]: currentAnswers.includes(value)
           ? currentAnswers.filter((v) => v !== value)
           : [...currentAnswers, value],
       }));
-    } else {
+    } else if (currentQuestion) {
       setAnswers((prev) => ({
         ...prev,
-        [currentQuestion.id]: value,
+        [String(currentQuestion.id)]: value,
       }));
     }
   };
@@ -247,7 +256,7 @@ export const OnboardingQuiz = ({ onComplete, avatarConfig = {} }) => {
               className={`group flex w-full cursor-pointer items-center gap-4 rounded-xl border-2 p-4 text-left font-semibold transition-all duration-200 ${
                 (
                   isMultiple
-                    ? currentAnswer.includes(option.value)
+                    ? (Array.isArray(currentAnswer) ? currentAnswer : []).includes(option.value)
                     : currentAnswer === option.value
                 )
                   ? 'border-cyan-500 bg-cyan-500/20 text-white shadow-lg shadow-cyan-500/10'
@@ -258,7 +267,7 @@ export const OnboardingQuiz = ({ onComplete, avatarConfig = {} }) => {
                 className={`flex h-6 w-6 shrink-0 items-center justify-center rounded border-2 transition-all ${
                   (
                     isMultiple
-                      ? currentAnswer.includes(option.value)
+                      ? (Array.isArray(currentAnswer) ? currentAnswer : []).includes(option.value)
                       : currentAnswer === option.value
                   )
                     ? 'scale-110 border-cyan-500 bg-cyan-500'
@@ -266,7 +275,7 @@ export const OnboardingQuiz = ({ onComplete, avatarConfig = {} }) => {
                 }`}
               >
                 {(isMultiple
-                  ? currentAnswer.includes(option.value)
+                  ? (Array.isArray(currentAnswer) ? currentAnswer : []).includes(option.value)
                   : currentAnswer === option.value) && (
                   <span className="text-sm font-bold text-white">✓</span>
                 )}

@@ -36,8 +36,11 @@ const MASCOT_AVATARS = [
   },
 ];
 
-const getMascotDialogue = (emotion, context) => {
-  const dialogues = {
+type EmotionKey = 'greeting' | 'thinking' | 'celebrating' | 'sad' | 'neutral';
+type ContextKey = 'start' | 'practice' | 'achievement';
+
+const getMascotDialogue = (emotion: EmotionKey, context?: ContextKey | null): string => {
+  const dialogues: Record<EmotionKey, string[]> = {
     greeting: [
       '¡Hola! ¿Listo para estudiar?',
       '¡Bienvenido! Hoy vamos a aprender juntos',
@@ -83,7 +86,7 @@ const getMascotDialogue = (emotion, context) => {
     ],
   };
 
-  const selected = context ? contextDialogues[context] : dialogues[emotion];
+  const selected = context ? contextDialogues[context as ContextKey] : dialogues[emotion];
   return selected[Math.floor(Math.random() * selected.length)];
 };
 
@@ -91,6 +94,15 @@ const getMascotDialogue = (emotion, context) => {
  * Componente Mascota - Similar a Duolingo Owl
  * Interactiva, motivadora y linda
  */
+interface AppMascotProps {
+  size?: 'sm' | 'md' | 'lg' | 'xl';
+  emotion?: EmotionKey;
+  showDialogue?: boolean;
+  interactive?: boolean;
+  context?: ContextKey | null;
+  className?: string;
+}
+
 export const AppMascot = ({
   size = 'md',
   emotion = 'greeting',
@@ -98,7 +110,7 @@ export const AppMascot = ({
   interactive = true,
   context = null,
   className = '',
-}) => {
+}: AppMascotProps) => {
   const [currentEmotion, setCurrentEmotion] = useState(emotion);
   const [dialogue, setDialogue] = useState(getMascotDialogue(emotion, context));
   const [isAnimating, setIsAnimating] = useState(false);
@@ -117,8 +129,8 @@ export const AppMascot = ({
       const emotions = ['greeting', 'thinking', 'neutral'];
       const randomEmotion =
         emotions[Math.floor(Math.random() * emotions.length)];
-      setCurrentEmotion(randomEmotion);
-      setDialogue(getMascotDialogue(randomEmotion));
+      setCurrentEmotion(randomEmotion as EmotionKey);
+      setDialogue(getMascotDialogue(randomEmotion as EmotionKey));
     }, 5000);
 
     return () => clearInterval(emotionTimer);
@@ -140,7 +152,9 @@ export const AppMascot = ({
  `;
     document.head.appendChild(bobbingStyle);
 
-    return () => document.head.removeChild(bobbingStyle);
+    return () => {
+      document.head.removeChild(bobbingStyle);
+    };
   }, [bobbing]);
 
   const sizeClasses = {
@@ -150,7 +164,8 @@ export const AppMascot = ({
     xl: { mascot: 'w-52 h-52', speech: 'max-w-2xl', text: 'text-xl' },
   };
 
-  const sizes = sizeClasses[size] || sizeClasses.md;
+  const sizeKey = ['sm', 'md', 'lg', 'xl'].includes(size) ? size : 'md';
+  const sizes = sizeClasses[sizeKey as keyof typeof sizeClasses] || sizeClasses.md;
 
   const currentAvatar =
     MASCOT_AVATARS.find((a) => a.emotion === currentEmotion) ||
@@ -160,7 +175,7 @@ export const AppMascot = ({
     if (!interactive) return;
     setIsAnimating(true);
     setCurrentEmotion('celebrating');
-    setDialogue(getMascotDialogue('celebrating'));
+    setDialogue(getMascotDialogue('celebrating', null));
     setTimeout(() => setIsAnimating(false), 600);
   };
 
@@ -186,7 +201,7 @@ export const AppMascot = ({
             alt="App Mascot"
             className="h-full w-full object-cover"
             onError={(e) => {
-              e.target.style.display = 'none';
+              (e.target as HTMLImageElement).style.display = 'none';
             }}
           />
         </div>

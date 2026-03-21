@@ -1,4 +1,4 @@
-export type MascotaCircleSize = 'sm' | 'md' | 'lg' | 'xl';
+export type MascotaCircleSize = 'sm' | 'md' | 'lg' | 'xl' | 'medium' | 'large';
 
 export type MascotaCircleProps = {
   src: string;
@@ -23,15 +23,17 @@ export const MascotaCircle = ({
   className = '',
   circleClassName = '',
 }: MascotaCircleProps) => {
-  const sizeMap = {
+  const sizeMap: Record<MascotaCircleSize, string> = {
     sm: 'w-32 h-32',
     md: 'w-40 h-40',
     lg: 'w-48 h-48',
     xl: 'w-56 h-56',
+    medium: 'w-40 h-40',
+    large: 'w-56 h-56',
   };
 
   const containerClass = centered ? 'flex justify-center' : '';
-  const circleClass = sizeMap[size] || sizeMap.lg;
+  const circleClass = size ? sizeMap[size] ?? sizeMap.lg : sizeMap.lg;
 
   return (
     <div className={`${containerClass} ${className}`}>

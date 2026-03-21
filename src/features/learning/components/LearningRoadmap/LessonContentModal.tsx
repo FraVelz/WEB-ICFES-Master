@@ -14,31 +14,49 @@ import {
 import { AREA_INFO } from '@/shared/constants';
 
 const getAreaColor = (areaId: string) => {
-  const info = AREA_INFO[areaId] || AREA_INFO['lectura-critica'];
-  if (info.color.includes('blue')) return 'from-blue-500 to-blue-600';
-  if (info.color.includes('green')) return 'from-green-500 to-green-600';
-  if (info.color.includes('purple')) return 'from-purple-500 to-purple-600';
-  if (info.color.includes('orange')) return 'from-orange-500 to-orange-600';
-  if (info.color.includes('indigo')) return 'from-indigo-500 to-indigo-600';
+  const info = (AREA_INFO as Record<string, { color?: string }>)[areaId] || (AREA_INFO as Record<string, { color?: string }>)['lectura-critica'];
+  const color = info?.color ?? '';
+  if (color.includes('blue')) return 'from-blue-500 to-blue-600';
+  if (color.includes('green')) return 'from-green-500 to-green-600';
+  if (color.includes('purple')) return 'from-purple-500 to-purple-600';
+  if (color.includes('orange')) return 'from-orange-500 to-orange-600';
+  if (color.includes('indigo')) return 'from-indigo-500 to-indigo-600';
   return 'from-blue-500 to-blue-600';
 };
 
 const getBubbleBorderColor = (areaId: string) => {
-  const info = AREA_INFO[areaId] || AREA_INFO['lectura-critica'];
-  if (info.color.includes('blue')) return 'border-blue-400/50';
-  if (info.color.includes('green')) return 'border-green-400/50';
-  if (info.color.includes('purple')) return 'border-purple-400/50';
-  if (info.color.includes('orange')) return 'border-orange-400/50';
-  if (info.color.includes('indigo')) return 'border-indigo-400/50';
+  const info = (AREA_INFO as Record<string, { color?: string }>)[areaId] || (AREA_INFO as Record<string, { color?: string }>)['lectura-critica'];
+  const color = info?.color ?? '';
+  if (color.includes('blue')) return 'border-blue-400/50';
+  if (color.includes('green')) return 'border-green-400/50';
+  if (color.includes('purple')) return 'border-purple-400/50';
+  if (color.includes('orange')) return 'border-orange-400/50';
+  if (color.includes('indigo')) return 'border-indigo-400/50';
   return 'border-blue-400/50';
 };
+
+export interface LessonContentModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  lesson: {
+    id?: string;
+    title?: string;
+    content?: string;
+    quiz?: unknown;
+    questions?: unknown[];
+    xp?: number;
+    coins?: number;
+    rewards?: { xp?: number; coins?: number };
+  } | null;
+  areaId?: string;
+}
 
 export const LessonContentModal = ({
   isOpen,
   onClose,
   lesson,
   areaId = 'lectura-critica',
-}) => {
+}: LessonContentModalProps) => {
   const [isQuizOpen, setIsQuizOpen] = useState(false);
   const [currentSection, setCurrentSection] = useState(0);
 
@@ -53,7 +71,7 @@ export const LessonContentModal = ({
     Array.isArray(lesson.questions) &&
     lesson.questions.length > 0;
   const hasQuiz = lesson?.quiz && typeof lesson.quiz === 'object';
-  const canShowQuiz = hasQuestions || hasQuiz;
+  const canShowQuiz: boolean = Boolean(hasQuestions || hasQuiz);
 
   const contentStr =
     typeof lesson?.content === 'string' ? lesson.content : '';
@@ -98,13 +116,13 @@ export const LessonContentModal = ({
   const gradientClass = getAreaColor(areaId);
   const bubbleBorder = getBubbleBorderColor(areaId);
 
-  const contentToRender =
+  const contentToRender: string =
     sections.length > 0 && !isExamStep
       ? stripFirstHeadingIfDuplicate(
           sections[currentSection],
           mascotDialogue
         )
-      : sections[currentSection] || '';
+      : (sections[currentSection] ?? '');
 
   return (
     <div
@@ -186,15 +204,15 @@ export const LessonContentModal = ({
                   <>
                     Completa{' '}
                     {hasQuestions
-                      ? `las ${lesson.questions.length} pregunta${lesson.questions.length > 1 ? 's' : ''}`
+                      ? `las ${(lesson?.questions ?? []).length} pregunta${(lesson?.questions ?? []).length > 1 ? 's' : ''}`
                       : 'el examen rápido'}
                     , para finalizar esta lección y ganar{' '}
                     <span className="font-bold text-blue-400">
-                      {lesson.xp || lesson.quiz?.rewards?.xp || 10} XP
+                      {lesson.xp || (lesson?.quiz as { rewards?: { xp?: number } } | undefined)?.rewards?.xp || 10} XP
                     </span>{' '}
                     y{' '}
                     <span className="font-bold text-yellow-400">
-                      {lesson.coins || lesson.quiz?.rewards?.coins || 5} monedas
+                      {lesson.coins || (lesson?.quiz as { rewards?: { coins?: number } } | undefined)?.rewards?.coins || 5} monedas
                     </span>
                     .
                   </>
@@ -268,24 +286,27 @@ export const LessonContentModal = ({
                       {...props}
                     />
                   ),
-                  code: ({ node, inline, className, children, ...props }) =>
-                    inline ? (
+                  code: ({ node, className, children, ...props }) => {
+                    const isInline = !className?.includes('language-');
+                    const content: React.ReactNode = Array.isArray(children) ? children.join('') : (children ?? '') as React.ReactNode;
+                    return isInline ? (
                       <code
                         className="rounded bg-slate-800 px-1.5 py-0.5 font-mono text-xs text-pink-400 sm:text-sm"
                         {...props}
                       >
-                        {children}
+                        {content}
                       </code>
                     ) : (
                       <div className="my-3 overflow-x-auto rounded-lg border border-slate-700 bg-slate-800/80 p-3 sm:my-4 sm:p-4">
                         <code
-                          className="font-mono text-xs text-slate-200 sm:text-sm"
+                          className={`font-mono text-xs text-slate-200 sm:text-sm ${className ?? ''}`}
                           {...props}
                         >
-                          {children}
+                          {content}
                         </code>
                       </div>
-                    ),
+                    );
+                  },
                   a: ({ node, ...props }) => (
                     <a
                       className="text-blue-400 underline decoration-blue-400/30 hover:text-blue-300 hover:decoration-blue-300"
@@ -300,8 +321,7 @@ export const LessonContentModal = ({
                   ),
                 }}
               >
-                {contentToRender ||
-                  '_No hay contenido disponible para esta lección._'}
+                {String(contentToRender || '_No hay contenido disponible para esta lección._')}
               </ReactMarkdown>
             </div>
           ) : (
@@ -353,12 +373,12 @@ export const LessonContentModal = ({
           resetSection();
           onClose();
         }}
-        questions={lesson.questions}
-        quiz={lesson.quiz}
-        lessonId={lesson.id}
-        lessonTitle={lesson.title}
-        lessonXp={lesson.xp}
-        lessonCoins={lesson.coins}
+        questions={Array.isArray(lesson?.questions) ? (lesson.questions as import('./LessonQuizModal').LessonQuizModalProps['questions']) : undefined}
+        quiz={lesson?.quiz && typeof lesson.quiz === 'object' ? { ...(lesson.quiz as object), questions: lesson.questions, rewards: lesson.rewards } as import('./LessonQuizModal').LessonQuizModalProps['quiz'] : undefined}
+        lessonId={lesson?.id}
+        lessonTitle={lesson?.title}
+        lessonXp={lesson?.xp}
+        lessonCoins={lesson?.coins}
       />
     </div>
   );

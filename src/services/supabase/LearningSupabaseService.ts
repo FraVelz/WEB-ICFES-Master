@@ -26,10 +26,10 @@ const LearningSupabaseService = {
   /**
    * Obtener lecciones por área desde learning_content
    */
-  async getLessonsByArea(area) {
+  async getLessonsByArea(area: string) {
     const sb = getSupabase();
     if (!sb) return [];
-    const normalizedArea = AREA_MAP[area] || area.replace(/-/g, '_');
+    const normalizedArea = (AREA_MAP as Record<string, string>)[area] ?? area.replace(/-/g, '_');
     const { data, error } = await sb
       .from(TABLE)
       .select('*')
@@ -61,7 +61,7 @@ const LearningSupabaseService = {
   /**
    * Obtener una lección por ID
    */
-  async getLesson(lessonId) {
+  async getLesson(lessonId: string) {
     const sb = getSupabase();
     if (!sb) return null;
     const { data, error } = await sb

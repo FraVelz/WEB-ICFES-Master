@@ -8,7 +8,10 @@
 import API_CONFIG from './api.config';
 
 export class BaseService {
-  constructor(resourceName) {
+  resourceName: string;
+  localStorageKey: string;
+
+  constructor(resourceName: string) {
     this.resourceName = resourceName;
     this.localStorageKey = `icfes_${resourceName}`;
   }
@@ -23,10 +26,10 @@ export class BaseService {
 
   /**
    * GET - Obtener uno o múltiples registros
-   * @param {string} id - ID del registro (opcional)
+   * @param id - ID del registro (opcional, null para obtener todos)
    * @returns {Promise}
    */
-  async get(id = null) {
+  async get(id?: string | null) {
     this._ensureLocalStorageMode();
     return this._getFromLocalStorage(id);
   }
@@ -36,7 +39,7 @@ export class BaseService {
    * @param {object} data - Datos del nuevo registro
    * @returns {Promise}
    */
-  async create(data) {
+  async create(data: Record<string, unknown>) {
     this._ensureLocalStorageMode();
     return this._createInLocalStorage(data);
   }
@@ -47,9 +50,9 @@ export class BaseService {
    * @param {object} data - Datos actualizados
    * @returns {Promise}
    */
-  async update(id, data) {
+  async update(id: string, data: object) {
     this._ensureLocalStorageMode();
-    return this._updateInLocalStorage(id, data);
+    return this._updateInLocalStorage(id, data as Record<string, unknown>);
   }
 
   /**
@@ -57,21 +60,21 @@ export class BaseService {
    * @param {string} id - ID del registro
    * @returns {Promise}
    */
-  async delete(id) {
+  async delete(id: string) {
     this._ensureLocalStorageMode();
     return this._deleteFromLocalStorage(id);
   }
 
   // ============ MÉTODOS PRIVADOS - localStorage ============
 
-  _getFromLocalStorage(id) {
+  _getFromLocalStorage(id?: string | null) {
     return new Promise((resolve, reject) => {
       try {
         const data = localStorage.getItem(this.localStorageKey);
         const parsed = data ? JSON.parse(data) : [];
 
         if (id) {
-          const item = parsed.find((item) => item.id === id);
+          const item = parsed.find((item: { id?: string }) => item.id === id);
           resolve(item || null);
         } else {
           resolve(parsed);
@@ -79,14 +82,14 @@ export class BaseService {
       } catch (error) {
         reject(
           new Error(
-            `Error leyendo ${this.resourceName} de localStorage: ${error.message}`
+            `Error leyendo ${this.resourceName} de localStorage: ${error instanceof Error ? error.message : String(error)}`
           )
         );
       }
     });
   }
 
-  _createInLocalStorage(data) {
+  _createInLocalStorage(data: Record<string, unknown>) {
     return new Promise((resolve, reject) => {
       try {
         const items = JSON.parse(
@@ -106,19 +109,19 @@ export class BaseService {
         resolve(newItem);
       } catch (error) {
         reject(
-          new Error(`Error creando ${this.resourceName}: ${error.message}`)
+          new Error(`Error creando ${this.resourceName}: ${error instanceof Error ? error.message : String(error)}`)
         );
       }
     });
   }
 
-  _updateInLocalStorage(id, data) {
+  protected _updateInLocalStorage(id: string, data: Record<string, unknown>) {
     return new Promise((resolve, reject) => {
       try {
         const items = JSON.parse(
           localStorage.getItem(this.localStorageKey) || '[]'
         );
-        const index = items.findIndex((item) => item.id === id);
+        const index = items.findIndex((item: { id?: string }) => item.id === id);
 
         if (index === -1) {
           reject(new Error(`${this.resourceName} con ID ${id} no encontrado`));
@@ -135,19 +138,19 @@ export class BaseService {
         resolve(items[index]);
       } catch (error) {
         reject(
-          new Error(`Error actualizando ${this.resourceName}: ${error.message}`)
+          new Error(`Error actualizando ${this.resourceName}: ${error instanceof Error ? error.message : String(error)}`)
         );
       }
     });
   }
 
-  _deleteFromLocalStorage(id) {
+  _deleteFromLocalStorage(id: string) {
     return new Promise((resolve, reject) => {
       try {
         const items = JSON.parse(
           localStorage.getItem(this.localStorageKey) || '[]'
         );
-        const filtered = items.filter((item) => item.id !== id);
+        const filtered = items.filter((item: { id?: string }) => item.id !== id);
 
         if (items.length === filtered.length) {
           reject(new Error(`${this.resourceName} con ID ${id} no encontrado`));
@@ -158,7 +161,7 @@ export class BaseService {
         resolve({ success: true, message: `${this.resourceName} eliminado` });
       } catch (error) {
         reject(
-          new Error(`Error eliminando ${this.resourceName}: ${error.message}`)
+          new Error(`Error eliminando ${this.resourceName}: ${error instanceof Error ? error.message : String(error)}`)
         );
       }
     });

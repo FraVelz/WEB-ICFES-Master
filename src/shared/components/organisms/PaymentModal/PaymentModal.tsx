@@ -11,8 +11,15 @@ import { PlanChangeAlert } from './components/PlanChangeAlert';
 import { usePriceCalculation } from './hooks/usePriceCalculation';
 import { useAuth } from '@/context/AuthContext';
 import { SubscriptionPlanService, PlanScheduleService } from '@/services';
+import type { PlanItem, UserPlanData } from './types';
 
-export const PaymentModal = ({ isOpen, onClose, plan }) => {
+export interface PaymentModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  plan: PlanItem | null;
+}
+
+export const PaymentModal = ({ isOpen, onClose, plan }: PaymentModalProps) => {
   const { user } = useAuth();
   const [cardData, setCardData] = useState({
     cardNumber: '',
@@ -23,14 +30,15 @@ export const PaymentModal = ({ isOpen, onClose, plan }) => {
   });
   const [isProcessing, setIsProcessing] = useState(false);
   const [paymentSuccess, setPaymentSuccess] = useState(false);
-  const [billingPeriod, setBillingPeriod] = useState('monthly');
-  const [error, setError] = useState(null);
-  const [currentPlan, setCurrentPlan] = useState(null);
+  const [billingPeriod, setBillingPeriod] = useState<'monthly' | 'annual'>('monthly');
+  const [error, setError] = useState<string | null>(null);
+  const [currentPlan, setCurrentPlan] = useState<UserPlanData | null>(null);
   const [loadingPlan, setLoadingPlan] = useState(true);
   const [canSchedulePlan, setCanSchedulePlan] = useState(true);
-  const [scheduleError, setScheduleError] = useState(null);
+  const [scheduleError, setScheduleError] = useState<string | null>(null);
 
   const validateScheduling = useCallback(async () => {
+    if (!user?.uid) return;
     try {
       const validation = await PlanScheduleService.validatePlanScheduling(
         user.uid
@@ -46,6 +54,7 @@ export const PaymentModal = ({ isOpen, onClose, plan }) => {
   }, [user?.uid]);
 
   const loadCurrentPlan = useCallback(async () => {
+    if (!user?.uid) return;
     try {
       setLoadingPlan(true);
       const userCurrentPlan = await SubscriptionPlanService.getUserPlan(
@@ -72,13 +81,13 @@ export const PaymentModal = ({ isOpen, onClose, plan }) => {
 
   if (!isOpen) return null;
 
-  const handleCardNumberChange = (e) => {
+  const handleCardNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     let value = e.target.value.replace(/\s/g, '').slice(0, 16);
     value = value.replace(/(\d{4})/g, '$1 ').trim();
     setCardData({ ...cardData, cardNumber: value });
   };
 
-  const handleExpiryChange = (type, value) => {
+  const handleExpiryChange = (type: 'month' | 'year', value: string) => {
     if (type === 'month') {
       value = value.slice(0, 2);
       if (parseInt(value) > 12) value = '12';
@@ -91,12 +100,12 @@ export const PaymentModal = ({ isOpen, onClose, plan }) => {
     });
   };
 
-  const handleCVVChange = (e) => {
+  const handleCVVChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     let value = e.target.value.replace(/\D/g, '').slice(0, 3);
     setCardData({ ...cardData, cvv: value });
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsProcessing(true);
     setError(null);
@@ -108,6 +117,7 @@ export const PaymentModal = ({ isOpen, onClose, plan }) => {
       }
 
       // Si es plan gratuito, no necesita procesamiento de pago
+      if (!plan) throw new Error('Plan no seleccionado');
       if (plan.price === 'Gratis') {
         // Guardar directamente sin simular pago
         const planData = {
@@ -126,7 +136,17 @@ export const PaymentModal = ({ isOpen, onClose, plan }) => {
         // Simular procesamiento de pago para planes de pago (en producción: Stripe/PayPal)
         await new Promise((resolve) => setTimeout(resolve, 2000));
 
-        const planData = {
+        const planData: {
+          planType: string;
+          planName?: string;
+          price: number | string;
+          billingPeriod: string;
+          originalPrice?: number | string;
+          features: string[];
+          purchaseDate: Date;
+          status?: string;
+          nextBillingDate?: Date | null;
+        } = {
           planType: plan.id || 'premium',
           planName: plan.name,
           price: priceCalculation.finalPrice,
@@ -144,7 +164,7 @@ export const PaymentModal = ({ isOpen, onClose, plan }) => {
 
         if (hasActivePlan) {
           // Programar el plan para después
-          planData.nextBillingDate = currentPlan.nextBillingDate;
+          planData.nextBillingDate = currentPlan.nextBillingDate as Date | null | undefined;
           await PlanScheduleService.schedulePlan(user.uid, planData);
         } else {
           // Activar directamente
@@ -163,7 +183,8 @@ export const PaymentModal = ({ isOpen, onClose, plan }) => {
       setPaymentSuccess(true);
     } catch (err) {
       setIsProcessing(false);
-      setError(err.message || 'Error al procesar el pago. Intenta de nuevo.');
+      const msg = err instanceof Error ? err.message : 'Error al procesar el pago. Intenta de nuevo.';
+      setError(msg);
       console.error('Payment error:', err);
     }
   };
@@ -176,16 +197,18 @@ export const PaymentModal = ({ isOpen, onClose, plan }) => {
     currentPlan.status === 'active';
 
   // Para planes gratuitos, no necesita validar tarjeta
-  const isFormValid =
+  const isFormValid: boolean =
     !canSchedulePlan || isSamePlanActive
       ? false
       : plan?.price === 'Gratis'
         ? true
-        : cardData.cardNumber.replace(/\s/g, '').length === 16 &&
-          cardData.cardHolder.trim().length > 0 &&
-          cardData.expiryMonth &&
-          cardData.expiryYear &&
-          cardData.cvv.length === 3;
+        : Boolean(
+            cardData.cardNumber.replace(/\s/g, '').length === 16 &&
+            cardData.cardHolder.trim().length > 0 &&
+            cardData.expiryMonth &&
+            cardData.expiryYear &&
+            cardData.cvv.length === 3
+          );
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-0 backdrop-blur-sm lg:items-end lg:p-4 lg:pt-20">
@@ -314,7 +337,7 @@ export const PaymentModal = ({ isOpen, onClose, plan }) => {
             isProcessing={isProcessing}
             isFormValid={isFormValid}
             onClose={onClose}
-            price={priceCalculation.finalPrice}
+            price={String(priceCalculation.finalPrice)}
             plan={plan}
           />
         )}

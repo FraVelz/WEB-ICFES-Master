@@ -16,8 +16,10 @@ import {
   SCIENCE_QUESTIONS,
   SOCIAL_QUESTIONS,
 } from '@/shared/data';
+import type { ExamQuestion } from '@/shared/types/question';
+import type { ExamConfig } from '@/features/exam/types';
 
-const AREA_QUESTIONS = {
+const AREA_QUESTIONS: Record<string, ExamQuestion[]> = {
   'lectura-critica': LANGUAGE_QUESTIONS,
   matematicas: MATHEMATICS_QUESTIONS,
   'ciencias-naturales': SCIENCE_QUESTIONS,
@@ -41,29 +43,32 @@ const AREA_INFO = {
 };
 
 export const PracticePage = () => {
-  const { area } = useParams();
-  const allQuestions = AREA_QUESTIONS[area] || [];
-  const areaInfo = AREA_INFO[area] || {
+  const { area } = useParams<{ area: string }>();
+  const areaStr = Array.isArray(area) ? area[0] : area ?? '';
+  const allQuestions = AREA_QUESTIONS[areaStr] ?? [];
+  const areaInfo = AREA_INFO[areaStr as keyof typeof AREA_INFO] ?? {
     name: 'Examen Completo',
     color: 'from-pink-400 to-pink-600',
   };
 
-  const [examConfig, setExamConfig] = useState(null);
-  const [questions, setQuestions] = useState([]);
-  const [answers, setAnswers] = useState({});
+  const [examConfig, setExamConfig] = useState<ExamConfig | null>(null);
+  const [questions, setQuestions] = useState<ExamQuestion[]>([]);
+  const [answers, setAnswers] = useState<Record<string, string>>({});
   const [showResults, setShowResults] = useState(false);
-  const [timeRemaining, setTimeRemaining] = useState(null);
+  const [timeRemaining, setTimeRemaining] = useState<number | null>(null);
   const [isFinished, setIsFinished] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [showAnswerSheetMobile, setShowAnswerSheetMobile] = useState(false);
 
-  const handleExamStart = (config) => {
+  const handleExamStart = (config: ExamConfig) => {
     const selectedQuestions = allQuestions.slice(0, config.numQuestions);
     setQuestions(selectedQuestions);
     setExamConfig(config);
 
     if (config.useTimer) {
-      setTimeRemaining(config.numQuestions * config.timePerQuestion * 60);
+      setTimeRemaining(
+        config.numQuestions * (config.timePerQuestion ?? 2) * 60
+      );
     }
   };
 
@@ -72,7 +77,7 @@ export const PracticePage = () => {
 
     const timer = setInterval(() => {
       setTimeRemaining((prev) => {
-        if (prev <= 1) {
+        if (prev === null || prev <= 1) {
           setIsFinished(true);
           return 0;
         }
@@ -83,14 +88,14 @@ export const PracticePage = () => {
     return () => clearInterval(timer);
   }, [timeRemaining]);
 
-  const handleAnswer = (questionId, answer) => {
+  const handleAnswer = (questionId: string, answer: string) => {
     setAnswers((prev) => ({
       ...prev,
       [questionId]: answer,
     }));
   };
 
-  const handleScrollToQuestion = (index) => {
+  const handleScrollToQuestion = (index: number) => {
     const questionElement = document.getElementById(`question-${index}`);
     questionElement?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
@@ -108,7 +113,7 @@ export const PracticePage = () => {
       const percentage = Math.round((correctCount / questions.length) * 100);
 
       savePractice({
-        practiceArea: area,
+        practiceArea: areaStr,
         areaName: areaInfo.name,
         questions,
         answers,
@@ -125,12 +130,18 @@ export const PracticePage = () => {
     questions,
     answers,
     examConfig,
-    area,
+    areaStr,
     areaInfo.name,
   ]);
 
   if (!examConfig) {
-    return <ExamConfigModal area={area} onStart={handleExamStart} />;
+    return (
+      <ExamConfigModal
+        area={areaInfo.name}
+        totalQuestions={allQuestions.length}
+        onStart={handleExamStart}
+      />
+    );
   }
 
   if (isFinished || showResults) {
@@ -250,9 +261,9 @@ export const PracticePage = () => {
   }
 
   const timeColor =
-    timeRemaining < 300
+    timeRemaining !== null && timeRemaining < 300
       ? 'text-red-400'
-      : timeRemaining < 600
+      : timeRemaining !== null && timeRemaining < 600
         ? 'text-yellow-400'
         : 'text-cyan-300';
 
@@ -278,7 +289,7 @@ export const PracticePage = () => {
               </p>
             </div>
 
-            {examConfig.useTimer && (
+            {examConfig.useTimer && timeRemaining !== null && (
               <div className={`font-mono text-2xl font-bold ${timeColor}`}>
                 {formatTimeExtended(timeRemaining)}
               </div>
@@ -372,7 +383,7 @@ export const PracticePage = () => {
                         <button
                           key={option.letter}
                           onClick={() =>
-                            handleAnswer(question.id, option.letter)
+                            handleAnswer(question.id, option.letter ?? option.id)
                           }
                           className={`w-full rounded-lg border-2 p-4 text-left transition-all duration-300 ${
                             isSelected

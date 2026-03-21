@@ -1,19 +1,23 @@
 import { useState, useCallback } from 'react';
+import type { ExamQuestion } from '@/shared/types/question';
 
-export const useQuizLogic = (questions = []) => {
+export const useQuizLogic = (questions: ExamQuestion[] = []) => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-  const [answers, setAnswers] = useState({});
+  const [answers, setAnswers] = useState<Record<string, string>>({});
   const [showExplanation, setShowExplanation] = useState(false);
   const [isFinished, setIsFinished] = useState(false);
 
   const currentQuestion = questions[currentQuestionIndex];
-  const answered = answers[currentQuestion?.id] !== undefined;
+  const answered =
+    currentQuestion && answers[currentQuestion.id] !== undefined;
 
   const handleAnswer = useCallback(
-    (selectedAnswer) => {
+    (selectedAnswer: string) => {
       setAnswers((prev) => ({
         ...prev,
-        [currentQuestion.id]: selectedAnswer,
+        ...(currentQuestion && {
+          [currentQuestion.id]: selectedAnswer,
+        }),
       }));
       setShowExplanation(true);
     },
@@ -37,7 +41,7 @@ export const useQuizLogic = (questions = []) => {
   }, [currentQuestionIndex]);
 
   const getResults = useCallback(() => {
-    return questions.map((question) => ({
+    return questions.map((question: ExamQuestion) => ({
       question,
       correct: answers[question.id] === question.correctAnswer,
       userAnswer: answers[question.id],

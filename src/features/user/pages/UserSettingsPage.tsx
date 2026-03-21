@@ -16,14 +16,21 @@ import {
 
 // --- Internal Components for UI Consistency ---
 
-const SettingsSection = ({ title, icon, children, className = '' }) => (
+interface SettingsSectionProps {
+  title?: string;
+  icon?: string;
+  children: React.ReactNode;
+  className?: string;
+}
+
+const SettingsSection = ({ title, icon, children, className = '' }: SettingsSectionProps) => (
   <div
     className={`mb-6 rounded-2xl border border-slate-800 bg-slate-900/60 p-5 backdrop-blur-md sm:p-6 ${className}`}
   >
     {title && (
       <h2 className="mb-6 flex items-center gap-3 border-b border-slate-800 pb-4 text-lg font-bold text-white sm:text-xl">
         <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-slate-800 text-cyan-400 shadow-inner">
-          <Icon name={icon} />
+          <Icon name={icon ?? 'settings'} />
         </div>
         {title}
       </h2>
@@ -32,6 +39,15 @@ const SettingsSection = ({ title, icon, children, className = '' }) => (
   </div>
 );
 
+interface SettingOptionProps {
+  label: string;
+  description?: string;
+  icon?: string;
+  action: React.ReactNode;
+  danger?: boolean;
+  onClick?: () => void;
+}
+
 const SettingOption = ({
   label,
   description,
@@ -39,7 +55,7 @@ const SettingOption = ({
   action,
   danger = false,
   onClick,
-}) => (
+}: SettingOptionProps) => (
   <div
     onClick={onClick}
     className={`group flex flex-col justify-between rounded-xl border p-4 transition-all duration-200 sm:flex-row sm:items-center ${
@@ -57,7 +73,7 @@ const SettingOption = ({
               : 'bg-slate-700/50 text-slate-400 group-hover:bg-slate-700 group-hover:text-cyan-400'
           }`}
         >
-          <Icon name={icon} />
+          <Icon name={icon ?? 'settings'} />
         </div>
       )}
       <div>
@@ -85,16 +101,16 @@ export const UserSettingsPage = () => {
   const { logout } = useAuth();
   const { user: userData } = useUserData();
   const { resetProgress } = useProgress();
-  const { resetUserExams } = useExam();
+  const { resetUserExams } = useExam(undefined);
 
-  const fileInputRef = useRef(null);
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
   const [message, setMessage] = useState('');
   const [messageType, setMessageType] = useState('success');
   const [loading, setLoading] = useState(false);
-  const [username, setUsername] = useState(
-    user?.username || userData?.displayName || ''
+  const [username, setUsername] = useState<string>(
+    (user?.username ?? userData?.displayName ?? userData?.username ?? '') as string
   );
-  const [bio, setBio] = useState(user?.bio || userData?.bio || '');
+  const [bio, setBio] = useState<string>(() => (user?.bio ?? userData?.bio ?? '') || '');
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [deleteConfirmation, setDeleteConfirmation] = useState('');
 
@@ -106,15 +122,15 @@ export const UserSettingsPage = () => {
   const [sendingSupport, setSendingSupport] = useState(false);
 
   useEffect(() => {
-    setUsername(user?.username || userData?.displayName || '');
-    setSupportEmail(user?.email || '');
-  }, [user?.username, userData?.displayName, user?.email]);
+    setUsername(user?.username ?? userData?.displayName ?? userData?.username ?? '');
+    setSupportEmail((user?.email ?? userData?.email ?? '') as string);
+  }, [user?.username, user?.email, userData?.displayName, userData?.email]);
 
   useEffect(() => {
     setBio(user?.bio || userData?.bio || '');
   }, [user?.bio, userData?.bio]);
 
-  const showMessage = (msg, type = 'success') => {
+  const showMessage = (msg: string, type: 'success' | 'error' = 'success') => {
     setMessage(msg);
     setMessageType(type);
     setTimeout(() => setMessage(''), 3000);
@@ -131,7 +147,7 @@ export const UserSettingsPage = () => {
       refreshUser();
       showMessage('Nombre de usuario actualizado');
     } catch (err) {
-      showMessage(`Error: ${err.message}`, 'error');
+      showMessage(`Error: ${err instanceof Error ? err.message : 'Error desconocido'}`, 'error');
     } finally {
       setLoading(false);
     }
@@ -144,13 +160,13 @@ export const UserSettingsPage = () => {
       refreshUser();
       showMessage('Frase personal actualizada');
     } catch (err) {
-      showMessage(`Error: ${err.message}`, 'error');
+      showMessage(`Error: ${err instanceof Error ? err.message : 'Error desconocido'}`, 'error');
     } finally {
       setLoading(false);
     }
   };
 
-  const handleImageUpload = async (e) => {
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
@@ -160,7 +176,7 @@ export const UserSettingsPage = () => {
       await refreshUser();
       showMessage('Foto de perfil actualizada');
     } catch (err) {
-      showMessage(`Error: ${err.message}`, 'error');
+      showMessage(`Error: ${err instanceof Error ? err.message : 'Error desconocido'}`, 'error');
     } finally {
       setLoading(false);
     }
@@ -177,7 +193,7 @@ export const UserSettingsPage = () => {
     }
   };
 
-  const handleSupportSubmit = async (e) => {
+  const handleSupportSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!supportMessage.trim()) {
       showMessage('Por favor describe tu problema o pregunta', 'error');
@@ -198,7 +214,7 @@ export const UserSettingsPage = () => {
       );
       setSupportMessage('');
       setSupportCategory('technical');
-      if (!user?.email) setSupportEmail('');
+      if (!user?.email && !userData?.email) setSupportEmail('');
     } catch (err) {
       console.error('Error sending support message:', err);
       showMessage('Error al enviar el mensaje. Intenta nuevamente.', 'error');
@@ -214,7 +230,7 @@ export const UserSettingsPage = () => {
       showMessage('Sesión cerrada exitosamente', 'success');
       setTimeout(() => router.push('/'), 1500);
     } catch (err) {
-      showMessage(`Error al cerrar sesión: ${err.message}`, 'error');
+      showMessage(`Error al cerrar sesión: ${err instanceof Error ? err.message : 'Error desconocido'}`, 'error');
     } finally {
       setLoading(false);
     }
@@ -236,7 +252,7 @@ export const UserSettingsPage = () => {
       setDeleteConfirmation('');
       setTimeout(() => router.push('/dashboard'), 1500);
     } catch (err) {
-      showMessage(`Error al eliminar datos: ${err.message}`, 'error');
+      showMessage(`Error al eliminar datos: ${err instanceof Error ? err.message : 'Error desconocido'}`, 'error');
     } finally {
       setLoading(false);
     }
@@ -257,7 +273,7 @@ export const UserSettingsPage = () => {
       showMessage('Cuenta eliminada exitosamente', 'success');
       setTimeout(() => router.push('/'), 1500);
     } catch (err) {
-      showMessage(`Error al eliminar cuenta: ${err.message}`, 'error');
+      showMessage(`Error al eliminar cuenta: ${err instanceof Error ? err.message : 'Error desconocido'}`, 'error');
     } finally {
       setLoading(false);
     }

@@ -1,4 +1,12 @@
-export const PlanInfo = ({ plan, billingPeriod, priceCalculation }) => {
+import type { PlanItem, PriceCalculation } from '../types';
+
+export interface PlanInfoProps {
+  plan: PlanItem | null;
+  billingPeriod: string;
+  priceCalculation: PriceCalculation;
+}
+
+export const PlanInfo = ({ plan, billingPeriod, priceCalculation }: PlanInfoProps) => {
   const getPrice = () => priceCalculation.finalPrice;
   const getSavings = () => priceCalculation.savings;
   const getMonthlyPrice = () => priceCalculation.monthlyPrice;

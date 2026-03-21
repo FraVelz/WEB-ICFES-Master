@@ -10,6 +10,39 @@ import {
   markLessonAsCompleted,
 } from '@/shared/utils/progressStorage';
 
+interface QuizQuestionInput {
+  id?: string;
+  question?: string;
+  text?: string;
+  options?: (string | { id?: string; text?: string; content?: string; letter?: string })[];
+  correct_answer?: number;
+  correctAnswer?: number | string;
+  explanation?: string;
+  difficulty?: string;
+}
+
+interface QuizInput {
+  question?: string;
+  options?: (string | { id?: string; text?: string; content?: string; letter?: string })[];
+  correctAnswer?: string;
+  explanation?: string;
+  difficulty?: string;
+  questions?: QuizQuestionInput[];
+  rewards?: { xp?: number; coins?: number };
+}
+
+export interface LessonQuizModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  onComplete?: (result?: { correct: number; total: number }) => void;
+  questions?: QuizQuestionInput[];
+  quiz?: QuizInput;
+  lessonId?: string | null;
+  lessonTitle?: string;
+  lessonXp?: number;
+  lessonCoins?: number;
+}
+
 export const LessonQuizModal = ({
   isOpen,
   onClose,
@@ -20,7 +53,7 @@ export const LessonQuizModal = ({
   lessonTitle,
   lessonXp,
   lessonCoins,
-}) => {
+}: LessonQuizModalProps) => {
   const { user } = useAuth();
   const overlayRef = useGSAPModalEntrance({
     isOpen,
@@ -28,17 +61,17 @@ export const LessonQuizModal = ({
     duration: 0.2,
   });
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-  const [selectedOption, setSelectedOption] = useState(null);
+  const [selectedOption, setSelectedOption] = useState<string | null>(null);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isCorrect, setIsCorrect] = useState(false);
   const [loading, setLoading] = useState(false);
   const [alreadyCompleted, setAlreadyCompleted] = useState(false);
-  const [rewards, setRewards] = useState(null);
-  const [answers, setAnswers] = useState({}); // Para almacenar respuestas de múltiples preguntas
-  const [completedQuestions, setCompletedQuestions] = useState(new Set());
+  const [rewards, setRewards] = useState<{ xp: number; coins: number } | null>(null);
+  const [answers, setAnswers] = useState<Record<string, string>>({});
+  const [completedQuestions, setCompletedQuestions] = useState<Set<string>>(new Set());
 
   // Función auxiliar para normalizar opciones
-  const normalizeOptions = (options) => {
+  const normalizeOptions = (options: unknown): { id: string; text: string }[] => {
     if (!Array.isArray(options) || options.length === 0) {
       return [];
     }
@@ -52,14 +85,14 @@ export const LessonQuizModal = ({
     }
 
     // Si es array de objetos, normalizar
-    return options.map((opt, i) => {
+    return options.map((opt: unknown, i: number) => {
       if (typeof opt === 'string') {
         return { id: String.fromCharCode(97 + i), text: opt };
       }
-      // Si ya tiene id y text, usarlos; si no, generar
+      const o = opt as Record<string, unknown>;
       return {
-        id: opt.id || opt.letter || String.fromCharCode(97 + i),
-        text: opt.text || opt.content || String(opt),
+        id: String(o?.id ?? o?.letter ?? String.fromCharCode(97 + i)),
+        text: String(o?.text ?? o?.content ?? opt),
       };
     });
   };
@@ -202,7 +235,7 @@ export const LessonQuizModal = ({
   const checkCompletionStatus = async () => {
     try {
       const completedLessons = getCompletedLessons();
-      const wasCompleted = completedLessons.includes(lessonId);
+      const wasCompleted = lessonId ? completedLessons.includes(lessonId) : false;
       setAlreadyCompleted(wasCompleted);
       console.log('Estado de completitud de lección:', {
         lessonId,
@@ -226,7 +259,7 @@ export const LessonQuizModal = ({
     // Guardar respuesta con la respuesta actual incluida
     const updatedAnswers = { ...answers, [currentQuestion.id]: selectedOption };
     setAnswers(updatedAnswers);
-    setCompletedQuestions((prev) => new Set([...prev, currentQuestion.id]));
+    if (currentQuestion.id) setCompletedQuestions((prev) => new Set([...prev, currentQuestion.id]));
 
     // Verificar si todas las preguntas están respondidas
     const allQuestionsAnswered = normalizedQuestions.every((q) => {
@@ -292,7 +325,7 @@ export const LessonQuizModal = ({
         const coinsResult = await GamificationServiceAdapter.addCoins(
           user.uid,
           coinsAmount,
-          `lesson_quiz_${lessonId}`
+          `lesson_quiz_${lessonId ?? 'unknown'}`
         );
         console.log('Monedas otorgadas:', coinsResult);
 
@@ -300,13 +333,14 @@ export const LessonQuizModal = ({
 
         // Marcar lección como completada
         console.log('Marcando lección como completada...');
-        markLessonAsCompleted(user?.uid, lessonId);
+        if (user?.uid && lessonId) markLessonAsCompleted(user.uid, lessonId);
         console.log('Lección marcada como completada');
 
         setRewards({ xp: xpAmount, coins: coinsAmount });
         setAlreadyCompleted(true);
         console.log('=== RECOMPENSAS OTORGADAS EXITOSAMENTE ===');
-      } catch (error) {
+      } catch (err) {
+        const error = err instanceof Error ? err : new Error(String(err));
         console.error('=== ERROR OTORGANDO RECOMPENSAS ===', error);
         console.error('Detalles del error:', {
           message: error.message,
@@ -351,7 +385,7 @@ export const LessonQuizModal = ({
         const coinsResult = await GamificationServiceAdapter.addCoins(
           user.uid,
           coinsAmount,
-          `lesson_quiz_${lessonId}`
+          `lesson_quiz_${lessonId ?? 'unknown'}`
         );
 
         console.log('Resultados de recompensas (pregunta única):', {
@@ -360,12 +394,12 @@ export const LessonQuizModal = ({
         });
 
         // Marcar lección como completada
-        markLessonAsCompleted(user?.uid, lessonId);
+        if (user?.uid && lessonId) markLessonAsCompleted(user.uid, lessonId);
 
         setRewards({ xp: xpAmount, coins: coinsAmount });
         setAlreadyCompleted(true);
-      } catch (error) {
-        console.error('Error awarding rewards:', error);
+      } catch (err) {
+        console.error('Error awarding rewards:', err);
       }
       setLoading(false);
     }
@@ -604,7 +638,7 @@ export const LessonQuizModal = ({
                   (isCorrect || allQuestionsAnswered) &&
                   onComplete
                 ) {
-                  onComplete();
+                  onComplete({ correct: Object.keys(answers).filter((k) => answers[k] === normalizedQuestions.find((q) => q.id === k)?.correctAnswer).length, total: totalQuestions });
                 } else {
                   onClose();
                 }

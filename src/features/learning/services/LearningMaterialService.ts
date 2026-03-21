@@ -9,18 +9,23 @@ import {
 import API_CONFIG from '@/services/api.config';
 import LearningSupabaseService from '@/services/supabase/LearningSupabaseService';
 
-const AREA_MAP = { 'sociales-ciudadanas': 'sociales' };
+const AREA_MAP: Record<string, string> = { 'sociales-ciudadanas': 'sociales' };
+
+interface TopicItem {
+  title?: string;
+  [key: string]: unknown;
+}
 
 class LearningMaterialService {
-  async getLessonsByArea(area) {
+  async getLessonsByArea(area: string) {
     if (API_CONFIG.MODE === 'supabase') {
       const lessons = await LearningSupabaseService.getLessonsByArea(area);
       if (lessons?.length > 0) return lessons;
     }
 
-    const key = AREA_MAP[area] || area;
-    const topics = BASICO_TOPICS[key] || [];
-    return topics.map((t, i) => ({
+    const key = AREA_MAP[area] ?? area;
+    const topics = (BASICO_TOPICS as Record<string, TopicItem[]>)[key] ?? [];
+    return topics.map((t: TopicItem, i: number) => ({
       id: `${key}_${i}`,
       title: t.title,
       area,
@@ -28,25 +33,25 @@ class LearningMaterialService {
     }));
   }
 
-  async getLesson(lessonId) {
+  async getLesson(lessonId: string) {
     if (API_CONFIG.MODE === 'supabase') {
       return LearningSupabaseService.getLesson(lessonId);
     }
     return null;
   }
 
-  async createLesson(lessonData) {
+  async createLesson(_lessonData: unknown) {
     return `lesson_${Date.now()}`;
   }
 
-  async markLessonAsCompleted(userId, lessonId) {
+  async markLessonAsCompleted(userId: string, lessonId: string) {
     markLesson(userId, lessonId);
   }
 
-  async getUserLessonsProgress(userId, area) {
+  async getUserLessonsProgress(userId: string, area: string) {
     const lessons = await this.getLessonsByArea(area);
     const completed = getCompletedLessons();
-    const completedCount = lessons.filter((l) =>
+    const completedCount = lessons.filter((l: { id: string }) =>
       completed.includes(l.id)
     ).length;
     return {

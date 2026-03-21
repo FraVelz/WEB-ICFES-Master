@@ -7,9 +7,16 @@ import { ShopItemCard } from './ShopItemCard';
 import { ShopItemModal } from './ShopItemModal';
 import { useGSAPModalEntrance } from '@/hooks/useGSAPModalEntrance';
 
-export const StoreModal = ({ isOpen, onClose }) => {
+import type { ShopItem } from '../data/shopItems';
+
+export interface StoreModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+}
+
+export const StoreModal = ({ isOpen, onClose }: StoreModalProps) => {
   const { coins, hasItem, loading, processing, buyItem, shopItems } = useShop();
-  const [selectedItem, setSelectedItem] = useState(null);
+  const [selectedItem, setSelectedItem] = useState<ShopItem | null>(null);
   const [filter, setFilter] = useState('all'); // all, avatar, theme, powerup
   const modalRef = useGSAPModalEntrance({
     isOpen,
@@ -17,21 +24,20 @@ export const StoreModal = ({ isOpen, onClose }) => {
     duration: 0.2,
   });
 
-  const handleBuy = async (item) => {
+  const handleBuy = async (item: ShopItem) => {
     try {
       await buyItem(item);
       setSelectedItem(null);
-      // Aquí podrías mostrar un toast de éxito
       alert(`¡Has comprado ${item.name}!`);
-    } catch (error) {
-      alert(error.message);
+    } catch (err) {
+      alert(err instanceof Error ? err.message : 'Error en la compra');
     }
   };
 
   const filteredItems =
     filter === 'all'
       ? shopItems
-      : shopItems.filter((item) => item.category === filter);
+      : shopItems.filter((item: ShopItem) => item.category === filter);
 
   if (!isOpen) return null;
 
@@ -145,8 +151,8 @@ export const StoreModal = ({ isOpen, onClose }) => {
           onClose={() => setSelectedItem(null)}
           onBuy={handleBuy}
           processing={processing}
-          canAfford={selectedItem && coins >= selectedItem.price}
-          isPurchased={selectedItem && hasItem(selectedItem.id)}
+          canAfford={!!selectedItem && coins >= selectedItem.price}
+          isPurchased={!!selectedItem && hasItem(selectedItem.id)}
         />
       </div>
     </div>

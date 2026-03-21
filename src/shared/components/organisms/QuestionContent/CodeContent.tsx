@@ -11,13 +11,20 @@
  *   title="Ejemplo de bucle"
  * />
  */
+interface CodeContentProps {
+  language?: string;
+  code?: string;
+  title?: string;
+  showLineNumbers?: boolean;
+}
+
 export const CodeContent = ({
   language = 'pseudocode',
   code,
   title,
   showLineNumbers = true,
-}) => {
-  const lines = code.split('\n');
+}: CodeContentProps) => {
+  const lines = (code ?? '').split('\n');
 
   return (
     <div className="my-6 overflow-hidden rounded-lg border border-green-500/20">
@@ -43,7 +50,7 @@ export const CodeContent = ({
             </span>
           )}
           <span className="flex-1">
-            {lines.map((line, idx) => (
+            {lines.map((line: string, idx: number) => (
               <span key={idx}>
                 {line}
                 {'\n'}

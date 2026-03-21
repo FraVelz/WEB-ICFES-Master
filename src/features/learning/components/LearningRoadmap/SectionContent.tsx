@@ -5,6 +5,7 @@ import {
 } from '../../data/roadmapData';
 import { SubjectCard } from '../BasicoComponents';
 import { IntermediaExamCard } from '../IntermediaComponents';
+import type { Exam } from '../IntermediaComponents';
 import {
   AvanzadoStats,
   AvanzadoExamComposition,
@@ -41,7 +42,12 @@ export const AdvancedContent = () => {
 /**
  * Componente para renderizar el contenido de Básico
  */
-export const BasicContent = ({ expandedSubject, onToggleSubject }) => {
+export interface BasicContentProps {
+  expandedSubject: string | null;
+  onToggleSubject: (level: string, subjectId: string) => void;
+}
+
+export const BasicContent = ({ expandedSubject, onToggleSubject }: BasicContentProps) => {
   return (
     <>
       {SUBJECTS.map((subject) => (
@@ -49,7 +55,7 @@ export const BasicContent = ({ expandedSubject, onToggleSubject }) => {
           key={subject.id}
           subject={subject}
           isExpanded={expandedSubject === subject.id}
-          topics={BASICO_TOPICS[subject.id]}
+          topics={(BASICO_TOPICS as Record<string, { title: string; duration: string; content: string }[]>)[subject.id] ?? []}
           onToggle={() => onToggleSubject('basico', subject.id)}
         />
       ))}
@@ -60,14 +66,19 @@ export const BasicContent = ({ expandedSubject, onToggleSubject }) => {
 /**
  * Componente para renderizar el contenido de Intermedio
  */
-export const IntermediaContent = ({ expandedSubject, onToggleSubject }) => {
+export interface IntermediaContentProps {
+  expandedSubject: string | null;
+  onToggleSubject: (level: string, subjectId: string) => void;
+}
+
+export const IntermediaContent = ({ expandedSubject, onToggleSubject }: IntermediaContentProps) => {
   return (
     <>
       {SUBJECTS.map((subject) => (
         <IntermediaExamCard
           key={subject.id}
           subject={subject}
-          exam={INTERMEDIO_TOPICS[subject.id]}
+          exam={((INTERMEDIO_TOPICS as Record<string, Exam>)[subject.id] ?? { description: '', topics: [], questions: 0, duration: '', difficulty: '' })}
           isExpanded={expandedSubject === subject.id}
           onToggle={() => onToggleSubject('intermedio', subject.id)}
         />

@@ -1,6 +1,15 @@
 import { Icon } from '@/shared/components/Icon';
 import Link from 'next/link';
 
+export interface LevelHeaderProps {
+  icon: string;
+  color: string;
+  title: string;
+  subtitle: string;
+  isExpanded: boolean;
+  onClick: () => void;
+}
+
 export const LevelHeader = ({
   icon,
   color,
@@ -8,7 +17,7 @@ export const LevelHeader = ({
   subtitle,
   isExpanded,
   onClick,
-}) => (
+}: LevelHeaderProps) => (
   <button
     onClick={onClick}
     className={`flex w-full items-center justify-between p-6 hover:${color}/30 transition-colors`}
@@ -31,7 +40,14 @@ export const LevelHeader = ({
   </button>
 );
 
-export const AvanzadoExamComposition = ({ subjects }) => (
+export interface SubjectItem {
+  id: string;
+  icon?: string;
+  color?: string;
+  name?: string;
+}
+
+export const AvanzadoExamComposition = ({ subjects }: { subjects: SubjectItem[] }) => (
   <div className="mb-6">
     <p className="mb-3 font-semibold text-white">Composición del Examen:</p>
     <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
@@ -40,7 +56,7 @@ export const AvanzadoExamComposition = ({ subjects }) => (
           key={subject.id}
           className="flex items-center gap-3 rounded-lg bg-slate-800/50 p-3"
         >
-          <Icon name={subject.icon} className={`text-lg ${subject.color}`} />
+          <Icon name={subject.icon ?? 'book'} className={`text-lg ${subject.color ?? ''}`} />
           <div className="flex-1">
             <p className="font-medium text-white">{subject.name}</p>
             <p className="text-xs text-slate-400">24 preguntas</p>

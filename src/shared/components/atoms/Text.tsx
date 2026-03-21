@@ -1,12 +1,23 @@
+import React from 'react';
+
+type TextVariant = 'default' | 'small' | 'large' | 'muted' | 'bold';
+
+interface TextProps {
+  children: React.ReactNode;
+  as?: keyof React.JSX.IntrinsicElements;
+  variant?: TextVariant;
+  className?: string;
+}
+
 export const Text = ({
   children,
-  as = 'p',
+  as: As = 'p',
   variant = 'default',
   className = '',
-}) => {
-  const Component = as;
+}: TextProps) => {
+  const Component = As as React.ElementType;
 
-  const variants = {
+  const variants: Record<TextVariant, string> = {
     default: 'text-white text-base md:text-base',
     small: 'text-gray-300 text-sm md:text-sm',
     large: 'text-white text-lg md:text-xl',
@@ -21,7 +32,13 @@ export const Text = ({
   );
 };
 
-export const Title = ({ children, level = 1, className = '' }) => {
+interface TitleProps {
+  children: React.ReactNode;
+  level?: 1 | 2 | 3 | 4 | 5 | 6;
+  className?: string;
+}
+
+export const Title = ({ children, level = 1, className = '' }: TitleProps) => {
   const sizes = {
     1: 'text-3xl md:text-5xl lg:text-6xl',
     2: 'text-2xl md:text-3xl lg:text-4xl',
@@ -31,8 +48,9 @@ export const Title = ({ children, level = 1, className = '' }) => {
     6: 'text-sm md:text-base',
   };
 
+  const l = level in sizes ? level : 1;
   return (
-    <h1 className={`font-bold text-white ${sizes[level]} ${className}`}>
+    <h1 className={`font-bold text-white ${sizes[l as keyof typeof sizes]} ${className}`}>
       {children}
     </h1>
   );

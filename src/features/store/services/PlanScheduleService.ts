@@ -5,23 +5,23 @@
 import SubscriptionPlanService from './SubscriptionPlanService';
 
 class PlanScheduleService {
-  async getScheduledPlans(uid) {
+  async getScheduledPlans(_uid: string) {
     return [];
   }
 
-  async validatePlanScheduling(uid) {
+  async validatePlanScheduling(_uid: string) {
     return { canSchedule: true, reason: 'Puede programar un nuevo plan' };
   }
 
-  async schedulePlan(uid, planData) {
+  async schedulePlan(_uid: string, _planData: unknown) {
     // No-op en modo local
   }
 
-  async activateScheduledPlan(uid) {
+  async activateScheduledPlan(_uid: string) {
     // No-op en modo local - no hay planes programados
   }
 
-  async cancelScheduledPlan(scheduledPlanId) {
+  async cancelScheduledPlan(_scheduledPlanId: string) {
     // No-op en modo local
   }
 }

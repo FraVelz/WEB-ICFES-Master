@@ -4,11 +4,18 @@ import { Icon } from '@/shared/components/Icon';
 import { AREA_INFO } from '@/shared/constants';
 import { useGSAPModalEntrance } from '@/hooks/useGSAPModalEntrance';
 
+export interface AreasModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  onSelectArea: (area: string) => void;
+  currentArea: string;
+}
+
 /**
  * Dropdown que muestra todas las áreas disponibles
  * Se renderiza justo debajo del header secundario
  */
-export const AreasModal = ({ isOpen, onClose, onSelectArea, currentArea }) => {
+export const AreasModal = ({ isOpen, onClose, onSelectArea, currentArea }: AreasModalProps) => {
   const dropdownRef = useGSAPModalEntrance({
     isOpen,
     type: 'slideFromTop',
@@ -43,7 +50,7 @@ export const AreasModal = ({ isOpen, onClose, onSelectArea, currentArea }) => {
           </div>
 
           <div className="max-h-[60vh] space-y-2 overflow-y-auto">
-            {areas.map(([areaKey, areaData]) => (
+            {areas.map(([areaKey, areaData]: [string, { name?: string; color?: string; icon?: string }]) => (
               <button
                 key={areaKey}
                 onClick={() => {
@@ -62,7 +69,7 @@ export const AreasModal = ({ isOpen, onClose, onSelectArea, currentArea }) => {
                   }`}
                 >
                   <Icon
-                    name={areaData.icon}
+                    name={areaData.icon ?? 'book'}
                     className={
                       currentArea === areaKey ? 'text-white' : 'text-slate-400'
                     }

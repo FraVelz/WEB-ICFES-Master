@@ -1,5 +1,14 @@
 import { Icon } from '@/shared/components/Icon';
 import { AnswerOption } from '@/shared/components';
+import type { ExamQuestion } from '@/shared/types/question';
+
+interface QuestionPanelProps {
+  question: ExamQuestion;
+  onAnswer: (answer: string) => void;
+  answered?: boolean;
+  selectedAnswer?: string | null;
+  showExplanation?: boolean;
+}
 
 export const QuestionPanel = ({
   question,
@@ -7,7 +16,7 @@ export const QuestionPanel = ({
   answered = false,
   selectedAnswer = null,
   showExplanation = false,
-}) => {
+}: QuestionPanelProps) => {
   const letters = ['A', 'B', 'C', 'D'];
 
   return (
@@ -23,7 +32,7 @@ export const QuestionPanel = ({
         </div>
 
         <div className="mb-8 space-y-4">
-          {question.options.map((option, index) => (
+          {question.options.map((option: { text: string }, index: number) => (
             <AnswerOption
               key={index}
               letter={letters[index]}

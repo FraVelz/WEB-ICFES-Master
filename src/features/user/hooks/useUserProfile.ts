@@ -2,18 +2,33 @@ import { useState, useEffect } from 'react';
 import { useAuth } from '@/context/AuthContext';
 import { useGamification } from '@/features/logros/hooks/useGamification';
 import { getLevelInfo } from '@/features/logros/utils/gamificationUtils';
+import { RANKS } from '@/features/logros/constants/ranks';
 import { getUserProfile } from '@/shared/utils/userProfile';
+
+const levelToRankId = (level: number): string => {
+  const rankOrder = Math.min(Math.max(level, 1), 7);
+  const rank = Object.values(RANKS).find((r) => r.order === rankOrder);
+  return rank?.id ?? 'novato';
+};
 
 /**
  * Hook unificado para gestionar perfiles de usuario (localStorage)
  */
-export const useUserProfile = (targetUserId = null) => {
+export const useUserProfile = (targetUserId: string | null = null) => {
   const { user: authUser } = useAuth();
   const uid = targetUserId || authUser?.uid;
   const isOwnProfile = authUser?.uid && uid === authUser.uid;
   const gamification = useGamification(uid);
 
-  const [profileData, setProfileData] = useState({
+  const [profileData, setProfileData] = useState<{
+    photoUrl: string | null;
+    name: string;
+    personalPhrase: string;
+    createdAt: string;
+    coursesProgress: Record<string, unknown>;
+    loading: boolean;
+    exists: boolean;
+  }>({
     photoUrl: null,
     name: '',
     personalPhrase: '',
@@ -41,7 +56,7 @@ export const useUserProfile = (targetUserId = null) => {
             day: 'numeric',
           })
         : 'Reciente',
-      coursesProgress: profile.coursesProgress || {},
+      coursesProgress: (profile as { coursesProgress?: Record<string, unknown> }).coursesProgress || {},
       loading: false,
       exists: true,
     });
@@ -51,9 +66,12 @@ export const useUserProfile = (targetUserId = null) => {
     typeof gamification.totalXP === 'number' ? gamification.totalXP : 0;
   const levelInfo = getLevelInfo(totalXPFromDB);
 
+  const rank = levelToRankId(levelInfo.level);
+
   return {
     uid,
     isOwnProfile,
+    rank,
     ...profileData,
     ...gamification,
     totalXP: totalXPFromDB,

@@ -1,10 +1,19 @@
+import React from 'react';
+
+interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  children: React.ReactNode;
+  variant?: 'primary' | 'secondary' | 'success' | 'danger' | 'outline';
+  size?: 'sm' | 'md' | 'lg' | 'full';
+  className?: string;
+}
+
 export const Button = ({
   children,
   variant = 'primary',
   size = 'md',
   className = '',
   ...props
-}) => {
+}: ButtonProps) => {
   const baseStyles =
     'font-semibold rounded-xl transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 hover-lift relative overflow-hidden';
 
@@ -28,9 +37,11 @@ export const Button = ({
     full: 'w-full px-4 py-2 text-base',
   };
 
+  const v = variant in variants ? variant : 'primary';
+  const s = size in sizes ? size : 'md';
   return (
     <button
-      className={`${baseStyles} ${variants[variant]} ${sizes[size]} ${className}`}
+      className={`${baseStyles} ${variants[v]} ${sizes[s]} ${className}`}
       {...props}
     >
       {children}

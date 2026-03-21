@@ -2,7 +2,7 @@
  * Formatea segundos a tiempo legible
  * Soporta HH:MM:SS para tiempos > 1 hora
  */
-export const formatTimeExtended = (seconds) => {
+export const formatTimeExtended = (seconds: number): string => {
   const hours = Math.floor(seconds / 3600);
   const mins = Math.floor((seconds % 3600) / 60);
   const secs = seconds % 60;

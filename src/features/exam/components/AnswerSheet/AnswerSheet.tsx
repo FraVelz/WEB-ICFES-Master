@@ -1,9 +1,16 @@
+interface AnswerSheetProps {
+  totalQuestions: number;
+  answers: Record<string, string>;
+  currentQuestion: number;
+  onQuestionClick: (index: number) => void;
+}
+
 export const AnswerSheet = ({
   totalQuestions,
   answers,
   currentQuestion,
   onQuestionClick,
-}) => {
+}: AnswerSheetProps) => {
   return (
     <div className="sticky top-6 h-fit rounded-xl border border-white/10 bg-linear-to-br from-gray-800/40 via-gray-900/40 to-gray-950/40 p-4 shadow-2xl backdrop-blur-md">
       <h3 className="mb-4 flex items-center gap-2 text-sm font-bold text-white">
@@ -14,9 +21,9 @@ export const AnswerSheet = ({
       <div className="grid grid-cols-5 gap-2">
         {Array.from({ length: totalQuestions }).map((_, idx) => {
           const questionNum = idx + 1;
-          const answer = answers[questionNum];
+          const answer = answers[String(questionNum)];
           const isAnswered = answer !== undefined;
-          const isCurrent = currentQuestion === questionNum;
+          const isCurrent = currentQuestion === idx || currentQuestion === questionNum;
 
           return (
             <button

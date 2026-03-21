@@ -6,10 +6,22 @@ import { getProgress } from '@/shared/utils/progressStorage';
  * Hook de clasificación - Versión local con datos mock
  * Preparado para futura implementación de backend
  */
+export interface LeaderboardPlayer {
+  id: string;
+  displayName?: string;
+  name?: string;
+  username?: string;
+  photoUrl?: string;
+  profileImage?: string;
+  weeklyXP?: number;
+  rank?: string;
+  virtualMoney?: number;
+}
+
 export const useLeaderboard = (currentRankId = 'novato') => {
-  const [leaderboardData, setLeaderboardData] = useState([]);
+  const [leaderboardData, setLeaderboardData] = useState<LeaderboardPlayer[]>([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<Error | null>(null);
 
   useEffect(() => {
     setLoading(true);
