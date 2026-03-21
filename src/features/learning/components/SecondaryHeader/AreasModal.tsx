@@ -36,7 +36,7 @@ export const AreasModal = ({ isOpen, onClose, onSelectArea, currentArea }) => {
             </h3>
             <button
               onClick={onClose}
-              className="text-slate-500 hover:text-white"
+              className="cursor-pointer text-slate-500 hover:text-white"
             >
               <Icon name="times" />
             </button>
@@ -50,7 +50,7 @@ export const AreasModal = ({ isOpen, onClose, onSelectArea, currentArea }) => {
                   onSelectArea(areaKey);
                   onClose();
                 }}
-                className={`flex w-full items-center gap-3 rounded-xl px-4 py-3 transition-all ${
+                className={`flex w-full cursor-pointer items-center gap-3 rounded-xl px-4 py-3 transition-all ${
                   currentArea === areaKey
                     ? `bg-linear-to-r ${areaData.color} text-white shadow-lg`
                     : 'bg-slate-800/50 text-slate-300 hover:bg-slate-800'

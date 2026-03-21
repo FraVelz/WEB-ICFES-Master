@@ -1,6 +1,8 @@
 /**
  * Hook de gamificación - Supabase o localStorage
  */
+'use client';
+
 import { useState, useEffect, useCallback } from 'react';
 import { ACHIEVEMENTS_DATA } from '../constants/achievements';
 import { getVirtualMoney } from '@/shared/utils/userProfile';

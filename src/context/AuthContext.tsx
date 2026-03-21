@@ -5,7 +5,11 @@ import { supabase } from '@/config/supabase';
 import API_CONFIG from '@/services/api.config';
 import UserSupabaseService from '@/services/supabase/UserSupabaseService';
 
-const AuthContext = createContext();
+type AuthContextType = {
+  login: () => void;
+};
+
+const AuthContext = createContext<AuthContextType | null>(null);
 
 export const useAuth = () => {
   const context = useContext(AuthContext);

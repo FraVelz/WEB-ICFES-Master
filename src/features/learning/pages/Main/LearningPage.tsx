@@ -1,3 +1,5 @@
+'use client';
+
 import Link from 'next/link';
 import { Icon } from '@/shared/components/Icon';
 import { useState, useMemo } from 'react';

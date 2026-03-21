@@ -103,7 +103,7 @@ export const ChatAssistant = () => {
       {/* Botón flotante */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="fixed right-6 bottom-6 z-50 flex h-14 w-14 items-center justify-center rounded-full border-2 border-cyan-400/50 bg-linear-to-r from-cyan-500 to-blue-600 text-white shadow-lg shadow-cyan-500/30 transition-all duration-300 hover:scale-110 hover:shadow-cyan-500/50"
+        className="fixed right-6 bottom-6 z-50 flex h-14 w-14 cursor-pointer items-center justify-center rounded-full border-2 border-cyan-400/50 bg-linear-to-r from-cyan-500 to-blue-600 text-white shadow-lg shadow-cyan-500/30 transition-all duration-300 hover:scale-110 hover:shadow-cyan-500/50"
         aria-label="Abrir asistente de chat"
       >
         <Icon name="message" size="xl" />
@@ -128,7 +128,7 @@ export const ChatAssistant = () => {
             </div>
             <button
               onClick={() => setIsOpen(false)}
-              className="rounded-lg p-2 text-slate-400 transition-colors hover:bg-white/10 hover:text-white"
+              className="cursor-pointer rounded-lg p-2 text-slate-400 transition-colors hover:bg-white/10 hover:text-white"
               aria-label="Cerrar chat"
             >
               <Icon name="times" size="lg" />
@@ -229,7 +229,7 @@ export const ChatAssistant = () => {
               <button
                 onClick={handleSend}
                 disabled={!inputValue.trim() || isTyping}
-                className="rounded-xl bg-linear-to-r from-cyan-500 to-blue-600 px-4 py-3 text-white transition-all hover:from-cyan-600 hover:to-blue-700 disabled:cursor-not-allowed disabled:opacity-50"
+                className="cursor-pointer rounded-xl bg-linear-to-r from-cyan-500 to-blue-600 px-4 py-3 text-white transition-all hover:from-cyan-600 hover:to-blue-700 disabled:cursor-not-allowed disabled:opacity-50"
               >
                 <Icon name="paper-plane" />
               </button>

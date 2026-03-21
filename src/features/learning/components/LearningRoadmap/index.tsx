@@ -103,6 +103,7 @@ export const LearningRoadmap = ({ initialArea = 'lectura-critica' }) => {
           isOpen={!!viewingLesson}
           onClose={() => setViewingLesson(null)}
           lesson={viewingLesson}
+          areaId={currentArea}
         />
       </div>
     </div>

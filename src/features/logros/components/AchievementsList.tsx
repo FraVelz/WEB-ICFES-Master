@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState } from 'react';
 import { Icon } from '@/shared/components/Icon';
 import { ACHIEVEMENT_CATEGORIES } from '../constants/achievements';

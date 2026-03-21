@@ -1,1 +1,1 @@
-export { OnboardingQuiz } from './OnboardingQuiz';
+export { OnboardingQuiz } from './OnboardingQuiz/OnboardingQuiz';
