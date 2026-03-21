@@ -1,7 +1,7 @@
 'use client';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { OnboardingQuiz } from '../components/OnboardingQuiz';
+import { OnboardingQuiz } from '../components/OnboardingQuiz/OnboardingQuiz';
 
 export const OnboardingPage = () => {
   const router = useRouter();

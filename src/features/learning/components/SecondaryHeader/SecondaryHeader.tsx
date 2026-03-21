@@ -1,3 +1,5 @@
+'use client';
+
 import { useState, useMemo } from 'react';
 import { Icon } from '@/shared/components/Icon';
 import { AREA_INFO } from '@/shared/constants';

@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 import { useAuth } from '@/context/AuthContext';
 import { useGamification } from '@/features/logros/hooks/useGamification';
