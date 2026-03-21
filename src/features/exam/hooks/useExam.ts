@@ -5,13 +5,13 @@ import { useState, useEffect, useCallback } from 'react';
 import { useAuth } from '@/context/AuthContext';
 import API_CONFIG from '@/services/api.config';
 import ExamSupabaseService from '@/services/supabase/ExamSupabaseService';
-import { getStoredExams, clearExamsOnly } from '@/shared/utils/progressStorage';
+import { getStoredExams, clearExamsOnly, type AttemptWithQuestions } from '@/shared/utils/progressStorage';
 
-export function useExam(examId) {
+export function useExam(examId: string | undefined) {
   const { user } = useAuth();
-  const [exam, setExam] = useState(null);
+  const [exam, setExam] = useState<unknown>(null);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<string | null>(null);
 
   const loadExam = useCallback(async () => {
     if (!examId) return;
@@ -20,7 +20,7 @@ export function useExam(examId) {
       setExam(found || null);
     } else {
       const exams = getStoredExams();
-      const found = exams.find((e) => e.id === examId);
+      const found = exams.find((e: AttemptWithQuestions) => String(e.id) === examId);
       setExam(found || null);
     }
   }, [examId, user?.uid]);

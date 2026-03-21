@@ -1,6 +1,13 @@
+import React from 'react';
 import { Button } from './atoms/Button';
 
-export const Modal = ({ isOpen, title, children, onClose }) => {
+interface ModalProps {
+  isOpen: boolean;
+  title?: string;
+  children: React.ReactNode;
+  onClose: () => void;
+}
+export const Modal = ({ isOpen, title, children, onClose }: ModalProps) => {
   if (!isOpen) return null;
 
   return (

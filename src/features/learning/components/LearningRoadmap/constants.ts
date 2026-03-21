@@ -97,7 +97,7 @@ export const ICFES_LEVELS = [
   },
 ];
 
-export const DIFFICULTY_COLORS = {
+export const DIFFICULTY_COLORS: Record<string, string> = {
   Fácil: 'bg-green-900/40 text-green-300',
   Intermedio: 'bg-yellow-900/40 text-yellow-300',
   Avanzado: 'bg-orange-900/40 text-orange-300',

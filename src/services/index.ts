@@ -24,6 +24,6 @@ export { default as AchievementService } from '@/features/logros/services/Achiev
 export { default as TestResultService } from '@/features/exam/services/TestResultService';
 
 // Re-exportar constantes útiles
-import GamificationService from '@/features/logros/services/GamificationService';
+import { GamificationService } from '@/features/logros/services/GamificationService';
 export const BADGES = GamificationService.BADGES;
 export const LEVELS = GamificationService.LEVELS;

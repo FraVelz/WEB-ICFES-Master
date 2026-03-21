@@ -6,28 +6,40 @@
 import { supabase } from '@/config/supabase';
 
 export class SupabaseService {
-  constructor(tableName) {
+  tableName: string;
+
+  constructor(tableName: string) {
     this.tableName = tableName;
+  }
+
+  _ensureSupabase() {
+    if (!supabase) throw new Error('Supabase no configurado');
+    return supabase;
   }
 
   /**
    * Obtener sesión actual (para user_id)
    */
   async getSession() {
+    const sb = this._ensureSupabase();
     const {
       data: { session },
-    } = await supabase.auth.getSession();
+    } = await sb.auth.getSession();
     return session;
   }
 
   /**
    * GET - Obtener uno o múltiples registros
    */
-  async get(id = null, options = {}) {
-    const { column = 'id', userIdColumn = 'user_id' } = options;
+  async get(
+    id: string | null = null,
+    options: { column?: string; userIdColumn?: string } = {}
+  ) {
+    const sb = this._ensureSupabase();
+    const { column = 'id' } = options;
 
     if (id) {
-      const { data, error } = await supabase
+      const { data, error } = await sb
         .from(this.tableName)
         .select('*')
         .eq(column, id)
@@ -38,7 +50,7 @@ export class SupabaseService {
       return data;
     }
 
-    const { data, error } = await supabase.from(this.tableName).select('*');
+    const { data, error } = await sb.from(this.tableName).select('*');
 
     if (error)
       throw new Error(`Error leyendo ${this.tableName}: ${error.message}`);
@@ -48,8 +60,9 @@ export class SupabaseService {
   /**
    * Obtener por user_id
    */
-  async getByUserId(userId) {
-    const { data, error } = await supabase
+  async getByUserId(userId: string) {
+    const sb = this._ensureSupabase();
+    const { data, error } = await sb
       .from(this.tableName)
       .select('*')
       .eq('user_id', userId)
@@ -63,8 +76,9 @@ export class SupabaseService {
   /**
    * POST - Crear un nuevo registro
    */
-  async create(data) {
-    const { data: inserted, error } = await supabase
+  async create(data: Record<string, unknown>) {
+    const sb = this._ensureSupabase();
+    const { data: inserted, error } = await sb
       .from(this.tableName)
       .insert(this._toSnakeCase(data))
       .select()
@@ -78,14 +92,19 @@ export class SupabaseService {
   /**
    * PUT - Actualizar un registro
    */
-  async update(id, data, options = {}) {
+  async update(
+    id: string,
+    data: Record<string, unknown>,
+    options: { column?: string } = {}
+  ) {
     const { column = 'id' } = options;
     const payload = {
       ...this._toSnakeCase(data),
       updated_at: new Date().toISOString(),
     };
 
-    const { data: updated, error } = await supabase
+    const sb = this._ensureSupabase();
+    const { data: updated, error } = await sb
       .from(this.tableName)
       .update(payload)
       .eq(column, id)
@@ -100,9 +119,10 @@ export class SupabaseService {
   /**
    * DELETE - Eliminar un registro
    */
-  async delete(id, options = {}) {
+  async delete(id: string, options: { column?: string } = {}) {
     const { column = 'id' } = options;
-    const { error } = await supabase
+    const sb = this._ensureSupabase();
+    const { error } = await sb
       .from(this.tableName)
       .delete()
       .eq(column, id);
@@ -112,9 +132,9 @@ export class SupabaseService {
     return { success: true };
   }
 
-  _toSnakeCase(obj) {
-    if (!obj || typeof obj !== 'object') return obj;
-    const result = {};
+  _toSnakeCase(obj: Record<string, unknown> | null): Record<string, unknown> {
+    if (!obj || typeof obj !== 'object') return {};
+    const result: Record<string, unknown> = {};
     for (const [k, v] of Object.entries(obj)) {
       const snake = k.replace(/[A-Z]/g, (l) => `_${l.toLowerCase()}`);
       result[snake] = v;
@@ -122,9 +142,9 @@ export class SupabaseService {
     return result;
   }
 
-  _toCamelCase(obj) {
-    if (!obj || typeof obj !== 'object') return obj;
-    const result = {};
+  _toCamelCase(obj: Record<string, unknown> | null): Record<string, unknown> {
+    if (!obj || typeof obj !== 'object') return {};
+    const result: Record<string, unknown> = {};
     for (const [k, v] of Object.entries(obj)) {
       const camel = k.replace(/_([a-z])/g, (_, l) => l.toUpperCase());
       result[camel] = v;

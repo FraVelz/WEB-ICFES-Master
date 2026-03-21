@@ -7,15 +7,24 @@ import { addVirtualMoney } from '@/shared/utils/userProfile';
 
 const CHALLENGES_KEY = 'icfes_daily_challenges';
 
+export interface DailyChallenge {
+  id: string;
+  status?: string;
+  target?: number;
+  xpReward?: number;
+  coinsReward?: number;
+  [key: string]: unknown;
+}
+
 /**
  * Hook de desafíos diarios (localStorage)
  */
-export const useDailyChallenges = (dateString) => {
+export const useDailyChallenges = (dateString?: string) => {
   const { user } = useAuth();
   const targetDate = dateString || new Date().toISOString().split('T')[0];
   const today = new Date().toISOString().split('T')[0];
 
-  const [challenges, setChallenges] = useState([]);
+  const [challenges, setChallenges] = useState<DailyChallenge[]>([]);
   const [loading, setLoading] = useState(true);
   const [stats, setStats] = useState({ completed: 0, total: 0, totalXP: 0 });
 
@@ -29,14 +38,15 @@ export const useDailyChallenges = (dateString) => {
       localStorage.setItem(CHALLENGES_KEY, JSON.stringify(all));
     }
 
-    const completed = dayChallenges.filter(
-      (c) => c.status === 'completed'
+    const typedChallenges = dayChallenges as DailyChallenge[];
+    const completed = typedChallenges.filter(
+      (c: DailyChallenge) => c.status === 'completed'
     ).length;
-    const totalXP = dayChallenges
-      .filter((c) => c.status === 'completed')
-      .reduce((acc, c) => acc + (c.xpReward || 0), 0);
+    const totalXP = typedChallenges
+      .filter((c: DailyChallenge) => c.status === 'completed')
+      .reduce((acc: number, c: DailyChallenge) => acc + (c.xpReward ?? 0), 0);
 
-    setChallenges(dayChallenges);
+    setChallenges(typedChallenges);
     setStats({ completed, total: dayChallenges.length, totalXP });
     setLoading(false);
   }, [targetDate, today]);
@@ -50,32 +60,34 @@ export const useDailyChallenges = (dateString) => {
     loadChallenges();
   }, [user?.uid, targetDate, loadChallenges]);
 
-  const completeChallenge = async (challengeId) => {
+  const completeChallenge = async (challengeId: string) => {
     if (!user?.uid || !challenges.length) return;
-    const idx = challenges.findIndex((c) => c.id === challengeId);
-    if (idx === -1 || challenges[idx].status === 'completed') return;
+    const idx = challenges.findIndex((c: DailyChallenge) => c.id === challengeId);
+    if (idx === -1 || challenges[idx]?.status === 'completed') return;
 
     const updated = [...challenges];
+    const currentCh = updated[idx];
+    if (!currentCh || typeof currentCh !== 'object') return;
     updated[idx] = {
-      ...updated[idx],
+      ...currentCh,
       status: 'completed',
-      progress: updated[idx].target,
+      progress: currentCh.target,
       completedAt: new Date().toISOString(),
     };
 
-    addVirtualMoney(updated[idx].coinsReward || 0);
+    addVirtualMoney((updated[idx]?.coinsReward as number) ?? 0);
 
     const all = JSON.parse(localStorage.getItem(CHALLENGES_KEY) || '{}');
     all[targetDate] = { date: targetDate, challenges: updated };
     localStorage.setItem(CHALLENGES_KEY, JSON.stringify(all));
 
-    const allCompleted = updated.every((c) => c.status === 'completed');
+    const allCompleted = updated.every((c: DailyChallenge) => c.status === 'completed');
     if (allCompleted) addVirtualMoney(50);
 
     loadChallenges();
   };
 
-  const updateChallengeProgress = async (challengeId, newProgress) => {
+  const updateChallengeProgress = async (_challengeId: string, _newProgress: number) => {
     // No-op por ahora
   };
 

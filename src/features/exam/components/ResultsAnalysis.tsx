@@ -1,4 +1,23 @@
 import Link from 'next/link';
+import type { ExamQuestion } from '@/shared/types/question';
+import type { ExamConfig } from '@/features/exam/types';
+
+interface ResultItem {
+  question: ExamQuestion;
+  correct: boolean;
+  userAnswer: string;
+}
+
+interface ResultsAnalysisProps {
+  results: ResultItem[];
+  questions: ExamQuestion[];
+  percentage: number;
+  correctCount: number;
+  examConfig: ExamConfig | null;
+  onRetry: () => void;
+  returnTo?: string;
+  areaInfo?: { name: string; color: string; icon?: string };
+}
 
 export const ResultsAnalysis = ({
   results,
@@ -8,7 +27,7 @@ export const ResultsAnalysis = ({
   examConfig,
   onRetry,
   returnTo,
-}) => {
+}: ResultsAnalysisProps) => {
   const backHref = returnTo || '/';
   const backLabel =
     returnTo === '/ruta-aprendizaje' ? 'Volver a la Ruta' : 'Volver al Inicio';
@@ -144,7 +163,7 @@ export const ResultsAnalysis = ({
                 )}
 
                 {/* Explanation */}
-                {examConfig.showExplanations && (
+                {examConfig?.showExplanations && (
                   <div>
                     <p className="mb-2 text-sm font-semibold text-blue-300">
                       Explicación:

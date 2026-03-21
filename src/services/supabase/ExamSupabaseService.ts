@@ -5,9 +5,20 @@ import { supabase } from '@/config/supabase';
 
 const TABLE = 'exam_results';
 
+export interface ExamFilters {
+  type?: string;
+  limit?: number;
+}
+
+function ensureSupabase() {
+  if (!supabase) throw new Error('Supabase no configurado');
+  return supabase;
+}
+
 const ExamSupabaseService = {
-  async getByUserId(userId, filters = {}) {
-    let query = supabase
+  async getByUserId(userId: string, filters: ExamFilters = {}): Promise<Record<string, unknown>[]> {
+    const sb = ensureSupabase();
+    let query = sb
       .from(TABLE)
       .select('*')
       .eq('user_id', userId)
@@ -19,8 +30,9 @@ const ExamSupabaseService = {
     return data || [];
   },
 
-  async getById(examId) {
-    const { data, error } = await supabase
+  async getById(examId: string): Promise<Record<string, unknown> | null> {
+    const sb = ensureSupabase();
+    const { data, error } = await sb
       .from(TABLE)
       .select('*')
       .eq('id', examId)
@@ -29,21 +41,23 @@ const ExamSupabaseService = {
     return data;
   },
 
-  async create(userId, examData) {
+  async create(userId: string, examData: Record<string, unknown>): Promise<Record<string, unknown>> {
+    const sb = ensureSupabase();
+    const ed = examData as { type?: string; questions?: unknown[]; totalQuestions?: number };
     const id = `exam_${Date.now()}_${Math.random().toString(36).slice(2)}`;
     const payload = {
       id,
       user_id: userId,
-      exam_type: examData.type || 'practice',
+      exam_type: ed.type || 'practice',
       score: null,
       total_questions:
-        examData.questions?.length || examData.totalQuestions || 0,
+        (ed.questions as unknown[])?.length || ed.totalQuestions || 0,
       correct_answers: 0,
       time_spent: 0,
       completed_at: null,
-      questions: examData.questions || [],
+      questions: ed.questions || [],
     };
-    const { data, error } = await supabase
+    const { data, error } = await sb
       .from(TABLE)
       .insert(payload)
       .select()
@@ -53,13 +67,13 @@ const ExamSupabaseService = {
   },
 
   async complete(
-    examId,
-    score,
-    correctAnswers,
-    totalQuestions,
-    timeSpent,
-    answers = []
-  ) {
+    examId: string,
+    score: number,
+    correctAnswers: number,
+    totalQuestions: number,
+    timeSpent: number,
+    answers: unknown[] = []
+  ): Promise<Record<string, unknown>> {
     const payload = {
       score,
       correct_answers: correctAnswers,
@@ -68,7 +82,8 @@ const ExamSupabaseService = {
       completed_at: new Date().toISOString(),
       questions: answers,
     };
-    const { data, error } = await supabase
+    const sb = ensureSupabase();
+    const { data, error } = await sb
       .from(TABLE)
       .update(payload)
       .eq('id', examId)
@@ -78,8 +93,9 @@ const ExamSupabaseService = {
     return data;
   },
 
-  async resetUserExams(userId) {
-    const { error } = await supabase.from(TABLE).delete().eq('user_id', userId);
+  async resetUserExams(userId: string): Promise<{ success: boolean }> {
+    const sb = ensureSupabase();
+    const { error } = await sb.from(TABLE).delete().eq('user_id', userId);
     if (error) throw new Error(`Error eliminando exámenes: ${error.message}`);
     return { success: true };
   },

@@ -17,11 +17,22 @@
  *   title="Historia de América"
  * />
  */
+interface TimelineEvent {
+  year?: string;
+  event?: string;
+}
+
+interface TimelineContentProps {
+  events?: TimelineEvent[];
+  title?: string;
+  orientation?: 'vertical' | 'horizontal';
+}
+
 export const TimelineContent = ({
-  events,
+  events = [],
   title,
   orientation = 'vertical',
-}) => {
+}: TimelineContentProps) => {
   if (orientation === 'vertical') {
     return (
       <div className="my-6 rounded-lg border border-orange-500/20 bg-linear-to-r from-slate-700/20 to-slate-800/20 p-6">
@@ -35,7 +46,7 @@ export const TimelineContent = ({
           {/* Línea vertical */}
           <div className="absolute top-0 bottom-0 left-6 w-0.5 bg-linear-to-b from-orange-500/50 to-orange-500/20"></div>
 
-          {events.map((event, idx) => (
+          {events.map((event: TimelineEvent, idx: number) => (
             <div key={idx} className="relative pl-20">
               {/* Punto en la línea */}
               <div className="absolute top-2 left-0 flex h-14 w-14 items-center justify-center rounded-full bg-linear-to-br from-orange-500 to-red-500 text-sm font-bold text-white shadow-lg">
@@ -62,7 +73,7 @@ export const TimelineContent = ({
       )}
 
       <div className="flex min-w-max gap-4">
-        {events.map((event, idx) => (
+        {events.map((event: TimelineEvent, idx: number) => (
           <div key={idx} className="w-40 shrink-0 text-center">
             <div className="mb-2 flex h-12 items-center justify-center rounded-lg bg-linear-to-br from-orange-500 to-red-500 text-sm font-bold text-white shadow-lg">
               {event.year}

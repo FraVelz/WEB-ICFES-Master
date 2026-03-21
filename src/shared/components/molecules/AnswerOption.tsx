@@ -3,6 +3,16 @@ import { Button } from '../atoms/Button';
 import { Card } from '../atoms/Card';
 import { Text } from '../atoms/Text';
 
+interface AnswerOptionProps {
+  letter: string;
+  text: string;
+  selected?: boolean;
+  correct?: boolean;
+  incorrect?: boolean;
+  onClick?: () => void;
+  disabled?: boolean;
+}
+
 export const AnswerOption = ({
   letter,
   text,
@@ -11,7 +21,7 @@ export const AnswerOption = ({
   incorrect = false,
   onClick,
   disabled = false,
-}) => {
+}: AnswerOptionProps) => {
   const getBackgroundColor = () => {
     if (correct)
       return 'bg-linear-to-r from-green-400 to-emerald-500 border-2 border-green-600';

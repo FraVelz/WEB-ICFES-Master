@@ -42,7 +42,7 @@ export const ResetPasswordPage = () => {
     checkSession();
   }, []);
 
-  const validatePassword = (pwd) => {
+  const validatePassword = (pwd: string): string => {
     if (pwd.length < 6) {
       return EMAIL_MESSAGES.resetPasswordPage.errorPasswordTooShort;
     }
@@ -55,7 +55,7 @@ export const ResetPasswordPage = () => {
     return '';
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError('');
 
@@ -83,7 +83,10 @@ export const ResetPasswordPage = () => {
       setSuccess(true);
       setTimeout(() => router.push('/login'), 3000);
     } catch (err) {
-      setError(err?.message || EMAIL_MESSAGES.resetPasswordPage.errorGeneric);
+      setError(
+        (err instanceof Error ? err.message : null) ||
+          EMAIL_MESSAGES.resetPasswordPage.errorGeneric
+      );
     } finally {
       setIsLoading(false);
     }

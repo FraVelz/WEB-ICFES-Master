@@ -35,7 +35,7 @@ export const SignupPage = () => {
   }, []);
 
   // Validar contraseña en tiempo real
-  const validatePassword = (pass) => {
+  const validatePassword = (pass: string) => {
     setValidations({
       minLength: pass.length >= 6,
       hasNumber: /[0-9]/.test(pass),
@@ -43,7 +43,7 @@ export const SignupPage = () => {
     });
   };
 
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
       ...prev,
@@ -55,7 +55,7 @@ export const SignupPage = () => {
     }
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError('');
 
@@ -81,7 +81,7 @@ export const SignupPage = () => {
       await signup(formData.email, formData.password, formData.displayName);
       router.push('/perfil');
     } catch (err) {
-      setError(err.message);
+      setError(err instanceof Error ? err.message : 'Error en el registro');
     } finally {
       setIsLoading(false);
     }

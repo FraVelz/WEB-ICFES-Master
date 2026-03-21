@@ -1,4 +1,9 @@
-export const BillingPeriodSelector = ({ billingPeriod, setBillingPeriod }) => {
+export interface BillingPeriodSelectorProps {
+  billingPeriod: 'monthly' | 'annual';
+  setBillingPeriod: React.Dispatch<React.SetStateAction<'monthly' | 'annual'>>;
+}
+
+export const BillingPeriodSelector = ({ billingPeriod, setBillingPeriod }: BillingPeriodSelectorProps) => {
   return (
     <div className="mb-6 rounded-lg bg-slate-800/50 p-4">
       <label className="mb-3 block text-sm font-semibold text-white">

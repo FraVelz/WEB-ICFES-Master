@@ -56,7 +56,7 @@ export const debugLocalStorage = () => {
 /**
  * Limpia todos los datos de localStorage (CUIDADO: esto elimina TODO)
  */
-export const clearAllData = () => {
+export const clearAllDataDebug = () => {
   if (
     confirm('⚠️  ADVERTENCIA: Esto eliminará TODOS los datos. ¿Estás seguro?')
   ) {

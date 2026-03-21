@@ -25,7 +25,9 @@ export const GSAPGlowBlob = ({
     tl.to(el, { opacity: 0.5, duration: 2, ease: 'sine.inOut' });
     tl.to(el, { opacity: 0.3, duration: 2, ease: 'sine.inOut' });
 
-    return () => tl.kill();
+    return () => {
+      tl.kill();
+    };
   }, [delay]);
 
   return (

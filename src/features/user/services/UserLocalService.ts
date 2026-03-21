@@ -1,49 +1,62 @@
 /**
  * Servicio de usuario - Versión local (localStorage)
  */
-import { getUserProfile, updateUserProfile } from '@/shared/utils/userProfile';
+import {
+  getUserProfile,
+  updateUserProfile,
+  type UserProfile,
+} from '@/shared/utils/userProfile';
 
 class UserLocalService {
-  async getUserProfile(uid) {
+  async getUserProfile(_uid?: string): Promise<UserProfile> {
     return getUserProfile();
   }
 
-  async createUserProfile(uid, data) {
-    updateUserProfile({ ...data, id: uid });
+  async createUserProfile(uid: string, data: Record<string, unknown>): Promise<UserProfile> {
+    return updateUserProfile({ ...data, id: uid } as unknown as Partial<UserProfile>);
   }
 
-  async updateUserProfile(uid, data) {
-    return updateUserProfile(data);
+  async updateUserProfile(_uid: string, data: Record<string, unknown>): Promise<UserProfile> {
+    return updateUserProfile(data as Partial<UserProfile>);
   }
 
-  async userExists(uid) {
+  async userExists(_uid: string): Promise<boolean> {
     return false;
   }
-  async userExistsByEmail(email) {
+
+  async userExistsByEmail(_email: string): Promise<boolean> {
     return false;
   }
-  async updateUsername(uid, username) {
+
+  async updateUsername(_uid: string, username: string): Promise<UserProfile> {
     return updateUserProfile({ username });
   }
-  async updateUserBio(uid, bio) {
+
+  async updateUserBio(_uid: string, bio: string): Promise<UserProfile> {
     return updateUserProfile({ bio });
   }
-  async updateProfileImage(uid, url) {
+
+  async updateProfileImage(_uid: string, url: string | null): Promise<UserProfile> {
     return updateUserProfile({ profileImage: url });
   }
-  async getUserPreferences(uid) {
+
+  async getUserPreferences(_uid: string): Promise<Record<string, unknown>> {
     return {};
   }
-  async updateUserPreferences(uid, prefs) {
+
+  async updateUserPreferences(_uid: string, _prefs: Record<string, unknown>): Promise<Record<string, unknown>> {
     return {};
   }
-  async addVirtualMoney(uid, amount) {
+
+  async addVirtualMoney(_uid: string, _amount: number): Promise<Record<string, unknown>> {
     return {};
   }
-  async spendVirtualMoney(uid, amount) {
+
+  async spendVirtualMoney(_uid: string, _amount: number): Promise<Record<string, unknown>> {
     return {};
   }
-  async addBadge(uid, badgeId) {
+
+  async addBadge(_uid: string, _badgeId: string): Promise<unknown[]> {
     return [];
   }
 }

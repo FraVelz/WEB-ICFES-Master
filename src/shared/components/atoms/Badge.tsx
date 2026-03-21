@@ -1,5 +1,13 @@
-export const Badge = ({ children, variant = 'default', className = '' }) => {
-  const variants = {
+import React from 'react';
+
+interface BadgeProps {
+  children: React.ReactNode;
+  variant?: 'default' | 'success' | 'warning' | 'danger' | 'math' | 'language' | 'science' | 'social';
+  className?: string;
+}
+
+export const Badge = ({ children, variant = 'default', className = '' }: BadgeProps) => {
+  const variants: Record<string, string> = {
     default:
       'bg-linear-to-r from-blue-100 to-blue-200 text-blue-900 border border-blue-300',
     success:
@@ -19,7 +27,7 @@ export const Badge = ({ children, variant = 'default', className = '' }) => {
 
   return (
     <span
-      className={`inline-block rounded-full px-4 py-2 text-sm font-bold ${variants[variant]} ${className} shadow-sm`}
+      className={`inline-block rounded-full px-4 py-2 text-sm font-bold ${variants[variant] ?? variants.default} ${className} shadow-sm`}
     >
       {children}
     </span>

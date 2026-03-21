@@ -1,8 +1,11 @@
 import { useMemo } from 'react';
 
-export const usePriceCalculation = (price, billingPeriod) => {
+export const usePriceCalculation = (
+  price: number | string | undefined,
+  billingPeriod: string
+) => {
   return useMemo(() => {
-    if (!price)
+    if (price === undefined || price === null || price === 'Gratis')
       return {
         basePrice: 0,
         finalPrice: '$0',
@@ -10,7 +13,8 @@ export const usePriceCalculation = (price, billingPeriod) => {
         monthlyPrice: '$0',
       };
 
-    const basePrice = parseInt(price.replace('$', '').replace(/\D/g, ''));
+    const numPrice = typeof price === 'number' ? price : parseInt(String(price).replace('$', '').replace(/\D/g, ''), 10);
+    const basePrice = isNaN(numPrice) ? 0 : numPrice;
 
     if (billingPeriod === 'annual') {
       const monthlyTotal = basePrice * 12;
@@ -21,15 +25,15 @@ export const usePriceCalculation = (price, billingPeriod) => {
         basePrice,
         finalPrice: `$${annualPrice.toLocaleString('es-CO')}`,
         savings: savings.toLocaleString('es-CO'),
-        monthlyPrice: price,
+        monthlyPrice: typeof price === 'number' ? `$${price.toLocaleString('es-CO')}` : String(price),
       };
     }
 
     return {
       basePrice,
-      finalPrice: price,
+      finalPrice: typeof price === 'number' ? `$${price.toLocaleString('es-CO')}` : String(price),
       savings: null,
-      monthlyPrice: price,
+      monthlyPrice: typeof price === 'number' ? `$${price.toLocaleString('es-CO')}` : String(price),
     };
   }, [price, billingPeriod]);
 };

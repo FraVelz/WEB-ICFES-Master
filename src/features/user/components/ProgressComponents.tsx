@@ -7,7 +7,7 @@ export const ProgressOverviewCard = ({
   borderColor,
   shadowColor,
   info,
-}) => (
+}: { label: string; value: string | number; color: string; borderColor: string; shadowColor: string; info?: string }) => (
   <div
     className={`border bg-white/5 p-8 backdrop-blur-xl ${borderColor} hover:border-opacity-100 hover:bg-opacity-20 rounded-2xl transition-all duration-300 hover:shadow-lg ${shadowColor} hover:scale-105`}
   >
@@ -35,7 +35,7 @@ export const ProgressOverviewCard = ({
   </div>
 );
 
-export const AreaPerformanceCard = ({ area }) => (
+export const AreaPerformanceCard = ({ area }: { area: { icon: string; name: string; percentage: number; correct: number; total: number; color: string } }) => (
   <div className="rounded-2xl border border-cyan-500/20 bg-white/5 p-8 backdrop-blur-xl transition-all duration-300 hover:scale-105 hover:border-cyan-500/50 hover:bg-cyan-500/10 hover:shadow-lg hover:shadow-cyan-500/20">
     <div className="mb-6 flex items-center justify-between">
       <div className="flex items-center gap-4">
@@ -63,13 +63,13 @@ export const AreaPerformanceCard = ({ area }) => (
   </div>
 );
 
-export const RecommendationsList = ({ recommendations, icons, iconColors }) => (
+export const RecommendationsList = ({ recommendations, icons, iconColors }: { recommendations: string[]; icons: string[]; iconColors: string[] }) => (
   <div className="rounded-3xl border-2 border-orange-500/30 bg-linear-to-br from-orange-600/20 via-red-600/20 to-pink-600/20 p-12 shadow-2xl backdrop-blur-xl transition-all duration-300 hover:border-orange-500/60 hover:shadow-lg hover:shadow-orange-500/20">
     <h3 className="mb-8 bg-linear-to-r from-orange-400 to-red-400 bg-clip-text text-2xl font-black text-transparent">
       🎯 Recomendaciones Personalizadas
     </h3>
     <ul className="space-y-4">
-      {recommendations.map((recommendation, idx) => (
+      {recommendations.map((recommendation: string, idx: number) => (
         <li key={idx} className="flex items-start gap-4">
           <Icon
             name={icons[idx % icons.length]}

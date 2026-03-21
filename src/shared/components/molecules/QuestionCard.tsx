@@ -2,14 +2,29 @@ import { Card } from '../atoms/Card';
 import { Badge } from '../atoms/Badge';
 import { Text, Title } from '../atoms/Text';
 
+interface QuestionCardQuestion {
+  area?: string;
+  areaLabel?: string;
+  text?: string;
+  difficulty?: string;
+}
+
+interface QuestionCardProps {
+  question: QuestionCardQuestion;
+  number: number;
+  onSelect?: () => void;
+  isSelected?: boolean;
+  className?: string;
+}
+
 export const QuestionCard = ({
   question,
   number,
   onSelect,
   isSelected = false,
   className = '',
-}) => {
-  const areaColors = {
+}: QuestionCardProps) => {
+  const areaColors: Record<string, 'math' | 'language' | 'science' | 'social'> = {
     mathematics: 'math',
     lenguaje: 'language',
     science: 'science',
@@ -27,7 +42,7 @@ export const QuestionCard = ({
           <Title level={5} className="mb-2">
             Pregunta {number}
           </Title>
-          <Badge variant={areaColors[question.area]}>
+          <Badge variant={(question.area && areaColors[question.area]) ? areaColors[question.area] : 'default'}>
             {question.areaLabel}
           </Badge>
         </div>

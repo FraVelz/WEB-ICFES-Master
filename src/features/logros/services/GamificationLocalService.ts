@@ -11,7 +11,7 @@ import { calculateLevel } from '../utils/gamificationUtils';
 const GAMIFICATION_KEY = 'icfes_gamification';
 
 class GamificationLocalService {
-  async createGamificationProfile(userId) {
+  async createGamificationProfile(userId: string) {
     const defaultProfile = {
       userId,
       totalXP: 0,
@@ -25,14 +25,14 @@ class GamificationLocalService {
     return defaultProfile;
   }
 
-  async getProfile(userId) {
+  async getProfile(_userId: string) {
     const stored = localStorage.getItem(GAMIFICATION_KEY);
     return stored
       ? JSON.parse(stored)
       : { totalXP: 0, level: 1, virtualMoney: 0, achievements: {} };
   }
 
-  async addXP(userId, points, reason = 'activity') {
+  async addXP(_userId: string, points: number, _reason = 'activity') {
     const gam = JSON.parse(localStorage.getItem(GAMIFICATION_KEY) || '{}');
     const newXP = (gam.totalXP || 0) + points;
     const newLevel = calculateLevel(newXP);
@@ -46,12 +46,12 @@ class GamificationLocalService {
     return { totalXP: newXP, level: newLevel };
   }
 
-  async addCoins(userId, amount, reason = 'reward') {
+  async addCoins(_userId: string, amount: number, _reason = 'reward') {
     addVirtualMoney(amount);
     return { coins: getVirtualMoney(), virtualMoney: getVirtualMoney() };
   }
 
-  async spendCoins(userId, amount, item = 'purchase') {
+  async spendCoins(_userId: string, amount: number, _item = 'purchase') {
     removeVirtualMoney(amount);
     return { coins: getVirtualMoney(), virtualMoney: getVirtualMoney() };
   }

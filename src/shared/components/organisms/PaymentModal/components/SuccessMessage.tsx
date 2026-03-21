@@ -1,6 +1,13 @@
 import { Icon } from '@/shared/components/Icon';
+import type { PlanItem, UserPlanData } from '../types';
 
-export const SuccessMessage = ({ plan, onClose, currentPlan }) => {
+export interface SuccessMessageProps {
+  plan: PlanItem | null;
+  onClose: () => void;
+  currentPlan: UserPlanData | null;
+}
+
+export const SuccessMessage = ({ plan, onClose, currentPlan }: SuccessMessageProps) => {
   const isFree = plan?.price === 'Gratis';
   const isPro = plan?.id === 'pro';
   // Si ya tiene un plan activo y es diferente, el nuevo plan está en espera

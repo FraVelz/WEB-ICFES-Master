@@ -19,7 +19,7 @@ const defaultPlan = {
 };
 
 class SubscriptionPlanService {
-  async createDefaultPlan(uid) {
+  async createDefaultPlan(_uid: string) {
     const planData = {
       ...defaultPlan,
       createdAt: new Date().toISOString(),
@@ -29,12 +29,12 @@ class SubscriptionPlanService {
     return planData;
   }
 
-  async getUserPlan(uid) {
+  async getUserPlan(_uid: string) {
     const stored = localStorage.getItem(PLAN_KEY);
     return stored ? JSON.parse(stored) : defaultPlan;
   }
 
-  async updateUserPlan(uid, planData) {
+  async updateUserPlan(_uid: string, planData: Record<string, unknown>) {
     const current = JSON.parse(localStorage.getItem(PLAN_KEY) || '{}');
     const updated = {
       ...current,
@@ -44,19 +44,19 @@ class SubscriptionPlanService {
     localStorage.setItem(PLAN_KEY, JSON.stringify(updated));
   }
 
-  async updatePlanStatus(uid, status) {
+  async updatePlanStatus(_uid: string, status: string) {
     const current = JSON.parse(localStorage.getItem(PLAN_KEY) || '{}');
     current.status = status;
     current.updatedAt = new Date().toISOString();
     localStorage.setItem(PLAN_KEY, JSON.stringify(current));
   }
 
-  async hasActivePlan(uid) {
+  async hasActivePlan(uid: string) {
     const plan = await this.getUserPlan(uid);
     return plan?.status === 'active';
   }
 
-  async getPlanFeatures(uid) {
+  async getPlanFeatures(uid: string) {
     const plan = await this.getUserPlan(uid);
     return plan?.features || defaultPlan.features;
   }

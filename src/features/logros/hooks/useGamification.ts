@@ -26,8 +26,23 @@ const getDefaultGamification = () => ({
   achievements: {},
 });
 
-export const useGamification = (userId) => {
-  const [achievements, setAchievements] = useState([]);
+interface AchievementMerged {
+  progress: number;
+  unlockedAt: string | null;
+  status: string;
+  id: string;
+  category: string;
+  title: string;
+  description: string;
+  icon: string;
+  target: number;
+  xpReward: number;
+  coinsReward: number;
+  [key: string]: unknown;
+}
+
+export const useGamification = (userId: string | undefined) => {
+  const [achievements, setAchievements] = useState<AchievementMerged[]>([]);
   const [loading, setLoading] = useState(true);
   const [coins, setCoins] = useState(0);
   const [totalXP, setTotalXP] = useState(0);
@@ -37,16 +52,16 @@ export const useGamification = (userId) => {
   const [currentStreak, setCurrentStreak] = useState(0);
   const [longestStreak, setLongestStreak] = useState(0);
 
-  const calculateStreakFromDates = (dates) => {
+  const calculateStreakFromDates = (dates: unknown[]) => {
     if (!dates?.length) return 0;
     const sorted = [...new Set(dates)].sort(
-      (a, b) => new Date(b) - new Date(a)
+      (a: unknown, b: unknown) => new Date(b as string | number | Date).getTime() - new Date(a as string | number | Date).getTime()
     );
     const today = getLocalDateString();
     const yesterday = getLocalDateString(new Date(Date.now() - 86400000));
     if (!sorted.includes(today) && !sorted.includes(yesterday)) return 0;
     let count = 0;
-    let d = new Date(sorted.includes(today) ? today : yesterday);
+    let d = new Date((sorted.includes(today) ? today : yesterday) as string);
     while (sorted.includes(getLocalDateString(d))) {
       count++;
       d.setDate(d.getDate() - 1);
@@ -68,9 +83,9 @@ export const useGamification = (userId) => {
         setLevel(profile?.level ?? 1);
         setCoins((profile?.totalCoins ?? 0) - (profile?.spentCoins ?? 0));
 
-        const achProgress = profile?.achievements || {};
+        const achProgress = (profile?.achievements ?? {}) as unknown as Record<string, { current?: number; unlocked?: boolean; unlockedAt?: string | null }>;
         const merged = ACHIEVEMENTS_DATA.map((a) => {
-          const p = achProgress[a.id] || {};
+          const p = achProgress[a.id] ?? {};
           const current = p.current ?? 0;
           const unlocked = p.unlocked ?? false;
           return {
@@ -91,9 +106,9 @@ export const useGamification = (userId) => {
       } else {
         const gam = JSON.parse(localStorage.getItem(GAMIFICATION_KEY) || '{}');
         const g = { ...getDefaultGamification(), ...gam };
-        const achProgress = g.achievements || {};
+        const achProgress = (g.achievements || {}) as Record<string, { current?: number; unlocked?: boolean; unlockedAt?: string | null }>;
         const merged = ACHIEVEMENTS_DATA.map((a) => {
-          const p = achProgress[a.id] || {};
+          const p = achProgress[a.id] ?? {};
           const current = p.current ?? 0;
           const unlocked = p.unlocked ?? false;
           return {
@@ -136,20 +151,21 @@ export const useGamification = (userId) => {
     loadData();
   }, [loadData]);
 
-  const updateAchievementProgress = async (achievementId, amount = 1) => {
+  const updateAchievementProgress = async (achievementId: string, amount = 1) => {
     if (!userId) return;
     const ach = ACHIEVEMENTS_DATA.find((a) => a.id === achievementId);
     if (!ach) return;
 
     if (API_CONFIG.MODE === 'supabase') {
       const profile = await GamificationSupabaseService.getOrCreate(userId);
-      const achProgress = profile?.achievements || {};
-      const current = achProgress[achievementId] || {};
+      const raw = profile?.achievements;
+      const achProgress = (typeof raw === 'object' && raw !== null && !Array.isArray(raw) ? raw : {}) as Record<string, { current?: number; unlocked?: boolean }>;
+      const current = achProgress[achievementId] ?? {};
       if (current.unlocked) return;
 
       const newCurrent = (current.current || 0) + amount;
       const unlocked = newCurrent >= ach.target;
-      achProgress[achievementId] = {
+      (achProgress as Record<string, { current: number; unlocked: boolean; unlockedAt: string | null }>)[achievementId] = {
         current: newCurrent,
         unlocked,
         unlockedAt: unlocked ? new Date().toISOString() : null,
@@ -174,13 +190,14 @@ export const useGamification = (userId) => {
     }
 
     const gam = JSON.parse(localStorage.getItem(GAMIFICATION_KEY) || '{}');
-    const achProgress = gam.achievements || {};
-    const current = achProgress[achievementId] || {};
+    const rawAchievements = gam.achievements ?? {};
+    const achProgress = (typeof rawAchievements === 'object' && !Array.isArray(rawAchievements) ? rawAchievements : {}) as unknown as Record<string, { current?: number; unlocked?: boolean; unlockedAt?: string | null }>;
+    const current = achProgress[achievementId] ?? {};
     if (current.unlocked) return;
 
     const newCurrent = (current.current || 0) + amount;
     const unlocked = newCurrent >= ach.target;
-    achProgress[achievementId] = {
+    (achProgress as Record<string, { current: number; unlocked: boolean; unlockedAt: string | null }>)[achievementId] = {
       current: newCurrent,
       unlocked,
       unlockedAt: unlocked ? new Date().toISOString() : null,

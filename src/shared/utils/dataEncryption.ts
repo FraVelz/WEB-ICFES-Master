@@ -8,7 +8,7 @@
  * @param {string} password - Contraseña del usuario
  * @returns {Promise<CryptoKey>} - Clave criptográfica
  */
-export const generateKey = async (password) => {
+export const generateKey = async (password: string) => {
   const encoder = new TextEncoder();
   const data = encoder.encode(password);
 
@@ -42,7 +42,7 @@ export const generateKey = async (password) => {
  * @param {string} password - Contraseña para cifrado
  * @returns {Promise<string>} - Datos cifrados en base64
  */
-export const encryptData = async (data, password) => {
+export const encryptData = async (data: unknown, password: string) => {
   try {
     const key = await generateKey(password);
 
@@ -70,9 +70,9 @@ export const encryptData = async (data, password) => {
     combined.set(new Uint8Array(encryptedData), iv.length);
 
     // Convertir a base64 para almacenar
-    return btoa(String.fromCharCode.apply(null, combined));
+    return btoa(String.fromCharCode(...combined));
   } catch (error) {
-    throw new Error(`Error al cifrar datos: ${error.message}`);
+    throw new Error(`Error al cifrar datos: ${error instanceof Error ? error.message : String(error)}`);
   }
 };
 
@@ -82,7 +82,7 @@ export const encryptData = async (data, password) => {
  * @param {string} password - Contraseña para descifrado
  * @returns {Promise<object>} - Datos descifrados
  */
-export const decryptData = async (encryptedBase64, password) => {
+export const decryptData = async (encryptedBase64: string, password: string) => {
   try {
     const key = await generateKey(password);
 
@@ -113,7 +113,7 @@ export const decryptData = async (encryptedBase64, password) => {
     return JSON.parse(jsonString);
   } catch (error) {
     throw new Error(
-      `Error al descifrar datos. Contraseña incorrecta o datos corruptos: ${error.message}`
+      `Error al descifrar datos. Contraseña incorrecta o datos corruptos: ${error instanceof Error ? error.message : String(error)}`
     );
   }
 };
@@ -123,7 +123,7 @@ export const decryptData = async (encryptedBase64, password) => {
  * @param {string} data - Datos a hashear
  * @returns {string} - Hash en hexadecimal
  */
-export const createChecksum = async (data) => {
+export const createChecksum = async (data: unknown) => {
   const encoder = new TextEncoder();
   const encodedData = encoder.encode(JSON.stringify(data));
   const hashBuffer = await window.crypto.subtle.digest('SHA-256', encodedData);
@@ -139,7 +139,7 @@ export const createChecksum = async (data) => {
  * @param {string} checksum - Checksum original
  * @returns {Promise<boolean>} - true si los datos no fueron modificados
  */
-export const verifyChecksum = async (data, checksum) => {
+export const verifyChecksum = async (data: unknown, checksum: string) => {
   const newChecksum = await createChecksum(data);
   return newChecksum === checksum;
 };

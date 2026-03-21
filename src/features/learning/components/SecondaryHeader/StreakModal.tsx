@@ -4,10 +4,24 @@ import { useState } from 'react';
 import { Icon } from '@/shared/components/Icon';
 import { useGSAPModalEntrance } from '@/hooks/useGSAPModalEntrance';
 
+export interface StreakData {
+  currentStreak?: number;
+  longestStreak?: number;
+  streakHistory?: string[];
+  isBadgeUnlocked?: boolean;
+  daysUntilBadge?: number;
+}
+
+export interface StreakModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  streakData?: StreakData | null;
+}
+
 /**
  * Dropdown que muestra información detallada de la racha con mini-calendario
  */
-export const StreakModal = ({ isOpen, onClose, streakData }) => {
+export const StreakModal = ({ isOpen, onClose, streakData }: StreakModalProps) => {
   const dropdownRef = useGSAPModalEntrance({
     isOpen,
     type: 'slideFromTop',
@@ -23,16 +37,16 @@ export const StreakModal = ({ isOpen, onClose, streakData }) => {
   } = streakData || {};
   const [viewDate, setViewDate] = useState(new Date());
 
-  const getDaysInMonth = (date) => {
+  const getDaysInMonth = (date: Date) => {
     return new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
   };
 
-  const getFirstDayOfMonth = (date) => {
+  const getFirstDayOfMonth = (date: Date) => {
     // 0 = Domingo, 1 = Lunes, ...
     return new Date(date.getFullYear(), date.getMonth(), 1).getDay();
   };
 
-  const changeMonth = (offset) => {
+  const changeMonth = (offset: number) => {
     const newDate = new Date(viewDate);
     newDate.setMonth(newDate.getMonth() + offset);
     setViewDate(newDate);
@@ -57,7 +71,7 @@ export const StreakModal = ({ isOpen, onClose, streakData }) => {
   ];
   const dayNames = ['D', 'L', 'M', 'M', 'J', 'V', 'S'];
 
-  const isStreakDay = (day) => {
+  const isStreakDay = (day: number) => {
     // Construir fecha local para comparar
     // Nota: streakHistory son strings YYYY-MM-DD
     const year = viewDate.getFullYear();
@@ -69,7 +83,7 @@ export const StreakModal = ({ isOpen, onClose, streakData }) => {
     return streakHistory.includes(dateStr);
   };
 
-  const isToday = (day) => {
+  const isToday = (day: number) => {
     const today = new Date();
     return (
       day === today.getDate() &&

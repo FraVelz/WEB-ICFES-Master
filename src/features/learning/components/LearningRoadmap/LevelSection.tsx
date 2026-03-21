@@ -1,15 +1,24 @@
+import React from 'react';
 import { Icon } from '@/shared/components/Icon';
 
 /**
  * Componente para la sección collapsible de Básico, Intermedio o Avanzado
  */
+export interface LevelSectionProps {
+  config: { color?: 'green' | 'yellow' | 'red'; title?: string; subtitle?: string };
+  isExpanded: boolean;
+  onToggle: () => void;
+  children: React.ReactNode;
+  icon?: string;
+}
+
 export const LevelSection = ({
   config,
   isExpanded,
   onToggle,
   children,
   icon,
-}) => {
+}: LevelSectionProps) => {
   const colorMap = {
     green: {
       borderColor: 'border-green-600',
@@ -37,7 +46,7 @@ export const LevelSection = ({
     },
   };
 
-  const colors = colorMap[config.color];
+  const colors = colorMap[config.color ?? 'green'];
 
   return (
     <div
@@ -58,14 +67,14 @@ export const LevelSection = ({
         <div className="flex items-center gap-4">
           <div className={colors.iconBg + ' rounded-xl p-4'}>
             <Icon
-              name={icon}
+              name={icon ?? 'book'}
               size="3xl"
               className={`text-3xl ${colors.iconColor}`}
             />
           </div>
           <div className="text-left">
-            <h2 className="text-2xl font-bold text-white">{config.title}</h2>
-            <p className={`${colors.iconColor}`}>{config.subtitle}</p>
+            <h2 className="text-2xl font-bold text-white">{config.title ?? ''}</h2>
+            <p className={`${colors.iconColor}`}>{config.subtitle ?? ''}</p>
           </div>
         </div>
         <Icon

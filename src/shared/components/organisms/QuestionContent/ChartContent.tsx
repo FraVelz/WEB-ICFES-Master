@@ -28,24 +28,41 @@
  * Nota: Esta es una versión simplificada. Para gráficas complejas
  * se recomienda instalar: npm install chart.js react-chartjs-2
  */
+interface ChartDataset {
+  label?: string;
+  data: number[];
+  color?: string;
+}
+
+interface ChartContentProps {
+  type?: 'bar' | 'line' | 'pie';
+  labels?: string[];
+  datasets?: ChartDataset[];
+  title?: string;
+  description?: string;
+}
+
 export const ChartContent = ({
   type = 'bar',
   labels,
   datasets,
   title,
   description = '',
-}) => {
+}: ChartContentProps) => {
   // Versión simplificada con barras ASCII/visual
   const renderSimpleBar = () => {
-    const maxValue = Math.max(...datasets.flatMap((d) => d.data));
+    const ds = datasets ?? [];
+    const lb = labels ?? [];
+    if (!ds[0]) return null;
+    const maxValue = Math.max(...ds.flatMap((d: ChartDataset) => d.data));
     const scale = 200 / maxValue;
 
     return (
       <div className="space-y-4">
-        {datasets[0].data.map((value, idx) => (
+        {ds[0]?.data.map((value: number, idx: number) => (
           <div key={idx} className="flex items-center gap-4">
             <span className="w-16 text-right text-sm font-semibold text-gray-300">
-              {labels[idx]}
+              {lb[idx]}
             </span>
             <div className="flex flex-1 items-center gap-2">
               <div

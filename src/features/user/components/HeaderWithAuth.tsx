@@ -96,7 +96,7 @@ export const HeaderWithAuth = () => {
                         </p>
                         {rank && (
                           <p className="text-xs text-slate-400">
-                            Rango: {rank}
+                            Rango: {rank.name ?? rank.icon ?? '-'}
                           </p>
                         )}
                       </div>

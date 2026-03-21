@@ -117,16 +117,16 @@ export const getUserBadgesWithDetails = () => {
 /**
  * Verifica si una insignia está comprada
  */
-export const isBadgePurchased = (badgeId) => {
-  return getUserBadges().includes(badgeId);
+export const isBadgePurchased = (badgeId: string | number) => {
+  return getUserBadges().includes(String(badgeId));
 };
 
 /**
  * Verifica si una insignia puede ser comprada
  * (si ya tiene la insignia anterior o no requiere ninguna)
  */
-export const canPurchaseBadge = (badgeId) => {
-  const badge = BADGES_CATALOG.find((b) => b.id === badgeId);
+export const canPurchaseBadge = (badgeId: string | number) => {
+  const badge = BADGES_CATALOG.find((b) => String(b.id) === String(badgeId));
   if (!badge) return false;
 
   // Si ya la compró
@@ -145,7 +145,7 @@ export const canPurchaseBadge = (badgeId) => {
 export const getAllBadgesWithStatus = () => {
   return BADGES_CATALOG.map((badge) => ({
     ...badge,
-    purchased: isBadgePurchased(badge.id),
+    purchased: isBadgePurchased(String(badge.id)),
     canPurchase: canPurchaseBadge(badge.id),
     locked: !canPurchaseBadge(badge.id) && !isBadgePurchased(badge.id),
   }));
@@ -154,8 +154,8 @@ export const getAllBadgesWithStatus = () => {
 /**
  * Compra una insignia
  */
-export const purchaseBadge = (badgeId) => {
-  const badge = BADGES_CATALOG.find((b) => b.id === badgeId);
+export const purchaseBadge = (badgeId: string | number) => {
+  const badge = BADGES_CATALOG.find((b) => String(b.id) === String(badgeId));
   if (!badge) {
     throw new Error('Insignia no encontrada');
   }

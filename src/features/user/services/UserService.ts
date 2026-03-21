@@ -30,7 +30,7 @@ class UserService extends BaseService {
    * @param {Object} profileData
    * @returns {Promise<Object>}
    */
-  async updateProfile(userId, profileData) {
+  async updateProfile(userId: string, profileData: Record<string, unknown>) {
     return this.update(userId, {
       ...profileData,
       lastProfileUpdate: new Date().toISOString(),
@@ -42,9 +42,9 @@ class UserService extends BaseService {
    * @param {string} userId
    * @returns {Promise<Object>}
    */
-  async getSettings(userId) {
-    const user = await this.get(userId);
-    return user?.settings || {};
+  async getSettings(userId: string) {
+    const user = (await this.get(userId)) as Record<string, unknown> | null;
+    return (user?.settings as Record<string, unknown>) || {};
   }
 
   /**
@@ -53,12 +53,14 @@ class UserService extends BaseService {
    * @param {Object} settings
    * @returns {Promise<Object>}
    */
-  async updateSettings(userId, settings) {
-    const user = await this.get(userId);
+  async updateSettings(userId: string, settings: Record<string, unknown>) {
+    const user = (await this.get(userId)) as Record<string, unknown> | null;
+    const safeUser = user && typeof user === 'object' ? user : {};
+    const safeSettings = (safeUser.settings as Record<string, unknown>) || {};
     return this.update(userId, {
-      ...user,
+      ...safeUser,
       settings: {
-        ...user?.settings,
+        ...safeSettings,
         ...settings,
       },
     });
@@ -70,7 +72,7 @@ class UserService extends BaseService {
    * @param {string} imageBase64
    * @returns {Promise<Object>}
    */
-  async updateProfileImage(userId, imageBase64) {
+  async updateProfileImage(userId: string, imageBase64: string) {
     return this.update(userId, {
       profileImage: imageBase64,
       lastImageUpdate: new Date().toISOString(),
@@ -83,7 +85,7 @@ class UserService extends BaseService {
    * @param {string} username
    * @returns {Promise<Object>}
    */
-  async updateUsername(userId, username) {
+  async updateUsername(userId: string, username: string) {
     return this.update(userId, { username });
   }
 
@@ -93,7 +95,7 @@ class UserService extends BaseService {
    * @param {string} phrase
    * @returns {Promise<Object>}
    */
-  async updatePersonalPhrase(userId, phrase) {
+  async updatePersonalPhrase(userId: string, phrase: string) {
     return this.update(userId, { personalPhrase: phrase });
   }
 
@@ -102,7 +104,7 @@ class UserService extends BaseService {
    * @param {string} userId
    * @returns {Promise<Object>}
    */
-  async exportUserData(userId) {
+  async exportUserData(userId: string) {
     // Este método se completaría con datos de otros servicios
     // Por ahora retorna datos del usuario
     return this.get(userId);
@@ -114,7 +116,7 @@ class UserService extends BaseService {
    * @param {Object} backupData
    * @returns {Promise<Object>}
    */
-  async importUserData(userId, backupData) {
+  async importUserData(userId: string, backupData: Record<string, unknown>) {
     return this.update(userId, {
       ...backupData,
       lastImport: new Date().toISOString(),
@@ -126,7 +128,7 @@ class UserService extends BaseService {
    * @param {string} userId
    * @returns {Promise<Object>}
    */
-  async deleteAccount(userId) {
+  async deleteAccount(userId: string) {
     return this.delete(userId);
   }
 
@@ -135,7 +137,7 @@ class UserService extends BaseService {
    * @param {Object} userData
    * @returns {Promise<Object>}
    */
-  async initializeUser(userData = {}) {
+  async initializeUser(userData: Record<string, unknown> = {}) {
     return this.create({
       username: userData.username || 'Usuario ICFES',
       email: userData.email || null,
@@ -149,13 +151,13 @@ class UserService extends BaseService {
         notifications: true,
         soundEnabled: true,
         darkMode: true,
-        ...userData.settings,
+        ...(typeof userData.settings === 'object' && userData.settings ? userData.settings : {}),
       },
       stats: {
         totalExams: 0,
         totalQuestions: 0,
         correctAnswers: 0,
-        ...userData.stats,
+        ...(typeof userData.stats === 'object' && userData.stats ? userData.stats : {}),
       },
       ...userData,
     });

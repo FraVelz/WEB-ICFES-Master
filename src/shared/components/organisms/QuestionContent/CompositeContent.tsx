@@ -30,37 +30,46 @@ import { QuoteContent } from './QuoteContent';
 import { TimelineContent } from './TimelineContent';
 import { MapContent } from './MapContent';
 
-export const CompositeContent = ({ blocks }) => {
-  const renderBlock = (block, idx) => {
+interface ContentBlock {
+  type: string;
+  content?: Record<string, unknown>;
+}
+
+interface CompositeContentProps {
+  blocks: ContentBlock[];
+}
+
+export const CompositeContent = ({ blocks }: CompositeContentProps) => {
+  const renderBlock = (block: ContentBlock, idx: number) => {
     const { type, content } = block;
 
     switch (type) {
       case 'text':
-        return <TextContent key={idx} text={content} />;
+        return <TextContent key={idx} text={(content as unknown) as string} />;
 
       case 'image':
-        return <ImageContent key={idx} {...content} />;
+        return <ImageContent key={idx} {...(content as Record<string, unknown>)} />;
 
       case 'table':
-        return <TableContent key={idx} {...content} />;
+        return <TableContent key={idx} {...(content as Record<string, unknown>)} />;
 
       case 'formula':
-        return <FormulaContent key={idx} {...content} />;
+        return <FormulaContent key={idx} {...(content as Record<string, unknown>)} />;
 
       case 'chart':
-        return <ChartContent key={idx} {...content} />;
+        return <ChartContent key={idx} {...(content as Record<string, unknown>)} />;
 
       case 'code':
-        return <CodeContent key={idx} {...content} />;
+        return <CodeContent key={idx} {...(content as Record<string, unknown>)} />;
 
       case 'quote':
-        return <QuoteContent key={idx} {...content} />;
+        return <QuoteContent key={idx} {...(content as Record<string, unknown>)} />;
 
       case 'timeline':
-        return <TimelineContent key={idx} {...content} />;
+        return <TimelineContent key={idx} {...(content as Record<string, unknown>)} />;
 
       case 'map':
-        return <MapContent key={idx} {...content} />;
+        return <MapContent key={idx} {...(content as Record<string, unknown>)} />;
 
       default:
         return null;
@@ -69,7 +78,7 @@ export const CompositeContent = ({ blocks }) => {
 
   return (
     <div className="space-y-4">
-      {blocks.map((block, idx) => renderBlock(block, idx))}
+      {blocks.map((block: ContentBlock, idx: number) => renderBlock(block, idx))}
     </div>
   );
 };

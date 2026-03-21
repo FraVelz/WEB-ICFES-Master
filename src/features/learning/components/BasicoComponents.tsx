@@ -1,7 +1,27 @@
 import { Icon } from '@/shared/components/Icon';
 import Link from 'next/link';
 
-export const TopicItem = ({ topic, idx, subject }) => (
+interface Topic {
+  title: string;
+  content: string;
+  duration: string;
+}
+
+interface Subject {
+  id: string;
+  name: string;
+  icon: string;
+  color: string;
+  bgColor?: string;
+}
+
+interface TopicItemProps {
+  topic: Topic;
+  idx: number;
+  subject: string;
+}
+
+export const TopicItem = ({ topic, idx, subject }: TopicItemProps) => (
   <div className="flex items-start justify-between rounded-lg bg-slate-800/50 p-3 transition-colors hover:bg-slate-800">
     <div className="flex-1">
       <p className="font-semibold text-white">{topic.title}</p>
@@ -21,15 +41,27 @@ export const TopicItem = ({ topic, idx, subject }) => (
   </div>
 );
 
-export const BasicoTopicsList = ({ topics, subject }) => (
+interface BasicoTopicsListProps {
+  topics: Topic[];
+  subject: string;
+}
+
+export const BasicoTopicsList = ({ topics, subject }: BasicoTopicsListProps) => (
   <div className="space-y-3 border-t border-slate-700 bg-slate-900/50 p-4">
-    {topics.map((topic, idx) => (
+    {topics.map((topic: Topic, idx: number) => (
       <TopicItem key={idx} topic={topic} idx={idx} subject={subject} />
     ))}
   </div>
 );
 
-export const SubjectButton = ({ subject, isExpanded, onClick, bgColor }) => (
+interface SubjectButtonProps {
+  subject: Subject;
+  isExpanded: boolean;
+  onClick: () => void;
+  bgColor?: string;
+}
+
+export const SubjectButton = ({ subject, isExpanded, onClick, bgColor }: SubjectButtonProps) => (
   <button
     onClick={onClick}
     className={`flex w-full items-center justify-between p-4 ${
@@ -56,7 +88,14 @@ export const SubjectButton = ({ subject, isExpanded, onClick, bgColor }) => (
   </button>
 );
 
-export const SubjectCard = ({ subject, isExpanded, topics, onToggle }) => (
+interface SubjectCardProps {
+  subject: Subject;
+  isExpanded: boolean;
+  topics: Topic[];
+  onToggle: () => void;
+}
+
+export const SubjectCard = ({ subject, isExpanded, topics, onToggle }: SubjectCardProps) => (
   <div className="overflow-hidden rounded-xl border border-slate-700">
     <SubjectButton
       subject={subject}

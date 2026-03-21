@@ -14,12 +14,19 @@
  *   type="excerpt"
  * />
  */
+interface QuoteContentProps {
+  text?: string;
+  author?: string | null;
+  source?: string | null;
+  type?: 'quote' | 'excerpt';
+}
+
 export const QuoteContent = ({
   text,
   author = null,
   source = null,
   type = 'quote',
-}) => {
+}: QuoteContentProps) => {
   const isQuote = type === 'quote';
 
   return (
@@ -30,7 +37,7 @@ export const QuoteContent = ({
           : 'border-amber-500 bg-amber-500/10 text-amber-100'
       }`}
     >
-      <p className="text-sm leading-relaxed italic">"{text}"</p>
+      <p className="text-sm leading-relaxed italic">"{text ?? ''}"</p>
       {author && (
         <p
           className={`mt-3 text-xs font-semibold ${isQuote ? 'text-blue-300' : 'text-amber-300'}`}

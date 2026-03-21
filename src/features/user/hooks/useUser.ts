@@ -5,6 +5,8 @@ import {
   getVirtualMoney,
   addVirtualMoney,
   removeVirtualMoney,
+  type UserProfile,
+  type UserRank,
 } from '@/shared/utils/userProfile';
 import { useAuth } from '@/context/AuthContext';
 
@@ -12,8 +14,8 @@ import { useAuth } from '@/context/AuthContext';
  * Hook personalizado para manejar datos del usuario (localStorage)
  */
 export const useUser = () => {
-  const [user, setUser] = useState(null);
-  const [rank, setRank] = useState(null);
+  const [user, setUser] = useState<UserProfile | null>(null);
+  const [rank, setRank] = useState<UserRank | null>(null);
   const [virtualMoney, setVirtualMoney] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const { user: authUser } = useAuth();
@@ -27,7 +29,7 @@ export const useUser = () => {
             ...profile,
             username: authUser.displayName,
             displayName: authUser.displayName,
-          };
+          } as UserProfile;
         }
         const userRank = getUserRank();
         const money = getVirtualMoney();
@@ -51,24 +53,24 @@ export const useUser = () => {
     setVirtualMoney(money);
   };
 
-  const addMoney = (amount) => {
+  const addMoney = (amount: number) => {
     try {
       addVirtualMoney(amount);
       setVirtualMoney(getVirtualMoney());
       return true;
-    } catch (error) {
-      console.error('Error al añadir dinero:', error);
+    } catch (_error) {
+      console.error('Error al añadir dinero:', _error);
       return false;
     }
   };
 
-  const removeMoney = (amount) => {
+  const removeMoney = (amount: number) => {
     try {
       removeVirtualMoney(amount);
       setVirtualMoney(getVirtualMoney());
       return true;
-    } catch (error) {
-      console.error('Error al restar dinero:', error);
+    } catch (_error) {
+      console.error('Error al restar dinero:', _error);
       return false;
     }
   };

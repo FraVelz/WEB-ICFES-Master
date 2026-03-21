@@ -1,6 +1,12 @@
 import { Icon } from '@/shared/components/Icon';
+import type { PlanItem } from '../types';
 
-export const PaymentHeader = ({ plan, onClose }) => {
+export interface PaymentHeaderProps {
+  plan: PlanItem | null;
+  onClose: () => void;
+}
+
+export const PaymentHeader = ({ plan, onClose }: PaymentHeaderProps) => {
   return (
     <div className="flex shrink-0 items-center justify-between border-b border-slate-700 p-6">
       <div>

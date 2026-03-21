@@ -4,11 +4,22 @@ import { useState, useEffect } from 'react';
 import { PaymentModal } from '@/shared/components';
 import { useAuth } from '@/context/AuthContext';
 
-export const PricingPlans = ({ plans = [] }) => {
+interface Plan {
+  popular?: boolean;
+  name: string;
+  description: string;
+  price: string;
+  originalPrice?: string;
+  cta: string;
+  features: string[];
+  [key: string]: unknown;
+}
+
+export const PricingPlans = ({ plans = [] }: { plans?: Plan[] }) => {
   const router = useRouter();
   const { isAuthenticated } = useAuth();
   const [isPaymentOpen, setIsPaymentOpen] = useState(false);
-  const [selectedPlan, setSelectedPlan] = useState(null);
+  const [selectedPlan, setSelectedPlan] = useState<Plan | null>(null);
 
   // Al cargar, verificar si hay un plan guardado en localStorage
   useEffect(() => {
@@ -28,7 +39,7 @@ export const PricingPlans = ({ plans = [] }) => {
 
     if (savedPlan && isAuthenticated) {
       try {
-        const plan = JSON.parse(savedPlan);
+        const plan = JSON.parse(savedPlan) as Plan;
         setSelectedPlan(plan);
         setIsPaymentOpen(true);
         localStorage.removeItem('selectedPlan'); // Limpiar después de usar
@@ -38,7 +49,7 @@ export const PricingPlans = ({ plans = [] }) => {
     }
   }, [isAuthenticated]);
 
-  const handlePlanClick = (plan) => {
+  const handlePlanClick = (plan: Plan) => {
     // Si está autenticado, mostrar modal o procesar
     if (isAuthenticated) {
       if (plan.price === 'Gratis') {
@@ -119,7 +130,7 @@ export const PricingPlans = ({ plans = [] }) => {
             </button>
 
             <ul className="space-y-3">
-              {plan.features.map((feature, fidx) => (
+              {plan.features.map((feature: string, fidx: number) => (
                 <li
                   key={fidx}
                   className="flex items-start gap-3 text-slate-300"

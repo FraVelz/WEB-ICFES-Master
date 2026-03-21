@@ -1,8 +1,14 @@
+interface ResultsSummaryProps {
+  activeArea: string;
+  selectedTopics: string[];
+  filteredMaterials: Record<string, unknown[]>;
+}
+
 export const ResultsSummary = ({
   activeArea,
   selectedTopics,
   filteredMaterials,
-}) => {
+}: ResultsSummaryProps) => {
   if (activeArea === 'all' && selectedTopics.length === 0) {
     return null;
   }

@@ -2,7 +2,7 @@
 import { useAuth } from '@/context/AuthContext';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
-export const DemoRoute = ({ children }) => {
+export const DemoRoute = ({ children }: { children: React.ReactNode }) => {
   const { isAuthenticated, loading } = useAuth();
   const router = useRouter();
   const [isDemoMode, setIsDemoMode] = useState(false);

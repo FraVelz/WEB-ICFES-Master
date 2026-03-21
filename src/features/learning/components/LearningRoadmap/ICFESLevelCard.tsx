@@ -5,10 +5,32 @@ import { DIFFICULTY_COLORS } from './constants';
 /**
  * Componente para mostrar un nivel individual del mapa ICFES
  */
-export const ICFESLevelCard = ({ level, index, totalLevels }) => {
+export interface ICFESLevelCardProps {
+  level: {
+    completed?: boolean;
+    progress?: number;
+    colorBg20?: string;
+    colorBorder?: string;
+    colorGradient?: string;
+    icon?: string;
+    name?: string;
+    description?: string;
+    difficulty?: string;
+    estimatedHours?: number;
+    pointRange?: string;
+    statusIcon?: string;
+    topics?: string[];
+    [key: string]: unknown;
+  };
+  index: number;
+  totalLevels: number;
+}
+
+export const ICFESLevelCard = ({ level, index, totalLevels }: ICFESLevelCardProps) => {
+  const progress = level.progress ?? 0;
   const isCompleted = level.completed;
-  const isLocked = !level.completed && level.progress === 0;
-  const isInProgress = level.progress > 0 && level.progress < 100;
+  const isLocked = !level.completed && progress === 0;
+  const isInProgress = progress > 0 && progress < 100;
 
   return (
     <div
@@ -33,7 +55,7 @@ export const ICFESLevelCard = ({ level, index, totalLevels }) => {
                     isLocked ? 'opacity-40' : 'opacity-100'
                   }`}
                 >
-                  <Icon name={level.icon} size="2xl" className="text-2xl" />
+                  <Icon name={level.icon ?? 'book'} size="2xl" className="text-2xl" />
                 </div>
 
                 {/* Título y Descripción */}
@@ -48,7 +70,7 @@ export const ICFESLevelCard = ({ level, index, totalLevels }) => {
                   </p>
                   <div className="flex flex-wrap gap-2">
                     <span
-                      className={`rounded-full px-3 py-1 text-xs ${DIFFICULTY_COLORS[level.difficulty]}`}
+                      className={`rounded-full px-3 py-1 text-xs ${DIFFICULTY_COLORS[level.difficulty ?? ''] ?? 'bg-slate-700/40 text-slate-300'}`}
                     >
                       {level.difficulty}
                     </span>
@@ -77,7 +99,7 @@ export const ICFESLevelCard = ({ level, index, totalLevels }) => {
                         : 'bg-blue-600/40 text-blue-400'
                   }`}
                 >
-                  <Icon name={level.statusIcon} />
+                  <Icon name={level.statusIcon ?? 'star'} />
                 </div>
               </div>
             </div>
@@ -86,7 +108,7 @@ export const ICFESLevelCard = ({ level, index, totalLevels }) => {
             <div className="ml-16">
               <p className="mb-2 text-xs text-slate-400">Temas principales:</p>
               <div className="flex flex-wrap gap-2">
-                {level.topics.map((topic, i) => (
+                {(level.topics ?? []).map((topic: string, i: number) => (
                   <span
                     key={i}
                     className={`rounded-full px-3 py-1 text-xs ${

@@ -5,7 +5,11 @@ import { Icon } from '@/shared/components/Icon';
  * Componente de alerta para secciones en construcción
  * TODO: Eliminar este componente cuando los módulos estén finalizados
  */
-export const ConstructionAlert = ({ moduleName, className = '' }) => {
+interface ConstructionAlertProps {
+  moduleName?: string;
+  className?: string;
+}
+export const ConstructionAlert = ({ moduleName, className = '' }: ConstructionAlertProps) => {
   return (
     <div
       className={`mx-4 mb-6 max-w-7xl rounded-r-lg border-l-4 border-yellow-500 bg-yellow-500/10 p-4 backdrop-blur-sm md:mx-auto ${className}`}

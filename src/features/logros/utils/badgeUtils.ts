@@ -1,4 +1,4 @@
-export const getBadgeCategory = (badgeId) => {
+export const getBadgeCategory = (badgeId: string) => {
   if (
     badgeId.includes('PLAN') ||
     badgeId.includes('ANNUAL') ||

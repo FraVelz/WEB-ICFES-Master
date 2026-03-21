@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { Icon } from '@/shared/components/Icon';
 import {
   ExamConfigModal,
@@ -14,9 +14,11 @@ import {
   SCIENCE_QUESTIONS,
   SOCIAL_QUESTIONS,
 } from '@/shared/data';
+import type { ExamQuestion } from '@/shared/types/question';
+import type { ExamConfig } from '@/features/exam/types';
 
 export const FullExamPage = () => {
-  const allQuestions = [
+  const allQuestions: ExamQuestion[] = [
     ...MATHEMATICS_QUESTIONS,
     ...LANGUAGE_QUESTIONS,
     ...SCIENCE_QUESTIONS,
@@ -25,22 +27,24 @@ export const FullExamPage = () => {
 
   const areaInfo = AREA_INFO['examen-completo'];
 
-  const [examConfig, setExamConfig] = useState(null);
-  const [questions, setQuestions] = useState([]);
-  const [answers, setAnswers] = useState({});
+  const [examConfig, setExamConfig] = useState<ExamConfig | null>(null);
+  const [questions, setQuestions] = useState<ExamQuestion[]>([]);
+  const [answers, setAnswers] = useState<Record<string, string>>({});
   const [showResults, setShowResults] = useState(false);
-  const [timeRemaining, setTimeRemaining] = useState(null);
+  const [timeRemaining, setTimeRemaining] = useState<number | null>(null);
   const [isFinished, setIsFinished] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [showAnswerSheetMobile, setShowAnswerSheetMobile] = useState(false);
 
-  const handleExamStart = (config) => {
+  const handleExamStart = (config: ExamConfig) => {
     const selectedQuestions = allQuestions.slice(0, config.numQuestions);
     setQuestions(selectedQuestions);
     setExamConfig(config);
 
     if (config.useTimer) {
-      setTimeRemaining(config.numQuestions * config.timePerQuestion * 60);
+      setTimeRemaining(
+        config.numQuestions * (config.timePerQuestion ?? 2) * 60
+      );
     }
   };
 
@@ -49,7 +53,7 @@ export const FullExamPage = () => {
 
     const timer = setInterval(() => {
       setTimeRemaining((prev) => {
-        if (prev <= 1) {
+        if (prev === null || prev <= 1) {
           setIsFinished(true);
           return 0;
         }
@@ -60,14 +64,14 @@ export const FullExamPage = () => {
     return () => clearInterval(timer);
   }, [timeRemaining]);
 
-  const handleAnswer = (questionId, answer) => {
+  const handleAnswer = (questionId: string, answer: string) => {
     setAnswers((prev) => ({
       ...prev,
       [questionId]: answer,
     }));
   };
 
-  const handleScrollToQuestion = (index) => {
+  const handleScrollToQuestion = (index: number) => {
     const questionElement = document.getElementById(`question-${index}`);
     questionElement?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
@@ -115,7 +119,7 @@ export const FullExamPage = () => {
 
               {/* Desktop Exit Button */}
               <Link
-                to="/"
+                href="/"
                 className="hidden rounded-lg bg-white/10 px-4 py-2 text-sm text-white transition-all duration-300 hover:bg-white/20 md:block"
               >
                 Salir
@@ -145,7 +149,7 @@ export const FullExamPage = () => {
                       <span>Ver Respuestas</span>
                     </button>
                     <Link
-                      to="/"
+                      href="/"
                       onClick={() => setMobileMenuOpen(false)}
                       className="flex items-center gap-3 px-4 py-3 text-white transition-colors hover:bg-white/10"
                     >
@@ -200,9 +204,9 @@ export const FullExamPage = () => {
   }
 
   const timeColor =
-    timeRemaining < 300
+    timeRemaining !== null && timeRemaining < 300
       ? 'text-red-400'
-      : timeRemaining < 600
+      : timeRemaining !== null && timeRemaining < 600
         ? 'text-yellow-400'
         : 'text-cyan-300';
 
@@ -228,7 +232,7 @@ export const FullExamPage = () => {
               </p>
             </div>
 
-            {examConfig.useTimer && (
+            {examConfig.useTimer && timeRemaining !== null && (
               <div className={`font-mono text-2xl font-bold ${timeColor}`}>
                 {formatTimeExtended(timeRemaining)}
               </div>
@@ -236,7 +240,7 @@ export const FullExamPage = () => {
 
             {/* Desktop Exit Button */}
             <Link
-              to="/"
+              href="/"
               className="hidden rounded-lg bg-white/10 px-4 py-2 text-sm text-white transition-all duration-300 hover:bg-white/20 md:block"
             >
               Salir
@@ -265,7 +269,7 @@ export const FullExamPage = () => {
                     <span>Ver Respuestas</span>
                   </button>
                   <Link
-                    to="/"
+                    href="/"
                     onClick={() => setMobileMenuOpen(false)}
                     className="flex items-center gap-3 px-4 py-3 text-white transition-colors hover:bg-white/10"
                   >
@@ -322,7 +326,10 @@ export const FullExamPage = () => {
                         <button
                           key={option.letter}
                           onClick={() =>
-                            handleAnswer(question.id, option.letter)
+                            handleAnswer(
+                              question.id,
+                              option.letter ?? option.id ?? option.text
+                            )
                           }
                           className={`w-full rounded-lg border-2 p-4 text-left transition-all duration-300 ${
                             isSelected

@@ -15,11 +15,16 @@ import { StoreModal } from '@/features/store/components/StoreModal';
  * Visible en móvil y desktop
  * Contiene 3 elementos interactivos principales
  */
+export interface SecondaryHeaderProps {
+  currentArea?: string;
+  onAreaChange?: (area: string) => void;
+}
+
 export const SecondaryHeader = ({
   currentArea = 'lectura-critica',
   onAreaChange,
-}) => {
-  const [activeModal, setActiveModal] = useState(null);
+}: SecondaryHeaderProps) => {
+  const [activeModal, setActiveModal] = useState<'areas' | 'streak' | 'store' | 'coins' | null>(null);
   const { user } = useAuth();
 
   // Hook de gamificación para obtener datos del usuario
@@ -43,7 +48,7 @@ export const SecondaryHeader = ({
 
   // Obtener información del área actual
   const currentAreaInfo =
-    AREA_INFO[currentArea] || AREA_INFO['lectura-critica'];
+    (AREA_INFO as Record<string, { name?: string; color?: string; icon?: string }>)[currentArea] || (AREA_INFO as Record<string, { name?: string; color?: string; icon?: string }>)['lectura-critica'];
 
   // Datos de racha
   const streakData = {
@@ -54,7 +59,7 @@ export const SecondaryHeader = ({
     daysUntilBadge,
   };
 
-  const handleSelectArea = (areaKey) => {
+  const handleSelectArea = (areaKey: string) => {
     if (onAreaChange) onAreaChange(areaKey);
     setActiveModal(null);
   };
@@ -85,7 +90,7 @@ export const SecondaryHeader = ({
           <div
             className={`h-8 w-8 rounded-lg bg-linear-to-br ${currentAreaInfo.color} flex items-center justify-center shadow-lg`}
           >
-            <Icon name={currentAreaInfo.icon} className="text-xs text-white" />
+            <Icon name={currentAreaInfo.icon ?? 'book'} className="text-xs text-white" />
           </div>
           {/* Nombre del área - Oculto en móvil muy pequeño */}
           <div className="hidden flex-col items-start sm:flex">

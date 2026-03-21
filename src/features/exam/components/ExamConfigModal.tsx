@@ -1,13 +1,21 @@
 'use client';
 import { useState } from 'react';
 import Link from 'next/link';
+import type { ExamConfig } from '@/features/exam/types';
+
+interface ExamConfigModalProps {
+  area: string;
+  totalQuestions: number;
+  onStart: (config: ExamConfig) => void;
+  isFullExam?: boolean;
+}
 
 export const ExamConfigModal = ({
   area,
   totalQuestions: maxQuestions,
   onStart,
   isFullExam = false,
-}) => {
+}: ExamConfigModalProps) => {
   const [numQuestions, setNumQuestions] = useState(
     isFullExam ? maxQuestions : 10
   );

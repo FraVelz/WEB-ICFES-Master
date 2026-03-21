@@ -3,6 +3,33 @@
 import { useState, useMemo } from 'react';
 import { Icon } from '@/shared/components/Icon';
 
+export interface BadgeItem {
+  id: string;
+  name?: string;
+  description?: string;
+  icon?: string;
+  rarity?: string;
+  unlockedAt?: string | null;
+  progress?: number;
+  totalProgress?: number;
+  requirement?: string;
+  unlocked?: boolean;
+  unlockedDate?: string;
+  [key: string]: unknown;
+}
+
+export interface UnifiedAchievementsHubProps {
+  badges?: BadgeItem[];
+  level?: number;
+  totalXP?: number;
+  xpForNextLevel?: number;
+  currentStreak?: number;
+  maxStreak?: number;
+  totalHours?: number;
+  completedChallenges?: number;
+  loading?: boolean;
+}
+
 /**
  * Centro Unificado de Logros y Gamificación
  * Integra badges, niveles, estadísticas y desafíos en una experiencia cohesiva
@@ -17,9 +44,9 @@ export const UnifiedAchievementsHub = ({
   totalHours = 0,
   completedChallenges = 0,
   loading = false,
-}) => {
+}: UnifiedAchievementsHubProps) => {
   const [activeTab, setActiveTab] = useState('overview');
-  const [selectedBadge, setSelectedBadge] = useState(null);
+  const [selectedBadge, setSelectedBadge] = useState<BadgeItem | null>(null);
   const [filterCategory, setFilterCategory] = useState('all');
 
   // Cálculos de progreso
@@ -48,7 +75,7 @@ export const UnifiedAchievementsHub = ({
   }, []);
 
   // Rareza de badges
-  const rarityConfig = {
+  const rarityConfig: Record<string, { color: string; textColor: string; badge: string }> = {
     común: {
       color: 'from-gray-600 to-gray-400',
       textColor: 'text-gray-300',
@@ -430,12 +457,12 @@ export const UnifiedAchievementsHub = ({
                               <div
                                 className="h-full bg-yellow-500"
                                 style={{
-                                  width: `${(badge.progress / badge.totalProgress) * 100}%`,
+                                  width: `${((badge.progress ?? 0) / (badge.totalProgress ?? 1)) * 100}%`,
                                 }}
                               />
                             </div>
                             <p className="text-xs text-slate-300">
-                              {badge.progress}/{badge.totalProgress}
+                              {badge.progress}/{badge.totalProgress ?? 0}
                             </p>
                           </div>
                         ) : (
@@ -696,20 +723,20 @@ export const UnifiedAchievementsHub = ({
               </div>
               <div>
                 <h2 className="text-2xl font-bold text-white">
-                  {selectedBadge.name}
+                  {String(selectedBadge?.name ?? '')}
                 </h2>
                 <p className="mt-1 text-sm text-slate-400 uppercase">
-                  {selectedBadge.rarity}
+                  {String(selectedBadge?.rarity ?? '')}
                 </p>
               </div>
             </div>
 
             <div className="space-y-3 rounded-lg bg-slate-800/50 p-4">
-              <p className="text-slate-300">{selectedBadge.description}</p>
-              {selectedBadge.requirement && (
+              <p className="text-slate-300">{String(selectedBadge?.description ?? '')}</p>
+              {selectedBadge?.requirement && (
                 <div className="border-t border-slate-700 pt-3">
                   <p className="mb-1 text-sm text-slate-400">Requisito:</p>
-                  <p className="text-slate-300">{selectedBadge.requirement}</p>
+                  <p className="text-slate-300">{String(selectedBadge.requirement)}</p>
                 </div>
               )}
             </div>

@@ -3,6 +3,17 @@
 import React, { useEffect, useRef } from 'react';
 import { Icon } from '@/shared/components/Icon';
 import { gsap } from '@/lib/gsap';
+import type { ShopItem } from '../data/shopItems';
+
+export interface ShopItemModalProps {
+  item: ShopItem | null;
+  isOpen: boolean;
+  onClose: () => void;
+  onBuy: (item: ShopItem) => void | Promise<void>;
+  processing: boolean;
+  canAfford: boolean;
+  isPurchased: boolean;
+}
 
 export const ShopItemModal = ({
   item,
@@ -12,7 +23,7 @@ export const ShopItemModal = ({
   processing,
   canAfford,
   isPurchased,
-}) => {
+}: ShopItemModalProps) => {
   const overlayRef = useRef(null);
   const contentRef = useRef(null);
 

@@ -1,12 +1,26 @@
 import Link from 'next/link';
 import { Icon } from '@/shared/components/Icon';
+import type { LearningMaterial } from '@/shared/data/learningMaterials';
+
+export interface AreaIconConfig {
+  icon: string;
+  color: string;
+  label: string;
+}
+
+export interface MaterialsGridProps {
+  filteredMaterials: Record<string, LearningMaterial[]>;
+  areaIcons: Record<string, AreaIconConfig>;
+  selectedTopics: string[];
+  onTopicToggle: (topic: string) => void;
+}
 
 export const MaterialsGrid = ({
   filteredMaterials,
   areaIcons,
   selectedTopics,
   onTopicToggle,
-}) => {
+}: MaterialsGridProps) => {
   if (Object.keys(filteredMaterials).length === 0) {
     return (
       <div className="py-20 text-center">
@@ -20,17 +34,17 @@ export const MaterialsGrid = ({
 
   return (
     <div className="mb-10 grid grid-cols-1 gap-12">
-      {Object.entries(filteredMaterials).map(([area, materials]) => (
+      {Object.entries(filteredMaterials).map(([area, materials]: [string, LearningMaterial[]]) => (
         <div key={area} className="grid grid-cols-1 gap-6 md:grid-cols-2">
           <h2 className="flex items-center gap-3 text-3xl font-bold text-white md:text-4xl">
             <Icon
-              name={areaIcons[area].icon}
-              className={areaIcons[area].color}
+              name={areaIcons[area]?.icon ?? 'book'}
+              className={areaIcons[area]?.color ?? 'text-gray-400'}
             />
-            {areaIcons[area].label}
+            {areaIcons[area]?.label ?? area}
           </h2>
 
-          {materials.map((material) => (
+          {materials.map((material: LearningMaterial) => (
             <div
               key={material.id}
               className="group border-white/10 bg-white/5 p-6 backdrop-blur-sm transition-all duration-300 hover:scale-105 hover:border-white/20 hover:bg-white/10 hover:shadow-xl sm:rounded-2xl sm:border"
@@ -68,7 +82,7 @@ export const MaterialsGrid = ({
               </div>
 
               <div className="mb-4 flex flex-wrap gap-2">
-                {material.topics.map((topic, idx) => (
+                {material.topics.map((topic: string, idx: number) => (
                   <span
                     key={idx}
                     className={`inline-block cursor-pointer rounded-full border px-3 py-1 text-sm transition-colors ${
@@ -83,7 +97,7 @@ export const MaterialsGrid = ({
                 ))}
               </div>
               <Link
-                href={material.path}
+                href={material.path ?? '#'}
                 className="block w-full rounded-xl bg-linear-to-r from-blue-600 to-blue-700 px-4 py-2 text-center font-semibold text-white transition-all duration-300 hover:from-blue-700 hover:to-blue-800 hover:shadow-lg"
               >
                 Aprender

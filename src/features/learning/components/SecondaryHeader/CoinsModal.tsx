@@ -3,10 +3,16 @@
 import { Icon } from '@/shared/components/Icon';
 import { useGSAPModalEntrance } from '@/hooks/useGSAPModalEntrance';
 
+export interface CoinsModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  coins?: number;
+}
+
 /**
  * Dropdown que muestra el dinero virtual
  */
-export const CoinsModal = ({ isOpen, onClose, coins = 0 }) => {
+export const CoinsModal = ({ isOpen, onClose, coins = 0 }: CoinsModalProps) => {
   const dropdownRef = useGSAPModalEntrance({
     isOpen,
     type: 'slideFromTop',

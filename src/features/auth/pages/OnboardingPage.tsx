@@ -1,11 +1,12 @@
 'use client';
+
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { OnboardingQuiz } from '../components/OnboardingQuiz/OnboardingQuiz';
 
 export const OnboardingPage = () => {
   const router = useRouter();
-  const [quizAnswers, setQuizAnswers] = useState(null);
+  const [quizAnswers, setQuizAnswers] = useState<Record<string, unknown> | null>(null);
 
   // Configuración de avatares personalizables
   // Puedes cambiar las rutas de los avatares aquí
@@ -14,7 +15,7 @@ export const OnboardingPage = () => {
     intro2: '/avatars/logo.webp', // Avatar para "Responde 5 preguntas..."
   };
 
-  const handleQuizComplete = (answers) => {
+  const handleQuizComplete = (answers: Record<string, unknown>) => {
     // Guardar las respuestas en sessionStorage para usarlas después en el registro
     sessionStorage.setItem('onboardingAnswers', JSON.stringify(answers));
     setQuizAnswers(answers);

@@ -5,7 +5,7 @@ import { Icon } from '@/shared/components/Icon';
 import Link from 'next/link';
 
 export const LearningPathMap = () => {
-  const [expandedArea, setExpandedArea] = useState(null);
+  const [expandedArea, setExpandedArea] = useState<string | null>(null);
 
   const learningPaths = [
     {
@@ -178,7 +178,7 @@ export const LearningPathMap = () => {
     },
   ];
 
-  const getStatusColor = (status) => {
+  const getStatusColor = (status: string) => {
     switch (status) {
       case 'completed':
         return 'bg-green-500/20 border-green-500';
@@ -191,7 +191,7 @@ export const LearningPathMap = () => {
     }
   };
 
-  const getStatusIcon = (status) => {
+  const getStatusIcon = (status: string) => {
     switch (status) {
       case 'completed':
         return 'check-circle';

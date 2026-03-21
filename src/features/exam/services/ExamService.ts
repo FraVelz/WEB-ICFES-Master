@@ -4,6 +4,7 @@
  */
 
 import BaseService from '@/services/BaseService';
+import type { ExamData, ExamRecord, AnswerRecord } from '../types/exam';
 
 class ExamService extends BaseService {
   constructor() {
@@ -12,11 +13,8 @@ class ExamService extends BaseService {
 
   /**
    * Crear un nuevo examen/cuestionario
-   * @param {string} userId
-   * @param {Object} examData - {type, area, difficulty, questions, timeLimit}
-   * @returns {Promise<Object>}
    */
-  async createExam(userId, examData) {
+  async createExam(userId: string, examData: ExamData) {
     return this.create({
       userId,
       type: examData.type || 'practice', // 'practice', 'mock', 'diagnostic'
@@ -35,12 +33,19 @@ class ExamService extends BaseService {
 
   /**
    * Guardar respuesta en un examen
-   * @param {string} examId
-   * @param {Object} answerData - {questionId, selectedAnswer, isCorrect, timeSpent}
-   * @returns {Promise<Object>}
    */
-  async saveAnswer(examId, answerData) {
-    const exam = await this.get(examId);
+  async saveAnswer(
+    examId: string,
+    answerData: {
+      questionId: string;
+      selectedAnswer: string;
+      correctAnswer: string;
+      isCorrect: boolean;
+      timeSpent?: number;
+    }
+  ) {
+    const exam = (await this.get(examId)) as ExamRecord;
+    if (!exam || !exam.answers) throw new Error('Examen no encontrado');
 
     // Evitar duplicados
     const existingIndex = exam.answers.findIndex(
@@ -67,19 +72,18 @@ class ExamService extends BaseService {
 
   /**
    * Completar examen y calcular puntuación
-   * @param {string} examId
-   * @returns {Promise<Object>}
    */
-  async completeExam(examId) {
-    const exam = await this.get(examId);
+  async completeExam(examId: string) {
+    const exam = (await this.get(examId)) as ExamRecord;
+    if (!exam) throw new Error('Examen no encontrado');
 
-    // Calcular puntuación
-    const correctAnswers = exam.answers.filter((a) => a.isCorrect).length;
-    const score = Math.round((correctAnswers / exam.totalQuestions) * 100);
+    const totalQuestions = exam.totalQuestions ?? exam.answers?.length ?? 1;
+    const correctAnswers = (exam.answers ?? []).filter((a: AnswerRecord) => a.isCorrect).length;
+    const score = Math.round((correctAnswers / totalQuestions) * 100);
 
     // Calcular tiempo total
-    const totalTime = exam.answers.reduce(
-      (sum, a) => sum + (a.timeSpent || 0),
+    const totalTime = (exam.answers ?? []).reduce(
+      (sum: number, a: AnswerRecord) => sum + (a.timeSpent || 0),
       0
     );
 
@@ -90,18 +94,16 @@ class ExamService extends BaseService {
       status: 'completed',
       totalTime,
       correctAnswers,
-      wrongAnswers: exam.totalQuestions - correctAnswers,
+      wrongAnswers: totalQuestions - correctAnswers,
       grade: this._calculateGrade(score),
     });
   }
 
   /**
    * Abandonar un examen
-   * @param {string} examId
-   * @returns {Promise<Object>}
    */
-  async abandonExam(examId) {
-    const exam = await this.get(examId);
+  async abandonExam(examId: string) {
+    const exam = (await this.get(examId)) as ExamRecord;
     return this.update(examId, {
       ...exam,
       status: 'abandoned',
@@ -111,19 +113,18 @@ class ExamService extends BaseService {
 
   /**
    * Obtener historial de exámenes del usuario
-   * @param {string} userId
-   * @param {Object} filters - {type, area, status, limit}
-   * @returns {Promise<Array>}
    */
-  async getUserExams(userId, filters = {}) {
+  async getUserExams(
+    userId: string,
+    filters: { type?: string; area?: string; status?: string; limit?: number } = {}
+  ) {
     try {
-      const exams = await this.get();
+      const exams = (await this.get()) as ExamRecord[];
 
       let result = Array.isArray(exams)
         ? exams.filter((e) => e.userId === userId)
         : [];
 
-      // Aplicar filtros
       if (filters.type) {
         result = result.filter((e) => e.type === filters.type);
       }
@@ -134,10 +135,12 @@ class ExamService extends BaseService {
         result = result.filter((e) => e.status === filters.status);
       }
 
-      // Ordenar por fecha descendente
-      result.sort((a, b) => new Date(b.startedAt) - new Date(a.startedAt));
+      result.sort(
+        (a, b) =>
+          new Date(b.startedAt ?? 0).getTime() -
+          new Date(a.startedAt ?? 0).getTime()
+      );
 
-      // Aplicar límite
       if (filters.limit) {
         result = result.slice(0, filters.limit);
       }
@@ -151,11 +154,11 @@ class ExamService extends BaseService {
 
   /**
    * Obtener estadísticas de exámenes
-   * @param {string} userId
-   * @returns {Promise<Object>}
    */
-  async getExamStats(userId) {
-    const exams = await this.getUserExams(userId, { status: 'completed' });
+  async getExamStats(userId: string) {
+    const exams = (await this.getUserExams(userId, {
+      status: 'completed',
+    })) as ExamRecord[];
 
     if (exams.length === 0) {
       return {
@@ -167,15 +170,16 @@ class ExamService extends BaseService {
       };
     }
 
-    const scores = exams.map((e) => e.score);
+    const scores = exams.map((e) => e.score ?? 0).filter((s) => typeof s === 'number');
 
     return {
       totalExams: exams.length,
-      averageScore: Math.round(
-        scores.reduce((a, b) => a + b, 0) / scores.length
-      ),
-      bestScore: Math.max(...scores),
-      worstScore: Math.min(...scores),
+      averageScore:
+        scores.length > 0
+          ? Math.round(scores.reduce((a, b) => a + b, 0) / scores.length)
+          : 0,
+      bestScore: scores.length > 0 ? Math.max(...scores) : 0,
+      worstScore: scores.length > 0 ? Math.min(...scores) : 0,
       examsCompleted: exams.filter((e) => e.status === 'completed').length,
       practiceExams: exams.filter((e) => e.type === 'practice').length,
       mockExams: exams.filter((e) => e.type === 'mock').length,
@@ -184,17 +188,17 @@ class ExamService extends BaseService {
 
   /**
    * Obtener análisis detallado de un examen
-   * @param {string} examId
-   * @returns {Promise<Object>}
    */
-  async getExamAnalysis(examId) {
-    const exam = await this.get(examId);
+  async getExamAnalysis(examId: string) {
+    const exam = (await this.get(examId)) as ExamRecord;
+    if (!exam) throw new Error('Examen no encontrado');
 
-    // Agrupar respuestas por área
-    const byArea = {};
-    exam.answers.forEach((answer) => {
-      const question = exam.questions.find((q) => q.id === answer.questionId);
-      if (question) {
+    const byArea: Record<string, { correct: number; total: number }> = {};
+    (exam.answers ?? []).forEach((answer: AnswerRecord) => {
+      const question = (exam.questions ?? []).find(
+        (q: { id?: string; area?: string }) => q.id === answer.questionId
+      );
+      if (question?.area) {
         if (!byArea[question.area]) {
           byArea[question.area] = { correct: 0, total: 0 };
         }
@@ -205,12 +209,13 @@ class ExamService extends BaseService {
       }
     });
 
-    // Agrupar respuestas por dificultad
-    const byDifficulty = {};
-    exam.answers.forEach((answer) => {
-      const question = exam.questions.find((q) => q.id === answer.questionId);
+    const byDifficulty: Record<string, { correct: number; total: number }> = {};
+    (exam.answers ?? []).forEach((answer: AnswerRecord) => {
+      const question = (exam.questions ?? []).find(
+        (q: { id?: string; difficulty?: string }) => q.id === answer.questionId
+      );
       if (question) {
-        const diff = question.difficulty || 'media';
+        const diff = question.difficulty ?? 'media';
         if (!byDifficulty[diff]) {
           byDifficulty[diff] = { correct: 0, total: 0 };
         }
@@ -221,12 +226,13 @@ class ExamService extends BaseService {
       }
     });
 
-    // Calcular tiempos
     const avgTimePerQuestion =
-      exam.answers.length > 0
+      (exam.answers ?? []).length > 0
         ? Math.round(
-            exam.answers.reduce((sum, a) => sum + (a.timeSpent || 0), 0) /
-              exam.answers.length
+            (exam.answers ?? []).reduce(
+              (sum: number, a: AnswerRecord) => sum + (a.timeSpent || 0),
+              0
+            ) / (exam.answers ?? []).length
           )
         : 0;
 
@@ -256,16 +262,17 @@ class ExamService extends BaseService {
 
   /**
    * Obtener preguntas incorrectas para revisión
-   * @param {string} examId
-   * @returns {Promise<Array>}
    */
-  async getWrongAnswers(examId) {
-    const exam = await this.get(examId);
+  async getWrongAnswers(examId: string) {
+    const exam = (await this.get(examId)) as ExamRecord;
+    if (!exam?.answers) return [];
 
-    return exam.answers
-      .filter((answer) => !answer.isCorrect)
-      .map((answer) => {
-        const question = exam.questions.find((q) => q.id === answer.questionId);
+    return (exam.answers ?? [])
+      .filter((answer: AnswerRecord) => !answer.isCorrect)
+      .map((answer: AnswerRecord) => {
+        const question = (exam.questions ?? []).find(
+          (q: { id?: string }) => q.id === answer.questionId
+        );
         return {
           questionId: answer.questionId,
           question: question?.text,
@@ -280,13 +287,10 @@ class ExamService extends BaseService {
 
   /**
    * Comparar dos exámenes
-   * @param {string} examId1
-   * @param {string} examId2
-   * @returns {Promise<Object>}
    */
-  async compareExams(examId1, examId2) {
-    const exam1 = await this.get(examId1);
-    const exam2 = await this.get(examId2);
+  async compareExams(examId1: string, examId2: string) {
+    const exam1 = (await this.get(examId1)) as ExamRecord;
+    const exam2 = (await this.get(examId2)) as ExamRecord;
 
     return {
       exam1: {
@@ -299,22 +303,23 @@ class ExamService extends BaseService {
         score: exam2.score,
         completedAt: exam2.completedAt,
       },
-      improvement: exam2.score - exam1.score,
+      improvement: (exam2?.score ?? 0) - (exam1?.score ?? 0),
       improvementPercent:
-        exam1.score > 0
-          ? Math.round(((exam2.score - exam1.score) / exam1.score) * 100)
+        (exam1?.score ?? 0) > 0
+          ? Math.round(
+              (((exam2?.score ?? 0) - (exam1?.score ?? 0)) /
+                (exam1?.score ?? 1)) *
+                100
+            )
           : 0,
     };
   }
 
   /**
-   * Exportar resultados de un examen (PDF, JSON, etc)
-   * @param {string} examId
-   * @param {string} format - 'json', 'csv'
-   * @returns {Promise<string>}
+   * Exportar resultados de un examen
    */
-  async exportResults(examId, format = 'json') {
-    const exam = await this.get(examId);
+  async exportResults(examId: string, format = 'json') {
+    const exam = (await this.get(examId)) as ExamRecord;
     const analysis = await this.getExamAnalysis(examId);
 
     if (format === 'json') {
@@ -327,10 +332,9 @@ class ExamService extends BaseService {
         2
       );
     } else if (format === 'csv') {
-      // Convertir a CSV
       let csv =
         'Pregunta,Respuesta Seleccionada,Respuesta Correcta,Correcta,Tiempo (s)\n';
-      exam.answers.forEach((answer) => {
+      (exam.answers ?? []).forEach((answer: AnswerRecord) => {
         csv += `"${answer.questionId}","${answer.selectedAnswer}","${answer.correctAnswer}",${answer.isCorrect},${answer.timeSpent}\n`;
       });
       return csv;
@@ -341,11 +345,9 @@ class ExamService extends BaseService {
 
   /**
    * Resetear historial de exámenes del usuario
-   * @param {string} userId
-   * @returns {Promise<Object>}
    */
-  async resetUserExams(userId) {
-    const exams = await this.getUserExams(userId);
+  async resetUserExams(userId: string) {
+    const exams = (await this.getUserExams(userId)) as ExamRecord[];
     for (const exam of exams) {
       await this.delete(exam.id);
     }
@@ -354,7 +356,7 @@ class ExamService extends BaseService {
 
   // ============ MÉTODOS PRIVADOS ============
 
-  _calculateGrade(score) {
+  _calculateGrade(score: number) {
     if (score >= 90) return 'A';
     if (score >= 80) return 'B';
     if (score >= 70) return 'C';

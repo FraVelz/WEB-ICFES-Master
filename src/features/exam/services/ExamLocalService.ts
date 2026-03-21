@@ -3,48 +3,60 @@
  */
 import { getStoredExams } from '@/shared/utils/progressStorage';
 
+interface StoredExam {
+  id?: string;
+  [key: string]: unknown;
+}
+
 class ExamLocalService {
-  async createExam(userId, examData) {
-    const exam = {
+  async createExam(userId: string, examData: Record<string, unknown>) {
+    return {
       id: `exam_${Date.now()}`,
       ...examData,
       userId,
       status: 'in-progress',
     };
-    return exam;
   }
 
-  async get(examId, userId) {
+  async get(examId: string, _userId: string) {
     const exams = getStoredExams();
-    return exams.find((e) => e.id === examId) || null;
+    return (exams as StoredExam[]).find((e) => e.id === examId) || null;
   }
 
-  async saveAnswer(examId, userId, answerData) {
+  async saveAnswer(
+    _examId: string,
+    _userId: string,
+    answerData: unknown
+  ) {
     return answerData;
   }
-  async completeExam(examId, userId) {
+  async completeExam(_examId: string, _userId: string) {
     return {};
   }
-  async abandonExam(examId, userId) {}
-  async getExamAnalysis(examId, userId) {
+  async abandonExam(_examId: string, _userId: string) {}
+  async getExamAnalysis(_examId: string, _userId: string) {
     return null;
   }
-  async getWrongAnswers(examId, userId) {
+  async getWrongAnswers(_examId: string, _userId: string) {
     return [];
   }
-  async getExamStats(userId) {
+  async getExamStats(_userId: string) {
     return {};
   }
-  async getUserExams(userId, filters = {}) {
+  async getUserExams(_userId: string, _filters: Record<string, unknown> = {}) {
     return getStoredExams();
   }
-  async compareExams(id1, id2, userId) {
+  async compareExams(_id1: string, _id2: string, _userId: string) {
     return null;
   }
-  async exportResults(examId, userId, format) {
+  async exportResults(
+    _examId: string,
+    _userId: string,
+    _format?: string
+  ) {
     return {};
   }
-  async resetUserExams(userId) {
+  async resetUserExams(_userId: string) {
     localStorage.removeItem('icfes_exams');
   }
 }

@@ -1,10 +1,26 @@
+export interface CardData {
+  cardNumber: string;
+  cardHolder: string;
+  expiryMonth: string;
+  expiryYear: string;
+  cvv: string;
+}
+
+export interface CardFormProps {
+  cardData: CardData;
+  setCardData: React.Dispatch<React.SetStateAction<CardData>>;
+  handleCardNumberChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  handleExpiryChange: (type: 'month' | 'year', value: string) => void;
+  handleCVVChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+}
+
 export const CardForm = ({
   cardData,
   setCardData,
   handleCardNumberChange,
   handleExpiryChange,
   handleCVVChange,
-}) => {
+}: CardFormProps) => {
   return (
     <>
       {/* Card Number */}
@@ -51,7 +67,7 @@ export const CardForm = ({
           <input
             type="text"
             placeholder="MM"
-            maxLength="2"
+            maxLength={2}
             value={cardData.expiryMonth}
             onChange={(e) => handleExpiryChange('month', e.target.value)}
             className="w-full rounded-lg border border-slate-700 bg-slate-800 px-3 py-3 text-center text-sm text-white placeholder-slate-500 transition-colors focus:border-cyan-500 focus:outline-none"
@@ -68,7 +84,7 @@ export const CardForm = ({
           <input
             type="text"
             placeholder="YY"
-            maxLength="2"
+            maxLength={2}
             value={cardData.expiryYear}
             onChange={(e) => handleExpiryChange('year', e.target.value)}
             className="w-full rounded-lg border border-slate-700 bg-slate-800 px-3 py-3 text-center text-sm text-white placeholder-slate-500 transition-colors focus:border-cyan-500 focus:outline-none"
@@ -85,7 +101,7 @@ export const CardForm = ({
           <input
             type="password"
             placeholder="***"
-            maxLength="3"
+            maxLength={3}
             value={cardData.cvv}
             onChange={handleCVVChange}
             className="w-full rounded-lg border border-slate-700 bg-slate-800 px-3 py-3 text-center text-sm text-white placeholder-slate-500 transition-colors focus:border-cyan-500 focus:outline-none"

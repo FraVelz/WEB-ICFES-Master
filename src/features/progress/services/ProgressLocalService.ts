@@ -11,37 +11,37 @@ import {
 } from '@/shared/utils/progressStorage';
 
 class ProgressLocalService {
-  async updateProgress(userId, data) {
+  async updateProgress(_userId: string, _data: unknown) {
     return getProgress();
   }
-  async getProgress(userId) {
+  async getProgress(_userId: string) {
     return getProgress();
   }
-  async getProgressByArea(userId) {
+  async getProgressByArea(_userId: string) {
     return {};
   }
-  async getRecommendations(userId) {
+  async getRecommendations(_userId: string) {
     return [];
   }
-  async getAttemptHistory(userId, limit) {
+  async getAttemptHistory(_userId: string, limit?: number) {
     return [...getStoredExams(), ...getStoredPractices()].slice(0, limit || 50);
   }
-  async saveAttempt(userId, data) {
+  async saveAttempt(_userId: string, data: unknown) {
     return data;
   }
-  async getAreaStatistics(userId) {
+  async getAreaStatistics(_userId: string) {
     return {};
   }
-  async getPerformanceAnalysis(userId, days) {
+  async getPerformanceAnalysis(_userId: string, _days?: number) {
     return {};
   }
-  async resetProgress(userId) {
+  async resetProgress(_userId: string) {
     clearAllData();
   }
-  async getCompletedLessons(userId) {
+  async getCompletedLessons(_userId: string) {
     return getCompletedLessons();
   }
-  async markLessonAsCompleted(userId, lessonId) {
+  async markLessonAsCompleted(userId: string, lessonId: string) {
     markLessonAsCompleted(userId, lessonId);
   }
 }

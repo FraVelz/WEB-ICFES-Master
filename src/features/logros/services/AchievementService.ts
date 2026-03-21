@@ -9,15 +9,15 @@ class AchievementService {
     return ACHIEVEMENTS_DATA;
   }
 
-  async getAchievement(achievementId) {
+  async getAchievement(achievementId: string) {
     return ACHIEVEMENTS_DATA.find((a) => a.id === achievementId) || null;
   }
 
-  async unlockAchievement(userId, achievementId, metadata = {}) {
+  async unlockAchievement(_userId: string, _achievementId: string, _metadata = {}) {
     // No-op - useGamification maneja esto con localStorage/Supabase
   }
 
-  async getUserAchievements(userId) {
+  async getUserAchievements(_userId: string) {
     return [];
   }
 }

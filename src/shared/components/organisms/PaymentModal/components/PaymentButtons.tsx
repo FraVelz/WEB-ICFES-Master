@@ -1,4 +1,13 @@
 import { Icon } from '@/shared/components/Icon';
+import type { PlanItem } from '../types';
+
+export interface PaymentButtonsProps {
+  isProcessing: boolean;
+  isFormValid: boolean;
+  onClose: () => void;
+  price: string;
+  plan: PlanItem | null;
+}
 
 export const PaymentButtons = ({
   isProcessing,
@@ -6,7 +15,7 @@ export const PaymentButtons = ({
   onClose,
   price,
   plan,
-}) => {
+}: PaymentButtonsProps) => {
   const isFree = plan?.price === 'Gratis';
 
   return (

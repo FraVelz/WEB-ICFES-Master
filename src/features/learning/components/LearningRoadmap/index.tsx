@@ -14,18 +14,20 @@ import { AnimatedOnMount } from '@/shared/components/AnimatedOnMount';
  * Muestra el camino visual de progreso para el área seleccionada.
  * Ahora incluye el Header Secundario internamente.
  */
-export const LearningRoadmap = ({ initialArea = 'lectura-critica' }) => {
+import type { PathNodeData } from './AreaPath';
+
+export const LearningRoadmap = ({ initialArea = 'lectura-critica' }: { initialArea?: string }) => {
   const [currentArea, setCurrentArea] = useState(initialArea);
-  const [selectedLesson, setSelectedLesson] = useState(null);
-  const [viewingLesson, setViewingLesson] = useState(null);
+  const [selectedLesson, setSelectedLesson] = useState<PathNodeData | null>(null);
+  const [viewingLesson, setViewingLesson] = useState<PathNodeData | null>(null);
 
   const currentAreaData =
-    AREA_INFO[currentArea] || AREA_INFO['lectura-critica'];
+    (AREA_INFO as Record<string, { name?: string; color?: string }>)[currentArea] || (AREA_INFO as Record<string, { name?: string; color?: string }>)['lectura-critica'];
 
   // Hook para obtener datos de gamificación
   const { sections, loading, error } = useLearningPath(currentArea);
 
-  const getColorClass = (gradient) => {
+  const getColorClass = (gradient: string) => {
     if (gradient.includes('blue')) return 'bg-blue-500';
     if (gradient.includes('green')) return 'bg-green-500';
     if (gradient.includes('purple')) return 'bg-purple-500';
@@ -35,15 +37,15 @@ export const LearningRoadmap = ({ initialArea = 'lectura-critica' }) => {
     return 'bg-slate-500';
   };
 
-  const colorClass = getColorClass(currentAreaData.color);
+  const colorClass = getColorClass(currentAreaData?.color ?? 'from-blue-500 to-blue-600');
 
-  const handleNodeClick = (node) => {
+  const handleNodeClick = (node: PathNodeData) => {
     setSelectedLesson(node);
   };
 
-  const handleStartLesson = (lesson) => {
+  const handleStartLesson = (lesson?: PathNodeData | { id?: string } | null) => {
     setSelectedLesson(null);
-    setViewingLesson(lesson);
+    setViewingLesson(lesson as PathNodeData | null);
   };
 
   return (

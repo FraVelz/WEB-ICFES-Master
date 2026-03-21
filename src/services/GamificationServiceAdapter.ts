@@ -10,12 +10,22 @@ const getService = () =>
     ? GamificationSupabaseService
     : GamificationLocalService;
 
+const service = () => getService();
+
 export default {
-  addXP: (userId, points, reason) => getService().addXP(userId, points, reason),
-  addCoins: (userId, amount, reason) =>
-    getService().addCoins(userId, amount, reason),
-  spendCoins: (userId, amount, item) =>
-    getService().spendCoins(userId, amount, item),
-  getProfile: (userId) =>
-    getService().getProfile?.(userId) ?? getService().getOrCreate?.(userId),
+  addXP: (userId: string, points: number, reason?: string) => service().addXP(userId, points, reason),
+  addCoins: (userId: string, amount: number, reason?: string) =>
+    service().addCoins(userId, amount, reason),
+  spendCoins: (userId: string, amount: number, item?: string) =>
+    service().spendCoins(userId, amount, item),
+  getProfile: async (userId: string) => {
+    const s = service();
+    if ('getProfile' in s && typeof s.getProfile === 'function') {
+      return s.getProfile(userId);
+    }
+    if ('getOrCreate' in s && typeof s.getOrCreate === 'function') {
+      return s.getOrCreate(userId);
+    }
+    throw new Error('Gamification service has no getProfile or getOrCreate');
+  },
 };

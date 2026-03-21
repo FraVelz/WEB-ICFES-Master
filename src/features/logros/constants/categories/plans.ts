@@ -18,7 +18,7 @@ export const PLAN_BADGES = {
   PRO_PLAN_USER: {
     id: 'PRO_PLAN_USER',
     name: 'Usuario Pro',
-    icon: faRocket,
+    icon: 'rocket',
     description: 'Acceso al plan Pro',
     requirement: 'Actualizar a plan Pro',
     category: 'planes',

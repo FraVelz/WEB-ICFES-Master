@@ -5,6 +5,7 @@ import {
   getVirtualMoney,
   removeVirtualMoney,
 } from '@/shared/utils/userProfile';
+import type { ShopItem } from '../data/shopItems';
 
 const PURCHASES_KEY = 'icfes_shop_purchases';
 
@@ -14,7 +15,7 @@ const PURCHASES_KEY = 'icfes_shop_purchases';
 export const useShop = () => {
   const { user } = useAuth();
   const [coins, setCoins] = useState(0);
-  const [purchases, setPurchases] = useState([]);
+  const [purchases, setPurchases] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
   const [processing, setProcessing] = useState(false);
 
@@ -22,17 +23,17 @@ export const useShop = () => {
     setLoading(true);
     setCoins(getVirtualMoney());
     const stored = localStorage.getItem(PURCHASES_KEY);
-    setPurchases(stored ? JSON.parse(stored) : []);
+    setPurchases(stored ? (JSON.parse(stored) as string[]) : []);
     setLoading(false);
   }, [user?.uid]);
 
   const refreshData = () => {
     setCoins(getVirtualMoney());
     const stored = localStorage.getItem(PURCHASES_KEY);
-    setPurchases(stored ? JSON.parse(stored) : []);
+    setPurchases(stored ? (JSON.parse(stored) as string[]) : []);
   };
 
-  const buyItem = async (item) => {
+  const buyItem = async (item: ShopItem) => {
     const currentCoins = getVirtualMoney();
     if (item.category !== 'powerup' && hasItem(item.id)) {
       throw new Error('Ya tienes este artículo');
@@ -60,8 +61,8 @@ export const useShop = () => {
     }
   };
 
-  const hasItem = (itemId) =>
-    purchases.some((p) => p === itemId || p.startsWith(`${itemId}_`));
+  const hasItem = (itemId: string) =>
+    purchases.some((p) => p === itemId || (typeof p === 'string' && p.startsWith(`${itemId}_`)));
 
   return {
     coins,

@@ -2,12 +2,30 @@ import React from 'react';
 import { Icon } from '@/shared/components/Icon';
 import { useRouter } from 'next/navigation';
 
-export const ChallengeCard = ({ challenge, onComplete }) => {
+export interface ChallengeItem {
+  id: string;
+  status?: string;
+  progress?: number;
+  target?: number;
+  area?: string;
+  title?: string;
+  description?: string;
+  icon?: string;
+  xpReward?: number;
+  coinsReward?: number;
+  [key: string]: unknown;
+}
+
+export interface ChallengeCardProps {
+  challenge: ChallengeItem;
+  onComplete: (id: string) => void;
+}
+
+export const ChallengeCard = ({ challenge, onComplete }: ChallengeCardProps) => {
   const router = useRouter();
   const isCompleted = challenge.status === 'completed';
 
-  // Mapeo de áreas a rutas de práctica
-  const getRoute = (area) => {
+  const getRoute = (area: string) => {
     if (area === 'matematicas') return '/practica/matematicas';
     if (area === 'lectura-critica') return '/practica/lectura-critica';
     if (area === 'ciencias-naturales') return '/practica/ciencias-naturales';
@@ -30,7 +48,7 @@ export const ChallengeCard = ({ challenge, onComplete }) => {
     ) {
       onComplete(challenge.id);
     } else {
-      router.push(getRoute(challenge.area));
+      router.push(getRoute(challenge.area ?? 'examen-completo'));
     }
   };
 
@@ -46,7 +64,7 @@ export const ChallengeCard = ({ challenge, onComplete }) => {
       {!isCompleted && (
         <div
           className="absolute bottom-0 left-0 h-1 bg-cyan-500/50 transition-all duration-500"
-          style={{ width: `${(challenge.progress / challenge.target) * 100}%` }}
+          style={{ width: `${((challenge.progress ?? 0) / (challenge.target ?? 1)) * 100}%` }}
         />
       )}
 
@@ -59,7 +77,7 @@ export const ChallengeCard = ({ challenge, onComplete }) => {
               : 'bg-slate-700/50 text-cyan-400'
           }`}
         >
-          <Icon name={challenge.icon || 'bolt'} />
+          <Icon name={typeof challenge.icon === 'string' ? challenge.icon : 'bolt'} />
         </div>
 
         {/* Content */}
@@ -68,7 +86,7 @@ export const ChallengeCard = ({ challenge, onComplete }) => {
             <h3
               className={`truncate text-lg font-bold ${isCompleted ? 'text-slate-400 line-through' : 'text-white'}`}
             >
-              {challenge.title}
+              {String(challenge.title ?? '')}
             </h3>
             {isCompleted && (
               <span className="flex items-center gap-1 text-sm text-green-400">
@@ -79,7 +97,7 @@ export const ChallengeCard = ({ challenge, onComplete }) => {
           </div>
 
           <p className="mb-3 line-clamp-2 text-sm text-slate-400">
-            {challenge.description}
+            {String(challenge.description ?? '')}
           </p>
 
           {/* Rewards & Action */}
@@ -88,12 +106,12 @@ export const ChallengeCard = ({ challenge, onComplete }) => {
               <span
                 className={`flex items-center gap-1 ${isCompleted ? 'text-slate-500' : 'text-yellow-400'}`}
               >
-                <Icon name="bolt" /> +{challenge.xpReward} XP
+                <Icon name="bolt" /> +{challenge.xpReward ?? 0} XP
               </span>
               <span
                 className={`flex items-center gap-1 ${isCompleted ? 'text-slate-500' : 'text-amber-400'}`}
               >
-                <Icon name="coins" /> +{challenge.coinsReward}
+                <Icon name="coins" /> +{challenge.coinsReward ?? 0}
               </span>
             </div>
 

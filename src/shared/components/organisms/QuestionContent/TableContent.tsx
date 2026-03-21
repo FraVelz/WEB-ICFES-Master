@@ -18,13 +18,19 @@
  *   caption="Población de países latinoamericanos"
  * />
  */
-export const TableContent = ({ headers, rows, caption }) => {
+interface TableContentProps {
+  headers?: string[];
+  rows?: unknown[][];
+  caption?: string;
+}
+
+export const TableContent = ({ headers = [], rows = [], caption }: TableContentProps) => {
   return (
     <figure className="my-6 overflow-x-auto">
       <table className="w-full border-collapse text-sm">
         <thead>
           <tr className="border-b border-white/20 bg-linear-to-r from-cyan-500/20 to-blue-500/20">
-            {headers.map((header, idx) => (
+            {headers.map((header: string, idx: number) => (
               <th
                 key={idx}
                 className="border-r border-white/10 px-4 py-3 text-left font-semibold text-cyan-300 last:border-r-0"
@@ -42,12 +48,12 @@ export const TableContent = ({ headers, rows, caption }) => {
                 rowIdx % 2 === 0 ? 'bg-white/5' : 'bg-white/2'
               } transition-colors hover:bg-white/10`}
             >
-              {row.map((cell, cellIdx) => (
+              {row.map((cell: unknown, cellIdx: number) => (
                 <td
                   key={cellIdx}
                   className="border-r border-white/10 px-4 py-3 text-gray-200 last:border-r-0"
                 >
-                  {cell}
+                  {String(cell ?? '')}
                 </td>
               ))}
             </tr>

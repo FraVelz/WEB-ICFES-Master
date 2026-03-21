@@ -1,6 +1,6 @@
 import { Icon } from '@/shared/components/Icon';
 
-export const ProfileCard = ({ user }) => (
+export const ProfileCard = ({ user }: { user?: { profileImage?: string; username?: string; displayName?: string; bio?: string } }) => (
   <div className="rounded-2xl border border-cyan-500/20 bg-white/5 p-8 backdrop-blur-xl transition-all duration-300 hover:border-cyan-500/50 hover:shadow-lg hover:shadow-cyan-500/20">
     {/* Avatar Section */}
     <div className="relative mb-6">
@@ -11,9 +11,9 @@ export const ProfileCard = ({ user }) => (
             alt={user.username || user.displayName || 'Usuario'}
             className="h-full w-full object-cover"
             onError={(e) => {
-              e.target.style.display = 'none';
-              e.target.parentElement.innerHTML =
-                '<span className="text-6xl">👤</span>';
+              const el = e.target as HTMLImageElement;
+              el.style.display = 'none';
+              if (el.parentElement) el.parentElement.innerHTML = '<span class="text-6xl">👤</span>';
             }}
           />
         ) : (
@@ -41,7 +41,7 @@ export const ProfileCard = ({ user }) => (
   </div>
 );
 
-export const RankBadge = ({ rank }) => {
+export const RankBadge = ({ rank }: { rank?: { color?: string; icon?: React.ReactNode; name?: string; percentage?: number } }) => {
   if (!rank) return null;
 
   return (
@@ -57,7 +57,7 @@ export const RankBadge = ({ rank }) => {
   );
 };
 
-export const StatsCard = ({ userData }) => {
+export const StatsCard = ({ userData }: { userData?: { progress?: { percentage: number; totalAttempts: number; streakDays: number } } }) => {
   if (!userData?.progress) return null;
 
   return (
@@ -89,9 +89,9 @@ export const StatsCard = ({ userData }) => {
   );
 };
 
-export const RanksGrid = ({ allRanks, currentRank }) => (
+export const RanksGrid = ({ allRanks, currentRank }: { allRanks: Array<{ name: string; icon: string; minScore: number }>; currentRank?: { name: string } }) => (
   <div className="grid grid-cols-2 gap-4 md:grid-cols-3">
-    {allRanks.map((r, idx) => {
+    {allRanks.map((r: { name: string; icon: string; minScore: number }, idx: number) => {
       const isCurrentRank = currentRank && r.name === currentRank.name;
       return (
         <div

@@ -1,6 +1,12 @@
 import { Icon } from '@/shared/components/Icon';
+import type { PlanItem, UserPlanData } from '../types';
 
-export const PlanChangeAlert = ({ currentPlan, newPlan }) => {
+export interface PlanChangeAlertProps {
+  currentPlan: UserPlanData | null;
+  newPlan: PlanItem | null;
+}
+
+export const PlanChangeAlert = ({ currentPlan, newPlan }: PlanChangeAlertProps) => {
   const isFreeToPaid =
     currentPlan?.planType === 'free' && newPlan?.id !== 'free';
   const isPaidToFree =
@@ -9,21 +15,23 @@ export const PlanChangeAlert = ({ currentPlan, newPlan }) => {
     currentPlan?.planType !== 'free' && newPlan?.id !== 'free';
 
   // Convertir nextBillingDate correctamente
-  const getFormattedDate = (date) => {
+  const getFormattedDate = (date: Date | string | number | { toDate?: () => Date } | null | undefined): string | null => {
     if (!date) return null;
     try {
       // Si es un objeto de Firebase Timestamp
-      if (date.toDate && typeof date.toDate === 'function') {
-        return new Date(date.toDate()).toLocaleDateString('es-CO');
+      if (typeof date === 'object' && date !== null && 'toDate' in date && typeof (date as { toDate: () => Date }).toDate === 'function') {
+        return new Date((date as { toDate: () => Date }).toDate()).toLocaleDateString('es-CO');
       }
       // Si es un objeto Date
       if (date instanceof Date) {
         return date.toLocaleDateString('es-CO');
       }
       // Si es un string o número
-      const dateObj = new Date(date);
-      if (!isNaN(dateObj.getTime())) {
-        return dateObj.toLocaleDateString('es-CO');
+      if (typeof date === 'string' || typeof date === 'number') {
+        const dateObj = new Date(date);
+        if (!isNaN(dateObj.getTime())) {
+          return dateObj.toLocaleDateString('es-CO');
+        }
       }
       return null;
     } catch (err) {

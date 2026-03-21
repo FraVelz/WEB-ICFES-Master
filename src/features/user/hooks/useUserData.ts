@@ -16,11 +16,14 @@ import {
   getVirtualMoney,
 } from '@/shared/utils/userProfile';
 
+import type { MappedUser } from '@/services/supabase/UserSupabaseService';
+import type { UserProfile } from '@/shared/utils/userProfile';
+
 export function useUserData() {
   const { user } = useAuth();
-  const [userData, setUserData] = useState(null);
+  const [userData, setUserData] = useState<MappedUser | UserProfile | null>(null);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<string | null>(null);
 
   const loadUserData = useCallback(async () => {
     if (!user?.uid) {
@@ -49,7 +52,7 @@ export function useUserData() {
       }
       setError(null);
     } catch (err) {
-      setError(err?.message || 'Error cargando datos');
+      setError(err instanceof Error ? err.message : 'Error cargando datos');
       setUserData(null);
     } finally {
       setLoading(false);
@@ -61,7 +64,7 @@ export function useUserData() {
   }, [loadUserData]);
 
   const updateProfile = useCallback(
-    async (updates) => {
+    async (updates: Partial<UserProfile> | Record<string, unknown>) => {
       if (!user?.uid) return null;
       if (API_CONFIG.MODE === 'supabase') {
         const updated = await UserSupabaseService.updateProfile(
@@ -79,7 +82,7 @@ export function useUserData() {
   );
 
   const updateProfileUsername = useCallback(
-    async (username) => {
+    async (username: string) => {
       if (API_CONFIG.MODE === 'supabase') {
         return updateProfile({ username });
       }
@@ -91,7 +94,7 @@ export function useUserData() {
   );
 
   const updateBio = useCallback(
-    async (bio) => {
+    async (bio: string) => {
       if (API_CONFIG.MODE === 'supabase') {
         return updateProfile({ bio });
       }
@@ -103,13 +106,13 @@ export function useUserData() {
   );
 
   const updateProfileImage = useCallback(
-    async (file) => {
+    async (file: File | null) => {
       if (API_CONFIG.MODE === 'supabase') {
         const reader = new FileReader();
         return new Promise((resolve, reject) => {
           reader.onload = async () => {
             if (!file) return updateProfile({ profileImage: null });
-            const updated = await UserSupabaseService.updateProfile(user.uid, {
+            const updated = await UserSupabaseService.updateProfile(user!.uid, {
               profileImage: reader.result,
             });
             setUserData(updated);
@@ -127,7 +130,7 @@ export function useUserData() {
   );
 
   const addMoney = useCallback(
-    async (amount) => {
+    async (amount: number) => {
       if (!user?.uid) return 0;
       if (API_CONFIG.MODE === 'supabase') {
         await UserSupabaseService.updateVirtualMoney(user.uid, amount);
@@ -143,7 +146,7 @@ export function useUserData() {
   );
 
   const spendMoney = useCallback(
-    async (amount) => {
+    async (amount: number) => {
       if (!user?.uid) return 0;
       if (API_CONFIG.MODE === 'supabase') {
         const profile = await UserSupabaseService.getByUserId(user.uid);

@@ -4,28 +4,37 @@
  */
 import { getStoredExams } from '@/shared/utils/progressStorage';
 
+interface StoredExam {
+  id?: string;
+  [key: string]: unknown;
+}
+
 class ExamDataService {
-  async createExam(examData) {
+  async createExam(_examData: unknown) {
     return `exam_${Date.now()}`;
   }
 
-  async getExam(examId) {
+  async getExam(examId: string) {
     const exams = getStoredExams();
-    return exams.find((e) => e.id === examId) || null;
+    return (exams as StoredExam[]).find((e) => e.id === examId) || null;
   }
 
   async getAllExams() {
     return getStoredExams();
   }
 
-  async saveExamAnswers(userId, examId, answers) {}
-  async getUserExamAnswers(userId, examId) {
+  async saveExamAnswers(
+    _userId: string,
+    _examId: string,
+    _answers: unknown
+  ) {}
+  async getUserExamAnswers(_userId: string, _examId: string) {
     return null;
   }
-  async getUserExamHistory(userId) {
+  async getUserExamHistory(_userId: string) {
     return getStoredExams();
   }
-  calculateScore(answers) {
+  calculateScore(_answers: unknown) {
     return 0;
   }
 }

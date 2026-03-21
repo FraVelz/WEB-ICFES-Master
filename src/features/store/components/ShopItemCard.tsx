@@ -1,7 +1,16 @@
 import React from 'react';
 import { Icon } from '@/shared/components/Icon';
 
-export const ShopItemCard = ({ item, isPurchased, canAfford, onClick }) => {
+import type { ShopItem } from '../data/shopItems';
+
+export interface ShopItemCardProps {
+  item: ShopItem;
+  isPurchased: boolean;
+  canAfford: boolean;
+  onClick: () => void;
+}
+
+export const ShopItemCard = ({ item, isPurchased, canAfford, onClick }: ShopItemCardProps) => {
   return (
     <div
       onClick={onClick}

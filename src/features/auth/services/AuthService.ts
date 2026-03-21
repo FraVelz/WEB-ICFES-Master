@@ -3,11 +3,11 @@
  * Preparado para futura implementación de backend
  */
 class AuthService {
-  async verifyResetCode(code) {
+  async verifyResetCode(_code: string): Promise<boolean> {
     return true;
   }
 
-  async confirmReset(oobCode, password) {
+  async confirmReset(_oobCode: string, _password: string): Promise<boolean> {
     return true;
   }
 }

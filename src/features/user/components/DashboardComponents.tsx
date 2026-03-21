@@ -1,7 +1,7 @@
 import { Icon } from '@/shared/components/Icon';
 import Link from 'next/link';
 
-export const QuickStatCard = ({ stat, value, icon, color }) => (
+export const QuickStatCard = ({ stat, value, icon, color }: { stat: string; value: string | number; icon: string; color: string }) => (
   <div
     className={`bg-linear-to-br ${color} rounded-lg border border-slate-700/50 p-6 text-white shadow-lg transition-transform duration-300 hover:scale-105`}
   >
@@ -13,7 +13,7 @@ export const QuickStatCard = ({ stat, value, icon, color }) => (
   </div>
 );
 
-export const DailyGoalCard = ({ percentage, current, target }) => (
+export const DailyGoalCard = ({ percentage, current, target }: { percentage: number; current: number; target: number }) => (
   <div className="mb-8 rounded-xl border border-slate-700 bg-linear-to-r from-slate-800 to-slate-900 p-6">
     <div className="mb-4 flex items-center justify-between">
       <h3 className="flex items-center gap-2 text-2xl font-bold text-white">
@@ -36,7 +36,7 @@ export const DailyGoalCard = ({ percentage, current, target }) => (
   </div>
 );
 
-export const ProgressBar = ({ percentage, label, info }) => (
+export const ProgressBar = ({ percentage, label, info }: { percentage: number; label: string; info?: string }) => (
   <div className="mb-6 rounded-xl border border-slate-700 bg-linear-to-r from-slate-800 to-slate-900 p-6">
     <div className="mb-3 flex items-center justify-between">
       <div>
@@ -58,7 +58,15 @@ export const ProgressBar = ({ percentage, label, info }) => (
   </div>
 );
 
-export const NavigationCard = ({ card }) => (
+interface NavCard {
+  link: string;
+  badge?: string;
+  color?: string;
+  icon: string;
+  title: string;
+  description: string;
+}
+export const NavigationCard = ({ card }: { card: NavCard }) => (
   <Link
     href={card.link}
     className="group relative rounded-xl border border-slate-700 bg-slate-800/50 p-5 transition-all duration-300 hover:-translate-y-1 hover:border-slate-600 hover:shadow-lg"
@@ -88,7 +96,7 @@ export const NavigationCard = ({ card }) => (
   </Link>
 );
 
-export const RecommendedSessionItem = ({ session }) => (
+export const RecommendedSessionItem = ({ session }: { session: { area: string; nivel: string; tiempo: string; puntos: number } }) => (
   <div className="flex items-center justify-between rounded-lg bg-slate-700/50 p-4 transition-colors hover:bg-slate-700">
     <div>
       <p className="font-semibold text-white">{session.area}</p>

@@ -14,18 +14,24 @@
  *
  * Por ahora proporciona estructura básica para implementación futura
  */
+interface FormulaContentProps {
+  formula?: string;
+  inline?: boolean;
+  description?: string;
+}
+
 export const FormulaContent = ({
   formula,
   inline = false,
   description = '',
-}) => {
+}: FormulaContentProps) => {
   return (
     <div className="my-6 rounded-lg border border-purple-500/20 bg-linear-to-r from-purple-500/10 to-blue-500/10 p-4">
       <div className="text-center font-mono">
         <code
           className={`${inline ? 'text-sm' : 'block py-2 text-lg'} text-purple-300`}
         >
-          {inline ? `$${formula}$` : `$$${formula}$$`}
+          {inline ? `$${formula ?? ''}$` : `$$${formula ?? ''}$$`}
         </code>
       </div>
       {description && (

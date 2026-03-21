@@ -3,6 +3,25 @@
 import { Icon } from '@/shared/components/Icon';
 import { useRef, useState, useEffect } from 'react';
 
+export interface AreaIconConfig {
+  icon: string;
+  color: string;
+  label: string;
+}
+
+export interface LearningFiltersProps {
+  activeArea: string;
+  selectedTopics: string[];
+  searchTerm: string;
+  onAreaChange: (area: string) => void;
+  onTopicToggle: (topic: string) => void;
+  onSearchChange: (value: string) => void;
+  onClearFilters: () => void;
+  areaIcons: Record<string, AreaIconConfig>;
+  filteredTopics: string[];
+  allTopics?: string[];
+}
+
 export const LearningFilters = ({
   activeArea,
   selectedTopics,
@@ -13,15 +32,16 @@ export const LearningFilters = ({
   onClearFilters,
   areaIcons,
   filteredTopics,
-}) => {
-  const carouselRef = useRef(null);
+  allTopics = [],
+}: LearningFiltersProps) => {
+  const carouselRef = useRef<HTMLDivElement | null>(null);
   const [scrollProgress, setScrollProgress] = useState(0);
   const [showFilters, setShowFilters] = useState(() => window.innerWidth < 768);
   const [isAutoScrolling, setIsAutoScrolling] = useState(true);
-  const inactivityTimerRef = useRef(null);
-  const autoScrollIntervalRef = useRef(null);
+  const inactivityTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const autoScrollIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
-  const scroll = (direction) => {
+  const scroll = (direction: 'left' | 'right') => {
     if (carouselRef.current) {
       const scrollAmount = 300;
       carouselRef.current.scrollBy({
@@ -179,7 +199,7 @@ export const LearningFilters = ({
                   type="text"
                   placeholder="Escribe para buscar temas (ej: 'Derivadas', 'Células'...)"
                   value={searchTerm}
-                  onChange={(e) => onSearchChange(e.target.value)}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => onSearchChange(e.target.value)}
                   className="w-full rounded-xl border border-white/20 bg-white/10 px-4 py-3 text-white placeholder-gray-400 transition-all focus:border-cyan-500/50 focus:bg-white/15 focus:outline-none"
                 />
                 {searchTerm && (
