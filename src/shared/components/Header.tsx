@@ -10,6 +10,7 @@ export const Header = () => {
   const { user, rank, virtualMoney } = useUser();
   const [profileMenuOpen, setProfileMenuOpen] = useState(false);
   const [mobileOptionsMenuOpen, setMobileOptionsMenuOpen] = useState(false);
+  const [sidebarExpanded, setSidebarExpanded] = useState(false);
 
   const mainOptions = [
     { path: '/ruta-aprendizaje', label: 'Aprendizaje', icon: 'graduation-cap' },
@@ -26,20 +27,38 @@ export const Header = () => {
   return (
     <>
       {/* Header Desktop - Sidebar Izquierda */}
-      <header className="group sticky top-0 z-50 hidden h-screen w-20 flex-col border-r border-cyan-500/20 bg-slate-950/95 shadow-2xl shadow-cyan-500/10 backdrop-blur-xl transition-all duration-300 hover:w-72 lg:flex">
+      <header
+        className={`sticky top-0 z-50 hidden h-screen flex-col border-r border-cyan-500/20 bg-slate-950/95 shadow-2xl shadow-cyan-500/10 backdrop-blur-xl transition-all duration-300 lg:flex ${sidebarExpanded ? 'w-72' : 'w-20'}`}
+      >
         {/* 1. Logo & Brand */}
-        <div className="relative flex h-24 shrink-0 items-center justify-center border-b border-cyan-500/10">
+        <div
+          className={`relative flex shrink-0 flex-col items-center justify-center gap-0 border-b border-cyan-500/10 ${sidebarExpanded ? 'h-24' : 'h-auto py-4'}`}
+        >
+          {/* Logo - siempre visible */}
           <Link
             href="/"
-            className="absolute left-[18px] flex items-center gap-3 transition-all duration-300"
+            className={`flex shrink-0 items-center gap-3 transition-all duration-300 ${sidebarExpanded ? 'absolute left-[18px]' : 'justify-center'}`}
           >
-            <div className="z-10 flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-linear-to-br from-cyan-500 via-blue-500 to-purple-600 shadow-lg shadow-cyan-500/30">
+            <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-linear-to-br from-cyan-500 via-blue-500 to-purple-600 shadow-lg shadow-cyan-500/30">
               <Icon name="rocket" size="lg" className="text-white" />
             </div>
-            <span className="bg-linear-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text pl-2 text-xl font-bold whitespace-nowrap text-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+            <span
+              className={`bg-linear-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-xl font-bold whitespace-nowrap text-transparent transition-opacity duration-300 ${sidebarExpanded ? 'pl-2 opacity-100' : 'opacity-0 w-0 overflow-hidden'}`}
+            >
               ICFES Master
             </span>
           </Link>
+          {/* Botón toggle barra lateral - abajo cuando cerrado, a la derecha cuando expandido */}
+          <button
+            onClick={() => setSidebarExpanded(!sidebarExpanded)}
+            className={`flex h-8 w-8 shrink-0 cursor-pointer items-center justify-center rounded-lg text-slate-400 transition-colors hover:bg-white/10 hover:text-cyan-400 ${sidebarExpanded ? 'absolute right-2 top-1/2 -translate-y-1/2' : 'mt-3'}`}
+            aria-label={sidebarExpanded ? 'Cerrar barra lateral' : 'Abrir barra lateral'}
+          >
+            <Icon
+              name={sidebarExpanded ? 'chevron-left' : 'chevron-right'}
+              size="lg"
+            />
+          </button>
         </div>
 
         {/* 2. Navigation Links */}
@@ -58,7 +77,9 @@ export const Header = () => {
               <div className="flex w-6 shrink-0 justify-center">
                 <Icon name={option.icon} size="lg" />
               </div>
-              <span className="absolute left-14 font-medium whitespace-nowrap opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+              <span
+                className={`absolute left-14 font-medium whitespace-nowrap transition-opacity duration-300 ${sidebarExpanded ? 'opacity-100' : 'opacity-0'}`}
+              >
                 {option.label}
               </span>
 
@@ -83,7 +104,9 @@ export const Header = () => {
             <div className="flex w-6 shrink-0 justify-center">
               <Icon name="fire" size="lg" />
             </div>
-            <span className="absolute left-14 font-medium whitespace-nowrap opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+            <span
+              className={`absolute left-14 font-medium whitespace-nowrap transition-opacity duration-300 ${sidebarExpanded ? 'opacity-100' : 'opacity-0'}`}
+            >
               Desafíos
             </span>
           </Link>
@@ -93,10 +116,14 @@ export const Header = () => {
         <div className="border-t border-cyan-500/10 bg-slate-900/50 p-4">
           {/* Coins Display */}
           <div className="relative mb-4 flex h-10 items-center overflow-hidden rounded-lg border border-amber-500/20 bg-slate-800/50">
-            <div className="absolute left-0 flex w-full shrink-0 justify-center transition-all duration-300 group-hover:-left-full">
+            <div
+              className={`absolute left-0 flex w-full shrink-0 justify-center transition-all duration-300 ${sidebarExpanded ? '-left-full' : ''}`}
+            >
               <Icon name="coins" className="text-amber-400" />
             </div>
-            <div className="flex w-full items-center gap-3 px-3 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+            <div
+              className={`flex w-full items-center gap-3 px-3 transition-opacity duration-300 ${sidebarExpanded ? 'opacity-100' : 'opacity-0'}`}
+            >
               <Icon name="coins" className="text-amber-400" />
               <span className="font-bold whitespace-nowrap text-amber-400">
                 {virtualMoney}
@@ -126,7 +153,9 @@ export const Header = () => {
                 </div>
               )}
             </div>
-            <div className="absolute left-16 overflow-hidden whitespace-nowrap opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+            <div
+              className={`absolute left-16 overflow-hidden whitespace-nowrap transition-opacity duration-300 ${sidebarExpanded ? 'opacity-100' : 'opacity-0'}`}
+            >
               <p className="max-w-[140px] truncate text-sm font-bold text-white">
                 {user?.username || 'Usuario'}
               </p>
