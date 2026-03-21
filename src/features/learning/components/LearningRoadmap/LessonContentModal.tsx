@@ -9,16 +9,9 @@ import { useGSAPModalEntrance } from '@/hooks/useGSAPModalEntrance';
 import {
   splitLessonContent,
   extractSectionTitle,
+  stripFirstHeadingIfDuplicate,
 } from '../../utils/splitLessonContent';
 import { AREA_INFO } from '@/shared/constants';
-
-const MASCOT_BY_AREA: Record<string, string> = {
-  'lectura-critica': '/avatars/saludando.webp',
-  matematicas: '/avatars/saludando.webp',
-  'ciencias-naturales': '/avatars/saludando.webp',
-  'sociales-ciudadanas': '/avatars/saludando.webp',
-  ingles: '/avatars/saludando.webp',
-};
 
 const getAreaColor = (areaId: string) => {
   const info = AREA_INFO[areaId] || AREA_INFO['lectura-critica'];
@@ -99,9 +92,19 @@ export const LessonContentModal = ({
 
   if (!isOpen || !lesson) return null;
 
-  const mascotSrc = MASCOT_BY_AREA[areaId] || '/avatars/saludando.webp';
+  const mascotSrc = isExamStep
+    ? '/avatars/celebrando-2.webp'
+    : '/avatars/logo.webp';
   const gradientClass = getAreaColor(areaId);
   const bubbleBorder = getBubbleBorderColor(areaId);
+
+  const contentToRender =
+    sections.length > 0 && !isExamStep
+      ? stripFirstHeadingIfDuplicate(
+          sections[currentSection],
+          mascotDialogue
+        )
+      : sections[currentSection] || '';
 
   return (
     <div
@@ -297,7 +300,7 @@ export const LessonContentModal = ({
                   ),
                 }}
               >
-                {sections[currentSection] ||
+                {contentToRender ||
                   '_No hay contenido disponible para esta lección._'}
               </ReactMarkdown>
             </div>
