@@ -42,11 +42,15 @@ export const OnboardingQuiz = ({
     currentQuestionIndex
   ];
   const isMultiple = currentQuestion?.type === 'multiple';
-  const rawAnswer = currentQuestion ? answers[String(currentQuestion.id)] : undefined;
+  const rawAnswer = currentQuestion
+    ? answers[String(currentQuestion.id)]
+    : undefined;
   const currentAnswer: string | string[] =
     typeof rawAnswer === 'string' || Array.isArray(rawAnswer)
       ? rawAnswer
-      : (isMultiple ? [] : '');
+      : isMultiple
+        ? []
+        : '';
   const progress =
     ((currentQuestionIndex + 1) / ONBOARDING_QUESTIONS.length) * 100;
 
@@ -131,7 +135,7 @@ export const OnboardingQuiz = ({
         </div>
 
         {/* Main Content */}
-        <main className="flex flex-1 flex-col items-center justify-center px-6 py-8">
+        <div className="flex flex-1 flex-col items-center justify-center px-6 py-8">
           {/* Avatar */}
           <MascotaCircle
             src={avatarSrc}
@@ -147,10 +151,10 @@ export const OnboardingQuiz = ({
             </h2>
             <p className="text-sm text-slate-300">{currentIntro.description}</p>
           </div>
-        </main>
+        </div>
 
         {/* Bottom Section - Button */}
-        <footer className="mx-auto w-full max-w-md px-6 pb-8">
+        <div className="mx-auto w-full max-w-md px-6 pb-8">
           <button
             onClick={handleIntroNext}
             className="flex w-full cursor-pointer items-center justify-center gap-2 rounded-lg bg-linear-to-r from-cyan-500 to-blue-600 px-6 py-4 text-lg font-bold text-white transition-all duration-300 hover:shadow-lg hover:shadow-cyan-500/50"
@@ -158,7 +162,7 @@ export const OnboardingQuiz = ({
             <span>Continuar</span>
             <Icon name="arrow-right" />
           </button>
-        </footer>
+        </div>
       </OnboardingLayout>
     );
   }
@@ -166,7 +170,7 @@ export const OnboardingQuiz = ({
   if (stage === 'completed') {
     return (
       <OnboardingLayout className="items-center justify-center">
-        <main className="mx-auto flex w-full max-w-md flex-1 flex-col items-center justify-center space-y-8 px-6 py-12 text-center">
+        <div className="mx-auto flex w-full max-w-md flex-1 flex-col items-center justify-center space-y-8 px-6 py-12 text-center">
           <div className="mx-auto inline-flex h-24 w-24 items-center justify-center rounded-full bg-linear-to-r from-green-500 to-emerald-600 shadow-lg shadow-green-500/30">
             <Icon name="check-circle" className="text-5xl" />
           </div>
@@ -189,7 +193,7 @@ export const OnboardingQuiz = ({
             <Icon name="arrow-right" />
             Ir al Registro
           </button>
-        </main>
+        </div>
       </OnboardingLayout>
     );
   }
@@ -197,7 +201,7 @@ export const OnboardingQuiz = ({
   return (
     <OnboardingLayout>
       {/* Header & Progress - Sticky Top */}
-      <header className="sticky top-0 z-30 border-b border-slate-800 bg-slate-950/95 shadow-lg backdrop-blur-md">
+      <div className="sticky top-0 z-30 border-b border-slate-800 bg-slate-950/95 shadow-lg backdrop-blur-md">
         <div className="flex h-16 items-center justify-between px-6">
           <button
             onClick={handleQuizBack}
@@ -226,10 +230,10 @@ export const OnboardingQuiz = ({
             ></div>
           </div>
         </div>
-      </header>
+      </div>
 
       {/* Main Content - Scrollable Area */}
-      <main className="mx-auto flex w-full max-w-4xl flex-1 flex-col gap-8 px-4 py-8">
+      <div className="mx-auto flex w-full max-w-4xl flex-1 flex-col gap-8 px-4 py-8">
         {/* Question + Avatar */}
         <div className="flex flex-col items-center gap-6 sm:flex-row sm:items-start">
           <div className="shrink-0">
@@ -256,7 +260,10 @@ export const OnboardingQuiz = ({
               className={`group flex w-full cursor-pointer items-center gap-4 rounded-xl border-2 p-4 text-left font-semibold transition-all duration-200 ${
                 (
                   isMultiple
-                    ? (Array.isArray(currentAnswer) ? currentAnswer : []).includes(option.value)
+                    ? (Array.isArray(currentAnswer)
+                        ? currentAnswer
+                        : []
+                      ).includes(option.value)
                     : currentAnswer === option.value
                 )
                   ? 'border-cyan-500 bg-cyan-500/20 text-white shadow-lg shadow-cyan-500/10'
@@ -267,7 +274,10 @@ export const OnboardingQuiz = ({
                 className={`flex h-6 w-6 shrink-0 items-center justify-center rounded border-2 transition-all ${
                   (
                     isMultiple
-                      ? (Array.isArray(currentAnswer) ? currentAnswer : []).includes(option.value)
+                      ? (Array.isArray(currentAnswer)
+                          ? currentAnswer
+                          : []
+                        ).includes(option.value)
                       : currentAnswer === option.value
                   )
                     ? 'scale-110 border-cyan-500 bg-cyan-500'
@@ -275,7 +285,10 @@ export const OnboardingQuiz = ({
                 }`}
               >
                 {(isMultiple
-                  ? (Array.isArray(currentAnswer) ? currentAnswer : []).includes(option.value)
+                  ? (Array.isArray(currentAnswer)
+                      ? currentAnswer
+                      : []
+                    ).includes(option.value)
                   : currentAnswer === option.value) && (
                   <span className="text-sm font-bold text-white">✓</span>
                 )}
@@ -284,10 +297,10 @@ export const OnboardingQuiz = ({
             </button>
           ))}
         </div>
-      </main>
+      </div>
 
       {/* Footer Actions */}
-      <footer className="z-20 mx-auto w-full max-w-4xl p-6 pt-2">
+      <div className="z-20 mx-auto w-full max-w-4xl p-6 pt-2">
         <button
           onClick={handleNext}
           disabled={!canProceed}
@@ -305,7 +318,7 @@ export const OnboardingQuiz = ({
             </>
           )}
         </button>
-      </footer>
+      </div>
     </OnboardingLayout>
   );
 };

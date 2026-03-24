@@ -5,10 +5,8 @@ import { AnimatedReveal } from '@/shared/components/AnimatedReveal';
 import { RefObject } from 'react';
 
 export const AreasSection = ({
-  isInitialLoad,
   areasSection,
 }: {
-  isInitialLoad: boolean;
   areasSection: { elementRef: RefObject<null>; isVisible: boolean };
 }) => {
   return (
@@ -18,7 +16,6 @@ export const AreasSection = ({
     >
       <AnimatedReveal
         isVisible={areasSection.isVisible}
-        isInitialLoad={isInitialLoad}
         delay={0.8}
         className="mb-16 text-center"
       >
@@ -37,7 +34,6 @@ export const AreasSection = ({
           <AnimatedReveal
             key={area.id}
             isVisible={areasSection.isVisible}
-            isInitialLoad={isInitialLoad}
             delay={0.9 + idx * 0.15}
           >
             <Link

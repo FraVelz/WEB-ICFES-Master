@@ -1,4 +1,5 @@
 'use client';
+
 import { MascotaCircle } from '@/shared/components/MascotaCircle';
 
 export const HomePageMobile = () => {

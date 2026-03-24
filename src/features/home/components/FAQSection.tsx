@@ -5,12 +5,10 @@ import { AnimatedReveal } from '@/shared/components/AnimatedReveal';
 import { RefObject } from 'react';
 
 export const FAQSection = ({
-  isInitialLoad,
   faqSection,
   expandedFaq,
   setExpandedFaq,
 }: {
-  isInitialLoad: boolean;
   faqSection: {
     elementRef: RefObject<null>;
     isVisible: boolean;
@@ -25,7 +23,6 @@ export const FAQSection = ({
     >
       <AnimatedReveal
         isVisible={faqSection.isVisible}
-        isInitialLoad={isInitialLoad}
         className="mb-16 text-center"
       >
         <h2 className="mb-4 text-4xl font-bold md:text-5xl">
@@ -38,7 +35,6 @@ export const FAQSection = ({
           <AnimatedReveal
             key={idx}
             isVisible={faqSection.isVisible}
-            isInitialLoad={isInitialLoad}
             delay={idx * 0.12}
             className="overflow-hidden rounded-lg border border-slate-700 bg-slate-800"
           >

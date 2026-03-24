@@ -5,10 +5,8 @@ import { AnimatedReveal } from '@/shared/components/AnimatedReveal';
 import { RefObject } from 'react';
 
 export const FeaturesSection = ({
-  isInitialLoad,
   whyChooseSection,
 }: {
-  isInitialLoad: boolean;
   whyChooseSection: {
     elementRef: RefObject<null>;
     isVisible: boolean;
@@ -21,7 +19,6 @@ export const FeaturesSection = ({
     >
       <AnimatedReveal
         isVisible={whyChooseSection.isVisible}
-        isInitialLoad={isInitialLoad}
         className="mb-16 text-center"
       >
         <h2 className="mb-4 text-4xl font-bold md:text-5xl">
@@ -37,7 +34,6 @@ export const FeaturesSection = ({
           <AnimatedReveal
             key={idx}
             isVisible={whyChooseSection.isVisible}
-            isInitialLoad={isInitialLoad}
             delay={idx * 0.12}
             className={`bg-linear-to-br ${feature.color} group rounded-xl border border-slate-700 p-8 transition-all duration-300 hover:scale-105 hover:border-slate-500 hover:shadow-lg`}
           >

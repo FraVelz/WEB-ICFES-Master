@@ -1,6 +1,5 @@
 /**
- * Hook para animaciones de revelado con GSAP
- * Reemplaza getAnimationStyle para animaciones al hacer scroll o en carga inicial
+ * Hook para animaciones de revelado con GSAP cuando el elemento es visible (p. ej. IntersectionObserver)
  */
 import { useRef, useEffect } from 'react';
 import { gsap } from '@/lib/gsap';
@@ -14,7 +13,6 @@ interface UseGSAPRevealOptions {
 
 export const useGSAPReveal = (
   isVisible: boolean,
-  isInitialLoad: boolean,
   options: UseGSAPRevealOptions = {}
 ) => {
   const ref = useRef<HTMLDivElement>(null);
@@ -24,9 +22,7 @@ export const useGSAPReveal = (
     const el = ref.current;
     if (!el) return;
 
-    const shouldAnimate = isVisible || isInitialLoad;
-
-    if (shouldAnimate) {
+    if (isVisible) {
       gsap.fromTo(
         el,
         { opacity: 0, y },
@@ -42,7 +38,7 @@ export const useGSAPReveal = (
     } else {
       gsap.set(el, { opacity: 0, y });
     }
-  }, [isVisible, isInitialLoad, delay, duration, y, ease]);
+  }, [isVisible, delay, duration, y, ease]);
 
   return ref;
 };
