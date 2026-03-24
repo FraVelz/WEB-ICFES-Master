@@ -37,12 +37,10 @@ const GLOW_EFFECTS = [
 ];
 
 const HomePageDesktopComponent = ({
-  isInitialLoad,
   expandedFaq,
   setExpandedFaq,
   onDemoAccess,
 }: {
-  isInitialLoad: boolean;
   expandedFaq: number | null;
   setExpandedFaq: React.Dispatch<React.SetStateAction<number | null>>;
   onDemoAccess: () => void;
@@ -76,42 +74,29 @@ const HomePageDesktopComponent = ({
       <div className="relative z-10 w-full">
         {/* Hero Section */}
         <section className="relative overflow-hidden py-0">
-          <HeroSection
-            isInitialLoad={isInitialLoad}
-            onDemoAccess={onDemoAccess}
-          />
+          <HeroSection onDemoAccess={onDemoAccess} />
         </section>
 
         {/* Areas Section with visual separator */}
         <section className="relative overflow-hidden py-8 md:py-12">
           <div className="absolute top-0 right-0 left-0 h-1 bg-linear-to-r from-transparent via-blue-500/50 to-transparent" />
-          <AreasSection
-            isInitialLoad={isInitialLoad}
-            areasSection={areasSection}
-          />
+          <AreasSection areasSection={areasSection} />
         </section>
 
         {/* Features Section */}
         <section className="relative overflow-hidden py-12 md:py-16">
-          <FeaturesSection
-            isInitialLoad={isInitialLoad}
-            whyChooseSection={whyChooseSection}
-          />
+          <FeaturesSection whyChooseSection={whyChooseSection} />
         </section>
 
         {/* Testimonials Section with visual separator */}
         <section className="relative overflow-hidden py-12 md:py-16">
           <div className="absolute top-0 right-0 left-0 h-1 bg-linear-to-r from-transparent via-purple-500/50 to-transparent" />
-          <TestimonialsSection
-            isInitialLoad={isInitialLoad}
-            testimonialSection={testimonialSection}
-          />
+          <TestimonialsSection testimonialSection={testimonialSection} />
         </section>
 
         {/* FAQ Section */}
         <section className="relative overflow-hidden py-12 md:py-16">
           <FAQSection
-            isInitialLoad={isInitialLoad}
             faqSection={faqSection}
             expandedFaq={expandedFaq}
             setExpandedFaq={setExpandedFaq}

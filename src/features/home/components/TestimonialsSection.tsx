@@ -5,10 +5,8 @@ import { AnimatedReveal } from '@/shared/components/AnimatedReveal';
 import { RefObject } from 'react';
 
 export const TestimonialsSection = ({
-  isInitialLoad,
   testimonialSection,
 }: {
-  isInitialLoad: boolean;
   testimonialSection: {
     elementRef: RefObject<null>;
     isVisible: boolean;
@@ -21,7 +19,6 @@ export const TestimonialsSection = ({
     >
       <AnimatedReveal
         isVisible={testimonialSection.isVisible}
-        isInitialLoad={isInitialLoad}
         className="mb-16 text-center"
       >
         <h2 className="mb-4 text-4xl font-bold md:text-5xl">
@@ -37,7 +34,6 @@ export const TestimonialsSection = ({
           <AnimatedReveal
             key={idx}
             isVisible={testimonialSection.isVisible}
-            isInitialLoad={isInitialLoad}
             delay={idx * 0.15}
             className="rounded-lg border border-slate-700 bg-slate-800/50 p-6 transition-all duration-300 hover:border-slate-600 hover:shadow-lg"
           >

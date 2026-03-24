@@ -5,10 +5,8 @@ import { Icon } from '@/shared/components/Icon';
 import { AnimatedReveal } from '@/shared/components/AnimatedReveal';
 
 export const HeroSection = ({
-  isInitialLoad,
   onDemoAccess,
 }: {
-  isInitialLoad: boolean;
   onDemoAccess: () => void;
 }) => {
   const handleDemoClick = () => {
@@ -27,8 +25,7 @@ export const HeroSection = ({
       <div className="mx-auto max-w-6xl space-y-8 text-center">
         {/* Badge */}
         <AnimatedReveal
-          isVisible={true}
-          isInitialLoad={isInitialLoad}
+          isVisible
           delay={0}
           className="inline-flex items-center gap-2 rounded-full border border-cyan-500/50 bg-cyan-500/20 px-4 py-2"
         >
@@ -39,14 +36,14 @@ export const HeroSection = ({
         </AnimatedReveal>
 
         {/* Main Title */}
-        <AnimatedReveal isVisible isInitialLoad={isInitialLoad} delay={0.15}>
+        <AnimatedReveal isVisible delay={0.15}>
           <h1 className="mb-6 bg-linear-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-5xl leading-tight font-black text-transparent md:text-7xl lg:text-8xl">
             Domina el ICFES desde Cero
           </h1>
         </AnimatedReveal>
 
         {/* Subtitle */}
-        <AnimatedReveal isVisible isInitialLoad={isInitialLoad} delay={0.3}>
+        <AnimatedReveal isVisible delay={0.3}>
           <p className="mx-auto max-w-3xl text-lg leading-relaxed text-slate-300 md:text-xl">
             La plataforma #1 con{' '}
             <span className="font-bold text-cyan-400">+500 preguntas</span>,
@@ -58,7 +55,6 @@ export const HeroSection = ({
         {/* CTA Buttons */}
         <AnimatedReveal
           isVisible
-          isInitialLoad={isInitialLoad}
           delay={0.45}
           className="flex flex-col justify-center gap-4 pt-4 md:flex-row"
         >
@@ -81,7 +77,6 @@ export const HeroSection = ({
         {/* Stats */}
         <AnimatedReveal
           isVisible
-          isInitialLoad={isInitialLoad}
           delay={0.6}
           className="mx-auto grid max-w-2xl grid-cols-3 gap-4 pt-8"
         >
