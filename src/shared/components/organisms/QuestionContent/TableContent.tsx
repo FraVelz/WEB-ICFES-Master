@@ -1,22 +1,7 @@
 /**
- * TableContent - Componente para mostrar tablas en las preguntas
+ * TableContent — markdown-style tables in questions
  *
- * Estructura de datos:
- * {
- *   headers: ["Encabezado 1", "Encabezado 2"],
- *   rows: [
- *     ["Celda 1", "Celda 2"],
- *     ["Celda 3", "Celda 4"]
- *   ],
- *   caption: "Pie de tabla (opcional)"
- * }
- *
- * Uso:
- * <TableContent
- *   headers={["País", "Población"]}
- *   rows={[["Colombia", "50M"], ["México", "128M"]]}
- *   caption="Población de países latinoamericanos"
- * />
+ * Shape: { headers, rows, caption? }
  */
 import { cn } from '@/utils/cn';
 

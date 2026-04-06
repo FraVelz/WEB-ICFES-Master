@@ -1,6 +1,4 @@
-/**
- * Hook para animaciones de entrada de modales con GSAP
- */
+/** GSAP entrance presets for modals */
 import { useRef, useEffect } from 'react';
 import { gsap } from '@/lib/gsap';
 

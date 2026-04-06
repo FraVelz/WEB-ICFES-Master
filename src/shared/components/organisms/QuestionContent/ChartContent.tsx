@@ -1,32 +1,17 @@
 /**
- * ChartContent - Componente para mostrar gráficas/gráficos en preguntas
+ * ChartContent — simple charts for question bodies
  *
- * Tipos soportados: "bar", "line", "pie"
+ * Supported kinds: "bar", "line", "pie"
  *
- * Estructura de datos:
+ * Data shape:
  * {
  *   type: "bar",
  *   labels: ["2020", "2021", "2022"],
- *   datasets: [
- *     {
- *       label: "Ventas",
- *       data: [100, 150, 200],
- *       color: "bg-cyan-500"
- *     }
- *   ],
- *   title: "Título del gráfico"
+ *   datasets: [{ label: "Sales", data: [100, 150, 200], color: "bg-cyan-500" }],
+ *   title: "Chart title"
  * }
  *
- * Uso:
- * <ChartContent
- *   type="bar"
- *   labels={["Q1", "Q2", "Q3"]}
- *   datasets={[{ label: "Ingresos", data: [1000, 1500, 2000] }]}
- *   title="Ingresos por trimestre"
- * />
- *
- * Nota: Esta es una versión simplificada. Para gráficas complejas
- * se recomienda instalar: npm install chart.js react-chartjs-2
+ * For richer charts, consider chart.js + react-chartjs-2.
  */
 interface ChartDataset {
   label?: string;
@@ -43,7 +28,7 @@ interface ChartContentProps {
 }
 
 export const ChartContent = ({ type = 'bar', labels, datasets, title, description = '' }: ChartContentProps) => {
-  // Versión simplificada con barras ASCII/visual
+  // Lightweight ASCII-style bars
   const renderSimpleBar = () => {
     const ds = datasets ?? [];
     const lb = labels ?? [];

@@ -1,7 +1,4 @@
-/**
- * Servicio de clasificación - Versión local (no-op)
- * Preparado para futura implementación de backend
- */
+/** Leaderboard — local no-op until backend exists */
 export const checkAndProcessWeeklyUpdate = async () => {
   return false;
 };

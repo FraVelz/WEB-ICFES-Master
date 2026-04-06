@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { Icon } from '@/shared/components/Icon';
 import { cn } from '@/utils/cn';
 
-// Mapeo de colores para bordes y sombras para asegurar que Tailwind los detecte
+// Explicit border/shadow tokens so Tailwind includes them in the build
 const BORDER_COLORS = {
   blue: 'border-blue-500/50',
   green: 'border-green-500/50',
@@ -49,12 +49,12 @@ export const PathNode = ({
   const isAvailable = status === 'available';
   const isCompleted = status === 'completed';
 
-  // Extraer el nombre del color (ej: 'blue' de 'bg-blue-500')
+  // Parse color name from utility (e.g. 'blue' from 'bg-blue-500')
   const colorName = (colorClass.split('-')[1] || 'slate') as keyof typeof BORDER_COLORS;
   const borderColor = (BORDER_COLORS as Record<string, string>)[colorName] ?? BORDER_COLORS.slate;
   const shadowColor = (SHADOW_COLORS as Record<string, string>)[colorName] ?? SHADOW_COLORS.slate;
 
-  // Configuración de estilos base
+  // Base style tokens by status
   const getStyles = () => {
     if (status === 'incomplete') {
       return {
@@ -90,7 +90,7 @@ export const PathNode = ({
         isCompleted && 'border-yellow-500/30 bg-slate-900/50 hover:bg-slate-900'
       )}
     >
-      {/* Indicador de Estado (Círculo Izquierdo) */}
+      {/* Status indicator (left circle) */}
       <div
         className={cn(
           'relative flex shrink-0 items-center justify-center rounded-full border-b-4 transition-transform group-hover:scale-105',
@@ -104,7 +104,7 @@ export const PathNode = ({
         {isAvailable && <div className={cn('absolute inset-0 animate-ping rounded-full opacity-20', colorClass)} />}
       </div>
 
-      {/* Contenido de Texto */}
+      {/* Text content */}
       <div className="min-w-0 flex-1">
         <h4
           className={cn(
@@ -127,7 +127,7 @@ export const PathNode = ({
         )}
       </div>
 
-      {/* Botón de Acción (Solo visible si disponible o completado) */}
+      {/* Action button (available or completed) */}
       {(isAvailable || isCompleted) && (
         <div
           className={cn(

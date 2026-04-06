@@ -1,6 +1,4 @@
-/**
- * Hook para animaciones de revelado con GSAP cuando el elemento es visible (p. ej. IntersectionObserver)
- */
+/** GSAP reveal when element becomes visible (e.g. with IntersectionObserver) */
 import { useRef, useEffect } from 'react';
 import { gsap } from '@/lib/gsap';
 

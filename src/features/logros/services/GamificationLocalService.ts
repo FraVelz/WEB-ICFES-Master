@@ -1,6 +1,4 @@
-/**
- * Servicio de gamificación - Versión local (localStorage)
- */
+/** Gamification — localStorage implementation */
 import { addVirtualMoney, removeVirtualMoney, getVirtualMoney } from '@/shared/utils/userProfile';
 import { calculateLevel } from '../utils/gamificationUtils';
 

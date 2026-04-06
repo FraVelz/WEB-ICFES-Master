@@ -1,5 +1,5 @@
-// Este archivo ahora importa desde los módulos individuales de cada categoría
-// para mantener una estructura limpia y organizada
+// This file imports from per-category modules
+// to keep a clean, organized structure
 
 export {
   FIRST_STEPS_BADGES,

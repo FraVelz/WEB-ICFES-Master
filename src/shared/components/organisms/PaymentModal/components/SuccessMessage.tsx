@@ -11,7 +11,7 @@ export interface SuccessMessageProps {
 export const SuccessMessage = ({ plan, onClose, currentPlan }: SuccessMessageProps) => {
   const isFree = plan?.price === 'Gratis';
   const isPro = plan?.id === 'pro';
-  // Si ya tiene un plan activo y es diferente, el nuevo plan está en espera
+  // Active plan differs: new purchase is scheduled for next billing
   const isWaitingActivation = currentPlan && currentPlan.status === 'active' && currentPlan.planType !== plan?.id;
 
   return (

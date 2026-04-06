@@ -1,11 +1,6 @@
 import { cn } from '@/utils/cn';
 
-/**
- * TextContent - Componente para mostrar texto en las preguntas
- *
- * Uso:
- * <TextContent text="Este es el texto de la pregunta" />
- */
+/** Plain paragraph block for question stems */
 interface TextContentProps {
   text?: string;
   className?: string;

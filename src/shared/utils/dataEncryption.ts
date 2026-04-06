@@ -1,28 +1,28 @@
 /**
- * Sistema de cifrado para datos del usuario
- * Usa una clave derivada de contraseña para cifrar/descifrar datos
+ * Encryption helpers for user-owned data
+ * Uses a password-derived key to encrypt/decrypt payloads
  */
 
 /**
- * Genera una clave criptográfica a partir de una contraseña
- * @param {string} password - Contraseña del usuario
- * @returns {Promise<CryptoKey>} - Clave criptográfica
+ * Derives a cryptographic key from a password
+ * @param {string} password - User password
+ * @returns {Promise<CryptoKey>} - CryptoKey for AES-GCM
  */
 export const generateKey = async (password: string) => {
   const encoder = new TextEncoder();
   const data = encoder.encode(password);
 
-  // Crear una clave a partir de la contraseña
+  // Import raw password bytes as key material
   const keyMaterial = await window.crypto.subtle.importKey('raw', data, { name: 'PBKDF2' }, false, [
     'deriveBits',
     'deriveKey',
   ]);
 
-  // Derivar una clave segura de la contraseña
+  // Derive a strong key from the password
   return await window.crypto.subtle.deriveKey(
     {
       name: 'PBKDF2',
-      salt: new Uint8Array(16), // Salt fijo para consistencia
+      salt: new Uint8Array(16), // Fixed salt for consistency
       iterations: 100000,
       hash: 'SHA-256',
     },
@@ -34,24 +34,24 @@ export const generateKey = async (password: string) => {
 };
 
 /**
- * Cifra datos JSON con AES-GCM
- * @param {object} data - Datos a cifrar
- * @param {string} password - Contraseña para cifrado
- * @returns {Promise<string>} - Datos cifrados en base64
+ * Encrypt JSON with AES-GCM
+ * @param {object} data - Payload to encrypt
+ * @param {string} password - Encryption password
+ * @returns {Promise<string>} - Base64 ciphertext (IV + ciphertext)
  */
 export const encryptData = async (data: unknown, password: string) => {
   try {
     const key = await generateKey(password);
 
-    // Convertir datos a JSON
+    // Serialize to JSON
     const jsonString = JSON.stringify(data);
     const encoder = new TextEncoder();
     const encodedData = encoder.encode(jsonString);
 
-    // Generar IV (vector de inicialización) aleatorio
+    // Random IV (initialization vector)
     const iv = window.crypto.getRandomValues(new Uint8Array(12));
 
-    // Cifrar los datos
+    // Encrypt payload
     const encryptedData = await window.crypto.subtle.encrypt(
       {
         name: 'AES-GCM',
@@ -61,12 +61,12 @@ export const encryptData = async (data: unknown, password: string) => {
       encodedData
     );
 
-    // Combinar IV + datos cifrados
+    // Concatenate IV + ciphertext
     const combined = new Uint8Array(iv.length + encryptedData.byteLength);
     combined.set(iv);
     combined.set(new Uint8Array(encryptedData), iv.length);
 
-    // Convertir a base64 para almacenar
+    // Base64 for storage
     return btoa(String.fromCharCode(...combined));
   } catch (error) {
     throw new Error(`Error al cifrar datos: ${error instanceof Error ? error.message : String(error)}`);
@@ -74,27 +74,27 @@ export const encryptData = async (data: unknown, password: string) => {
 };
 
 /**
- * Descifra datos JSON cifrados con AES-GCM
- * @param {string} encryptedBase64 - Datos cifrados en base64
- * @param {string} password - Contraseña para descifrado
- * @returns {Promise<object>} - Datos descifrados
+ * Decrypt AES-GCM JSON payload
+ * @param {string} encryptedBase64 - Base64 ciphertext
+ * @param {string} password - Decryption password
+ * @returns {Promise<object>} - Parsed JSON
  */
 export const decryptData = async (encryptedBase64: string, password: string) => {
   try {
     const key = await generateKey(password);
 
-    // Convertir de base64 a bytes
+    // Base64 → bytes
     const binaryString = atob(encryptedBase64);
     const bytes = new Uint8Array(binaryString.length);
     for (let i = 0; i < binaryString.length; i++) {
       bytes[i] = binaryString.charCodeAt(i);
     }
 
-    // Extraer IV (primeros 12 bytes)
+    // IV = first 12 bytes
     const iv = bytes.slice(0, 12);
     const encryptedData = bytes.slice(12);
 
-    // Descifrar
+    // Decrypt
     const decryptedData = await window.crypto.subtle.decrypt(
       {
         name: 'AES-GCM',
@@ -104,7 +104,7 @@ export const decryptData = async (encryptedBase64: string, password: string) => 
       encryptedData
     );
 
-    // Convertir a string y parsear JSON
+    // UTF-8 decode and parse JSON
     const decoder = new TextDecoder();
     const jsonString = decoder.decode(decryptedData);
     return JSON.parse(jsonString);
@@ -116,25 +116,25 @@ export const decryptData = async (encryptedBase64: string, password: string) => 
 };
 
 /**
- * Crea un hash simple para validar integridad (no es criptográfico)
- * @param {string} data - Datos a hashear
- * @returns {string} - Hash en hexadecimal
+ * Simple integrity hash (not a standalone security primitive)
+ * @param {string} data - Payload to hash
+ * @returns {string} - Hex digest
  */
 export const createChecksum = async (data: unknown) => {
   const encoder = new TextEncoder();
   const encodedData = encoder.encode(JSON.stringify(data));
   const hashBuffer = await window.crypto.subtle.digest('SHA-256', encodedData);
 
-  // Convertir a hexadecimal
+  // Hex encode
   const hashArray = Array.from(new Uint8Array(hashBuffer));
   return hashArray.map((b) => b.toString(16).padStart(2, '0')).join('');
 };
 
 /**
- * Valida que los datos no fueron modificados
- * @param {object} data - Datos a validar
- * @param {string} checksum - Checksum original
- * @returns {Promise<boolean>} - true si los datos no fueron modificados
+ * Verify payload matches checksum
+ * @param {object} data - Payload to verify
+ * @param {string} checksum - Expected checksum
+ * @returns {Promise<boolean>} - true if unchanged
  */
 export const verifyChecksum = async (data: unknown, checksum: string) => {
   const newChecksum = await createChecksum(data);

@@ -45,7 +45,7 @@ export const DonationSection = () => {
       <Header />
 
       <div className="grid grid-cols-1 gap-8 md:grid-cols-12">
-        {/* Columna Izquierda: Selección de Monto y Método */}
+        {/* Left column: amount + method */}
         <DonationMethod
           selectedAmount={selectedAmount}
           customAmount={customAmount}
@@ -55,7 +55,7 @@ export const DonationSection = () => {
           handleCustomAmountChange={handleCustomAmountChange}
         />
 
-        {/* Columna Derecha: Detalles y Acción */}
+        {/* Right column: details + action */}
         <DonationForm
           currentAmount={currentAmount}
           selectedAmount={selectedAmount}

@@ -1,7 +1,4 @@
-/**
- * Servicio de planes - Versión local (localStorage)
- * Preparado para futura implementación de backend
- */
+/** Subscription snapshot — localStorage stub */
 const PLAN_KEY = 'icfes_user_plan';
 
 const defaultPlan = {

@@ -8,7 +8,7 @@ import { ConstructionAlert } from '@/shared/components';
 export const DailyChallengesPage = () => {
   const [selectedDate, setSelectedDate] = useState(new Date());
 
-  // Formato YYYY-MM-DD para el hook
+  // YYYY-MM-DD for the daily-challenges hook
   const dateString = selectedDate.toISOString().split('T')[0];
 
   const { challenges, loading, stats, completeChallenge } = useDailyChallenges(dateString);
@@ -23,7 +23,7 @@ export const DailyChallengesPage = () => {
     const newDate = new Date(selectedDate);
     newDate.setDate(selectedDate.getDate() + 1);
 
-    // No permitir ir al futuro más allá de hoy (opcional, pero lógico para desafíos)
+    // Do not navigate past today
     if (newDate <= new Date()) {
       setSelectedDate(newDate);
     }

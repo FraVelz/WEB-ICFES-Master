@@ -62,7 +62,7 @@ const CHALLENGE_TEMPLATES = [
 ];
 
 export const generateDailyChallenges = () => {
-  // Seleccionar 3 desafíos aleatorios para el día
+  // Pick 3 random challenges for the day
   const shuffled = [...CHALLENGE_TEMPLATES].sort(() => 0.5 - Math.random());
   const selected = shuffled.slice(0, 3);
 

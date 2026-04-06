@@ -56,10 +56,10 @@ export const PerfilPublico = () => {
   };
 
   const handleReport = () => {
-    // Aquí iría la lógica real de reporte (ej: abrir modal o enviar a backend)
+    // Production: open report modal or POST to API
     if (window.confirm(`¿Deseas reportar al usuario ${name}?`)) {
       setReported(true);
-      // Simulación de reporte enviado
+      // Demo: pretend report was sent
       setTimeout(() => setReported(false), 3000);
     }
   };

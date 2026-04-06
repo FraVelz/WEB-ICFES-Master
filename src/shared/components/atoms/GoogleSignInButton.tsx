@@ -25,7 +25,7 @@ export function GoogleSignInButton({ redirectAfterLogin = DEFAULT_REDIRECT }: Go
       setLocalError('');
       setIsLoading(true);
       const result = await loginWithGoogle();
-      // OAuth real redirige a Google; solo aquí llega con usuario (modo local o edge case)
+      // Real OAuth redirects away; this branch is mock mode or rare sync return
       if (result) {
         router.push(redirectAfterLogin);
       }

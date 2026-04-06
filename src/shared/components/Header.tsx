@@ -27,7 +27,7 @@ export const Header = () => {
 
   return (
     <>
-      {/* Header Desktop - Sidebar Izquierda */}
+      {/* Desktop header — left sidebar */}
       <header
         className={cn(
           'sticky top-0 z-50 hidden h-screen flex-col border-r border-cyan-500/20 bg-slate-950/95',
@@ -42,7 +42,7 @@ export const Header = () => {
             sidebarExpanded ? 'h-24' : 'h-auto py-4'
           )}
         >
-          {/* Logo - siempre visible */}
+          {/* Logo — always visible */}
           <Link
             href="/"
             className={cn(
@@ -68,7 +68,7 @@ export const Header = () => {
               ICFES Master
             </span>
           </Link>
-          {/* Botón toggle barra lateral - abajo cuando cerrado, a la derecha cuando expandido */}
+          {/* Sidebar toggle — position shifts when expanded */}
           <button
             onClick={() => setSidebarExpanded(!sidebarExpanded)}
             className={cn(

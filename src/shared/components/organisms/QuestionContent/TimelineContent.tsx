@@ -1,22 +1,15 @@
 import { cn } from '@/utils/cn';
 /**
- * TimelineContent - Componente para mostrar líneas de tiempo
+ * TimelineContent — vertical/horizontal timelines in questions
  *
- * Estructura de datos:
+ * Data:
  * [
- *   { year: "1492", event: "Descubrimiento de América" },
- *   { year: "1776", event: "Independencia de EE.UU." },
- *   { year: "1810", event: "Independencia de Colombia" }
+ *   { year: "1492", event: "…" },
+ *   { year: "1776", event: "…" },
  * ]
  *
- * Uso:
- * <TimelineContent
- *   events={[
- *     { year: "1492", event: "Descubrimiento" },
- *     { year: "1810", event: "Independencia" }
- *   ]}
- *   title="Historia de América"
- * />
+ * Example:
+ * <TimelineContent events={[...]} title="Timeline title" />
  */
 interface TimelineEvent {
   year?: string;
@@ -36,12 +29,12 @@ export const TimelineContent = ({ events = [], title, orientation = 'vertical' }
         {title && <h4 className="mb-6 text-center text-sm font-semibold text-orange-300">{title}</h4>}
 
         <div className="relative space-y-4">
-          {/* Línea vertical */}
+          {/* Vertical line */}
           <div className="absolute top-0 bottom-0 left-6 w-0.5 bg-linear-to-b from-orange-500/50 to-orange-500/20"></div>
 
           {events.map((event: TimelineEvent, idx: number) => (
             <div key={idx} className="relative pl-20">
-              {/* Punto en la línea */}
+              {/* Point on line */}
               <div
                 className={cn(
                   'absolute top-2 left-0 flex h-14 w-14 items-center justify-center rounded-full',
@@ -50,7 +43,7 @@ export const TimelineContent = ({ events = [], title, orientation = 'vertical' }
               >
                 {event.year}
               </div>
-              {/* Contenido del evento */}
+              {/* Event body */}
               <div className="rounded-lg border border-orange-500/20 bg-white/5 p-3">
                 <p className="text-sm text-gray-200">{event.event}</p>
               </div>

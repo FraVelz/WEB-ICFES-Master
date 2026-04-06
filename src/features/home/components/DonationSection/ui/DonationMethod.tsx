@@ -21,7 +21,7 @@ export const DonationMethod = ({
 }) => {
   return (
     <div className="space-y-8 md:col-span-7">
-      {/* Selector de Monto */}
+      {/* Amount selector */}
       <div>
         <label className="mb-3 block text-sm font-medium tracking-wider text-gray-400 uppercase">
           1. Elige un monto de apoyo
@@ -75,7 +75,7 @@ export const DonationMethod = ({
         )}
       </div>
 
-      {/* Selector de Método */}
+      {/* Payment method selector */}
       <div>
         <label className="mb-3 block text-sm font-medium tracking-wider text-gray-400 uppercase">
           2. Elige el medio de donación

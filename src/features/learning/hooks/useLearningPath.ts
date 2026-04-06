@@ -3,8 +3,7 @@ import { LearningService } from '../services/LearningService';
 import { useAuth } from '@/context/AuthContext';
 
 /**
- * Hook para manejar la lógica de la ruta de aprendizaje.
- * Transforma los datos planos de Supabase/localStorage en la estructura de secciones que necesita el UI.
+ * Learning-path state: maps Supabase/local lessons into UI "sections".
  */
 import { buildLessonHrefFromNode } from '@/features/learning/constants/lessonDynamicRoutes';
 import type { PathSection, PathNodeData } from '@/features/learning/components/LearningRoadmap/AreaPath';
@@ -23,13 +22,13 @@ export const useLearningPath = (areaId: string | undefined) => {
 
       setLoading(true);
       try {
-        // 1. Obtener lecciones y progreso en paralelo
+        // 1. Lessons + progress in parallel
         const [lessons, progress] = await Promise.all([
           LearningService.getLearningPath(areaId),
           user ? LearningService.getUserProgress(user.uid, areaId) : Promise.resolve(null),
         ]);
 
-        // 2. Agrupar lecciones por dificultad para mantener el diseño de "Secciones"
+        // 2. Bucket by difficulty for the three section columns
         const groupedSections: PathSection[] = [
           {
             id: 'facil',
@@ -51,7 +50,7 @@ export const useLearningPath = (areaId: string | undefined) => {
           },
         ];
 
-        // 3. Distribuir lecciones en las secciones
+        // 3. Place lessons into buckets
         const completedIds = (progress as { completedLessons?: string[] } | null)?.completedLessons ?? [];
         lessons.forEach(
           (lesson: {
@@ -61,25 +60,23 @@ export const useLearningPath = (areaId: string | undefined) => {
             xp?: number;
             coins?: number;
           }) => {
-            // Normalizar dificultad a minúsculas por si acaso
+            // Normalize difficulty (lowercase)
             const difficulty = lesson.difficulty?.toLowerCase() || 'facil';
             const sectionIndex = groupedSections.findIndex((s) => s.id === difficulty);
 
             if (sectionIndex !== -1) {
-              // Calcular estado basado en progreso
+              // Node status from completion list
               let status = 'locked';
               const isCompleted = completedIds.includes(lesson.id ?? '');
 
               if (isCompleted) {
                 status = 'completed';
               } else {
-                // Lógica simple: si no está completada, verificar si es la primera disponible
-                // Por defecto dejamos 'available' para que el usuario pueda verlas
-                // En una implementación estricta, verificaríamos si la anterior está completada
+                // Simple rule: incomplete lessons stay available (not strict prerequisite chain)
                 status = 'available';
               }
 
-              // Aplanar recompensas para que el UI las entienda
+              // Flatten rewards for the roadmap UI
               const xp = lesson.rewards?.xp || lesson.xp || 0;
               const coins = lesson.rewards?.coins || lesson.coins || 0;
 
@@ -101,7 +98,7 @@ export const useLearningPath = (areaId: string | undefined) => {
           }
         );
 
-        // Filtrar secciones vacías
+        // Drop empty difficulty buckets
         const activeSections = groupedSections.filter((s) => s.nodes.length > 0);
 
         setSections(activeSections);

@@ -24,7 +24,7 @@ export const AnimatedReveal = ({
 }: AnimatedRevealProps) => {
   const ref = useGSAPReveal(isVisible, { delay, duration, y });
 
-  // Estado inicial alineado con gsap.fromTo en useGSAPReveal: evita FOUC antes del useEffect
+  // Initial state aligned with gsap.fromTo in useGSAPReveal — avoids FOUC before useEffect
   const initialStyle: React.CSSProperties = {
     opacity: 0,
     transform: `translateY(${y}px)`,

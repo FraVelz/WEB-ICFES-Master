@@ -12,7 +12,7 @@ export const ForgotPasswordPage = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState(false);
-  const [step, setStep] = useState(1); // 1: pedir email, 2: confirmación enviada
+  const [step, setStep] = useState(1); // 1: email form, 2: success message
   const { resetPassword, verifyEmailExists } = useAuth();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -22,7 +22,7 @@ export const ForgotPasswordPage = () => {
     setIsLoading(true);
 
     try {
-      // Modo visual: simula envío (backend pendiente)
+      // Visual-only success (wire API when ready)
       await resetPassword(email);
       setSuccess(true);
       setStep(2);

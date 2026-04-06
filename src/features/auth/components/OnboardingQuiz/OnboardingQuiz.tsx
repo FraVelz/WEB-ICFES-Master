@@ -30,7 +30,7 @@ export const OnboardingQuiz = ({ onComplete, avatarConfig = {} }: OnboardingQuiz
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [answers, setAnswers] = useState<Record<string, unknown>>({});
 
-  // Configuración de avatares - permitir personalización
+  // Optional avatar overrides from parent
   const avatarSettings = {
     intro1: avatarConfig.intro1 ?? '/avatars/logo.webp',
     intro2: avatarConfig.intro2 ?? '/avatars/logo.webp',
@@ -60,7 +60,7 @@ export const OnboardingQuiz = ({ onComplete, avatarConfig = {} }: OnboardingQuiz
     }
   };
 
-  // Navegación de introducciones
+  // Intro carousel
   const handleIntroNext = () => {
     if (introIndex < INTRODUCTION_SECTIONS.length - 1) {
       setIntroIndex((prev) => prev + 1);
@@ -90,7 +90,7 @@ export const OnboardingQuiz = ({ onComplete, avatarConfig = {} }: OnboardingQuiz
     if (currentQuestionIndex > 0) {
       setCurrentQuestionIndex((prev) => prev - 1);
     } else {
-      // Volver a la introducción
+      // Back to last intro slide
       setStage('intro');
       setIntroIndex(INTRODUCTION_SECTIONS.length - 1);
     }
@@ -102,7 +102,7 @@ export const OnboardingQuiz = ({ onComplete, avatarConfig = {} }: OnboardingQuiz
 
   const canProceed = isMultiple ? Array.isArray(currentAnswer) && currentAnswer.length > 0 : currentAnswer !== '';
 
-  // Pantalla de Introducción (Secciones 1 y 2)
+  // Intro slides (before quiz)
   if (stage !== 'quiz' && stage !== 'completed') {
     const currentIntro = INTRODUCTION_SECTIONS[introIndex];
     const avatarSrc = introIndex === 0 ? avatarSettings.intro1 : avatarSettings.intro2;

@@ -13,10 +13,10 @@ export const Modal = ({ isOpen, title, children, onClose }: ModalProps) => {
 
   return (
     <>
-      {/* Overlay oscuro - Fixed debajo del header en mobile */}
+      {/* Dim overlay — sits below mobile header */}
       <div className="fixed inset-0 top-20 z-40 bg-black/80 backdrop-blur-sm sm:top-0" onClick={onClose}></div>
 
-      {/* Modal content - Posicionado debajo del header en mobile */}
+      {/* Panel — offset below mobile header */}
       <div
         className={cn(
           'fixed inset-0 top-20 right-0 bottom-0 left-0 z-50 flex flex-col p-0 sm:inset-0 sm:top-0',

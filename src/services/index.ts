@@ -1,7 +1,7 @@
 /**
- * Servicios de la aplicación
+ * Application services barrel
  *
- * Persistencia dual (Supabase / localStorage): usar `@/services/persistence`.
+ * Dual persistence (Supabase / localStorage): prefer `@/services/persistence` helpers.
  */
 export { default as SubscriptionPlanService } from '@/features/store/services/SubscriptionPlanService';
 export { default as PlanScheduleService } from '@/features/store/services/PlanScheduleService';

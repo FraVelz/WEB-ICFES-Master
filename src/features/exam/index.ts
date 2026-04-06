@@ -1,5 +1,5 @@
 /**
- * API pública del feature exam: páginas, componentes, hooks y tipos usados fuera de `features/exam`.
+ * Public exam feature surface (pages, components, hooks, shared types).
  */
 export type { ExamQuestion, QuestionOption, ExamConfig, AreaInfo } from './types';
 

@@ -1,5 +1,5 @@
-// Datos de preguntas por área ICFES
-// Este archivo contiene todas las preguntas organizadas por área
+// ICFES-area question data
+// Questions grouped by area
 
 import type { ExamQuestion } from '@/shared/types/question';
 

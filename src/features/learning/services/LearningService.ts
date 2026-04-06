@@ -20,7 +20,7 @@ interface IntermedioTopic {
 }
 
 /**
- * Servicio de aprendizaje - Supabase o datos estáticos locales
+ * Learning data: Supabase when configured, otherwise static roadmap JSON
  */
 export const LearningService = {
   getLearningPath: async (areaId: string) => {
@@ -28,7 +28,7 @@ export const LearningService = {
       const lessons = await LearningSupabaseService.getLessonsByArea(areaId);
       if (lessons?.length > 0) {
         return lessons.map((l, i) => {
-          // Extraer el contenido como string (body, markdown, content o content.body)
+          // Normalize body to string (body, markdown, content, or content.body)
           const rawContent =
             l.body ??
             l.markdown ??

@@ -112,7 +112,7 @@
   }
 }
 
-/* Utilidad mínima para componentes que aún usan animate-fadeIn (legacy) */
+/* Minimal utility for legacy animate-fadeIn usage */
 .animate-fadeIn {
   animation: fadeIn 0.3s ease-in-out;
 }

@@ -1,6 +1,6 @@
 /**
- * Servicio de planes programados - Versión local (no-op)
- * Preparado para futura implementación de backend
+ * Scheduled plan changes — local no-op stub
+ * Replace with real scheduling when backend exists
  */
 import SubscriptionPlanService from './SubscriptionPlanService';
 
@@ -14,15 +14,15 @@ class PlanScheduleService {
   }
 
   async schedulePlan(_uid: string, _planData: unknown) {
-    // No-op en modo local
+    // No-op in local mode
   }
 
   async activateScheduledPlan(_uid: string) {
-    // No-op en modo local - no hay planes programados
+    // No-op in local mode — no scheduled rows
   }
 
   async cancelScheduledPlan(_scheduledPlanId: string) {
-    // No-op en modo local
+    // No-op in local mode
   }
 }
 

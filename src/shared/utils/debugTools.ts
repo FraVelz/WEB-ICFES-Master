@@ -1,12 +1,12 @@
 /**
- * Función de debugging para verificar qué está en localStorage
- * Ejecuta esto en la consola del navegador (F12) para diagnosticar problemas
+ * Debug helpers to inspect localStorage
+ * Run from the browser console (F12) when diagnosing issues
  */
 
 export const debugLocalStorage = () => {
   console.log('=== DEBUGGING LOCALSTORAGE ===\n');
 
-  // Verificar exámenes
+  // Exams
   const exams = localStorage.getItem('icfes_exams');
   console.log('📋 Exámenes guardados:');
   if (exams) {
@@ -17,7 +17,7 @@ export const debugLocalStorage = () => {
     console.log('❌ No hay exámenes guardados');
   }
 
-  // Verificar prácticas
+  // Practice attempts
   const practices = localStorage.getItem('icfes_practice');
   console.log('\n📚 Prácticas guardadas:');
   if (practices) {
@@ -28,7 +28,7 @@ export const debugLocalStorage = () => {
     console.log('❌ No hay prácticas guardadas');
   }
 
-  // Verificar progreso
+  // Progress
   const progress = localStorage.getItem('icfes_progress');
   console.log('\n📊 Progreso consolidado:');
   if (progress) {
@@ -39,7 +39,7 @@ export const debugLocalStorage = () => {
     console.log('❌ No hay progreso consolidado');
   }
 
-  // Verificar perfil
+  // Profile
   const profile = localStorage.getItem('icfes_user_profile');
   console.log('\n👤 Perfil de usuario:');
   if (profile) {
@@ -54,7 +54,7 @@ export const debugLocalStorage = () => {
 };
 
 /**
- * Limpia todos los datos de localStorage (CUIDADO: esto elimina TODO)
+ * Clear all tracked localStorage keys (destructive)
  */
 export const clearAllDataDebug = () => {
   if (confirm('⚠️  ADVERTENCIA: Esto eliminará TODOS los datos. ¿Estás seguro?')) {
@@ -69,7 +69,7 @@ export const clearAllDataDebug = () => {
 };
 
 /**
- * Limpia solo las estadísticas (útil para probar de nuevo)
+ * Clear stats keys only (exams, practice, progress)
  */
 export const clearStats = () => {
   localStorage.removeItem('icfes_exams');
@@ -79,7 +79,7 @@ export const clearStats = () => {
 };
 
 /**
- * Verifica si los datos están siendo guardados correctamente
+ * Smoke test: can we round-trip a value in localStorage?
  */
 export const testSaveAndLoad = () => {
   const testData = {

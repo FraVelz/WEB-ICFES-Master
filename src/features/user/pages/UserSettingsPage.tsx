@@ -188,7 +188,7 @@ export const UserSettingsPage = () => {
 
     try {
       setSendingSupport(true);
-      // Modo visual: mensaje guardado localmente (backend pendiente)
+      // Visual-only: optimistic save (no backend yet)
       showMessage('Gracias 🙌 Tu mensaje se ha registrado. Te responderemos pronto.', 'success');
       setSupportMessage('');
       setSupportCategory('technical');

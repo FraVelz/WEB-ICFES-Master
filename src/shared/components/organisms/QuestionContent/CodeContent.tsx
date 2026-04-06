@@ -1,15 +1,7 @@
 /**
- * CodeContent - Componente para mostrar código/pseudocódigo en preguntas
+ * CodeContent — code / pseudocode blocks in questions
  *
- * Lenguajes soportados: "javascript", "python", "java", "pseudocode", "sql", etc.
- *
- * Uso:
- * <CodeContent
- *   language="python"
- *   code={`for i in range(10):
- *     print(i)`}
- *   title="Ejemplo de bucle"
- * />
+ * `language` is cosmetic (syntax highlight not implemented here).
  */
 interface CodeContentProps {
   language?: string;

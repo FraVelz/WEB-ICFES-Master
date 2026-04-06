@@ -90,7 +90,7 @@ export const PracticePage = () => {
     questionElement?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
 
-  // Guardar práctica cuando se finaliza
+  // Persist practice attempt on finish
   useEffect(() => {
     if ((isFinished || showResults) && questions.length > 0) {
       const results = questions.map((q) => ({

@@ -1,6 +1,6 @@
 /**
- * Progreso y exámenes en **localStorage** (solo cliente).
- * No sustituye persistencia en servidor; ver documentación en
+ * Progress and exams in **localStorage** (client-only).
+ * Not a substitute for server persistence; see
  * `docs/es/data/progreso-cliente-local.md` (EN: `docs/en/data/client-local-progress.md`).
  */
 
@@ -57,7 +57,7 @@ export const markLessonAsCompleted = (_userId: string, lessonId: string): void =
 };
 
 /**
- * Obtiene los exámenes almacenados
+ * Load stored full exams
  */
 export const getStoredExams = (): AttemptWithQuestions[] => {
   const stored = localStorage.getItem(STORAGE_KEYS.EXAMS);
@@ -65,7 +65,7 @@ export const getStoredExams = (): AttemptWithQuestions[] => {
 };
 
 /**
- * Guarda un nuevo examen completo
+ * Persist a new full exam attempt
  */
 export const saveFullExam = (
   examData: Record<string, unknown>
@@ -84,7 +84,7 @@ export const saveFullExam = (
 };
 
 /**
- * Obtiene las prácticas almacenadas
+ * Load stored practice attempts
  */
 export const getStoredPractices = (): AttemptWithQuestions[] => {
   const stored = localStorage.getItem(STORAGE_KEYS.PRACTICE);
@@ -92,7 +92,7 @@ export const getStoredPractices = (): AttemptWithQuestions[] => {
 };
 
 /**
- * Guarda una nueva práctica
+ * Persist a new practice attempt
  */
 export const savePractice = (
   practiceData: Record<string, unknown>
@@ -111,7 +111,7 @@ export const savePractice = (
 };
 
 /**
- * Calcula y almacena el progreso total
+ * Recompute and store aggregate progress
  */
 export const updateProgress = (): ProgressData => {
   const exams = getStoredExams();
@@ -124,7 +124,7 @@ export const updateProgress = (): ProgressData => {
     return getDefaultProgress();
   }
 
-  // Calcular estadísticas generales
+  // Aggregate totals
   let totalQuestions = 0;
   let totalCorrect = 0;
   const areaStats: Record<string, { total: number; correct: number }> = {
@@ -154,7 +154,7 @@ export const updateProgress = (): ProgressData => {
     });
   });
 
-  // Calcular racha de días
+  // Study streak (calendar days)
   const streakDays = calculateStreak(allAttempts);
 
   const progress: ProgressData = {
@@ -212,7 +212,7 @@ export const updateProgress = (): ProgressData => {
     },
   };
 
-  // Encontrar mejor y peor área
+  // Best and weakest areas (by %)
   const areas = Object.values(progress.areaStats).filter((a: AreaStatItem) => a.total > 0);
   if (areas.length > 0) {
     progress.bestArea = areas.reduce<AreaStatItem>(
@@ -230,7 +230,7 @@ export const updateProgress = (): ProgressData => {
 };
 
 /**
- * Obtiene el progreso almacenado
+ * Load stored aggregate progress
  */
 export const getProgress = (): ProgressData => {
   const stored = localStorage.getItem(STORAGE_KEYS.PROGRESS);
@@ -238,7 +238,7 @@ export const getProgress = (): ProgressData => {
 };
 
 /**
- * Progreso por defecto
+ * Empty progress snapshot
  */
 export const getDefaultProgress = (): ProgressData => {
   return {
@@ -288,12 +288,12 @@ export const getDefaultProgress = (): ProgressData => {
 };
 
 /**
- * Calcula la racha de días consecutivos estudiando
+ * Consecutive study days from attempt dates
  */
 const calculateStreak = (attempts: AttemptWithQuestions[]): number => {
   if (attempts.length === 0) return 0;
 
-  // Ordenar por fecha descendente
+  // Sort by date descending
   const sorted = attempts
     .map((a) => new Date(a.date ?? 0).toDateString())
     .sort((a, b) => new Date(b).getTime() - new Date(a).getTime());
@@ -308,7 +308,7 @@ const calculateStreak = (attempts: AttemptWithQuestions[]): number => {
   let currentDate = new Date(firstDate ?? today.toDateString());
   const todayString = today.toDateString();
 
-  // Si el último intento no fue hoy, reinicia la racha
+  // If last activity was not today (or yesterday), streak is broken
   if (currentDate.toDateString() !== todayString) {
     const yesterday = new Date(today);
     yesterday.setDate(yesterday.getDate() - 1);
@@ -334,7 +334,7 @@ const calculateStreak = (attempts: AttemptWithQuestions[]): number => {
 };
 
 /**
- * Limpia todos los datos almacenados
+ * Clear exams, practice, and progress keys
  */
 export const clearAllData = (): void => {
   localStorage.removeItem(STORAGE_KEYS.EXAMS);
@@ -343,7 +343,7 @@ export const clearAllData = (): void => {
 };
 
 /**
- * Limpia solo los exámenes guardados
+ * Clear full exams only (recomputes progress)
  */
 export const clearExamsOnly = (): void => {
   localStorage.removeItem(STORAGE_KEYS.EXAMS);
@@ -351,7 +351,7 @@ export const clearExamsOnly = (): void => {
 };
 
 /**
- * Obtiene recomendaciones basadas en el progreso
+ * Tip strings derived from progress data
  */
 export const getRecommendations = (progress: ProgressData): string[] => {
   const recommendations: string[] = [];

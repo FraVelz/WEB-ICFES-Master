@@ -1,5 +1,5 @@
 /**
- * HOOKS INDEX - Exporta todos los custom hooks de la aplicación
+ * App-wide custom hooks barrel
  *
  * USO:
  * import { useUserData, useProgress, useGamification, useExam } from '@/hooks';

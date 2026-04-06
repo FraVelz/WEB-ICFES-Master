@@ -38,7 +38,7 @@ export const ExamConfigModal = ({
         <p className="mb-8 text-gray-400">{area}</p>
 
         <div className="space-y-6">
-          {/* Número de preguntas */}
+          {/* Question count */}
           <div>
             <label className="mb-3 block font-semibold text-white">Número de preguntas</label>
             <div className="flex items-center gap-4">
@@ -57,7 +57,7 @@ export const ExamConfigModal = ({
             <p className="mt-2 text-xs text-gray-500">Disponibles: {maxQuestions} preguntas</p>
           </div>
 
-          {/* Temporizador */}
+          {/* Timer */}
           <div>
             <label className="flex cursor-pointer items-center gap-3">
               <input
@@ -70,7 +70,7 @@ export const ExamConfigModal = ({
             </label>
           </div>
 
-          {/* Tiempo por pregunta */}
+          {/* Time per question */}
           {useTimer && (
             <div>
               <label className="mb-3 block font-semibold text-white">Minutos por pregunta</label>
@@ -90,7 +90,7 @@ export const ExamConfigModal = ({
             </div>
           )}
 
-          {/* Mostrar explicaciones */}
+          {/* Show explanations */}
           <div>
             <label className="flex cursor-pointer items-center gap-3">
               <input
@@ -103,7 +103,7 @@ export const ExamConfigModal = ({
             </label>
           </div>
 
-          {/* Resumen */}
+          {/* Summary */}
           <div className="mt-8 rounded-lg border border-white/10 bg-white/5 p-4">
             <p className="text-sm text-gray-400">
               Tiempo total estimado:{' '}
@@ -113,7 +113,7 @@ export const ExamConfigModal = ({
             </p>
           </div>
 
-          {/* Botones */}
+          {/* Actions */}
           <div className="flex gap-3 pt-6">
             <Link
               href="/"

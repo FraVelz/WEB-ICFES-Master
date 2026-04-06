@@ -2,7 +2,7 @@ import { cn } from '@/utils/cn';
 import React, { useState, useEffect } from 'react';
 import { Icon } from '@/shared/components/Icon';
 
-// Mascota Avatar de la App
+// App mascot avatar
 const MASCOT_AVATARS = [
   {
     id: 1,
@@ -102,7 +102,7 @@ export const AppMascot = ({
     setDialogue(getMascotDialogue(emotion, context));
   }, [emotion, context]);
 
-  // Cambiar emoción aleatorialmente cada 5 segundos si está activo
+  // Rotate emotion every 5s when interactive
   useEffect(() => {
     if (!interactive) return;
 
@@ -116,7 +116,7 @@ export const AppMascot = ({
     return () => clearInterval(emotionTimer);
   }, [interactive]);
 
-  // Efecto de bobbing (movimiento suave hacia arriba y abajo)
+  // Gentle vertical bob animation
   useEffect(() => {
     if (!bobbing) return;
 
@@ -159,7 +159,7 @@ export const AppMascot = ({
 
   return (
     <div className={cn('flex flex-col items-center gap-4', className)}>
-      {/* Mascota */}
+      {/* Mascot */}
       <div
         onClick={handleMascotClick}
         className={cn(
@@ -177,7 +177,7 @@ export const AppMascot = ({
           )}
         ></div>
 
-        {/* Mascota image */}
+        {/* Mascot image */}
         <div
           className={cn(
             sizes.mascot,
@@ -235,7 +235,7 @@ export const AppMascot = ({
         </div>
       )}
 
-      {/* Stats bajo la mascota (opcional) */}
+      {/* Optional stats under mascot */}
       {interactive && size !== 'sm' && (
         <div className="flex gap-6 pt-4">
           <div className="flex flex-col items-center">

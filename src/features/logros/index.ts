@@ -1,5 +1,5 @@
 /**
- * API pública del feature logros (páginas, componentes, hooks y servicios de gamificación).
+ * Public exports for achievements / gamification (pages, components, hooks, services).
  */
 export { UnifiedAchievementsPage, DailyChallengesWidget, DailyChallengesPage } from './pages';
 export { UnifiedAchievementsHub } from './components';

@@ -1,24 +1,6 @@
 /**
- * CompositeContent - Componente para combinar múltiples tipos de contenido
- *
- * Permite crear preguntas complejas con texto, imágenes, tablas, etc.
- *
- * Estructura de datos:
- * [
- *   { type: "text", content: "Pregunta inicial" },
- *   { type: "image", content: { src: "...", alt: "..." } },
- *   { type: "table", content: { headers: [...], rows: [...] } },
- *   { type: "text", content: "Pregunta final" }
- * ]
- *
- * Uso:
- * <CompositeContent
- *   blocks={[
- *     { type: "text", content: "Observa la siguiente tabla:" },
- *     { type: "table", content: { headers: [...], rows: [...] } },
- *     { type: "text", content: "¿Cuál es el promedio?" }
- *   ]}
- * />
+ * CompositeContent — stack multiple content blocks (text, image, table, …)
+ * blocks: [{ type, content }, ...]
  */
 import { TextContent } from './TextContent';
 import { ImageContent } from './ImageContent';

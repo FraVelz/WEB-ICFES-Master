@@ -68,13 +68,13 @@ export const LessonQuizModal = ({
   const [answers, setAnswers] = useState<Record<string, string>>({});
   const [completedQuestions, setCompletedQuestions] = useState<Set<string>>(new Set());
 
-  // Función auxiliar para normalizar opciones
+  // Normalize MCQ options from various API shapes
   const normalizeOptions = (options: unknown): { id: string; text: string }[] => {
     if (!Array.isArray(options) || options.length === 0) {
       return [];
     }
 
-    // Si es array de strings, convertir a formato {id, text}
+    // String[] → { id, text } with a,b,c ids
     if (typeof options[0] === 'string') {
       return options.map((opt, i) => ({
         id: String.fromCharCode(97 + i),
@@ -82,7 +82,7 @@ export const LessonQuizModal = ({
       }));
     }
 
-    // Si es array de objetos, normalizar
+    // Object[] → normalized rows
     return options.map((opt: unknown, i: number) => {
       if (typeof opt === 'string') {
         return { id: String.fromCharCode(97 + i), text: opt };
@@ -95,14 +95,14 @@ export const LessonQuizModal = ({
     });
   };
 
-  // Normalizar preguntas: convertir questions array a formato compatible o usar quiz
+  // Build a single question list (several legacy formats)
   const normalizedQuestions = React.useMemo(() => {
-    // Prioridad 1: questions array directo
+    // Priority 1: top-level questions[]
     if (questions && Array.isArray(questions) && questions.length > 0) {
       return questions.map((q, index) => {
         const options = normalizeOptions(q.options);
 
-        // Convertir correct_answer (índice) a correctAnswer (id)
+        // Map numeric correct_answer index → option id
         const correctAnswerIndex =
           typeof q.correct_answer === 'number'
             ? q.correct_answer
@@ -131,7 +131,7 @@ export const LessonQuizModal = ({
         };
       });
     }
-    // Prioridad 2: quiz.questions (array de preguntas dentro del quiz)
+    // Priority 2: quiz.questions[]
     else if (quiz && quiz.questions && Array.isArray(quiz.questions) && quiz.questions.length > 0) {
       return quiz.questions.map((q, index) => {
         const options = normalizeOptions(q.options);
@@ -164,7 +164,7 @@ export const LessonQuizModal = ({
         };
       });
     }
-    // Prioridad 3: quiz único (formato antiguo)
+    // Priority 3: legacy single-question quiz object
     else if (quiz) {
       const options = normalizeOptions(quiz.options);
 
@@ -213,7 +213,7 @@ export const LessonQuizModal = ({
     }
   }, [isOpen, user, lessonId]);
 
-  // Reset cuando cambia la pregunta actual
+  // Sync local UI when navigating between questions
   useEffect(() => {
     if (currentQuestion) {
       const savedAnswer = answers[currentQuestion.id];
@@ -237,7 +237,7 @@ export const LessonQuizModal = ({
       });
     } catch (error) {
       console.error('Error checking completion status:', error);
-      // Si hay error, asumir que no está completada para permitir intentar
+      // On error, allow retry (treat as not completed)
       setAlreadyCompleted(false);
     }
   };
@@ -249,17 +249,17 @@ export const LessonQuizModal = ({
     setIsCorrect(correct);
     setIsSubmitted(true);
 
-    // Guardar respuesta con la respuesta actual incluida
+    // Persist this answer in the map
     const updatedAnswers = { ...answers, [currentQuestion.id]: selectedOption };
     setAnswers(updatedAnswers);
     if (currentQuestion.id) setCompletedQuestions((prev) => new Set([...prev, currentQuestion.id]));
 
-    // Verificar si todas las preguntas están respondidas
+    // All prompts answered?
     const allQuestionsAnswered = normalizedQuestions.every((q) => {
       return updatedAnswers[q.id] !== undefined && updatedAnswers[q.id] !== null;
     });
 
-    // Verificar si todas las preguntas están correctas (incluyendo la actual)
+    // All answers correct (including this one)?
     const allCorrect = normalizedQuestions.every((q) => {
       const answer = updatedAnswers[q.id];
       return answer === q.correctAnswer;
@@ -276,12 +276,11 @@ export const LessonQuizModal = ({
       updatedAnswers,
     });
 
-    // Otorgar recompensas cuando se complete la última pregunta (todas respondidas)
-    // Solo si no se ha completado antes
+    // Award on last question when fully answered and not already rewarded
     if (isLastQuestion && allQuestionsAnswered && !alreadyCompleted && user?.uid) {
       setLoading(true);
       try {
-        // Obtener recompensas: prioridad: lessonXp/lessonCoins > quiz.rewards > valores por defecto (500/250)
+        // Rewards: lesson props > quiz.rewards > defaults (500/250)
         const xpAmount = lessonXp ?? quiz?.rewards?.xp ?? 500;
         const coinsAmount = lessonCoins ?? quiz?.rewards?.coins ?? 250;
 
@@ -298,7 +297,7 @@ export const LessonQuizModal = ({
           lessonId,
         });
 
-        // Otorgar XP y monedas
+        // Grant XP and coins
         console.log('Llamando addXP...');
         const xpResult = await gamificationPersistence.addXP(user.uid, xpAmount, `lesson_quiz_${lessonId}`);
         console.log('XP otorgado:', xpResult);
@@ -313,7 +312,7 @@ export const LessonQuizModal = ({
 
         console.log('Resultados de recompensas:', { xpResult, coinsResult });
 
-        // Marcar lección como completada
+        // Mark lesson completed in local storage
         console.log('Marcando lección como completada...');
         if (user?.uid && lessonId) markLessonAsCompleted(user.uid, lessonId);
         console.log('Lección marcada como completada');
@@ -332,14 +331,14 @@ export const LessonQuizModal = ({
           xpAmount: lessonXp ?? quiz?.rewards?.xp ?? 500,
           coinsAmount: lessonCoins ?? quiz?.rewards?.coins ?? 250,
         });
-        // Mostrar error al usuario si es necesario
+        // Could surface a toast here
       }
       setLoading(false);
     } else if (totalQuestions === 1 && correct && !alreadyCompleted && user?.uid) {
-      // Si solo hay una pregunta y está correcta, otorgar recompensas inmediatamente
+      // Single-question quiz: award as soon as correct
       setLoading(true);
       try {
-        // Obtener recompensas: prioridad: lessonXp/lessonCoins > quiz.rewards > valores por defecto (500/250)
+        // Rewards: lesson props > quiz.rewards > defaults (500/250)
         const xpAmount = lessonXp ?? quiz?.rewards?.xp ?? 500;
         const coinsAmount = lessonCoins ?? quiz?.rewards?.coins ?? 250;
 
@@ -353,7 +352,7 @@ export const LessonQuizModal = ({
           lessonId,
         });
 
-        // Otorgar XP y monedas
+        // Grant XP and coins
         const xpResult = await gamificationPersistence.addXP(user.uid, xpAmount, `lesson_quiz_${lessonId}`);
         const coinsResult = await gamificationPersistence.addCoins(
           user.uid,
@@ -366,7 +365,7 @@ export const LessonQuizModal = ({
           coinsResult,
         });
 
-        // Marcar lección como completada
+        // Mark lesson completed in local storage
         if (user?.uid && lessonId) markLessonAsCompleted(user.uid, lessonId);
 
         setRewards({ xp: xpAmount, coins: coinsAmount });
@@ -416,7 +415,7 @@ export const LessonQuizModal = ({
           <p className="mt-1.5 line-clamp-2 text-center text-xs text-slate-400 lg:text-sm">{lessonTitle}</p>
           {totalQuestions > 1 && (
             <div className="mt-2.5 flex items-center justify-center gap-2">
-              {/* Barra de progreso visual */}
+              {/* Progress bar */}
               <div className="h-1.5 max-w-[120px] flex-1 overflow-hidden rounded-full bg-slate-700/50">
                 <div
                   className="h-full rounded-full bg-blue-500 transition-all duration-300"
@@ -465,7 +464,7 @@ export const LessonQuizModal = ({
                   )}
                 >
                   <div className="flex items-start gap-3">
-                    {/* Indicador de letra */}
+                    {/* Letter badge (A, B, C…) */}
                     <div
                       className={cn(
                         'mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-xs font-bold lg:h-7 lg:w-7 lg:text-sm',
@@ -496,7 +495,7 @@ export const LessonQuizModal = ({
               ))}
             </div>
 
-            {/* Explicación */}
+            {/* Explanation */}
             {isSubmitted && currentQuestion.explanation && (
               <div className="mt-3 rounded-r-lg border-l-4 border-blue-500 bg-blue-500/10 p-3.5 lg:mt-4 lg:rounded-xl lg:p-4">
                 <p className="text-xs leading-relaxed text-blue-200 lg:text-sm">
@@ -569,7 +568,7 @@ export const LessonQuizModal = ({
         {/* Actions - Fixed at bottom */}
         <div className="shrink-0 border-t border-slate-800 bg-slate-900/95 p-3 pt-2 backdrop-blur-sm lg:p-6 lg:pt-0">
           <div className="flex gap-2 lg:gap-3">
-            {/* Botón Anterior */}
+            {/* Previous */}
             {currentQuestionIndex > 0 && (
               <button
                 onClick={handlePreviousQuestion}
@@ -584,10 +583,10 @@ export const LessonQuizModal = ({
               </button>
             )}
 
-            {/* Botón Cerrar/Cancelar */}
+            {/* Close / cancel */}
             <button
               onClick={() => {
-                // Si se completó el quiz exitosamente, cerrar también el modal de contenido
+                // Successful completion: also notify parent (closes lesson modal)
                 if (isLastQuestion && (isCorrect || allQuestionsAnswered) && onComplete) {
                   onComplete({
                     correct: Object.keys(answers).filter(

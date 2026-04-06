@@ -1,4 +1,4 @@
-// Archivo índice para exportar todos los datos
+// Barrel file exporting all home data
 export { AREAS } from './areas';
 export { WHY_CHOOSE_US } from './features';
 export { TESTIMONIALS } from './testimonials';

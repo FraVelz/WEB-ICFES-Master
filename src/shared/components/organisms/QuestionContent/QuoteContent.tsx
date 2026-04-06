@@ -1,20 +1,8 @@
 import { cn } from '@/utils/cn';
 
 /**
- * QuoteContent - Componente para mostrar citas/fragmentos de texto
- *
- * Uso:
- * <QuoteContent
- *   text="La educación es el arma más poderosa que puedes usar para cambiar el mundo"
- *   author="Nelson Mandela"
- *   type="quote"
- * />
- *
- * <QuoteContent
- *   text="Fragmento del artículo 2 de la constitución..."
- *   source="Constitución Política de Colombia"
- *   type="excerpt"
- * />
+ * QuoteContent — block quotes and excerpts
+ * type: "quote" | "excerpt"
  */
 interface QuoteContentProps {
   text?: string;

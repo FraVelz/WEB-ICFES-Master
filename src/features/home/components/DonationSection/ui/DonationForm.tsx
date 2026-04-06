@@ -57,7 +57,7 @@ export const DonationForm = ({
               </p>
             </div>
 
-            {/* FORMULARIO DE TARJETA */}
+            {/* Card form */}
             {currentMethod?.type === 'card' && (
               <form onSubmit={handlePayment} className="animate-fadeIn space-y-4">
                 {paymentSuccess ? (

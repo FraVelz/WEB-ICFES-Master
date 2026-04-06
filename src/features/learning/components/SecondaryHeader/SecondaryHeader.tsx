@@ -25,7 +25,7 @@ export const SecondaryHeader = ({ currentArea = 'lectura-critica', onAreaChange 
   const [activeModal, setActiveModal] = useState<'areas' | 'streak' | 'store' | 'coins' | null>(null);
   const { user } = useAuth();
 
-  // Hook de gamificación para obtener datos del usuario
+  // Gamification snapshot (XP, coins, streak)
   const {
     currentStreak = 0,
     longestStreak = 0,
@@ -34,26 +34,26 @@ export const SecondaryHeader = ({ currentArea = 'lectura-critica', onAreaChange 
     loading,
   } = useGamification(user?.uid);
 
-  // Calcular si la insignia está desbloqueada
+  // Streak badge unlocked?
   const isBadgeUnlocked = useMemo(() => {
     return currentStreak >= 7;
   }, [currentStreak]);
 
-  // Calcular días faltantes para insignia
+  // Days until next streak badge
   const daysUntilBadge = useMemo(() => {
     return Math.max(0, 7 - currentStreak);
   }, [currentStreak]);
 
-  // Obtener información del área actual
+  // Current subject metadata
   const currentAreaInfo =
     (AREA_INFO as Record<string, { name?: string; color?: string; icon?: string }>)[currentArea] ||
     (AREA_INFO as Record<string, { name?: string; color?: string; icon?: string }>)['lectura-critica'];
 
-  // Datos de racha
+  // Streak modal payload
   const streakData = {
     currentStreak,
     longestStreak,
-    streakHistory: streak, // Pasamos el historial completo
+    streakHistory: streak, // full history for the modal
     isBadgeUnlocked,
     daysUntilBadge,
   };
@@ -80,20 +80,20 @@ export const SecondaryHeader = ({ currentArea = 'lectura-critica', onAreaChange 
 
   return (
     <div className="relative z-50">
-      {/* Header Secundario - Sticky, Visible en móvil y desktop */}
+      {/* Sticky secondary header */}
       <div
         className={cn(
           'sticky top-0 z-50 flex h-16 items-center justify-between border-b border-slate-800',
           'bg-slate-950/90 px-4 shadow-lg backdrop-blur-md'
         )}
       >
-        {/* Elemento 1: Área Actual */}
+        {/* Current subject */}
         <button
           onClick={() => setActiveModal(activeModal === 'areas' ? null : 'areas')}
           className="flex cursor-pointer items-center gap-3 rounded-xl p-2 transition-colors hover:bg-slate-800/50"
           title="Cambiar área"
         >
-          {/* Ícono del área */}
+          {/* Subject icon */}
           <div
             className={cn(
               'flex h-8 w-8 items-center justify-center rounded-lg shadow-lg',
@@ -102,7 +102,7 @@ export const SecondaryHeader = ({ currentArea = 'lectura-critica', onAreaChange 
           >
             <Icon name={currentAreaInfo.icon ?? 'book'} className="text-xs text-white" />
           </div>
-          {/* Nombre del área - Oculto en móvil muy pequeño */}
+          {/* Subject label — hidden on very small screens */}
           <div className="hidden flex-col items-start sm:flex">
             <span className="text-xs font-bold tracking-wider text-slate-400 uppercase">Área actual</span>
             <span className="text-sm font-bold text-slate-200">{currentAreaInfo.name}</span>
@@ -114,7 +114,7 @@ export const SecondaryHeader = ({ currentArea = 'lectura-critica', onAreaChange 
         </button>
 
         <div className="flex items-center gap-3">
-          {/* Elemento 2: Racha de Días */}
+          {/* Streak */}
           <button
             onClick={() => setActiveModal(activeModal === 'streak' ? null : 'streak')}
             className={cn(
@@ -140,7 +140,7 @@ export const SecondaryHeader = ({ currentArea = 'lectura-critica', onAreaChange 
             </span>
           </button>
 
-          {/* Elemento 3: Monedas / Tienda */}
+          {/* Coins / store */}
           <button
             onClick={() => setActiveModal(activeModal === 'store' ? null : 'store')}
             className={cn(
@@ -155,7 +155,7 @@ export const SecondaryHeader = ({ currentArea = 'lectura-critica', onAreaChange 
         </div>
       </div>
 
-      {/* Modales */}
+      {/* Modals */}
       <AreasModal
         isOpen={activeModal === 'areas'}
         onClose={closeModals}

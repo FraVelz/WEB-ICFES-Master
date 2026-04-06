@@ -1,12 +1,12 @@
 /**
- * MapContent - Componente para mostrar mapas/diagramas geográficos
+ * MapContent — geographic maps / diagrams in questions
  *
- * Estructura de datos:
+ * Data shape:
  * {
- *   title: "Mapa de Sudamérica",
- *   description: "Mapa mostrando países",
+ *   title: "South America map",
+ *   description: "Countries overview",
  *   svgContent: "<svg>...</svg>",
- *   // O usar una imagen
+ *   // or use a raster image
  *   imageSrc: "/path/to/map.png",
  *   regions: [
  *     { name: "Colombia", highlight: true, info: "Capital: Bogotá" },
@@ -14,15 +14,15 @@
  *   ]
  * }
  *
- * Uso:
+ * Example:
  * <MapContent
- *   title="División política de América del Sur"
+ *   title="Political map of South America"
  *   imageSrc="/maps/south-america.png"
  *   regions={[
  *     { name: "Colombia", highlight: true },
  *     { name: "Perú", highlight: true }
  *   ]}
- *   description="Territorios destacados"
+ *   description="Highlighted territories"
  * />
  */
 import { cn } from '@/utils/cn';
@@ -46,15 +46,15 @@ export const MapContent = ({ title, description, imageSrc, regions = [], svgCont
     <figure className="my-6 rounded-lg border border-purple-500/20 bg-linear-to-r from-slate-700/20 to-slate-800/20 p-6">
       {title && <h4 className="mb-3 text-center text-sm font-semibold text-purple-300">{title}</h4>}
 
-      {/* Si hay contenido SVG */}
+      {/* SVG body */}
       {svgContent && <div className="mb-4 flex justify-center" dangerouslySetInnerHTML={{ __html: svgContent }} />}
 
-      {/* Si hay imagen */}
+      {/* Raster map image */}
       {imageSrc && (
         <img src={imageSrc} alt={title} className="mx-auto mb-4 w-full max-w-md rounded-lg border border-white/10" />
       )}
 
-      {/* Lista de regiones */}
+      {/* Region list */}
       {regions.length > 0 && (
         <div className="mt-4 grid grid-cols-1 gap-2 md:grid-cols-2">
           {regions.map((region: MapRegion, idx: number) => (

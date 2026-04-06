@@ -1,4 +1,4 @@
-// Importar todas las categorías de logros
+// Import all achievement categories
 export { FIRST_STEPS_BADGES } from './firstSteps';
 export { STREAK_BADGES } from './streaks';
 export { ACADEMIC_BADGES } from './academic';

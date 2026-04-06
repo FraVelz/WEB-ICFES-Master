@@ -1,18 +1,17 @@
 /**
- * CONFIGURACIÓN CENTRAL DE API
- * Este archivo centraliza toda la configuración de conexión
- * Permite cambiar entre localStorage y supabase.
- * La lógica que depende del modo debe usar `@/services/persistence` (helpers isSupabaseMode, etc.).
+ * Central API configuration
+ * Single place for connection settings; switch between localStorage and Supabase.
+ * Mode-dependent logic should use `@/services/persistence` (isSupabaseMode, etc.).
  */
 
-// Cambiar estos valores según el ambiente (Next.js usa NEXT_PUBLIC_ para cliente)
+// Tune for your environment (Next.js exposes NEXT_PUBLIC_* to the client)
 const API_CONFIG = {
-  // 'supabase' para Supabase (producción)
-  // 'localStorage' para desarrollo local sin backend
+  // 'supabase' — Supabase (production)
+  // 'localStorage' — local dev without a backend
   MODE: process.env.NEXT_PUBLIC_API_MODE || 'supabase',
 };
 
-// Validar configuración
+// Validate configuration
 const validModes = ['localStorage', 'supabase'];
 if (!validModes.includes(API_CONFIG.MODE)) {
   console.warn('API_MODE inválido. Usando supabase por defecto');
