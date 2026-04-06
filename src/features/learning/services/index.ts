@@ -1,1 +1,1 @@
-export { default as LearningMaterialService } from './LearningMaterialService';
+export { LearningService } from './LearningService';

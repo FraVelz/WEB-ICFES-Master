@@ -5,9 +5,8 @@ import { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { Icon } from '@/shared/components/Icon';
-import { useUser } from '@/features/user/hooks/useUser';
 import { useAuth } from '@/context/AuthContext';
-import { useUserData, useProgress, useExam } from '@/hooks/FirestoreHooks';
+import { useUser, useUserData, useProgress, useExam } from '@/hooks';
 import { updateUsername, updateUserBio, updateProfileImage } from '@/shared/utils/userProfile';
 // import { DonationSection } from '@/features/home';
 

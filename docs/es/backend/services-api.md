@@ -61,19 +61,11 @@ Supabase              localStorage / roadmapData
 NEXT_PUBLIC_API_MODE=supabase     # 'supabase' | 'localStorage'
 ```
 
-### 2. **BaseService.js** (modo localStorage)
+### 2. **Capa legacy eliminada**
 
-- **Ubicación**: `src/services/BaseService.js`
-- **Uso**: Servicios que extienden BaseService cuando `MODE === 'localStorage'`
-- **Métodos**: `get(id?)`, `create(data)`, `update(id, data)`, `delete(id)`
+Las clases genéricas `BaseService` y `SupabaseService` en `src/services/` se retiraron: la app usa `@/services/persistence` y los `*SupabaseService` concretos.
 
-### 3. **SupabaseService.js** (Clase base para Supabase)
-
-- **Ubicación**: `src/services/SupabaseService.js`
-- **Responsabilidad**: Operaciones CRUD con Supabase, mapeo snake_case ↔ camelCase
-- **Métodos**: `get()`, `getByUserId()`, `create()`, `update()`, `delete()`
-
-### 4. **Servicios Supabase** (`src/services/supabase/`)
+### 3. **Servicios Supabase** (`src/services/supabase/`)
 
 Servicios que conectan directamente con tablas de PostgreSQL en Supabase:
 
@@ -85,25 +77,21 @@ Servicios que conectan directamente con tablas de PostgreSQL en Supabase:
 | **ExamSupabaseService**         | `exam_results`      | Exámenes completados, scores, respuestas           |
 | **LearningSupabaseService**     | `learning_content`  | Lecciones por área, contenido, quizzes             |
 
-### 5. **GamificationServiceAdapter**
+### 4. **GamificationServiceAdapter**
 
 - **Ubicación**: `src/services/GamificationServiceAdapter.js`
 - **Propósito**: Adaptador que selecciona GamificationSupabaseService o GamificationLocalService según `API_CONFIG.MODE`
 - **Métodos**: `addXP()`, `addCoins()`, `spendCoins()`, `getProfile()`
 
-### 6. **Servicios por Feature** (`src/features/*/services/`)
+### 5. **Servicios por Feature** (`src/features/*/services/`)
 
 | Feature      | Servicio                | Descripción                                                                          |
 | ------------ | ----------------------- | ------------------------------------------------------------------------------------ |
-| **user**     | UserService             | Extiende BaseService. useUserData usa UserSupabaseService o utils                    |
-| **progress** | ProgressService         | Extiende BaseService. useProgress usa ProgressSupabaseService o progressStorage      |
-| **logros**   | GamificationService     | Extiende BaseService. useGamification usa GamificationSupabaseService o localStorage |
-| **logros**   | AchievementService      | Lógica de logros desbloqueables                                                      |
-| **exam**     | ExamService             | Extiende BaseService. useExam usa ExamSupabaseService o progressStorage              |
-| **exam**     | ExamDataService         | Carga de preguntas                                                                   |
-| **exam**     | TestResultService       | Análisis de resultados                                                               |
-| **learning** | LearningService         | Supabase o roadmapData estático                                                      |
-| **learning** | LearningMaterialService | Material de estudio                                                                  |
+| **user**     | UserService             | useUserData usa UserSupabaseService o utils                                          |
+| **progress** | ProgressService         | useProgress usa ProgressSupabaseService o progressStorage                            |
+| **logros**   | GamificationService     | useGamification usa GamificationSupabaseService o localStorage                        |
+| **exam**     | ExamService             | useExam usa ExamSupabaseService o progressStorage                                    |
+| **learning** | LearningService         | Supabase o roadmapData estático (`learning_content` vía LearningSupabaseService)     |
 | **store**    | SubscriptionPlanService | Planes (localStorage por ahora)                                                      |
 | **store**    | PlanScheduleService     | Verificación de planes                                                               |
 | **auth**     | AuthService             | Verificación de códigos reset (local)                                                |
@@ -411,20 +399,13 @@ NEXT_PUBLIC_API_MODE=localStorage
 
 ```javascript
 import {
-  UserService,
-  ProgressService,
-  GamificationService,
-  ExamService,
-  BaseService,
   SubscriptionPlanService,
   PlanScheduleService,
-  ExamDataService,
-  LearningMaterialService,
-  AchievementService,
-  TestResultService,
   BADGES,
   LEVELS,
 } from '@/services';
+
+import * as persistence from '@/services/persistence';
 
 import GamificationServiceAdapter from '@/services/GamificationServiceAdapter';
 ```

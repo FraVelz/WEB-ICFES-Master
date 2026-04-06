@@ -150,7 +150,7 @@ export const Comprension = () => {
       <div className="relative z-10 mx-auto max-w-4xl px-6 py-10">
         <div className="mb-12 flex items-center justify-between">
           <Link
-            href="/aprendizaje"
+            href="/ruta-aprendizaje"
             className="flex items-center gap-3 text-gray-400 transition-colors hover:text-blue-400"
           >
             <Icon name="arrow-left" className="text-xl" />
@@ -244,7 +244,7 @@ export const Comprension = () => {
 
         <div className="text-center">
           <Link
-            href="/aprendizaje"
+            href="/ruta-aprendizaje"
             className={cn(
               'inline-block rounded-xl bg-linear-to-r from-purple-600 to-purple-700 px-8 py-3',
               'font-semibold text-white transition-all duration-300 hover:scale-105 hover:from-purple-700',

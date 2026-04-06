@@ -164,5 +164,5 @@ In `src/utils/quiz.ts`:
 - `HomePage` - Home page
 - `PracticePage` - Practice page
 - `FullExamPage` - Full exam
-- `LearningPage` - Study material
+- `LearningRoadmapPage` - Learning path (`/ruta-aprendizaje`)
 - `ProgressPage` - Progress tracking

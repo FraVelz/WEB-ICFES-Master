@@ -8,6 +8,7 @@ Bienvenido a la documentación técnica del proyecto. Esta documentación está 
 
 - **[Resumen Ejecutivo](executive-summary.md)**: Visión de alto nivel para managers y nuevos integrantes.
 - **[Estructura del Proyecto](project-structure.md)**: Explicación de la arquitectura de carpetas y módulos.
+- **[Redundancias y limpieza](architecture-redundancies.md)**: Mapa de rutas activas y notas tras depurar código duplicado.
 
 ### 2. Configuración (`/setup`)
 
