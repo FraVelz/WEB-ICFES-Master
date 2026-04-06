@@ -219,7 +219,7 @@ export const ChatAssistant = () => {
                 <p className="mb-2 text-sm text-slate-400">¿Tienes preguntas sobre el ICFES?</p>
                 <p className="text-xs text-slate-500">
                   {isAnonymous
-                    ? `Sin cuenta puedes hacer hasta ${CHAT_ANON_LIMIT} preguntas (se guarda en este dispositivo).`
+                    ? `Sin cuenta puedes hacer hasta ${CHAT_ANON_LIMIT} preguntas.`
                     : 'Escribe aquí y te ayudaré con tus dudas'}
                 </p>
               </div>

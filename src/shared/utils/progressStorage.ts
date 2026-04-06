@@ -1,4 +1,8 @@
-// Utilidades para almacenar y recuperar datos de progreso en localStorage
+/**
+ * Progreso y exámenes en **localStorage** (solo cliente).
+ * No sustituye persistencia en servidor; ver documentación en
+ * `docs/es/data/progreso-cliente-local.md` (EN: `docs/en/data/client-local-progress.md`).
+ */
 
 export interface AreaStatItem {
   name: string;

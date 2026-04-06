@@ -18,16 +18,36 @@ export interface LessonAreaLinksProps {
 }
 
 /**
- * Enlaces a rutas dinámicas de práctica (`/practica/[area]`) y de lecciones (`/lessons/[area]/[topic]`).
+ * Enlaces a `/examen-completo`, práctica (`/practica/[area]`) y lecciones (`/lessons/[area]/[topic]`).
  */
 export const LessonAreaLinks = ({ roadmapAreaId, className }: LessonAreaLinksProps) => {
   const practicaHref = getPracticaHrefForRoadmapArea(roadmapAreaId);
   const lessonRoutes = getLessonRoutesForRoadmapArea(roadmapAreaId);
+  const showFullExamLink = roadmapAreaId === 'examen-completo';
 
-  if (!practicaHref && lessonRoutes.length === 0) return null;
+  if (!showFullExamLink && !practicaHref && lessonRoutes.length === 0) return null;
 
   return (
     <div className={cn('mx-auto mb-10 max-w-2xl space-y-8 px-4', className)}>
+      {showFullExamLink && (
+        <div>
+          <p className="mb-3 text-center text-xs font-semibold tracking-wider text-slate-500 uppercase">
+            Simulacro
+          </p>
+          <div className="flex flex-wrap justify-center gap-2">
+            <Link
+              href="/examen-completo"
+              className={cn(
+                'rounded-full border border-pink-500/40 bg-pink-500/10 px-4 py-2 text-sm font-semibold text-pink-200',
+                'transition-colors hover:border-pink-400/60 hover:bg-pink-500/20 hover:text-white'
+              )}
+            >
+              Ir al examen completo ICFES
+            </Link>
+          </div>
+        </div>
+      )}
+
       {practicaHref && (
         <div>
           <p className="mb-3 text-center text-xs font-semibold tracking-wider text-slate-500 uppercase">

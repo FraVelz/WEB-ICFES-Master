@@ -1,3 +1,2 @@
-export * from './useExam';
-export * from './useExam';
-export * from './useQuizLogic';
+export { useExam } from './useExam';
+export { useQuizLogic } from './useQuizLogic';
