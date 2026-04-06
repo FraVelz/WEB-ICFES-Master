@@ -1,4 +1,5 @@
 import React from 'react';
+import { cn } from '@/utils/cn';
 
 interface BadgeProps {
   children: React.ReactNode;
@@ -20,7 +21,11 @@ export const Badge = ({ children, variant = 'default', className = '' }: BadgePr
 
   return (
     <span
-      className={`inline-block rounded-full px-4 py-2 text-sm font-bold ${variants[variant] ?? variants.default} ${className} shadow-sm`}
+      className={cn(
+        'inline-block rounded-full px-4 py-2 text-sm font-bold shadow-sm',
+        variants[variant] ?? variants.default,
+        className
+      )}
     >
       {children}
     </span>

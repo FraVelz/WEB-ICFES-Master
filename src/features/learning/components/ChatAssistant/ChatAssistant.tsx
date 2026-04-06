@@ -1,5 +1,6 @@
 'use client';
 
+import { cn } from '@/utils/cn';
 import { useState, useRef, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import ReactMarkdown from 'react-markdown';
@@ -161,7 +162,12 @@ export const ChatAssistant = () => {
       {/* Botón flotante */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="fixed right-6 bottom-6 z-50 flex h-14 w-14 cursor-pointer items-center justify-center rounded-full border-2 border-cyan-400/50 bg-linear-to-r from-cyan-500 to-blue-600 text-white shadow-lg shadow-cyan-500/30 transition-all duration-300 hover:scale-110 hover:shadow-cyan-500/50"
+        className={cn(
+          'fixed right-6 bottom-6 z-50 flex h-14 w-14 cursor-pointer items-center justify-center',
+          'rounded-full border-2 border-cyan-400/50 bg-linear-to-r from-cyan-500 to-blue-600',
+          'text-white shadow-lg shadow-cyan-500/30 transition-all duration-300 hover:scale-110',
+          'hover:shadow-cyan-500/50'
+        )}
         aria-label="Abrir asistente de chat"
       >
         <Icon name="message" size="xl" />
@@ -171,7 +177,11 @@ export const ChatAssistant = () => {
       {isOpen && (
         <div
           ref={chatPanelRef}
-          className="fixed right-6 bottom-24 z-50 flex h-[min(500px,70vh)] w-[min(400px,calc(100vw-3rem))] flex-col overflow-hidden rounded-2xl border border-cyan-500/30 bg-slate-900/98 shadow-2xl shadow-cyan-500/20 backdrop-blur-xl"
+          className={cn(
+            'fixed right-6 bottom-24 z-50 flex h-[min(500px,70vh)] w-[min(400px,calc(100vw-3rem))]',
+            'flex-col overflow-hidden rounded-2xl border border-cyan-500/30 bg-slate-900/98 shadow-2xl',
+            'shadow-cyan-500/20 backdrop-blur-xl'
+          )}
         >
           {/* Header */}
           <div className="flex items-center justify-between border-b border-cyan-500/20 bg-linear-to-r from-cyan-600/30 to-blue-600/30 px-4 py-3">
@@ -216,11 +226,12 @@ export const ChatAssistant = () => {
             )}
 
             {messages.map((msg) => (
-              <div key={msg.id} className={`flex gap-3 ${msg.role === 'user' ? 'flex-row-reverse' : ''}`}>
+              <div key={msg.id} className={cn('flex gap-3', msg.role === 'user' && 'flex-row-reverse')}>
                 <div
-                  className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full ${
+                  className={cn(
+                    'flex h-8 w-8 shrink-0 items-center justify-center rounded-full',
                     msg.role === 'user' ? 'bg-blue-500/30' : 'bg-cyan-500/30'
-                  }`}
+                  )}
                 >
                   <Icon
                     name={msg.role === 'user' ? 'user' : 'robot'}
@@ -228,14 +239,20 @@ export const ChatAssistant = () => {
                   />
                 </div>
                 <div
-                  className={`max-w-[85%] rounded-2xl px-4 py-2.5 ${
+                  className={cn(
+                    'max-w-[85%] rounded-2xl px-4 py-2.5',
                     msg.role === 'user'
                       ? 'rounded-br-md border border-blue-500/30 bg-blue-500/30'
                       : 'rounded-bl-md border border-slate-700/50 bg-slate-800/80'
-                  }`}
+                  )}
                 >
                   {msg.role === 'assistant' ? (
-                    <div className="text-sm leading-relaxed text-white [&_code]:rounded [&_code]:bg-slate-700/50 [&_code]:px-1 [&_li]:ml-4 [&_ol]:my-2 [&_p]:my-1 [&_strong]:font-semibold [&_ul]:my-2">
+                    <div
+                      className={cn(
+                        'text-sm leading-relaxed text-white [&_code]:rounded [&_code]:bg-slate-700/50 [&_code]:px-1',
+                        '[&_li]:ml-4 [&_ol]:my-2 [&_p]:my-1 [&_strong]:font-semibold [&_ul]:my-2'
+                      )}
+                    >
                       <ReactMarkdown>{msg.content}</ReactMarkdown>
                     </div>
                   ) : (
@@ -291,12 +308,20 @@ export const ChatAssistant = () => {
                   onKeyDown={handleKeyDown}
                   placeholder="Escribe tu pregunta..."
                   disabled={isTyping}
-                  className="flex-1 rounded-xl border border-slate-600 bg-slate-800 px-4 py-3 text-white placeholder-slate-500 transition-all focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/30 focus:outline-none disabled:opacity-60"
+                  className={cn(
+                    'flex-1 rounded-xl border border-slate-600 bg-slate-800 px-4 py-3 text-white',
+                    'placeholder-slate-500 transition-all focus:border-cyan-500 focus:ring-2',
+                    'focus:ring-cyan-500/30 focus:outline-none disabled:opacity-60'
+                  )}
                 />
                 <button
                   onClick={handleSend}
                   disabled={!inputValue.trim() || isTyping}
-                  className="cursor-pointer rounded-xl bg-linear-to-r from-cyan-500 to-blue-600 px-4 py-3 text-white transition-all hover:from-cyan-600 hover:to-blue-700 disabled:cursor-not-allowed disabled:opacity-50"
+                  className={cn(
+                    'cursor-pointer rounded-xl bg-linear-to-r from-cyan-500 to-blue-600 px-4 py-3 text-white',
+                    'transition-all hover:from-cyan-600 hover:to-blue-700 disabled:cursor-not-allowed',
+                    'disabled:opacity-50'
+                  )}
                 >
                   <Icon name="paper-plane" />
                 </button>

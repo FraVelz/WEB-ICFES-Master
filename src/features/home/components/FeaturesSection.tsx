@@ -1,4 +1,5 @@
 import { Icon } from '@/shared/components/Icon';
+import { cn } from '@/utils/cn';
 import { WHY_CHOOSE_US } from '@/features/home/data';
 import { AnimatedReveal } from '@/shared/components/AnimatedReveal';
 
@@ -25,7 +26,11 @@ export const FeaturesSection = ({
             key={idx}
             isVisible={whyChooseSection.isVisible}
             delay={idx * 0.12}
-            className={`bg-linear-to-br ${feature.color} group rounded-xl border border-slate-700 p-8 transition-all duration-300 hover:scale-105 hover:border-slate-500 hover:shadow-lg`}
+            className={cn(
+              'group rounded-xl border border-slate-700 p-8 transition-all duration-300',
+              'hover:scale-105 hover:border-slate-500 hover:shadow-lg',
+              `bg-linear-to-br ${feature.color}`
+            )}
           >
             <div className="mb-4 text-5xl text-white transition-transform group-hover:scale-110">
               <Icon name={feature.icon} size="2xl" />

@@ -25,6 +25,8 @@
  *   description="Territorios destacados"
  * />
  */
+import { cn } from '@/utils/cn';
+
 interface MapRegion {
   name?: string;
   highlight?: boolean;
@@ -58,11 +60,12 @@ export const MapContent = ({ title, description, imageSrc, regions = [], svgCont
           {regions.map((region: MapRegion, idx: number) => (
             <div
               key={idx}
-              className={`rounded p-2 px-3 text-xs font-medium transition-colors ${
+              className={cn(
+                'rounded p-2 px-3 text-xs font-medium transition-colors',
                 region.highlight
                   ? 'border border-purple-500/50 bg-purple-500/30 text-purple-200'
                   : 'border border-white/10 bg-white/5 text-gray-300'
-              }`}
+              )}
             >
               <span className="font-semibold">{region.name}</span>
               {region.info && <span className="ml-2 text-gray-400">{region.info}</span>}

@@ -1,5 +1,6 @@
 'use client';
 
+import { cn } from '@/utils/cn';
 import { Icon } from '@/shared/components/Icon';
 import { AREA_INFO } from '@/shared/constants';
 import { useGSAPModalEntrance } from '@/hooks/useGSAPModalEntrance';
@@ -52,16 +53,18 @@ export const AreasModal = ({ isOpen, onClose, onSelectArea, currentArea }: Areas
                   onSelectArea(areaKey);
                   onClose();
                 }}
-                className={`flex w-full cursor-pointer items-center gap-3 rounded-xl px-4 py-3 transition-all ${
+                className={cn(
+                  'flex w-full cursor-pointer items-center gap-3 rounded-xl px-4 py-3 transition-all',
                   currentArea === areaKey
-                    ? `bg-linear-to-r ${areaData.color} text-white shadow-lg`
+                    ? ['bg-linear-to-r text-white shadow-lg', areaData.color]
                     : 'bg-slate-800/50 text-slate-300 hover:bg-slate-800'
-                }`}
+                )}
               >
                 <div
-                  className={`flex h-8 w-8 items-center justify-center rounded-lg ${
+                  className={cn(
+                    'flex h-8 w-8 items-center justify-center rounded-lg',
                     currentArea === areaKey ? 'bg-white/20' : 'bg-slate-700/50'
-                  }`}
+                  )}
                 >
                   <Icon
                     name={areaData.icon ?? 'book'}

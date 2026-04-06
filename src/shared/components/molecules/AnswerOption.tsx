@@ -1,3 +1,4 @@
+import { cn } from '@/utils/cn';
 import { Icon } from '@/shared/components/Icon';
 import { Button } from '../atoms/Button';
 import { Card } from '../atoms/Card';
@@ -47,11 +48,19 @@ export const AnswerOption = ({
     <button
       onClick={onClick}
       disabled={disabled}
-      className={`mb-4 w-full rounded-3xl p-4 text-left transition-all duration-300 ${getBackgroundColor()} ${getTextColor()} ${disabled ? 'cursor-not-allowed opacity-70' : 'cursor-pointer hover:scale-105 hover:shadow-2xl'} group flex items-start gap-6 shadow-lg`}
+      className={cn(
+        'group mb-4 flex w-full items-start gap-6 rounded-3xl p-4 text-left shadow-lg transition-all duration-300',
+        getBackgroundColor(),
+        getTextColor(),
+        disabled ? 'cursor-not-allowed opacity-70' : 'cursor-pointer hover:scale-105 hover:shadow-2xl'
+      )}
     >
       <div className="mt-1 min-w-fit">
         <span
-          className={`inline-flex h-12 w-12 items-center justify-center ${getLetterColor()} shrink-0 rounded-2xl text-lg font-black transition-all duration-300 group-hover:scale-110`}
+          className={cn(
+            'inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl text-lg font-black transition-all duration-300 group-hover:scale-110',
+            getLetterColor()
+          )}
         >
           {letter}
         </span>
@@ -60,7 +69,7 @@ export const AnswerOption = ({
         <p className="text-left text-lg leading-relaxed md:text-xl">{text}</p>
       </div>
       {(correct || incorrect) && (
-        <div className={`shrink-0 ${correct ? 'animate-bounce text-green-400' : 'text-red-400'}`}>
+        <div className={cn('shrink-0', correct ? 'animate-bounce text-green-400' : 'text-red-400')}>
           <Icon name={correct ? 'check' : 'times'} className="text-2xl" />
         </div>
       )}

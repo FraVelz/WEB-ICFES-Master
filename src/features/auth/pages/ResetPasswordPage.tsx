@@ -1,4 +1,5 @@
 'use client';
+import { cn } from '@/utils/cn';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
@@ -90,7 +91,12 @@ export const ResetPasswordPage = () => {
 
   if (verifying) {
     return (
-      <div className="flex min-h-dvh items-center justify-center overflow-hidden bg-linear-to-b from-black via-slate-950 to-black px-6 text-white">
+      <div
+        className={cn(
+          'flex min-h-dvh items-center justify-center overflow-hidden bg-linear-to-b from-black',
+          'via-slate-950 to-black px-6 text-white'
+        )}
+      >
         <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
           <div className="absolute top-1/3 left-1/4 h-96 w-96 animate-pulse rounded-full bg-blue-500/30 blur-3xl"></div>
           <div className="absolute right-1/4 bottom-1/3 h-96 w-96 animate-pulse rounded-full bg-purple-500/30 blur-3xl"></div>
@@ -104,7 +110,12 @@ export const ResetPasswordPage = () => {
   }
 
   return (
-    <div className="flex min-h-dvh items-center justify-center overflow-hidden bg-linear-to-b from-black via-slate-950 to-black px-6 text-white">
+    <div
+      className={cn(
+        'flex min-h-dvh items-center justify-center overflow-hidden bg-linear-to-b from-black',
+        'via-slate-950 to-black px-6 text-white'
+      )}
+    >
       {/* Background glow effects */}
       <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
         <div className="absolute top-1/3 left-1/4 h-96 w-96 animate-pulse rounded-full bg-blue-500/30 blur-3xl"></div>
@@ -123,7 +134,12 @@ export const ResetPasswordPage = () => {
             </div>
 
             <div>
-              <h1 className="mb-4 bg-linear-to-r from-green-400 via-cyan-400 to-blue-400 bg-clip-text text-3xl font-black text-transparent md:text-4xl">
+              <h1
+                className={cn(
+                  'mb-4 bg-linear-to-r from-green-400 via-cyan-400 to-blue-400 bg-clip-text text-3xl',
+                  'font-black text-transparent md:text-4xl'
+                )}
+              >
                 {EMAIL_MESSAGES.resetPasswordPage.successTitle}
               </h1>
               <p className="text-slate-400">{EMAIL_MESSAGES.resetPasswordPage.successMessage}</p>
@@ -131,7 +147,10 @@ export const ResetPasswordPage = () => {
 
             <Link
               href="/login"
-              className="block rounded-lg bg-linear-to-r from-cyan-500 to-blue-600 px-4 py-3 text-center font-bold text-white transition-all hover:shadow-lg hover:shadow-cyan-500/50"
+              className={cn(
+                'block rounded-lg bg-linear-to-r from-cyan-500 to-blue-600 px-4 py-3 text-center font-bold',
+                'text-white transition-all hover:shadow-lg hover:shadow-cyan-500/50'
+              )}
             >
               {EMAIL_MESSAGES.resetPasswordPage.goToLoginButton}
             </Link>
@@ -145,7 +164,12 @@ export const ResetPasswordPage = () => {
                   <Icon name="lock" size="2xl" className="text-2xl text-cyan-400" />
                 </div>
               </div>
-              <h1 className="mb-4 bg-linear-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-3xl font-black text-transparent md:text-4xl">
+              <h1
+                className={cn(
+                  'mb-4 bg-linear-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-3xl',
+                  'font-black text-transparent md:text-4xl'
+                )}
+              >
                 {EMAIL_MESSAGES.resetPasswordPage.title}
               </h1>
               <p className="text-slate-400">{EMAIL_MESSAGES.resetPasswordPage.subtitle}</p>
@@ -174,7 +198,10 @@ export const ResetPasswordPage = () => {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     placeholder={EMAIL_MESSAGES.resetPasswordPage.passwordPlaceholder}
-                    className="w-full rounded-lg border border-slate-700 bg-slate-800/50 py-3 pr-10 pl-10 transition-all focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/30 focus:outline-none"
+                    className={cn(
+                      'w-full rounded-lg border border-slate-700 bg-slate-800/50 py-3 pr-10 pl-10 transition-all',
+                      'focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/30 focus:outline-none'
+                    )}
                   />
                   <button
                     type="button"
@@ -199,7 +226,10 @@ export const ResetPasswordPage = () => {
                     value={confirmPassword}
                     onChange={(e) => setConfirmPassword(e.target.value)}
                     placeholder={EMAIL_MESSAGES.resetPasswordPage.passwordPlaceholder}
-                    className="w-full rounded-lg border border-slate-700 bg-slate-800/50 py-3 pr-10 pl-10 transition-all focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/30 focus:outline-none"
+                    className={cn(
+                      'w-full rounded-lg border border-slate-700 bg-slate-800/50 py-3 pr-10 pl-10 transition-all',
+                      'focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/30 focus:outline-none'
+                    )}
                   />
                   <button
                     type="button"
@@ -236,7 +266,11 @@ export const ResetPasswordPage = () => {
               <button
                 type="submit"
                 disabled={isLoading}
-                className="w-full rounded-lg bg-linear-to-r from-cyan-500 to-blue-600 px-4 py-3 font-bold text-white transition-all duration-300 hover:shadow-lg hover:shadow-cyan-500/50 disabled:cursor-not-allowed disabled:opacity-50"
+                className={cn(
+                  'w-full rounded-lg bg-linear-to-r from-cyan-500 to-blue-600 px-4 py-3 font-bold text-white',
+                  'transition-all duration-300 hover:shadow-lg hover:shadow-cyan-500/50',
+                  'disabled:cursor-not-allowed disabled:opacity-50'
+                )}
               >
                 {isLoading
                   ? EMAIL_MESSAGES.resetPasswordPage.buttonLoadingText

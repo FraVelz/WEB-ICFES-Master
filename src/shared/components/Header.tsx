@@ -1,4 +1,5 @@
 'use client';
+import { cn } from '@/utils/cn';
 import { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -28,22 +29,41 @@ export const Header = () => {
     <>
       {/* Header Desktop - Sidebar Izquierda */}
       <header
-        className={`sticky top-0 z-50 hidden h-screen flex-col border-r border-cyan-500/20 bg-slate-950/95 shadow-2xl shadow-cyan-500/10 backdrop-blur-xl transition-all duration-300 lg:flex ${sidebarExpanded ? 'w-72' : 'w-20'}`}
+        className={cn(
+          'sticky top-0 z-50 hidden h-screen flex-col border-r border-cyan-500/20 bg-slate-950/95',
+          'shadow-2xl shadow-cyan-500/10 backdrop-blur-xl transition-all duration-300 lg:flex',
+          sidebarExpanded ? 'w-72' : 'w-20'
+        )}
       >
         {/* 1. Logo & Brand */}
         <div
-          className={`relative flex shrink-0 flex-col items-center justify-center gap-0 border-b border-cyan-500/10 ${sidebarExpanded ? 'h-24' : 'h-auto py-4'}`}
+          className={cn(
+            'relative flex shrink-0 flex-col items-center justify-center gap-0 border-b border-cyan-500/10',
+            sidebarExpanded ? 'h-24' : 'h-auto py-4'
+          )}
         >
           {/* Logo - siempre visible */}
           <Link
             href="/"
-            className={`flex shrink-0 items-center gap-3 transition-all duration-300 ${sidebarExpanded ? 'absolute left-[18px]' : 'justify-center'}`}
+            className={cn(
+              'flex shrink-0 items-center gap-3 transition-all duration-300',
+              sidebarExpanded ? 'absolute left-[18px]' : 'justify-center'
+            )}
           >
-            <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-linear-to-br from-cyan-500 via-blue-500 to-purple-600 shadow-lg shadow-cyan-500/30">
+            <div
+              className={cn(
+                'flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-linear-to-br',
+                'from-cyan-500 via-blue-500 to-purple-600 shadow-lg shadow-cyan-500/30'
+              )}
+            >
               <Icon name="rocket" size="lg" className="text-white" />
             </div>
             <span
-              className={`bg-linear-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-xl font-bold whitespace-nowrap text-transparent transition-opacity duration-300 ${sidebarExpanded ? 'pl-2 opacity-100' : 'w-0 overflow-hidden opacity-0'}`}
+              className={cn(
+                'bg-linear-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-xl font-bold',
+                'whitespace-nowrap text-transparent transition-opacity duration-300',
+                sidebarExpanded ? 'pl-2 opacity-100' : 'w-0 overflow-hidden opacity-0'
+              )}
             >
               ICFES Master
             </span>
@@ -51,7 +71,11 @@ export const Header = () => {
           {/* Botón toggle barra lateral - abajo cuando cerrado, a la derecha cuando expandido */}
           <button
             onClick={() => setSidebarExpanded(!sidebarExpanded)}
-            className={`flex h-8 w-8 shrink-0 cursor-pointer items-center justify-center rounded-lg text-slate-400 transition-colors hover:bg-white/10 hover:text-cyan-400 ${sidebarExpanded ? 'absolute top-1/2 right-2 -translate-y-1/2' : 'mt-3'}`}
+            className={cn(
+              'flex h-8 w-8 shrink-0 cursor-pointer items-center justify-center rounded-lg text-slate-400',
+              'transition-colors hover:bg-white/10 hover:text-cyan-400',
+              sidebarExpanded ? 'absolute top-1/2 right-2 -translate-y-1/2' : 'mt-3'
+            )}
             aria-label={sidebarExpanded ? 'Cerrar barra lateral' : 'Abrir barra lateral'}
           >
             <Icon name={sidebarExpanded ? 'chevron-left' : 'chevron-right'} size="lg" />
@@ -65,17 +89,21 @@ export const Header = () => {
             <Link
               key={option.path}
               href={option.path}
-              className={`group/item relative flex h-12 items-center rounded-xl px-3 transition-all duration-300 ${
+              className={cn(
+                'group/item relative flex h-12 items-center rounded-xl px-3 transition-all duration-300',
                 pathname === option.path
                   ? 'bg-cyan-500/10 text-cyan-400 shadow-lg shadow-cyan-500/5'
                   : 'text-slate-400 hover:bg-white/5 hover:text-white'
-              }`}
+              )}
             >
               <div className="flex w-6 shrink-0 justify-center">
                 <Icon name={option.icon} size="lg" />
               </div>
               <span
-                className={`absolute left-14 font-medium whitespace-nowrap transition-opacity duration-300 ${sidebarExpanded ? 'opacity-100' : 'opacity-0'}`}
+                className={cn(
+                  'absolute left-14 font-medium whitespace-nowrap transition-opacity duration-300',
+                  sidebarExpanded ? 'opacity-100' : 'opacity-0'
+                )}
               >
                 {option.label}
               </span>
@@ -92,17 +120,21 @@ export const Header = () => {
           {/* Secondary Options */}
           <Link
             href="/desafios-diarios"
-            className={`group/item relative flex h-12 items-center rounded-xl px-3 transition-all duration-300 ${
+            className={cn(
+              'group/item relative flex h-12 items-center rounded-xl px-3 transition-all duration-300',
               pathname === '/desafios-diarios'
                 ? 'bg-orange-500/10 text-orange-400'
                 : 'text-slate-400 hover:bg-white/5 hover:text-white'
-            }`}
+            )}
           >
             <div className="flex w-6 shrink-0 justify-center">
               <Icon name="fire" size="lg" />
             </div>
             <span
-              className={`absolute left-14 font-medium whitespace-nowrap transition-opacity duration-300 ${sidebarExpanded ? 'opacity-100' : 'opacity-0'}`}
+              className={cn(
+                'absolute left-14 font-medium whitespace-nowrap transition-opacity duration-300',
+                sidebarExpanded ? 'opacity-100' : 'opacity-0'
+              )}
             >
               Desafíos
             </span>
@@ -114,12 +146,18 @@ export const Header = () => {
           {/* Coins Display */}
           <div className="relative mb-4 flex h-10 items-center overflow-hidden rounded-lg border border-amber-500/20 bg-slate-800/50">
             <div
-              className={`absolute left-0 flex w-full shrink-0 justify-center transition-all duration-300 ${sidebarExpanded ? '-left-full' : ''}`}
+              className={cn(
+                'absolute left-0 flex w-full shrink-0 justify-center transition-all duration-300',
+                sidebarExpanded && '-left-full'
+              )}
             >
               <Icon name="coins" className="text-amber-400" />
             </div>
             <div
-              className={`flex w-full items-center gap-3 px-3 transition-opacity duration-300 ${sidebarExpanded ? 'opacity-100' : 'opacity-0'}`}
+              className={cn(
+                'flex w-full items-center gap-3 px-3 transition-opacity duration-300',
+                sidebarExpanded ? 'opacity-100' : 'opacity-0'
+              )}
             >
               <Icon name="coins" className="text-amber-400" />
               <span className="font-bold whitespace-nowrap text-amber-400">{virtualMoney}</span>
@@ -141,7 +179,10 @@ export const Header = () => {
               )}
             </div>
             <div
-              className={`absolute left-16 overflow-hidden whitespace-nowrap transition-opacity duration-300 ${sidebarExpanded ? 'opacity-100' : 'opacity-0'}`}
+              className={cn(
+                'absolute left-16 overflow-hidden whitespace-nowrap transition-opacity duration-300',
+                sidebarExpanded ? 'opacity-100' : 'opacity-0'
+              )}
             >
               <p className="max-w-[140px] truncate text-sm font-bold text-white">{user?.username || 'Usuario'}</p>
               <p className="text-xs text-cyan-400">{rank?.name || 'Novato'}</p>
@@ -159,17 +200,23 @@ export const Header = () => {
       </header>
 
       {/* Mobile Bottom Navigation */}
-      <nav className="fixed right-0 bottom-0 left-0 z-50 border-t border-cyan-500/20 bg-linear-to-t from-slate-950/95 via-slate-950/90 to-slate-950/80 backdrop-blur-xl lg:hidden">
+      <nav
+        className={cn(
+          'fixed right-0 bottom-0 left-0 z-50 border-t border-cyan-500/20 bg-linear-to-t',
+          'from-slate-950/95 via-slate-950/90 to-slate-950/80 backdrop-blur-xl lg:hidden'
+        )}
+      >
         <div className="flex h-20 items-center justify-around">
           {mainOptions.map((option) => (
             <Link
               key={option.path}
               href={option.path}
-              className={`flex h-20 w-16 flex-col items-center justify-center transition-all duration-300 ${
+              className={cn(
+                'flex h-20 w-16 flex-col items-center justify-center transition-all duration-300',
                 pathname === option.path
                   ? 'border-t-2 border-cyan-500 text-cyan-400'
                   : 'text-slate-400 hover:text-white'
-              }`}
+              )}
             >
               <Icon name={option.icon} size="xl" className="mb-1" />
             </Link>
@@ -190,7 +237,12 @@ export const Header = () => {
 
       {/* Mobile Options Menu Dropdown */}
       {mobileOptionsMenuOpen && (
-        <div className="fixed right-0 bottom-20 left-0 z-50 h-fit w-screen border-t border-cyan-500/30 bg-slate-900/98 backdrop-blur-xl lg:hidden">
+        <div
+          className={cn(
+            'fixed right-0 bottom-20 left-0 z-50 h-fit w-screen border-t border-cyan-500/30',
+            'bg-slate-900/98 backdrop-blur-xl lg:hidden'
+          )}
+        >
           <div className="flex flex-col divide-y divide-slate-700/50">
             {mobileMenuOptions.map((option) => (
               <Link

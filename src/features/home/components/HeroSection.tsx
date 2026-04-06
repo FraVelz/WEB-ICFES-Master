@@ -1,5 +1,6 @@
 'use client';
 
+import { cn } from '@/utils/cn';
 import Link from 'next/link';
 import { Icon } from '@/shared/components/Icon';
 import { AnimatedReveal } from '@/shared/components/AnimatedReveal';
@@ -33,7 +34,12 @@ export const HeroSection = ({ onDemoAccess }: { onDemoAccess: () => void }) => {
 
         {/* Main Title */}
         <AnimatedReveal isVisible delay={0.15}>
-          <h1 className="mb-6 bg-linear-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-5xl leading-tight font-black text-transparent md:text-7xl lg:text-8xl">
+          <h1
+            className={cn(
+              'mb-6 bg-linear-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-5xl',
+              'leading-tight font-black text-transparent md:text-7xl lg:text-8xl'
+            )}
+          >
             Domina el ICFES desde Cero
           </h1>
         </AnimatedReveal>
@@ -50,14 +56,22 @@ export const HeroSection = ({ onDemoAccess }: { onDemoAccess: () => void }) => {
         <AnimatedReveal isVisible delay={0.45} className="flex flex-col justify-center gap-4 pt-4 md:flex-row">
           <button
             onClick={handleDemoClick}
-            className="flex cursor-pointer items-center justify-center gap-2 rounded-lg bg-linear-to-r from-cyan-500 to-blue-600 px-8 py-4 text-lg font-bold text-white transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-cyan-500/50"
+            className={cn(
+              'flex cursor-pointer items-center justify-center gap-2 rounded-lg bg-linear-to-r',
+              'from-cyan-500 to-blue-600 px-8 py-4 text-lg font-bold text-white transition-all',
+              'duration-300 hover:scale-105 hover:shadow-lg hover:shadow-cyan-500/50'
+            )}
           >
             <Icon name="play" />
             Probar Demo
           </button>
           <Link
             href="/login"
-            className="flex items-center justify-center gap-2 rounded-lg border-2 border-cyan-500 px-8 py-4 text-lg font-bold text-white transition-all duration-300 hover:border-cyan-400 hover:bg-cyan-500/10 hover:shadow-lg hover:shadow-cyan-500/30"
+            className={cn(
+              'flex items-center justify-center gap-2 rounded-lg border-2 border-cyan-500 px-8 py-4',
+              'text-lg font-bold text-white transition-all duration-300 hover:border-cyan-400',
+              'hover:bg-cyan-500/10 hover:shadow-lg hover:shadow-cyan-500/30'
+            )}
           >
             <Icon name="rocket" />
             Iniciar Sesión

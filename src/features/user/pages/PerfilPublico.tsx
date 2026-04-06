@@ -1,5 +1,6 @@
 'use client';
 
+import { cn } from '@/utils/cn';
 import React, { useState, useEffect } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { Icon } from '@/shared/components/Icon';
@@ -106,11 +107,19 @@ export const PerfilPublico = () => {
 
       <div className="relative z-10 container mx-auto max-w-6xl px-4 py-8">
         {/* Header Profile Card */}
-        <div className="relative mb-8 overflow-hidden rounded-3xl border border-slate-800 bg-slate-900/80 p-6 shadow-2xl backdrop-blur-xl md:p-10">
+        <div
+          className={cn(
+            'relative mb-8 overflow-hidden rounded-3xl border border-slate-800 bg-slate-900/80 p-6',
+            'shadow-2xl backdrop-blur-xl md:p-10'
+          )}
+        >
           <div className="absolute top-0 right-0 flex gap-2 p-4">
             <button
               onClick={handleShare}
-              className="flex cursor-pointer items-center gap-2 rounded-lg bg-slate-800 p-2 text-sm font-medium text-cyan-400 transition-colors hover:bg-slate-700"
+              className={cn(
+                'flex cursor-pointer items-center gap-2 rounded-lg bg-slate-800 p-2 text-sm font-medium',
+                'text-cyan-400 transition-colors hover:bg-slate-700'
+              )}
               title="Copiar enlace"
             >
               <Icon name={copied ? 'check' : 'share-nodes'} />
@@ -118,7 +127,10 @@ export const PerfilPublico = () => {
             </button>
             <button
               onClick={handleReport}
-              className={`cursor-pointer rounded-lg bg-slate-800 p-2 transition-colors hover:bg-red-900/30 ${reported ? 'text-red-500' : 'text-slate-400 hover:text-red-400'}`}
+              className={cn(
+                'cursor-pointer rounded-lg bg-slate-800 p-2 transition-colors hover:bg-red-900/30',
+                reported ? 'text-red-500' : 'text-slate-400 hover:text-red-400'
+              )}
               title="Reportar usuario"
             >
               <Icon name="flag" />
@@ -135,7 +147,12 @@ export const PerfilPublico = () => {
                   className="h-full w-full rounded-full bg-slate-800 object-cover"
                 />
               </div>
-              <div className="absolute -right-2 -bottom-2 rounded-full border border-slate-700 bg-slate-900 px-3 py-1 text-xs font-bold text-purple-400 shadow-lg">
+              <div
+                className={cn(
+                  'absolute -right-2 -bottom-2 rounded-full border border-slate-700 bg-slate-900 px-3 py-1',
+                  'text-xs font-bold text-purple-400 shadow-lg'
+                )}
+              >
                 {levelInfo?.levelIcon} Nivel {levelInfo?.level || level}
               </div>
             </div>
@@ -172,7 +189,10 @@ export const PerfilPublico = () => {
                 </div>
                 <div className="h-4 overflow-hidden rounded-full border border-slate-700 bg-slate-800 shadow-inner">
                   <div
-                    className={`h-full bg-linear-to-r ${levelInfo?.levelColor || 'from-purple-500 to-purple-600'} shadow-lg transition-all duration-1000`}
+                    className={cn(
+                      'h-full bg-linear-to-r shadow-lg transition-all duration-1000',
+                      levelInfo?.levelColor || 'from-purple-500 to-purple-600'
+                    )}
                     style={{ width: `${levelInfo?.xpProgress || 0}%` }}
                   />
                 </div>
@@ -264,11 +284,12 @@ export const PerfilPublico = () => {
                   return (
                     <div
                       key={achievement.id}
-                      className={`flex aspect-square flex-col items-center justify-center rounded-xl border p-2 transition-all ${
+                      className={cn(
+                        'relative flex aspect-square flex-col items-center justify-center rounded-xl border p-2 transition-all',
                         isUnlocked
                           ? 'border-yellow-500/30 bg-yellow-500/10 text-yellow-400'
                           : 'border-slate-700 bg-slate-800/50 text-slate-600 opacity-50 grayscale'
-                      }`}
+                      )}
                       title={achievement.title}
                     >
                       <Icon

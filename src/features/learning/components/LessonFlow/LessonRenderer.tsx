@@ -1,5 +1,6 @@
 'use client';
 
+import { cn } from '@/utils/cn';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 
 import type { LessonStepRow } from '@/features/learning/types/lessonFlow';
@@ -105,7 +106,11 @@ export function LessonRenderer({ lessonId, steps }: LessonRendererProps) {
           type="button"
           onClick={goPrev}
           disabled={currentIndex === 0}
-          className="min-h-[52px] rounded-xl border border-slate-600 px-6 text-lg font-medium text-slate-200 transition enabled:hover:border-slate-500 enabled:hover:bg-slate-800/50 disabled:cursor-not-allowed disabled:opacity-40"
+          className={cn(
+            'min-h-[52px] rounded-xl border border-slate-600 px-6 text-lg font-medium text-slate-200',
+            'transition enabled:hover:border-slate-500 enabled:hover:bg-slate-800/50',
+            'disabled:cursor-not-allowed disabled:opacity-40'
+          )}
         >
           Anterior
         </button>
@@ -114,7 +119,10 @@ export function LessonRenderer({ lessonId, steps }: LessonRendererProps) {
             type="button"
             onClick={goNext}
             disabled={!canProceed}
-            className="min-h-[52px] rounded-xl bg-cyan-600 px-8 text-lg font-semibold text-white transition enabled:hover:bg-cyan-500 disabled:cursor-not-allowed disabled:opacity-40"
+            className={cn(
+              'min-h-[52px] rounded-xl bg-cyan-600 px-8 text-lg font-semibold text-white transition',
+              'enabled:hover:bg-cyan-500 disabled:cursor-not-allowed disabled:opacity-40'
+            )}
           >
             Siguiente
           </button>

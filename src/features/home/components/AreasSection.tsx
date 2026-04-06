@@ -1,3 +1,4 @@
+import { cn } from '@/utils/cn';
 import Link from 'next/link';
 import { Icon } from '@/shared/components/Icon';
 import { AREAS } from '@/features/home/data';
@@ -25,7 +26,11 @@ export const AreasSection = ({
           <AnimatedReveal key={area.id} isVisible={areasSection.isVisible} delay={0.9 + idx * 0.15}>
             <Link href={`/practica/${area.id}`} className="group relative block">
               <div
-                className={`bg-linear-to-br ${area.gradient} h-full cursor-pointer rounded-xl border border-slate-700 p-8 transition-all duration-300 hover:scale-105 hover:border-slate-500 hover:shadow-lg hover:shadow-slate-900/50`}
+                className={cn(
+                  'h-full cursor-pointer rounded-xl border border-slate-700 p-8 transition-all duration-300',
+                  'hover:scale-105 hover:border-slate-500 hover:shadow-lg hover:shadow-slate-900/50',
+                  `bg-linear-to-br ${area.gradient}`
+                )}
               >
                 {/* Icon Background */}
                 <div className="absolute top-6 right-6 text-5xl opacity-20">
@@ -76,7 +81,11 @@ export const AreasSection = ({
 
         <Link
           href="/examen-completo"
-          className="inline-flex items-center gap-2 rounded-lg bg-linear-to-r from-red-600 to-pink-600 px-8 py-4 font-bold text-white transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-red-500/50"
+          className={cn(
+            'inline-flex items-center gap-2 rounded-lg bg-linear-to-r from-red-600 to-pink-600 px-8',
+            'py-4 font-bold text-white transition-all duration-300 hover:scale-105 hover:shadow-lg',
+            'hover:shadow-red-500/50'
+          )}
         >
           <Icon name="bullseye" />
           Hacer Simulacro Completo

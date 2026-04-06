@@ -1,3 +1,4 @@
+import { cn } from '@/utils/cn';
 export const Progress = ({ value = 0, max = 100, className = '', showPercentage = true }) => {
   const percentage = (value / max) * 100;
 
@@ -8,10 +9,15 @@ export const Progress = ({ value = 0, max = 100, className = '', showPercentage 
   };
 
   return (
-    <div className={`w-full ${className}`}>
-      <div className="h-6 w-full overflow-hidden rounded-full border-2 border-gray-400 bg-gray-300 shadow-xl dark:border-gray-500 dark:bg-gray-600">
+    <div className={cn('w-full', className)}>
+      <div
+        className={cn(
+          'h-6 w-full overflow-hidden rounded-full border-2 border-gray-400 bg-gray-300 shadow-xl',
+          'dark:border-gray-500 dark:bg-gray-600'
+        )}
+      >
         <div
-          className={`h-full ${getColor()} shadow-lg transition-all duration-500 ease-out`}
+          className={cn('h-full shadow-lg transition-all duration-500 ease-out', getColor())}
           style={{ width: `${percentage}%` }}
         />
       </div>

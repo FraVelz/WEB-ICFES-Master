@@ -1,4 +1,5 @@
 'use client';
+import { cn } from '@/utils/cn';
 import { useState } from 'react';
 import Link from 'next/link';
 import type { ExamConfig } from '@/features/exam/types';
@@ -116,13 +117,20 @@ export const ExamConfigModal = ({
           <div className="flex gap-3 pt-6">
             <Link
               href="/"
-              className="flex-1 rounded-lg border border-white/20 bg-white/10 px-6 py-3 text-center font-semibold text-white transition-all duration-300 hover:bg-white/20"
+              className={cn(
+                'flex-1 rounded-lg border border-white/20 bg-white/10 px-6 py-3 text-center font-semibold',
+                'text-white transition-all duration-300 hover:bg-white/20'
+              )}
             >
               Cancelar
             </Link>
             <button
               onClick={handleStart}
-              className="flex-1 rounded-lg bg-linear-to-r from-cyan-500 to-blue-500 px-6 py-3 font-semibold text-white transition-all duration-300 hover:from-cyan-600 hover:to-blue-600 hover:shadow-lg hover:shadow-cyan-500/50"
+              className={cn(
+                'flex-1 rounded-lg bg-linear-to-r from-cyan-500 to-blue-500 px-6 py-3 font-semibold',
+                'text-white transition-all duration-300 hover:from-cyan-600 hover:to-blue-600',
+                'hover:shadow-lg hover:shadow-cyan-500/50'
+              )}
             >
               Comenzar
             </button>

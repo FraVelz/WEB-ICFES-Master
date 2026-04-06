@@ -1,5 +1,6 @@
 'use client';
 
+import { cn } from '@/utils/cn';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 
@@ -126,7 +127,12 @@ export const OnboardingQuiz = ({ onComplete, avatarConfig = {} }: OnboardingQuiz
 
           {/* Message */}
           <div className="w-full max-w-2xl rounded-lg border border-slate-700 bg-slate-800/50 p-8 text-center backdrop-blur-sm">
-            <h2 className="mb-2 bg-linear-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-2xl font-bold text-transparent md:text-3xl">
+            <h2
+              className={cn(
+                'mb-2 bg-linear-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-2xl',
+                'font-bold text-transparent md:text-3xl'
+              )}
+            >
               {currentIntro.message}
             </h2>
             <p className="text-sm text-slate-300">{currentIntro.description}</p>
@@ -137,7 +143,11 @@ export const OnboardingQuiz = ({ onComplete, avatarConfig = {} }: OnboardingQuiz
         <div className="mx-auto w-full max-w-md px-6 pb-8">
           <button
             onClick={handleIntroNext}
-            className="flex w-full cursor-pointer items-center justify-center gap-2 rounded-lg bg-linear-to-r from-cyan-500 to-blue-600 px-6 py-4 text-lg font-bold text-white transition-all duration-300 hover:shadow-lg hover:shadow-cyan-500/50"
+            className={cn(
+              'flex w-full cursor-pointer items-center justify-center gap-2 rounded-lg bg-linear-to-r',
+              'from-cyan-500 to-blue-600 px-6 py-4 text-lg font-bold text-white transition-all',
+              'duration-300 hover:shadow-lg hover:shadow-cyan-500/50'
+            )}
           >
             <span>Continuar</span>
             <Icon name="arrow-right" />
@@ -151,7 +161,12 @@ export const OnboardingQuiz = ({ onComplete, avatarConfig = {} }: OnboardingQuiz
     return (
       <OnboardingLayout className="items-center justify-center">
         <div className="mx-auto flex w-full max-w-md flex-1 flex-col items-center justify-center space-y-8 px-6 py-12 text-center">
-          <div className="mx-auto inline-flex h-24 w-24 items-center justify-center rounded-full bg-linear-to-r from-green-500 to-emerald-600 shadow-lg shadow-green-500/30">
+          <div
+            className={cn(
+              'mx-auto inline-flex h-24 w-24 items-center justify-center rounded-full bg-linear-to-r',
+              'from-green-500 to-emerald-600 shadow-lg shadow-green-500/30'
+            )}
+          >
             <Icon name="check-circle" className="text-5xl" />
           </div>
 
@@ -167,7 +182,11 @@ export const OnboardingQuiz = ({ onComplete, avatarConfig = {} }: OnboardingQuiz
 
           <button
             onClick={handleContinue}
-            className="flex w-full cursor-pointer items-center justify-center gap-2 rounded-lg bg-linear-to-r from-cyan-500 to-blue-600 px-6 py-4 text-lg font-bold text-white transition-all duration-300 hover:shadow-lg hover:shadow-cyan-500/50"
+            className={cn(
+              'flex w-full cursor-pointer items-center justify-center gap-2 rounded-lg bg-linear-to-r',
+              'from-cyan-500 to-blue-600 px-6 py-4 text-lg font-bold text-white transition-all',
+              'duration-300 hover:shadow-lg hover:shadow-cyan-500/50'
+            )}
           >
             <Icon name="arrow-right" />
             Ir al Registro
@@ -224,38 +243,33 @@ export const OnboardingQuiz = ({ onComplete, avatarConfig = {} }: OnboardingQuiz
 
         {/* Options List */}
         <div className="w-full space-y-3">
-          {currentQuestion.options.map((option) => (
-            <button
-              key={option.value}
-              onClick={() => handleSelectOption(option.value)}
-              className={`group flex w-full cursor-pointer items-center gap-4 rounded-xl border-2 p-4 text-left font-semibold transition-all duration-200 ${
-                (
-                  isMultiple
-                    ? (Array.isArray(currentAnswer) ? currentAnswer : []).includes(option.value)
-                    : currentAnswer === option.value
-                )
-                  ? 'border-cyan-500 bg-cyan-500/20 text-white shadow-lg shadow-cyan-500/10'
-                  : 'border-slate-700 bg-slate-800/50 text-slate-300 hover:border-slate-500 hover:bg-slate-800'
-              }`}
-            >
-              <div
-                className={`flex h-6 w-6 shrink-0 items-center justify-center rounded border-2 transition-all ${
-                  (
-                    isMultiple
-                      ? (Array.isArray(currentAnswer) ? currentAnswer : []).includes(option.value)
-                      : currentAnswer === option.value
-                  )
-                    ? 'scale-110 border-cyan-500 bg-cyan-500'
-                    : 'border-slate-600 group-hover:border-slate-400'
-                }`}
+          {currentQuestion.options.map((option) => {
+            const selected = isMultiple
+              ? (Array.isArray(currentAnswer) ? currentAnswer : []).includes(option.value)
+              : currentAnswer === option.value;
+            return (
+              <button
+                key={option.value}
+                onClick={() => handleSelectOption(option.value)}
+                className={cn(
+                  'group flex w-full cursor-pointer items-center gap-4 rounded-xl border-2 p-4 text-left font-semibold transition-all duration-200',
+                  selected
+                    ? 'border-cyan-500 bg-cyan-500/20 text-white shadow-lg shadow-cyan-500/10'
+                    : 'border-slate-700 bg-slate-800/50 text-slate-300 hover:border-slate-500 hover:bg-slate-800'
+                )}
               >
-                {(isMultiple
-                  ? (Array.isArray(currentAnswer) ? currentAnswer : []).includes(option.value)
-                  : currentAnswer === option.value) && <span className="text-sm font-bold text-white">✓</span>}
-              </div>
-              <span className="text-base sm:text-lg">{option.label}</span>
-            </button>
-          ))}
+                <div
+                  className={cn(
+                    'flex h-6 w-6 shrink-0 items-center justify-center rounded border-2 transition-all',
+                    selected ? 'scale-110 border-cyan-500 bg-cyan-500' : 'border-slate-600 group-hover:border-slate-400'
+                  )}
+                >
+                  {selected && <span className="text-sm font-bold text-white">✓</span>}
+                </div>
+                <span className="text-base sm:text-lg">{option.label}</span>
+              </button>
+            );
+          })}
         </div>
       </div>
 
@@ -264,7 +278,12 @@ export const OnboardingQuiz = ({ onComplete, avatarConfig = {} }: OnboardingQuiz
         <button
           onClick={handleNext}
           disabled={!canProceed}
-          className="flex w-full cursor-pointer items-center justify-center gap-2 rounded-xl bg-linear-to-r from-cyan-500 to-blue-600 px-6 py-4 text-lg font-bold text-white shadow-md transition-all duration-300 hover:shadow-lg hover:shadow-cyan-500/50 disabled:cursor-not-allowed disabled:opacity-50"
+          className={cn(
+            'flex w-full cursor-pointer items-center justify-center gap-2 rounded-xl bg-linear-to-r',
+            'from-cyan-500 to-blue-600 px-6 py-4 text-lg font-bold text-white shadow-md transition-all',
+            'duration-300 hover:shadow-lg hover:shadow-cyan-500/50 disabled:cursor-not-allowed',
+            'disabled:opacity-50'
+          )}
         >
           {currentQuestionIndex === ONBOARDING_QUESTIONS.length - 1 ? (
             <>

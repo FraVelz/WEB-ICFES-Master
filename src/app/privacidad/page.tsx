@@ -1,3 +1,4 @@
+import { cn } from '@/utils/cn';
 import Link from 'next/link';
 
 export const metadata = {
@@ -125,7 +126,11 @@ export default function PrivacidadPage() {
           <div className="mt-12 flex justify-center border-t border-white/10 pt-8">
             <Link
               href="/"
-              className="flex items-center gap-2 rounded-lg bg-linear-to-r from-cyan-500 to-blue-600 px-8 py-3 font-semibold text-white transition-all duration-300 hover:from-cyan-600 hover:to-blue-700 hover:shadow-lg hover:shadow-cyan-500/50"
+              className={cn(
+                'flex items-center gap-2 rounded-lg bg-linear-to-r from-cyan-500 to-blue-600 px-8 py-3',
+                'font-semibold text-white transition-all duration-300 hover:from-cyan-600 hover:to-blue-700',
+                'hover:shadow-lg hover:shadow-cyan-500/50'
+              )}
             >
               ← Volver al Inicio
             </Link>

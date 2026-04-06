@@ -1,5 +1,6 @@
 'use client';
 
+import { cn } from '@/utils/cn';
 import { useEffect } from 'react';
 
 import type { ResourceStepData } from '@/features/learning/types/lessonFlow';
@@ -43,7 +44,10 @@ export function ResourceStep({ data, onStepReady }: ResourceStepProps) {
             href={data.url}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex min-h-[52px] items-center justify-center rounded-xl bg-cyan-600 px-8 text-lg font-semibold text-white transition hover:bg-cyan-500"
+            className={cn(
+              'inline-flex min-h-[52px] items-center justify-center rounded-xl bg-cyan-600 px-8 text-lg',
+              'font-semibold text-white transition hover:bg-cyan-500'
+            )}
           >
             Abrir recurso
           </a>

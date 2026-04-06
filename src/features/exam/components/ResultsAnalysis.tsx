@@ -1,3 +1,4 @@
+import { cn } from '@/utils/cn';
 import Link from 'next/link';
 import type { ExamQuestion } from '@/shared/types/question';
 import type { ExamConfig } from '@/features/exam/types';
@@ -35,7 +36,12 @@ export const ResultsAnalysis = ({
       {/* Results Summary */}
       <div className="rounded-3xl border border-white/10 bg-white/5 p-12 shadow-2xl backdrop-blur-sm">
         <div className="mb-12 text-center">
-          <h1 className="mb-8 bg-linear-to-r from-blue-400 via-purple-400 to-cyan-400 bg-clip-text text-5xl font-bold text-transparent md:text-6xl">
+          <h1
+            className={cn(
+              'mb-8 bg-linear-to-r from-blue-400 via-purple-400 to-cyan-400 bg-clip-text text-5xl',
+              'font-bold text-transparent md:text-6xl'
+            )}
+          >
             ¡Examen Completado!
           </h1>
           <div className="mb-4 bg-linear-to-r from-blue-400 to-cyan-400 bg-clip-text text-7xl font-black text-transparent">
@@ -57,13 +63,21 @@ export const ResultsAnalysis = ({
         <div className="flex flex-wrap justify-center gap-4">
           <button
             onClick={onRetry}
-            className="cursor-pointer rounded-xl bg-linear-to-r from-blue-600 to-blue-700 px-8 py-3 font-semibold text-white transition-all duration-300 hover:scale-105 hover:from-blue-700 hover:to-blue-800 hover:shadow-lg"
+            className={cn(
+              'cursor-pointer rounded-xl bg-linear-to-r from-blue-600 to-blue-700 px-8 py-3 font-semibold',
+              'text-white transition-all duration-300 hover:scale-105 hover:from-blue-700',
+              'hover:to-blue-800 hover:shadow-lg'
+            )}
           >
             Intentar de Nuevo
           </button>
           <Link
             href={backHref}
-            className="cursor-pointer rounded-xl bg-linear-to-r from-purple-600 to-purple-700 px-8 py-3 font-semibold text-white transition-all duration-300 hover:scale-105 hover:from-purple-700 hover:to-purple-800 hover:shadow-lg"
+            className={cn(
+              'cursor-pointer rounded-xl bg-linear-to-r from-purple-600 to-purple-700 px-8 py-3',
+              'font-semibold text-white transition-all duration-300 hover:scale-105 hover:from-purple-700',
+              'hover:to-purple-800 hover:shadow-lg'
+            )}
           >
             {backLabel}
           </Link>
@@ -79,17 +93,22 @@ export const ResultsAnalysis = ({
           return (
             <div
               key={result.question.id}
-              className="rounded-xl border border-white/10 bg-linear-to-br from-gray-800/40 via-gray-900/40 to-gray-950/40 p-6 shadow-lg backdrop-blur-md transition-all duration-300 hover:border-white/20 hover:shadow-xl"
+              className={cn(
+                'rounded-xl border border-white/10 bg-linear-to-br from-gray-800/40 via-gray-900/40',
+                'to-gray-950/40 p-6 shadow-lg backdrop-blur-md transition-all duration-300',
+                'hover:border-white/20 hover:shadow-xl'
+              )}
             >
               {/* Question Header */}
               <div className="mb-6">
                 <div className="flex items-start gap-4">
                   <div
-                    className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-lg text-sm font-bold ${
+                    className={cn(
+                      'flex h-10 w-10 shrink-0 items-center justify-center rounded-lg text-sm font-bold',
                       isCorrect
                         ? 'bg-linear-to-r from-green-500 to-emerald-500'
                         : 'bg-linear-to-r from-red-500 to-rose-500'
-                    }`}
+                    )}
                   >
                     {isCorrect ? '' : ''}
                   </div>
@@ -97,9 +116,10 @@ export const ResultsAnalysis = ({
                     <div className="mb-2 flex items-center justify-between">
                       <p className="text-lg leading-relaxed font-semibold text-white">Pregunta {idx + 1}</p>
                       <span
-                        className={`rounded-lg px-3 py-1 text-xs font-bold ${
+                        className={cn(
+                          'rounded-lg px-3 py-1 text-xs font-bold',
                           isCorrect ? 'bg-green-500/20 text-green-300' : 'bg-red-500/20 text-red-300'
-                        }`}
+                        )}
                       >
                         {isCorrect ? 'Correcta' : 'Incorrecta'}
                       </span>

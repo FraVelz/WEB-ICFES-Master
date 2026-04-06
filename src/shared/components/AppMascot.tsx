@@ -1,3 +1,4 @@
+import { cn } from '@/utils/cn';
 import React, { useState, useEffect } from 'react';
 import { Icon } from '@/shared/components/Icon';
 
@@ -157,18 +158,31 @@ export const AppMascot = ({
   };
 
   return (
-    <div className={`flex flex-col items-center gap-4 ${className}`}>
+    <div className={cn('flex flex-col items-center gap-4', className)}>
       {/* Mascota */}
       <div
         onClick={handleMascotClick}
-        className={`group relative cursor-pointer transition-transform duration-300 ${interactive && 'hover:scale-110'} ${isAnimating && 'animate-bounce'} ${bobbing && 'mascot-bobbing'}`}
+        className={cn(
+          'group relative cursor-pointer transition-transform duration-300',
+          interactive && 'hover:scale-110',
+          isAnimating && 'animate-bounce',
+          bobbing && 'mascot-bobbing'
+        )}
       >
         {/* Glow effect */}
-        <div className="absolute inset-0 scale-110 rounded-full bg-linear-to-r from-cyan-400 via-blue-400 to-purple-400 opacity-0 blur-xl transition-opacity duration-300 group-hover:opacity-50"></div>
+        <div
+          className={cn(
+            'absolute inset-0 scale-110 rounded-full bg-linear-to-r from-cyan-400 via-blue-400',
+            'to-purple-400 opacity-0 blur-xl transition-opacity duration-300 group-hover:opacity-50'
+          )}
+        ></div>
 
         {/* Mascota image */}
         <div
-          className={`${sizes.mascot} relative z-10 flex items-center justify-center overflow-hidden rounded-full bg-linear-to-br from-slate-800 to-slate-900 shadow-2xl shadow-blue-500/50`}
+          className={cn(
+            sizes.mascot,
+            'relative z-10 flex items-center justify-center overflow-hidden rounded-full bg-linear-to-br from-slate-800 to-slate-900 shadow-2xl shadow-blue-500/50'
+          )}
           style={{
             borderImage: 'linear-gradient(135deg, #06b6d4, #3b82f6, #a855f7) 1',
           }}
@@ -184,20 +198,36 @@ export const AppMascot = ({
         </div>
 
         {/* Emotion indicator */}
-        <div className="absolute -right-2 -bottom-2 rounded-full bg-linear-to-r from-cyan-400 to-blue-500 px-3 py-1 text-xs font-bold whitespace-nowrap text-white shadow-lg">
+        <div
+          className={cn(
+            'absolute -right-2 -bottom-2 rounded-full bg-linear-to-r from-cyan-400 to-blue-500 px-3',
+            'py-1 text-xs font-bold whitespace-nowrap text-white shadow-lg'
+          )}
+        >
           {currentAvatar.label}
         </div>
       </div>
 
       {/* Speech Bubble */}
       {showDialogue && (
-        <div className={`${sizes.speech} group relative`}>
+        <div className={cn(sizes.speech, 'group relative')}>
           {/* Speech bubble tail */}
-          <div className="absolute -top-3 left-1/2 h-0 w-0 -translate-x-1/2 transform border-t-8 border-r-8 border-l-8 border-t-cyan-400/80 border-r-transparent border-l-transparent"></div>
+          <div
+            className={cn(
+              'absolute -top-3 left-1/2 h-0 w-0 -translate-x-1/2 transform border-t-8 border-r-8',
+              'border-l-8 border-t-cyan-400/80 border-r-transparent border-l-transparent'
+            )}
+          ></div>
 
           {/* Speech bubble */}
-          <div className="rounded-2xl border border-cyan-400/50 bg-linear-to-r from-cyan-400/10 to-blue-400/10 p-4 shadow-xl shadow-cyan-400/20 backdrop-blur-xl transition-all duration-300 hover:border-cyan-400">
-            <p className={`${sizes.text} text-center leading-relaxed font-semibold text-white`}>{dialogue}</p>
+          <div
+            className={cn(
+              'rounded-2xl border border-cyan-400/50 bg-linear-to-r from-cyan-400/10 to-blue-400/10 p-4',
+              'shadow-xl shadow-cyan-400/20 backdrop-blur-xl transition-all duration-300',
+              'hover:border-cyan-400'
+            )}
+          >
+            <p className={cn(sizes.text, 'text-center leading-relaxed font-semibold text-white')}>{dialogue}</p>
           </div>
 
           {/* Quote mark decoration */}

@@ -1,5 +1,6 @@
 'use client';
 
+import { cn } from '@/utils/cn';
 import { useState, useEffect } from 'react';
 import { useParams } from 'next/navigation';
 import Link from 'next/link';
@@ -108,11 +109,19 @@ export const PracticePage = () => {
 
         <div className="relative z-10">
           {/* Header */}
-          <div className="sticky top-0 z-40 border-b border-white/10 bg-linear-to-b from-gray-900 via-gray-900 to-transparent py-4 backdrop-blur-md">
+          <div
+            className={cn(
+              'sticky top-0 z-40 border-b border-white/10 bg-linear-to-b from-gray-900 via-gray-900',
+              'to-transparent py-4 backdrop-blur-md'
+            )}
+          >
             <div className="mx-auto flex max-w-7xl items-center justify-between px-6">
               <div>
                 <div
-                  className={`inline-block bg-linear-to-r ${areaInfo.color} mb-2 rounded-lg px-3 py-1 text-xs font-semibold text-white`}
+                  className={cn(
+                    'mb-2 inline-block rounded-lg px-3 py-1 text-xs font-semibold text-white',
+                    `bg-linear-to-r ${areaInfo.color}`
+                  )}
                 >
                   {areaInfo.name}
                 </div>
@@ -208,11 +217,19 @@ export const PracticePage = () => {
 
       <div className="relative z-10">
         {/* Header */}
-        <div className="sticky top-0 z-40 border-b border-white/10 bg-linear-to-b from-gray-900 via-gray-900 to-transparent py-4 backdrop-blur-md">
+        <div
+          className={cn(
+            'sticky top-0 z-40 border-b border-white/10 bg-linear-to-b from-gray-900 via-gray-900',
+            'to-transparent py-4 backdrop-blur-md'
+          )}
+        >
           <div className="mx-auto flex max-w-7xl items-center justify-between px-6">
             <div>
               <div
-                className={`inline-block bg-linear-to-r ${areaInfo.color} mb-2 rounded-lg px-3 py-1 text-xs font-semibold text-white`}
+                className={cn(
+                  'mb-2 inline-block rounded-lg px-3 py-1 text-xs font-semibold text-white',
+                  `bg-linear-to-r ${areaInfo.color}`
+                )}
               >
                 {areaInfo.name}
               </div>
@@ -220,7 +237,7 @@ export const PracticePage = () => {
             </div>
 
             {examConfig.useTimer && (
-              <div className={`font-mono text-2xl font-bold ${timeColor}`}>{formatTimeExtended(timeValue)}</div>
+              <div className={cn('font-mono text-2xl font-bold', timeColor)}>{formatTimeExtended(timeValue)}</div>
             )}
 
             {/* Desktop Exit Button */}
@@ -273,12 +290,21 @@ export const PracticePage = () => {
                 <div
                   key={question.id}
                   id={`question-${index}`}
-                  className="rounded-xl border border-white/10 bg-linear-to-br from-gray-800/40 via-gray-900/40 to-gray-950/40 p-6 shadow-lg backdrop-blur-md transition-all duration-300 hover:border-white/20 hover:shadow-xl"
+                  className={cn(
+                    'rounded-xl border border-white/10 bg-linear-to-br from-gray-800/40 via-gray-900/40',
+                    'to-gray-950/40 p-6 shadow-lg backdrop-blur-md transition-all duration-300',
+                    'hover:border-white/20 hover:shadow-xl'
+                  )}
                 >
                   {/* Question Number and Title */}
                   <div className="mb-6">
                     <div className="flex items-start gap-4">
-                      <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-linear-to-r from-cyan-500 to-blue-500 text-sm font-bold">
+                      <div
+                        className={cn(
+                          'flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-linear-to-r',
+                          'from-cyan-500 to-blue-500 text-sm font-bold'
+                        )}
+                      >
                         {index + 1}
                       </div>
                       <div className="flex-1">
@@ -299,17 +325,19 @@ export const PracticePage = () => {
                         <button
                           key={option.letter}
                           onClick={() => handleAnswer(question.id, option.letter ?? option.id)}
-                          className={`w-full rounded-lg border-2 p-4 text-left transition-all duration-300 ${
+                          className={cn(
+                            'w-full rounded-lg border-2 p-4 text-left transition-all duration-300',
                             isSelected
                               ? 'border-cyan-400 bg-cyan-500/20 text-cyan-100'
                               : 'border-white/20 bg-white/5 text-white hover:border-cyan-400/50 hover:bg-cyan-500/10'
-                          }`}
+                          )}
                         >
                           <div className="flex items-center gap-3">
                             <div
-                              className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full border-2 text-sm font-bold ${
+                              className={cn(
+                                'flex h-8 w-8 shrink-0 items-center justify-center rounded-full border-2 text-sm font-bold',
                                 isSelected ? 'border-cyan-400 bg-cyan-500 text-white' : 'border-white/30'
-                              }`}
+                              )}
                             >
                               {option.letter}
                             </div>
@@ -334,7 +362,11 @@ export const PracticePage = () => {
               <div className="flex justify-center pt-8">
                 <button
                   onClick={() => setShowResults(true)}
-                  className="rounded-xl bg-linear-to-r from-green-500 to-emerald-500 px-12 py-4 text-lg font-bold text-white transition-all duration-300 hover:from-green-600 hover:to-emerald-600 hover:shadow-lg hover:shadow-green-500/50"
+                  className={cn(
+                    'rounded-xl bg-linear-to-r from-green-500 to-emerald-500 px-12 py-4 text-lg font-bold',
+                    'text-white transition-all duration-300 hover:from-green-600 hover:to-emerald-600',
+                    'hover:shadow-lg hover:shadow-green-500/50'
+                  )}
                 >
                   Finalizar Examen
                 </button>

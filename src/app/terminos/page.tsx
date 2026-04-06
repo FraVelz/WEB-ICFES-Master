@@ -1,3 +1,4 @@
+import { cn } from '@/utils/cn';
 import Link from 'next/link';
 
 export const metadata = {
@@ -107,7 +108,11 @@ export default function TerminosPage() {
           <div className="mt-12 flex justify-center border-t border-white/10 pt-8">
             <Link
               href="/"
-              className="flex items-center gap-2 rounded-lg bg-linear-to-r from-purple-500 to-pink-600 px-8 py-3 font-semibold text-white transition-all duration-300 hover:from-purple-600 hover:to-pink-700 hover:shadow-lg hover:shadow-purple-500/50"
+              className={cn(
+                'flex items-center gap-2 rounded-lg bg-linear-to-r from-purple-500 to-pink-600 px-8 py-3',
+                'font-semibold text-white transition-all duration-300 hover:from-purple-600',
+                'hover:to-pink-700 hover:shadow-lg hover:shadow-purple-500/50'
+              )}
             >
               ← Volver al Inicio
             </Link>

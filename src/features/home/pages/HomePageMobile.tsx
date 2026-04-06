@@ -1,5 +1,6 @@
 'use client';
 
+import { cn } from '@/utils/cn';
 import { MascotaCircle } from '@/shared/components/MascotaCircle';
 
 export const HomePageMobile = () => {
@@ -37,14 +38,21 @@ export const HomePageMobile = () => {
               window.location.href = '/ruta-aprendizaje';
             }
           }}
-          className="block w-full transform rounded-lg bg-linear-to-r from-blue-500 to-blue-600 py-3 text-center font-semibold text-white transition-all duration-200 hover:scale-105 hover:from-blue-600 hover:to-blue-700"
+          className={cn(
+            'block w-full transform rounded-lg bg-linear-to-r from-blue-500 to-blue-600 py-3',
+            'text-center font-semibold text-white transition-all duration-200 hover:scale-105',
+            'hover:from-blue-600 hover:to-blue-700'
+          )}
         >
           Probar Demo
         </button>
 
         <a
           href="/login"
-          className="block w-full rounded-lg border-2 border-blue-500 bg-transparent py-3 text-center font-semibold text-blue-400 transition-all duration-200 hover:bg-blue-500/10"
+          className={cn(
+            'block w-full rounded-lg border-2 border-blue-500 bg-transparent py-3 text-center',
+            'font-semibold text-blue-400 transition-all duration-200 hover:bg-blue-500/10'
+          )}
         >
           Iniciar Sesión
         </a>

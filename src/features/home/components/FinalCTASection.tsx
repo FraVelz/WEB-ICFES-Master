@@ -1,3 +1,4 @@
+import { cn } from '@/utils/cn';
 import Link from 'next/link';
 import { Icon } from '@/shared/components/Icon';
 
@@ -11,7 +12,11 @@ export const FinalCTASection = () => {
         </p>
         <Link
           href="/dashboard"
-          className="inline-flex items-center gap-2 rounded-lg bg-linear-to-r from-cyan-500 to-blue-600 px-10 py-4 text-lg font-bold text-white transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-cyan-500/50"
+          className={cn(
+            'inline-flex items-center gap-2 rounded-lg bg-linear-to-r from-cyan-500 to-blue-600 px-10',
+            'py-4 text-lg font-bold text-white transition-all duration-300 hover:scale-105',
+            'hover:shadow-lg hover:shadow-cyan-500/50'
+          )}
         >
           <Icon name="rocket" />
           Comienza tu Preparación Gratis

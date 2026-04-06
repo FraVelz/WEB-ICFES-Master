@@ -1,3 +1,4 @@
+import { cn } from '@/utils/cn';
 import { Header } from './ui/Header';
 import { Footer } from './ui/Footer';
 
@@ -34,7 +35,12 @@ export const DonationSection = () => {
   } = useDonation();
 
   return (
-    <div className="mx-auto mt-16 max-w-4xl rounded-2xl border border-white/10 bg-linear-to-b from-gray-900 to-gray-800 px-4 py-12 shadow-2xl sm:px-6">
+    <div
+      className={cn(
+        'mx-auto mt-16 max-w-4xl rounded-2xl border border-white/10 bg-linear-to-b from-gray-900',
+        'to-gray-800 px-4 py-12 shadow-2xl sm:px-6'
+      )}
+    >
       {/* Header */}
       <Header />
 

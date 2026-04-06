@@ -18,6 +18,8 @@
  *   caption="Población de países latinoamericanos"
  * />
  */
+import { cn } from '@/utils/cn';
+
 interface TableContentProps {
   headers?: string[];
   rows?: unknown[][];
@@ -44,9 +46,10 @@ export const TableContent = ({ headers = [], rows = [], caption }: TableContentP
           {rows.map((row, rowIdx) => (
             <tr
               key={rowIdx}
-              className={`border-b border-white/10 ${
+              className={cn(
+                'border-b border-white/10 transition-colors hover:bg-white/10',
                 rowIdx % 2 === 0 ? 'bg-white/5' : 'bg-white/2'
-              } transition-colors hover:bg-white/10`}
+              )}
             >
               {row.map((cell: unknown, cellIdx: number) => (
                 <td key={cellIdx} className="border-r border-white/10 px-4 py-3 text-gray-200 last:border-r-0">

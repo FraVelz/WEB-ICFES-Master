@@ -1,4 +1,5 @@
 'use client';
+import { cn } from '@/utils/cn';
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { Icon } from '@/shared/components/Icon';
@@ -82,11 +83,12 @@ export const ClasificatoriaPage = () => {
             <button
               key={rank.id}
               onClick={() => setSelectedRank(rank.id)}
-              className={`flex cursor-pointer items-center gap-2 rounded-full border px-4 py-2 whitespace-nowrap transition-all ${
+              className={cn(
+                'flex cursor-pointer items-center gap-2 rounded-full border px-4 py-2 whitespace-nowrap transition-all',
                 selectedRank === rank.id
-                  ? `bg-linear-to-r ${rank.color} border-transparent text-white shadow-lg`
+                  ? cn(`bg-linear-to-r ${rank.color}`, 'border-transparent text-white shadow-lg')
                   : 'border-slate-700 bg-slate-900 text-slate-400 hover:bg-slate-800'
-              }`}
+              )}
             >
               <span className="text-lg">{rank.icon}</span>
               <span className="font-bold">{rank.label}</span>
@@ -95,12 +97,15 @@ export const ClasificatoriaPage = () => {
         </div>
 
         {/* Rank Info Card */}
-        <div className={`bg-linear-to-r ${currentRankInfo.color} mb-8 rounded-2xl p-px`}>
+        <div className={cn('mb-8 rounded-2xl p-px', `bg-linear-to-r ${currentRankInfo.color}`)}>
           <div className="rounded-2xl bg-slate-900/95 p-6 backdrop-blur-xl">
             <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
               <div className="flex items-center gap-4">
                 <div
-                  className={`h-16 w-16 rounded-xl bg-linear-to-br ${currentRankInfo.color} flex items-center justify-center text-3xl shadow-lg`}
+                  className={cn(
+                    'flex h-16 w-16 items-center justify-center rounded-xl text-3xl shadow-lg',
+                    `bg-linear-to-br ${currentRankInfo.color}`
+                  )}
                 >
                   {currentRankInfo.icon}
                 </div>
@@ -151,11 +156,12 @@ export const ClasificatoriaPage = () => {
                 <div
                   key={player.id}
                   onClick={() => router.push(isCurrentUser ? '/perfil' : `/perfil/public?userId=${player.id}`)}
-                  className={`group relative flex cursor-pointer items-center gap-4 rounded-xl border p-4 transition-all ${
+                  className={cn(
+                    'group relative flex cursor-pointer items-center gap-4 rounded-xl border p-4 transition-all',
                     isCurrentUser
                       ? 'border-cyan-500/50 bg-cyan-500/10 shadow-lg shadow-cyan-500/10'
-                      : `${style.bg} hover:bg-slate-800`
-                  }`}
+                      : cn(style.bg, 'hover:bg-slate-800')
+                  )}
                 >
                   {/* Position */}
                   <div className="w-8 text-center text-lg font-bold text-slate-300">{index + 1}</div>
@@ -183,7 +189,7 @@ export const ClasificatoriaPage = () => {
                   {/* Info */}
                   <div className="min-w-0 flex-1">
                     <div className="flex items-center gap-2">
-                      <h3 className={`truncate font-bold ${isCurrentUser ? 'text-cyan-400' : 'text-white'}`}>
+                      <h3 className={cn('truncate font-bold', isCurrentUser ? 'text-cyan-400' : 'text-white')}>
                         {player.name || player.username || 'Usuario'}
                       </h3>
                       {isCurrentUser && (
@@ -192,7 +198,7 @@ export const ClasificatoriaPage = () => {
                         </span>
                       )}
                     </div>
-                    <div className={`flex items-center gap-1 text-xs ${style.color}`}>
+                    <div className={cn('flex items-center gap-1 text-xs', style.color)}>
                       <Icon name={style.icon} />
                       {style.label}
                     </div>

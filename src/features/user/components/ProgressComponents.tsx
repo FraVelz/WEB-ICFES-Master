@@ -1,3 +1,4 @@
+import { cn } from '@/utils/cn';
 import { Icon } from '@/shared/components/Icon';
 
 export const ProgressOverviewCard = ({
@@ -16,14 +17,18 @@ export const ProgressOverviewCard = ({
   info?: string;
 }) => (
   <div
-    className={`border bg-white/5 p-8 backdrop-blur-xl ${borderColor} hover:border-opacity-100 hover:bg-opacity-20 rounded-2xl transition-all duration-300 hover:shadow-lg ${shadowColor} hover:scale-105`}
+    className={cn(
+      'hover:border-opacity-100 hover:bg-opacity-20 rounded-2xl border bg-white/5 p-8 backdrop-blur-xl transition-all duration-300 hover:scale-105 hover:shadow-lg',
+      borderColor,
+      shadowColor
+    )}
   >
-    <p className={`${color} mb-4 text-sm font-semibold tracking-wider uppercase`}>{label}</p>
-    <h3 className={`bg-linear-to-r text-5xl font-black ${color} mb-4 bg-clip-text text-transparent`}>{value}</h3>
+    <p className={cn('mb-4 text-sm font-semibold tracking-wider uppercase', color)}>{label}</p>
+    <h3 className={cn('mb-4 bg-linear-to-r bg-clip-text text-5xl font-black text-transparent', color)}>{value}</h3>
     {info && (
       <>
         <div className="mb-4 h-2 overflow-hidden rounded-full border border-slate-700/30 bg-slate-800/50">
-          <div className={`bg-linear-to-r ${color} h-full`} style={{ width: `${value}%` }}></div>
+          <div className={cn('h-full bg-linear-to-r', color)} style={{ width: `${value}%` }}></div>
         </div>
         <p className="text-sm text-slate-300">{info}</p>
       </>
@@ -36,7 +41,13 @@ export const AreaPerformanceCard = ({
 }: {
   area: { icon: string; name: string; percentage: number; correct: number; total: number; color: string };
 }) => (
-  <div className="rounded-2xl border border-cyan-500/20 bg-white/5 p-8 backdrop-blur-xl transition-all duration-300 hover:scale-105 hover:border-cyan-500/50 hover:bg-cyan-500/10 hover:shadow-lg hover:shadow-cyan-500/20">
+  <div
+    className={cn(
+      'rounded-2xl border border-cyan-500/20 bg-white/5 p-8 backdrop-blur-xl transition-all',
+      'duration-300 hover:scale-105 hover:border-cyan-500/50 hover:bg-cyan-500/10 hover:shadow-lg',
+      'hover:shadow-cyan-500/20'
+    )}
+  >
     <div className="mb-6 flex items-center justify-between">
       <div className="flex items-center gap-4">
         <Icon name={area.icon} className="text-3xl text-cyan-400" />
@@ -56,7 +67,7 @@ export const AreaPerformanceCard = ({
     </div>
     <div className="h-2 overflow-hidden rounded-full border border-cyan-500/30 bg-slate-800/50">
       <div
-        className={`bg-linear-to-r ${area.color} h-full transition-all duration-500`}
+        className={cn('h-full bg-linear-to-r transition-all duration-500', area.color)}
         style={{ width: `${area.percentage}%` }}
       ></div>
     </div>
@@ -72,7 +83,13 @@ export const RecommendationsList = ({
   icons: string[];
   iconColors: string[];
 }) => (
-  <div className="rounded-3xl border-2 border-orange-500/30 bg-linear-to-br from-orange-600/20 via-red-600/20 to-pink-600/20 p-12 shadow-2xl backdrop-blur-xl transition-all duration-300 hover:border-orange-500/60 hover:shadow-lg hover:shadow-orange-500/20">
+  <div
+    className={cn(
+      'rounded-3xl border-2 border-orange-500/30 bg-linear-to-br from-orange-600/20',
+      'via-red-600/20 to-pink-600/20 p-12 shadow-2xl backdrop-blur-xl transition-all duration-300',
+      'hover:border-orange-500/60 hover:shadow-lg hover:shadow-orange-500/20'
+    )}
+  >
     <h3 className="mb-8 bg-linear-to-r from-orange-400 to-red-400 bg-clip-text text-2xl font-black text-transparent">
       🎯 Recomendaciones Personalizadas
     </h3>
@@ -81,7 +98,7 @@ export const RecommendationsList = ({
         <li key={idx} className="flex items-start gap-4">
           <Icon
             name={icons[idx % icons.length]}
-            className={`${iconColors[idx % iconColors.length]} mt-1 shrink-0 text-xl`}
+            className={cn('mt-1 shrink-0 text-xl', iconColors[idx % iconColors.length])}
           />
           <span className="text-lg font-semibold text-slate-200">{recommendation}</span>
         </li>

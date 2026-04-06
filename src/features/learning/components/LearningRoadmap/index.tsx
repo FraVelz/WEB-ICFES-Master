@@ -1,5 +1,6 @@
 'use client';
 
+import { cn } from '@/utils/cn';
 import React, { useState } from 'react';
 import { AreaPath } from './AreaPath';
 import { LessonPreview } from './LessonPreview';
@@ -50,7 +51,7 @@ export const LearningRoadmap = ({ initialArea = 'lectura-critica' }: { initialAr
   };
 
   return (
-    <div className={`relative flex flex-col bg-slate-950 ${viewingLesson ? 'h-dvh overflow-hidden' : 'min-h-dvh'}`}>
+    <div className={cn('relative flex flex-col bg-slate-950', viewingLesson ? 'h-dvh overflow-hidden' : 'min-h-dvh')}>
       {/* Header Secundario Sticky - Ahora parte del componente */}
       <div className="sticky top-0 z-50">
         <SecondaryHeader currentArea={currentArea} onAreaChange={setCurrentArea} />
@@ -59,7 +60,7 @@ export const LearningRoadmap = ({ initialArea = 'lectura-critica' }: { initialAr
       <div className="relative flex-1 px-4 pt-8 pb-24">
         {/* Título del Área (Contexto) */}
         <AnimatedOnMount className="mb-8 text-center" duration={0.7} y={16}>
-          <h2 className={`bg-linear-to-r bg-clip-text text-3xl font-bold text-transparent ${currentAreaData.color}`}>
+          <h2 className={cn('bg-linear-to-r bg-clip-text text-3xl font-bold text-transparent', currentAreaData.color)}>
             {currentAreaData.name}
           </h2>
           <p className="mt-2 text-sm font-medium tracking-wide text-slate-400 uppercase">Ruta de Aprendizaje</p>

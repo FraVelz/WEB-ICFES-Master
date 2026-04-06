@@ -1,5 +1,6 @@
 'use client';
 
+import { cn } from '@/utils/cn';
 import Link from 'next/link';
 import { Icon } from '@/shared/components/Icon';
 import { useState, useMemo } from 'react';
@@ -107,7 +108,8 @@ export const LearningPage = () => {
       title: 'Nivel Fácil',
       subtitle: 'Aprende las Bases',
       description:
-        'Domina los conceptos fundamentales de cada materia con materiales estructurados, explicaciones y ejercicios básicos.',
+        'Domina los conceptos fundamentales de cada materia con materiales estructurados, ' +
+        'explicaciones y ejercicios básicos.',
       icon: 'lightbulb',
       color: 'from-blue-500 to-cyan-500',
       textColor: 'text-blue-400',
@@ -158,7 +160,12 @@ export const LearningPage = () => {
           <div className="pt-20">
             {/* Hero Section */}
             <header className="mb-20 text-center">
-              <h1 className="mb-8 bg-linear-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-5xl font-bold text-transparent md:text-6xl lg:text-7xl">
+              <h1
+                className={cn(
+                  'mb-8 bg-linear-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-5xl',
+                  'font-bold text-transparent md:text-6xl lg:text-7xl'
+                )}
+              >
                 📚 Modo Aprendizaje
               </h1>
               <p className="mx-auto max-w-3xl text-base leading-relaxed text-slate-300 md:text-lg">
@@ -172,7 +179,13 @@ export const LearningPage = () => {
                 <div
                   key={levelKey}
                   onClick={() => setActiveLevel(levelKey as 'easy' | 'intermediate' | 'advanced')}
-                  className={`group relative cursor-pointer rounded-2xl border-2 p-8 transition-all duration-300 ${level.borderColor} ${level.bgColor} hover:scale-105 hover:shadow-2xl ${level.hoverColor}`}
+                  className={cn(
+                    'group relative cursor-pointer rounded-2xl border-2 p-8 transition-all duration-300',
+                    'hover:scale-105 hover:shadow-2xl',
+                    level.borderColor,
+                    level.bgColor,
+                    level.hoverColor
+                  )}
                 >
                   {/* Card Background Glow */}
                   <div className="absolute inset-0 rounded-2xl opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
@@ -180,14 +193,17 @@ export const LearningPage = () => {
                   <div className="relative z-10">
                     {/* Icon */}
                     <div
-                      className={`mb-6 text-5xl ${level.textColor} transition-transform duration-300 group-hover:scale-110`}
+                      className={cn(
+                        'mb-6 text-5xl transition-transform duration-300 group-hover:scale-110',
+                        level.textColor
+                      )}
                     >
                       <Icon name={level.icon} />
                     </div>
 
                     {/* Title */}
                     <h2 className="mb-2 text-2xl font-bold text-white">{level.title}</h2>
-                    <p className={`text-sm font-semibold ${level.textColor} mb-4`}>{level.subtitle}</p>
+                    <p className={cn('mb-4 text-sm font-semibold', level.textColor)}>{level.subtitle}</p>
 
                     {/* Description */}
                     <p className="mb-6 text-sm leading-relaxed text-slate-300">{level.description}</p>
@@ -199,7 +215,10 @@ export const LearningPage = () => {
                         <p className="text-xs text-slate-400">Materias</p>
                       </div>
                       <div
-                        className={`text-3xl ${level.textColor} transition-transform duration-300 group-hover:translate-x-1`}
+                        className={cn(
+                          'text-3xl transition-transform duration-300 group-hover:translate-x-1',
+                          level.textColor
+                        )}
                       >
                         <Icon name="arrow-right" />
                       </div>
@@ -207,7 +226,11 @@ export const LearningPage = () => {
 
                     {/* CTA Button */}
                     <button
-                      className={`w-full rounded-lg bg-linear-to-r px-4 py-3 font-semibold transition-all duration-300 ${level.color} text-white group-hover:shadow-lg hover:shadow-lg`}
+                      className={cn(
+                        'w-full rounded-lg bg-linear-to-r px-4 py-3 font-semibold transition-all duration-300',
+                        'text-white group-hover:shadow-lg hover:shadow-lg',
+                        level.color
+                      )}
                     >
                       Empezar Ahora
                     </button>
@@ -220,7 +243,11 @@ export const LearningPage = () => {
             <div className="pb-20 text-center">
               <Link
                 href="/"
-                className="inline-block cursor-pointer rounded-xl bg-linear-to-r from-purple-600 to-pink-600 px-8 py-3 font-semibold text-white transition-all duration-300 hover:scale-105 hover:from-purple-700 hover:to-pink-700 hover:shadow-lg hover:shadow-purple-500/30"
+                className={cn(
+                  'inline-block cursor-pointer rounded-xl bg-linear-to-r from-purple-600 to-pink-600 px-8',
+                  'py-3 font-semibold text-white transition-all duration-300 hover:scale-105',
+                  'hover:from-purple-700 hover:to-pink-700 hover:shadow-lg hover:shadow-purple-500/30'
+                )}
               >
                 ← Volver al Inicio
               </Link>
@@ -252,7 +279,12 @@ export const LearningPage = () => {
               setSelectedTopics([]);
               setSearchTerm('');
             }}
-            className={`mb-8 flex items-center gap-2 rounded-lg px-4 py-2 transition-all duration-300 ${currentLevel.bgColor} ${currentLevel.borderColor} border hover:scale-105 hover:shadow-lg`}
+            className={cn(
+              'mb-8 flex items-center gap-2 rounded-lg border px-4 py-2 transition-all duration-300',
+              'hover:scale-105 hover:shadow-lg',
+              currentLevel.bgColor,
+              currentLevel.borderColor
+            )}
           >
             <span className="text-lg">←</span>
             <span className="font-semibold">Volver a Niveles</span>
@@ -260,10 +292,15 @@ export const LearningPage = () => {
 
           {/* Hero Section */}
           <header className="mb-20 text-center">
-            <div className={`mb-4 text-5xl ${currentLevel.textColor}`}>
+            <div className={cn('mb-4 text-5xl', currentLevel.textColor)}>
               <Icon name={currentLevel.icon} />
             </div>
-            <h1 className="mb-4 bg-linear-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-5xl font-bold text-transparent md:text-6xl lg:text-7xl">
+            <h1
+              className={cn(
+                'mb-4 bg-linear-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-5xl',
+                'font-bold text-transparent md:text-6xl lg:text-7xl'
+              )}
+            >
               {currentLevel.title}
             </h1>
             <p className="mx-auto max-w-3xl text-base leading-relaxed text-slate-300 md:text-lg">
@@ -311,10 +348,14 @@ export const LearningPage = () => {
                 <Link
                   key={areaKey}
                   href={`/exam/${areaKey}`}
-                  className="group rounded-2xl border-2 border-slate-700/50 bg-slate-800/20 p-8 transition-all duration-300 hover:scale-105 hover:border-orange-500/60 hover:bg-orange-500/10 hover:shadow-lg hover:shadow-orange-500/30"
+                  className={cn(
+                    'group rounded-2xl border-2 border-slate-700/50 bg-slate-800/20 p-8 transition-all',
+                    'duration-300 hover:scale-105 hover:border-orange-500/60 hover:bg-orange-500/10',
+                    'hover:shadow-lg hover:shadow-orange-500/30'
+                  )}
                 >
                   <div className="flex flex-col items-center gap-4 text-center">
-                    <div className={`text-5xl ${areaData.color}`}>
+                    <div className={cn('text-5xl', areaData.color)}>
                       <Icon name={areaData.icon} />
                     </div>
                     <div>
@@ -365,7 +406,11 @@ export const LearningPage = () => {
                     </div>
                     <Link
                       href="/exam/full"
-                      className="inline-block w-full rounded-lg bg-linear-to-r from-red-500 to-pink-500 px-8 py-4 font-semibold text-white transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-red-500/30"
+                      className={cn(
+                        'inline-block w-full rounded-lg bg-linear-to-r from-red-500 to-pink-500 px-8 py-4',
+                        'font-semibold text-white transition-all duration-300 hover:scale-105 hover:shadow-lg',
+                        'hover:shadow-red-500/30'
+                      )}
                     >
                       Iniciar Simulacro Global
                     </Link>
@@ -383,7 +428,11 @@ export const LearningPage = () => {
         <div className="pb-20 text-center">
           <Link
             href="/"
-            className="inline-block cursor-pointer rounded-xl bg-linear-to-r from-purple-600 to-pink-600 px-8 py-3 font-semibold text-white transition-all duration-300 hover:scale-105 hover:from-purple-700 hover:to-pink-700 hover:shadow-lg hover:shadow-purple-500/30"
+            className={cn(
+              'inline-block cursor-pointer rounded-xl bg-linear-to-r from-purple-600 to-pink-600 px-8',
+              'py-3 font-semibold text-white transition-all duration-300 hover:scale-105',
+              'hover:from-purple-700 hover:to-pink-700 hover:shadow-lg hover:shadow-purple-500/30'
+            )}
           >
             ← Volver al Inicio
           </Link>

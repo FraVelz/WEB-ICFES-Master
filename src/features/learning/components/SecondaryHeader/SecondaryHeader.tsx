@@ -1,5 +1,6 @@
 'use client';
 
+import { cn } from '@/utils/cn';
 import { useState, useMemo } from 'react';
 import { Icon } from '@/shared/components/Icon';
 import { AREA_INFO } from '@/shared/constants';
@@ -66,7 +67,12 @@ export const SecondaryHeader = ({ currentArea = 'lectura-critica', onAreaChange 
 
   if (loading) {
     return (
-      <div className="sticky top-0 z-50 flex h-16 items-center justify-center border-b border-slate-700 bg-linear-to-b from-slate-950 to-slate-900">
+      <div
+        className={cn(
+          'sticky top-0 z-50 flex h-16 items-center justify-center border-b border-slate-700',
+          'bg-linear-to-b from-slate-950 to-slate-900'
+        )}
+      >
         <div className="animate-pulse text-slate-400">Cargando...</div>
       </div>
     );
@@ -75,7 +81,12 @@ export const SecondaryHeader = ({ currentArea = 'lectura-critica', onAreaChange 
   return (
     <div className="relative z-50">
       {/* Header Secundario - Sticky, Visible en móvil y desktop */}
-      <div className="sticky top-0 z-50 flex h-16 items-center justify-between border-b border-slate-800 bg-slate-950/90 px-4 shadow-lg backdrop-blur-md">
+      <div
+        className={cn(
+          'sticky top-0 z-50 flex h-16 items-center justify-between border-b border-slate-800',
+          'bg-slate-950/90 px-4 shadow-lg backdrop-blur-md'
+        )}
+      >
         {/* Elemento 1: Área Actual */}
         <button
           onClick={() => setActiveModal(activeModal === 'areas' ? null : 'areas')}
@@ -84,7 +95,10 @@ export const SecondaryHeader = ({ currentArea = 'lectura-critica', onAreaChange 
         >
           {/* Ícono del área */}
           <div
-            className={`h-8 w-8 rounded-lg bg-linear-to-br ${currentAreaInfo.color} flex items-center justify-center shadow-lg`}
+            className={cn(
+              'flex h-8 w-8 items-center justify-center rounded-lg shadow-lg',
+              `bg-linear-to-br ${currentAreaInfo.color}`
+            )}
           >
             <Icon name={currentAreaInfo.icon ?? 'book'} className="text-xs text-white" />
           </div>
@@ -95,7 +109,7 @@ export const SecondaryHeader = ({ currentArea = 'lectura-critica', onAreaChange 
           </div>
           <Icon
             name="chevron-down"
-            className={`ml-1 text-xs text-slate-500 transition-transform ${activeModal === 'areas' ? 'rotate-180' : ''}`}
+            className={cn('ml-1 text-xs text-slate-500 transition-transform', activeModal === 'areas' && 'rotate-180')}
           />
         </button>
 
@@ -103,15 +117,24 @@ export const SecondaryHeader = ({ currentArea = 'lectura-critica', onAreaChange 
           {/* Elemento 2: Racha de Días */}
           <button
             onClick={() => setActiveModal(activeModal === 'streak' ? null : 'streak')}
-            className="group flex cursor-pointer items-center gap-2 rounded-full border border-slate-800 bg-slate-900 px-3 py-1.5 transition-colors hover:border-orange-500/50"
+            className={cn(
+              'group flex cursor-pointer items-center gap-2 rounded-full border border-slate-800',
+              'bg-slate-900 px-3 py-1.5 transition-colors hover:border-orange-500/50'
+            )}
             title="Ver información de racha"
           >
             <Icon
               name="fire"
-              className={`text-sm transition-colors ${currentStreak > 0 ? 'text-orange-500' : 'text-slate-600 group-hover:text-orange-500/50'}`}
+              className={cn(
+                'text-sm transition-colors',
+                currentStreak > 0 ? 'text-orange-500' : 'text-slate-600 group-hover:text-orange-500/50'
+              )}
             />
             <span
-              className={`text-sm font-bold ${currentStreak > 0 ? 'text-orange-500' : 'text-slate-400 group-hover:text-orange-500/50'}`}
+              className={cn(
+                'text-sm font-bold',
+                currentStreak > 0 ? 'text-orange-500' : 'text-slate-400 group-hover:text-orange-500/50'
+              )}
             >
               {currentStreak}
             </span>
@@ -120,7 +143,10 @@ export const SecondaryHeader = ({ currentArea = 'lectura-critica', onAreaChange 
           {/* Elemento 3: Monedas / Tienda */}
           <button
             onClick={() => setActiveModal(activeModal === 'store' ? null : 'store')}
-            className="group flex cursor-pointer items-center gap-2 rounded-full border border-slate-800 bg-slate-900 px-3 py-1.5 transition-colors hover:border-yellow-500/50"
+            className={cn(
+              'group flex cursor-pointer items-center gap-2 rounded-full border border-slate-800',
+              'bg-slate-900 px-3 py-1.5 transition-colors hover:border-yellow-500/50'
+            )}
             title="Abrir tienda"
           >
             <Icon name="coins" className="text-sm text-yellow-500" />

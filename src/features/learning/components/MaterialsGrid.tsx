@@ -1,3 +1,4 @@
+import { cn } from '@/utils/cn';
 import Link from 'next/link';
 import { Icon } from '@/shared/components/Icon';
 import type { LearningMaterial } from '@/shared/data/learningMaterials';
@@ -38,20 +39,25 @@ export const MaterialsGrid = ({ filteredMaterials, areaIcons, selectedTopics, on
           {materials.map((material: LearningMaterial) => (
             <div
               key={material.id}
-              className="group border-white/10 bg-white/5 p-6 backdrop-blur-sm transition-all duration-300 hover:scale-105 hover:border-white/20 hover:bg-white/10 hover:shadow-xl sm:rounded-2xl sm:border"
+              className={cn(
+                'group border-white/10 bg-white/5 p-6 backdrop-blur-sm transition-all duration-300',
+                'hover:scale-105 hover:border-white/20 hover:bg-white/10 hover:shadow-xl sm:rounded-2xl',
+                'sm:border'
+              )}
             >
               <div>
                 <h3 className="mb-3 text-xl font-semibold text-white transition-colors group-hover:text-blue-400">
                   {material.title}
                 </h3>
                 <div
-                  className={`inline-block rounded-full px-4 py-1 text-sm font-semibold text-white ${
+                  className={cn(
+                    'inline-block rounded-full px-4 py-1 text-sm font-semibold text-white',
                     material.difficulty === 'fácil'
                       ? 'border border-green-500/50 bg-green-500/30 text-green-300'
                       : material.difficulty === 'medio'
                         ? 'border border-yellow-500/50 bg-yellow-500/30 text-yellow-300'
                         : 'border border-red-500/50 bg-red-500/30 text-red-300'
-                  }`}
+                  )}
                 >
                   {material.difficulty}
                 </div>
@@ -74,11 +80,12 @@ export const MaterialsGrid = ({ filteredMaterials, areaIcons, selectedTopics, on
                 {material.topics.map((topic: string, idx: number) => (
                   <span
                     key={idx}
-                    className={`inline-block cursor-pointer rounded-full border px-3 py-1 text-sm transition-colors ${
+                    className={cn(
+                      'inline-block cursor-pointer rounded-full border px-3 py-1 text-sm transition-colors',
                       selectedTopics.includes(topic)
                         ? 'border-purple-500 bg-purple-600 text-white'
                         : 'border-blue-500/30 bg-blue-500/20 text-blue-300 hover:bg-blue-500/30'
-                    }`}
+                    )}
                     onClick={() => onTopicToggle(topic)}
                   >
                     {topic}
@@ -87,7 +94,11 @@ export const MaterialsGrid = ({ filteredMaterials, areaIcons, selectedTopics, on
               </div>
               <Link
                 href={material.path ?? '#'}
-                className="block w-full rounded-xl bg-linear-to-r from-blue-600 to-blue-700 px-4 py-2 text-center font-semibold text-white transition-all duration-300 hover:from-blue-700 hover:to-blue-800 hover:shadow-lg"
+                className={cn(
+                  'block w-full rounded-xl bg-linear-to-r from-blue-600 to-blue-700 px-4 py-2 text-center',
+                  'font-semibold text-white transition-all duration-300 hover:from-blue-700 hover:to-blue-800',
+                  'hover:shadow-lg'
+                )}
               >
                 Aprender
               </Link>

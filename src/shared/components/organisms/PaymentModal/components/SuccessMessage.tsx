@@ -1,3 +1,4 @@
+import { cn } from '@/utils/cn';
 import { Icon } from '@/shared/components/Icon';
 import type { PlanItem, UserPlanData } from '../types';
 
@@ -16,18 +17,19 @@ export const SuccessMessage = ({ plan, onClose, currentPlan }: SuccessMessagePro
   return (
     <div className="py-12 text-center">
       <div
-        className={`mx-auto mb-6 flex h-20 w-20 animate-pulse items-center justify-center rounded-full ${
+        className={cn(
+          'mx-auto mb-6 flex h-20 w-20 animate-pulse items-center justify-center rounded-full',
           isFree
             ? 'border-2 border-green-500 bg-green-500/20'
             : isPro
               ? 'border-2 border-purple-500 bg-purple-500/20'
               : 'border-2 border-cyan-500 bg-cyan-500/20'
-        }`}
+        )}
       >
         <Icon
           name={isFree ? 'check-circle' : isPro ? 'trophy' : 'crown'}
           size="2xl"
-          className={`text-4xl ${isFree ? 'text-green-400' : isPro ? 'text-purple-400' : 'text-cyan-400'}`}
+          className={cn('text-4xl', isFree ? 'text-green-400' : isPro ? 'text-purple-400' : 'text-cyan-400')}
         />
       </div>
 
@@ -62,7 +64,10 @@ export const SuccessMessage = ({ plan, onClose, currentPlan }: SuccessMessagePro
       <div className="mt-8 border-t border-slate-700 pt-6">
         <button
           onClick={onClose}
-          className="w-full cursor-pointer rounded-lg bg-cyan-600 px-6 py-3 font-bold text-white transition-all duration-200 hover:bg-cyan-700"
+          className={cn(
+            'w-full cursor-pointer rounded-lg bg-cyan-600 px-6 py-3 font-bold text-white transition-all',
+            'duration-200 hover:bg-cyan-700'
+          )}
         >
           Cerrar
         </button>

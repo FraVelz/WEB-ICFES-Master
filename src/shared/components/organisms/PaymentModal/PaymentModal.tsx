@@ -1,3 +1,4 @@
+import { cn } from '@/utils/cn';
 import { useState, useEffect, useCallback } from 'react';
 import { Icon } from '@/shared/components/Icon';
 import { PaymentHeader } from './components/PaymentHeader';
@@ -199,7 +200,13 @@ export const PaymentModal = ({ isOpen, onClose, plan }: PaymentModalProps) => {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-0 backdrop-blur-sm lg:items-end lg:p-4 lg:pt-20">
-      <div className="mb-20 flex h-dvh max-h-[90vh] w-full max-w-md flex-col rounded-t-2xl border-t border-slate-700 bg-slate-900 shadow-2xl sm:w-auto sm:rounded-xl lg:mb-0 lg:rounded-b-2xl lg:border">
+      <div
+        className={cn(
+          'mb-20 flex h-dvh max-h-[90vh] w-full max-w-md flex-col rounded-t-2xl border-t',
+          'border-slate-700 bg-slate-900 shadow-2xl sm:w-auto sm:rounded-xl lg:mb-0 lg:rounded-b-2xl',
+          'lg:border'
+        )}
+      >
         <PaymentHeader plan={plan} onClose={onClose} />
 
         <div className="flex-1 overflow-y-auto p-6">
@@ -215,7 +222,10 @@ export const PaymentModal = ({ isOpen, onClose, plan }: PaymentModalProps) => {
               </p>
               <button
                 onClick={onClose}
-                className="w-full cursor-pointer rounded-lg bg-slate-700 px-6 py-3 font-bold text-white transition-all duration-200 hover:bg-slate-600"
+                className={cn(
+                  'w-full cursor-pointer rounded-lg bg-slate-700 px-6 py-3 font-bold text-white',
+                  'transition-all duration-200 hover:bg-slate-600'
+                )}
               >
                 Cerrar
               </button>
@@ -250,7 +260,10 @@ export const PaymentModal = ({ isOpen, onClose, plan }: PaymentModalProps) => {
               </p>
               <button
                 onClick={onClose}
-                className="w-full cursor-pointer rounded-lg bg-slate-700 px-6 py-3 font-bold text-white transition-all duration-200 hover:bg-slate-600"
+                className={cn(
+                  'w-full cursor-pointer rounded-lg bg-slate-700 px-6 py-3 font-bold text-white',
+                  'transition-all duration-200 hover:bg-slate-600'
+                )}
               >
                 Cerrar
               </button>
