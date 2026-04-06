@@ -1,15 +1,9 @@
 import DemoProtectedPage from '@/components/DemoProtectedPage';
 import { PracticePage } from '@/features/exam/pages';
-
-const PRACTICA_AREAS = [
-  { area: 'lectura-critica' },
-  { area: 'matematicas' },
-  { area: 'ciencias-naturales' },
-  { area: 'sociales-ciudadanas' },
-];
+import { PRACTICA_AREA_SLUGS } from '@/features/learning/constants/practiceDynamicRoutes';
 
 export function generateStaticParams() {
-  return PRACTICA_AREAS;
+  return PRACTICA_AREA_SLUGS.map((area) => ({ area }));
 }
 
 export default function Page() {
