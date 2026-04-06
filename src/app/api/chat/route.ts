@@ -19,15 +19,19 @@ Responde de forma clara, concisa y didáctica. Usa ejemplos cuando sea útil. Si
 async function getAuthUserFromRequest(request: NextRequest) {
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+
   if (!url || !key) return null;
   const authHeader = request.headers.get('Authorization');
   const jwt = authHeader?.startsWith('Bearer ') ? authHeader.slice(7) : null;
+
   if (!jwt) return null;
   const supabase = createClient(url, key);
+
   const {
     data: { user },
     error,
   } = await supabase.auth.getUser(jwt);
+
   if (error || !user) return null;
   return user;
 }
@@ -113,10 +117,10 @@ export async function POST(request: NextRequest) {
       isLoggedIn
         ? { content: assistantMessage }
         : {
-            content: assistantMessage,
-            anonUsed: anonUsed + 1,
-            limit: CHAT_ANON_LIMIT,
-          }
+          content: assistantMessage,
+          anonUsed: anonUsed + 1,
+          limit: CHAT_ANON_LIMIT,
+        }
     );
 
     if (!isLoggedIn) {

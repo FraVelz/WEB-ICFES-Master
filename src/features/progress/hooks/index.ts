@@ -1,2 +1,1 @@
-export * from './useProgress';
-export * from './useProgress';
+export { useProgress } from './useProgress';

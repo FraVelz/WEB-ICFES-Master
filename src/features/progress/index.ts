@@ -1,3 +1,5 @@
-export * from './pages';
-export * from './components';
-export * from './hooks';
+/**
+ * API pública del feature progress.
+ */
+export { ProgressPage } from './pages';
+export { useProgress } from './hooks/useProgress';
