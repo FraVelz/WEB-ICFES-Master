@@ -8,8 +8,7 @@ import { Icon } from '@/shared/components/Icon';
 
 export const UnifiedAchievementsPage = () => {
   const { user } = useAuth();
-  const { achievements, loading, totalXP, level, completedCount } =
-    useGamification(user?.uid);
+  const { achievements, loading, totalXP, level, completedCount } = useGamification(user?.uid);
 
   if (loading) {
     return (

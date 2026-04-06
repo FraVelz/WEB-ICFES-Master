@@ -77,13 +77,13 @@ NEXT_PUBLIC_API_MODE=supabase     # 'supabase' | 'localStorage'
 
 Services that connect directly to PostgreSQL tables in Supabase:
 
-| Service                        | Table               | Description                                        |
-| ------------------------------ | ------------------- | -------------------------------------------------- |
-| **UserSupabaseService**       | `users`             | Profile, username, bio, virtualMoney, profileImage  |
-| **ProgressSupabaseService**    | `user_progress`     | totalAttempts, totalCorrect, streakDays, areaStats |
-| **GamificationSupabaseService**| `user_gamification` | XP, level, totalCoins, badges, achievements         |
-| **ExamSupabaseService**        | `exam_results`      | Completed exams, scores, answers                   |
-| **LearningSupabaseService**    | `learning_content`  | Lessons by area, content, quizzes                  |
+| Service                         | Table               | Description                                        |
+| ------------------------------- | ------------------- | -------------------------------------------------- |
+| **UserSupabaseService**         | `users`             | Profile, username, bio, virtualMoney, profileImage |
+| **ProgressSupabaseService**     | `user_progress`     | totalAttempts, totalCorrect, streakDays, areaStats |
+| **GamificationSupabaseService** | `user_gamification` | XP, level, totalCoins, badges, achievements        |
+| **ExamSupabaseService**         | `exam_results`      | Completed exams, scores, answers                   |
+| **LearningSupabaseService**     | `learning_content`  | Lessons by area, content, quizzes                  |
 
 ### 5. **GamificationServiceAdapter**
 
@@ -93,20 +93,20 @@ Services that connect directly to PostgreSQL tables in Supabase:
 
 ### 6. **Feature Services** (`src/features/*/services/`)
 
-| Feature      | Service                | Description                                                                          |
-| ------------ | ---------------------- | ------------------------------------------------------------------------------------ |
-| **user**     | UserService            | Extends BaseService. useUserData uses UserSupabaseService or utils                   |
-| **progress** | ProgressService       | Extends BaseService. useProgress uses ProgressSupabaseService or progressStorage     |
-| **logros**   | GamificationService   | Extends BaseService. useGamification uses GamificationSupabaseService or localStorage|
-| **logros**   | AchievementService   | Unlockable achievements logic                                                        |
-| **exam**     | ExamService           | Extends BaseService. useExam uses ExamSupabaseService or progressStorage             |
-| **exam**     | ExamDataService       | Question loading                                                                    |
-| **exam**     | TestResultService     | Result analysis                                                                     |
-| **learning** | LearningService       | Supabase or static roadmapData                                                      |
-| **learning** | LearningMaterialService | Study material                                                                    |
-| **store**    | SubscriptionPlanService | Plans (localStorage for now)                                                      |
-| **store**    | PlanScheduleService   | Plan verification                                                                   |
-| **auth**     | AuthService           | Reset code verification (local)                                                     |
+| Feature      | Service                 | Description                                                                           |
+| ------------ | ----------------------- | ------------------------------------------------------------------------------------- |
+| **user**     | UserService             | Extends BaseService. useUserData uses UserSupabaseService or utils                    |
+| **progress** | ProgressService         | Extends BaseService. useProgress uses ProgressSupabaseService or progressStorage      |
+| **logros**   | GamificationService     | Extends BaseService. useGamification uses GamificationSupabaseService or localStorage |
+| **logros**   | AchievementService      | Unlockable achievements logic                                                         |
+| **exam**     | ExamService             | Extends BaseService. useExam uses ExamSupabaseService or progressStorage              |
+| **exam**     | ExamDataService         | Question loading                                                                      |
+| **exam**     | TestResultService       | Result analysis                                                                       |
+| **learning** | LearningService         | Supabase or static roadmapData                                                        |
+| **learning** | LearningMaterialService | Study material                                                                        |
+| **store**    | SubscriptionPlanService | Plans (localStorage for now)                                                          |
+| **store**    | PlanScheduleService     | Plan verification                                                                     |
+| **auth**     | AuthService             | Reset code verification (local)                                                       |
 
 ---
 
@@ -117,7 +117,8 @@ Hooks abstract the logic and select the service based on `API_CONFIG.MODE`:
 ### **useUserData()**
 
 ```javascript
-const { user, loading, updateProfile, updateUsername, updateBio, updateProfileImage, addMoney, spendMoney, refresh } = useUserData();
+const { user, loading, updateProfile, updateUsername, updateBio, updateProfileImage, addMoney, spendMoney, refresh } =
+  useUserData();
 ```
 
 - **Supabase**: UserSupabaseService
@@ -135,7 +136,8 @@ const { progress, areaStats, recommendations, attemptHistory, resetProgress, ref
 ### **useGamification(userId)**
 
 ```javascript
-const { achievements, totalXP, level, coins, currentStreak, updateAchievementProgress, refreshData } = useGamification(userId);
+const { achievements, totalXP, level, coins, currentStreak, updateAchievementProgress, refreshData } =
+  useGamification(userId);
 ```
 
 - **Supabase**: GamificationSupabaseService
@@ -156,77 +158,77 @@ const { exam, getUserExams, resetUserExams, refresh } = useExam(examId);
 
 ### `users`
 
-| Column       | Type        | Description                    |
-| ------------ | ----------- | ------------------------------ |
-| id           | uuid        | User ID (Supabase Auth)        |
-| email        | text        | Email                          |
-| display_name | text        | Display name                   |
-| username     | text        | Username                       |
-| bio          | text        | Biography                      |
-| profile_image| text        | URL or base64 of photo         |
-| virtual_money| int         | Virtual coins                  |
-| created_at   | timestamptz | Creation date                  |
-| updated_at   | timestamptz | Update date                    |
+| Column        | Type        | Description             |
+| ------------- | ----------- | ----------------------- |
+| id            | uuid        | User ID (Supabase Auth) |
+| email         | text        | Email                   |
+| display_name  | text        | Display name            |
+| username      | text        | Username                |
+| bio           | text        | Biography               |
+| profile_image | text        | URL or base64 of photo  |
+| virtual_money | int         | Virtual coins           |
+| created_at    | timestamptz | Creation date           |
+| updated_at    | timestamptz | Update date             |
 
 ### `user_progress`
 
-| Column            | Type  | Description           |
-| ----------------- | ----- | --------------------- |
-| user_id           | uuid  | FK to users           |
-| total_attempts    | int   | Total attempts        |
-| total_correct     | int   | Correct answers       |
-| percentage        | float | Percentage            |
-| streak_days       | int   | Streak days           |
-| area_stats        | jsonb | Stats per area        |
-| last_activity_date| date  | Last activity         |
+| Column             | Type  | Description     |
+| ------------------ | ----- | --------------- |
+| user_id            | uuid  | FK to users     |
+| total_attempts     | int   | Total attempts  |
+| total_correct      | int   | Correct answers |
+| percentage         | float | Percentage      |
+| streak_days        | int   | Streak days     |
+| area_stats         | jsonb | Stats per area  |
+| last_activity_date | date  | Last activity   |
 
 ### `user_gamification`
 
-| Column       | Type  | Description          |
-| ------------ | ----- | -------------------- |
-| user_id      | uuid  | FK to users          |
-| xp / total_xp| int   | Total experience     |
-| level        | int   | Current level        |
-| total_coins  | int   | Coins earned         |
-| spent_coins  | int   | Coins spent          |
-| badges       | jsonb | Unlocked badges      |
-| achievements | jsonb | Achievement progress |
-| xp_history   | jsonb | XP history           |
-| coins_history| jsonb | Coins history        |
+| Column        | Type  | Description          |
+| ------------- | ----- | -------------------- |
+| user_id       | uuid  | FK to users          |
+| xp / total_xp | int   | Total experience     |
+| level         | int   | Current level        |
+| total_coins   | int   | Coins earned         |
+| spent_coins   | int   | Coins spent          |
+| badges        | jsonb | Unlocked badges      |
+| achievements  | jsonb | Achievement progress |
+| xp_history    | jsonb | XP history           |
+| coins_history | jsonb | Coins history        |
 
 ### `exam_results`
 
-| Column         | Type        | Description          |
-| -------------- | ----------- | -------------------- |
-| id             | text        | Exam ID              |
-| user_id        | uuid        | FK to users          |
-| exam_type      | text        | practice             |
-| score          | int         | Score                |
-| correct_answers| int         | Correct answers      |
-| total_questions| int         | Total questions      |
-| time_spent     | int         | Time in seconds      |
-| completed_at   | timestamptz | Completion date      |
-| questions      | jsonb       | Saved answers        |
+| Column          | Type        | Description     |
+| --------------- | ----------- | --------------- |
+| id              | text        | Exam ID         |
+| user_id         | uuid        | FK to users     |
+| exam_type       | text        | practice        |
+| score           | int         | Score           |
+| correct_answers | int         | Correct answers |
+| total_questions | int         | Total questions |
+| time_spent      | int         | Time in seconds |
+| completed_at    | timestamptz | Completion date |
+| questions       | jsonb       | Saved answers   |
 
 ### `learning_content`
 
-| Column     | Type  | Description                                 |
-| ---------- | ----- | ------------------------------------------- |
-| id         | uuid  | Unique ID (auto-generated)                   |
-| area       | text  | Area: `matematicas`, `lectura_critica`, `sociales`, `ciencias_naturales`, `ingles` |
-| order_index| int   | Lesson order (1, 2, 3...)                   |
-| published  | bool  | `true` to show, `false` to hide             |
-| content    | jsonb | Content (title, summary, body, questions, quiz) |
+| Column      | Type  | Description                                                                        |
+| ----------- | ----- | ---------------------------------------------------------------------------------- |
+| id          | uuid  | Unique ID (auto-generated)                                                         |
+| area        | text  | Area: `matematicas`, `lectura_critica`, `sociales`, `ciencias_naturales`, `ingles` |
+| order_index | int   | Lesson order (1, 2, 3...)                                                          |
+| published   | bool  | `true` to show, `false` to hide                                                    |
+| content     | jsonb | Content (title, summary, body, questions, quiz)                                    |
 
 **Area mapping** (app → DB):
 
-| Area in App (ID)  | Value in DB          |
-| ----------------- | -------------------- |
-| `lectura-critica` | `lectura_critica`    |
-| `matematicas`     | `matematicas`        |
-| `sociales-ciudadanas`| `sociales`        |
-| `ciencias-naturales` | `ciencias_naturales` |
-| `ingles`          | `ingles`             |
+| Area in App (ID)      | Value in DB          |
+| --------------------- | -------------------- |
+| `lectura-critica`     | `lectura_critica`    |
+| `matematicas`         | `matematicas`        |
+| `sociales-ciudadanas` | `sociales`           |
+| `ciencias-naturales`  | `ciencias_naturales` |
+| `ingles`              | `ingles`             |
 
 ---
 
@@ -255,14 +257,14 @@ const { exam, getUserExams, resetUserExams, refresh } = useExam(examId);
 }
 ```
 
-| Field     | Type   | Required | Description                                      |
-| --------- | ------ | -------- | ------------------------------------------------ |
-| title     | string | Yes      | Visible lesson title                             |
-| summary   | string | No       | Brief description                                |
-| body      | string | No       | Markdown content (rendered with ReactMarkdown)   |
-| type      | string | No       | `lesson` by default                              |
-| questions | array  | No       | Quiz questions (format 1, see below)             |
-| quiz      | object | No       | Associated quiz (formats 2 or 3, see below)      |
+| Field     | Type   | Required | Description                                    |
+| --------- | ------ | -------- | ---------------------------------------------- |
+| title     | string | Yes      | Visible lesson title                           |
+| summary   | string | No       | Brief description                              |
+| body      | string | No       | Markdown content (rendered with ReactMarkdown) |
+| type      | string | No       | `lesson` by default                            |
+| questions | array  | No       | Quiz questions (format 1, see below)           |
+| quiz      | object | No       | Associated quiz (formats 2 or 3, see below)    |
 
 ### Supported quiz formats
 
@@ -325,13 +327,13 @@ The `LessonQuizModal` component accepts **three formats** (usage priority):
 
 ### Question and option fields
 
-| Field         | Type   | Description                                      |
-|---------------|--------|--------------------------------------------------|
-| question      | string | Question text (also accepts `text`)              |
-| options       | array  | Options: `{id, text}` or array of strings        |
-| correctAnswer | string | ID of correct option (a, b, c, d)                |
-| correct_answer| number | Index of correct option (0, 1, 2...)             |
-| explanation   | string | Optional explanation after answering             |
+| Field          | Type   | Description                               |
+| -------------- | ------ | ----------------------------------------- |
+| question       | string | Question text (also accepts `text`)       |
+| options        | array  | Options: `{id, text}` or array of strings |
+| correctAnswer  | string | ID of correct option (a, b, c, d)         |
+| correct_answer | number | Index of correct option (0, 1, 2...)      |
+| explanation    | string | Optional explanation after answering      |
 
 Options are normalized automatically: if they are strings, ids `a`, `b`, `c`, `d` are assigned.
 
@@ -421,7 +423,7 @@ import {
   AchievementService,
   TestResultService,
   BADGES,
-  LEVELS
+  LEVELS,
 } from '@/services';
 
 import GamificationServiceAdapter from '@/services/GamificationServiceAdapter';

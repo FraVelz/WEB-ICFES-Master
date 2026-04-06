@@ -6,15 +6,13 @@ import { Icon } from '@/shared/components/Icon';
 import { MascotaCircle } from '@/shared/components/MascotaCircle';
 import { LessonQuizModal } from './LessonQuizModal';
 import { useGSAPModalEntrance } from '@/hooks/useGSAPModalEntrance';
-import {
-  splitLessonContent,
-  extractSectionTitle,
-  stripFirstHeadingIfDuplicate,
-} from '../../utils/splitLessonContent';
+import { splitLessonContent, extractSectionTitle, stripFirstHeadingIfDuplicate } from '../../utils/splitLessonContent';
 import { AREA_INFO } from '@/shared/constants';
 
 const getAreaColor = (areaId: string) => {
-  const info = (AREA_INFO as Record<string, { color?: string }>)[areaId] || (AREA_INFO as Record<string, { color?: string }>)['lectura-critica'];
+  const info =
+    (AREA_INFO as Record<string, { color?: string }>)[areaId] ||
+    (AREA_INFO as Record<string, { color?: string }>)['lectura-critica'];
   const color = info?.color ?? '';
   if (color.includes('blue')) return 'from-blue-500 to-blue-600';
   if (color.includes('green')) return 'from-green-500 to-green-600';
@@ -25,7 +23,9 @@ const getAreaColor = (areaId: string) => {
 };
 
 const getBubbleBorderColor = (areaId: string) => {
-  const info = (AREA_INFO as Record<string, { color?: string }>)[areaId] || (AREA_INFO as Record<string, { color?: string }>)['lectura-critica'];
+  const info =
+    (AREA_INFO as Record<string, { color?: string }>)[areaId] ||
+    (AREA_INFO as Record<string, { color?: string }>)['lectura-critica'];
   const color = info?.color ?? '';
   if (color.includes('blue')) return 'border-blue-400/50';
   if (color.includes('green')) return 'border-green-400/50';
@@ -66,25 +66,17 @@ export const LessonContentModal = ({
     duration: 0.3,
   });
 
-  const hasQuestions =
-    lesson?.questions &&
-    Array.isArray(lesson.questions) &&
-    lesson.questions.length > 0;
+  const hasQuestions = lesson?.questions && Array.isArray(lesson.questions) && lesson.questions.length > 0;
   const hasQuiz = lesson?.quiz && typeof lesson.quiz === 'object';
   const canShowQuiz: boolean = Boolean(hasQuestions || hasQuiz);
 
-  const contentStr =
-    typeof lesson?.content === 'string' ? lesson.content : '';
+  const contentStr = typeof lesson?.content === 'string' ? lesson.content : '';
   const hasContent = contentStr.trim().length > 0;
 
-  const sections = useMemo(
-    () => splitLessonContent(contentStr),
-    [contentStr]
-  );
+  const sections = useMemo(() => splitLessonContent(contentStr), [contentStr]);
 
   const totalSteps = sections.length + (hasContent && canShowQuiz ? 1 : 0);
-  const isExamStep =
-    currentSection === sections.length && totalSteps > sections.length;
+  const isExamStep = currentSection === sections.length && totalSteps > sections.length;
   const progress = totalSteps > 0 ? ((currentSection + 1) / totalSteps) * 100 : 0;
 
   const mascotDialogue = useMemo(() => {
@@ -110,25 +102,17 @@ export const LessonContentModal = ({
 
   if (!isOpen || !lesson) return null;
 
-  const mascotSrc = isExamStep
-    ? '/avatars/celebrando-2.webp'
-    : '/avatars/logo.webp';
+  const mascotSrc = isExamStep ? '/avatars/celebrando-2.webp' : '/avatars/logo.webp';
   const gradientClass = getAreaColor(areaId);
   const bubbleBorder = getBubbleBorderColor(areaId);
 
   const contentToRender: string =
     sections.length > 0 && !isExamStep
-      ? stripFirstHeadingIfDuplicate(
-          sections[currentSection],
-          mascotDialogue
-        )
+      ? stripFirstHeadingIfDuplicate(sections[currentSection], mascotDialogue)
       : (sections[currentSection] ?? '');
 
   return (
-    <div
-      ref={modalRef}
-      className="fixed inset-0 z-60 flex h-full w-full flex-col bg-slate-950"
-    >
+    <div ref={modalRef} className="fixed inset-0 z-60 flex h-full w-full flex-col bg-slate-950">
       {/* Header compacto */}
       <div className="flex shrink-0 items-center justify-between border-b border-slate-800/80 bg-slate-900/90 px-3 py-2.5 backdrop-blur-md sm:px-4 sm:py-3">
         <button
@@ -156,31 +140,23 @@ export const LessonContentModal = ({
       <div className="min-h-0 flex-1 overflow-x-hidden overflow-y-auto scroll-smooth">
         <div className="mx-auto max-w-2xl px-3 py-4 pb-28 sm:px-6 sm:py-6">
           {/* Bloque Duolingo: Mascota + globo de diálogo */}
-          <div className="mb-6 flex flex-col items-center gap-4 sm:mb-8 sm:flex-row sm:items-flex-start sm:justify-center sm:gap-6">
+          <div className="sm:items-flex-start mb-6 flex flex-col items-center gap-4 sm:mb-8 sm:flex-row sm:justify-center sm:gap-6">
             {/* Mascota con animación flotante tipo Duolingo */}
-            <div
-              className="shrink-0 sm:order-2"
-              style={{ animation: 'float 3s ease-in-out infinite' }}
-            >
-              <MascotaCircle
-                src={mascotSrc}
-                alt="Mascota"
-                size="md"
-                centered={false}
-              />
+            <div className="shrink-0 sm:order-2" style={{ animation: 'float 3s ease-in-out infinite' }}>
+              <MascotaCircle src={mascotSrc} alt="Mascota" size="md" centered={false} />
             </div>
 
             {/* Globo de diálogo - la mascota "dice" el título o subtítulo */}
             <div className="relative w-full max-w-sm sm:order-1 sm:max-w-md sm:flex-1">
               {/* Cola del globo: móvil abajo, desktop derecha apuntando a mascota */}
               <div
-                className="absolute left-1/2 top-full h-0 w-0 -translate-x-1/2 -translate-y-px border-[10px] border-transparent border-t-slate-800 sm:left-full sm:right-auto sm:top-1/2 sm:translate-x-0 sm:-translate-y-1/2 sm:border-t-transparent sm:border-r-slate-800"
+                className="absolute top-full left-1/2 h-0 w-0 -translate-x-1/2 -translate-y-px border-[10px] border-transparent border-t-slate-800 sm:top-1/2 sm:right-auto sm:left-full sm:translate-x-0 sm:-translate-y-1/2 sm:border-t-transparent sm:border-r-slate-800"
                 aria-hidden
               />
               <div
                 className={`rounded-2xl border-2 ${bubbleBorder} bg-slate-800/95 p-4 shadow-xl backdrop-blur-sm sm:p-5`}
               >
-                <p className="text-center text-base font-semibold leading-relaxed text-white sm:text-left sm:text-lg">
+                <p className="text-center text-base leading-relaxed font-semibold text-white sm:text-left sm:text-lg">
                   {mascotDialogue}
                 </p>
               </div>
@@ -189,10 +165,8 @@ export const LessonContentModal = ({
 
           {/* Indicador de sección */}
           <div className="mb-4 flex justify-center sm:mb-6">
-            <span className="rounded-full bg-slate-800/80 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-slate-400">
-              {isExamStep
-                ? 'Examen'
-                : `${currentSection + 1} de ${sections.length}`}
+            <span className="rounded-full bg-slate-800/80 px-3 py-1 text-xs font-semibold tracking-wider text-slate-400 uppercase">
+              {isExamStep ? 'Examen' : `${currentSection + 1} de ${sections.length}`}
             </span>
           </div>
 
@@ -212,21 +186,18 @@ export const LessonContentModal = ({
                     </span>{' '}
                     y{' '}
                     <span className="font-bold text-yellow-400">
-                      {lesson.coins || (lesson?.quiz as { rewards?: { coins?: number } } | undefined)?.rewards?.coins || 5} monedas
+                      {lesson.coins ||
+                        (lesson?.quiz as { rewards?: { coins?: number } } | undefined)?.rewards?.coins ||
+                        5}{' '}
+                      monedas
                     </span>
                     .
                   </>
                 ) : (
                   <>
                     Completa el examen rápido para finalizar esta lección y ganar{' '}
-                    <span className="font-bold text-blue-400">
-                      {lesson.xp || 10} XP
-                    </span>{' '}
-                    y{' '}
-                    <span className="font-bold text-yellow-400">
-                      {lesson.coins || 5} monedas
-                    </span>
-                    .
+                    <span className="font-bold text-blue-400">{lesson.xp || 10} XP</span> y{' '}
+                    <span className="font-bold text-yellow-400">{lesson.coins || 5} monedas</span>.
                   </>
                 )}
               </p>
@@ -242,22 +213,16 @@ export const LessonContentModal = ({
               <ReactMarkdown
                 components={{
                   h1: ({ node, ...props }) => (
-                    <h1
-                      className="mb-3 mt-0 text-xl font-bold text-white sm:text-2xl md:text-3xl"
-                      {...props}
-                    />
+                    <h1 className="mt-0 mb-3 text-xl font-bold text-white sm:text-2xl md:text-3xl" {...props} />
                   ),
                   h2: ({ node, ...props }) => (
                     <h2
-                      className="mb-2 mt-4 border-b border-slate-700/60 pb-2 text-lg font-bold text-slate-100 sm:mt-6 sm:text-xl md:text-2xl"
+                      className="mt-4 mb-2 border-b border-slate-700/60 pb-2 text-lg font-bold text-slate-100 sm:mt-6 sm:text-xl md:text-2xl"
                       {...props}
                     />
                   ),
                   h3: ({ node, ...props }) => (
-                    <h3
-                      className="mb-2 mt-3 text-base font-bold text-slate-200 sm:mt-4 sm:text-lg"
-                      {...props}
-                    />
+                    <h3 className="mt-3 mb-2 text-base font-bold text-slate-200 sm:mt-4 sm:text-lg" {...props} />
                   ),
                   p: ({ node, ...props }) => (
                     <p
@@ -277,18 +242,18 @@ export const LessonContentModal = ({
                       {...props}
                     />
                   ),
-                  li: ({ node, ...props }) => (
-                    <li className="ml-3 sm:ml-4" {...props} />
-                  ),
+                  li: ({ node, ...props }) => <li className="ml-3 sm:ml-4" {...props} />,
                   blockquote: ({ node, ...props }) => (
                     <blockquote
-                      className="my-3 rounded-r-lg border-l-4 border-blue-500/80 bg-slate-800/50 py-2 pl-3 pr-3 text-slate-400 italic sm:my-4 sm:pl-4 sm:pr-4"
+                      className="my-3 rounded-r-lg border-l-4 border-blue-500/80 bg-slate-800/50 py-2 pr-3 pl-3 text-slate-400 italic sm:my-4 sm:pr-4 sm:pl-4"
                       {...props}
                     />
                   ),
                   code: ({ node, className, children, ...props }) => {
                     const isInline = !className?.includes('language-');
-                    const content: React.ReactNode = Array.isArray(children) ? children.join('') : (children ?? '') as React.ReactNode;
+                    const content: React.ReactNode = Array.isArray(children)
+                      ? children.join('')
+                      : ((children ?? '') as React.ReactNode);
                     return isInline ? (
                       <code
                         className="rounded bg-slate-800 px-1.5 py-0.5 font-mono text-xs text-pink-400 sm:text-sm"
@@ -298,10 +263,7 @@ export const LessonContentModal = ({
                       </code>
                     ) : (
                       <div className="my-3 overflow-x-auto rounded-lg border border-slate-700 bg-slate-800/80 p-3 sm:my-4 sm:p-4">
-                        <code
-                          className={`font-mono text-xs text-slate-200 sm:text-sm ${className ?? ''}`}
-                          {...props}
-                        >
+                        <code className={`font-mono text-xs text-slate-200 sm:text-sm ${className ?? ''}`} {...props}>
                           {content}
                         </code>
                       </div>
@@ -326,9 +288,7 @@ export const LessonContentModal = ({
             </div>
           ) : (
             <div className="rounded-2xl border border-slate-700/60 bg-slate-900/30 p-4 text-center sm:p-6">
-              <p className="text-sm text-slate-400 sm:text-base">
-                No hay contenido disponible para esta lección.
-              </p>
+              <p className="text-sm text-slate-400 sm:text-base">No hay contenido disponible para esta lección.</p>
               {canShowQuiz && (
                 <button
                   onClick={() => setIsQuizOpen(true)}
@@ -343,11 +303,11 @@ export const LessonContentModal = ({
       </div>
 
       {/* Navegación: Anterior / Siguiente - responsive */}
-      <div className="fixed bottom-0 left-0 right-0 flex shrink-0 items-center justify-between gap-2 border-t border-slate-800/80 bg-slate-950/95 px-3 py-3 backdrop-blur-md sm:gap-4 sm:px-4 sm:py-4">
+      <div className="fixed right-0 bottom-0 left-0 flex shrink-0 items-center justify-between gap-2 border-t border-slate-800/80 bg-slate-950/95 px-3 py-3 backdrop-blur-md sm:gap-4 sm:px-4 sm:py-4">
         <button
           onClick={handlePrev}
           disabled={currentSection === 0}
-          className="flex min-w-[44px] cursor-pointer items-center justify-center gap-1.5 rounded-xl border border-slate-700 bg-slate-800/80 px-3 py-2.5 font-medium text-slate-300 transition-all disabled:cursor-not-allowed disabled:opacity-40 hover:bg-slate-700/80 hover:text-white disabled:hover:bg-slate-800/80 disabled:hover:text-slate-300 sm:gap-2 sm:px-4 sm:py-3"
+          className="flex min-w-[44px] cursor-pointer items-center justify-center gap-1.5 rounded-xl border border-slate-700 bg-slate-800/80 px-3 py-2.5 font-medium text-slate-300 transition-all hover:bg-slate-700/80 hover:text-white disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:bg-slate-800/80 disabled:hover:text-slate-300 sm:gap-2 sm:px-4 sm:py-3"
         >
           <Icon name="arrow-left" className="text-sm" />
           <span className="hidden text-sm sm:inline">Anterior</span>
@@ -358,7 +318,7 @@ export const LessonContentModal = ({
         <button
           onClick={handleNext}
           disabled={currentSection >= totalSteps - 1}
-          className={`flex min-w-[44px] cursor-pointer items-center justify-center gap-1.5 rounded-xl bg-linear-to-r ${gradientClass} px-3 py-2.5 font-medium text-white shadow-lg transition-all disabled:cursor-not-allowed disabled:opacity-40 hover:opacity-95 disabled:hover:opacity-40 sm:gap-2 sm:px-4 sm:py-3`}
+          className={`flex min-w-[44px] cursor-pointer items-center justify-center gap-1.5 rounded-xl bg-linear-to-r ${gradientClass} px-3 py-2.5 font-medium text-white shadow-lg transition-all hover:opacity-95 disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:opacity-40 sm:gap-2 sm:px-4 sm:py-3`}
         >
           <span className="hidden text-sm sm:inline">Siguiente</span>
           <Icon name="arrow-right" className="text-sm" />
@@ -373,8 +333,20 @@ export const LessonContentModal = ({
           resetSection();
           onClose();
         }}
-        questions={Array.isArray(lesson?.questions) ? (lesson.questions as import('./LessonQuizModal').LessonQuizModalProps['questions']) : undefined}
-        quiz={lesson?.quiz && typeof lesson.quiz === 'object' ? { ...(lesson.quiz as object), questions: lesson.questions, rewards: lesson.rewards } as import('./LessonQuizModal').LessonQuizModalProps['quiz'] : undefined}
+        questions={
+          Array.isArray(lesson?.questions)
+            ? (lesson.questions as import('./LessonQuizModal').LessonQuizModalProps['questions'])
+            : undefined
+        }
+        quiz={
+          lesson?.quiz && typeof lesson.quiz === 'object'
+            ? ({
+                ...(lesson.quiz as object),
+                questions: lesson.questions,
+                rewards: lesson.rewards,
+              } as import('./LessonQuizModal').LessonQuizModalProps['quiz'])
+            : undefined
+        }
         lessonId={lesson?.id}
         lessonTitle={lesson?.title}
         lessonXp={lesson?.xp}

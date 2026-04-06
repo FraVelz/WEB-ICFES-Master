@@ -28,9 +28,7 @@ export const TopicItem = ({ topic, idx, subject }: TopicItemProps) => (
       <p className="text-sm text-slate-400">{topic.content}</p>
     </div>
     <div className="ml-4 flex items-center gap-3">
-      <span className="rounded bg-slate-700/50 px-3 py-1 text-xs text-slate-300">
-        {topic.duration}
-      </span>
+      <span className="rounded bg-slate-700/50 px-3 py-1 text-xs text-slate-300">{topic.duration}</span>
       <Link
         href={`/aprender/${subject}/basico/${idx}`}
         className="rounded bg-green-600 px-3 py-1 text-sm text-white transition-colors hover:bg-green-700"
@@ -69,11 +67,7 @@ export const SubjectButton = ({ subject, isExpanded, onClick, bgColor }: Subject
     } transition-colors`}
   >
     <div className="flex items-center gap-3 text-left">
-      <Icon
-        name={subject.icon}
-        size="xl"
-        className={`text-xl ${subject.color}`}
-      />
+      <Icon name={subject.icon} size="xl" className={`text-xl ${subject.color}`} />
       <div>
         <h3 className="text-lg font-semibold text-white">{subject.name}</h3>
         <p className="text-xs text-slate-400">8 horas de contenido • 500 XP</p>
@@ -81,9 +75,7 @@ export const SubjectButton = ({ subject, isExpanded, onClick, bgColor }: Subject
     </div>
     <Icon
       name="chevron-down"
-      className={`text-slate-400 transition-transform duration-300 ${
-        isExpanded ? 'rotate-180' : ''
-      }`}
+      className={`text-slate-400 transition-transform duration-300 ${isExpanded ? 'rotate-180' : ''}`}
     />
   </button>
 );
@@ -97,12 +89,7 @@ interface SubjectCardProps {
 
 export const SubjectCard = ({ subject, isExpanded, topics, onToggle }: SubjectCardProps) => (
   <div className="overflow-hidden rounded-xl border border-slate-700">
-    <SubjectButton
-      subject={subject}
-      isExpanded={isExpanded}
-      onClick={onToggle}
-      bgColor={subject.bgColor}
-    />
+    <SubjectButton subject={subject} isExpanded={isExpanded} onClick={onToggle} bgColor={subject.bgColor} />
     {isExpanded && <BasicoTopicsList topics={topics} subject={subject.id} />}
   </div>
 );

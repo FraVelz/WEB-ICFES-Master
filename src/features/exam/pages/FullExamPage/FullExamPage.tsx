@@ -1,19 +1,10 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Icon } from '@/shared/components/Icon';
-import {
-  ExamConfigModal,
-  AnswerSheet,
-  ResultsAnalysis,
-} from '@/features/exam/components';
+import { ExamConfigModal, AnswerSheet, ResultsAnalysis } from '@/features/exam/components';
 import { formatTimeExtended } from '@/shared/utils';
 import { AREA_INFO } from '@/shared/constants';
-import {
-  MATHEMATICS_QUESTIONS,
-  LANGUAGE_QUESTIONS,
-  SCIENCE_QUESTIONS,
-  SOCIAL_QUESTIONS,
-} from '@/shared/data';
+import { MATHEMATICS_QUESTIONS, LANGUAGE_QUESTIONS, SCIENCE_QUESTIONS, SOCIAL_QUESTIONS } from '@/shared/data';
 import type { ExamQuestion } from '@/shared/types/question';
 import type { ExamConfig } from '@/features/exam/types';
 
@@ -42,9 +33,7 @@ export const FullExamPage = () => {
     setExamConfig(config);
 
     if (config.useTimer) {
-      setTimeRemaining(
-        config.numQuestions * (config.timePerQuestion ?? 2) * 60
-      );
+      setTimeRemaining(config.numQuestions * (config.timePerQuestion ?? 2) * 60);
     }
   };
 
@@ -127,15 +116,8 @@ export const FullExamPage = () => {
 
               {/* Mobile Menu Button */}
               <div className="relative md:hidden">
-                <button
-                  onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                  className="p-2 text-white"
-                >
-                  <Icon
-                    name="ellipsis-vertical"
-                    size="xl"
-                    className="text-xl"
-                  />
+                <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)} className="p-2 text-white">
+                  <Icon name="ellipsis-vertical" size="xl" className="text-xl" />
                 </button>
 
                 {/* Mobile Menu */}
@@ -153,11 +135,7 @@ export const FullExamPage = () => {
                       onClick={() => setMobileMenuOpen(false)}
                       className="flex items-center gap-3 px-4 py-3 text-white transition-colors hover:bg-white/10"
                     >
-                      <Icon
-                        name="arrow-right-from-bracket"
-                        size="sm"
-                        className="text-sm"
-                      />
+                      <Icon name="arrow-right-from-bracket" size="sm" className="text-sm" />
                       <span>Salir</span>
                     </Link>
                   </div>
@@ -227,15 +205,11 @@ export const FullExamPage = () => {
               >
                 {areaInfo.name}
               </div>
-              <p className="text-sm text-gray-400">
-                Preguntas: {questions.length}
-              </p>
+              <p className="text-sm text-gray-400">Preguntas: {questions.length}</p>
             </div>
 
             {examConfig.useTimer && timeRemaining !== null && (
-              <div className={`font-mono text-2xl font-bold ${timeColor}`}>
-                {formatTimeExtended(timeRemaining)}
-              </div>
+              <div className={`font-mono text-2xl font-bold ${timeColor}`}>{formatTimeExtended(timeRemaining)}</div>
             )}
 
             {/* Desktop Exit Button */}
@@ -248,10 +222,7 @@ export const FullExamPage = () => {
 
             {/* Mobile Menu Button */}
             <div className="relative md:hidden">
-              <button
-                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className="p-2 text-white"
-              >
+              <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)} className="p-2 text-white">
                 <Icon name="ellipsis-vertical" size="xl" className="text-xl" />
               </button>
 
@@ -273,11 +244,7 @@ export const FullExamPage = () => {
                     onClick={() => setMobileMenuOpen(false)}
                     className="flex items-center gap-3 px-4 py-3 text-white transition-colors hover:bg-white/10"
                   >
-                    <Icon
-                      name="arrow-right-from-bracket"
-                      size="sm"
-                      className="text-sm"
-                    />
+                    <Icon name="arrow-right-from-bracket" size="sm" className="text-sm" />
                     <span>Salir</span>
                   </Link>
                 </div>
@@ -304,14 +271,9 @@ export const FullExamPage = () => {
                         {index + 1}
                       </div>
                       <div className="flex-1">
-                        <p className="text-lg leading-relaxed font-semibold text-white">
-                          {question.text}
-                        </p>
+                        <p className="text-lg leading-relaxed font-semibold text-white">{question.text}</p>
                         <p className="mt-2 text-xs text-gray-500">
-                          Dificultad:{' '}
-                          <span className="text-cyan-300">
-                            {question.difficulty}
-                          </span>
+                          Dificultad: <span className="text-cyan-300">{question.difficulty}</span>
                         </p>
                       </div>
                     </div>
@@ -325,12 +287,7 @@ export const FullExamPage = () => {
                       return (
                         <button
                           key={option.letter}
-                          onClick={() =>
-                            handleAnswer(
-                              question.id,
-                              option.letter ?? option.id ?? option.text
-                            )
-                          }
+                          onClick={() => handleAnswer(question.id, option.letter ?? option.id ?? option.text)}
                           className={`w-full rounded-lg border-2 p-4 text-left transition-all duration-300 ${
                             isSelected
                               ? 'border-cyan-400 bg-cyan-500/20 text-cyan-100'
@@ -340,9 +297,7 @@ export const FullExamPage = () => {
                           <div className="flex items-center gap-3">
                             <div
                               className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full border-2 text-sm font-bold ${
-                                isSelected
-                                  ? 'border-cyan-400 bg-cyan-500 text-white'
-                                  : 'border-white/30'
+                                isSelected ? 'border-cyan-400 bg-cyan-500 text-white' : 'border-white/30'
                               }`}
                             >
                               {option.letter}
@@ -355,18 +310,12 @@ export const FullExamPage = () => {
                   </div>
 
                   {/* Explanation - Only shown after exam finishes */}
-                  {showResults &&
-                    examConfig.showExplanations &&
-                    answers[question.id] && (
-                      <div className="mt-6 ml-14 rounded-lg border border-blue-500/30 bg-blue-500/10 p-4">
-                        <p className="mb-2 text-xs font-semibold text-blue-300">
-                          EXPLICACIÓN:
-                        </p>
-                        <p className="text-sm text-gray-200">
-                          {question.explanation}
-                        </p>
-                      </div>
-                    )}
+                  {showResults && examConfig.showExplanations && answers[question.id] && (
+                    <div className="mt-6 ml-14 rounded-lg border border-blue-500/30 bg-blue-500/10 p-4">
+                      <p className="mb-2 text-xs font-semibold text-blue-300">EXPLICACIÓN:</p>
+                      <p className="text-sm text-gray-200">{question.explanation}</p>
+                    </div>
+                  )}
                 </div>
               ))}
 

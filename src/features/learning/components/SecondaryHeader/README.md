@@ -179,9 +179,7 @@ En `StreakModal.tsx`:
 
 ```jsx
 {
-  isBadgeUnlocked && (
-    <div className="bg-linear-to-r... animate-pulse">{/* Contenido */}</div>
-  );
+  isBadgeUnlocked && <div className="bg-linear-to-r... animate-pulse">{/* Contenido */}</div>;
 }
 ```
 

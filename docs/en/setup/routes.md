@@ -17,30 +17,30 @@ These are the project **URLs**:
 
 ## Dashboard (requires session or demo)
 
-| URL                 | Description                        |
-| ------------------- | ---------------------------------- |
-| `/ruta-aprendizaje` | Learning path (with AI chat)       |
-| `/logros`           | Achievements and gamification      |
-| `/perfil`           | User profile                       |
-| `/perfil/public`    | Public profile                     |
-| `/clasificatoria`   | Ranking / leaderboard               |
-| `/desafios-diarios` | Daily challenges                   |
-| `/configuracion`    | Settings                           |
-| `/examen-completo`  | Full simulation                    |
+| URL                 | Description                   |
+| ------------------- | ----------------------------- |
+| `/ruta-aprendizaje` | Learning path (with AI chat)  |
+| `/logros`           | Achievements and gamification |
+| `/perfil`           | User profile                  |
+| `/perfil/public`    | Public profile                |
+| `/clasificatoria`   | Ranking / leaderboard         |
+| `/desafios-diarios` | Daily challenges              |
+| `/configuracion`    | Settings                      |
+| `/examen-completo`  | Full simulation               |
 
 ## Practice (by area)
 
-| URL                             | Description                 |
-| ------------------------------- | --------------------------- |
-| `/practica/lectura-critica`     | Reading practice            |
-| `/practica/matematicas`         | Math practice               |
-| `/practica/ciencias-naturales`  | Natural sciences practice   |
-| `/practica/sociales-ciudadanas` | Social studies practice     |
+| URL                             | Description               |
+| ------------------------------- | ------------------------- |
+| `/practica/lectura-critica`     | Reading practice          |
+| `/practica/matematicas`         | Math practice             |
+| `/practica/ciencias-naturales`  | Natural sciences practice |
+| `/practica/sociales-ciudadanas` | Social studies practice   |
 
 ## Lessons (by area and topic)
 
-| URL                       | Example                                                          |
-| ------------------------- | ---------------------------------------------------------------- |
+| URL                       | Example                                                             |
+| ------------------------- | ------------------------------------------------------------------- |
 | `/lessons/[area]/[topic]` | `/lessons/matematicas/algebra`, `/lessons/lenguaje/gramatica`, etc. |
 
 **Areas and topics:**
@@ -52,6 +52,6 @@ These are the project **URLs**:
 
 ## API
 
-| URL         | Method | Description                              |
-| ----------- | ------ | ---------------------------------------- |
-| `/api/chat` | POST   | Chat with ChatGPT for ICFES assistant    |
+| URL         | Method | Description                           |
+| ----------- | ------ | ------------------------------------- |
+| `/api/chat` | POST   | Chat with ChatGPT for ICFES assistant |

@@ -134,10 +134,7 @@ export const LearningFilters = ({
             <Icon name="filter" className="text-cyan-400" />
             Filtros
           </span>
-          <Icon
-            name={showFilters ? 'chevron-up' : 'chevron-down'}
-            className="text-cyan-400"
-          />
+          <Icon name={showFilters ? 'chevron-up' : 'chevron-down'} className="text-cyan-400" />
         </button>
         {(activeArea !== 'all' || selectedTopics.length > 0) && (
           <button
@@ -154,9 +151,7 @@ export const LearningFilters = ({
         <>
           {/* Area Filter */}
           <div className="mb-8">
-            <h3 className="mb-4 text-lg font-semibold text-white">
-              Áreas de Estudio
-            </h3>
+            <h3 className="mb-4 text-lg font-semibold text-white">Áreas de Estudio</h3>
             <div className="flex flex-wrap gap-3 md:grid md:grid-cols-5">
               <button
                 onClick={() => onAreaChange('all')}
@@ -168,22 +163,20 @@ export const LearningFilters = ({
               >
                 Todas
               </button>
-              {Object.entries(areaIcons).map(
-                ([area, { icon, color, label }]) => (
-                  <button
-                    key={area}
-                    onClick={() => onAreaChange(area)}
-                    className={`flex cursor-pointer items-center justify-center gap-2 rounded-lg px-4 py-2 font-semibold transition-all ${
-                      activeArea === area
-                        ? 'scale-105 bg-blue-600 text-white'
-                        : 'bg-white/10 text-gray-300 hover:bg-white/20'
-                    }`}
-                  >
-                    <Icon name={icon} className={color} />
-                    <span className="inline">{label}</span>
-                  </button>
-                )
-              )}
+              {Object.entries(areaIcons).map(([area, { icon, color, label }]) => (
+                <button
+                  key={area}
+                  onClick={() => onAreaChange(area)}
+                  className={`flex cursor-pointer items-center justify-center gap-2 rounded-lg px-4 py-2 font-semibold transition-all ${
+                    activeArea === area
+                      ? 'scale-105 bg-blue-600 text-white'
+                      : 'bg-white/10 text-gray-300 hover:bg-white/20'
+                  }`}
+                >
+                  <Icon name={icon} className={color} />
+                  <span className="inline">{label}</span>
+                </button>
+              ))}
             </div>
           </div>
 
@@ -191,9 +184,7 @@ export const LearningFilters = ({
           <div className="space-y-6">
             {/* Search Input */}
             <div>
-              <h3 className="mb-4 text-lg font-semibold text-white">
-                🔍 Buscar Temas
-              </h3>
+              <h3 className="mb-4 text-lg font-semibold text-white">🔍 Buscar Temas</h3>
               <div className="relative">
                 <input
                   type="text"
@@ -212,9 +203,7 @@ export const LearningFilters = ({
                 )}
               </div>
               {searchTerm && filteredTopics.length === 0 && (
-                <p className="mt-2 text-sm text-gray-400">
-                  No se encontraron temas que coincidan con "{searchTerm}"
-                </p>
+                <p className="mt-2 text-sm text-gray-400">No se encontraron temas que coincidan con "{searchTerm}"</p>
               )}
             </div>
 
@@ -222,11 +211,7 @@ export const LearningFilters = ({
             <div>
               <h3 className="mb-4 text-lg font-semibold text-white">
                 Tags de Temas
-                {filteredTopics.length > 0 && (
-                  <span className="ml-2 text-cyan-400">
-                    ({filteredTopics.length})
-                  </span>
-                )}
+                {filteredTopics.length > 0 && <span className="ml-2 text-cyan-400">({filteredTopics.length})</span>}
               </h3>
 
               <div>
@@ -253,9 +238,7 @@ export const LearningFilters = ({
                       </button>
                     ))
                   ) : (
-                    <div className="w-full py-8 text-center text-gray-400">
-                      Selecciona temas usando el buscador
-                    </div>
+                    <div className="w-full py-8 text-center text-gray-400">Selecciona temas usando el buscador</div>
                   )}
                 </div>
 
@@ -275,8 +258,7 @@ export const LearningFilters = ({
                       <div
                         style={{
                           width: `${scrollProgress}%`,
-                          background:
-                            'linear-gradient(90deg, #3b82f6, #06b6d4)',
+                          background: 'linear-gradient(90deg, #3b82f6, #06b6d4)',
                           transition: 'width 0.2s ease-out',
                         }}
                         className="h-full shadow-lg shadow-blue-500/50"
@@ -296,8 +278,7 @@ export const LearningFilters = ({
                 {/* Selection Counter */}
                 {filteredTopics.length > 0 && (
                   <div className="mt-3 text-center text-sm font-semibold text-cyan-400">
-                    {selectedTopics.length} de {filteredTopics.length} temas
-                    seleccionados
+                    {selectedTopics.length} de {filteredTopics.length} temas seleccionados
                   </div>
                 )}
               </div>
@@ -306,10 +287,7 @@ export const LearningFilters = ({
               {selectedTopics.length > 0 && (
                 <div className="mt-6 border-t border-white/10 pt-6">
                   <p className="mb-3 text-sm text-gray-400">
-                    📌 Temas seleccionados:{' '}
-                    <span className="font-bold text-cyan-400">
-                      {selectedTopics.length}
-                    </span>
+                    📌 Temas seleccionados: <span className="font-bold text-cyan-400">{selectedTopics.length}</span>
                   </p>
                   <div className="flex flex-wrap gap-2">
                     {selectedTopics.map((topic) => (
@@ -318,10 +296,7 @@ export const LearningFilters = ({
                         className="flex items-center gap-2 rounded-full border border-cyan-500/50 bg-cyan-600/30 px-3 py-1 text-sm text-cyan-300"
                       >
                         {topic}
-                        <button
-                          onClick={() => onTopicToggle(topic)}
-                          className="transition-colors hover:text-cyan-100"
-                        >
+                        <button onClick={() => onTopicToggle(topic)} className="transition-colors hover:text-cyan-100">
                           <Icon name="times" size="sm" className="text-xs" />
                         </button>
                       </div>

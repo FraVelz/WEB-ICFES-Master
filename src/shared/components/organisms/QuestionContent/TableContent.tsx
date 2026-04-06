@@ -49,10 +49,7 @@ export const TableContent = ({ headers = [], rows = [], caption }: TableContentP
               } transition-colors hover:bg-white/10`}
             >
               {row.map((cell: unknown, cellIdx: number) => (
-                <td
-                  key={cellIdx}
-                  className="border-r border-white/10 px-4 py-3 text-gray-200 last:border-r-0"
-                >
+                <td key={cellIdx} className="border-r border-white/10 px-4 py-3 text-gray-200 last:border-r-0">
                   {String(cell ?? '')}
                 </td>
               ))}
@@ -60,11 +57,7 @@ export const TableContent = ({ headers = [], rows = [], caption }: TableContentP
           ))}
         </tbody>
       </table>
-      {caption && (
-        <figcaption className="mt-3 text-center text-xs text-gray-400 italic">
-          {caption}
-        </figcaption>
-      )}
+      {caption && <figcaption className="mt-3 text-center text-xs text-gray-400 italic">{caption}</figcaption>}
     </figure>
   );
 };

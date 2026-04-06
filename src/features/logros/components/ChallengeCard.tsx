@@ -41,11 +41,7 @@ export const ChallengeCard = ({ challenge, onComplete }: ChallengeCardProps) => 
     // navigate(getRoute(challenge.area));
 
     // SIMULACIÓN: Completar directamente para probar la UI
-    if (
-      window.confirm(
-        '¿Simular completar este desafío? (En producción esto iría a la lección)'
-      )
-    ) {
+    if (window.confirm('¿Simular completar este desafío? (En producción esto iría a la lección)')) {
       onComplete(challenge.id);
     } else {
       router.push(getRoute(challenge.area ?? 'examen-completo'));
@@ -72,9 +68,7 @@ export const ChallengeCard = ({ challenge, onComplete }: ChallengeCardProps) => 
         {/* Icon Box */}
         <div
           className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-xl text-xl ${
-            isCompleted
-              ? 'bg-green-500/20 text-green-400'
-              : 'bg-slate-700/50 text-cyan-400'
+            isCompleted ? 'bg-green-500/20 text-green-400' : 'bg-slate-700/50 text-cyan-400'
           }`}
         >
           <Icon name={typeof challenge.icon === 'string' ? challenge.icon : 'bolt'} />
@@ -83,9 +77,7 @@ export const ChallengeCard = ({ challenge, onComplete }: ChallengeCardProps) => 
         {/* Content */}
         <div className="min-w-0 flex-1">
           <div className="mb-1 flex items-start justify-between">
-            <h3
-              className={`truncate text-lg font-bold ${isCompleted ? 'text-slate-400 line-through' : 'text-white'}`}
-            >
+            <h3 className={`truncate text-lg font-bold ${isCompleted ? 'text-slate-400 line-through' : 'text-white'}`}>
               {String(challenge.title ?? '')}
             </h3>
             {isCompleted && (
@@ -96,21 +88,15 @@ export const ChallengeCard = ({ challenge, onComplete }: ChallengeCardProps) => 
             )}
           </div>
 
-          <p className="mb-3 line-clamp-2 text-sm text-slate-400">
-            {String(challenge.description ?? '')}
-          </p>
+          <p className="mb-3 line-clamp-2 text-sm text-slate-400">{String(challenge.description ?? '')}</p>
 
           {/* Rewards & Action */}
           <div className="mt-2 flex items-center justify-between">
             <div className="flex gap-3 text-xs font-bold tracking-wider uppercase">
-              <span
-                className={`flex items-center gap-1 ${isCompleted ? 'text-slate-500' : 'text-yellow-400'}`}
-              >
+              <span className={`flex items-center gap-1 ${isCompleted ? 'text-slate-500' : 'text-yellow-400'}`}>
                 <Icon name="bolt" /> +{challenge.xpReward ?? 0} XP
               </span>
-              <span
-                className={`flex items-center gap-1 ${isCompleted ? 'text-slate-500' : 'text-amber-400'}`}
-              >
+              <span className={`flex items-center gap-1 ${isCompleted ? 'text-slate-500' : 'text-amber-400'}`}>
                 <Icon name="coins" /> +{challenge.coinsReward ?? 0}
               </span>
             </div>

@@ -20,32 +20,24 @@ export default function TerminosPage() {
         <p className="mb-8 text-gray-300">
           <strong>ICFES Master</strong>
         </p>
-        <p className="mb-8 text-sm text-gray-400">
-          Última actualización: 16 de diciembre de 2025
-        </p>
+        <p className="mb-8 text-sm text-gray-400">Última actualización: 16 de diciembre de 2025</p>
 
         <div className="space-y-6">
           <p className="leading-relaxed text-gray-200">
-            Al acceder y utilizar{' '}
-            <strong className="text-purple-400">ICFES Master</strong>, aceptas
-            los siguientes Términos y Condiciones.
+            Al acceder y utilizar <strong className="text-purple-400">ICFES Master</strong>, aceptas los siguientes
+            Términos y Condiciones.
           </p>
 
           <div>
-            <h2 className="mt-8 mb-4 text-2xl font-bold text-purple-400">
-              1. Descripción del servicio
-            </h2>
+            <h2 className="mt-8 mb-4 text-2xl font-bold text-purple-400">1. Descripción del servicio</h2>
             <p className="mb-6 text-gray-300">
-              ICFES Master es una plataforma educativa diseñada para apoyar la
-              preparación del examen ICFES mediante práctica, seguimiento del
-              progreso y estadísticas académicas.
+              ICFES Master es una plataforma educativa diseñada para apoyar la preparación del examen ICFES mediante
+              práctica, seguimiento del progreso y estadísticas académicas.
             </p>
           </div>
 
           <div>
-            <h2 className="mt-8 mb-4 text-2xl font-bold text-purple-400">
-              2. Uso adecuado
-            </h2>
+            <h2 className="mt-8 mb-4 text-2xl font-bold text-purple-400">2. Uso adecuado</h2>
             <ul className="mb-6 list-inside list-disc space-y-2 text-gray-300">
               <li>Usar la plataforma únicamente con fines educativos</li>
               <li>No realizar actividades fraudulentas o malintencionadas</li>
@@ -53,61 +45,42 @@ export default function TerminosPage() {
           </div>
 
           <div>
-            <h2 className="mt-8 mb-4 text-2xl font-bold text-purple-400">
-              3. Cuentas de usuario
-            </h2>
+            <h2 className="mt-8 mb-4 text-2xl font-bold text-purple-400">3. Cuentas de usuario</h2>
             <p className="mb-6 text-gray-300">
-              El usuario es responsable de mantener la confidencialidad de su
-              cuenta y de toda actividad realizada desde ella.
+              El usuario es responsable de mantener la confidencialidad de su cuenta y de toda actividad realizada desde
+              ella.
             </p>
           </div>
 
           <div>
-            <h2 className="mt-8 mb-4 text-2xl font-bold text-purple-400">
-              4. Resultados académicos
-            </h2>
+            <h2 className="mt-8 mb-4 text-2xl font-bold text-purple-400">4. Resultados académicos</h2>
             <div className="mb-6 rounded-lg border border-yellow-500/50 bg-yellow-500/20 p-4">
               <p className="text-gray-200">
-                <strong className="text-yellow-300">
-                  No garantiza resultados específicos en el examen ICFES
-                </strong>
-                , ya que dependen de múltiples factores.
+                <strong className="text-yellow-300">No garantiza resultados específicos en el examen ICFES</strong>, ya
+                que dependen de múltiples factores.
               </p>
             </div>
           </div>
 
           <div>
-            <h2 className="mt-8 mb-4 text-2xl font-bold text-purple-400">
-              5. Disponibilidad del servicio
-            </h2>
+            <h2 className="mt-8 mb-4 text-2xl font-bold text-purple-400">5. Disponibilidad del servicio</h2>
             <p className="mb-6 text-gray-300">
-              El servicio puede ser modificado, suspendido o actualizado en
-              cualquier momento.
+              El servicio puede ser modificado, suspendido o actualizado en cualquier momento.
             </p>
           </div>
 
           <div>
-            <h2 className="mt-8 mb-4 text-2xl font-bold text-purple-400">
-              6. Monetización
-            </h2>
-            <p className="mb-6 text-gray-300">
-              La plataforma es 100% gratuita.
-            </p>
+            <h2 className="mt-8 mb-4 text-2xl font-bold text-purple-400">6. Monetización</h2>
+            <p className="mb-6 text-gray-300">La plataforma es 100% gratuita.</p>
           </div>
 
           <div>
-            <h2 className="mt-8 mb-4 text-2xl font-bold text-purple-400">
-              7. Propiedad intelectual
-            </h2>
-            <p className="mb-6 text-gray-300">
-              Todo el contenido de ICFES Master pertenece a sus desarrolladores.
-            </p>
+            <h2 className="mt-8 mb-4 text-2xl font-bold text-purple-400">7. Propiedad intelectual</h2>
+            <p className="mb-6 text-gray-300">Todo el contenido de ICFES Master pertenece a sus desarrolladores.</p>
           </div>
 
           <div>
-            <h2 className="mt-8 mb-4 text-2xl font-bold text-purple-400">
-              8. Limitación de responsabilidad
-            </h2>
+            <h2 className="mt-8 mb-4 text-2xl font-bold text-purple-400">8. Limitación de responsabilidad</h2>
             <ul className="mb-6 list-inside list-disc space-y-2 text-gray-300">
               <li>Resultados académicos obtenidos por el usuario</li>
               <li>Uso indebido de la plataforma</li>
@@ -116,24 +89,16 @@ export default function TerminosPage() {
           </div>
 
           <div>
-            <h2 className="mt-8 mb-4 text-2xl font-bold text-purple-400">
-              9. Legislación aplicable
-            </h2>
+            <h2 className="mt-8 mb-4 text-2xl font-bold text-purple-400">9. Legislación aplicable</h2>
             <p className="mb-6 text-gray-300">
-              Estos términos se rigen por las leyes de la{' '}
-              <strong>República de Colombia</strong>.
+              Estos términos se rigen por las leyes de la <strong>República de Colombia</strong>.
             </p>
           </div>
 
           <div>
-            <h2 className="mt-8 mb-4 text-2xl font-bold text-purple-400">
-              10. Contacto
-            </h2>
+            <h2 className="mt-8 mb-4 text-2xl font-bold text-purple-400">10. Contacto</h2>
             <p className="mb-6 text-gray-300">
-              <a
-                href="mailto:fravelz@proton.me"
-                className="text-purple-400 underline hover:text-purple-300"
-              >
+              <a href="mailto:fravelz@proton.me" className="text-purple-400 underline hover:text-purple-300">
                 fravelz@proton.me
               </a>
             </p>

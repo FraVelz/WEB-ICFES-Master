@@ -23,11 +23,7 @@ class ExamDataService {
     return getStoredExams();
   }
 
-  async saveExamAnswers(
-    _userId: string,
-    _examId: string,
-    _answers: unknown
-  ) {}
+  async saveExamAnswers(_userId: string, _examId: string, _answers: unknown) {}
   async getUserExamAnswers(_userId: string, _examId: string) {
     return null;
   }

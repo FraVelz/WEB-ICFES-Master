@@ -11,32 +11,14 @@ export const Quimica = () => {
       {
         name: 'Moléculas',
         description: 'Estructura de moléculas orgánicas con átomos de carbono.',
-        subtopics: [
-          'Enlaces covalentes',
-          'Cadenas de carbono',
-          'Grupos funcionales',
-          'Isómeros',
-        ],
-        examples: [
-          'Alcanos: C-C enlaces simples',
-          'Alquenos: C=C doble enlace',
-          'Benceno: anillo aromático',
-        ],
+        subtopics: ['Enlaces covalentes', 'Cadenas de carbono', 'Grupos funcionales', 'Isómeros'],
+        examples: ['Alcanos: C-C enlaces simples', 'Alquenos: C=C doble enlace', 'Benceno: anillo aromático'],
       },
       {
         name: 'Reacciones Orgánicas',
         description: 'Tipos de reacciones químicas en moléculas orgánicas.',
-        subtopics: [
-          'Sustitución y eliminación',
-          'Adición',
-          'Oxidación-reducción',
-          'Reacciones de condensación',
-        ],
-        examples: [
-          'Sustitución: R-X + Y⁻ → R-Y + X⁻',
-          'Adición a doble enlace',
-          'Combustión: CₙHₘ + O₂ → CO₂ + H₂O',
-        ],
+        subtopics: ['Sustitución y eliminación', 'Adición', 'Oxidación-reducción', 'Reacciones de condensación'],
+        examples: ['Sustitución: R-X + Y⁻ → R-Y + X⁻', 'Adición a doble enlace', 'Combustión: CₙHₘ + O₂ → CO₂ + H₂O'],
       },
       {
         name: 'Ácidos y Bases',
@@ -47,11 +29,7 @@ export const Quimica = () => {
           'Reacciones de neutralización',
           'Buffer y soluciones amortiguadoras',
         ],
-        examples: [
-          'HCl es ácido fuerte',
-          'NaOH es base fuerte',
-          'pH = 7: neutro, <7: ácido, >7: básico',
-        ],
+        examples: ['HCl es ácido fuerte', 'NaOH es base fuerte', 'pH = 7: neutro, <7: ácido, >7: básico'],
       },
     ],
     keyFormulas: [
@@ -102,9 +80,7 @@ export const Quimica = () => {
             <span className="flex items-center gap-2">
               <Icon name="book" /> {content.lessons} lecciones
             </span>
-            <span className="rounded-full bg-red-500/30 px-4 py-1 text-sm">
-              {content.difficulty}
-            </span>
+            <span className="rounded-full bg-red-500/30 px-4 py-1 text-sm">{content.difficulty}</span>
           </div>
         </header>
 
@@ -114,16 +90,12 @@ export const Quimica = () => {
               key={idx}
               className="rounded-2xl border border-white/10 bg-white/5 p-8 backdrop-blur-sm transition-all hover:bg-white/10"
             >
-              <h2 className="mb-4 text-3xl font-bold text-green-400">
-                {topic.name}
-              </h2>
+              <h2 className="mb-4 text-3xl font-bold text-green-400">{topic.name}</h2>
               <p className="mb-6 text-lg text-gray-300">{topic.description}</p>
 
               <div className="grid gap-8 md:grid-cols-2">
                 <div>
-                  <h3 className="mb-4 text-xl font-semibold text-blue-400">
-                    Subtemas
-                  </h3>
+                  <h3 className="mb-4 text-xl font-semibold text-blue-400">Subtemas</h3>
                   <ul className="space-y-3">
                     {topic.subtopics.map((sub, i) => (
                       <li key={i} className="flex items-start gap-3">
@@ -135,18 +107,11 @@ export const Quimica = () => {
                 </div>
 
                 <div>
-                  <h3 className="mb-4 text-xl font-semibold text-green-400">
-                    Ejemplos
-                  </h3>
+                  <h3 className="mb-4 text-xl font-semibold text-green-400">Ejemplos</h3>
                   <div className="space-y-3">
                     {topic.examples.map((example, i) => (
-                      <div
-                        key={i}
-                        className="rounded border-l-4 border-green-400 bg-gray-900/50 p-4"
-                      >
-                        <code className="text-sm text-green-300">
-                          {example}
-                        </code>
+                      <div key={i} className="rounded border-l-4 border-green-400 bg-gray-900/50 p-4">
+                        <code className="text-sm text-green-300">{example}</code>
                       </div>
                     ))}
                   </div>
@@ -157,27 +122,18 @@ export const Quimica = () => {
         </div>
 
         <section className="mb-16">
-          <h2 className="mb-8 text-3xl font-bold text-cyan-400">
-            Fórmulas Clave
-          </h2>
+          <h2 className="mb-8 text-3xl font-bold text-cyan-400">Fórmulas Clave</h2>
           <div className="grid gap-4 md:grid-cols-2">
             {content.keyFormulas.map((formula, idx) => (
-              <div
-                key={idx}
-                className="rounded-xl border border-cyan-500/30 bg-cyan-500/10 p-6"
-              >
-                <code className="block text-center text-lg text-cyan-300">
-                  {formula}
-                </code>
+              <div key={idx} className="rounded-xl border border-cyan-500/30 bg-cyan-500/10 p-6">
+                <code className="block text-center text-lg text-cyan-300">{formula}</code>
               </div>
             ))}
           </div>
         </section>
 
         <section className="mb-16">
-          <h2 className="mb-8 text-3xl font-bold text-purple-400">
-            Ejercicios de Práctica
-          </h2>
+          <h2 className="mb-8 text-3xl font-bold text-purple-400">Ejercicios de Práctica</h2>
           <div className="space-y-4">
             {content.practiceExercises.map((exercise, idx) => (
               <div
@@ -185,9 +141,7 @@ export const Quimica = () => {
                 className="rounded-xl border border-white/10 bg-white/5 p-6 transition-all hover:bg-white/10"
               >
                 <div className="flex items-start gap-4">
-                  <span className="min-w-fit text-xl font-bold text-purple-400">
-                    {idx + 1}.
-                  </span>
+                  <span className="min-w-fit text-xl font-bold text-purple-400">{idx + 1}.</span>
                   <p className="text-gray-300">{exercise}</p>
                 </div>
               </div>

@@ -7,13 +7,7 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   className?: string;
 }
 
-export const Button = ({
-  children,
-  variant = 'primary',
-  size = 'md',
-  className = '',
-  ...props
-}: ButtonProps) => {
+export const Button = ({ children, variant = 'primary', size = 'md', className = '', ...props }: ButtonProps) => {
   const baseStyles =
     'font-semibold rounded-xl transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 hover-lift relative overflow-hidden';
 
@@ -40,10 +34,7 @@ export const Button = ({
   const v = variant in variants ? variant : 'primary';
   const s = size in sizes ? size : 'md';
   return (
-    <button
-      className={`${baseStyles} ${variants[v]} ${sizes[s]} ${className}`}
-      {...props}
-    >
+    <button className={`${baseStyles} ${variants[v]} ${sizes[s]} ${className}`} {...props}>
       {children}
     </button>
   );

@@ -42,10 +42,7 @@ interface QuestionWithArea {
   difficulty?: string;
 }
 
-export const getQuestionsByArea = (
-  questions: QuestionWithArea[],
-  area: string
-) => {
+export const getQuestionsByArea = (questions: QuestionWithArea[], area: string) => {
   return questions.filter((q) => q.area === area);
 };
 

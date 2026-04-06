@@ -80,9 +80,4 @@ export const RECOMMENDED_SESSIONS = [
   },
 ];
 
-export const ICON_COLORS = [
-  'text-cyan-400',
-  'text-orange-400',
-  'text-yellow-400',
-  'text-pink-400',
-];
+export const ICON_COLORS = ['text-cyan-400', 'text-orange-400', 'text-yellow-400', 'text-pink-400'];

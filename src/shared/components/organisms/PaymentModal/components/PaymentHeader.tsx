@@ -16,10 +16,7 @@ export const PaymentHeader = ({ plan, onClose }: PaymentHeaderProps) => {
         </h2>
         <p className="mt-1 text-sm text-slate-400">{plan?.name}</p>
       </div>
-      <button
-        onClick={onClose}
-        className="cursor-pointer text-slate-400 transition-colors hover:text-white"
-      >
+      <button onClick={onClose} className="cursor-pointer text-slate-400 transition-colors hover:text-white">
         <Icon name="times" className="text-2xl" />
       </button>
     </div>

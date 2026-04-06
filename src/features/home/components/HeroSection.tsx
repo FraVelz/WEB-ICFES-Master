@@ -4,11 +4,7 @@ import Link from 'next/link';
 import { Icon } from '@/shared/components/Icon';
 import { AnimatedReveal } from '@/shared/components/AnimatedReveal';
 
-export const HeroSection = ({
-  onDemoAccess,
-}: {
-  onDemoAccess: () => void;
-}) => {
+export const HeroSection = ({ onDemoAccess }: { onDemoAccess: () => void }) => {
   const handleDemoClick = () => {
     if (onDemoAccess) {
       onDemoAccess();
@@ -45,19 +41,13 @@ export const HeroSection = ({
         {/* Subtitle */}
         <AnimatedReveal isVisible delay={0.3}>
           <p className="mx-auto max-w-3xl text-lg leading-relaxed text-slate-300 md:text-xl">
-            La plataforma #1 con{' '}
-            <span className="font-bold text-cyan-400">+500 preguntas</span>,
-            simulacros reales, gamificación adictiva y eficiente, y una
-            comunidad de estudiantes preparándose contigo.
+            La plataforma #1 con <span className="font-bold text-cyan-400">+500 preguntas</span>, simulacros reales,
+            gamificación adictiva y eficiente, y una comunidad de estudiantes preparándose contigo.
           </p>
         </AnimatedReveal>
 
         {/* CTA Buttons */}
-        <AnimatedReveal
-          isVisible
-          delay={0.45}
-          className="flex flex-col justify-center gap-4 pt-4 md:flex-row"
-        >
+        <AnimatedReveal isVisible delay={0.45} className="flex flex-col justify-center gap-4 pt-4 md:flex-row">
           <button
             onClick={handleDemoClick}
             className="flex cursor-pointer items-center justify-center gap-2 rounded-lg bg-linear-to-r from-cyan-500 to-blue-600 px-8 py-4 text-lg font-bold text-white transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-cyan-500/50"
@@ -75,11 +65,7 @@ export const HeroSection = ({
         </AnimatedReveal>
 
         {/* Stats */}
-        <AnimatedReveal
-          isVisible
-          delay={0.6}
-          className="mx-auto grid max-w-2xl grid-cols-3 gap-4 pt-8"
-        >
+        <AnimatedReveal isVisible delay={0.6} className="mx-auto grid max-w-2xl grid-cols-3 gap-4 pt-8">
           <div className="rounded-lg border border-slate-700 bg-slate-800/50 p-2 sm:p-4">
             <p className="text-3xl font-bold text-cyan-400">+500</p>
             <p className="mt-1 text-xs text-slate-400">Preguntas</p>

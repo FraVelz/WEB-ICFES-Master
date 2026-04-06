@@ -25,9 +25,7 @@ export const CardForm = ({
     <>
       {/* Card Number */}
       <div>
-        <label className="mb-2 block text-sm font-semibold text-white">
-          Número de Tarjeta
-        </label>
+        <label className="mb-2 block text-sm font-semibold text-white">Número de Tarjeta</label>
         <input
           type="text"
           placeholder="0000 0000 0000 0000"
@@ -40,9 +38,7 @@ export const CardForm = ({
 
       {/* Card Holder */}
       <div>
-        <label className="mb-2 block text-sm font-semibold text-white">
-          Nombre en la Tarjeta
-        </label>
+        <label className="mb-2 block text-sm font-semibold text-white">Nombre en la Tarjeta</label>
         <input
           type="text"
           placeholder="JUAN PEREZ"
@@ -61,9 +57,7 @@ export const CardForm = ({
       {/* Expiry and CVV */}
       <div className="grid grid-cols-5 items-end gap-1.5">
         <div>
-          <label className="mb-2 block text-sm font-semibold text-white">
-            Mes
-          </label>
+          <label className="mb-2 block text-sm font-semibold text-white">Mes</label>
           <input
             type="text"
             placeholder="MM"
@@ -78,9 +72,7 @@ export const CardForm = ({
           <span className="text-2xl font-bold text-white">/</span>
         </div>
         <div>
-          <label className="mb-2 block text-sm font-semibold text-white">
-            Año
-          </label>
+          <label className="mb-2 block text-sm font-semibold text-white">Año</label>
           <input
             type="text"
             placeholder="YY"
@@ -95,9 +87,7 @@ export const CardForm = ({
           <span className="text-2xl font-bold text-white"></span>
         </div>
         <div>
-          <label className="mb-2 block text-sm font-semibold text-white">
-            CVV
-          </label>
+          <label className="mb-2 block text-sm font-semibold text-white">CVV</label>
           <input
             type="password"
             placeholder="***"

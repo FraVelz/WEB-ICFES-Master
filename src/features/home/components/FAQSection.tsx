@@ -17,17 +17,9 @@ export const FAQSection = ({
   setExpandedFaq: React.Dispatch<React.SetStateAction<number | null>>;
 }) => {
   return (
-    <section
-      ref={faqSection.elementRef}
-      className="mx-auto max-w-4xl px-6 py-20 md:px-8"
-    >
-      <AnimatedReveal
-        isVisible={faqSection.isVisible}
-        className="mb-16 text-center"
-      >
-        <h2 className="mb-4 text-4xl font-bold md:text-5xl">
-          Preguntas Frecuentes
-        </h2>
+    <section ref={faqSection.elementRef} className="mx-auto max-w-4xl px-6 py-20 md:px-8">
+      <AnimatedReveal isVisible={faqSection.isVisible} className="mb-16 text-center">
+        <h2 className="mb-4 text-4xl font-bold md:text-5xl">Preguntas Frecuentes</h2>
       </AnimatedReveal>
 
       <div className="space-y-4">
@@ -49,9 +41,7 @@ export const FAQSection = ({
               />
             </button>
             {expandedFaq === idx && (
-              <div className="border-t border-slate-700 bg-slate-700/20 px-6 pt-3 pb-6 text-slate-300">
-                {faq.a}
-              </div>
+              <div className="border-t border-slate-700 bg-slate-700/20 px-6 pt-3 pb-6 text-slate-300">{faq.a}</div>
             )}
           </AnimatedReveal>
         ))}

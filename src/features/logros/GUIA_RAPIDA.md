@@ -41,10 +41,7 @@ logros/
 ### Opción 1: Todo en uno (recomendado)
 
 ```javascript
-import {
-  LOGROS_DISPONIBLES,
-  BADGE_CATEGORIES,
-} from '@/features/logros/constants';
+import { LOGROS_DISPONIBLES, BADGE_CATEGORIES } from '@/features/logros/constants';
 
 // Usar:
 const allBadges = LOGROS_DISPONIBLES;
@@ -63,10 +60,7 @@ const academicBadges = ACADEMIC_BADGES;
 ### Opción 3: Múltiples categorías
 
 ```javascript
-import {
-  ACADEMIC_BADGES,
-  EXCELLENCE_BADGES,
-} from '@/features/logros/constants/categories';
+import { ACADEMIC_BADGES, EXCELLENCE_BADGES } from '@/features/logros/constants/categories';
 
 // Usar:
 const badges = { ...ACADEMIC_BADGES, ...EXCELLENCE_BADGES };

@@ -20,9 +20,7 @@ export const PlanInfo = ({ plan, billingPeriod, priceCalculation }: PlanInfoProp
       <div className="space-y-2">
         <div className="flex items-center justify-between text-sm">
           <span className="text-slate-400">Período:</span>
-          <span className="font-semibold text-slate-300">
-            {billingPeriod === 'monthly' ? 'Mensual' : 'Anual'}
-          </span>
+          <span className="font-semibold text-slate-300">{billingPeriod === 'monthly' ? 'Mensual' : 'Anual'}</span>
         </div>
         {billingPeriod === 'annual' && (
           <div className="flex items-center justify-between border-t border-slate-700/50 pt-2 text-sm">
@@ -33,9 +31,7 @@ export const PlanInfo = ({ plan, billingPeriod, priceCalculation }: PlanInfoProp
         {getSavings() && (
           <div className="flex items-center justify-between border-t border-slate-700/50 pt-2 text-sm">
             <span className="text-slate-400">Ahorras:</span>
-            <span className="text-base font-semibold text-green-400">
-              ${getSavings()}
-            </span>
+            <span className="text-base font-semibold text-green-400">${getSavings()}</span>
           </div>
         )}
       </div>

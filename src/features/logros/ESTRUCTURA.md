@@ -91,10 +91,7 @@ badges.js (re-exports)
 ### Importar todos los logros:
 
 ```javascript
-import {
-  LOGROS_DISPONIBLES,
-  BADGE_CATEGORIES,
-} from '@/features/logros/constants';
+import { LOGROS_DISPONIBLES, BADGE_CATEGORIES } from '@/features/logros/constants';
 ```
 
 ### Importar una categoría específica:
@@ -106,10 +103,7 @@ import { FIRST_STEPS_BADGES } from '@/features/logros/constants/categories/first
 ### Importar múltiples categorías:
 
 ```javascript
-import {
-  ACADEMIC_BADGES,
-  EXCELLENCE_BADGES,
-} from '@/features/logros/constants/categories';
+import { ACADEMIC_BADGES, EXCELLENCE_BADGES } from '@/features/logros/constants/categories';
 ```
 
 ## Agregar Nuevo Logro

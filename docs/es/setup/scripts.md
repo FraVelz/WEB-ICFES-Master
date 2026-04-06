@@ -110,11 +110,11 @@ pnpm deploy
 
 ## Flujo de trabajo recomendado
 
-| Tarea | Script(s) |
-|-------|-----------|
-| Desarrollo local | `pnpm dev` |
-| Compilar para producción | `pnpm build` |
-| Preview local | `pnpm start` |
-| Desplegar | `pnpm deploy` o Vercel/Netlify |
-| Revisar código | `pnpm lint` y `pnpm format:check` |
-| Formatear código | `pnpm format` |
+| Tarea                    | Script(s)                         |
+| ------------------------ | --------------------------------- |
+| Desarrollo local         | `pnpm dev`                        |
+| Compilar para producción | `pnpm build`                      |
+| Preview local            | `pnpm start`                      |
+| Desplegar                | `pnpm deploy` o Vercel/Netlify    |
+| Revisar código           | `pnpm lint` y `pnpm format:check` |
+| Formatear código         | `pnpm format`                     |

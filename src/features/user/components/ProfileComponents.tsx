@@ -1,6 +1,10 @@
 import { Icon } from '@/shared/components/Icon';
 
-export const ProfileCard = ({ user }: { user?: { profileImage?: string; username?: string; displayName?: string; bio?: string } }) => (
+export const ProfileCard = ({
+  user,
+}: {
+  user?: { profileImage?: string; username?: string; displayName?: string; bio?: string };
+}) => (
   <div className="rounded-2xl border border-cyan-500/20 bg-white/5 p-8 backdrop-blur-xl transition-all duration-300 hover:border-cyan-500/50 hover:shadow-lg hover:shadow-cyan-500/20">
     {/* Avatar Section */}
     <div className="relative mb-6">
@@ -27,9 +31,7 @@ export const ProfileCard = ({ user }: { user?: { profileImage?: string; username
       <h2 className="bg-linear-to-r from-cyan-400 to-blue-400 bg-clip-text text-2xl font-bold text-transparent">
         {user?.username || user?.displayName || 'Usuario'}
       </h2>
-      <p className="mt-2 text-sm text-cyan-300/60">
-        Miembro desde {new Date().toLocaleDateString()}
-      </p>
+      <p className="mt-2 text-sm text-cyan-300/60">Miembro desde {new Date().toLocaleDateString()}</p>
     </div>
 
     {/* Bio */}
@@ -41,7 +43,11 @@ export const ProfileCard = ({ user }: { user?: { profileImage?: string; username
   </div>
 );
 
-export const RankBadge = ({ rank }: { rank?: { color?: string; icon?: React.ReactNode; name?: string; percentage?: number } }) => {
+export const RankBadge = ({
+  rank,
+}: {
+  rank?: { color?: string; icon?: React.ReactNode; name?: string; percentage?: number };
+}) => {
   if (!rank) return null;
 
   return (
@@ -57,7 +63,11 @@ export const RankBadge = ({ rank }: { rank?: { color?: string; icon?: React.Reac
   );
 };
 
-export const StatsCard = ({ userData }: { userData?: { progress?: { percentage: number; totalAttempts: number; streakDays: number } } }) => {
+export const StatsCard = ({
+  userData,
+}: {
+  userData?: { progress?: { percentage: number; totalAttempts: number; streakDays: number } };
+}) => {
   if (!userData?.progress) return null;
 
   return (
@@ -68,28 +78,28 @@ export const StatsCard = ({ userData }: { userData?: { progress?: { percentage: 
       <div className="space-y-4">
         <div className="flex items-center justify-between border-b border-purple-500/20 pb-3">
           <span className="text-slate-300">Desempeño:</span>
-          <span className="font-bold text-purple-400">
-            {userData.progress.percentage}%
-          </span>
+          <span className="font-bold text-purple-400">{userData.progress.percentage}%</span>
         </div>
         <div className="flex items-center justify-between border-b border-purple-500/20 pb-3">
           <span className="text-slate-300">Intentos:</span>
-          <span className="font-bold text-purple-400">
-            {userData.progress.totalAttempts}
-          </span>
+          <span className="font-bold text-purple-400">{userData.progress.totalAttempts}</span>
         </div>
         <div className="flex items-center justify-between">
           <span className="text-slate-300">Racha:</span>
-          <span className="font-bold text-purple-400">
-            🔥 {userData.progress.streakDays} días
-          </span>
+          <span className="font-bold text-purple-400">🔥 {userData.progress.streakDays} días</span>
         </div>
       </div>
     </div>
   );
 };
 
-export const RanksGrid = ({ allRanks, currentRank }: { allRanks: Array<{ name: string; icon: string; minScore: number }>; currentRank?: { name: string } }) => (
+export const RanksGrid = ({
+  allRanks,
+  currentRank,
+}: {
+  allRanks: Array<{ name: string; icon: string; minScore: number }>;
+  currentRank?: { name: string };
+}) => (
   <div className="grid grid-cols-2 gap-4 md:grid-cols-3">
     {allRanks.map((r: { name: string; icon: string; minScore: number }, idx: number) => {
       const isCurrentRank = currentRank && r.name === currentRank.name;

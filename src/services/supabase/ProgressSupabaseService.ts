@@ -38,11 +38,7 @@ function ensureSupabase() {
 const ProgressSupabaseService = {
   async getByUserId(userId: string): Promise<MappedProgress | null> {
     const sb = ensureSupabase();
-    const { data, error } = await sb
-      .from(TABLE)
-      .select('*')
-      .eq('user_id', userId)
-      .maybeSingle();
+    const { data, error } = await sb.from(TABLE).select('*').eq('user_id', userId).maybeSingle();
     if (error) throw new Error(`Error leyendo progreso: ${error.message}`);
     return data ? mapFromDb(data as Record<string, unknown>) : null;
   },
@@ -72,11 +68,7 @@ const ProgressSupabaseService = {
       area_stats: pd.areaStats ?? pd.area_stats ?? {},
       updated_at: new Date().toISOString(),
     };
-    const { data, error } = await sb
-      .from(TABLE)
-      .upsert(payload, { onConflict: 'user_id' })
-      .select()
-      .single();
+    const { data, error } = await sb.from(TABLE).upsert(payload, { onConflict: 'user_id' }).select().single();
     if (error) throw new Error(`Error guardando progreso: ${error.message}`);
     return mapFromDb(data as Record<string, unknown>)!;
   },

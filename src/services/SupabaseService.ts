@@ -31,29 +31,20 @@ export class SupabaseService {
   /**
    * GET - Obtener uno o múltiples registros
    */
-  async get(
-    id: string | null = null,
-    options: { column?: string; userIdColumn?: string } = {}
-  ) {
+  async get(id: string | null = null, options: { column?: string; userIdColumn?: string } = {}) {
     const sb = this._ensureSupabase();
     const { column = 'id' } = options;
 
     if (id) {
-      const { data, error } = await sb
-        .from(this.tableName)
-        .select('*')
-        .eq(column, id)
-        .maybeSingle();
+      const { data, error } = await sb.from(this.tableName).select('*').eq(column, id).maybeSingle();
 
-      if (error)
-        throw new Error(`Error leyendo ${this.tableName}: ${error.message}`);
+      if (error) throw new Error(`Error leyendo ${this.tableName}: ${error.message}`);
       return data;
     }
 
     const { data, error } = await sb.from(this.tableName).select('*');
 
-    if (error)
-      throw new Error(`Error leyendo ${this.tableName}: ${error.message}`);
+    if (error) throw new Error(`Error leyendo ${this.tableName}: ${error.message}`);
     return data || [];
   }
 
@@ -62,14 +53,9 @@ export class SupabaseService {
    */
   async getByUserId(userId: string) {
     const sb = this._ensureSupabase();
-    const { data, error } = await sb
-      .from(this.tableName)
-      .select('*')
-      .eq('user_id', userId)
-      .maybeSingle();
+    const { data, error } = await sb.from(this.tableName).select('*').eq('user_id', userId).maybeSingle();
 
-    if (error)
-      throw new Error(`Error leyendo ${this.tableName}: ${error.message}`);
+    if (error) throw new Error(`Error leyendo ${this.tableName}: ${error.message}`);
     return data;
   }
 
@@ -78,25 +64,16 @@ export class SupabaseService {
    */
   async create(data: Record<string, unknown>) {
     const sb = this._ensureSupabase();
-    const { data: inserted, error } = await sb
-      .from(this.tableName)
-      .insert(this._toSnakeCase(data))
-      .select()
-      .single();
+    const { data: inserted, error } = await sb.from(this.tableName).insert(this._toSnakeCase(data)).select().single();
 
-    if (error)
-      throw new Error(`Error creando ${this.tableName}: ${error.message}`);
+    if (error) throw new Error(`Error creando ${this.tableName}: ${error.message}`);
     return this._toCamelCase(inserted);
   }
 
   /**
    * PUT - Actualizar un registro
    */
-  async update(
-    id: string,
-    data: Record<string, unknown>,
-    options: { column?: string } = {}
-  ) {
+  async update(id: string, data: Record<string, unknown>, options: { column?: string } = {}) {
     const { column = 'id' } = options;
     const payload = {
       ...this._toSnakeCase(data),
@@ -104,15 +81,9 @@ export class SupabaseService {
     };
 
     const sb = this._ensureSupabase();
-    const { data: updated, error } = await sb
-      .from(this.tableName)
-      .update(payload)
-      .eq(column, id)
-      .select()
-      .single();
+    const { data: updated, error } = await sb.from(this.tableName).update(payload).eq(column, id).select().single();
 
-    if (error)
-      throw new Error(`Error actualizando ${this.tableName}: ${error.message}`);
+    if (error) throw new Error(`Error actualizando ${this.tableName}: ${error.message}`);
     return this._toCamelCase(updated);
   }
 
@@ -122,13 +93,9 @@ export class SupabaseService {
   async delete(id: string, options: { column?: string } = {}) {
     const { column = 'id' } = options;
     const sb = this._ensureSupabase();
-    const { error } = await sb
-      .from(this.tableName)
-      .delete()
-      .eq(column, id);
+    const { error } = await sb.from(this.tableName).delete().eq(column, id);
 
-    if (error)
-      throw new Error(`Error eliminando ${this.tableName}: ${error.message}`);
+    if (error) throw new Error(`Error eliminando ${this.tableName}: ${error.message}`);
     return { success: true };
   }
 

@@ -28,11 +28,7 @@ export const LessonPreview = ({ isOpen, onClose, lesson, onStart }: LessonPrevie
   return (
     <div className="fixed inset-0 z-50 flex items-end justify-center sm:items-center">
       {/* Backdrop */}
-      <div
-        ref={backdropRef}
-        className="absolute inset-0 bg-black/60 backdrop-blur-sm"
-        onClick={onClose}
-      />
+      <div ref={backdropRef} className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={onClose} />
 
       {/* Content */}
       <div
@@ -49,29 +45,19 @@ export const LessonPreview = ({ isOpen, onClose, lesson, onStart }: LessonPrevie
 
         {/* Header */}
         <div className="mb-6 text-center">
-          <h3 className="mr-8 mb-2 text-xl font-bold text-white">
-            {lesson.title}
-          </h3>
+          <h3 className="mr-8 mb-2 text-xl font-bold text-white">{lesson.title}</h3>
           <p className="text-sm text-slate-400">{lesson.description}</p>
         </div>
 
         {/* Rewards */}
         <div className="mb-8 flex justify-center gap-4">
           <div className="flex min-w-[100px] flex-col items-center rounded-xl border border-slate-700 bg-slate-800/50 p-3">
-            <span className="text-lg font-bold text-orange-400">
-              +{lesson?.xp ?? 0}
-            </span>
-            <span className="text-xs tracking-wider text-slate-500 uppercase">
-              XP
-            </span>
+            <span className="text-lg font-bold text-orange-400">+{lesson?.xp ?? 0}</span>
+            <span className="text-xs tracking-wider text-slate-500 uppercase">XP</span>
           </div>
           <div className="flex min-w-[100px] flex-col items-center rounded-xl border border-slate-700 bg-slate-800/50 p-3">
-            <span className="text-lg font-bold text-yellow-400">
-              +{lesson?.coins ?? 0}
-            </span>
-            <span className="text-xs tracking-wider text-slate-500 uppercase">
-              Monedas
-            </span>
+            <span className="text-lg font-bold text-yellow-400">+{lesson?.coins ?? 0}</span>
+            <span className="text-xs tracking-wider text-slate-500 uppercase">Monedas</span>
           </div>
         </div>
 

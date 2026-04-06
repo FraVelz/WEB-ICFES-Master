@@ -110,11 +110,11 @@ pnpm deploy
 
 ## Recommended workflow
 
-| Task              | Script(s)                    |
-| ----------------- | ---------------------------- |
-| Local development | `pnpm dev`                   |
-| Production build  | `pnpm build`                 |
-| Local preview     | `pnpm start`                 |
-| Deploy            | `pnpm deploy` or Vercel/Netlify |
+| Task              | Script(s)                           |
+| ----------------- | ----------------------------------- |
+| Local development | `pnpm dev`                          |
+| Production build  | `pnpm build`                        |
+| Local preview     | `pnpm start`                        |
+| Deploy            | `pnpm deploy` or Vercel/Netlify     |
 | Code review       | `pnpm lint` and `pnpm format:check` |
-| Format code       | `pnpm format`                |
+| Format code       | `pnpm format`                       |

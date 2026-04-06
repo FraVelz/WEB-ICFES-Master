@@ -11,10 +11,7 @@ interface GSAPGlowBlobProps {
 /**
  * Blob decorativo con animación de pulso suave usando GSAP
  */
-export const GSAPGlowBlob = ({
-  className = '',
-  delay = 0,
-}: GSAPGlowBlobProps) => {
+export const GSAPGlowBlob = ({ className = '', delay = 0 }: GSAPGlowBlobProps) => {
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -31,11 +28,6 @@ export const GSAPGlowBlob = ({
   }, [delay]);
 
   return (
-    <div
-      ref={ref}
-      className={className}
-      aria-hidden="true"
-      style={{ filter: 'blur(90px)', willChange: 'opacity' }}
-    />
+    <div ref={ref} className={className} aria-hidden="true" style={{ filter: 'blur(90px)', willChange: 'opacity' }} />
   );
 };

@@ -33,12 +33,7 @@ export interface AreaPathProps {
   sections?: PathSection[];
 }
 
-export const AreaPath = ({
-  areaId,
-  onNodeClick,
-  colorClass,
-  sections = [],
-}: AreaPathProps) => {
+export const AreaPath = ({ areaId, onNodeClick, colorClass, sections = [] }: AreaPathProps) => {
   const areaIcon = AREA_ICONS[areaId] ?? 'book';
 
   return (

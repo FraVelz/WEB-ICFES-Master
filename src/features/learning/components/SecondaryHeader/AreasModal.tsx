@@ -38,13 +38,8 @@ export const AreasModal = ({ isOpen, onClose, onSelectArea, currentArea }: Areas
       >
         <div className="p-4">
           <div className="mb-3 flex items-center justify-between border-b border-slate-800 pb-2">
-            <h3 className="text-sm font-bold tracking-wider text-slate-400 uppercase">
-              Mis Cursos
-            </h3>
-            <button
-              onClick={onClose}
-              className="cursor-pointer text-slate-500 hover:text-white"
-            >
+            <h3 className="text-sm font-bold tracking-wider text-slate-400 uppercase">Mis Cursos</h3>
+            <button onClick={onClose} className="cursor-pointer text-slate-500 hover:text-white">
               <Icon name="times" />
             </button>
           </div>
@@ -70,14 +65,10 @@ export const AreasModal = ({ isOpen, onClose, onSelectArea, currentArea }: Areas
                 >
                   <Icon
                     name={areaData.icon ?? 'book'}
-                    className={
-                      currentArea === areaKey ? 'text-white' : 'text-slate-400'
-                    }
+                    className={currentArea === areaKey ? 'text-white' : 'text-slate-400'}
                   />
                 </div>
-                <span className="text-left text-sm font-semibold">
-                  {areaData.name}
-                </span>
+                <span className="text-left text-sm font-semibold">{areaData.name}</span>
               </button>
             ))}
           </div>

@@ -57,9 +57,7 @@ export const debugLocalStorage = () => {
  * Limpia todos los datos de localStorage (CUIDADO: esto elimina TODO)
  */
 export const clearAllDataDebug = () => {
-  if (
-    confirm('⚠️  ADVERTENCIA: Esto eliminará TODOS los datos. ¿Estás seguro?')
-  ) {
+  if (confirm('⚠️  ADVERTENCIA: Esto eliminará TODOS los datos. ¿Estás seguro?')) {
     localStorage.removeItem('icfes_exams');
     localStorage.removeItem('icfes_practice');
     localStorage.removeItem('icfes_progress');

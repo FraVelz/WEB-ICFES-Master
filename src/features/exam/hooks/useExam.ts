@@ -3,9 +3,7 @@
  */
 import { useState, useEffect, useCallback } from 'react';
 import { useAuth } from '@/context/AuthContext';
-import API_CONFIG from '@/services/api.config';
-import ExamSupabaseService from '@/services/supabase/ExamSupabaseService';
-import { getStoredExams, clearExamsOnly, type AttemptWithQuestions } from '@/shared/utils/progressStorage';
+import { getExamById, resetUserExams as resetUserExamsPersistence, getUserExamsList } from '@/services/persistence';
 
 export function useExam(examId: string | undefined) {
   const { user } = useAuth();
@@ -15,13 +13,12 @@ export function useExam(examId: string | undefined) {
 
   const loadExam = useCallback(async () => {
     if (!examId) return;
-    if (API_CONFIG.MODE === 'supabase' && user?.uid) {
-      const found = await ExamSupabaseService.getById(examId);
+    try {
+      const found = await getExamById(examId, user?.uid);
       setExam(found || null);
-    } else {
-      const exams = getStoredExams();
-      const found = exams.find((e: AttemptWithQuestions) => String(e.id) === examId);
-      setExam(found || null);
+      setError(null);
+    } catch (e) {
+      setError(e instanceof Error ? e.message : 'Error');
     }
   }, [examId, user?.uid]);
 
@@ -30,11 +27,7 @@ export function useExam(examId: string | undefined) {
   }, [loadExam]);
 
   const resetUserExams = useCallback(async () => {
-    if (API_CONFIG.MODE === 'supabase' && user?.uid) {
-      await ExamSupabaseService.resetUserExams(user.uid);
-    } else {
-      clearExamsOnly();
-    }
+    await resetUserExamsPersistence(user?.uid);
     setExam(null);
     return true;
   }, [user?.uid]);
@@ -50,12 +43,7 @@ export function useExam(examId: string | undefined) {
     completeExam: async () => ({}),
     abandonExam: async () => ({}),
     getExamStats: async () => ({}),
-    getUserExams: async () => {
-      if (API_CONFIG.MODE === 'supabase' && user?.uid) {
-        return ExamSupabaseService.getByUserId(user.uid);
-      }
-      return getStoredExams();
-    },
+    getUserExams: async () => getUserExamsList(user?.uid),
     compareExams: async () => ({}),
     exportResults: async () => ({}),
     resetUserExams,

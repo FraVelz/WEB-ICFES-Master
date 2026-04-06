@@ -1,11 +1,6 @@
 // Utilidades para gestionar datos del usuario (localStorage)
 // Preparado para futura implementación de backend
-import {
-  encryptData,
-  decryptData,
-  createChecksum,
-  verifyChecksum,
-} from './dataEncryption';
+import { encryptData, decryptData, createChecksum, verifyChecksum } from './dataEncryption';
 
 const STORAGE_KEYS = {
   USER_PROFILE: 'icfes_user_profile',
@@ -142,8 +137,7 @@ export const getUserRank = (): UserRank => {
     return {
       ...currentRank,
       percentage,
-      nextRankPercentage:
-        rankIndex < 5 ? RANK_SYSTEM[rankIndex + 1].minScore : null,
+      nextRankPercentage: rankIndex < 5 ? RANK_SYSTEM[rankIndex + 1].minScore : null,
     };
   } catch {
     return {
@@ -220,8 +214,7 @@ export const deleteUserAccount = (): boolean => {
   }
 
   const finalConfirm = window.confirm(
-    '🚨 ÚLTIMA CONFIRMACIÓN\n\n' +
-      'Escriba "BORRAR TODO" para confirmar la eliminación permanente.'
+    '🚨 ÚLTIMA CONFIRMACIÓN\n\n' + 'Escriba "BORRAR TODO" para confirmar la eliminación permanente.'
   );
 
   if (!finalConfirm) {
@@ -380,7 +373,12 @@ export const importUserData = async (file: File, password: string): Promise<Impo
       try {
         const fileContent = e.target?.result;
         if (typeof fileContent !== 'string') throw new Error('Archivo no legible');
-        const exportObject = JSON.parse(fileContent) as { encrypted?: boolean; data?: unknown; version?: string; checksum?: string };
+        const exportObject = JSON.parse(fileContent) as {
+          encrypted?: boolean;
+          data?: unknown;
+          version?: string;
+          checksum?: string;
+        };
 
         // Validar estructura del archivo
         if (!exportObject.encrypted || !exportObject.data) {
@@ -399,44 +397,26 @@ export const importUserData = async (file: File, password: string): Promise<Impo
         // Validar checksum
         const checksum = exportObject.checksum;
         if (typeof checksum !== 'string') throw new Error('Checksum inválido');
-        const isValid = await verifyChecksum(
-          decryptedData,
-          checksum
-        );
+        const isValid = await verifyChecksum(decryptedData, checksum);
         if (!isValid) {
           throw new Error('Los datos han sido modificados o están corruptos');
         }
 
         // Guardar datos en localStorage
         if (decryptedData.profile) {
-          localStorage.setItem(
-            STORAGE_KEYS.USER_PROFILE,
-            JSON.stringify(decryptedData.profile)
-          );
+          localStorage.setItem(STORAGE_KEYS.USER_PROFILE, JSON.stringify(decryptedData.profile));
         }
         if (decryptedData.settings) {
-          localStorage.setItem(
-            STORAGE_KEYS.USER_SETTINGS,
-            JSON.stringify(decryptedData.settings)
-          );
+          localStorage.setItem(STORAGE_KEYS.USER_SETTINGS, JSON.stringify(decryptedData.settings));
         }
         if (decryptedData.exams) {
-          localStorage.setItem(
-            'icfes_exams',
-            JSON.stringify(decryptedData.exams)
-          );
+          localStorage.setItem('icfes_exams', JSON.stringify(decryptedData.exams));
         }
         if (decryptedData.practices) {
-          localStorage.setItem(
-            'icfes_practice',
-            JSON.stringify(decryptedData.practices)
-          );
+          localStorage.setItem('icfes_practice', JSON.stringify(decryptedData.practices));
         }
         if (decryptedData.progress) {
-          localStorage.setItem(
-            'icfes_progress',
-            JSON.stringify(decryptedData.progress)
-          );
+          localStorage.setItem('icfes_progress', JSON.stringify(decryptedData.progress));
         }
 
         resolve(decryptedData as ImportedUserData);

@@ -28,18 +28,18 @@ The learning system works by reading data from the **`learning_content`** table 
 | id          | uuid  | Yes      | Unique ID (auto-generated)                                                         |
 | area        | text  | Yes      | Area: `matematicas`, `lectura_critica`, `sociales`, `ciencias_naturales`, `ingles` |
 | order_index | int   | Yes      | Position in list (1, 2, 3...)                                                      |
-| published   | bool  | Yes      | `true` to show, `false` to hide                                                     |
-| content     | jsonb | Yes      | Content (title, summary, questions, quiz)                                           |
+| published   | bool  | Yes      | `true` to show, `false` to hide                                                    |
+| content     | jsonb | Yes      | Content (title, summary, questions, quiz)                                          |
 
 ### Area Mapping
 
-| Area in App (ID)   | Value in DB          |
-| ------------------ | -------------------- |
-| `lectura-critica`  | `lectura_critica`    |
-| `matematicas`      | `matematicas`        |
-| `sociales`         | `sociales`           |
+| Area in App (ID)     | Value in DB          |
+| -------------------- | -------------------- |
+| `lectura-critica`    | `lectura_critica`    |
+| `matematicas`        | `matematicas`        |
+| `sociales`           | `sociales`           |
 | `ciencias-naturales` | `ciencias_naturales` |
-| `ingles`           | `ingles`             |
+| `ingles`             | `ingles`             |
 
 ---
 
@@ -61,13 +61,13 @@ The learning system works by reading data from the **`learning_content`** table 
 
 ### Content Fields
 
-| Field     | Type   | Required | Description                                                                                         |
-| --------- | ------ | -------- | --------------------------------------------------------------------------------------------------- |
-| title     | string | Yes      | Visible lesson title                                                                                |
-| summary   | string | No       | Brief description                                                                                  |
-| type      | string | No       | `lesson` by default                                                                                |
-| questions | array  | No       | Content questions                                                                                  |
-| quiz      | object | No       | Associated exam (see [services-api.md](../backend/services-api.md#learning-module-and-quizzes))     |
+| Field     | Type   | Required | Description                                                                                     |
+| --------- | ------ | -------- | ----------------------------------------------------------------------------------------------- |
+| title     | string | Yes      | Visible lesson title                                                                            |
+| summary   | string | No       | Brief description                                                                               |
+| type      | string | No       | `lesson` by default                                                                             |
+| questions | array  | No       | Content questions                                                                               |
+| quiz      | object | No       | Associated exam (see [services-api.md](../backend/services-api.md#learning-module-and-quizzes)) |
 
 ---
 

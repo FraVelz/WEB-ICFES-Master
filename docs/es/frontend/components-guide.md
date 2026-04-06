@@ -27,11 +27,11 @@ export function QuizExample() {
 
   return (
     <div>
-      <p>{quiz.progress} / {quiz.totalQuestions}</p>
+      <p>
+        {quiz.progress} / {quiz.totalQuestions}
+      </p>
       <h2>{quiz.currentQuestion.text}</h2>
-      <button onClick={() => quiz.handleAnswer('A')}>
-        Responder A
-      </button>
+      <button onClick={() => quiz.handleAnswer('A')}>Responder A</button>
       <button onClick={quiz.handleNextQuestion} disabled={!quiz.answered}>
         Siguiente
       </button>
@@ -49,20 +49,16 @@ import { Card } from './Card';
 import { Title, Text } from './Text';
 import { Badge } from './Badge';
 
-export const AreaCard = ({
-  title,
-  icon,
-  description,
-  questionsCount,
-  onClick
-}) => {
+export const AreaCard = ({ title, icon, description, questionsCount, onClick }) => {
   return (
     <Card hover onClick={onClick}>
       <div className="flex items-start gap-4">
         <div className="text-4xl">{icon}</div>
         <div className="flex-1">
           <Title level={4}>{title}</Title>
-          <Text variant="small" className="mt-2">{description}</Text>
+          <Text variant="small" className="mt-2">
+            {description}
+          </Text>
           <Badge variant="default" className="mt-3">
             {questionsCount} preguntas
           </Badge>
@@ -81,19 +77,19 @@ Ubicación: `src/data/questions.js`
 export const NEW_AREA_QUESTIONS = [
   {
     id: 101,
-    text: "Pregunta de ejemplo",
-    area: "new_area",
-    areaLabel: "Nueva Área",
-    difficulty: "fácil",
+    text: 'Pregunta de ejemplo',
+    area: 'new_area',
+    areaLabel: 'Nueva Área',
+    difficulty: 'fácil',
     options: [
-      { letter: "A", text: "Opción 1" },
-      { letter: "B", text: "Opción 2" },
-      { letter: "C", text: "Opción 3" },
-      { letter: "D", text: "Opción 4" }
+      { letter: 'A', text: 'Opción 1' },
+      { letter: 'B', text: 'Opción 2' },
+      { letter: 'C', text: 'Opción 3' },
+      { letter: 'D', text: 'Opción 4' },
     ],
-    correctAnswer: "A",
-    explanation: "Explicación de por qué A es correcta"
-  }
+    correctAnswer: 'A',
+    explanation: 'Explicación de por qué A es correcta',
+  },
 ];
 
 // Luego actualizar ALL_QUESTIONS
@@ -102,7 +98,7 @@ export const ALL_QUESTIONS = [
   ...LANGUAGE_QUESTIONS,
   ...SCIENCE_QUESTIONS,
   ...SOCIAL_QUESTIONS,
-  ...NEW_AREA_QUESTIONS
+  ...NEW_AREA_QUESTIONS,
 ];
 ```
 

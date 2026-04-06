@@ -55,9 +55,7 @@ export const DonationMethod = ({
         {selectedAmount === 'custom' && (
           <div className="animate-fadeIn mt-3">
             <div className="relative">
-              <span className="absolute top-1/2 left-4 -translate-y-1/2 text-gray-400">
-                $
-              </span>
+              <span className="absolute top-1/2 left-4 -translate-y-1/2 text-gray-400">$</span>
               <input
                 type="text"
                 value={customAmount}
@@ -94,17 +92,13 @@ export const DonationMethod = ({
               <div className="flex items-center gap-3">
                 <div
                   className={`flex h-10 w-10 items-center justify-center rounded-full ${
-                    method.highlight
-                      ? 'bg-green-500/20 text-green-400'
-                      : 'bg-white/10 text-gray-300'
+                    method.highlight ? 'bg-green-500/20 text-green-400' : 'bg-white/10 text-gray-300'
                   }`}
                 >
                   <Icon name={method.icon} className="text-lg" />
                 </div>
                 <div>
-                  <h4
-                    className={`font-bold ${selectedMethod === method.id ? 'text-white' : 'text-gray-300'}`}
-                  >
+                  <h4 className={`font-bold ${selectedMethod === method.id ? 'text-white' : 'text-gray-300'}`}>
                     {method.name}
                   </h4>
                   <p className="text-xs text-gray-400">{method.info}</p>

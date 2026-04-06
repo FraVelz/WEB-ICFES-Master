@@ -117,13 +117,9 @@ export const getLevelInfo = (totalXP: number) => {
   const nextLevelData = LEVELS.find((l) => l.level === level + 1);
   const xpForNextLevel = nextLevelData ? nextLevelData.minXP - totalXP : null;
   const xpInCurrentLevel = totalXP - levelData.minXP;
-  const xpNeededForNext = nextLevelData
-    ? nextLevelData.minXP - levelData.minXP
-    : null;
+  const xpNeededForNext = nextLevelData ? nextLevelData.minXP - levelData.minXP : null;
   const progress =
-    nextLevelData && xpNeededForNext != null && xpNeededForNext > 0
-      ? (xpInCurrentLevel / xpNeededForNext) * 100
-      : 100;
+    nextLevelData && xpNeededForNext != null && xpNeededForNext > 0 ? (xpInCurrentLevel / xpNeededForNext) * 100 : 100;
   return {
     level,
     levelData,

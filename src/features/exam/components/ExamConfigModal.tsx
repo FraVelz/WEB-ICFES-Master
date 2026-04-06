@@ -16,9 +16,7 @@ export const ExamConfigModal = ({
   onStart,
   isFullExam = false,
 }: ExamConfigModalProps) => {
-  const [numQuestions, setNumQuestions] = useState(
-    isFullExam ? maxQuestions : 10
-  );
+  const [numQuestions, setNumQuestions] = useState(isFullExam ? maxQuestions : 10);
   const [useTimer, setUseTimer] = useState(true);
   const [timePerQuestion, setTimePerQuestion] = useState(2);
   const [showExplanations, setShowExplanations] = useState(true);
@@ -35,17 +33,13 @@ export const ExamConfigModal = ({
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm">
       <div className="w-full max-w-md rounded-2xl border border-white/10 bg-linear-to-br from-gray-800 via-gray-900 to-gray-950 p-8 shadow-2xl">
-        <h2 className="mb-2 text-3xl font-bold text-white">
-          Configurar Examen
-        </h2>
+        <h2 className="mb-2 text-3xl font-bold text-white">Configurar Examen</h2>
         <p className="mb-8 text-gray-400">{area}</p>
 
         <div className="space-y-6">
           {/* Número de preguntas */}
           <div>
-            <label className="mb-3 block font-semibold text-white">
-              Número de preguntas
-            </label>
+            <label className="mb-3 block font-semibold text-white">Número de preguntas</label>
             <div className="flex items-center gap-4">
               <input
                 type="range"
@@ -59,9 +53,7 @@ export const ExamConfigModal = ({
                 {numQuestions}
               </span>
             </div>
-            <p className="mt-2 text-xs text-gray-500">
-              Disponibles: {maxQuestions} preguntas
-            </p>
+            <p className="mt-2 text-xs text-gray-500">Disponibles: {maxQuestions} preguntas</p>
           </div>
 
           {/* Temporizador */}
@@ -73,18 +65,14 @@ export const ExamConfigModal = ({
                 onChange={(e) => setUseTimer(e.target.checked)}
                 className="h-5 w-5 rounded border-2 border-cyan-400 accent-cyan-500"
               />
-              <span className="font-semibold text-white">
-                Usar temporizador
-              </span>
+              <span className="font-semibold text-white">Usar temporizador</span>
             </label>
           </div>
 
           {/* Tiempo por pregunta */}
           {useTimer && (
             <div>
-              <label className="mb-3 block font-semibold text-white">
-                Minutos por pregunta
-              </label>
+              <label className="mb-3 block font-semibold text-white">Minutos por pregunta</label>
               <div className="flex items-center gap-4">
                 <input
                   type="range"
@@ -110,9 +98,7 @@ export const ExamConfigModal = ({
                 onChange={(e) => setShowExplanations(e.target.checked)}
                 className="h-5 w-5 rounded border-2 border-cyan-400 accent-cyan-500"
               />
-              <span className="font-semibold text-white">
-                Mostrar explicaciones
-              </span>
+              <span className="font-semibold text-white">Mostrar explicaciones</span>
             </label>
           </div>
 
@@ -121,8 +107,7 @@ export const ExamConfigModal = ({
             <p className="text-sm text-gray-400">
               Tiempo total estimado:{' '}
               <span className="font-semibold text-cyan-300">
-                {useTimer ? `${numQuestions * timePerQuestion}` : 'Sin límite'}{' '}
-                minutos
+                {useTimer ? `${numQuestions * timePerQuestion}` : 'Sin límite'} minutos
               </span>
             </p>
           </div>

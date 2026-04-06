@@ -24,11 +24,7 @@ export const HomePage = () => {
         <HomePageMobile />
       </div>
       <div className="hidden md:block">
-        <HomePageDesktop
-          onDemoAccess={handleDemoAccess}
-          expandedFaq={expandedFaq}
-          setExpandedFaq={setExpandedFaq}
-        />
+        <HomePageDesktop onDemoAccess={handleDemoAccess} expandedFaq={expandedFaq} setExpandedFaq={setExpandedFaq} />
       </div>
     </>
   );

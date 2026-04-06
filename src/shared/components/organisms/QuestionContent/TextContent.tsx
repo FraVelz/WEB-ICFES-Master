@@ -10,9 +10,5 @@ interface TextContentProps {
 }
 
 export const TextContent = ({ text, className = '' }: TextContentProps) => {
-  return (
-    <p className={`text-base leading-relaxed text-gray-100 ${className}`}>
-      {text}
-    </p>
-  );
+  return <p className={`text-base leading-relaxed text-gray-100 ${className}`}>{text}</p>;
 };

@@ -34,32 +34,20 @@ export const StoreModal = ({ isOpen, onClose }: StoreModalProps) => {
     }
   };
 
-  const filteredItems =
-    filter === 'all'
-      ? shopItems
-      : shopItems.filter((item: ShopItem) => item.category === filter);
+  const filteredItems = filter === 'all' ? shopItems : shopItems.filter((item: ShopItem) => item.category === filter);
 
   if (!isOpen) return null;
 
   return (
-    <div
-      ref={modalRef}
-      className="fixed inset-0 z-100 flex flex-col bg-slate-950"
-    >
+    <div ref={modalRef} className="fixed inset-0 z-100 flex flex-col bg-slate-950">
       <div className="flex h-full w-full flex-col overflow-hidden bg-slate-900">
         {/* Header */}
         <div className="flex shrink-0 items-center justify-between border-b border-slate-800 bg-slate-900 p-4 lg:p-6">
           <div className="flex flex-1 items-center justify-center gap-3">
             <h2 className="text-xl font-bold text-white lg:text-2xl">Tienda</h2>
             <div className="flex items-center gap-2 rounded-full border border-yellow-500/30 bg-yellow-500/10 px-3 py-1.5">
-              <Icon
-                name="coins"
-                size="md"
-                className="text-sm text-yellow-400 lg:text-base"
-              />
-              <span className="text-sm font-bold text-yellow-400 lg:text-base">
-                {coins}
-              </span>
+              <Icon name="coins" size="md" className="text-sm text-yellow-400 lg:text-base" />
+              <span className="text-sm font-bold text-yellow-400 lg:text-base">{coins}</span>
             </div>
           </div>
           <button
@@ -75,11 +63,7 @@ export const StoreModal = ({ isOpen, onClose }: StoreModalProps) => {
           {loading ? (
             <div className="flex items-center justify-center py-20">
               <div className="space-y-4 text-center">
-                <Icon
-                  name="spinner"
-                  size="2xl"
-                  className="animate-spin text-4xl text-cyan-400"
-                />
+                <Icon name="spinner" size="2xl" className="animate-spin text-4xl text-cyan-400" />
                 <p className="text-slate-300">Cargando tienda...</p>
               </div>
             </div>
@@ -111,8 +95,7 @@ export const StoreModal = ({ isOpen, onClose }: StoreModalProps) => {
               {/* Items Grid */}
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 lg:gap-6">
                 {filteredItems.map((item) => {
-                  const isPurchased =
-                    item.category !== 'powerup' && hasItem(item.id);
+                  const isPurchased = item.category !== 'powerup' && hasItem(item.id);
                   const canAfford = coins >= item.price;
 
                   return (
@@ -130,14 +113,8 @@ export const StoreModal = ({ isOpen, onClose }: StoreModalProps) => {
               {/* Empty State */}
               {filteredItems.length === 0 && (
                 <div className="rounded-3xl border border-dashed border-slate-800 bg-slate-900/30 py-20 text-center">
-                  <Icon
-                    name="shopping-bag"
-                    size="2xl"
-                    className="mb-4 text-4xl text-slate-600"
-                  />
-                  <p className="text-lg text-slate-400">
-                    No hay artículos en esta categoría aún.
-                  </p>
+                  <Icon name="shopping-bag" size="2xl" className="mb-4 text-4xl text-slate-600" />
+                  <p className="text-lg text-slate-400">No hay artículos en esta categoría aún.</p>
                 </div>
               )}
             </>

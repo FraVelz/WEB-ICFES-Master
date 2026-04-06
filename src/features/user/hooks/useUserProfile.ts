@@ -45,8 +45,7 @@ export const useUserProfile = (targetUserId: string | null = null) => {
     }
     const profile = getUserProfile();
     setProfileData({
-      photoUrl:
-        profile.profileImage || (isOwnProfile ? authUser?.photoURL : null),
+      photoUrl: profile.profileImage || (isOwnProfile ? authUser?.photoURL : null),
       name: profile.username || authUser?.displayName || 'Usuario',
       personalPhrase: profile.bio || '¡Preparándome para el éxito!',
       createdAt: profile.createdAt
@@ -62,8 +61,7 @@ export const useUserProfile = (targetUserId: string | null = null) => {
     });
   }, [uid, authUser, isOwnProfile]);
 
-  const totalXPFromDB =
-    typeof gamification.totalXP === 'number' ? gamification.totalXP : 0;
+  const totalXPFromDB = typeof gamification.totalXP === 'number' ? gamification.totalXP : 0;
   const levelInfo = getLevelInfo(totalXPFromDB);
 
   const rank = levelToRankId(levelInfo.level);

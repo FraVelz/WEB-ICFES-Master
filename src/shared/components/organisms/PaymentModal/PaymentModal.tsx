@@ -40,9 +40,7 @@ export const PaymentModal = ({ isOpen, onClose, plan }: PaymentModalProps) => {
   const validateScheduling = useCallback(async () => {
     if (!user?.uid) return;
     try {
-      const validation = await PlanScheduleService.validatePlanScheduling(
-        user.uid
-      );
+      const validation = await PlanScheduleService.validatePlanScheduling(user.uid);
       setCanSchedulePlan(validation.canSchedule);
       if (!validation.canSchedule) {
         setScheduleError(validation.reason);
@@ -57,9 +55,7 @@ export const PaymentModal = ({ isOpen, onClose, plan }: PaymentModalProps) => {
     if (!user?.uid) return;
     try {
       setLoadingPlan(true);
-      const userCurrentPlan = await SubscriptionPlanService.getUserPlan(
-        user.uid
-      );
+      const userCurrentPlan = await SubscriptionPlanService.getUserPlan(user.uid);
       setCurrentPlan(userCurrentPlan);
     } catch (err) {
       console.error('Error al cargar plan actual:', err);
@@ -157,10 +153,7 @@ export const PaymentModal = ({ isOpen, onClose, plan }: PaymentModalProps) => {
         };
 
         // Si ya tiene un plan activo y diferente, programar para después
-        const hasActivePlan =
-          currentPlan &&
-          currentPlan.status === 'active' &&
-          currentPlan.planType !== plan.id;
+        const hasActivePlan = currentPlan && currentPlan.status === 'active' && currentPlan.planType !== plan.id;
 
         if (hasActivePlan) {
           // Programar el plan para después
@@ -170,10 +163,7 @@ export const PaymentModal = ({ isOpen, onClose, plan }: PaymentModalProps) => {
           // Activar directamente
           planData.status = 'active';
           planData.nextBillingDate = new Date(
-            Date.now() +
-              (billingPeriod === 'annual'
-                ? 365 * 24 * 60 * 60 * 1000
-                : 30 * 24 * 60 * 60 * 1000)
+            Date.now() + (billingPeriod === 'annual' ? 365 * 24 * 60 * 60 * 1000 : 30 * 24 * 60 * 60 * 1000)
           );
           await SubscriptionPlanService.updateUserPlan(user.uid, planData);
         }
@@ -191,10 +181,7 @@ export const PaymentModal = ({ isOpen, onClose, plan }: PaymentModalProps) => {
 
   // Detectar si el plan es el mismo que ya tiene activo
   const isSamePlanActive =
-    currentPlan &&
-    plan?.id &&
-    currentPlan.planType === plan.id &&
-    currentPlan.status === 'active';
+    currentPlan && plan?.id && currentPlan.planType === plan.id && currentPlan.status === 'active';
 
   // Para planes gratuitos, no necesita validar tarjeta
   const isFormValid: boolean =
@@ -219,15 +206,9 @@ export const PaymentModal = ({ isOpen, onClose, plan }: PaymentModalProps) => {
           {!canSchedulePlan && !isSamePlanActive ? (
             <div className="py-12 text-center">
               <div className="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full border-2 border-red-500 bg-red-500/20">
-                <Icon
-                  name="exclamation-triangle"
-                  size="2xl"
-                  className="text-4xl text-red-400"
-                />
+                <Icon name="exclamation-triangle" size="2xl" className="text-4xl text-red-400" />
               </div>
-              <h3 className="mb-4 text-2xl font-bold text-white">
-                No se puede comprar este plan
-              </h3>
+              <h3 className="mb-4 text-2xl font-bold text-white">No se puede comprar este plan</h3>
               <p className="mb-4 text-slate-300">{scheduleError}</p>
               <p className="mb-8 text-sm text-slate-400">
                 Solo puedes tener un plan activo y uno en espera de activación.
@@ -258,25 +239,14 @@ export const PaymentModal = ({ isOpen, onClose, plan }: PaymentModalProps) => {
           ) : isSamePlanActive ? (
             <div className="py-12 text-center">
               <div className="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full border-2 border-blue-500 bg-blue-500/20">
-                <Icon
-                  name="check-circle"
-                  size="2xl"
-                  className="text-4xl text-blue-400"
-                />
+                <Icon name="check-circle" size="2xl" className="text-4xl text-blue-400" />
               </div>
-              <h3 className="mb-4 text-2xl font-bold text-white">
-                Plan ya Activo
-              </h3>
+              <h3 className="mb-4 text-2xl font-bold text-white">Plan ya Activo</h3>
               <p className="mb-4 text-slate-300">
-                Ya tienes el plan{' '}
-                <span className="font-semibold text-blue-400">
-                  {plan?.name}
-                </span>{' '}
-                activo en tu cuenta.
+                Ya tienes el plan <span className="font-semibold text-blue-400">{plan?.name}</span> activo en tu cuenta.
               </p>
               <p className="mb-8 text-sm text-slate-400">
-                No es necesario volver a comprar este plan. Si deseas cambiar a
-                otro plan, selecciona uno diferente.
+                No es necesario volver a comprar este plan. Si deseas cambiar a otro plan, selecciona uno diferente.
               </p>
               <button
                 onClick={onClose}
@@ -286,28 +256,17 @@ export const PaymentModal = ({ isOpen, onClose, plan }: PaymentModalProps) => {
               </button>
             </div>
           ) : (
-            <form
-              id="payment-form"
-              onSubmit={handleSubmit}
-              className="space-y-4"
-            >
+            <form id="payment-form" onSubmit={handleSubmit} className="space-y-4">
               {/* Alerta de plan actual si existe */}
               {!loadingPlan && currentPlan && !isSamePlanActive && (
                 <PlanChangeAlert currentPlan={currentPlan} newPlan={plan} />
               )}
 
               {plan?.price !== 'Gratis' && (
-                <BillingPeriodSelector
-                  billingPeriod={billingPeriod}
-                  setBillingPeriod={setBillingPeriod}
-                />
+                <BillingPeriodSelector billingPeriod={billingPeriod} setBillingPeriod={setBillingPeriod} />
               )}
 
-              <PlanInfo
-                plan={plan}
-                billingPeriod={billingPeriod}
-                priceCalculation={priceCalculation}
-              />
+              <PlanInfo plan={plan} billingPeriod={billingPeriod} priceCalculation={priceCalculation} />
 
               {error && (
                 <div className="rounded-lg border border-red-500/50 bg-red-500/10 p-3 text-sm text-red-400">

@@ -6,9 +6,7 @@ export interface BillingPeriodSelectorProps {
 export const BillingPeriodSelector = ({ billingPeriod, setBillingPeriod }: BillingPeriodSelectorProps) => {
   return (
     <div className="mb-6 rounded-lg bg-slate-800/50 p-4">
-      <label className="mb-3 block text-sm font-semibold text-white">
-        Período de Facturación
-      </label>
+      <label className="mb-3 block text-sm font-semibold text-white">Período de Facturación</label>
       <div className="grid grid-cols-2 gap-3">
         <button
           type="button"

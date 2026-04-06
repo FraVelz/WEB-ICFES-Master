@@ -6,8 +6,7 @@ export const paymentMethods = [
     info: 'Tarjeta Débito / Crédito',
     type: 'card',
     highlight: true,
-    description:
-      'Usa tu tarjeta para invitar una Sprite al creador de forma segura.',
+    description: 'Usa tu tarjeta para invitar una Sprite al creador de forma segura.',
   },
   {
     id: 'nequi',

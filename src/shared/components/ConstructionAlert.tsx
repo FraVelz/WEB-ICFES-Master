@@ -20,15 +20,10 @@ export const ConstructionAlert = ({ moduleName, className = '' }: ConstructionAl
         </div>
         <div className="ml-3">
           <h3 className="text-sm font-medium text-yellow-500">
-            {moduleName
-              ? `Módulo ${moduleName} en Construcción`
-              : 'En Construcción'}
+            {moduleName ? `Módulo ${moduleName} en Construcción` : 'En Construcción'}
           </h3>
           <div className="mt-1 text-sm text-yellow-200/80">
-            <p>
-              Este apartado está en desarrollo activo. Faltan configuraciones y
-              funcionalidades finales.
-            </p>
+            <p>Este apartado está en desarrollo activo. Faltan configuraciones y funcionalidades finales.</p>
           </div>
         </div>
       </div>

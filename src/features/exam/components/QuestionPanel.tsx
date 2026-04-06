@@ -26,9 +26,7 @@ export const QuestionPanel = ({
           <div className="bg-opacity-20 mb-6 inline-block rounded-full border-2 border-white bg-white px-3 py-1 text-lg font-black text-gray-800">
             Pregunta ICFES
           </div>
-          <h2 className="text-2xl leading-tight font-black drop-shadow-lg md:text-3xl lg:text-4xl">
-            {question.text}
-          </h2>
+          <h2 className="text-2xl leading-tight font-black drop-shadow-lg md:text-3xl lg:text-4xl">{question.text}</h2>
         </div>
 
         <div className="mb-8 space-y-4">
@@ -39,11 +37,7 @@ export const QuestionPanel = ({
               text={option.text}
               selected={selectedAnswer === letters[index] && !answered}
               correct={answered && letters[index] === question.correctAnswer}
-              incorrect={
-                answered &&
-                selectedAnswer === letters[index] &&
-                letters[index] !== question.correctAnswer
-              }
+              incorrect={answered && selectedAnswer === letters[index] && letters[index] !== question.correctAnswer}
               onClick={() => !answered && onAnswer(letters[index])}
               disabled={answered}
             />
@@ -58,9 +52,7 @@ export const QuestionPanel = ({
               <Icon name="lightbulb" size="2xl" className="text-yellow-600" />
             </div>
             <div className="flex-1">
-              <h4 className="mb-2 text-xl font-black text-yellow-900 drop-shadow-lg md:text-2xl">
-                Explicación
-              </h4>
+              <h4 className="mb-2 text-xl font-black text-yellow-900 drop-shadow-lg md:text-2xl">Explicación</h4>
               <p className="text-base leading-relaxed font-medium text-yellow-800 drop-shadow-lg md:text-lg">
                 {question.explanation}
               </p>

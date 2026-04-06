@@ -12,8 +12,7 @@ export const DemoRoute = ({ children }: { children: React.ReactNode }) => {
     setChecked(true);
   }, []);
   useEffect(() => {
-    if (!loading && checked && !isAuthenticated && !isDemoMode)
-      router.replace('/login');
+    if (!loading && checked && !isAuthenticated && !isDemoMode) router.replace('/login');
   }, [loading, checked, isAuthenticated, isDemoMode, router]);
   if (loading || !checked || (!isAuthenticated && !isDemoMode)) return null;
   return children;

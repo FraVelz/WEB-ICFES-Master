@@ -1,7 +1,17 @@
 import { Icon } from '@/shared/components/Icon';
 import Link from 'next/link';
 
-export const QuickStatCard = ({ stat, value, icon, color }: { stat: string; value: string | number; icon: string; color: string }) => (
+export const QuickStatCard = ({
+  stat,
+  value,
+  icon,
+  color,
+}: {
+  stat: string;
+  value: string | number;
+  icon: string;
+  color: string;
+}) => (
   <div
     className={`bg-linear-to-br ${color} rounded-lg border border-slate-700/50 p-6 text-white shadow-lg transition-transform duration-300 hover:scale-105`}
   >
@@ -13,12 +23,18 @@ export const QuickStatCard = ({ stat, value, icon, color }: { stat: string; valu
   </div>
 );
 
-export const DailyGoalCard = ({ percentage, current, target }: { percentage: number; current: number; target: number }) => (
+export const DailyGoalCard = ({
+  percentage,
+  current,
+  target,
+}: {
+  percentage: number;
+  current: number;
+  target: number;
+}) => (
   <div className="mb-8 rounded-xl border border-slate-700 bg-linear-to-r from-slate-800 to-slate-900 p-6">
     <div className="mb-4 flex items-center justify-between">
-      <h3 className="flex items-center gap-2 text-2xl font-bold text-white">
-        🎯 Meta del Día
-      </h3>
+      <h3 className="flex items-center gap-2 text-2xl font-bold text-white">🎯 Meta del Día</h3>
       <span className="text-2xl font-bold text-amber-400">{percentage}%</span>
     </div>
     <p className="mb-4 text-slate-400">
@@ -30,9 +46,7 @@ export const DailyGoalCard = ({ percentage, current, target }: { percentage: num
         style={{ width: `${percentage}%` }}
       />
     </div>
-    <p className="text-sm text-slate-500">
-      Te faltan {target - current} XP para completar hoy 🔥
-    </p>
+    <p className="text-sm text-slate-500">Te faltan {target - current} XP para completar hoy 🔥</p>
   </div>
 );
 
@@ -88,15 +102,16 @@ export const NavigationCard = ({ card }: { card: NavCard }) => (
 
     <div className="mt-4 flex items-center gap-2 text-blue-400 transition-colors group-hover:text-blue-300">
       <span className="text-xs font-semibold">Ir</span>
-      <Icon
-        name="arrow-right"
-        className="transition-transform group-hover:translate-x-1"
-      />
+      <Icon name="arrow-right" className="transition-transform group-hover:translate-x-1" />
     </div>
   </Link>
 );
 
-export const RecommendedSessionItem = ({ session }: { session: { area: string; nivel: string; tiempo: string; puntos: number } }) => (
+export const RecommendedSessionItem = ({
+  session,
+}: {
+  session: { area: string; nivel: string; tiempo: string; puntos: number };
+}) => (
   <div className="flex items-center justify-between rounded-lg bg-slate-700/50 p-4 transition-colors hover:bg-slate-700">
     <div>
       <p className="font-semibold text-white">{session.area}</p>

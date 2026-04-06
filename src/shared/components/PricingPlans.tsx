@@ -75,16 +75,10 @@ export const PricingPlans = ({ plans = [] }: { plans?: Plan[] }) => {
   return (
     <section id="planes" className="mx-auto max-w-7xl px-6 py-20 md:px-8">
       <div className="mb-16 text-center">
-        <h2 className="mb-4 text-4xl font-bold md:text-5xl">
-          Planes Transparentes
-        </h2>
-        <p className="text-lg text-slate-400">
-          Sin sorpresas, cancela cuando quieras (Planes Mensuales y Anuales)
-        </p>
+        <h2 className="mb-4 text-4xl font-bold md:text-5xl">Planes Transparentes</h2>
+        <p className="text-lg text-slate-400">Sin sorpresas, cancela cuando quieras (Planes Mensuales y Anuales)</p>
 
-        <p>
-          Nota: La compra de planes no esta disponible en dispositivos moviles.
-        </p>
+        <p>Nota: La compra de planes no esta disponible en dispositivos moviles.</p>
       </div>
 
       <div className="grid grid-cols-1 gap-10 md:grid-cols-2 xl:grid-cols-3">
@@ -111,11 +105,7 @@ export const PricingPlans = ({ plans = [] }: { plans?: Plan[] }) => {
 
             <div className="mb-6">
               <p className="text-4xl font-bold text-white">{plan.price}</p>
-              {plan.originalPrice && (
-                <p className="text-sm text-slate-400 line-through">
-                  {plan.originalPrice}
-                </p>
-              )}
+              {plan.originalPrice && <p className="text-sm text-slate-400 line-through">{plan.originalPrice}</p>}
             </div>
 
             <button
@@ -131,14 +121,8 @@ export const PricingPlans = ({ plans = [] }: { plans?: Plan[] }) => {
 
             <ul className="space-y-3">
               {plan.features.map((feature: string, fidx: number) => (
-                <li
-                  key={fidx}
-                  className="flex items-start gap-3 text-slate-300"
-                >
-                  <Icon
-                    name="check-circle"
-                    className="mt-1 shrink-0 text-green-400"
-                  />
+                <li key={fidx} className="flex items-start gap-3 text-slate-300">
+                  <Icon name="check-circle" className="mt-1 shrink-0 text-green-400" />
                   {feature}
                 </li>
               ))}
@@ -148,11 +132,7 @@ export const PricingPlans = ({ plans = [] }: { plans?: Plan[] }) => {
       </div>
 
       {/* Payment Modal */}
-      <PaymentModal
-        isOpen={isPaymentOpen}
-        onClose={() => setIsPaymentOpen(false)}
-        plan={selectedPlan}
-      />
+      <PaymentModal isOpen={isPaymentOpen} onClose={() => setIsPaymentOpen(false)} plan={selectedPlan} />
     </section>
   );
 };

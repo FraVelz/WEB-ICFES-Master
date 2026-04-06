@@ -29,11 +29,7 @@ export const ShopItemModal = ({
 
   useEffect(() => {
     if (!isOpen || !overlayRef.current || !contentRef.current) return;
-    gsap.fromTo(
-      overlayRef.current,
-      { opacity: 0 },
-      { opacity: 1, duration: 0.2 }
-    );
+    gsap.fromTo(overlayRef.current, { opacity: 0 }, { opacity: 1, duration: 0.2 });
     gsap.fromTo(
       contentRef.current,
       { opacity: 0, scale: 0.95 },
@@ -61,18 +57,12 @@ export const ShopItemModal = ({
         </button>
 
         {/* Header Image */}
-        <div
-          className={`h-32 bg-linear-to-br ${item.color} relative flex items-center justify-center`}
-        >
+        <div className={`h-32 bg-linear-to-br ${item.color} relative flex items-center justify-center`}>
           <div className="absolute inset-0 bg-black/20"></div>
           <div className="relative z-10 h-24 w-24 translate-y-8 rounded-2xl bg-slate-900 p-1 shadow-2xl">
             <div className="flex h-full w-full items-center justify-center overflow-hidden rounded-xl bg-slate-800">
               {item.image ? (
-                <img
-                  src={item.image}
-                  alt={item.name}
-                  className="h-full w-full object-cover"
-                />
+                <img src={item.image} alt={item.name} className="h-full w-full object-cover" />
               ) : (
                 <Icon name={item.icon} className="text-4xl text-white" />
               )}
@@ -87,9 +77,7 @@ export const ShopItemModal = ({
             {item.category === 'powerup' ? 'Consumible' : 'Cosmético'}
           </div>
 
-          <p className="mb-8 leading-relaxed text-slate-300">
-            {item.description}
-          </p>
+          <p className="mb-8 leading-relaxed text-slate-300">{item.description}</p>
 
           {/* Action Button */}
           {isPurchased && item.category !== 'powerup' ? (
@@ -132,8 +120,7 @@ export const ShopItemModal = ({
 
           {!canAfford && !isPurchased && (
             <p className="mt-3 text-sm font-medium text-red-400">
-              Te faltan {item.price - (canAfford ? 0 : 999999)} monedas para
-              comprar esto.
+              Te faltan {item.price - (canAfford ? 0 : 999999)} monedas para comprar esto.
             </p>
           )}
         </div>

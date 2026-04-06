@@ -1,11 +1,7 @@
 /**
  * Servicio de gamificación - Versión local (localStorage)
  */
-import {
-  addVirtualMoney,
-  removeVirtualMoney,
-  getVirtualMoney,
-} from '@/shared/utils/userProfile';
+import { addVirtualMoney, removeVirtualMoney, getVirtualMoney } from '@/shared/utils/userProfile';
 import { calculateLevel } from '../utils/gamificationUtils';
 
 const GAMIFICATION_KEY = 'icfes_gamification';
@@ -27,9 +23,7 @@ class GamificationLocalService {
 
   async getProfile(_userId: string) {
     const stored = localStorage.getItem(GAMIFICATION_KEY);
-    return stored
-      ? JSON.parse(stored)
-      : { totalXP: 0, level: 1, virtualMoney: 0, achievements: {} };
+    return stored ? JSON.parse(stored) : { totalXP: 0, level: 1, virtualMoney: 0, achievements: {} };
   }
 
   async addXP(_userId: string, points: number, _reason = 'activity') {

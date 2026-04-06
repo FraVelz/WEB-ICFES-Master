@@ -46,11 +46,7 @@ function ensureSupabase() {
 const GamificationSupabaseService = {
   async getByUserId(userId: string): Promise<GamificationProfile | null> {
     const sb = ensureSupabase();
-    const { data, error } = await sb
-      .from(TABLE)
-      .select('*')
-      .eq('user_id', userId)
-      .maybeSingle();
+    const { data, error } = await sb.from(TABLE).select('*').eq('user_id', userId).maybeSingle();
     if (error) throw new Error(`Error leyendo gamificación: ${error.message}`);
     return data ? mapFromDb(data as Record<string, unknown>) : null;
   },
@@ -71,13 +67,8 @@ const GamificationSupabaseService = {
         updated_at: new Date().toISOString(),
       };
       const sb = ensureSupabase();
-      const { data, error } = await sb
-        .from(TABLE)
-        .upsert(payload, { onConflict: 'user_id' })
-        .select()
-        .single();
-      if (error)
-        throw new Error(`Error creando gamificación: ${error.message}`);
+      const { data, error } = await sb.from(TABLE).upsert(payload, { onConflict: 'user_id' }).select().single();
+      if (error) throw new Error(`Error creando gamificación: ${error.message}`);
       profile = mapFromDb(data as Record<string, unknown>)!;
     }
     return profile;
@@ -87,10 +78,7 @@ const GamificationSupabaseService = {
     const profile = await this.getOrCreate(userId);
     const newTotalXP = (profile.totalXP || 0) + points;
     const newLevel = this._calculateLevel(newTotalXP);
-    const xpHistory = [
-      ...(profile.xpHistory || []),
-      { date: new Date().toISOString(), points, reason },
-    ];
+    const xpHistory = [...(profile.xpHistory || []), { date: new Date().toISOString(), points, reason }];
 
     const payload = {
       user_id: userId,
@@ -102,11 +90,7 @@ const GamificationSupabaseService = {
       updated_at: new Date().toISOString(),
     };
     const sb = ensureSupabase();
-    const { data, error } = await sb
-      .from(TABLE)
-      .upsert(payload, { onConflict: 'user_id' })
-      .select()
-      .single();
+    const { data, error } = await sb.from(TABLE).upsert(payload, { onConflict: 'user_id' }).select().single();
     if (error) throw new Error(`Error añadiendo XP: ${error.message}`);
     return mapFromDb(data as Record<string, unknown>)!;
   },
@@ -126,11 +110,7 @@ const GamificationSupabaseService = {
       updated_at: new Date().toISOString(),
     };
     const sb = ensureSupabase();
-    const { data, error } = await sb
-      .from(TABLE)
-      .upsert(payload, { onConflict: 'user_id' })
-      .select()
-      .single();
+    const { data, error } = await sb.from(TABLE).upsert(payload, { onConflict: 'user_id' }).select().single();
     if (error) throw new Error(`Error añadiendo monedas: ${error.message}`);
     return mapFromDb(data as Record<string, unknown>)!;
   },
@@ -152,12 +132,7 @@ const GamificationSupabaseService = {
       updated_at: new Date().toISOString(),
     };
     const sb = ensureSupabase();
-    const { data, error } = await sb
-      .from(TABLE)
-      .update(payload)
-      .eq('user_id', userId)
-      .select()
-      .single();
+    const { data, error } = await sb.from(TABLE).update(payload).eq('user_id', userId).select().single();
     if (error) throw new Error(`Error gastando monedas: ${error.message}`);
     return mapFromDb(data as Record<string, unknown>)!;
   },

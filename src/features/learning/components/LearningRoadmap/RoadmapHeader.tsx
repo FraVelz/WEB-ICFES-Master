@@ -10,12 +10,10 @@ export const RoadmapHeader = () => {
         <Icon name="graduation-cap" className="mr-3 text-yellow-400" />
         Tu Ruta de Aprendizaje ICFES
       </h2>
-      <p className="mb-2 text-slate-300">
-        Cuatro secciones: Mapa Progresivo, Nivel Básico, Intermedio y Avanzado
-      </p>
+      <p className="mb-2 text-slate-300">Cuatro secciones: Mapa Progresivo, Nivel Básico, Intermedio y Avanzado</p>
       <p className="text-sm text-slate-400">
-        Comienza con el mapa visual de progresión, luego los fundamentos en cada
-        materia y progresa hacia el examen completo
+        Comienza con el mapa visual de progresión, luego los fundamentos en cada materia y progresa hacia el examen
+        completo
       </p>
     </div>
   );

@@ -3,18 +3,8 @@
  */
 import { useState, useEffect, useCallback } from 'react';
 import { useAuth } from '@/context/AuthContext';
-import API_CONFIG from '@/services/api.config';
-import ProgressSupabaseService from '@/services/supabase/ProgressSupabaseService';
-import {
-  getProgress,
-  getStoredExams,
-  getStoredPractices,
-  clearAllData,
-  getRecommendations,
-  getDefaultProgress,
-  type ProgressData,
-  type AttemptWithQuestions,
-} from '@/shared/utils/progressStorage';
+import { loadProgressViewState, resetProgressData, type ProgressViewState } from '@/services/persistence';
+import type { ProgressData, AttemptWithQuestions } from '@/shared/utils/progressStorage';
 
 export function useProgress() {
   const { user } = useAuth();
@@ -24,6 +14,13 @@ export function useProgress() {
   const [attemptHistory, setAttemptHistory] = useState<AttemptWithQuestions[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+
+  const applyViewState = useCallback((state: ProgressViewState) => {
+    setProgress(state.progress);
+    setAreaStats(state.areaStats);
+    setRecommendations(state.recommendations);
+    setAttemptHistory(state.attemptHistory);
+  }, []);
 
   const loadProgressData = useCallback(async () => {
     if (!user?.uid) {
@@ -37,43 +34,15 @@ export function useProgress() {
 
     setLoading(true);
     try {
-      if (API_CONFIG.MODE === 'supabase') {
-        const prog = await ProgressSupabaseService.getByUserId(user.uid);
-        const mapped: ProgressData | null = prog
-          ? {
-              totalAttempts: prog.totalAttempts,
-              totalQuestions: prog.totalCorrect * 2,
-              totalCorrect: prog.totalCorrect,
-              percentage: prog.percentage,
-              streakDays: prog.streakDays,
-              lastAttemptDate: (prog as { lastAttemptDate?: string | null }).lastAttemptDate ?? null,
-              areaStats: (prog.areaStats || {}) as ProgressData['areaStats'],
-            }
-          : null;
-        setProgress(mapped);
-        setAreaStats(mapped?.areaStats || null);
-        setRecommendations(getRecommendations(mapped ?? getDefaultProgress()));
-        setAttemptHistory([]);
-      } else {
-        const prog = getProgress();
-        setProgress(prog);
-        setAreaStats(prog?.areaStats || null);
-        setRecommendations(getRecommendations(prog ?? getDefaultProgress()));
-        const exams = getStoredExams();
-        const practices = getStoredPractices();
-        setAttemptHistory(
-          [...exams, ...practices]
-            .sort((a, b) => new Date(b.date ?? 0).getTime() - new Date(a.date ?? 0).getTime())
-            .slice(0, 50)
-        );
-      }
+      const state = await loadProgressViewState(user.uid);
+      applyViewState(state);
       setError(null);
     } catch (err) {
       setError((err instanceof Error ? err.message : 'Error cargando progreso') ?? 'Error cargando progreso');
     } finally {
       setLoading(false);
     }
-  }, [user?.uid]);
+  }, [user?.uid, applyViewState]);
 
   useEffect(() => {
     loadProgressData();
@@ -81,17 +50,7 @@ export function useProgress() {
 
   const resetProgress = useCallback(async () => {
     if (!user?.uid) return true;
-    if (API_CONFIG.MODE === 'supabase') {
-      await ProgressSupabaseService.upsert(user.uid, {
-        totalAttempts: 0,
-        totalCorrect: 0,
-        percentage: 0,
-        streakDays: 0,
-        areaStats: {},
-      });
-    } else {
-      clearAllData();
-    }
+    await resetProgressData(user.uid);
     loadProgressData();
     return true;
   }, [user?.uid, loadProgressData]);

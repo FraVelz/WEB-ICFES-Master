@@ -18,21 +18,12 @@ export const Algebra = () => {
           'Sistemas de ecuaciones lineales',
           'Métodos de solución (sustitución, eliminación)',
         ],
-        examples: [
-          '2x + 5 = 13 → x = 4',
-          '3x - 2y = 5 combinado con x + y = 4',
-        ],
+        examples: ['2x + 5 = 13 → x = 4', '3x - 2y = 5 combinado con x + y = 4'],
       },
       {
         name: 'Sistemas de Ecuaciones',
-        description:
-          'Resuelve conjuntos de ecuaciones simultáneamente usando múltiples métodos.',
-        subtopics: [
-          'Métodos de sustitución',
-          'Métodos de eliminación',
-          'Métodos gráficos',
-          'Sistemas 2x2 y 3x3',
-        ],
+        description: 'Resuelve conjuntos de ecuaciones simultáneamente usando múltiples métodos.',
+        subtopics: ['Métodos de sustitución', 'Métodos de eliminación', 'Métodos gráficos', 'Sistemas 2x2 y 3x3'],
         examples: [
           'Sistema con solución única',
           'Sistema sin solución (inconsistente)',
@@ -41,19 +32,14 @@ export const Algebra = () => {
       },
       {
         name: 'Polinomios',
-        description:
-          'Operaciones y factorización de expresiones algebraicas polinómicas.',
+        description: 'Operaciones y factorización de expresiones algebraicas polinómicas.',
         subtopics: [
           'Suma, resta, multiplicación de polinomios',
           'Factorización básica',
           'Trinomios cuadráticos',
           'División sintética',
         ],
-        examples: [
-          '(x + 2)(x - 3) = x² - x - 6',
-          'x² + 5x + 6 = (x + 2)(x + 3)',
-          'Factorización por agrupación',
-        ],
+        examples: ['(x + 2)(x - 3) = x² - x - 6', 'x² + 5x + 6 = (x + 2)(x + 3)', 'Factorización por agrupación'],
       },
     ],
     keyFormulas: [
@@ -123,22 +109,16 @@ export const Algebra = () => {
               key={idx}
               className="rounded-2xl border border-white/10 bg-white/5 p-8 backdrop-blur-sm transition-all hover:bg-white/10"
             >
-              <h2 className="mb-4 text-3xl font-bold text-yellow-400">
-                {topic.name}
-              </h2>
+              <h2 className="mb-4 text-3xl font-bold text-yellow-400">{topic.name}</h2>
               <p className="mb-6 text-lg text-gray-300">{topic.description}</p>
 
               <div className="grid gap-8 md:grid-cols-2">
                 <div>
-                  <h3 className="mb-4 text-xl font-semibold text-blue-400">
-                    Subtemas
-                  </h3>
+                  <h3 className="mb-4 text-xl font-semibold text-blue-400">Subtemas</h3>
                   <ul className="space-y-3">
                     {topic.subtopics.map((sub, i) => (
                       <li key={i} className="flex items-start gap-3">
-                        <span className="mt-1 font-bold text-yellow-400">
-                          →
-                        </span>
+                        <span className="mt-1 font-bold text-yellow-400">→</span>
                         <span className="text-gray-300">{sub}</span>
                       </li>
                     ))}
@@ -146,18 +126,11 @@ export const Algebra = () => {
                 </div>
 
                 <div>
-                  <h3 className="mb-4 text-xl font-semibold text-green-400">
-                    Ejemplos
-                  </h3>
+                  <h3 className="mb-4 text-xl font-semibold text-green-400">Ejemplos</h3>
                   <div className="space-y-3">
                     {topic.examples.map((example, i) => (
-                      <div
-                        key={i}
-                        className="rounded border-l-4 border-green-400 bg-gray-900/50 p-4"
-                      >
-                        <code className="text-sm text-green-300">
-                          {example}
-                        </code>
+                      <div key={i} className="rounded border-l-4 border-green-400 bg-gray-900/50 p-4">
+                        <code className="text-sm text-green-300">{example}</code>
                       </div>
                     ))}
                   </div>
@@ -169,18 +142,11 @@ export const Algebra = () => {
 
         {/* Formulas */}
         <section className="mb-16">
-          <h2 className="mb-8 text-3xl font-bold text-cyan-400">
-            Fórmulas Clave
-          </h2>
+          <h2 className="mb-8 text-3xl font-bold text-cyan-400">Fórmulas Clave</h2>
           <div className="grid gap-4 md:grid-cols-2">
             {content.keyFormulas.map((formula, idx) => (
-              <div
-                key={idx}
-                className="rounded-xl border border-cyan-500/30 bg-cyan-500/10 p-6"
-              >
-                <code className="block text-center text-lg text-cyan-300">
-                  {formula}
-                </code>
+              <div key={idx} className="rounded-xl border border-cyan-500/30 bg-cyan-500/10 p-6">
+                <code className="block text-center text-lg text-cyan-300">{formula}</code>
               </div>
             ))}
           </div>
@@ -188,9 +154,7 @@ export const Algebra = () => {
 
         {/* Practice */}
         <section className="mb-16">
-          <h2 className="mb-8 text-3xl font-bold text-purple-400">
-            Ejercicios de Práctica
-          </h2>
+          <h2 className="mb-8 text-3xl font-bold text-purple-400">Ejercicios de Práctica</h2>
           <div className="space-y-4">
             {content.practiceExercises.map((exercise, idx) => (
               <div
@@ -198,9 +162,7 @@ export const Algebra = () => {
                 className="rounded-xl border border-white/10 bg-white/5 p-6 transition-all hover:bg-white/10"
               >
                 <div className="flex items-start gap-4">
-                  <span className="min-w-fit text-xl font-bold text-purple-400">
-                    {idx + 1}.
-                  </span>
+                  <span className="min-w-fit text-xl font-bold text-purple-400">{idx + 1}.</span>
                   <p className="text-gray-300">{exercise}</p>
                 </div>
               </div>

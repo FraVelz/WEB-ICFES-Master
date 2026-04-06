@@ -18,11 +18,7 @@ function ensureSupabase() {
 const ExamSupabaseService = {
   async getByUserId(userId: string, filters: ExamFilters = {}): Promise<Record<string, unknown>[]> {
     const sb = ensureSupabase();
-    let query = sb
-      .from(TABLE)
-      .select('*')
-      .eq('user_id', userId)
-      .order('completed_at', { ascending: false });
+    let query = sb.from(TABLE).select('*').eq('user_id', userId).order('completed_at', { ascending: false });
     if (filters.type) query = query.eq('exam_type', filters.type);
     if (filters.limit) query = query.limit(filters.limit);
     const { data, error } = await query;
@@ -32,11 +28,7 @@ const ExamSupabaseService = {
 
   async getById(examId: string): Promise<Record<string, unknown> | null> {
     const sb = ensureSupabase();
-    const { data, error } = await sb
-      .from(TABLE)
-      .select('*')
-      .eq('id', examId)
-      .maybeSingle();
+    const { data, error } = await sb.from(TABLE).select('*').eq('id', examId).maybeSingle();
     if (error) throw new Error(`Error leyendo examen: ${error.message}`);
     return data;
   },
@@ -50,18 +42,13 @@ const ExamSupabaseService = {
       user_id: userId,
       exam_type: ed.type || 'practice',
       score: null,
-      total_questions:
-        (ed.questions as unknown[])?.length || ed.totalQuestions || 0,
+      total_questions: (ed.questions as unknown[])?.length || ed.totalQuestions || 0,
       correct_answers: 0,
       time_spent: 0,
       completed_at: null,
       questions: ed.questions || [],
     };
-    const { data, error } = await sb
-      .from(TABLE)
-      .insert(payload)
-      .select()
-      .single();
+    const { data, error } = await sb.from(TABLE).insert(payload).select().single();
     if (error) throw new Error(`Error creando examen: ${error.message}`);
     return data;
   },
@@ -83,12 +70,7 @@ const ExamSupabaseService = {
       questions: answers,
     };
     const sb = ensureSupabase();
-    const { data, error } = await sb
-      .from(TABLE)
-      .update(payload)
-      .eq('id', examId)
-      .select()
-      .single();
+    const { data, error } = await sb.from(TABLE).update(payload).eq('id', examId).select().single();
     if (error) throw new Error(`Error completando examen: ${error.message}`);
     return data;
   },

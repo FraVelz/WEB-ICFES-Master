@@ -37,14 +37,12 @@ export const LearningPage = () => {
   // Filter topics based on search term
   const filteredTopics = useMemo(() => {
     if (!searchTerm) return allTopics;
-    return allTopics.filter((topic: string) =>
-      topic.toLowerCase().includes(searchTerm.toLowerCase())
-    );
+    return allTopics.filter((topic: string) => topic.toLowerCase().includes(searchTerm.toLowerCase()));
   }, [searchTerm, allTopics]);
 
   // Filter materials based on selected area and topics
   const filteredMaterials = useMemo(() => {
-    const result: Record<string, typeof LEARNING_MATERIALS[string]> = {};
+    const result: Record<string, (typeof LEARNING_MATERIALS)[string]> = {};
 
     Object.entries(LEARNING_MATERIALS).forEach(([area, materials]) => {
       if (activeArea !== 'all' && area !== activeArea) return;
@@ -75,9 +73,7 @@ export const LearningPage = () => {
   };
 
   const toggleTopic = (topic: string) => {
-    setSelectedTopics((prev) =>
-      prev.includes(topic) ? prev.filter((t) => t !== topic) : [...prev, topic]
-    );
+    setSelectedTopics((prev) => (prev.includes(topic) ? prev.filter((t) => t !== topic) : [...prev, topic]));
   };
 
   const areaIcons = {
@@ -92,7 +88,21 @@ export const LearningPage = () => {
   };
 
   type LevelKey = 'easy' | 'intermediate' | 'advanced';
-  const learningLevels: Record<LevelKey, { title: string; subtitle: string; description: string; icon: string; color: string; textColor: string; borderColor: string; bgColor: string; hoverColor: string; subjects: number }> = {
+  const learningLevels: Record<
+    LevelKey,
+    {
+      title: string;
+      subtitle: string;
+      description: string;
+      icon: string;
+      color: string;
+      textColor: string;
+      borderColor: string;
+      bgColor: string;
+      hoverColor: string;
+      subjects: number;
+    }
+  > = {
     easy: {
       title: 'Nivel Fácil',
       subtitle: 'Aprende las Bases',
@@ -152,8 +162,7 @@ export const LearningPage = () => {
                 📚 Modo Aprendizaje
               </h1>
               <p className="mx-auto max-w-3xl text-base leading-relaxed text-slate-300 md:text-lg">
-                Elige tu nivel de dificultad y comienza tu camino hacia el
-                dominio del ICFES
+                Elige tu nivel de dificultad y comienza tu camino hacia el dominio del ICFES
               </p>
             </header>
 
@@ -177,26 +186,16 @@ export const LearningPage = () => {
                     </div>
 
                     {/* Title */}
-                    <h2 className="mb-2 text-2xl font-bold text-white">
-                      {level.title}
-                    </h2>
-                    <p
-                      className={`text-sm font-semibold ${level.textColor} mb-4`}
-                    >
-                      {level.subtitle}
-                    </p>
+                    <h2 className="mb-2 text-2xl font-bold text-white">{level.title}</h2>
+                    <p className={`text-sm font-semibold ${level.textColor} mb-4`}>{level.subtitle}</p>
 
                     {/* Description */}
-                    <p className="mb-6 text-sm leading-relaxed text-slate-300">
-                      {level.description}
-                    </p>
+                    <p className="mb-6 text-sm leading-relaxed text-slate-300">{level.description}</p>
 
                     {/* Stats */}
                     <div className="mb-6 flex items-center justify-between rounded-lg bg-black/30 p-3">
                       <div className="text-center">
-                        <p className="text-2xl font-bold text-white">
-                          {level.subjects}
-                        </p>
+                        <p className="text-2xl font-bold text-white">{level.subjects}</p>
                         <p className="text-xs text-slate-400">Materias</p>
                       </div>
                       <div
@@ -319,15 +318,9 @@ export const LearningPage = () => {
                       <Icon name={areaData.icon} />
                     </div>
                     <div>
-                      <h3 className="mb-2 text-2xl font-bold text-white">
-                        {areaData.label}
-                      </h3>
-                      <p className="mb-4 text-sm text-slate-400">
-                        Practica con exámenes específicos
-                      </p>
-                      <p className="text-sm font-semibold text-orange-400">
-                        Comenzar Examen →
-                      </p>
+                      <h3 className="mb-2 text-2xl font-bold text-white">{areaData.label}</h3>
+                      <p className="mb-4 text-sm text-slate-400">Practica con exámenes específicos</p>
+                      <p className="text-sm font-semibold text-orange-400">Comenzar Examen →</p>
                     </div>
                   </div>
                 </Link>
@@ -343,46 +336,31 @@ export const LearningPage = () => {
                     <Icon name="fire" />
                   </div>
                   <div>
-                    <h3 className="mb-4 text-3xl font-bold text-white">
-                      Simulacro Global ICFES
-                    </h3>
+                    <h3 className="mb-4 text-3xl font-bold text-white">Simulacro Global ICFES</h3>
                     <p className="mb-6 text-lg leading-relaxed text-slate-300">
-                      Completa un examen que simula las condiciones reales del
-                      ICFES. Incluye todas las materias integradas con el mismo
-                      formato, duración y dificultad del examen oficial.
+                      Completa un examen que simula las condiciones reales del ICFES. Incluye todas las materias
+                      integradas con el mismo formato, duración y dificultad del examen oficial.
                     </p>
                     <div className="mb-8 grid grid-cols-2 gap-4 text-left">
                       <div className="rounded-lg bg-black/30 p-3">
                         <p className="flex items-center gap-2 font-semibold text-red-400">
                           <Icon name="clock" /> Duración
                         </p>
-                        <p className="text-sm text-slate-300">
-                          3 horas aproximadamente
-                        </p>
+                        <p className="text-sm text-slate-300">3 horas aproximadamente</p>
                       </div>
                       <div className="rounded-lg bg-black/30 p-3">
                         <p className="flex items-center gap-2 font-semibold text-red-400">
                           <Icon name="chart-line" /> Preguntas
                         </p>
-                        <p className="text-sm text-slate-300">
-                          200 preguntas totales
-                        </p>
+                        <p className="text-sm text-slate-300">200 preguntas totales</p>
                       </div>
                       <div className="rounded-lg bg-black/30 p-3">
-                        <p className="font-semibold text-red-400">
-                          🎯 Materias
-                        </p>
-                        <p className="text-sm text-slate-300">
-                          5 áreas integradas
-                        </p>
+                        <p className="font-semibold text-red-400">🎯 Materias</p>
+                        <p className="text-sm text-slate-300">5 áreas integradas</p>
                       </div>
                       <div className="rounded-lg bg-black/30 p-3">
-                        <p className="font-semibold text-red-400">
-                          📈 Resultados
-                        </p>
-                        <p className="text-sm text-slate-300">
-                          Análisis detallado
-                        </p>
+                        <p className="font-semibold text-red-400">📈 Resultados</p>
+                        <p className="text-sm text-slate-300">Análisis detallado</p>
                       </div>
                     </div>
                     <Link

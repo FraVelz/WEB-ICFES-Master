@@ -35,10 +35,7 @@ export const HeaderWithAuth = () => {
         <div className="mx-auto max-w-7xl px-4 py-3 md:px-6">
           <div className="flex items-center justify-between">
             {/* Logo/Brand */}
-            <Link
-              href="/"
-              className="flex items-center gap-3 transition-opacity duration-300 hover:opacity-80"
-            >
+            <Link href="/" className="flex items-center gap-3 transition-opacity duration-300 hover:opacity-80">
               <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-linear-to-br from-cyan-500 via-blue-500 to-purple-600 shadow-lg shadow-cyan-500/30 transition-transform duration-300 hover:scale-110">
                 <span className="text-xl font-bold text-white">🚀</span>
               </div>
@@ -71,9 +68,7 @@ export const HeaderWithAuth = () => {
               {user && (
                 <div className="hidden items-center gap-2 rounded-lg border border-yellow-500/30 bg-yellow-500/10 px-4 py-2 md:flex">
                   <Icon name="coins" className="text-yellow-400" />
-                  <span className="font-bold text-yellow-400">
-                    {virtualMoney || 0}
-                  </span>
+                  <span className="font-bold text-yellow-400">{virtualMoney || 0}</span>
                 </div>
               )}
 
@@ -83,22 +78,12 @@ export const HeaderWithAuth = () => {
                   onClick={() => setProfileMenuOpen(!profileMenuOpen)}
                   className="flex items-center gap-2 rounded-lg px-4 py-2 transition-colors hover:bg-slate-800/50"
                 >
-                  <Icon
-                    name="circle-user"
-                    size="2xl"
-                    className="text-2xl text-cyan-400"
-                  />
+                  <Icon name="circle-user" size="2xl" className="text-2xl text-cyan-400" />
                   {authUser && (
                     <>
                       <div className="hidden text-left sm:block">
-                        <p className="text-sm font-semibold text-white">
-                          {authUser.displayName || authUser.email}
-                        </p>
-                        {rank && (
-                          <p className="text-xs text-slate-400">
-                            Rango: {rank.name ?? rank.icon ?? '-'}
-                          </p>
-                        )}
+                        <p className="text-sm font-semibold text-white">{authUser.displayName || authUser.email}</p>
+                        {rank && <p className="text-xs text-slate-400">Rango: {rank.name ?? rank.icon ?? '-'}</p>}
                       </div>
                       <Icon
                         name="chevron-down"
@@ -115,12 +100,8 @@ export const HeaderWithAuth = () => {
                     {/* User Info */}
                     {authUser && (
                       <div className="border-b border-slate-700 px-4 py-3">
-                        <p className="text-sm font-semibold text-white">
-                          {authUser.displayName || authUser.email}
-                        </p>
-                        <p className="truncate text-xs text-slate-400">
-                          {authUser.email}
-                        </p>
+                        <p className="text-sm font-semibold text-white">{authUser.displayName || authUser.email}</p>
+                        <p className="truncate text-xs text-slate-400">{authUser.email}</p>
                       </div>
                     )}
 
@@ -163,11 +144,7 @@ export const HeaderWithAuth = () => {
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
                 className="flex h-10 w-10 items-center justify-center rounded-lg transition-colors hover:bg-slate-800 md:hidden"
               >
-                <Icon
-                  name={mobileMenuOpen ? 'times' : 'bars'}
-                  size="xl"
-                  className="text-xl text-cyan-400"
-                />
+                <Icon name={mobileMenuOpen ? 'times' : 'bars'} size="xl" className="text-xl text-cyan-400" />
               </button>
             </div>
           </div>
@@ -197,9 +174,7 @@ export const HeaderWithAuth = () => {
             {user && (
               <div className="my-2 flex items-center gap-2 rounded-lg border border-yellow-500/30 bg-yellow-500/10 px-4 py-3">
                 <Icon name="coins" className="text-yellow-400" />
-                <span className="font-bold text-yellow-400">
-                  {virtualMoney || 0}
-                </span>
+                <span className="font-bold text-yellow-400">{virtualMoney || 0}</span>
               </div>
             )}
           </nav>

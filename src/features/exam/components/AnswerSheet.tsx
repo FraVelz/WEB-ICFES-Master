@@ -43,11 +43,7 @@ export const AnswerSheet = ({
                     : 'border border-white/20 bg-white/10 text-gray-400 hover:bg-white/20'
               }`}
             >
-              {isAnswered ? (
-                <span className="text-xs">{answer}</span>
-              ) : (
-                <span>{questionNum}</span>
-              )}
+              {isAnswered ? <span className="text-xs">{answer}</span> : <span>{questionNum}</span>}
             </button>
           );
         })}

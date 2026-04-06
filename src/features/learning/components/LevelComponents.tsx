@@ -10,14 +10,7 @@ export interface LevelHeaderProps {
   onClick: () => void;
 }
 
-export const LevelHeader = ({
-  icon,
-  color,
-  title,
-  subtitle,
-  isExpanded,
-  onClick,
-}: LevelHeaderProps) => (
+export const LevelHeader = ({ icon, color, title, subtitle, isExpanded, onClick }: LevelHeaderProps) => (
   <button
     onClick={onClick}
     className={`flex w-full items-center justify-between p-6 hover:${color}/30 transition-colors`}
@@ -33,9 +26,7 @@ export const LevelHeader = ({
     </div>
     <Icon
       name="chevron-down"
-      className={`text-${color} text-2xl transition-transform duration-300 ${
-        isExpanded ? 'rotate-180' : ''
-      }`}
+      className={`text-${color} text-2xl transition-transform duration-300 ${isExpanded ? 'rotate-180' : ''}`}
     />
   </button>
 );
@@ -52,10 +43,7 @@ export const AvanzadoExamComposition = ({ subjects }: { subjects: SubjectItem[] 
     <p className="mb-3 font-semibold text-white">Composición del Examen:</p>
     <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
       {subjects.map((subject) => (
-        <div
-          key={subject.id}
-          className="flex items-center gap-3 rounded-lg bg-slate-800/50 p-3"
-        >
+        <div key={subject.id} className="flex items-center gap-3 rounded-lg bg-slate-800/50 p-3">
           <Icon name={subject.icon ?? 'book'} className={`text-lg ${subject.color ?? ''}`} />
           <div className="flex-1">
             <p className="font-medium text-white">{subject.name}</p>
@@ -91,8 +79,8 @@ export const AvanzadoStats = () => (
 export const AvanzadoNote = () => (
   <div className="mb-6 rounded-lg border border-red-600/50 bg-linear-to-r from-red-900/30 to-purple-900/30 p-4">
     <p className="text-sm text-slate-300">
-      <strong>Nota:</strong> Este simulacro incluye cronómetro,
-      retroalimentación detallada y análisis de desempeño por materia.
+      <strong>Nota:</strong> Este simulacro incluye cronómetro, retroalimentación detallada y análisis de desempeño por
+      materia.
     </p>
   </div>
 );

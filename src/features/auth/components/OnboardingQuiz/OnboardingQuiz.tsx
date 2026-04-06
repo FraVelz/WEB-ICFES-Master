@@ -22,10 +22,7 @@ interface OnboardingQuizProps {
   avatarConfig?: { intro1?: string; intro2?: string };
 }
 
-export const OnboardingQuiz = ({
-  onComplete,
-  avatarConfig = {},
-}: OnboardingQuizProps) => {
+export const OnboardingQuiz = ({ onComplete, avatarConfig = {} }: OnboardingQuizProps) => {
   const router = useRouter();
   const [stage, setStage] = useState('intro'); // 'intro', 'quiz', 'completed'
   const [introIndex, setIntroIndex] = useState(0);
@@ -38,21 +35,12 @@ export const OnboardingQuiz = ({
     intro2: avatarConfig.intro2 ?? '/avatars/logo.webp',
   };
 
-  const currentQuestion = (ONBOARDING_QUESTIONS as OnboardingQuestion[])[
-    currentQuestionIndex
-  ];
+  const currentQuestion = (ONBOARDING_QUESTIONS as OnboardingQuestion[])[currentQuestionIndex];
   const isMultiple = currentQuestion?.type === 'multiple';
-  const rawAnswer = currentQuestion
-    ? answers[String(currentQuestion.id)]
-    : undefined;
+  const rawAnswer = currentQuestion ? answers[String(currentQuestion.id)] : undefined;
   const currentAnswer: string | string[] =
-    typeof rawAnswer === 'string' || Array.isArray(rawAnswer)
-      ? rawAnswer
-      : isMultiple
-        ? []
-        : '';
-  const progress =
-    ((currentQuestionIndex + 1) / ONBOARDING_QUESTIONS.length) * 100;
+    typeof rawAnswer === 'string' || Array.isArray(rawAnswer) ? rawAnswer : isMultiple ? [] : '';
+  const progress = ((currentQuestionIndex + 1) / ONBOARDING_QUESTIONS.length) * 100;
 
   const handleSelectOption = (value: string) => {
     if (isMultiple && currentQuestion) {
@@ -111,15 +99,12 @@ export const OnboardingQuiz = ({
     onComplete(answers);
   };
 
-  const canProceed = isMultiple
-    ? Array.isArray(currentAnswer) && currentAnswer.length > 0
-    : currentAnswer !== '';
+  const canProceed = isMultiple ? Array.isArray(currentAnswer) && currentAnswer.length > 0 : currentAnswer !== '';
 
   // Pantalla de Introducción (Secciones 1 y 2)
   if (stage !== 'quiz' && stage !== 'completed') {
     const currentIntro = INTRODUCTION_SECTIONS[introIndex];
-    const avatarSrc =
-      introIndex === 0 ? avatarSettings.intro1 : avatarSettings.intro2;
+    const avatarSrc = introIndex === 0 ? avatarSettings.intro1 : avatarSettings.intro2;
 
     return (
       <OnboardingLayout>
@@ -137,12 +122,7 @@ export const OnboardingQuiz = ({
         {/* Main Content */}
         <div className="flex flex-1 flex-col items-center justify-center px-6 py-8">
           {/* Avatar */}
-          <MascotaCircle
-            src={avatarSrc}
-            size="large"
-            alt="Zeus - Tu asistente"
-            className="mb-8"
-          />
+          <MascotaCircle src={avatarSrc} size="large" alt="Zeus - Tu asistente" className="mb-8" />
 
           {/* Message */}
           <div className="w-full max-w-2xl rounded-lg border border-slate-700 bg-slate-800/50 p-8 text-center backdrop-blur-sm">
@@ -181,8 +161,7 @@ export const OnboardingQuiz = ({
             </h2>
 
             <p className="text-lg text-slate-300">
-              Hemos entendido tus necesidades. Ahora crearemos tu cuenta
-              personalizada con un plan adaptado a ti.
+              Hemos entendido tus necesidades. Ahora crearemos tu cuenta personalizada con un plan adaptado a ti.
             </p>
           </div>
 
@@ -212,12 +191,9 @@ export const OnboardingQuiz = ({
           </button>
           <div className="flex flex-1 items-center justify-center gap-6">
             <h3 className="hidden text-sm font-semibold text-slate-400 sm:block">
-              Pregunta {currentQuestionIndex + 1} de{' '}
-              {ONBOARDING_QUESTIONS.length}
+              Pregunta {currentQuestionIndex + 1} de {ONBOARDING_QUESTIONS.length}
             </h3>
-            <span className="text-sm font-semibold text-cyan-400">
-              {Math.round(progress)}%
-            </span>
+            <span className="text-sm font-semibold text-cyan-400">{Math.round(progress)}%</span>
           </div>
         </div>
 
@@ -237,12 +213,7 @@ export const OnboardingQuiz = ({
         {/* Question + Avatar */}
         <div className="flex flex-col items-center gap-6 sm:flex-row sm:items-start">
           <div className="shrink-0">
-            <MascotaCircle
-              src="/avatars/pensativo.webp"
-              size="medium"
-              alt="Zeus - Tu asistente"
-              centered={false}
-            />
+            <MascotaCircle src="/avatars/pensativo.webp" size="medium" alt="Zeus - Tu asistente" centered={false} />
           </div>
           <div className="flex-1 pt-2 text-center sm:text-left">
             <h2 className="text-xl leading-tight font-bold text-white sm:text-2xl md:text-3xl">
@@ -260,10 +231,7 @@ export const OnboardingQuiz = ({
               className={`group flex w-full cursor-pointer items-center gap-4 rounded-xl border-2 p-4 text-left font-semibold transition-all duration-200 ${
                 (
                   isMultiple
-                    ? (Array.isArray(currentAnswer)
-                        ? currentAnswer
-                        : []
-                      ).includes(option.value)
+                    ? (Array.isArray(currentAnswer) ? currentAnswer : []).includes(option.value)
                     : currentAnswer === option.value
                 )
                   ? 'border-cyan-500 bg-cyan-500/20 text-white shadow-lg shadow-cyan-500/10'
@@ -274,10 +242,7 @@ export const OnboardingQuiz = ({
                 className={`flex h-6 w-6 shrink-0 items-center justify-center rounded border-2 transition-all ${
                   (
                     isMultiple
-                      ? (Array.isArray(currentAnswer)
-                          ? currentAnswer
-                          : []
-                        ).includes(option.value)
+                      ? (Array.isArray(currentAnswer) ? currentAnswer : []).includes(option.value)
                       : currentAnswer === option.value
                   )
                     ? 'scale-110 border-cyan-500 bg-cyan-500'
@@ -285,13 +250,8 @@ export const OnboardingQuiz = ({
                 }`}
               >
                 {(isMultiple
-                  ? (Array.isArray(currentAnswer)
-                      ? currentAnswer
-                      : []
-                    ).includes(option.value)
-                  : currentAnswer === option.value) && (
-                  <span className="text-sm font-bold text-white">✓</span>
-                )}
+                  ? (Array.isArray(currentAnswer) ? currentAnswer : []).includes(option.value)
+                  : currentAnswer === option.value) && <span className="text-sm font-bold text-white">✓</span>}
               </div>
               <span className="text-base sm:text-lg">{option.label}</span>
             </button>

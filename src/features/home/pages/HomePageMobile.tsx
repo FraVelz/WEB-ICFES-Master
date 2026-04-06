@@ -23,8 +23,7 @@ export const HomePageMobile = () => {
 
           {/* Tagline */}
           <p className="max-w-xs text-center text-sm text-gray-300">
-            Domina el examen ICFES con nuestras plataforma, y diviertete
-            mientras aprendes.
+            Domina el examen ICFES con nuestras plataforma, y diviertete mientras aprendes.
           </p>
         </div>
       </div>

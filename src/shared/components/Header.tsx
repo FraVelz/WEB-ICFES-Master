@@ -43,7 +43,7 @@ export const Header = () => {
               <Icon name="rocket" size="lg" className="text-white" />
             </div>
             <span
-              className={`bg-linear-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-xl font-bold whitespace-nowrap text-transparent transition-opacity duration-300 ${sidebarExpanded ? 'pl-2 opacity-100' : 'opacity-0 w-0 overflow-hidden'}`}
+              className={`bg-linear-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-xl font-bold whitespace-nowrap text-transparent transition-opacity duration-300 ${sidebarExpanded ? 'pl-2 opacity-100' : 'w-0 overflow-hidden opacity-0'}`}
             >
               ICFES Master
             </span>
@@ -51,13 +51,10 @@ export const Header = () => {
           {/* Botón toggle barra lateral - abajo cuando cerrado, a la derecha cuando expandido */}
           <button
             onClick={() => setSidebarExpanded(!sidebarExpanded)}
-            className={`flex h-8 w-8 shrink-0 cursor-pointer items-center justify-center rounded-lg text-slate-400 transition-colors hover:bg-white/10 hover:text-cyan-400 ${sidebarExpanded ? 'absolute right-2 top-1/2 -translate-y-1/2' : 'mt-3'}`}
+            className={`flex h-8 w-8 shrink-0 cursor-pointer items-center justify-center rounded-lg text-slate-400 transition-colors hover:bg-white/10 hover:text-cyan-400 ${sidebarExpanded ? 'absolute top-1/2 right-2 -translate-y-1/2' : 'mt-3'}`}
             aria-label={sidebarExpanded ? 'Cerrar barra lateral' : 'Abrir barra lateral'}
           >
-            <Icon
-              name={sidebarExpanded ? 'chevron-left' : 'chevron-right'}
-              size="lg"
-            />
+            <Icon name={sidebarExpanded ? 'chevron-left' : 'chevron-right'} size="lg" />
           </button>
         </div>
 
@@ -125,9 +122,7 @@ export const Header = () => {
               className={`flex w-full items-center gap-3 px-3 transition-opacity duration-300 ${sidebarExpanded ? 'opacity-100' : 'opacity-0'}`}
             >
               <Icon name="coins" className="text-amber-400" />
-              <span className="font-bold whitespace-nowrap text-amber-400">
-                {virtualMoney}
-              </span>
+              <span className="font-bold whitespace-nowrap text-amber-400">{virtualMoney}</span>
             </div>
           </div>
 
@@ -138,27 +133,17 @@ export const Header = () => {
           >
             <div className="z-10 h-10 w-10 shrink-0 overflow-hidden rounded-full border-2 border-cyan-500/30 bg-slate-800">
               {user?.profileImage ? (
-                <img
-                  src={user.profileImage}
-                  alt="Profile"
-                  className="h-full w-full object-cover"
-                />
+                <img src={user.profileImage} alt="Profile" className="h-full w-full object-cover" />
               ) : (
                 <div className="flex h-full w-full items-center justify-center">
-                  <Icon
-                    name="circle-user"
-                    size="lg"
-                    className="text-slate-400"
-                  />
+                  <Icon name="circle-user" size="lg" className="text-slate-400" />
                 </div>
               )}
             </div>
             <div
               className={`absolute left-16 overflow-hidden whitespace-nowrap transition-opacity duration-300 ${sidebarExpanded ? 'opacity-100' : 'opacity-0'}`}
             >
-              <p className="max-w-[140px] truncate text-sm font-bold text-white">
-                {user?.username || 'Usuario'}
-              </p>
+              <p className="max-w-[140px] truncate text-sm font-bold text-white">{user?.username || 'Usuario'}</p>
               <p className="text-xs text-cyan-400">{rank?.name || 'Novato'}</p>
             </div>
           </Link>
@@ -200,10 +185,7 @@ export const Header = () => {
 
       {/* Mobile Options Menu Overlay */}
       {mobileOptionsMenuOpen && (
-        <div
-          className="fixed inset-0 z-40 lg:hidden"
-          onClick={() => setMobileOptionsMenuOpen(false)}
-        />
+        <div className="fixed inset-0 z-40 lg:hidden" onClick={() => setMobileOptionsMenuOpen(false)} />
       )}
 
       {/* Mobile Options Menu Dropdown */}

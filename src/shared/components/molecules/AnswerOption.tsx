@@ -23,12 +23,9 @@ export const AnswerOption = ({
   disabled = false,
 }: AnswerOptionProps) => {
   const getBackgroundColor = () => {
-    if (correct)
-      return 'bg-linear-to-r from-green-400 to-emerald-500 border-2 border-green-600';
-    if (incorrect)
-      return 'bg-linear-to-r from-red-400 to-orange-500 border-2 border-red-600';
-    if (selected)
-      return 'bg-linear-to-r from-blue-500 to-indigo-600 border-2 border-blue-600';
+    if (correct) return 'bg-linear-to-r from-green-400 to-emerald-500 border-2 border-green-600';
+    if (incorrect) return 'bg-linear-to-r from-red-400 to-orange-500 border-2 border-red-600';
+    if (selected) return 'bg-linear-to-r from-blue-500 to-indigo-600 border-2 border-blue-600';
     return 'bg-slate-700 border-2 border-slate-500 hover:bg-slate-600';
   };
 
@@ -63,9 +60,7 @@ export const AnswerOption = ({
         <p className="text-left text-lg leading-relaxed md:text-xl">{text}</p>
       </div>
       {(correct || incorrect) && (
-        <div
-          className={`shrink-0 ${correct ? 'animate-bounce text-green-400' : 'text-red-400'}`}
-        >
+        <div className={`shrink-0 ${correct ? 'animate-bounce text-green-400' : 'text-red-400'}`}>
           <Icon name={correct ? 'check' : 'times'} className="text-2xl" />
         </div>
       )}

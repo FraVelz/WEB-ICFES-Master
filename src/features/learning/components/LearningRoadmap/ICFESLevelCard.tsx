@@ -60,12 +60,8 @@ export const ICFESLevelCard = ({ level, index, totalLevels }: ICFESLevelCardProp
 
                 {/* Título y Descripción */}
                 <div className="flex-1">
-                  <h3 className="mb-1 text-2xl font-bold text-white">
-                    {level.name}
-                  </h3>
-                  <p
-                    className={`mb-2 text-sm ${isLocked ? 'text-slate-500' : 'text-slate-400'}`}
-                  >
+                  <h3 className="mb-1 text-2xl font-bold text-white">{level.name}</h3>
+                  <p className={`mb-2 text-sm ${isLocked ? 'text-slate-500' : 'text-slate-400'}`}>
                     {level.description}
                   </p>
                   <div className="flex flex-wrap gap-2">
@@ -74,14 +70,10 @@ export const ICFESLevelCard = ({ level, index, totalLevels }: ICFESLevelCardProp
                     >
                       {level.difficulty}
                     </span>
-                    <span
-                      className={`rounded-full bg-blue-900/40 px-3 py-1 text-xs text-blue-300`}
-                    >
+                    <span className={`rounded-full bg-blue-900/40 px-3 py-1 text-xs text-blue-300`}>
                       {level.estimatedHours}h estimadas
                     </span>
-                    <span
-                      className={`rounded-full bg-slate-700/40 px-3 py-1 text-xs text-slate-300`}
-                    >
+                    <span className={`rounded-full bg-slate-700/40 px-3 py-1 text-xs text-slate-300`}>
                       {level.pointRange} puntos
                     </span>
                   </div>
@@ -112,9 +104,7 @@ export const ICFESLevelCard = ({ level, index, totalLevels }: ICFESLevelCardProp
                   <span
                     key={i}
                     className={`rounded-full px-3 py-1 text-xs ${
-                      isLocked
-                        ? 'bg-slate-700/30 text-slate-500'
-                        : 'bg-slate-700/50 text-slate-300'
+                      isLocked ? 'bg-slate-700/30 text-slate-500' : 'bg-slate-700/50 text-slate-300'
                     }`}
                   >
                     {topic}
@@ -130,9 +120,7 @@ export const ICFESLevelCard = ({ level, index, totalLevels }: ICFESLevelCardProp
             <div>
               {isInProgress && (
                 <>
-                  <p className="mb-2 text-sm font-semibold text-white">
-                    Progreso: {level.progress}%
-                  </p>
+                  <p className="mb-2 text-sm font-semibold text-white">Progreso: {level.progress}%</p>
                   <div className="mb-4 h-3 overflow-hidden rounded-full border border-slate-600 bg-slate-700">
                     <div
                       className={`h-full bg-linear-to-r ${level.colorGradient}`}
@@ -157,9 +145,7 @@ export const ICFESLevelCard = ({ level, index, totalLevels }: ICFESLevelCardProp
                     <Icon name="lock" />
                     Bloqueado
                   </p>
-                  <p className="mt-1 text-xs text-slate-500">
-                    Completa el nivel anterior para desbloquear
-                  </p>
+                  <p className="mt-1 text-xs text-slate-500">Completa el nivel anterior para desbloquear</p>
                 </div>
               )}
             </div>
@@ -170,11 +156,7 @@ export const ICFESLevelCard = ({ level, index, totalLevels }: ICFESLevelCardProp
                 href={`/practica/icfes?nivel=${level.id}`}
                 className="group flex w-full items-center justify-center gap-2 rounded-lg bg-linear-to-r from-blue-600 to-blue-500 px-4 py-3 font-semibold text-white transition-all duration-300 hover:shadow-lg hover:shadow-blue-500/50"
               >
-                Continuar{' '}
-                <Icon
-                  name="arrow-right"
-                  className="transition-transform group-hover:translate-x-1"
-                />
+                Continuar <Icon name="arrow-right" className="transition-transform group-hover:translate-x-1" />
               </Link>
             )}
 
@@ -195,9 +177,7 @@ export const ICFESLevelCard = ({ level, index, totalLevels }: ICFESLevelCardProp
         <div className="flex justify-center py-2">
           <div
             className={`h-8 w-1 rounded-full ${
-              isCompleted
-                ? 'bg-linear-to-b from-green-600 to-green-600'
-                : 'bg-slate-700'
+              isCompleted ? 'bg-linear-to-b from-green-600 to-green-600' : 'bg-slate-700'
             }`}
           />
         </div>

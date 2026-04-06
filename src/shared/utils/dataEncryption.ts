@@ -13,13 +13,10 @@ export const generateKey = async (password: string) => {
   const data = encoder.encode(password);
 
   // Crear una clave a partir de la contraseña
-  const keyMaterial = await window.crypto.subtle.importKey(
-    'raw',
-    data,
-    { name: 'PBKDF2' },
-    false,
-    ['deriveBits', 'deriveKey']
-  );
+  const keyMaterial = await window.crypto.subtle.importKey('raw', data, { name: 'PBKDF2' }, false, [
+    'deriveBits',
+    'deriveKey',
+  ]);
 
   // Derivar una clave segura de la contraseña
   return await window.crypto.subtle.deriveKey(

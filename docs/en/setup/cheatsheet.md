@@ -4,11 +4,11 @@
 
 ### Development
 
-| Action              | Command      |
-| ------------------- | ------------ |
-| Start local server  | `pnpm dev`   |
-| Build project       | `pnpm build` |
-| Production preview  | `pnpm start` |
+| Action             | Command      |
+| ------------------ | ------------ |
+| Start local server | `pnpm dev`   |
+| Build project      | `pnpm build` |
+| Production preview | `pnpm start` |
 
 ### Web Deployment
 

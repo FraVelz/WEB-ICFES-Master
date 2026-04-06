@@ -28,10 +28,7 @@ export const ClasificatoriaPage = () => {
     const position = index + 1;
 
     // Zona de Ascenso
-    if (
-      currentRankInfo.promoteCount > 0 &&
-      position <= currentRankInfo.promoteCount
-    ) {
+    if (currentRankInfo.promoteCount > 0 && position <= currentRankInfo.promoteCount) {
       return {
         status: 'promote',
         icon: 'arrow-up',
@@ -42,10 +39,7 @@ export const ClasificatoriaPage = () => {
     }
 
     // Zona de Descenso
-    if (
-      currentRankInfo.demoteCount > 0 &&
-      position > totalUsers - currentRankInfo.demoteCount
-    ) {
+    if (currentRankInfo.demoteCount > 0 && position > totalUsers - currentRankInfo.demoteCount) {
       return {
         status: 'demote',
         icon: 'arrow-down',
@@ -79,10 +73,7 @@ export const ClasificatoriaPage = () => {
             <Icon name="trophy" className="text-yellow-400" />
             Clasificatoria Semanal
           </h1>
-          <p className="text-slate-400">
-            Compite con otros estudiantes y sube de rango. ¡Se actualiza cada
-            lunes!
-          </p>
+          <p className="text-slate-400">Compite con otros estudiantes y sube de rango. ¡Se actualiza cada lunes!</p>
         </div>
 
         {/* Rank Tabs */}
@@ -104,9 +95,7 @@ export const ClasificatoriaPage = () => {
         </div>
 
         {/* Rank Info Card */}
-        <div
-          className={`bg-linear-to-r ${currentRankInfo.color} mb-8 rounded-2xl p-px`}
-        >
+        <div className={`bg-linear-to-r ${currentRankInfo.color} mb-8 rounded-2xl p-px`}>
           <div className="rounded-2xl bg-slate-900/95 p-6 backdrop-blur-xl">
             <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
               <div className="flex items-center gap-4">
@@ -116,14 +105,9 @@ export const ClasificatoriaPage = () => {
                   {currentRankInfo.icon}
                 </div>
                 <div>
-                  <h2 className="text-2xl font-bold text-white">
-                    {currentRankInfo.label}
-                  </h2>
+                  <h2 className="text-2xl font-bold text-white">{currentRankInfo.label}</h2>
                   <p className="text-sm text-slate-400">
-                    {currentRankInfo.promoteCount > 0
-                      ? `Top ${currentRankInfo.promoteCount} suben`
-                      : 'Rango Máximo'}{' '}
-                    •
+                    {currentRankInfo.promoteCount > 0 ? `Top ${currentRankInfo.promoteCount} suben` : 'Rango Máximo'} •
                     {currentRankInfo.demoteCount > 0
                       ? ` Últimos ${currentRankInfo.demoteCount} bajan`
                       : ' Sin descenso'}
@@ -133,12 +117,8 @@ export const ClasificatoriaPage = () => {
 
               <div className="flex gap-4 text-center">
                 <div className="rounded-lg bg-slate-800/50 px-4 py-2">
-                  <div className="text-2xl font-bold text-white">
-                    {leaderboardData.length}
-                  </div>
-                  <div className="text-xs text-slate-400 uppercase">
-                    Competidores
-                  </div>
+                  <div className="text-2xl font-bold text-white">{leaderboardData.length}</div>
+                  <div className="text-xs text-slate-400 uppercase">Competidores</div>
                 </div>
               </div>
             </div>
@@ -149,18 +129,13 @@ export const ClasificatoriaPage = () => {
         <div className="space-y-3">
           {loading ? (
             <div className="py-12 text-center">
-              <Icon
-                name="spinner"
-                className="mb-4 animate-spin text-4xl text-cyan-400"
-              />
+              <Icon name="spinner" className="mb-4 animate-spin text-4xl text-cyan-400" />
               <p className="text-slate-400">Cargando clasificación...</p>
             </div>
           ) : error ? (
             <div className="rounded-2xl border border-red-500/20 bg-red-500/10 py-12 text-center">
               <div className="mb-4 text-4xl text-red-400">⚠️</div>
-              <h3 className="mb-2 text-xl font-bold text-white">
-                Error al cargar
-              </h3>
+              <h3 className="mb-2 text-xl font-bold text-white">Error al cargar</h3>
               <p className="px-4 text-slate-400">
                 {error?.message?.includes('index')
                   ? 'Estamos optimizando la base de datos. Por favor espera unos minutos.'
@@ -175,13 +150,7 @@ export const ClasificatoriaPage = () => {
               return (
                 <div
                   key={player.id}
-                  onClick={() =>
-                    router.push(
-                      isCurrentUser
-                        ? '/perfil'
-                        : `/perfil/public?userId=${player.id}`
-                    )
-                  }
+                  onClick={() => router.push(isCurrentUser ? '/perfil' : `/perfil/public?userId=${player.id}`)}
                   className={`group relative flex cursor-pointer items-center gap-4 rounded-xl border p-4 transition-all ${
                     isCurrentUser
                       ? 'border-cyan-500/50 bg-cyan-500/10 shadow-lg shadow-cyan-500/10'
@@ -189,9 +158,7 @@ export const ClasificatoriaPage = () => {
                   }`}
                 >
                   {/* Position */}
-                  <div className="w-8 text-center text-lg font-bold text-slate-300">
-                    {index + 1}
-                  </div>
+                  <div className="w-8 text-center text-lg font-bold text-slate-300">{index + 1}</div>
 
                   {/* Avatar */}
                   <div className="relative">
@@ -216,9 +183,7 @@ export const ClasificatoriaPage = () => {
                   {/* Info */}
                   <div className="min-w-0 flex-1">
                     <div className="flex items-center gap-2">
-                      <h3
-                        className={`truncate font-bold ${isCurrentUser ? 'text-cyan-400' : 'text-white'}`}
-                      >
+                      <h3 className={`truncate font-bold ${isCurrentUser ? 'text-cyan-400' : 'text-white'}`}>
                         {player.name || player.username || 'Usuario'}
                       </h3>
                       {isCurrentUser && (
@@ -227,9 +192,7 @@ export const ClasificatoriaPage = () => {
                         </span>
                       )}
                     </div>
-                    <div
-                      className={`flex items-center gap-1 text-xs ${style.color}`}
-                    >
+                    <div className={`flex items-center gap-1 text-xs ${style.color}`}>
                       <Icon name={style.icon} />
                       {style.label}
                     </div>
@@ -237,9 +200,7 @@ export const ClasificatoriaPage = () => {
 
                   {/* XP */}
                   <div className="text-right">
-                    <div className="text-xl font-bold text-white">
-                      {player.weeklyXP || 0} XP
-                    </div>
+                    <div className="text-xl font-bold text-white">{player.weeklyXP || 0} XP</div>
                     <div className="text-xs text-slate-500">Esta semana</div>
                   </div>
                 </div>
@@ -248,13 +209,8 @@ export const ClasificatoriaPage = () => {
           ) : (
             <div className="rounded-2xl border border-slate-800 bg-slate-900/50 py-12 text-center">
               <div className="mb-4 text-4xl">😴</div>
-              <h3 className="mb-2 text-xl font-bold text-white">
-                ¡Está muy tranquilo por aquí!
-              </h3>
-              <p className="text-slate-400">
-                Sé el primero en sumar puntos en la liga {currentRankInfo.label}
-                .
-              </p>
+              <h3 className="mb-2 text-xl font-bold text-white">¡Está muy tranquilo por aquí!</h3>
+              <p className="text-slate-400">Sé el primero en sumar puntos en la liga {currentRankInfo.label}.</p>
             </div>
           )}
         </div>

@@ -6,6 +6,7 @@ import { Icon } from '@/shared/components/Icon';
 import { EMAIL_MESSAGES } from '@/config/emailMessages';
 import { useAuth } from '@/context/AuthContext';
 import { supabase } from '@/config/supabase';
+import { mapSupabaseAuthError } from '@/utils/mapSupabaseAuthError';
 
 export const ResetPasswordPage = () => {
   const router = useRouter();
@@ -34,9 +35,7 @@ export const ResetPasswordPage = () => {
       setHasRecoverySession(!!session);
       setVerifying(false);
       if (!session) {
-        setError(
-          'Enlace de recuperación inválido o expirado. Solicita uno nuevo.'
-        );
+        setError('Enlace de recuperación inválido o expirado. Solicita uno nuevo.');
       }
     };
     checkSession();
@@ -83,10 +82,7 @@ export const ResetPasswordPage = () => {
       setSuccess(true);
       setTimeout(() => router.push('/login'), 3000);
     } catch (err) {
-      setError(
-        (err instanceof Error ? err.message : null) ||
-          EMAIL_MESSAGES.resetPasswordPage.errorGeneric
-      );
+      setError(mapSupabaseAuthError(err, EMAIL_MESSAGES.resetPasswordPage.errorGeneric));
     } finally {
       setIsLoading(false);
     }
@@ -122,11 +118,7 @@ export const ResetPasswordPage = () => {
           <div className="space-y-6 text-center">
             <div className="mb-6 flex justify-center">
               <div className="flex h-20 w-20 animate-pulse items-center justify-center rounded-full border border-green-500/50 bg-green-500/20">
-                <Icon
-                  name="check-circle"
-                  size="2xl"
-                  className="text-4xl text-green-400"
-                />
+                <Icon name="check-circle" size="2xl" className="text-4xl text-green-400" />
               </div>
             </div>
 
@@ -134,9 +126,7 @@ export const ResetPasswordPage = () => {
               <h1 className="mb-4 bg-linear-to-r from-green-400 via-cyan-400 to-blue-400 bg-clip-text text-3xl font-black text-transparent md:text-4xl">
                 {EMAIL_MESSAGES.resetPasswordPage.successTitle}
               </h1>
-              <p className="text-slate-400">
-                {EMAIL_MESSAGES.resetPasswordPage.successMessage}
-              </p>
+              <p className="text-slate-400">{EMAIL_MESSAGES.resetPasswordPage.successMessage}</p>
             </div>
 
             <Link
@@ -152,28 +142,19 @@ export const ResetPasswordPage = () => {
             <div className="mb-8 text-center">
               <div className="mb-4 flex justify-center">
                 <div className="flex h-16 w-16 items-center justify-center rounded-full border border-cyan-500/50 bg-cyan-500/20">
-                  <Icon
-                    name="lock"
-                    size="2xl"
-                    className="text-2xl text-cyan-400"
-                  />
+                  <Icon name="lock" size="2xl" className="text-2xl text-cyan-400" />
                 </div>
               </div>
               <h1 className="mb-4 bg-linear-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-3xl font-black text-transparent md:text-4xl">
                 {EMAIL_MESSAGES.resetPasswordPage.title}
               </h1>
-              <p className="text-slate-400">
-                {EMAIL_MESSAGES.resetPasswordPage.subtitle}
-              </p>
+              <p className="text-slate-400">{EMAIL_MESSAGES.resetPasswordPage.subtitle}</p>
             </div>
 
             {/* Error Message */}
             {error && (
               <div className="mb-6 flex items-start gap-3 rounded-lg border border-red-500/50 bg-red-500/20 p-4">
-                <Icon
-                  name="exclamation-circle"
-                  className="mt-0.5 shrink-0 text-red-400"
-                />
+                <Icon name="exclamation-circle" className="mt-0.5 shrink-0 text-red-400" />
                 <p className="text-sm text-red-400">{error}</p>
               </div>
             )}
@@ -182,25 +163,17 @@ export const ResetPasswordPage = () => {
             <form onSubmit={handleSubmit} className="space-y-6">
               {/* Password Field */}
               <div>
-                <label
-                  htmlFor="password"
-                  className="mb-2 block text-sm font-semibold"
-                >
+                <label htmlFor="password" className="mb-2 block text-sm font-semibold">
                   {EMAIL_MESSAGES.resetPasswordPage.newPasswordLabel}
                 </label>
                 <div className="relative">
-                  <Icon
-                    name="lock"
-                    className="absolute top-1/2 left-4 -translate-y-1/2 text-slate-400"
-                  />
+                  <Icon name="lock" className="absolute top-1/2 left-4 -translate-y-1/2 text-slate-400" />
                   <input
                     id="password"
                     type={showPassword ? 'text' : 'password'}
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    placeholder={
-                      EMAIL_MESSAGES.resetPasswordPage.passwordPlaceholder
-                    }
+                    placeholder={EMAIL_MESSAGES.resetPasswordPage.passwordPlaceholder}
                     className="w-full rounded-lg border border-slate-700 bg-slate-800/50 py-3 pr-10 pl-10 transition-all focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/30 focus:outline-none"
                   />
                   <button
@@ -215,25 +188,17 @@ export const ResetPasswordPage = () => {
 
               {/* Confirm Password Field */}
               <div>
-                <label
-                  htmlFor="confirmPassword"
-                  className="mb-2 block text-sm font-semibold"
-                >
+                <label htmlFor="confirmPassword" className="mb-2 block text-sm font-semibold">
                   {EMAIL_MESSAGES.resetPasswordPage.confirmPasswordLabel}
                 </label>
                 <div className="relative">
-                  <Icon
-                    name="lock"
-                    className="absolute top-1/2 left-4 -translate-y-1/2 text-slate-400"
-                  />
+                  <Icon name="lock" className="absolute top-1/2 left-4 -translate-y-1/2 text-slate-400" />
                   <input
                     id="confirmPassword"
                     type={showConfirmPassword ? 'text' : 'password'}
                     value={confirmPassword}
                     onChange={(e) => setConfirmPassword(e.target.value)}
-                    placeholder={
-                      EMAIL_MESSAGES.resetPasswordPage.passwordPlaceholder
-                    }
+                    placeholder={EMAIL_MESSAGES.resetPasswordPage.passwordPlaceholder}
                     className="w-full rounded-lg border border-slate-700 bg-slate-800/50 py-3 pr-10 pl-10 transition-all focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/30 focus:outline-none"
                   />
                   <button
@@ -255,23 +220,13 @@ export const ResetPasswordPage = () => {
                   <li className={password.length >= 6 ? 'text-green-400' : ''}>
                     ✓ {EMAIL_MESSAGES.resetPasswordPage.requirement1}
                   </li>
-                  <li
-                    className={/[A-Z]/.test(password) ? 'text-green-400' : ''}
-                  >
+                  <li className={/[A-Z]/.test(password) ? 'text-green-400' : ''}>
                     ✓ {EMAIL_MESSAGES.resetPasswordPage.requirement2}
                   </li>
-                  <li
-                    className={/[0-9]/.test(password) ? 'text-green-400' : ''}
-                  >
+                  <li className={/[0-9]/.test(password) ? 'text-green-400' : ''}>
                     ✓ {EMAIL_MESSAGES.resetPasswordPage.requirement3}
                   </li>
-                  <li
-                    className={
-                      password === confirmPassword && password
-                        ? 'text-green-400'
-                        : ''
-                    }
-                  >
+                  <li className={password === confirmPassword && password ? 'text-green-400' : ''}>
                     ✓ {EMAIL_MESSAGES.resetPasswordPage.requirement4}
                   </li>
                 </ul>

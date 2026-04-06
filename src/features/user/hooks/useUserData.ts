@@ -3,21 +3,17 @@
  */
 import { useState, useEffect, useCallback } from 'react';
 import { useAuth } from '@/context/AuthContext';
-import API_CONFIG from '@/services/api.config';
-import UserSupabaseService from '@/services/supabase/UserSupabaseService';
-import {
-  getUserProfile,
-  updateUserProfile,
-  updateUsername,
-  updateUserBio,
-  updateProfileImage as updateProfileImageUtil,
-  addVirtualMoney,
-  removeVirtualMoney,
-  getVirtualMoney,
-} from '@/shared/utils/userProfile';
-
 import type { MappedUser } from '@/services/supabase/UserSupabaseService';
 import type { UserProfile } from '@/shared/utils/userProfile';
+import {
+  loadUserProfile,
+  patchUserProfile,
+  setUsername,
+  setUserBio,
+  setUserProfileImage,
+  addUserMoney,
+  spendUserMoney,
+} from '@/services/persistence';
 
 export function useUserData() {
   const { user } = useAuth();
@@ -34,22 +30,8 @@ export function useUserData() {
 
     setLoading(true);
     try {
-      if (API_CONFIG.MODE === 'supabase') {
-        const profile = await UserSupabaseService.getByUserId(user.uid);
-        if (!profile) {
-          await UserSupabaseService.createUser(user.uid, {
-            email: user.email,
-            displayName: user.displayName,
-            username: user.displayName,
-          });
-          const created = await UserSupabaseService.getByUserId(user.uid);
-          setUserData(created);
-        } else {
-          setUserData(profile);
-        }
-      } else {
-        setUserData(getUserProfile());
-      }
+      const data = await loadUserProfile(user.uid, user.email, user.displayName);
+      setUserData(data);
       setError(null);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Error cargando datos');
@@ -66,15 +48,7 @@ export function useUserData() {
   const updateProfile = useCallback(
     async (updates: Partial<UserProfile> | Record<string, unknown>) => {
       if (!user?.uid) return null;
-      if (API_CONFIG.MODE === 'supabase') {
-        const updated = await UserSupabaseService.updateProfile(
-          user.uid,
-          updates
-        );
-        setUserData(updated);
-        return updated;
-      }
-      const updated = updateUserProfile(updates);
+      const updated = await patchUserProfile(user.uid, updates);
       setUserData(updated);
       return updated;
     },
@@ -83,64 +57,40 @@ export function useUserData() {
 
   const updateProfileUsername = useCallback(
     async (username: string) => {
-      if (API_CONFIG.MODE === 'supabase') {
-        return updateProfile({ username });
-      }
-      const updated = await updateUsername(username);
-      setUserData(getUserProfile());
+      if (!user?.uid) return null;
+      const updated = await setUsername(user.uid, username);
+      setUserData(updated);
       return updated;
     },
-    [updateProfile]
+    [user?.uid]
   );
 
   const updateBio = useCallback(
     async (bio: string) => {
-      if (API_CONFIG.MODE === 'supabase') {
-        return updateProfile({ bio });
-      }
-      const updated = await updateUserBio(bio);
-      setUserData(getUserProfile());
+      if (!user?.uid) return null;
+      const updated = await setUserBio(user.uid, bio);
+      setUserData(updated);
       return updated;
     },
-    [updateProfile]
+    [user?.uid]
   );
 
   const updateProfileImage = useCallback(
     async (file: File | null) => {
-      if (API_CONFIG.MODE === 'supabase') {
-        const reader = new FileReader();
-        return new Promise((resolve, reject) => {
-          reader.onload = async () => {
-            if (!file) return updateProfile({ profileImage: null });
-            const updated = await UserSupabaseService.updateProfile(user!.uid, {
-              profileImage: reader.result,
-            });
-            setUserData(updated);
-            resolve(updated);
-          };
-          reader.onerror = () => reject(new Error('Error al leer la imagen'));
-          reader.readAsDataURL(file || new Blob());
-        });
-      }
-      const updated = await updateProfileImageUtil(file);
-      setUserData(getUserProfile());
+      if (!user?.uid) return null;
+      const updated = await setUserProfileImage(user.uid, file);
+      setUserData(updated);
       return updated;
     },
-    [user?.uid, updateProfile]
+    [user?.uid]
   );
 
   const addMoney = useCallback(
     async (amount: number) => {
       if (!user?.uid) return 0;
-      if (API_CONFIG.MODE === 'supabase') {
-        await UserSupabaseService.updateVirtualMoney(user.uid, amount);
-        const updated = await UserSupabaseService.getByUserId(user.uid);
-        setUserData(updated);
-        return updated?.virtualMoney ?? 0;
-      }
-      addVirtualMoney(amount);
-      setUserData(getUserProfile());
-      return getVirtualMoney();
+      const updated = await addUserMoney(user.uid, amount);
+      setUserData(updated);
+      return updated?.virtualMoney ?? 0;
     },
     [user?.uid]
   );
@@ -148,20 +98,9 @@ export function useUserData() {
   const spendMoney = useCallback(
     async (amount: number) => {
       if (!user?.uid) return 0;
-      if (API_CONFIG.MODE === 'supabase') {
-        const profile = await UserSupabaseService.getByUserId(user.uid);
-        const current = profile?.virtualMoney ?? 0;
-        if (current < amount) throw new Error('Monedas insuficientes');
-        await UserSupabaseService.updateProfile(user.uid, {
-          virtualMoney: current - amount,
-        });
-        const updated = await UserSupabaseService.getByUserId(user.uid);
-        setUserData(updated);
-        return updated?.virtualMoney ?? 0;
-      }
-      removeVirtualMoney(amount);
-      setUserData(getUserProfile());
-      return getVirtualMoney();
+      const updated = await spendUserMoney(user.uid, amount);
+      setUserData(updated);
+      return updated?.virtualMoney ?? 0;
     },
     [user?.uid]
   );

@@ -10,50 +10,26 @@ export const Geometria = () => {
     topics: [
       {
         name: 'Triángulos',
-        description:
-          'Propiedades, clasificación y cálculos con triángulos en el plano.',
+        description: 'Propiedades, clasificación y cálculos con triángulos en el plano.',
         subtopics: [
           'Clasificación por lados (equilátero, isósceles, escaleno)',
           'Clasificación por ángulos (acutángulo, obtusángulo, rectángulo)',
           'Teorema de Pitágoras',
           'Áreas y perímetros',
         ],
-        examples: [
-          'Triángulo rectángulo: a² + b² = c²',
-          'Área = (base × altura) / 2',
-          'Perímetro = a + b + c',
-        ],
+        examples: ['Triángulo rectángulo: a² + b² = c²', 'Área = (base × altura) / 2', 'Perímetro = a + b + c'],
       },
       {
         name: 'Círculos',
-        description:
-          'Elementos del círculo, circunferencia y cálculos de área.',
-        subtopics: [
-          'Radio, diámetro, cuerda',
-          'Circunferencia y arco',
-          'Área del círculo',
-          'Sectores y segmentos',
-        ],
-        examples: [
-          'Circunferencia = 2πr',
-          'Área = πr²',
-          'Diámetro = 2 × radio',
-        ],
+        description: 'Elementos del círculo, circunferencia y cálculos de área.',
+        subtopics: ['Radio, diámetro, cuerda', 'Circunferencia y arco', 'Área del círculo', 'Sectores y segmentos'],
+        examples: ['Circunferencia = 2πr', 'Área = πr²', 'Diámetro = 2 × radio'],
       },
       {
         name: 'Volúmenes',
         description: 'Cálculo de volúmenes para sólidos geométricos comunes.',
-        subtopics: [
-          'Prismas y paralelepípedos',
-          'Cilindros',
-          'Esferas',
-          'Conos y pirámides',
-        ],
-        examples: [
-          'Cubo: V = a³',
-          'Cilindro: V = πr²h',
-          'Esfera: V = (4/3)πr³',
-        ],
+        subtopics: ['Prismas y paralelepípedos', 'Cilindros', 'Esferas', 'Conos y pirámides'],
+        examples: ['Cubo: V = a³', 'Cilindro: V = πr²h', 'Esfera: V = (4/3)πr³'],
       },
     ],
     keyFormulas: [
@@ -113,22 +89,16 @@ export const Geometria = () => {
               key={idx}
               className="rounded-2xl border border-white/10 bg-white/5 p-8 backdrop-blur-sm transition-all hover:bg-white/10"
             >
-              <h2 className="mb-4 text-3xl font-bold text-yellow-400">
-                {topic.name}
-              </h2>
+              <h2 className="mb-4 text-3xl font-bold text-yellow-400">{topic.name}</h2>
               <p className="mb-6 text-lg text-gray-300">{topic.description}</p>
 
               <div className="grid gap-8 md:grid-cols-2">
                 <div>
-                  <h3 className="mb-4 text-xl font-semibold text-blue-400">
-                    Subtemas
-                  </h3>
+                  <h3 className="mb-4 text-xl font-semibold text-blue-400">Subtemas</h3>
                   <ul className="space-y-3">
                     {topic.subtopics.map((sub, i) => (
                       <li key={i} className="flex items-start gap-3">
-                        <span className="mt-1 font-bold text-yellow-400">
-                          →
-                        </span>
+                        <span className="mt-1 font-bold text-yellow-400">→</span>
                         <span className="text-gray-300">{sub}</span>
                       </li>
                     ))}
@@ -136,18 +106,11 @@ export const Geometria = () => {
                 </div>
 
                 <div>
-                  <h3 className="mb-4 text-xl font-semibold text-green-400">
-                    Ejemplos
-                  </h3>
+                  <h3 className="mb-4 text-xl font-semibold text-green-400">Ejemplos</h3>
                   <div className="space-y-3">
                     {topic.examples.map((example, i) => (
-                      <div
-                        key={i}
-                        className="rounded border-l-4 border-green-400 bg-gray-900/50 p-4"
-                      >
-                        <code className="text-sm text-green-300">
-                          {example}
-                        </code>
+                      <div key={i} className="rounded border-l-4 border-green-400 bg-gray-900/50 p-4">
+                        <code className="text-sm text-green-300">{example}</code>
                       </div>
                     ))}
                   </div>
@@ -158,27 +121,18 @@ export const Geometria = () => {
         </div>
 
         <section className="mb-16">
-          <h2 className="mb-8 text-3xl font-bold text-cyan-400">
-            Fórmulas Clave
-          </h2>
+          <h2 className="mb-8 text-3xl font-bold text-cyan-400">Fórmulas Clave</h2>
           <div className="grid gap-4 md:grid-cols-2">
             {content.keyFormulas.map((formula, idx) => (
-              <div
-                key={idx}
-                className="rounded-xl border border-cyan-500/30 bg-cyan-500/10 p-6"
-              >
-                <code className="block text-center text-lg text-cyan-300">
-                  {formula}
-                </code>
+              <div key={idx} className="rounded-xl border border-cyan-500/30 bg-cyan-500/10 p-6">
+                <code className="block text-center text-lg text-cyan-300">{formula}</code>
               </div>
             ))}
           </div>
         </section>
 
         <section className="mb-16">
-          <h2 className="mb-8 text-3xl font-bold text-purple-400">
-            Ejercicios de Práctica
-          </h2>
+          <h2 className="mb-8 text-3xl font-bold text-purple-400">Ejercicios de Práctica</h2>
           <div className="space-y-4">
             {content.practiceExercises.map((exercise, idx) => (
               <div
@@ -186,9 +140,7 @@ export const Geometria = () => {
                 className="rounded-xl border border-white/10 bg-white/5 p-6 transition-all hover:bg-white/10"
               >
                 <div className="flex items-start gap-4">
-                  <span className="min-w-fit text-xl font-bold text-purple-400">
-                    {idx + 1}.
-                  </span>
+                  <span className="min-w-fit text-xl font-bold text-purple-400">{idx + 1}.</span>
                   <p className="text-gray-300">{exercise}</p>
                 </div>
               </div>

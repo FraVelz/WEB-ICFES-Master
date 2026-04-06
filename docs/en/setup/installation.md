@@ -6,10 +6,10 @@ Step-by-step guide to configure the project's local environment.
 
 ## Requirements
 
-| Tool     | Minimum version |
-| -------- | --------------- |
-| **Node.js** | 18+          |
-| **pnpm**   | 8+            |
+| Tool        | Minimum version |
+| ----------- | --------------- |
+| **Node.js** | 18+             |
+| **pnpm**    | 8+              |
 
 ```bash
 node -v   # Verify Node

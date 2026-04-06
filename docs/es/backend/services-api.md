@@ -81,9 +81,9 @@ Servicios que conectan directamente con tablas de PostgreSQL en Supabase:
 | ------------------------------- | ------------------- | -------------------------------------------------- |
 | **UserSupabaseService**         | `users`             | Perfil, username, bio, virtualMoney, profileImage  |
 | **ProgressSupabaseService**     | `user_progress`     | totalAttempts, totalCorrect, streakDays, areaStats |
-| **GamificationSupabaseService** | `user_gamification` | XP, level, totalCoins, badges, achievements       |
-| **ExamSupabaseService**         | `exam_results`      | Exámenes completados, scores, respuestas          |
-| **LearningSupabaseService**     | `learning_content`  | Lecciones por área, contenido, quizzes            |
+| **GamificationSupabaseService** | `user_gamification` | XP, level, totalCoins, badges, achievements        |
+| **ExamSupabaseService**         | `exam_results`      | Exámenes completados, scores, respuestas           |
+| **LearningSupabaseService**     | `learning_content`  | Lecciones por área, contenido, quizzes             |
 
 ### 5. **GamificationServiceAdapter**
 
@@ -96,8 +96,8 @@ Servicios que conectan directamente con tablas de PostgreSQL en Supabase:
 | Feature      | Servicio                | Descripción                                                                          |
 | ------------ | ----------------------- | ------------------------------------------------------------------------------------ |
 | **user**     | UserService             | Extiende BaseService. useUserData usa UserSupabaseService o utils                    |
-| **progress** | ProgressService         | Extiende BaseService. useProgress usa ProgressSupabaseService o progressStorage       |
-| **logros**   | GamificationService     | Extiende BaseService. useGamification usa GamificationSupabaseService o localStorage  |
+| **progress** | ProgressService         | Extiende BaseService. useProgress usa ProgressSupabaseService o progressStorage      |
+| **logros**   | GamificationService     | Extiende BaseService. useGamification usa GamificationSupabaseService o localStorage |
 | **logros**   | AchievementService      | Lógica de logros desbloqueables                                                      |
 | **exam**     | ExamService             | Extiende BaseService. useExam usa ExamSupabaseService o progressStorage              |
 | **exam**     | ExamDataService         | Carga de preguntas                                                                   |
@@ -106,7 +106,7 @@ Servicios que conectan directamente con tablas de PostgreSQL en Supabase:
 | **learning** | LearningMaterialService | Material de estudio                                                                  |
 | **store**    | SubscriptionPlanService | Planes (localStorage por ahora)                                                      |
 | **store**    | PlanScheduleService     | Verificación de planes                                                               |
-| **auth**     | AuthService             | Verificación de códigos reset (local)                                                 |
+| **auth**     | AuthService             | Verificación de códigos reset (local)                                                |
 
 ---
 
@@ -117,7 +117,8 @@ Los hooks abstraen la lógica y seleccionan el servicio según `API_CONFIG.MODE`
 ### **useUserData()**
 
 ```javascript
-const { user, loading, updateProfile, updateUsername, updateBio, updateProfileImage, addMoney, spendMoney, refresh } = useUserData();
+const { user, loading, updateProfile, updateUsername, updateBio, updateProfileImage, addMoney, spendMoney, refresh } =
+  useUserData();
 ```
 
 - **Supabase**: UserSupabaseService
@@ -135,7 +136,8 @@ const { progress, areaStats, recommendations, attemptHistory, resetProgress, ref
 ### **useGamification(userId)**
 
 ```javascript
-const { achievements, totalXP, level, coins, currentStreak, updateAchievementProgress, refreshData } = useGamification(userId);
+const { achievements, totalXP, level, coins, currentStreak, updateAchievementProgress, refreshData } =
+  useGamification(userId);
 ```
 
 - **Supabase**: GamificationSupabaseService
@@ -174,7 +176,7 @@ const { exam, getUserExams, resetUserExams, refresh } = useExam(examId);
 | ------------------ | ----- | --------------------- |
 | user_id            | uuid  | FK a users            |
 | total_attempts     | int   | Intentos totales      |
-| total_correct      | int   | Respuestas correctas |
+| total_correct      | int   | Respuestas correctas  |
 | percentage         | float | Porcentaje            |
 | streak_days        | int   | Días de racha         |
 | area_stats         | jsonb | Estadísticas por área |
@@ -210,23 +212,23 @@ const { exam, getUserExams, resetUserExams, refresh } = useExam(examId);
 
 ### `learning_content`
 
-| Columna     | Tipo  | Descripción                                 |
-| ----------- | ----- | ------------------------------------------- |
-| id          | uuid  | ID único (auto-generado)                    |
+| Columna     | Tipo  | Descripción                                                                        |
+| ----------- | ----- | ---------------------------------------------------------------------------------- |
+| id          | uuid  | ID único (auto-generado)                                                           |
 | area        | text  | Área: `matematicas`, `lectura_critica`, `sociales`, `ciencias_naturales`, `ingles` |
-| order_index | int   | Orden de lecciones (1, 2, 3...)             |
-| published   | bool  | `true` para mostrar, `false` para ocultar   |
-| content     | jsonb | Contenido (title, summary, body, questions, quiz) |
+| order_index | int   | Orden de lecciones (1, 2, 3...)                                                    |
+| published   | bool  | `true` para mostrar, `false` para ocultar                                          |
+| content     | jsonb | Contenido (title, summary, body, questions, quiz)                                  |
 
 **Mapeo de áreas** (app → BD):
 
-| Área en la App (ID)  | Valor en BD          |
-| -------------------- | -------------------- |
-| `lectura-critica`    | `lectura_critica`    |
-| `matematicas`        | `matematicas`        |
-| `sociales-ciudadanas`| `sociales`           |
-| `ciencias-naturales` | `ciencias_naturales` |
-| `ingles`             | `ingles`             |
+| Área en la App (ID)   | Valor en BD          |
+| --------------------- | -------------------- |
+| `lectura-critica`     | `lectura_critica`    |
+| `matematicas`         | `matematicas`        |
+| `sociales-ciudadanas` | `sociales`           |
+| `ciencias-naturales`  | `ciencias_naturales` |
+| `ingles`              | `ingles`             |
 
 ---
 
@@ -255,14 +257,14 @@ const { exam, getUserExams, resetUserExams, refresh } = useExam(examId);
 }
 ```
 
-| Campo     | Tipo   | Obligatorio | Descripción                                      |
-| --------- | ------ | ----------- | ------------------------------------------------ |
-| title     | string | Sí          | Título visible de la lección                     |
-| summary   | string | No          | Breve descripción                                |
+| Campo     | Tipo   | Obligatorio | Descripción                                            |
+| --------- | ------ | ----------- | ------------------------------------------------------ |
+| title     | string | Sí          | Título visible de la lección                           |
+| summary   | string | No          | Breve descripción                                      |
 | body      | string | No          | Contenido en Markdown (se renderiza con ReactMarkdown) |
-| type      | string | No          | `lesson` por defecto                              |
-| questions | array  | No          | Preguntas del quiz (formato 1, ver abajo)        |
-| quiz      | object | No          | Quiz asociado (formatos 2 o 3, ver abajo)        |
+| type      | string | No          | `lesson` por defecto                                   |
+| questions | array  | No          | Preguntas del quiz (formato 1, ver abajo)              |
+| quiz      | object | No          | Quiz asociado (formatos 2 o 3, ver abajo)              |
 
 ### Formatos de quiz soportados
 
@@ -325,13 +327,13 @@ El componente `LessonQuizModal` acepta **tres formatos** (prioridad de uso):
 
 ### Campos de preguntas y opciones
 
-| Campo         | Tipo   | Descripción                                      |
-|---------------|--------|--------------------------------------------------|
-| question      | string | Texto de la pregunta (también acepta `text`)     |
-| options       | array  | Opciones: `{id, text}` o array de strings        |
-| correctAnswer | string | ID de la opción correcta (a, b, c, d)            |
-| correct_answer| number | Índice de la opción correcta (0, 1, 2...)        |
-| explanation   | string | Explicación opcional tras responder              |
+| Campo          | Tipo   | Descripción                                  |
+| -------------- | ------ | -------------------------------------------- |
+| question       | string | Texto de la pregunta (también acepta `text`) |
+| options        | array  | Opciones: `{id, text}` o array de strings    |
+| correctAnswer  | string | ID de la opción correcta (a, b, c, d)        |
+| correct_answer | number | Índice de la opción correcta (0, 1, 2...)    |
+| explanation    | string | Explicación opcional tras responder          |
 
 Las opciones se normalizan automáticamente: si son strings, se asignan ids `a`, `b`, `c`, `d`.
 
@@ -421,7 +423,7 @@ import {
   AchievementService,
   TestResultService,
   BADGES,
-  LEVELS
+  LEVELS,
 } from '@/services';
 
 import GamificationServiceAdapter from '@/services/GamificationServiceAdapter';

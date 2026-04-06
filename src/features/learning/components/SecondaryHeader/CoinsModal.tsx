@@ -35,21 +35,14 @@ export const CoinsModal = ({ isOpen, onClose, coins = 0 }: CoinsModalProps) => {
               <Icon name="coins" className="text-yellow-400" />
               Mis Monedas
             </h2>
-            <button
-              onClick={onClose}
-              className="cursor-pointer text-slate-500 hover:text-white"
-            >
+            <button onClick={onClose} className="cursor-pointer text-slate-500 hover:text-white">
               <Icon name="times" />
             </button>
           </div>
 
           <div className="rounded-xl border border-slate-700 bg-slate-800/50 p-4 text-center">
-            <div className="mb-1 text-4xl font-bold text-yellow-400">
-              {coins}
-            </div>
-            <div className="text-sm font-medium text-slate-400">
-              Monedas disponibles
-            </div>
+            <div className="mb-1 text-4xl font-bold text-yellow-400">{coins}</div>
+            <div className="text-sm font-medium text-slate-400">Monedas disponibles</div>
           </div>
         </div>
       </div>

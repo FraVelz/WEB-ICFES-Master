@@ -15,18 +15,12 @@ export interface MaterialsGridProps {
   onTopicToggle: (topic: string) => void;
 }
 
-export const MaterialsGrid = ({
-  filteredMaterials,
-  areaIcons,
-  selectedTopics,
-  onTopicToggle,
-}: MaterialsGridProps) => {
+export const MaterialsGrid = ({ filteredMaterials, areaIcons, selectedTopics, onTopicToggle }: MaterialsGridProps) => {
   if (Object.keys(filteredMaterials).length === 0) {
     return (
       <div className="py-20 text-center">
         <p className="mb-4 text-2xl text-gray-400">
-          No se encontraron materiales que coincidan con los filtros
-          seleccionados
+          No se encontraron materiales que coincidan con los filtros seleccionados
         </p>
       </div>
     );
@@ -37,10 +31,7 @@ export const MaterialsGrid = ({
       {Object.entries(filteredMaterials).map(([area, materials]: [string, LearningMaterial[]]) => (
         <div key={area} className="grid grid-cols-1 gap-6 md:grid-cols-2">
           <h2 className="flex items-center gap-3 text-3xl font-bold text-white md:text-4xl">
-            <Icon
-              name={areaIcons[area]?.icon ?? 'book'}
-              className={areaIcons[area]?.color ?? 'text-gray-400'}
-            />
+            <Icon name={areaIcons[area]?.icon ?? 'book'} className={areaIcons[area]?.color ?? 'text-gray-400'} />
             {areaIcons[area]?.label ?? area}
           </h2>
 
@@ -66,9 +57,7 @@ export const MaterialsGrid = ({
                 </div>
               </div>
 
-              <p className="mb-4 text-sm leading-relaxed text-gray-300">
-                {material.description}
-              </p>
+              <p className="mb-4 text-sm leading-relaxed text-gray-300">{material.description}</p>
 
               <div className="mb-4 grid grid-cols-2 gap-4 text-xs text-gray-400">
                 <div className="flex items-center gap-2">
