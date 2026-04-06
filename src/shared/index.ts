@@ -1,4 +1,4 @@
-// Índice de la capa shared
+// Shared layer barrel export
 export * from './components';
 export * from './utils';
 export * from './constants';

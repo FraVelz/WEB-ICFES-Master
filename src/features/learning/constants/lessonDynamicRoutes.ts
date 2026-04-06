@@ -1,5 +1,5 @@
 /**
- * Rutas `/lessons/[area]/[topic]` alineadas con `generateStaticParams` y la tabla `lessons.slug` (`area/topic`).
+ * `/lessons/[area]/[topic]` pairs aligned with `generateStaticParams` and `lessons.slug` (`area/topic`).
  */
 export const LESSON_ROUTE_PAIRS = [
   { area: 'matematicas', topic: 'algebra' },
@@ -24,7 +24,7 @@ export const LESSON_ROUTE_PAIRS = [
   { area: 'sociales', topic: 'filosofia' },
 ] as const;
 
-/** ID de área en la ruta de aprendizaje (header) → segmento de URL en `/lessons/...` */
+/** Roadmap area id (header) → `/lessons/...` URL segment */
 export const ROADMAP_AREA_TO_LESSON_AREA: Record<string, string> = {
   matematicas: 'matematicas',
   'lectura-critica': 'lenguaje',

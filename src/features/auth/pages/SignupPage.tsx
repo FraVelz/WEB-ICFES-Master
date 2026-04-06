@@ -29,7 +29,7 @@ export const SignupPage = () => {
   const { signup } = useAuth();
   const router = useRouter();
 
-  // Cargar respuestas del onboarding si existen
+  // Prefill from onboarding session when present
   useEffect(() => {
     const answers = sessionStorage.getItem('onboardingAnswers');
     if (answers) {
@@ -37,7 +37,7 @@ export const SignupPage = () => {
     }
   }, []);
 
-  // Validar contraseña en tiempo real
+  // Live password rule checks
   const validatePassword = (pass: string) => {
     setValidations({
       minLength: pass.length >= 6,

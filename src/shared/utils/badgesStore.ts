@@ -1,11 +1,11 @@
-// Sistema de insignias y tienda virtual
+// Badge shop (virtual currency)
 import { getVirtualMoney, removeVirtualMoney } from './userProfile';
 
 const STORAGE_KEY = 'icfes_badges_store';
 
 /**
- * Definición de insignias disponibles en la tienda
- * Cada insignia está bloqueada hasta que compres la anterior
+ * Shop catalog
+ * Higher tiers stay locked until the previous badge is purchased
  */
 export const BADGES_CATALOG = [
   {
@@ -99,7 +99,7 @@ export const BADGES_CATALOG = [
 ];
 
 /**
- * Obtiene las insignias compradas del usuario
+ * Purchased badge IDs
  */
 export const getUserBadges = () => {
   const stored = localStorage.getItem(STORAGE_KEY);
@@ -107,7 +107,7 @@ export const getUserBadges = () => {
 };
 
 /**
- * Obtiene las insignias compradas con sus detalles
+ * Purchased badges with full catalog rows
  */
 export const getUserBadgesWithDetails = () => {
   const purchasedIds = getUserBadges();
@@ -115,32 +115,31 @@ export const getUserBadgesWithDetails = () => {
 };
 
 /**
- * Verifica si una insignia está comprada
+ * Whether the user already owns a badge
  */
 export const isBadgePurchased = (badgeId: string | number) => {
   return getUserBadges().includes(String(badgeId));
 };
 
 /**
- * Verifica si una insignia puede ser comprada
- * (si ya tiene la insignia anterior o no requiere ninguna)
+ * Purchase eligibility (previous tier satisfied when required)
  */
 export const canPurchaseBadge = (badgeId: string | number) => {
   const badge = BADGES_CATALOG.find((b) => String(b.id) === String(badgeId));
   if (!badge) return false;
 
-  // Si ya la compró
+  // Already owned
   if (isBadgePurchased(badgeId)) return false;
 
-  // Si no requiere insignia previa, puede comprar
+  // Starter tier
   if (badge.requiresPrevious === null) return true;
 
-  // Si requiere previa, verificar que la tenga
+  // Require previous tier
   return isBadgePurchased(badge.requiresPrevious);
 };
 
 /**
- * Obtiene todas las insignias disponibles con su estado
+ * Full catalog with purchased / locked flags
  */
 export const getAllBadgesWithStatus = () => {
   return BADGES_CATALOG.map((badge) => ({
@@ -152,7 +151,7 @@ export const getAllBadgesWithStatus = () => {
 };
 
 /**
- * Compra una insignia
+ * Purchase a badge (deducts virtual currency)
  */
 export const purchaseBadge = (badgeId: string | number) => {
   const badge = BADGES_CATALOG.find((b) => String(b.id) === String(badgeId));
@@ -160,27 +159,27 @@ export const purchaseBadge = (badgeId: string | number) => {
     throw new Error('Insignia no encontrada');
   }
 
-  // Verificar si ya está comprada
+  // Duplicate check
   if (isBadgePurchased(badgeId)) {
     throw new Error('Ya has comprado esta insignia');
   }
 
-  // Verificar si puede comprarla
+  // Eligibility
   if (!canPurchaseBadge(badgeId)) {
     throw new Error('Debes comprar la insignia anterior primero');
   }
 
-  // Obtener dinero del usuario
+  // Balance check
   const currentMoney = getVirtualMoney();
 
   if (currentMoney < badge.price) {
     throw new Error(`No tienes suficiente dinero. Necesitas ${badge.price} y tienes ${currentMoney}`);
   }
 
-  // Restar dinero
+  // Debit
   removeVirtualMoney(badge.price);
 
-  // Agregar insignia
+  // Record purchase
   const badges = getUserBadges();
   badges.push(badgeId);
   localStorage.setItem(STORAGE_KEY, JSON.stringify(badges));
@@ -189,7 +188,7 @@ export const purchaseBadge = (badgeId: string | number) => {
 };
 
 /**
- * Limpia todas las insignias (para testing)
+ * Reset purchases (testing)
  */
 export const clearBadges = () => {
   localStorage.removeItem(STORAGE_KEY);

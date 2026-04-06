@@ -1,7 +1,4 @@
-/**
- * Servicio de autenticación - Versión local
- * Preparado para futura implementación de backend
- */
+/** Auth helpers — local stub (extend when backend exists) */
 class AuthService {
   async verifyResetCode(_code: string): Promise<boolean> {
     return true;

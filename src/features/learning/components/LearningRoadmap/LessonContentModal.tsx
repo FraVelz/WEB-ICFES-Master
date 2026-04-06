@@ -114,7 +114,7 @@ export const LessonContentModal = ({
 
   return (
     <div ref={modalRef} className="fixed inset-0 z-60 flex h-full w-full flex-col bg-slate-950">
-      {/* Header compacto */}
+      {/* Compact header */}
       <div
         className={cn(
           'flex shrink-0 items-center justify-between border-b border-slate-800/80 bg-slate-900/90',
@@ -137,7 +137,7 @@ export const LessonContentModal = ({
         <div className="w-14 sm:w-20" />
       </div>
 
-      {/* Barra de progreso */}
+      {/* Progress bar */}
       <div className="h-1.5 shrink-0 bg-slate-800/80">
         <div
           className={cn('h-full bg-linear-to-r transition-all duration-300 ease-out', gradientClass)}
@@ -145,19 +145,19 @@ export const LessonContentModal = ({
         />
       </div>
 
-      {/* Contenido principal */}
+      {/* Main body */}
       <div className="min-h-0 flex-1 overflow-x-hidden overflow-y-auto scroll-smooth">
         <div className="mx-auto max-w-2xl px-3 py-4 pb-28 sm:px-6 sm:py-6">
-          {/* Bloque Duolingo: Mascota + globo de diálogo */}
+          {/* Duolingo-style: mascot + speech bubble */}
           <div className="sm:items-flex-start mb-6 flex flex-col items-center gap-4 sm:mb-8 sm:flex-row sm:justify-center sm:gap-6">
-            {/* Mascota con animación flotante tipo Duolingo */}
+            {/* Floating mascot */}
             <div className="shrink-0 sm:order-2" style={{ animation: 'float 3s ease-in-out infinite' }}>
               <MascotaCircle src={mascotSrc} alt="Mascota" size="md" centered={false} />
             </div>
 
-            {/* Globo de diálogo - la mascota "dice" el título o subtítulo */}
+            {/* Speech bubble (title / subtitle) */}
             <div className="relative w-full max-w-sm sm:order-1 sm:max-w-md sm:flex-1">
-              {/* Cola del globo: móvil abajo, desktop derecha apuntando a mascota */}
+              {/* Bubble tail: bottom on mobile, right on desktop */}
               <div
                 className={cn(
                   'absolute top-full left-1/2 h-0 w-0 -translate-x-1/2 -translate-y-px border-[10px]',
@@ -179,14 +179,14 @@ export const LessonContentModal = ({
             </div>
           </div>
 
-          {/* Indicador de sección */}
+          {/* Section indicator */}
           <div className="mb-4 flex justify-center sm:mb-6">
             <span className="rounded-full bg-slate-800/80 px-3 py-1 text-xs font-semibold tracking-wider text-slate-400 uppercase">
               {isExamStep ? 'Examen' : `${currentSection + 1} de ${sections.length}`}
             </span>
           </div>
 
-          {/* Contenido de la sección actual o bloque de examen */}
+          {/* Section body or quick exam block */}
           {isExamStep ? (
             <div className="rounded-2xl border border-slate-700/80 bg-slate-900/50 p-4 sm:p-6 md:p-8">
               <p className="mb-4 text-slate-400 sm:mb-6">
@@ -324,7 +324,7 @@ export const LessonContentModal = ({
         </div>
       </div>
 
-      {/* Navegación: Anterior / Siguiente - responsive */}
+      {/* Prev / next — responsive */}
       <div
         className={cn(
           'fixed right-0 bottom-0 left-0 flex shrink-0 items-center justify-between gap-2 border-t',

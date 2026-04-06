@@ -32,8 +32,7 @@ export interface UnifiedAchievementsHubProps {
 }
 
 /**
- * Centro Unificado de Logros y Gamificación
- * Integra badges, niveles, estadísticas y desafíos en una experiencia cohesiva
+ * Unified achievements hub: badges, levels, stats, and challenges
  */
 export const UnifiedAchievementsHub = ({
   badges = [],
@@ -50,7 +49,7 @@ export const UnifiedAchievementsHub = ({
   const [selectedBadge, setSelectedBadge] = useState<BadgeItem | null>(null);
   const [filterCategory, setFilterCategory] = useState('all');
 
-  // Cálculos de progreso
+  // Progress helpers
   const levelProgress = useMemo(() => {
     const baseXpPerLevel = 1000;
     const xpForCurrentLevel = (level - 1) * baseXpPerLevel;
@@ -64,7 +63,7 @@ export const UnifiedAchievementsHub = ({
     };
   }, [level, totalXP]);
 
-  // Categorías de badges
+  // Badge categories
   const badgeCategories = useMemo(() => {
     return {
       all: 'Todos',
@@ -106,7 +105,7 @@ export const UnifiedAchievementsHub = ({
     legendario: 'hover:shadow-yellow-500/30',
   };
 
-  // Datos de estadísticas
+  // Stats payload
   const stats = [
     {
       label: 'Nivel Actual',

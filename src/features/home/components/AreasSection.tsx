@@ -67,7 +67,7 @@ export const AreasSection = ({
         ))}
       </div>
 
-      {/* Call to action para simulacro */}
+      {/* Full exam CTA */}
       <div className="mt-16 rounded-xl border-2 border-red-500/50 bg-linear-to-r from-red-600/20 to-pink-600/20 p-8 text-center">
         <h3 className="mb-4 flex items-center justify-center gap-2 text-3xl font-bold text-white">
           <Icon name="fire" className="shrink-0 text-red-400" />

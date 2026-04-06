@@ -1,4 +1,4 @@
-// Índice de features
+// Features barrel export
 export * from './auth';
 export * from './exam';
 export * from './home';

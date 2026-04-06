@@ -6,7 +6,7 @@ import { MascotaCircle } from '@/shared/components/MascotaCircle';
 export const HomePageMobile = () => {
   return (
     <div className="flex h-dvh w-screen flex-col bg-linear-to-b from-black via-slate-950 to-black text-white">
-      {/* Background glow effects - Optimizado para móvil */}
+      {/* Background glow — mobile layout */}
       <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
         <div className="absolute top-1/3 left-1/4 h-48 w-48 animate-pulse rounded-full bg-blue-500/30 blur-2xl"></div>
         <div className="absolute right-1/4 bottom-1/3 h-48 w-48 animate-pulse rounded-full bg-purple-500/30 blur-2xl"></div>
@@ -29,7 +29,7 @@ export const HomePageMobile = () => {
         </div>
       </div>
 
-      {/* Bottom Buttons - Pegado abajo */}
+      {/* Bottom CTAs — pinned */}
       <div className="relative z-10 flex w-full flex-col gap-3 px-6 py-6">
         <button
           onClick={() => {

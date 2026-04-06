@@ -1,4 +1,4 @@
-/** Cuota de mensajes del asistente para usuarios sin sesión (persistencia en cliente). */
+/** Anonymous chat assistant quota (client-persisted). */
 export const CHAT_ANON_STORAGE_KEY = 'icfes_chat_anon_used';
 export const CHAT_ANON_LIMIT = 3;
 

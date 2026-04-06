@@ -29,7 +29,7 @@ export const AreasModal = ({ isOpen, onClose, onSelectArea, currentArea }: Areas
 
   return (
     <>
-      {/* Backdrop transparente para cerrar al hacer click fuera */}
+      {/* Transparent backdrop — click outside to close */}
       <div className="fixed inset-0 z-40" onClick={onClose} />
 
       {/* Dropdown Container */}

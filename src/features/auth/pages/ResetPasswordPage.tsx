@@ -22,7 +22,7 @@ export const ResetPasswordPage = () => {
   const [verifying, setVerifying] = useState(true);
   const [hasRecoverySession, setHasRecoverySession] = useState(false);
 
-  // Supabase: verificar si hay sesión de recuperación (hash en URL)
+  // Supabase: recovery session from URL hash
   useEffect(() => {
     const checkSession = async () => {
       if (!supabase) {

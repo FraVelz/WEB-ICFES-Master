@@ -12,13 +12,13 @@ import { useUserProfile } from '@/features/user/hooks/useUserProfile';
 export const ClasificatoriaPage = () => {
   const router = useRouter();
   const { user } = useAuth();
-  const { rank: myRank } = useUserProfile(); // Obtener mi rango actual
+  const { rank: myRank } = useUserProfile(); // Current user rank
 
   const [selectedRank, setSelectedRank] = useState('novato');
   const { leaderboardData, loading, error } = useLeaderboard(selectedRank);
   const currentRankInfo = getRankInfo(selectedRank);
 
-  // Actualizar tab seleccionado cuando carga mi rango
+  // Sync tab when rank data loads
   useEffect(() => {
     if (myRank) {
       setSelectedRank(myRank);

@@ -68,7 +68,7 @@ export const PaymentModal = ({ isOpen, onClose, plan }: PaymentModalProps) => {
 
   const priceCalculation = usePriceCalculation(plan?.price, billingPeriod);
 
-  // Cargar el plan actual cuando se abre el modal
+  // Load current subscription when modal opens
   useEffect(() => {
     if (isOpen && user) {
       loadCurrentPlan();
@@ -108,15 +108,15 @@ export const PaymentModal = ({ isOpen, onClose, plan }: PaymentModalProps) => {
     setError(null);
 
     try {
-      // Verificar que el usuario esté autenticado
+      // Require auth
       if (!user) {
         throw new Error('Debes estar autenticado para realizar una compra');
       }
 
-      // Si es plan gratuito, no necesita procesamiento de pago
+      // Free plan: skip card processing
       if (!plan) throw new Error('Plan no seleccionado');
       if (plan.price === 'Gratis') {
-        // Guardar directamente sin simular pago
+        // Persist free tier immediately
         const planData = {
           planType: plan.id || 'free',
           planName: plan.name,
@@ -130,7 +130,7 @@ export const PaymentModal = ({ isOpen, onClose, plan }: PaymentModalProps) => {
 
         await SubscriptionPlanService.updateUserPlan(user.uid, planData);
       } else {
-        // Simular procesamiento de pago para planes de pago (en producción: Stripe/PayPal)
+        // Stub payment delay (replace with Stripe/PayPal in production)
         await new Promise((resolve) => setTimeout(resolve, 2000));
 
         const planData: {
@@ -153,15 +153,15 @@ export const PaymentModal = ({ isOpen, onClose, plan }: PaymentModalProps) => {
           purchaseDate: new Date(),
         };
 
-        // Si ya tiene un plan activo y diferente, programar para después
+        // Active plan change: schedule for next billing cycle
         const hasActivePlan = currentPlan && currentPlan.status === 'active' && currentPlan.planType !== plan.id;
 
         if (hasActivePlan) {
-          // Programar el plan para después
+          // Deferred activation
           planData.nextBillingDate = currentPlan.nextBillingDate as Date | null | undefined;
           await PlanScheduleService.schedulePlan(user.uid, planData);
         } else {
-          // Activar directamente
+          // Activate now
           planData.status = 'active';
           planData.nextBillingDate = new Date(
             Date.now() + (billingPeriod === 'annual' ? 365 * 24 * 60 * 60 * 1000 : 30 * 24 * 60 * 60 * 1000)
@@ -180,11 +180,11 @@ export const PaymentModal = ({ isOpen, onClose, plan }: PaymentModalProps) => {
     }
   };
 
-  // Detectar si el plan es el mismo que ya tiene activo
+  // Same plan already active?
   const isSamePlanActive =
     currentPlan && plan?.id && currentPlan.planType === plan.id && currentPlan.status === 'active';
 
-  // Para planes gratuitos, no necesita validar tarjeta
+  // Free tier skips card validation
   const isFormValid: boolean =
     !canSchedulePlan || isSamePlanActive
       ? false
@@ -270,7 +270,7 @@ export const PaymentModal = ({ isOpen, onClose, plan }: PaymentModalProps) => {
             </div>
           ) : (
             <form id="payment-form" onSubmit={handleSubmit} className="space-y-4">
-              {/* Alerta de plan actual si existe */}
+              {/* Current-plan notice */}
               {!loadingPlan && currentPlan && !isSamePlanActive && (
                 <PlanChangeAlert currentPlan={currentPlan} newPlan={plan} />
               )}

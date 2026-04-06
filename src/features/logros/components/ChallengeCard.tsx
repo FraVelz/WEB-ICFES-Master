@@ -37,11 +37,11 @@ export const ChallengeCard = ({ challenge, onComplete }: ChallengeCardProps) => 
   const handleStart = () => {
     if (isCompleted) return;
 
-    // En un caso real, aquí navegaríamos a la práctica y pasaríamos el ID del desafío
-    // Para esta demo, simulamos completar el desafío al hacer click (o navegar)
+    // Production: navigate to practice with challenge id
+    // Demo: complete on click to exercise the UI
     // navigate(getRoute(challenge.area));
 
-    // SIMULACIÓN: Completar directamente para probar la UI
+    // Demo: mark complete immediately
     if (window.confirm('¿Simular completar este desafío? (En producción esto iría a la lección)')) {
       onComplete(challenge.id);
     } else {

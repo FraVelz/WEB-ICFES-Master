@@ -16,9 +16,7 @@ export interface DailyChallenge {
   [key: string]: unknown;
 }
 
-/**
- * Hook de desafíos diarios (localStorage)
- */
+/** Daily challenges — localStorage */
 export const useDailyChallenges = (dateString?: string) => {
   const { user } = useAuth();
   const targetDate = dateString || new Date().toISOString().split('T')[0];
@@ -86,7 +84,7 @@ export const useDailyChallenges = (dateString?: string) => {
   };
 
   const updateChallengeProgress = async (_challengeId: string, _newProgress: number) => {
-    // No-op por ahora
+    // Not implemented yet
   };
 
   return {

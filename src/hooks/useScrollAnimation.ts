@@ -7,10 +7,10 @@ export const useScrollAnimation = (options = {}) => {
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
-        // Si entra en viewport, mostrar
+        // Show once in viewport
         if (entry.isIntersecting) {
           setIsVisible(true);
-          // Detener observación después de que sea visible una vez
+          // Stop observing after first reveal
           if (elementRef.current) {
             observer.unobserve(elementRef.current);
           }

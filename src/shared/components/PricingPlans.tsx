@@ -22,13 +22,13 @@ export const PricingPlans = ({ plans = [] }: { plans?: Plan[] }) => {
   const [isPaymentOpen, setIsPaymentOpen] = useState(false);
   const [selectedPlan, setSelectedPlan] = useState<Plan | null>(null);
 
-  // Al cargar, verificar si hay un plan guardado en localStorage
+  // Resume checkout after login when a plan was stored
   useEffect(() => {
     const savedPlan = localStorage.getItem('selectedPlan');
     const fromPricing = localStorage.getItem('fromPricing');
 
     if (fromPricing) {
-      // Scroll a esta sección
+      // Scroll pricing into view
       const pricingSection = document.getElementById('planes');
       if (pricingSection) {
         setTimeout(() => {
@@ -43,7 +43,7 @@ export const PricingPlans = ({ plans = [] }: { plans?: Plan[] }) => {
         const plan = JSON.parse(savedPlan) as Plan;
         setSelectedPlan(plan);
         setIsPaymentOpen(true);
-        localStorage.removeItem('selectedPlan'); // Limpiar después de usar
+        localStorage.removeItem('selectedPlan'); // one-shot
       } catch (err) {
         console.error('Error al recuperar plan guardado:', err);
       }
@@ -51,19 +51,19 @@ export const PricingPlans = ({ plans = [] }: { plans?: Plan[] }) => {
   }, [isAuthenticated]);
 
   const handlePlanClick = (plan: Plan) => {
-    // Si está autenticado, mostrar modal o procesar
+    // Logged in: open payment modal (free or paid)
     if (isAuthenticated) {
       if (plan.price === 'Gratis') {
-        // Mostrar modal con mensaje de plan gratuito
+        // Free tier — still show confirmation flow
         setSelectedPlan(plan);
         setIsPaymentOpen(true);
       } else {
-        // Abrir modal de pago para planes de pago
+        // Paid plan
         setSelectedPlan(plan);
         setIsPaymentOpen(true);
       }
     } else {
-      // Si no está autenticado, guardar el plan en localStorage y redirigir a login
+      // Guest: stash plan and send to login
       localStorage.setItem('selectedPlan', JSON.stringify(plan));
       router.push('/login');
     }

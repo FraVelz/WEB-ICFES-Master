@@ -1,20 +1,20 @@
-// Secciones de introducción
+// Intro screens (onboarding)
 export const INTRODUCTION_SECTIONS = [
   {
     id: 1,
     message: '¡Hola!, Yo soy Zeus.',
-    avatar: '/avatars/logo.webp', // Avatar con libro o presentación
+    avatar: '/avatars/logo.webp', // Hero image
     description: 'Tu asistente de estudio',
   },
   {
     id: 2,
     message: '¡Responde 5 preguntas cortas antes de comenzar!',
-    avatar: '/avatars/logo.webp', // Avatar saludando
+    avatar: '/avatars/logo.webp', // Second intro image
     description: 'Personalizaremos tu experiencia.',
   },
 ];
 
-// Preguntas del cuestionario de onboarding
+// Onboarding quiz questions
 export const ONBOARDING_QUESTIONS = [
   {
     id: 1,

@@ -1,2 +1,2 @@
-/** API pública del feature home (landing). */
-export { HomePage } from './pages';
+/** Public exports for the home / landing feature. */
+export { HomePage } from './pages/HomePage';

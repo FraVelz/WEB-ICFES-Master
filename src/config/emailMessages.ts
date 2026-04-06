@@ -1,10 +1,10 @@
 /**
- * Configuración de mensajes de email personalizados
- * Puedes cambiar estos mensajes libremente
+ * Custom email copy configuration
+ * Safe to edit these strings as needed
  */
 
 export const EMAIL_MESSAGES = {
-  // Asunto del email de recuperación de contraseña
+  // Password recovery email subject line
   resetPassword: {
     subject: '🔐 Recupera tu contraseña - ICFES Master',
     title: 'Recuperar tu Contraseña',
@@ -18,7 +18,7 @@ export const EMAIL_MESSAGES = {
     notRecognize: 'Si no reconoces esta actividad, cambia tu contraseña inmediatamente.',
   },
 
-  // Mensajes de la página de recuperación
+  // Forgot-password page copy
   forgotPasswordPage: {
     headerTitle: 'Recuperar Contraseña',
     headerSubtitle: 'Ingresa tu email y te enviaremos un enlace para restablecer tu contraseña',
@@ -30,7 +30,7 @@ export const EMAIL_MESSAGES = {
     buttonLoadingText: 'Verificando...',
     backToLogin: 'Volver al login',
 
-    // Paso 2 - Éxito
+    // Step 2 — success
     successTitle: '¡Email Enviado!',
     successMessage: 'Revisa tu bandeja de entrada. Te hemos enviado un enlace para restablecer tu contraseña.',
     importantLabel: 'Importante:',
@@ -42,7 +42,7 @@ export const EMAIL_MESSAGES = {
     useAnotherEmailButton: '¿Usar otro email?',
   },
 
-  // Mensajes de la página de reset
+  // Reset-password page copy
   resetPasswordPage: {
     title: 'Nueva Contraseña',
     subtitle: 'Ingresa una nueva contraseña segura para tu cuenta',
@@ -50,7 +50,7 @@ export const EMAIL_MESSAGES = {
     confirmPasswordLabel: 'Confirmar Contraseña',
     passwordPlaceholder: '••••••••',
 
-    // Validaciones
+    // Validation messages
     errorEmptyFields: 'Por favor, completa todos los campos',
     errorPasswordTooShort: 'La contraseña debe tener al menos 6 caracteres',
     errorPasswordNoUppercase: 'Debe contener al menos una mayúscula',
@@ -60,7 +60,7 @@ export const EMAIL_MESSAGES = {
     errorInvalidLink: 'El enlace es inválido. Por favor, solicita uno nuevo.',
     errorGeneric: 'Error al resetear contraseña. Por favor, intenta de nuevo.',
 
-    // Requisitos
+    // Requirements
     requirementsTitle: 'Requisitos:',
     requirement1: 'Al menos 6 caracteres',
     requirement2: 'Al menos una mayúscula',
@@ -70,7 +70,7 @@ export const EMAIL_MESSAGES = {
     buttonText: 'Restablecer Contraseña',
     buttonLoadingText: 'Restableciendo...',
 
-    // Éxito
+    // Success
     successTitle: '¡Contraseña Restablecida!',
     successMessage: 'Tu contraseña ha sido actualizada correctamente. Serás redirigido al login en unos momentos.',
     goToLoginButton: 'Ir al Login',

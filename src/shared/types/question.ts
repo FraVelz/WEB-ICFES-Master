@@ -1,7 +1,7 @@
 export interface QuestionOption {
   id: string;
   text: string;
-  letter?: string; // A, B, C, D para coincidir con correctAnswer
+  letter?: string; // A, B, C, D — matches correctAnswer option id
 }
 
 export interface ExamQuestion {

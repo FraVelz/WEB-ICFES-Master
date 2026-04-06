@@ -69,7 +69,7 @@ export const StreakModal = ({ isOpen, onClose, streakData }: StreakModalProps) =
   const dayNames = ['D', 'L', 'M', 'M', 'J', 'V', 'S'];
 
   const isStreakDay = (day: number) => {
-    // Construir fecha local para comparar
+    // Local date string for calendar compare
     // Nota: streakHistory son strings YYYY-MM-DD
     const year = viewDate.getFullYear();
     const month = viewDate.getMonth() + 1; // 1-12

@@ -1,6 +1,5 @@
 /**
- * Divide el contenido markdown en secciones navegables.
- * Cada sección agrupa 2 subtítulos (## o ###) para navegación tipo Duolingo.
+ * Split markdown into navigable chunks (pairs of ## / ### headings, Duolingo-style).
  */
 export function splitLessonContent(content: string): string[] {
   if (!content || typeof content !== 'string') return [];
@@ -8,12 +7,12 @@ export function splitLessonContent(content: string): string[] {
   const trimmed = content.trim();
   if (!trimmed) return [];
 
-  // Dividir por ## o ### (cada encabezado = un bloque)
+  // Split on ## or ### headings
   const parts = trimmed.split(/\n(?=#{2,3}\s)/);
 
   if (parts.length <= 1) return [trimmed];
 
-  // Agrupar de 2 en 2: cada sección = 2 subtítulos
+  // Pair consecutive blocks: one section = two headings
   const sections: string[] = [];
   for (let i = 0; i < parts.length; i += 2) {
     const pair = parts.slice(i, i + 2);
@@ -23,7 +22,7 @@ export function splitLessonContent(content: string): string[] {
 }
 
 /**
- * Extrae el primer encabezado (## o ###) de una sección para el globo de la mascota.
+ * First ##/### heading in a chunk (mascot bubble title).
  */
 export function extractSectionTitle(section: string): string {
   const match = section.match(/^#{2,3}\s+(.+?)(?:\n|$)/);
@@ -31,8 +30,7 @@ export function extractSectionTitle(section: string): string {
 }
 
 /**
- * Elimina el primer encabezado de la sección si coincide con el título del globo,
- * para evitar duplicar el título en pantalla.
+ * Strip the first heading when it duplicates the bubble title (avoid duplicate headings on screen).
  */
 export function stripFirstHeadingIfDuplicate(section: string, bubbleTitle: string): string {
   if (!bubbleTitle || !section.trim()) return section;

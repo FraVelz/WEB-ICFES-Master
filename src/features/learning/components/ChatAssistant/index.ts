@@ -1,1 +1,0 @@
-export { ChatAssistant } from './ChatAssistant';

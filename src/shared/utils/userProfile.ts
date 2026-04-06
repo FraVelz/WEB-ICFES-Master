@@ -1,5 +1,5 @@
-// Utilidades para gestionar datos del usuario (localStorage)
-// Preparado para futura implementación de backend
+// User profile helpers (localStorage)
+// Ready for a future backend-backed implementation
 import { encryptData, decryptData, createChecksum, verifyChecksum } from './dataEncryption';
 
 const STORAGE_KEYS = {
@@ -34,7 +34,7 @@ export interface RankInfo {
   minScore: number;
 }
 
-// Sistema de rangos basado en porcentaje de desempeño
+// Rank tiers from overall performance percentage
 const RANK_SYSTEM: Record<number, RankInfo> = {
   0: {
     name: 'Novato',
@@ -75,7 +75,7 @@ const RANK_SYSTEM: Record<number, RankInfo> = {
 };
 
 /**
- * Obtiene el perfil del usuario o crea uno por defecto
+ * Load user profile or create defaults
  */
 export const getUserProfile = (): UserProfile => {
   const stored = localStorage.getItem(STORAGE_KEYS.USER_PROFILE);
@@ -83,22 +83,22 @@ export const getUserProfile = (): UserProfile => {
 };
 
 /**
- * Perfil de usuario por defecto
+ * Default user profile
  */
 export const getDefaultProfile = (): UserProfile => {
   return {
     id: Date.now(),
     username: 'Usuario ICFES',
     bio: 'Estudiante en busca de conocimiento',
-    profileImage: null, // Base64 o URL
-    virtualMoney: 1000, // Moneda virtual inicial
+    profileImage: null, // Base64 or URL
+    virtualMoney: 1000, // Starting virtual currency
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString(),
   };
 };
 
 /**
- * Actualiza el perfil del usuario
+ * Update user profile
  */
 export const updateUserProfile = (profileData: Partial<UserProfile>): UserProfile => {
   const profile = {
@@ -116,14 +116,14 @@ export interface UserRank extends RankInfo {
 }
 
 /**
- * Obtiene el rango del usuario basado en su desempeño
+ * Resolve rank from stored progress percentage
  */
 export const getUserRank = (): UserRank => {
   try {
     const progress = JSON.parse(localStorage.getItem('icfes_progress') ?? 'null') as { percentage?: number } | null;
     const percentage = progress?.percentage ?? 0;
 
-    // Encontrar el rango apropiado
+    // Pick matching tier
     let currentRank = RANK_SYSTEM[0];
     let rankIndex = 0;
     for (let i = 5; i >= 0; i--) {
@@ -149,7 +149,7 @@ export const getUserRank = (): UserRank => {
 };
 
 /**
- * Actualiza el nombre de usuario (localStorage)
+ * Update username (localStorage)
  */
 export const updateUsername = async (username: string): Promise<UserProfile> => {
   if (!username || username.trim().length === 0) {
@@ -162,7 +162,7 @@ export const updateUsername = async (username: string): Promise<UserProfile> => 
 };
 
 /**
- * Actualiza la biografía del usuario (localStorage)
+ * Update bio (localStorage)
  */
 export const updateUserBio = async (bio: string | null): Promise<UserProfile> => {
   if (bio && bio.length > 150) {
@@ -172,7 +172,7 @@ export const updateUserBio = async (bio: string | null): Promise<UserProfile> =>
 };
 
 /**
- * Actualiza la foto de perfil (base64 en localStorage)
+ * Update profile photo (base64 in localStorage)
  */
 export const updateProfileImage = async (file: File | null): Promise<UserProfile> => {
   if (!file) {
@@ -198,7 +198,7 @@ export const updateProfileImage = async (file: File | null): Promise<UserProfile
 };
 
 /**
- * Borra toda la información del usuario y su progreso
+ * Delete all user data and progress (interactive confirmations)
  */
 export const deleteUserAccount = (): boolean => {
   const confirmed = window.confirm(
@@ -224,7 +224,7 @@ export const deleteUserAccount = (): boolean => {
   const userInput = prompt('Escribe "BORRAR TODO" para confirmar:');
 
   if (userInput === 'BORRAR TODO') {
-    // Borrar todos los datos
+    // Clear all stored data
     localStorage.removeItem(STORAGE_KEYS.USER_PROFILE);
     localStorage.removeItem(STORAGE_KEYS.USER_SETTINGS);
     localStorage.removeItem('icfes_exams');
@@ -238,7 +238,7 @@ export const deleteUserAccount = (): boolean => {
 };
 
 /**
- * Obtiene los ajustes del usuario
+ * Load user settings
  */
 export const getUserSettings = (): UserSettings => {
   const stored = localStorage.getItem(STORAGE_KEYS.USER_SETTINGS);
@@ -246,7 +246,7 @@ export const getUserSettings = (): UserSettings => {
 };
 
 /**
- * Ajustes por defecto
+ * Default settings
  */
 export const getDefaultSettings = (): UserSettings => {
   return {
@@ -259,7 +259,7 @@ export const getDefaultSettings = (): UserSettings => {
 };
 
 /**
- * Actualiza los ajustes del usuario
+ * Update user settings
  */
 export const updateUserSettings = (settingsData: Partial<UserSettings>): UserSettings => {
   const settings = {
@@ -271,7 +271,7 @@ export const updateUserSettings = (settingsData: Partial<UserSettings>): UserSet
 };
 
 /**
- * Obtiene información completa del usuario
+ * Aggregate profile, rank, settings, and progress
  */
 export const getCompleteUserData = () => {
   const profile = getUserProfile();
@@ -307,7 +307,7 @@ export const getCompleteUserData = () => {
 };
 
 /**
- * Exporta datos del usuario a JSON
+ * Export user data to an encrypted JSON file
  */
 export const exportUserData = async (password: string): Promise<void> => {
   if (!password) {
@@ -323,13 +323,13 @@ export const exportUserData = async (password: string): Promise<void> => {
     exportedAt: new Date().toISOString(),
   };
 
-  // Crear checksum para validar integridad
+  // Checksum for integrity
   const checksum = await createChecksum(userData);
 
-  // Cifrar datos
+  // Encrypt payload
   const encryptedData = await encryptData(userData, password);
 
-  // Crear objeto de exportación
+  // Export envelope
   const exportObject = {
     version: '1.0',
     encrypted: true,
@@ -359,7 +359,7 @@ export interface ImportedUserData {
 }
 
 /**
- * Importa datos de usuario desde un archivo exportado
+ * Import user data from an exported file
  */
 export const importUserData = async (file: File, password: string): Promise<ImportedUserData> => {
   if (!password) {
@@ -380,7 +380,7 @@ export const importUserData = async (file: File, password: string): Promise<Impo
           checksum?: string;
         };
 
-        // Validar estructura del archivo
+        // Validate file envelope
         if (!exportObject.encrypted || !exportObject.data) {
           throw new Error('Formato de archivo inválido o no cifrado');
         }
@@ -389,12 +389,12 @@ export const importUserData = async (file: File, password: string): Promise<Impo
           throw new Error('Versión de archivo no soportada');
         }
 
-        // Descifrar datos
+        // Decrypt payload
         const dataToDecrypt = exportObject.data;
         if (typeof dataToDecrypt !== 'string') throw new Error('Datos de exportación inválidos');
         const decryptedData = await decryptData(dataToDecrypt, password);
 
-        // Validar checksum
+        // Verify checksum
         const checksum = exportObject.checksum;
         if (typeof checksum !== 'string') throw new Error('Checksum inválido');
         const isValid = await verifyChecksum(decryptedData, checksum);
@@ -402,7 +402,7 @@ export const importUserData = async (file: File, password: string): Promise<Impo
           throw new Error('Los datos han sido modificados o están corruptos');
         }
 
-        // Guardar datos en localStorage
+        // Persist to localStorage
         if (decryptedData.profile) {
           localStorage.setItem(STORAGE_KEYS.USER_PROFILE, JSON.stringify(decryptedData.profile));
         }
@@ -435,14 +435,14 @@ export const importUserData = async (file: File, password: string): Promise<Impo
 };
 
 /**
- * Retorna todos los rangos disponibles
+ * All rank tiers (metadata)
  */
 export const getAllRanks = (): RankInfo[] => {
   return Object.values(RANK_SYSTEM);
 };
 
 /**
- * Obtiene el dinero virtual del usuario
+ * Current virtual currency balance
  */
 export const getVirtualMoney = (): number => {
   const profile = getUserProfile();
@@ -450,7 +450,7 @@ export const getVirtualMoney = (): number => {
 };
 
 /**
- * Suma dinero virtual al usuario
+ * Add virtual currency
  */
 export const addVirtualMoney = (amount: number): UserProfile => {
   if (amount < 0) {
@@ -463,7 +463,7 @@ export const addVirtualMoney = (amount: number): UserProfile => {
 };
 
 /**
- * Resta dinero virtual del usuario
+ * Subtract virtual currency
  */
 export const removeVirtualMoney = (amount: number): UserProfile => {
   if (amount < 0) {
@@ -482,7 +482,7 @@ export const removeVirtualMoney = (amount: number): UserProfile => {
 };
 
 /**
- * Obtiene dinero bonus por completar un examen
+ * Bonus coins from exam score
  */
 export const getExamReward = (correctAnswers: number, totalQuestions: number): number => {
   const percentage = (correctAnswers / totalQuestions) * 100;

@@ -1,6 +1,4 @@
-/**
- * Hook para gestionar progreso del usuario (Supabase o localStorage)
- */
+/** Aggregate progress + recommendations */
 import { useState, useEffect, useCallback } from 'react';
 import { useAuth } from '@/context/AuthContext';
 import { loadProgressViewState, resetProgressData, type ProgressViewState } from '@/services/persistence';

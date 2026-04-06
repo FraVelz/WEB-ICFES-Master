@@ -1,13 +1,8 @@
 /**
- * ImageContent - Componente para mostrar imágenes en las preguntas
+ * ImageContent — figures in exam questions
  *
- * Uso:
- * <ImageContent
- *   src="/path/to/image.png"
- *   alt="Descripción de la imagen"
- *   caption="Pie de imagen opcional"
- *   maxWidth="600px"
- * />
+ * Example:
+ * <ImageContent src="..." alt="..." caption="..." maxWidth="600px" />
  */
 interface ImageContentProps {
   src?: string;

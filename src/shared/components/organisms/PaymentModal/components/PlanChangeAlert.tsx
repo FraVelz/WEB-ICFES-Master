@@ -12,13 +12,13 @@ export const PlanChangeAlert = ({ currentPlan, newPlan }: PlanChangeAlertProps) 
   const isPaidToFree = currentPlan?.planType !== 'free' && newPlan?.id === 'free';
   const isPaidToPaid = currentPlan?.planType !== 'free' && newPlan?.id !== 'free';
 
-  // Convertir nextBillingDate correctamente
+  // Normalize nextBillingDate from several possible shapes
   const getFormattedDate = (
     date: Date | string | number | { toDate?: () => Date } | null | undefined
   ): string | null => {
     if (!date) return null;
     try {
-      // Si es un objeto de Firebase Timestamp
+      // Firebase Timestamp
       if (
         typeof date === 'object' &&
         date !== null &&
@@ -27,11 +27,11 @@ export const PlanChangeAlert = ({ currentPlan, newPlan }: PlanChangeAlertProps) 
       ) {
         return new Date((date as { toDate: () => Date }).toDate()).toLocaleDateString('es-CO');
       }
-      // Si es un objeto Date
+      // Native Date
       if (date instanceof Date) {
         return date.toLocaleDateString('es-CO');
       }
-      // Si es un string o número
+      // ISO string or epoch
       if (typeof date === 'string' || typeof date === 'number') {
         const dateObj = new Date(date);
         if (!isNaN(dateObj.getTime())) {

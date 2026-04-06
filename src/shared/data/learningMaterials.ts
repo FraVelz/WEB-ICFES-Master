@@ -1,5 +1,5 @@
-// Materiales de aprendizaje por área ICFES
-// Este archivo contiene los recursos educativos
+// Learning materials by ICFES area
+// Educational resources for each area
 
 export interface LearningMaterial {
   id: string;

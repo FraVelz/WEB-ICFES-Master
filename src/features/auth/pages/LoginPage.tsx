@@ -49,7 +49,7 @@ export const LoginPage = () => {
         <div className="absolute right-1/4 bottom-1/3 h-96 w-96 animate-pulse rounded-full bg-purple-500/30 blur-3xl"></div>
       </div>
 
-      {/* Header Mobile - Solo visible en móvil */}
+      {/* Mobile-only header */}
       <div className="relative z-10">
         <div className="flex items-center justify-between py-4">
           <Link href="/" className="text-slate-400 transition-colors hover:text-slate-300">
@@ -180,7 +180,7 @@ export const LoginPage = () => {
         </div>
       </div>
 
-      {/* Legal Links Footer - Pegado al final */}
+      {/* Legal links footer — pinned to bottom */}
       <div className="relative z-10 mt-auto w-full border-t border-slate-700/50 py-4">
         <div className="mx-auto max-w-md">
           <p className="mb-3 text-center text-xs text-slate-500">

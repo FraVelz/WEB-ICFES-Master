@@ -1,4 +1,4 @@
-/** API pública del feature auth (páginas de sesión y onboarding). */
+/** Public exports for auth (session pages and onboarding). */
 export { LoginPage } from './pages/LoginPage';
 export { SignupPage } from './pages/SignupPage';
 export { OnboardingPage } from './pages/OnboardingPage';

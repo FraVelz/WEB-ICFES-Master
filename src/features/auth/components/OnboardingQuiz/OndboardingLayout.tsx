@@ -1,4 +1,4 @@
-// Componente de Layout reutilizable para mantener consistencia
+// Shared layout shell for onboarding screens
 import { cn } from '@/utils/cn';
 
 export const OnboardingLayout = ({ children, className = '' }: { children: React.ReactNode; className?: string }) => (

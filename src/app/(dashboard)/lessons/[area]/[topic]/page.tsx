@@ -4,7 +4,7 @@ import { getLessonWithSteps } from '@/features/learning/server/getLessonWithStep
 
 import { LessonPageClient } from './LessonPageClient';
 
-/** Los pasos vienen de Supabase; evitar HTML estático desactualizado. */
+/** Steps load from Supabase — avoid stale static HTML. */
 export const dynamic = 'force-dynamic';
 
 export function generateStaticParams() {

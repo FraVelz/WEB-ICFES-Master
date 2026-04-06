@@ -3,8 +3,8 @@ import { cn } from '@/utils/cn';
 import { Icon } from '@/shared/components/Icon';
 
 /**
- * Componente de alerta para secciones en construcción
- * TODO: Eliminar este componente cuando los módulos estén finalizados
+ * Banner for unfinished modules
+ * TODO: remove when modules ship
  */
 interface ConstructionAlertProps {
   moduleName?: string;

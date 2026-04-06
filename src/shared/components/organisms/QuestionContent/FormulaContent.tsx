@@ -1,20 +1,9 @@
 import { cn } from '@/utils/cn';
 
 /**
- * FormulaContent - Componente para mostrar fórmulas matemáticas
- *
- * Usa notación LaTeX para las matemáticas.
- * Para fórmulas inline: $formula$
- * Para fórmulas en bloque: $$formula$$
- *
- * Uso:
- * <FormulaContent formula="x = \\frac{-b \\pm \\sqrt{b^2-4ac}}{2a}" />
- * <FormulaContent formula="E = mc^2" inline={true} />
- *
- * Nota: Para usar este componente completo se requiere instalar:
- * npm install katex react-katex
- *
- * Por ahora proporciona estructura básica para implementación futura
+ * FormulaContent — math (LaTeX) placeholder
+ * Inline: $...$ ; block: $$...$$
+ * Full rendering needs katex + react-katex (see package.json when wired).
  */
 interface FormulaContentProps {
   formula?: string;

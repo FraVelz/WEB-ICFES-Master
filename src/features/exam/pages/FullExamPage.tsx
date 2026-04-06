@@ -73,7 +73,7 @@ export const FullExamPage = () => {
     questionElement?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
 
-  // Guardar examen cuando se finaliza
+  // Persist full exam on finish
   useEffect(() => {
     if (isFinished || showResults) {
       if (questions.length > 0) {

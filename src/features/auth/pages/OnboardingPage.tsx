@@ -8,18 +8,17 @@ export const OnboardingPage = () => {
   const router = useRouter();
   const [quizAnswers, setQuizAnswers] = useState<Record<string, unknown> | null>(null);
 
-  // Configuración de avatares personalizables
-  // Puedes cambiar las rutas de los avatares aquí
+  // Avatar URLs for intro screens (edit paths here)
   const avatarConfig = {
-    intro1: '/avatars/logo.webp', // Avatar para "Hola, Yo soy Zeus"
-    intro2: '/avatars/logo.webp', // Avatar para "Responde 5 preguntas..."
+    intro1: '/avatars/logo.webp', // Intro 1
+    intro2: '/avatars/logo.webp', // Intro 2
   };
 
   const handleQuizComplete = (answers: Record<string, unknown>) => {
-    // Guardar las respuestas en sessionStorage para usarlas después en el registro
+    // Stash quiz answers for signup prefill
     sessionStorage.setItem('onboardingAnswers', JSON.stringify(answers));
     setQuizAnswers(answers);
-    // Navegar al registro después de 1 segundo
+    // Short delay before navigating to signup
     setTimeout(() => {
       router.push('/signup');
     }, 1000);

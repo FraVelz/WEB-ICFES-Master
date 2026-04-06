@@ -1,5 +1,5 @@
 /**
- * API pública del feature store (tienda y planes).
+ * Public exports for the shop and subscription plans.
  */
 export { StoreModal, ShopItemCard, ShopItemModal } from './components';
 export { useShop } from './hooks/useShop';

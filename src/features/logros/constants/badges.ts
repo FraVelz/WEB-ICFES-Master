@@ -1,5 +1,5 @@
-// Este archivo ahora está factorizado en múltiples módulos
-// para mantener una estructura organizada y fácil de mantener
+// This file is split across multiple modules
+// to keep an organized, maintainable structure
 
 export { LOGROS_DISPONIBLES, BADGE_CATEGORIES } from './index';
 

@@ -149,7 +149,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       throw new Error(msg);
     }
 
-    // Confirmación por correo: sin sesión aún; el trigger en BD crea public.users al insertar en auth.users
+    // Email confirmation: no session yet; DB trigger creates public.users on auth.users insert
     if (!data.session) {
       setError(null);
       throw new Error(REQUIRES_EMAIL_CONFIRMATION);

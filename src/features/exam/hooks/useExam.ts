@@ -1,6 +1,4 @@
-/**
- * Hook para gestionar exámenes (Supabase o localStorage)
- */
+/** Load/save exam attempts — persistence layer */
 import { useState, useEffect, useCallback } from 'react';
 import { useAuth } from '@/context/AuthContext';
 import { getExamById, resetUserExams as resetUserExamsPersistence, getUserExamsList } from '@/services/persistence';

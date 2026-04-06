@@ -1,7 +1,7 @@
 /**
- * API pública del feature learning (ruta, lecciones y asistente).
+ * Public exports for learning (roadmap, lessons, assistant).
  */
-export { LearningRoadmapPage } from './pages/Roadmap/LearningRoadmapPage';
+export { LearningRoadmapPage } from './pages/LearningRoadmapPage';
 
 export {
   ContentStep,
@@ -15,5 +15,3 @@ export {
   SecondaryHeader,
   renderLessonStep,
 } from './components';
-
-export { ChatAssistant } from './components/ChatAssistant';
