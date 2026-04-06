@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { cn } from '@/utils/cn';
 import { Icon } from '@/shared/components/Icon';
 import { useGSAPModalEntrance } from '@/hooks/useGSAPModalEntrance';
 
@@ -158,11 +159,13 @@ export const StreakModal = ({ isOpen, onClose, streakData }: StreakModalProps) =
                 return (
                   <div
                     key={day}
-                    className={`flex h-8 w-8 items-center justify-center rounded-full text-xs font-bold transition-all ${
+                    className={cn(
+                      'flex h-8 w-8 items-center justify-center rounded-full text-xs font-bold transition-all',
                       active
                         ? 'bg-orange-500 text-white shadow-lg shadow-orange-500/20'
-                        : 'text-slate-400 hover:bg-slate-800'
-                    } ${today && !active ? 'border border-slate-600 text-slate-200' : ''} `}
+                        : 'text-slate-400 hover:bg-slate-800',
+                      today && !active && 'border border-slate-600 text-slate-200'
+                    )}
                   >
                     {day}
                   </div>

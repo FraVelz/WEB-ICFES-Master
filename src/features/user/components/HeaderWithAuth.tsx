@@ -1,3 +1,4 @@
+import { cn } from '@/utils/cn';
 import { useState } from 'react';
 import Link from 'next/link';
 import { useRouter, usePathname } from 'next/navigation';
@@ -31,12 +32,23 @@ export const HeaderWithAuth = () => {
   return (
     <>
       {/* Header Desktop */}
-      <header className="sticky top-0 z-50 border-b border-cyan-500/20 bg-linear-to-r from-slate-950/80 via-black/80 to-slate-950/80 shadow-lg shadow-cyan-500/10 backdrop-blur-xl">
+      <header
+        className={cn(
+          'sticky top-0 z-50 border-b border-cyan-500/20 bg-linear-to-r from-slate-950/80',
+          'via-black/80 to-slate-950/80 shadow-lg shadow-cyan-500/10 backdrop-blur-xl'
+        )}
+      >
         <div className="mx-auto max-w-7xl px-4 py-3 md:px-6">
           <div className="flex items-center justify-between">
             {/* Logo/Brand */}
             <Link href="/" className="flex items-center gap-3 transition-opacity duration-300 hover:opacity-80">
-              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-linear-to-br from-cyan-500 via-blue-500 to-purple-600 shadow-lg shadow-cyan-500/30 transition-transform duration-300 hover:scale-110">
+              <div
+                className={cn(
+                  'flex h-12 w-12 items-center justify-center rounded-xl bg-linear-to-br from-cyan-500',
+                  'via-blue-500 to-purple-600 shadow-lg shadow-cyan-500/30 transition-transform duration-300',
+                  'hover:scale-110'
+                )}
+              >
                 <span className="text-xl font-bold text-white">🚀</span>
               </div>
               <span className="hidden bg-linear-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-xl font-bold text-transparent sm:inline">
@@ -50,11 +62,12 @@ export const HeaderWithAuth = () => {
                 <Link
                   key={option.path}
                   href={option.path}
-                  className={`flex items-center gap-2 border-b-2 pb-2 font-semibold transition-all duration-300 ${
+                  className={cn(
+                    'flex items-center gap-2 border-b-2 pb-2 font-semibold transition-all duration-300',
                     pathname === option.path
                       ? 'border-b-cyan-500 text-cyan-400 shadow-lg shadow-cyan-500/20'
                       : 'border-b-transparent text-slate-300 hover:border-b-cyan-400/50 hover:text-white'
-                  }`}
+                  )}
                 >
                   <Icon name={option.icon} size="sm" className="text-sm" />
                   <span>{option.label}</span>
@@ -88,7 +101,7 @@ export const HeaderWithAuth = () => {
                       <Icon
                         name="chevron-down"
                         size="sm"
-                        className={`text-xs transition-transform ${profileMenuOpen ? 'rotate-180' : ''}`}
+                        className={cn('text-xs transition-transform', profileMenuOpen && 'rotate-180')}
                       />
                     </>
                   )}
@@ -129,7 +142,10 @@ export const HeaderWithAuth = () => {
                     <div className="border-t border-slate-700 py-2">
                       <button
                         onClick={handleLogout}
-                        className="flex w-full items-center gap-3 px-4 py-2 font-semibold text-red-400 transition-colors hover:bg-red-500/10 hover:text-red-300"
+                        className={cn(
+                          'flex w-full items-center gap-3 px-4 py-2 font-semibold text-red-400 transition-colors',
+                          'hover:bg-red-500/10 hover:text-red-300'
+                        )}
                       >
                         <Icon name="sign-out" />
                         <span>Cerrar Sesión</span>
@@ -160,11 +176,12 @@ export const HeaderWithAuth = () => {
                 key={option.path}
                 href={option.path}
                 onClick={() => setMobileMenuOpen(false)}
-                className={`flex items-center gap-3 rounded-lg px-4 py-3 transition-colors ${
+                className={cn(
+                  'flex items-center gap-3 rounded-lg px-4 py-3 transition-colors',
                   pathname === option.path
                     ? 'bg-cyan-500/20 text-cyan-400'
                     : 'text-slate-300 hover:bg-slate-800/50 hover:text-white'
-                }`}
+                )}
               >
                 <Icon name={option.icon} />
                 <span>{option.label}</span>

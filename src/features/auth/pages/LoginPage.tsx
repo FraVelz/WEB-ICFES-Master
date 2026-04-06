@@ -1,5 +1,6 @@
 'use client';
 
+import { cn } from '@/utils/cn';
 import { useState } from 'react';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
@@ -68,7 +69,12 @@ export const LoginPage = () => {
             <div className="mb-4 inline-flex h-16 w-16 items-center justify-center rounded-full bg-linear-to-r from-cyan-500 to-blue-600">
               <Icon name="rocket" size="2xl" className="text-2xl" />
             </div>
-            <h1 className="mb-2 bg-linear-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-3xl font-black text-transparent md:text-4xl">
+            <h1
+              className={cn(
+                'mb-2 bg-linear-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-3xl',
+                'font-black text-transparent md:text-4xl'
+              )}
+            >
               ICFES Master
             </h1>
             <p className="text-slate-400">Prepárate para dominar el ICFES</p>
@@ -89,7 +95,10 @@ export const LoginPage = () => {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="tu@email.com"
-                  className="w-full rounded-lg border border-slate-700 bg-slate-800/50 py-3 pr-4 pl-10 transition-all focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/30 focus:outline-none"
+                  className={cn(
+                    'w-full rounded-lg border border-slate-700 bg-slate-800/50 py-3 pr-4 pl-10 transition-all',
+                    'focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/30 focus:outline-none'
+                  )}
                   required
                 />
               </div>
@@ -108,7 +117,10 @@ export const LoginPage = () => {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="••••••••"
-                  className="w-full rounded-lg border border-slate-700 bg-slate-800/50 py-3 pr-12 pl-10 transition-all focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/30 focus:outline-none"
+                  className={cn(
+                    'w-full rounded-lg border border-slate-700 bg-slate-800/50 py-3 pr-12 pl-10 transition-all',
+                    'focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/30 focus:outline-none'
+                  )}
                   required
                 />
                 <button
@@ -133,7 +145,11 @@ export const LoginPage = () => {
             <button
               type="submit"
               disabled={isLoading}
-              className="flex w-full cursor-pointer items-center justify-center gap-2 rounded-lg bg-linear-to-r from-cyan-500 to-blue-600 px-4 py-3 font-bold text-white transition-all duration-300 hover:shadow-lg hover:shadow-cyan-500/50 disabled:cursor-not-allowed disabled:opacity-50"
+              className={cn(
+                'flex w-full cursor-pointer items-center justify-center gap-2 rounded-lg bg-linear-to-r',
+                'from-cyan-500 to-blue-600 px-4 py-3 font-bold text-white transition-all duration-300',
+                'hover:shadow-lg hover:shadow-cyan-500/50 disabled:cursor-not-allowed disabled:opacity-50'
+              )}
             >
               {isLoading ? (
                 <>

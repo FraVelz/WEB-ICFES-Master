@@ -1,3 +1,4 @@
+import { cn } from '@/utils/cn';
 export interface CardData {
   cardNumber: string;
   cardHolder: string;
@@ -31,7 +32,10 @@ export const CardForm = ({
           placeholder="0000 0000 0000 0000"
           value={cardData.cardNumber}
           onChange={handleCardNumberChange}
-          className="w-full rounded-lg border border-slate-700 bg-slate-800 px-4 py-3 text-white placeholder-slate-500 transition-colors focus:border-cyan-500 focus:outline-none"
+          className={cn(
+            'w-full rounded-lg border border-slate-700 bg-slate-800 px-4 py-3 text-white',
+            'placeholder-slate-500 transition-colors focus:border-cyan-500 focus:outline-none'
+          )}
           required
         />
       </div>
@@ -49,7 +53,10 @@ export const CardForm = ({
               cardHolder: e.target.value.toUpperCase(),
             })
           }
-          className="w-full rounded-lg border border-slate-700 bg-slate-800 px-4 py-3 text-white placeholder-slate-500 transition-colors focus:border-cyan-500 focus:outline-none"
+          className={cn(
+            'w-full rounded-lg border border-slate-700 bg-slate-800 px-4 py-3 text-white',
+            'placeholder-slate-500 transition-colors focus:border-cyan-500 focus:outline-none'
+          )}
           required
         />
       </div>
@@ -64,7 +71,11 @@ export const CardForm = ({
             maxLength={2}
             value={cardData.expiryMonth}
             onChange={(e) => handleExpiryChange('month', e.target.value)}
-            className="w-full rounded-lg border border-slate-700 bg-slate-800 px-3 py-3 text-center text-sm text-white placeholder-slate-500 transition-colors focus:border-cyan-500 focus:outline-none"
+            className={cn(
+              'w-full rounded-lg border border-slate-700 bg-slate-800 px-3 py-3 text-center text-sm',
+              'text-white placeholder-slate-500 transition-colors focus:border-cyan-500',
+              'focus:outline-none'
+            )}
             required
           />
         </div>
@@ -79,7 +90,11 @@ export const CardForm = ({
             maxLength={2}
             value={cardData.expiryYear}
             onChange={(e) => handleExpiryChange('year', e.target.value)}
-            className="w-full rounded-lg border border-slate-700 bg-slate-800 px-3 py-3 text-center text-sm text-white placeholder-slate-500 transition-colors focus:border-cyan-500 focus:outline-none"
+            className={cn(
+              'w-full rounded-lg border border-slate-700 bg-slate-800 px-3 py-3 text-center text-sm',
+              'text-white placeholder-slate-500 transition-colors focus:border-cyan-500',
+              'focus:outline-none'
+            )}
             required
           />
         </div>
@@ -94,7 +109,11 @@ export const CardForm = ({
             maxLength={3}
             value={cardData.cvv}
             onChange={handleCVVChange}
-            className="w-full rounded-lg border border-slate-700 bg-slate-800 px-3 py-3 text-center text-sm text-white placeholder-slate-500 transition-colors focus:border-cyan-500 focus:outline-none"
+            className={cn(
+              'w-full rounded-lg border border-slate-700 bg-slate-800 px-3 py-3 text-center text-sm',
+              'text-white placeholder-slate-500 transition-colors focus:border-cyan-500',
+              'focus:outline-none'
+            )}
             required
           />
         </div>

@@ -1,5 +1,6 @@
 'use client';
 
+import { cn } from '@/utils/cn';
 import { useState } from 'react';
 import { Icon } from '@/shared/components/Icon';
 import Link from 'next/link';
@@ -219,11 +220,15 @@ export const LearningPathMap = () => {
             {/* Card Principal del Área */}
             <button
               onClick={() => setExpandedArea(expandedArea === path.id ? null : path.id)}
-              className="w-full rounded-lg border border-slate-700 bg-linear-to-r from-slate-800 to-slate-900 p-6 text-left transition-all duration-300 hover:border-slate-600 hover:shadow-lg hover:shadow-slate-900/50"
+              className={cn(
+                'w-full rounded-lg border border-slate-700 bg-linear-to-r from-slate-800 to-slate-900 p-6',
+                'text-left transition-all duration-300 hover:border-slate-600 hover:shadow-lg',
+                'hover:shadow-slate-900/50'
+              )}
             >
               <div className="flex items-start justify-between">
                 <div className="flex flex-1 items-start gap-4">
-                  <div className={`bg-linear-to-br ${path.color} rounded-lg p-3 text-2xl`}>
+                  <div className={cn('rounded-lg p-3 text-2xl', `bg-linear-to-br ${path.color}`)}>
                     <Icon name={path.icon} className="text-white" />
                   </div>
                   <div className="flex-1">
@@ -242,7 +247,7 @@ export const LearningPathMap = () => {
                     {/* Barra de Progreso */}
                     <div className="h-2 w-full overflow-hidden rounded-full bg-slate-700">
                       <div
-                        className={`bg-linear-to-r ${path.color} h-full transition-all duration-500`}
+                        className={cn('h-full transition-all duration-500', `bg-linear-to-r ${path.color}`)}
                         style={{ width: `${path.completion}%` }}
                       />
                     </div>
@@ -252,7 +257,10 @@ export const LearningPathMap = () => {
 
                 <Icon
                   name="arrow-right"
-                  className={`text-lg text-slate-400 transition-transform duration-300 ${expandedArea === path.id ? 'rotate-90' : ''}`}
+                  className={cn(
+                    'text-lg text-slate-400 transition-transform duration-300',
+                    expandedArea === path.id && 'rotate-90'
+                  )}
                 />
               </div>
             </button>
@@ -263,19 +271,23 @@ export const LearningPathMap = () => {
                 {path.modules.map((module) => (
                   <div
                     key={module.id}
-                    className={`rounded-lg border p-4 transition-all duration-300 ${getStatusColor(module.status)} backdrop-blur-sm`}
+                    className={cn(
+                      'rounded-lg border p-4 backdrop-blur-sm transition-all duration-300',
+                      getStatusColor(module.status)
+                    )}
                   >
                     <div className="flex items-center justify-between">
                       <div className="flex flex-1 items-center gap-3">
                         <Icon
                           name={getStatusIcon(module.status)}
-                          className={`text-lg ${
+                          className={cn(
+                            'text-lg',
                             module.status === 'completed'
                               ? 'text-green-400'
                               : module.status === 'in-progress'
                                 ? 'text-blue-400'
                                 : 'text-slate-500'
-                          }`}
+                          )}
                         />
                         <div>
                           <p className="font-semibold text-white">{module.name}</p>
@@ -307,7 +319,11 @@ export const LearningPathMap = () => {
                     {module.status !== 'locked' && (
                       <Link
                         href={module.status === 'in-progress' ? `/practica/${path.id}` : `/aprendizaje`}
-                        className="mt-3 inline-block w-full rounded-lg bg-linear-to-r from-cyan-500 to-blue-500 px-4 py-2 text-center text-sm font-semibold text-white transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-blue-500/50"
+                        className={cn(
+                          'mt-3 inline-block w-full rounded-lg bg-linear-to-r from-cyan-500 to-blue-500 px-4 py-2',
+                          'text-center text-sm font-semibold text-white transition-all duration-300 hover:scale-105',
+                          'hover:shadow-lg hover:shadow-blue-500/50'
+                        )}
                       >
                         {module.status === 'completed' ? 'Revisar' : 'Continuar'}
                       </Link>

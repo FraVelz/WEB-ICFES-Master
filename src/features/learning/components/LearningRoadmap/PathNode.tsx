@@ -1,5 +1,6 @@
 import React from 'react';
 import { Icon } from '@/shared/components/Icon';
+import { cn } from '@/utils/cn';
 
 // Mapeo de colores para bordes y sombras para asegurar que Tailwind los detecte
 const BORDER_COLORS = {
@@ -79,22 +80,34 @@ export const PathNode = ({
   return (
     <div
       onClick={onClick}
-      className={`group relative flex w-full cursor-pointer items-center gap-4 rounded-2xl border-2 p-4 transition-all duration-200 ${status === 'incomplete' ? 'border-slate-800 bg-slate-900/50 hover:border-slate-700' : ''} ${isAvailable ? `${borderColor} bg-slate-900 hover:bg-slate-800` : ''} ${isCompleted ? 'border-yellow-500/30 bg-slate-900/50 hover:bg-slate-900' : ''} `}
+      className={cn(
+        'group relative flex w-full cursor-pointer items-center gap-4 rounded-2xl border-2 p-4 transition-all duration-200',
+        status === 'incomplete' && 'border-slate-800 bg-slate-900/50 hover:border-slate-700',
+        isAvailable && cn(borderColor, 'bg-slate-900 hover:bg-slate-800'),
+        isCompleted && 'border-yellow-500/30 bg-slate-900/50 hover:bg-slate-900'
+      )}
     >
       {/* Indicador de Estado (Círculo Izquierdo) */}
       <div
-        className={`relative flex shrink-0 items-center justify-center rounded-full border-b-4 transition-transform group-hover:scale-105 ${isCheckpoint ? 'h-16 w-16 text-2xl' : 'h-12 w-12 text-lg'} ${styles.container} `}
+        className={cn(
+          'relative flex shrink-0 items-center justify-center rounded-full border-b-4 transition-transform group-hover:scale-105',
+          isCheckpoint ? 'h-16 w-16 text-2xl' : 'h-12 w-12 text-lg',
+          styles.container
+        )}
       >
         <Icon name={isCompleted ? 'check' : icon || 'star'} className={styles.iconColor} />
 
         {/* Ping animation for available */}
-        {isAvailable && <div className={`absolute inset-0 rounded-full ${colorClass} animate-ping opacity-20`} />}
+        {isAvailable && <div className={cn('absolute inset-0 animate-ping rounded-full opacity-20', colorClass)} />}
       </div>
 
       {/* Contenido de Texto */}
       <div className="min-w-0 flex-1">
         <h4
-          className={`truncate text-base font-bold ${isCompleted ? 'text-yellow-500' : isAvailable ? 'text-white' : 'text-slate-500'}`}
+          className={cn(
+            'truncate text-base font-bold',
+            isCompleted ? 'text-yellow-500' : isAvailable ? 'text-white' : 'text-slate-500'
+          )}
         >
           {title}
         </h4>
@@ -104,7 +117,10 @@ export const PathNode = ({
       {/* Botón de Acción (Solo visible si disponible o completado) */}
       {(isAvailable || isCompleted) && (
         <div
-          className={`flex h-8 w-8 items-center justify-center rounded-full ${isAvailable ? 'bg-white text-slate-900' : 'bg-slate-800 text-yellow-500'} `}
+          className={cn(
+            'flex h-8 w-8 items-center justify-center rounded-full',
+            isAvailable ? 'bg-white text-slate-900' : 'bg-slate-800 text-yellow-500'
+          )}
         >
           <Icon
             name={isAvailable ? 'play' : 'check'}

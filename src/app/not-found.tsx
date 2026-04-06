@@ -1,3 +1,4 @@
+import { cn } from '@/utils/cn';
 import Link from 'next/link';
 
 export default function NotFound() {
@@ -9,7 +10,10 @@ export default function NotFound() {
         <p className="mb-8 text-slate-400">La página que buscas no existe o ha sido movida.</p>
         <Link
           href="/"
-          className="inline-block rounded-lg bg-linear-to-r from-cyan-500 to-blue-600 px-8 py-3 font-semibold text-white no-underline transition-opacity hover:opacity-90"
+          className={cn(
+            'inline-block rounded-lg bg-linear-to-r from-cyan-500 to-blue-600 px-8 py-3 font-semibold',
+            'text-white no-underline transition-opacity hover:opacity-90'
+          )}
         >
           Volver al inicio
         </Link>

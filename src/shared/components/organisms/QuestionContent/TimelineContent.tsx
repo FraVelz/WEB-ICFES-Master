@@ -1,3 +1,4 @@
+import { cn } from '@/utils/cn';
 /**
  * TimelineContent - Componente para mostrar líneas de tiempo
  *
@@ -41,7 +42,12 @@ export const TimelineContent = ({ events = [], title, orientation = 'vertical' }
           {events.map((event: TimelineEvent, idx: number) => (
             <div key={idx} className="relative pl-20">
               {/* Punto en la línea */}
-              <div className="absolute top-2 left-0 flex h-14 w-14 items-center justify-center rounded-full bg-linear-to-br from-orange-500 to-red-500 text-sm font-bold text-white shadow-lg">
+              <div
+                className={cn(
+                  'absolute top-2 left-0 flex h-14 w-14 items-center justify-center rounded-full',
+                  'bg-linear-to-br from-orange-500 to-red-500 text-sm font-bold text-white shadow-lg'
+                )}
+              >
                 {event.year}
               </div>
               {/* Contenido del evento */}
@@ -63,7 +69,12 @@ export const TimelineContent = ({ events = [], title, orientation = 'vertical' }
       <div className="flex min-w-max gap-4">
         {events.map((event: TimelineEvent, idx: number) => (
           <div key={idx} className="w-40 shrink-0 text-center">
-            <div className="mb-2 flex h-12 items-center justify-center rounded-lg bg-linear-to-br from-orange-500 to-red-500 text-sm font-bold text-white shadow-lg">
+            <div
+              className={cn(
+                'mb-2 flex h-12 items-center justify-center rounded-lg bg-linear-to-br from-orange-500',
+                'to-red-500 text-sm font-bold text-white shadow-lg'
+              )}
+            >
               {event.year}
             </div>
             <p className="text-xs text-gray-300">{event.event}</p>

@@ -1,3 +1,4 @@
+import { cn } from '@/utils/cn';
 import { Icon } from '@/shared/components/Icon';
 import Link from 'next/link';
 
@@ -13,7 +14,10 @@ export const QuickStatCard = ({
   color: string;
 }) => (
   <div
-    className={`bg-linear-to-br ${color} rounded-lg border border-slate-700/50 p-6 text-white shadow-lg transition-transform duration-300 hover:scale-105`}
+    className={cn(
+      'rounded-lg border border-slate-700/50 bg-linear-to-br p-6 text-white shadow-lg transition-transform duration-300 hover:scale-105',
+      color
+    )}
   >
     <div className="mb-3 flex items-center justify-between">
       <p className="text-sm font-semibold opacity-90">{stat}</p>
@@ -83,7 +87,10 @@ interface NavCard {
 export const NavigationCard = ({ card }: { card: NavCard }) => (
   <Link
     href={card.link}
-    className="group relative rounded-xl border border-slate-700 bg-slate-800/50 p-5 transition-all duration-300 hover:-translate-y-1 hover:border-slate-600 hover:shadow-lg"
+    className={cn(
+      'group relative rounded-xl border border-slate-700 bg-slate-800/50 p-5 transition-all',
+      'duration-300 hover:-translate-y-1 hover:border-slate-600 hover:shadow-lg'
+    )}
   >
     {card.badge && (
       <div className="absolute -top-2 -right-2 rounded-full bg-linear-to-r from-blue-600 to-purple-600 px-3 py-1 text-xs font-bold text-white">
@@ -92,7 +99,10 @@ export const NavigationCard = ({ card }: { card: NavCard }) => (
     )}
 
     <div
-      className={`rounded-lg bg-linear-to-br p-3 ${card.color} mb-3 inline-block text-white transition-transform duration-300 group-hover:scale-110`}
+      className={cn(
+        'mb-3 inline-block rounded-lg bg-linear-to-br p-3 text-white transition-transform duration-300 group-hover:scale-110',
+        card.color
+      )}
     >
       <Icon name={card.icon} className="text-xl" />
     </div>

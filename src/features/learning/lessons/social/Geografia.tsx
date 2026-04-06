@@ -1,3 +1,4 @@
+import { cn } from '@/utils/cn';
 import Link from 'next/link';
 import { Icon } from '@/shared/components/Icon';
 
@@ -164,7 +165,11 @@ export const Geografia = () => {
         <div className="text-center">
           <Link
             href="/aprendizaje"
-            className="inline-block rounded-xl bg-linear-to-r from-purple-600 to-purple-700 px-8 py-3 font-semibold text-white transition-all duration-300 hover:scale-105 hover:from-purple-700 hover:to-purple-800 hover:shadow-lg"
+            className={cn(
+              'inline-block rounded-xl bg-linear-to-r from-purple-600 to-purple-700 px-8 py-3',
+              'font-semibold text-white transition-all duration-300 hover:scale-105 hover:from-purple-700',
+              'hover:to-purple-800 hover:shadow-lg'
+            )}
           >
             Volver al Aprendizaje
           </Link>

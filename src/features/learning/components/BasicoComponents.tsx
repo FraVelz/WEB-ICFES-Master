@@ -1,4 +1,5 @@
 import { Icon } from '@/shared/components/Icon';
+import { cn } from '@/utils/cn';
 import Link from 'next/link';
 
 interface Topic {
@@ -62,12 +63,13 @@ interface SubjectButtonProps {
 export const SubjectButton = ({ subject, isExpanded, onClick, bgColor }: SubjectButtonProps) => (
   <button
     onClick={onClick}
-    className={`flex w-full items-center justify-between p-4 ${
+    className={cn(
+      'flex w-full items-center justify-between p-4 transition-colors',
       isExpanded ? bgColor : 'hover:bg-slate-700/50'
-    } transition-colors`}
+    )}
   >
     <div className="flex items-center gap-3 text-left">
-      <Icon name={subject.icon} size="xl" className={`text-xl ${subject.color}`} />
+      <Icon name={subject.icon} size="xl" className={cn('text-xl', subject.color)} />
       <div>
         <h3 className="text-lg font-semibold text-white">{subject.name}</h3>
         <p className="text-xs text-slate-400">8 horas de contenido • 500 XP</p>
@@ -75,7 +77,7 @@ export const SubjectButton = ({ subject, isExpanded, onClick, bgColor }: Subject
     </div>
     <Icon
       name="chevron-down"
-      className={`text-slate-400 transition-transform duration-300 ${isExpanded ? 'rotate-180' : ''}`}
+      className={cn('text-slate-400 transition-transform duration-300', isExpanded && 'rotate-180')}
     />
   </button>
 );

@@ -1,3 +1,4 @@
+import { cn } from '@/utils/cn';
 import { Icon } from '@/shared/components/Icon';
 import Link from 'next/link';
 
@@ -88,7 +89,11 @@ export const AvanzadoNote = () => (
 export const AvanzadoButton = () => (
   <Link
     href="/examen/simulacro/completo"
-    className="block w-full rounded-lg bg-linear-to-r from-red-600 to-purple-600 py-4 text-center text-lg font-bold text-white transition-all duration-300 hover:from-red-700 hover:to-purple-700 hover:shadow-lg hover:shadow-red-600/50"
+    className={cn(
+      'block w-full rounded-lg bg-linear-to-r from-red-600 to-purple-600 py-4 text-center text-lg',
+      'font-bold text-white transition-all duration-300 hover:from-red-700 hover:to-purple-700',
+      'hover:shadow-lg hover:shadow-red-600/50'
+    )}
   >
     <Icon name="trophy" className="mr-2" />
     Iniciar Simulacro Completo

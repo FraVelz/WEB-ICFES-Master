@@ -1,4 +1,5 @@
 import React from 'react';
+import { cn } from '@/utils/cn';
 import { Icon } from '@/shared/components/Icon';
 
 /**
@@ -12,7 +13,10 @@ interface ConstructionAlertProps {
 export const ConstructionAlert = ({ moduleName, className = '' }: ConstructionAlertProps) => {
   return (
     <div
-      className={`mx-4 mb-6 max-w-7xl rounded-r-lg border-l-4 border-yellow-500 bg-yellow-500/10 p-4 backdrop-blur-sm md:mx-auto ${className}`}
+      className={cn(
+        'mx-4 mb-6 max-w-7xl rounded-r-lg border-l-4 border-yellow-500 bg-yellow-500/10 p-4 backdrop-blur-sm md:mx-auto',
+        className
+      )}
     >
       <div className="flex items-start">
         <div className="shrink-0">

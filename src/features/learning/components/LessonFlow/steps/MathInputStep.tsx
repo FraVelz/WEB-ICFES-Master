@@ -1,5 +1,6 @@
 'use client';
 
+import { cn } from '@/utils/cn';
 import { useCallback, useEffect, useState } from 'react';
 
 import type { MathInputStepData } from '@/features/learning/types/lessonFlow';
@@ -42,7 +43,11 @@ export function MathInputStep({ data, onStepReady }: MathInputStepProps) {
             setChecked(false);
             setOk(false);
           }}
-          className="min-h-[52px] w-full rounded-xl border border-slate-600 bg-slate-900/80 px-4 text-center text-xl text-white placeholder:text-slate-500 focus:border-cyan-500 focus:outline-none sm:max-w-md"
+          className={cn(
+            'min-h-[52px] w-full rounded-xl border border-slate-600 bg-slate-900/80 px-4 text-center',
+            'text-xl text-white placeholder:text-slate-500 focus:border-cyan-500 focus:outline-none',
+            'sm:max-w-md'
+          )}
           placeholder="Tu respuesta"
           autoComplete="off"
         />
@@ -55,7 +60,7 @@ export function MathInputStep({ data, onStepReady }: MathInputStepProps) {
         </button>
       </div>
       {checked ? (
-        <p className={`text-center text-lg font-medium ${ok ? 'text-emerald-400' : 'text-rose-400'}`}>
+        <p className={cn('text-center text-lg font-medium', ok ? 'text-emerald-400' : 'text-rose-400')}>
           {ok ? '¡Muy bien!' : 'Intenta de nuevo o revisa el enunciado.'}
         </p>
       ) : null}

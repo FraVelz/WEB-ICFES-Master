@@ -1,8 +1,12 @@
 // Componente de Layout reutilizable para mantener consistencia
+import { cn } from '@/utils/cn';
 
 export const OnboardingLayout = ({ children, className = '' }: { children: React.ReactNode; className?: string }) => (
   <div
-    className={`relative flex min-h-dvh flex-col bg-linear-to-b from-black via-slate-950 to-black text-white ${className}`}
+    className={cn(
+      'relative flex min-h-dvh flex-col bg-linear-to-b from-black via-slate-950 to-black text-white',
+      className
+    )}
   >
     {/* Background glow effects - Fixed position */}
     <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden">

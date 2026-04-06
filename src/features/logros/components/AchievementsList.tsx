@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import { cn } from '@/utils/cn';
 import { Icon } from '@/shared/components/Icon';
 import { ACHIEVEMENT_CATEGORIES } from '../constants/achievements';
 
@@ -57,11 +58,12 @@ export const AchievementsList = ({ achievements = [] }: AchievementsListProps) =
             <button
               key={key}
               onClick={() => setActiveCategory(key)}
-              className={`flex cursor-pointer items-center gap-2 rounded-full border px-4 py-2 text-sm font-semibold whitespace-nowrap transition-all duration-300 ${
+              className={cn(
+                'flex cursor-pointer items-center gap-2 rounded-full border px-4 py-2 text-sm font-semibold whitespace-nowrap transition-all duration-300',
                 activeCategory === key
                   ? 'border-cyan-500 bg-cyan-500/20 text-cyan-400 shadow-lg shadow-cyan-500/20'
                   : 'border-slate-700 bg-slate-800/50 text-slate-400 hover:border-slate-600 hover:bg-slate-800'
-              }`}
+              )}
             >
               <Icon name={icon} />
               {label}
@@ -80,18 +82,22 @@ export const AchievementsList = ({ achievements = [] }: AchievementsListProps) =
           return (
             <div
               key={achievement.id}
-              className={`group relative overflow-hidden rounded-xl border p-4 transition-all duration-300 ${
+              className={cn(
+                'group relative overflow-hidden rounded-xl border p-4 transition-all duration-300',
                 isCompleted
                   ? 'border-yellow-500/30 bg-linear-to-br from-yellow-500/10 to-orange-500/5 hover:border-yellow-500/50'
                   : isIncomplete
                     ? 'border-slate-800 bg-slate-900/50 opacity-75'
                     : 'border-slate-700 bg-slate-800/30 hover:border-cyan-500/30 hover:bg-slate-800/50'
-              }`}
+              )}
             >
               <div className="flex items-start gap-4">
                 {/* Icon Box */}
                 <div
-                  className={`flex h-12 w-12 items-center justify-center rounded-lg border text-xl ${getStatusColor(achievement.status ?? 'incomplete')}`}
+                  className={cn(
+                    'flex h-12 w-12 items-center justify-center rounded-lg border text-xl',
+                    getStatusColor(achievement.status ?? 'incomplete')
+                  )}
                 >
                   <Icon name={achievement.icon ?? 'trophy'} />
                 </div>
@@ -99,7 +105,7 @@ export const AchievementsList = ({ achievements = [] }: AchievementsListProps) =
                 {/* Content */}
                 <div className="min-w-0 flex-1">
                   <div className="mb-1 flex items-start justify-between">
-                    <h3 className={`truncate pr-2 font-bold ${isCompleted ? 'text-yellow-100' : 'text-white'}`}>
+                    <h3 className={cn('truncate pr-2 font-bold', isCompleted ? 'text-yellow-100' : 'text-white')}>
                       {achievement.title}
                     </h3>
                     {isCompleted && <Icon name="check" className="text-sm text-yellow-400" />}
@@ -118,7 +124,10 @@ export const AchievementsList = ({ achievements = [] }: AchievementsListProps) =
                     </div>
                     <div className="h-1.5 w-full overflow-hidden rounded-full bg-slate-950">
                       <div
-                        className={`h-full rounded-full transition-all duration-500 ${getProgressBarColor(achievement.status ?? 'incomplete')}`}
+                        className={cn(
+                          'h-full rounded-full transition-all duration-500',
+                          getProgressBarColor(achievement.status ?? 'incomplete')
+                        )}
                         style={{ width: `${percent}%` }}
                       />
                     </div>

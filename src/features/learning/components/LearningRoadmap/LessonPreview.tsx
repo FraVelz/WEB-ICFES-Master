@@ -1,5 +1,6 @@
 'use client';
 
+import { cn } from '@/utils/cn';
 import React from 'react';
 import { Icon } from '@/shared/components/Icon';
 import { useGSAPModalEntrance } from '@/hooks/useGSAPModalEntrance';
@@ -67,7 +68,11 @@ export const LessonPreview = ({ isOpen, onClose, lesson, onStart }: LessonPrevie
             onStart(lesson);
             onClose();
           }}
-          className="flex w-full cursor-pointer items-center justify-center gap-2 rounded-xl bg-green-500 py-4 font-bold text-slate-900 shadow-lg shadow-green-500/20 transition-all hover:bg-green-400 active:scale-95"
+          className={cn(
+            'flex w-full cursor-pointer items-center justify-center gap-2 rounded-xl bg-green-500 py-4',
+            'font-bold text-slate-900 shadow-lg shadow-green-500/20 transition-all hover:bg-green-400',
+            'active:scale-95'
+          )}
         >
           <Icon name="play" />
           COMENZAR LECCIÓN

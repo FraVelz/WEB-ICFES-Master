@@ -1,5 +1,6 @@
 'use client';
 
+import { cn } from '@/utils/cn';
 import { useState } from 'react';
 import { Icon } from '@/shared/components/Icon';
 import { useAuth } from '@/context/AuthContext';
@@ -53,7 +54,11 @@ export function GoogleSignInButton({ redirectAfterLogin = DEFAULT_REDIRECT }: Go
         onClick={handleGoogleSignIn}
         disabled={isLoading}
         type="button"
-        className="flex w-full cursor-pointer items-center justify-center gap-2 rounded-lg border border-gray-300 bg-white px-4 py-3 font-bold text-black transition-all duration-300 hover:bg-gray-100 disabled:cursor-not-allowed disabled:opacity-50"
+        className={cn(
+          'flex w-full cursor-pointer items-center justify-center gap-2 rounded-lg border',
+          'border-gray-300 bg-white px-4 py-3 font-bold text-black transition-all duration-300',
+          'hover:bg-gray-100 disabled:cursor-not-allowed disabled:opacity-50'
+        )}
       >
         {isLoading ? (
           <>

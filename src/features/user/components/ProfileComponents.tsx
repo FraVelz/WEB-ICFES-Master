@@ -1,3 +1,4 @@
+import { cn } from '@/utils/cn';
 import { Icon } from '@/shared/components/Icon';
 
 export const ProfileCard = ({
@@ -5,10 +6,21 @@ export const ProfileCard = ({
 }: {
   user?: { profileImage?: string; username?: string; displayName?: string; bio?: string };
 }) => (
-  <div className="rounded-2xl border border-cyan-500/20 bg-white/5 p-8 backdrop-blur-xl transition-all duration-300 hover:border-cyan-500/50 hover:shadow-lg hover:shadow-cyan-500/20">
+  <div
+    className={cn(
+      'rounded-2xl border border-cyan-500/20 bg-white/5 p-8 backdrop-blur-xl transition-all',
+      'duration-300 hover:border-cyan-500/50 hover:shadow-lg hover:shadow-cyan-500/20'
+    )}
+  >
     {/* Avatar Section */}
     <div className="relative mb-6">
-      <div className="mx-auto flex h-32 w-32 items-center justify-center overflow-hidden rounded-full border-4 border-cyan-500/30 bg-linear-to-r from-cyan-500 to-blue-600 shadow-lg shadow-cyan-500/20 transition-all duration-300 hover:scale-110 hover:border-cyan-400">
+      <div
+        className={cn(
+          'mx-auto flex h-32 w-32 items-center justify-center overflow-hidden rounded-full border-4',
+          'border-cyan-500/30 bg-linear-to-r from-cyan-500 to-blue-600 shadow-lg shadow-cyan-500/20',
+          'transition-all duration-300 hover:scale-110 hover:border-cyan-400'
+        )}
+      >
         {user?.profileImage ? (
           <img
             src={user.profileImage}
@@ -53,7 +65,10 @@ export const RankBadge = ({
   return (
     <div className="mb-6 text-center">
       <div
-        className={`inline-block bg-linear-to-r ${rank.color} mb-2 rounded-xl px-6 py-3 shadow-lg transition-transform duration-300 hover:scale-105`}
+        className={cn(
+          'mb-2 inline-block rounded-xl bg-linear-to-r px-6 py-3 shadow-lg transition-transform duration-300 hover:scale-105',
+          rank.color
+        )}
       >
         <div className="mb-2 text-4xl">{rank.icon}</div>
         <div className="text-lg font-bold">{rank.name}</div>
@@ -71,7 +86,12 @@ export const StatsCard = ({
   if (!userData?.progress) return null;
 
   return (
-    <div className="rounded-2xl border border-purple-500/20 bg-white/5 p-6 backdrop-blur-xl transition-all duration-300 hover:border-purple-500/50 hover:shadow-lg hover:shadow-purple-500/20">
+    <div
+      className={cn(
+        'rounded-2xl border border-purple-500/20 bg-white/5 p-6 backdrop-blur-xl transition-all',
+        'duration-300 hover:border-purple-500/50 hover:shadow-lg hover:shadow-purple-500/20'
+      )}
+    >
       <h3 className="mb-6 bg-linear-to-r from-purple-400 to-pink-400 bg-clip-text text-lg font-bold text-transparent">
         Estadísticas
       </h3>
@@ -106,11 +126,12 @@ export const RanksGrid = ({
       return (
         <div
           key={idx}
-          className={`rounded-xl border-2 p-4 transition-all duration-300 hover:scale-105 ${
+          className={cn(
+            'rounded-xl border-2 p-4 transition-all duration-300 hover:scale-105',
             isCurrentRank
               ? 'border-cyan-500/60 bg-cyan-500/15 shadow-lg shadow-cyan-500/20'
               : 'border-slate-700/50 bg-slate-800/20 hover:border-cyan-500/40'
-          }`}
+          )}
         >
           <div className="mb-2 text-4xl">{r.icon}</div>
           <div className="text-sm font-bold text-white">{r.name}</div>

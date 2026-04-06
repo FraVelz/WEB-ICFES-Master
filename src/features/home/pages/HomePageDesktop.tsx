@@ -1,6 +1,7 @@
 'use client';
 
 import { memo } from 'react';
+import { cn } from '@/utils/cn';
 
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 import { Footer } from '@/shared/components';
@@ -59,7 +60,7 @@ const HomePageDesktopComponent = ({
         {GLOW_EFFECTS.map((effect, index) => (
           <GSAPGlowBlob
             key={`glow-${index}`}
-            className={`absolute ${effect.position} ${effect.size} ${effect.color} rounded-full blur-3xl`}
+            className={cn('absolute rounded-full blur-3xl', effect.position, effect.size, effect.color)}
             delay={effect.delay}
           />
         ))}

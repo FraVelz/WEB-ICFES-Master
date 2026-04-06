@@ -1,3 +1,4 @@
+import { cn } from '@/utils/cn';
 import { Icon } from '@/shared/components/Icon';
 
 import { useDonation } from '../useDonation';
@@ -75,7 +76,10 @@ export const DonationForm = ({
                           placeholder="0000 0000 0000 0000"
                           value={cardData.cardNumber}
                           onChange={handleCardNumberChange}
-                          className="w-full rounded-lg border border-white/10 bg-black/30 py-2.5 pr-4 pl-10 text-sm text-white placeholder-gray-600 transition-colors focus:border-purple-500 focus:outline-none"
+                          className={cn(
+                            'w-full rounded-lg border border-white/10 bg-black/30 py-2.5 pr-4 pl-10 text-sm text-white',
+                            'placeholder-gray-600 transition-colors focus:border-purple-500 focus:outline-none'
+                          )}
                           required
                         />
                         <Icon name="credit-card" className="absolute top-1/2 left-3 -translate-y-1/2 text-gray-500" />
@@ -91,7 +95,11 @@ export const DonationForm = ({
                             placeholder="MM"
                             value={cardData.expiryMonth}
                             onChange={(e) => handleExpiryChange('month', e.target.value)}
-                            className="w-full rounded-lg border border-white/10 bg-black/30 px-3 py-2.5 text-center text-sm text-white placeholder-gray-600 transition-colors focus:border-purple-500 focus:outline-none"
+                            className={cn(
+                              'w-full rounded-lg border border-white/10 bg-black/30 px-3 py-2.5 text-center text-sm',
+                              'text-white placeholder-gray-600 transition-colors focus:border-purple-500',
+                              'focus:outline-none'
+                            )}
                             required
                           />
                           <input
@@ -99,7 +107,11 @@ export const DonationForm = ({
                             placeholder="AA"
                             value={cardData.expiryYear}
                             onChange={(e) => handleExpiryChange('year', e.target.value)}
-                            className="w-full rounded-lg border border-white/10 bg-black/30 px-3 py-2.5 text-center text-sm text-white placeholder-gray-600 transition-colors focus:border-purple-500 focus:outline-none"
+                            className={cn(
+                              'w-full rounded-lg border border-white/10 bg-black/30 px-3 py-2.5 text-center text-sm',
+                              'text-white placeholder-gray-600 transition-colors focus:border-purple-500',
+                              'focus:outline-none'
+                            )}
                             required
                           />
                         </div>
@@ -112,7 +124,10 @@ export const DonationForm = ({
                             placeholder="123"
                             value={cardData.cvv}
                             onChange={handleCVVChange}
-                            className="w-full rounded-lg border border-white/10 bg-black/30 py-2.5 pr-8 pl-3 text-sm text-white placeholder-gray-600 transition-colors focus:border-purple-500 focus:outline-none"
+                            className={cn(
+                              'w-full rounded-lg border border-white/10 bg-black/30 py-2.5 pr-8 pl-3 text-sm text-white',
+                              'placeholder-gray-600 transition-colors focus:border-purple-500 focus:outline-none'
+                            )}
                             required
                           />
                           <Icon
@@ -135,7 +150,10 @@ export const DonationForm = ({
                             cardHolder: e.target.value.toUpperCase(),
                           })
                         }
-                        className="w-full rounded-lg border border-white/10 bg-black/30 px-4 py-2.5 text-sm text-white placeholder-gray-600 transition-colors focus:border-purple-500 focus:outline-none"
+                        className={cn(
+                          'w-full rounded-lg border border-white/10 bg-black/30 px-4 py-2.5 text-sm text-white',
+                          'placeholder-gray-600 transition-colors focus:border-purple-500 focus:outline-none'
+                        )}
                         required
                       />
                     </div>
@@ -143,7 +161,12 @@ export const DonationForm = ({
                     <button
                       type="submit"
                       disabled={isProcessing}
-                      className="mt-4 flex w-full transform items-center justify-center gap-2 rounded-xl bg-linear-to-r from-purple-600 to-purple-700 px-4 py-3 font-bold text-white shadow-lg shadow-purple-500/25 transition-all hover:scale-[1.02] hover:from-purple-500 hover:to-purple-600 disabled:cursor-not-allowed disabled:opacity-50"
+                      className={cn(
+                        'mt-4 flex w-full transform items-center justify-center gap-2 rounded-xl bg-linear-to-r',
+                        'from-purple-600 to-purple-700 px-4 py-3 font-bold text-white shadow-lg',
+                        'shadow-purple-500/25 transition-all hover:scale-[1.02] hover:from-purple-500',
+                        'hover:to-purple-600 disabled:cursor-not-allowed disabled:opacity-50'
+                      )}
                     >
                       {isProcessing ? (
                         <>
@@ -200,7 +223,10 @@ export const DonationForm = ({
                   href={currentMethod.detail}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="block w-full transform rounded-xl bg-purple-600 py-3 font-bold text-white shadow-lg shadow-purple-500/25 transition-all hover:scale-105 hover:bg-purple-700"
+                  className={cn(
+                    'block w-full transform rounded-xl bg-purple-600 py-3 font-bold text-white shadow-lg',
+                    'shadow-purple-500/25 transition-all hover:scale-105 hover:bg-purple-700'
+                  )}
                 >
                   Ir a Donar
                 </a>

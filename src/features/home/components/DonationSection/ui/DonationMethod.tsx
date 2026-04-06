@@ -1,3 +1,4 @@
+import { cn } from '@/utils/cn';
 import { Icon } from '@/shared/components/Icon';
 
 import { paymentMethods } from '../paymentMethods';
@@ -30,11 +31,12 @@ export const DonationMethod = ({
             <button
               key={amount}
               onClick={() => handleAmountSelect(amount)}
-              className={`cursor-pointer rounded-xl border px-2 py-3 text-sm font-semibold transition-all duration-200 ${
+              className={cn(
+                'cursor-pointer rounded-xl border px-2 py-3 text-sm font-semibold transition-all duration-200',
                 selectedAmount === amount
                   ? 'scale-105 transform border-purple-500 bg-purple-600 text-white shadow-lg shadow-purple-500/20'
                   : 'border-white/10 bg-white/5 text-gray-300 hover:border-white/20 hover:bg-white/10'
-              }`}
+              )}
             >
               ${amount.toLocaleString()}
             </button>
@@ -42,11 +44,12 @@ export const DonationMethod = ({
           <div className="relative">
             <button
               onClick={() => handleAmountSelect('custom')}
-              className={`h-full w-full cursor-pointer rounded-xl border px-2 py-3 text-sm font-semibold transition-all duration-200 ${
+              className={cn(
+                'h-full w-full cursor-pointer rounded-xl border px-2 py-3 text-sm font-semibold transition-all duration-200',
                 selectedAmount === 'custom'
                   ? 'border-purple-500 bg-purple-600 text-white shadow-lg shadow-purple-500/20'
                   : 'border-white/10 bg-white/5 text-gray-300 hover:border-white/20 hover:bg-white/10'
-              }`}
+              )}
             >
               Otro
             </button>
@@ -61,7 +64,11 @@ export const DonationMethod = ({
                 value={customAmount}
                 onChange={handleCustomAmountChange}
                 placeholder="Ingresa el valor (COP)"
-                className="w-full rounded-xl border border-white/10 bg-black/20 py-3 pr-4 pl-8 text-white placeholder-gray-500 transition-all focus:border-purple-500 focus:ring-1 focus:ring-purple-500 focus:outline-none"
+                className={cn(
+                  'w-full rounded-xl border border-white/10 bg-black/20 py-3 pr-4 pl-8 text-white',
+                  'placeholder-gray-500 transition-all focus:border-purple-500 focus:ring-1',
+                  'focus:ring-purple-500 focus:outline-none'
+                )}
               />
             </div>
           </div>
@@ -78,27 +85,35 @@ export const DonationMethod = ({
             <button
               key={method.id}
               onClick={() => setSelectedMethod(method.id)}
-              className={`group relative cursor-pointer rounded-xl border p-4 text-left transition-all duration-200 ${
+              className={cn(
+                'group relative cursor-pointer rounded-xl border p-4 text-left transition-all duration-200',
                 selectedMethod === method.id
                   ? 'border-purple-500 bg-white/10 ring-1 ring-purple-500/50'
-                  : 'border-white/10 bg-white/5 hover:border-white/20 hover:bg-white/10'
-              } ${method.highlight ? 'sm:col-span-2' : ''}`}
+                  : 'border-white/10 bg-white/5 hover:border-white/20 hover:bg-white/10',
+                method.highlight && 'sm:col-span-2'
+              )}
             >
               {method.highlight && (
-                <div className="absolute -top-3 -right-2 rotate-3 transform rounded-full bg-linear-to-r from-yellow-400 to-orange-500 px-2 py-1 text-[10px] font-bold text-black shadow-lg">
+                <div
+                  className={cn(
+                    'absolute -top-3 -right-2 rotate-3 transform rounded-full bg-linear-to-r from-yellow-400',
+                    'to-orange-500 px-2 py-1 text-[10px] font-bold text-black shadow-lg'
+                  )}
+                >
                   RECOMENDADO
                 </div>
               )}
               <div className="flex items-center gap-3">
                 <div
-                  className={`flex h-10 w-10 items-center justify-center rounded-full ${
+                  className={cn(
+                    'flex h-10 w-10 items-center justify-center rounded-full',
                     method.highlight ? 'bg-green-500/20 text-green-400' : 'bg-white/10 text-gray-300'
-                  }`}
+                  )}
                 >
                   <Icon name={method.icon} className="text-lg" />
                 </div>
                 <div>
-                  <h4 className={`font-bold ${selectedMethod === method.id ? 'text-white' : 'text-gray-300'}`}>
+                  <h4 className={cn('font-bold', selectedMethod === method.id ? 'text-white' : 'text-gray-300')}>
                     {method.name}
                   </h4>
                   <p className="text-xs text-gray-400">{method.info}</p>

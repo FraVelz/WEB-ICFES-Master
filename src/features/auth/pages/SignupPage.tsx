@@ -1,4 +1,5 @@
 'use client';
+import { cn } from '@/utils/cn';
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -94,7 +95,12 @@ export const SignupPage = () => {
   };
 
   return (
-    <div className="flex min-h-dvh items-center justify-center overflow-hidden bg-linear-to-b from-black via-slate-950 to-black px-6 py-12 text-white">
+    <div
+      className={cn(
+        'flex min-h-dvh items-center justify-center overflow-hidden bg-linear-to-b from-black',
+        'via-slate-950 to-black px-6 py-12 text-white'
+      )}
+    >
       {/* Background glow effects */}
       <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
         <div className="absolute top-1/3 left-1/4 h-96 w-96 animate-pulse rounded-full bg-blue-500/30 blur-3xl"></div>
@@ -118,7 +124,12 @@ export const SignupPage = () => {
           <div className="mb-4 inline-flex h-16 w-16 items-center justify-center rounded-full bg-linear-to-r from-cyan-500 to-blue-600">
             <Icon name="rocket" size="2xl" className="text-2xl" />
           </div>
-          <h1 className="mb-2 bg-linear-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-3xl font-black text-transparent md:text-4xl">
+          <h1
+            className={cn(
+              'mb-2 bg-linear-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-3xl',
+              'font-black text-transparent md:text-4xl'
+            )}
+          >
             Únete a ICFES Master
           </h1>
           <p className="text-slate-400">
@@ -134,7 +145,10 @@ export const SignupPage = () => {
             </p>
             <Link
               href="/login"
-              className="inline-flex items-center justify-center rounded-lg bg-cyan-600 px-6 py-3 font-semibold text-white transition hover:bg-cyan-500"
+              className={cn(
+                'inline-flex items-center justify-center rounded-lg bg-cyan-600 px-6 py-3 font-semibold',
+                'text-white transition hover:bg-cyan-500'
+              )}
             >
               Ir a iniciar sesión
             </Link>
@@ -157,7 +171,10 @@ export const SignupPage = () => {
                   value={formData.displayName}
                   onChange={handleChange}
                   placeholder="Juan Pérez"
-                  className="w-full rounded-lg border border-slate-700 bg-slate-800/50 py-3 pr-4 pl-10 transition-all focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/30 focus:outline-none"
+                  className={cn(
+                    'w-full rounded-lg border border-slate-700 bg-slate-800/50 py-3 pr-4 pl-10 transition-all',
+                    'focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/30 focus:outline-none'
+                  )}
                   required
                 />
               </div>
@@ -177,7 +194,10 @@ export const SignupPage = () => {
                   value={formData.email}
                   onChange={handleChange}
                   placeholder="tu@email.com"
-                  className="w-full rounded-lg border border-slate-700 bg-slate-800/50 py-3 pr-4 pl-10 transition-all focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/30 focus:outline-none"
+                  className={cn(
+                    'w-full rounded-lg border border-slate-700 bg-slate-800/50 py-3 pr-4 pl-10 transition-all',
+                    'focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/30 focus:outline-none'
+                  )}
                   required
                 />
               </div>
@@ -197,7 +217,10 @@ export const SignupPage = () => {
                   value={formData.password}
                   onChange={handleChange}
                   placeholder="••••••••"
-                  className="w-full rounded-lg border border-slate-700 bg-slate-800/50 py-3 pr-12 pl-10 transition-all focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/30 focus:outline-none"
+                  className={cn(
+                    'w-full rounded-lg border border-slate-700 bg-slate-800/50 py-3 pr-12 pl-10 transition-all',
+                    'focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/30 focus:outline-none'
+                  )}
                   required
                 />
                 <button
@@ -212,19 +235,22 @@ export const SignupPage = () => {
               {/* Password Validations */}
               <div className="mt-3 space-y-2 text-xs">
                 <div
-                  className={`flex items-center gap-2 ${validations.minLength ? 'text-green-400' : 'text-slate-500'}`}
+                  className={cn('flex items-center gap-2', validations.minLength ? 'text-green-400' : 'text-slate-500')}
                 >
                   <Icon name="check-circle" className={validations.minLength ? 'opacity-100' : 'opacity-50'} />
                   Al menos 6 caracteres
                 </div>
                 <div
-                  className={`flex items-center gap-2 ${validations.hasNumber ? 'text-green-400' : 'text-slate-500'}`}
+                  className={cn('flex items-center gap-2', validations.hasNumber ? 'text-green-400' : 'text-slate-500')}
                 >
                   <Icon name="check-circle" className={validations.hasNumber ? 'opacity-100' : 'opacity-50'} />
                   Contiene un número
                 </div>
                 <div
-                  className={`flex items-center gap-2 ${validations.hasUppercase ? 'text-green-400' : 'text-slate-500'}`}
+                  className={cn(
+                    'flex items-center gap-2',
+                    validations.hasUppercase ? 'text-green-400' : 'text-slate-500'
+                  )}
                 >
                   <Icon name="check-circle" className={validations.hasUppercase ? 'opacity-100' : 'opacity-50'} />
                   Contiene una mayúscula
@@ -246,7 +272,10 @@ export const SignupPage = () => {
                   value={formData.confirmPassword}
                   onChange={handleChange}
                   placeholder="••••••••"
-                  className="w-full rounded-lg border border-slate-700 bg-slate-800/50 py-3 pr-12 pl-10 transition-all focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/30 focus:outline-none"
+                  className={cn(
+                    'w-full rounded-lg border border-slate-700 bg-slate-800/50 py-3 pr-12 pl-10 transition-all',
+                    'focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/30 focus:outline-none'
+                  )}
                   required
                 />
                 <button
@@ -271,7 +300,11 @@ export const SignupPage = () => {
             <button
               type="submit"
               disabled={isLoading}
-              className="flex w-full items-center justify-center gap-2 rounded-lg bg-linear-to-r from-cyan-500 to-blue-600 px-4 py-3 font-bold text-white transition-all duration-300 hover:shadow-lg hover:shadow-cyan-500/50 disabled:cursor-not-allowed disabled:opacity-50"
+              className={cn(
+                'flex w-full items-center justify-center gap-2 rounded-lg bg-linear-to-r from-cyan-500',
+                'to-blue-600 px-4 py-3 font-bold text-white transition-all duration-300 hover:shadow-lg',
+                'hover:shadow-cyan-500/50 disabled:cursor-not-allowed disabled:opacity-50'
+              )}
             >
               {isLoading ? (
                 <>

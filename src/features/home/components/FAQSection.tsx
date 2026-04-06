@@ -1,3 +1,4 @@
+import { cn } from '@/utils/cn';
 import { Icon } from '@/shared/components/Icon';
 import { FAQS } from '@/features/home/data';
 import { AnimatedReveal } from '@/shared/components/AnimatedReveal';
@@ -37,7 +38,7 @@ export const FAQSection = ({
               <p className="text-left text-lg font-bold text-white">{faq.q}</p>
               <Icon
                 name="chevron-right"
-                className={`text-slate-400 transition-transform ${expandedFaq === idx ? 'rotate-90' : ''}`}
+                className={cn('text-slate-400 transition-transform', expandedFaq === idx && 'rotate-90')}
               />
             </button>
             {expandedFaq === idx && (

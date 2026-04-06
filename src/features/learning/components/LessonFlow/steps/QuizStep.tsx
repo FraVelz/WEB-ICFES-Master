@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useState } from 'react';
 
+import { cn } from '@/utils/cn';
 import type { QuizStepData } from '@/features/learning/types/lessonFlow';
 
 import { MathBlock } from '../MathBlock';
@@ -43,7 +44,8 @@ export function QuizStep({ data, onStepReady }: QuizStepProps) {
                 type="button"
                 disabled={answered}
                 onClick={() => handleSelect(index)}
-                className={`w-full rounded-xl border px-4 py-4 text-left text-lg transition-colors md:py-5 md:text-xl ${
+                className={cn(
+                  'w-full rounded-xl border px-4 py-4 text-left text-lg transition-colors md:py-5 md:text-xl',
                   showCorrect
                     ? 'border-emerald-500/80 bg-emerald-950/50 text-white'
                     : showWrong
@@ -51,7 +53,7 @@ export function QuizStep({ data, onStepReady }: QuizStepProps) {
                       : isSel
                         ? 'border-cyan-500/60 bg-slate-800/80 text-white'
                         : 'border-slate-600/80 bg-slate-900/60 text-slate-100 hover:border-slate-500'
-                }`}
+                )}
               >
                 {opt}
               </button>
@@ -61,11 +63,12 @@ export function QuizStep({ data, onStepReady }: QuizStepProps) {
       </ul>
       {answered ? (
         <div
-          className={`rounded-xl border px-4 py-4 text-base leading-relaxed md:text-lg ${
+          className={cn(
+            'rounded-xl border px-4 py-4 text-base leading-relaxed md:text-lg',
             isCorrect
               ? 'border-emerald-600/50 bg-emerald-950/30 text-emerald-100'
               : 'border-amber-600/50 bg-amber-950/20 text-amber-100'
-          }`}
+          )}
         >
           <p className="font-medium">{isCorrect ? '¡Correcto!' : 'Revisa la explicación:'}</p>
           <p className="mt-2 text-slate-200">{data.explanation}</p>

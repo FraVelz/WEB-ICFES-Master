@@ -1,5 +1,6 @@
 'use client';
 
+import { cn } from '@/utils/cn';
 import React, { useEffect, useRef } from 'react';
 import { Icon } from '@/shared/components/Icon';
 import { gsap } from '@/lib/gsap';
@@ -51,13 +52,16 @@ export const ShopItemModal = ({
         {/* Close Button */}
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 z-10 flex h-8 w-8 items-center justify-center rounded-full bg-slate-800 text-slate-400 transition-colors hover:bg-slate-700 hover:text-white"
+          className={cn(
+            'absolute top-4 right-4 z-10 flex h-8 w-8 items-center justify-center rounded-full',
+            'bg-slate-800 text-slate-400 transition-colors hover:bg-slate-700 hover:text-white'
+          )}
         >
           <Icon name="times" />
         </button>
 
         {/* Header Image */}
-        <div className={`h-32 bg-linear-to-br ${item.color} relative flex items-center justify-center`}>
+        <div className={cn('relative flex h-32 items-center justify-center', `bg-linear-to-br ${item.color}`)}>
           <div className="absolute inset-0 bg-black/20"></div>
           <div className="relative z-10 h-24 w-24 translate-y-8 rounded-2xl bg-slate-900 p-1 shadow-2xl">
             <div className="flex h-full w-full items-center justify-center overflow-hidden rounded-xl bg-slate-800">
@@ -81,7 +85,12 @@ export const ShopItemModal = ({
 
           {/* Action Button */}
           {isPurchased && item.category !== 'powerup' ? (
-            <div className="flex items-center justify-center gap-3 rounded-xl border border-green-500/30 bg-green-500/10 p-4 font-bold text-green-400">
+            <div
+              className={cn(
+                'flex items-center justify-center gap-3 rounded-xl border border-green-500/30',
+                'bg-green-500/10 p-4 font-bold text-green-400'
+              )}
+            >
               <Icon name="check-circle" className="text-xl" />
               <span>¡Ya tienes este artículo!</span>
             </div>
@@ -89,13 +98,14 @@ export const ShopItemModal = ({
             <button
               onClick={() => onBuy(item)}
               disabled={!canAfford || processing}
-              className={`flex w-full items-center justify-center gap-3 rounded-xl py-4 text-lg font-bold transition-all ${
+              className={cn(
+                'flex w-full items-center justify-center gap-3 rounded-xl py-4 text-lg font-bold transition-all',
                 processing
                   ? 'cursor-wait bg-slate-700 text-slate-400'
                   : canAfford
                     ? 'transform bg-linear-to-r from-yellow-500 to-orange-500 text-black shadow-lg shadow-orange-500/20 hover:-translate-y-0.5 hover:from-yellow-400 hover:to-orange-400 hover:shadow-orange-500/40'
                     : 'cursor-not-allowed bg-slate-800 text-slate-500'
-              }`}
+              )}
             >
               {processing ? (
                 <>

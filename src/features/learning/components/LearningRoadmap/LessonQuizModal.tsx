@@ -1,5 +1,6 @@
 'use client';
 
+import { cn } from '@/utils/cn';
 import React, { useState, useEffect } from 'react';
 import { Icon } from '@/shared/components/Icon';
 import { useAuth } from '@/context/AuthContext';
@@ -399,7 +400,13 @@ export const LessonQuizModal = ({
       ref={overlayRef}
       className="fixed inset-0 z-70 flex items-end justify-center bg-black/80 p-0 pb-20 backdrop-blur-sm lg:items-center lg:p-4 lg:pb-4"
     >
-      <div className="flex max-h-[calc(95vh-5rem)] w-full max-w-lg scale-100 transform flex-col overflow-hidden rounded-t-2xl border-t border-slate-800 bg-slate-900 shadow-2xl transition-all lg:max-h-[90vh] lg:rounded-2xl lg:border">
+      <div
+        className={cn(
+          'flex max-h-[calc(95vh-5rem)] w-full max-w-lg scale-100 transform flex-col overflow-hidden',
+          'rounded-t-2xl border-t border-slate-800 bg-slate-900 shadow-2xl transition-all',
+          'lg:max-h-[90vh] lg:rounded-2xl lg:border'
+        )}
+      >
         {/* Header */}
         <div className="shrink-0 border-b border-slate-800 bg-slate-800/50 p-3.5 lg:p-6">
           <div className="mb-1 flex items-center justify-center gap-2">
@@ -426,7 +433,12 @@ export const LessonQuizModal = ({
         </div>
 
         {/* Content - Scrollable */}
-        <div className="scrollbar-thin scrollbar-thumb-slate-700 scrollbar-track-transparent min-h-0 flex-1 overflow-x-hidden overflow-y-auto p-3.5 lg:p-6">
+        <div
+          className={cn(
+            'scrollbar-thin scrollbar-thumb-slate-700 scrollbar-track-transparent min-h-0 flex-1',
+            'overflow-x-hidden overflow-y-auto p-3.5 lg:p-6'
+          )}
+        >
           <div className="mb-3 lg:mb-6">
             <h4 className="mb-3 px-0.5 text-base leading-relaxed font-semibold text-white lg:mb-4 lg:text-lg">
               {currentQuestion.question}
@@ -438,7 +450,9 @@ export const LessonQuizModal = ({
                   key={option.id}
                   onClick={() => !isSubmitted && setSelectedOption(option.id)}
                   disabled={isSubmitted}
-                  className={`relative min-h-[52px] w-full cursor-pointer rounded-xl border-2 p-3.5 text-left text-sm transition-all lg:min-h-[48px] lg:rounded-xl lg:p-4 lg:text-base ${
+                  className={cn(
+                    'relative min-h-[52px] w-full cursor-pointer rounded-xl border-2 p-3.5 text-left text-sm transition-all',
+                    'lg:min-h-[48px] lg:rounded-xl lg:p-4 lg:text-base',
                     isSubmitted
                       ? option.id === currentQuestion.correctAnswer
                         ? 'border-green-500 bg-green-500/15 text-green-300 shadow-lg shadow-green-500/10'
@@ -448,12 +462,13 @@ export const LessonQuizModal = ({
                       : selectedOption === option.id
                         ? 'scale-[1.02] border-blue-500 bg-blue-500/15 text-blue-300 shadow-lg shadow-blue-500/10'
                         : 'border-slate-700/50 bg-slate-800/50 text-slate-200 hover:border-slate-600 hover:bg-slate-800/70 active:scale-[0.98] active:bg-slate-700'
-                  }`}
+                  )}
                 >
                   <div className="flex items-start gap-3">
                     {/* Indicador de letra */}
                     <div
-                      className={`mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-xs font-bold lg:h-7 lg:w-7 lg:text-sm ${
+                      className={cn(
+                        'mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-xs font-bold lg:h-7 lg:w-7 lg:text-sm',
                         isSubmitted
                           ? option.id === currentQuestion.correctAnswer
                             ? 'border border-green-500/30 bg-green-500/20 text-green-400'
@@ -463,7 +478,7 @@ export const LessonQuizModal = ({
                           : selectedOption === option.id
                             ? 'border border-blue-500/30 bg-blue-500/20 text-blue-400'
                             : 'border border-slate-600/50 bg-slate-700/50 text-slate-400'
-                      }`}
+                      )}
                     >
                       {String.fromCharCode(65 + index)}
                     </div>
@@ -495,11 +510,12 @@ export const LessonQuizModal = ({
           {/* Feedback & Rewards */}
           {isSubmitted && (
             <div
-              className={`mb-3 rounded-xl border-2 p-3.5 text-center lg:mb-6 lg:rounded-xl lg:p-4 ${
+              className={cn(
+                'mb-3 rounded-xl border-2 p-3.5 text-center lg:mb-6 lg:rounded-xl lg:p-4',
                 isCorrect
                   ? 'border-green-500/30 bg-linear-to-br from-green-500/15 to-green-600/5 shadow-lg shadow-green-500/5'
                   : 'border-red-500/30 bg-linear-to-br from-red-500/15 to-red-600/5 shadow-lg shadow-red-500/5'
-              }`}
+              )}
             >
               <div className="mb-2 flex items-center justify-center gap-2">
                 {isCorrect ? (
@@ -507,18 +523,28 @@ export const LessonQuizModal = ({
                 ) : (
                   <Icon name="times" size="2xl" className="text-xl text-red-400 lg:text-2xl" />
                 )}
-                <h5 className={`text-lg font-bold lg:text-xl ${isCorrect ? 'text-green-300' : 'text-red-300'}`}>
+                <h5 className={cn('text-lg font-bold lg:text-xl', isCorrect ? 'text-green-300' : 'text-red-300')}>
                   {isCorrect ? '¡Correcto!' : 'Incorrecto'}
                 </h5>
               </div>
 
               {isCorrect && rewards && isLastQuestion && (
                 <div className="mt-3 flex flex-wrap items-center justify-center gap-2.5 lg:gap-4">
-                  <div className="flex items-center gap-2 rounded-full border border-yellow-400/20 bg-yellow-400/15 px-3 py-1.5 text-sm font-bold text-yellow-300 shadow-md lg:px-4 lg:py-2 lg:text-base">
+                  <div
+                    className={cn(
+                      'flex items-center gap-2 rounded-full border border-yellow-400/20 bg-yellow-400/15 px-3',
+                      'py-1.5 text-sm font-bold text-yellow-300 shadow-md lg:px-4 lg:py-2 lg:text-base'
+                    )}
+                  >
                     <Icon name="coins" size="md" className="text-sm lg:text-base" />
                     <span>+{rewards.coins}</span>
                   </div>
-                  <div className="flex items-center gap-2 rounded-full border border-blue-400/20 bg-blue-400/15 px-3 py-1.5 text-sm font-bold text-blue-300 shadow-md lg:px-4 lg:py-2 lg:text-base">
+                  <div
+                    className={cn(
+                      'flex items-center gap-2 rounded-full border border-blue-400/20 bg-blue-400/15 px-3 py-1.5',
+                      'text-sm font-bold text-blue-300 shadow-md lg:px-4 lg:py-2 lg:text-base'
+                    )}
+                  >
                     <Icon name="star" size="md" className="text-sm lg:text-base" />
                     <span>+{rewards.xp} XP</span>
                   </div>
@@ -547,7 +573,11 @@ export const LessonQuizModal = ({
             {currentQuestionIndex > 0 && (
               <button
                 onClick={handlePreviousQuestion}
-                className="min-h-[48px] cursor-pointer rounded-xl bg-slate-800/80 px-3.5 py-3 font-bold text-slate-300 shadow-md transition-all hover:bg-slate-700 active:scale-95 active:bg-slate-600 lg:min-h-[44px] lg:rounded-xl lg:px-4"
+                className={cn(
+                  'min-h-[48px] cursor-pointer rounded-xl bg-slate-800/80 px-3.5 py-3 font-bold',
+                  'text-slate-300 shadow-md transition-all hover:bg-slate-700 active:scale-95',
+                  'active:bg-slate-600 lg:min-h-[44px] lg:rounded-xl lg:px-4'
+                )}
                 aria-label="Pregunta anterior"
               >
                 <Icon name="arrow-left" size="lg" className="text-base lg:text-lg" />
@@ -569,7 +599,11 @@ export const LessonQuizModal = ({
                   onClose();
                 }
               }}
-              className="min-h-[48px] flex-1 cursor-pointer rounded-xl bg-slate-800/80 px-3 py-3 text-sm font-semibold text-slate-300 shadow-md transition-all hover:bg-slate-700 active:scale-95 active:bg-slate-600 lg:min-h-[44px] lg:rounded-xl lg:px-4 lg:text-base"
+              className={cn(
+                'min-h-[48px] flex-1 cursor-pointer rounded-xl bg-slate-800/80 px-3 py-3 text-sm',
+                'font-semibold text-slate-300 shadow-md transition-all hover:bg-slate-700 active:scale-95',
+                'active:bg-slate-600 lg:min-h-[44px] lg:rounded-xl lg:px-4 lg:text-base'
+              )}
             >
               {isLastQuestion && (isCorrect || allQuestionsAnswered) ? 'Cerrar' : 'Cancelar'}
             </button>
@@ -578,7 +612,13 @@ export const LessonQuizModal = ({
               <button
                 onClick={handleSubmit}
                 disabled={!selectedOption || loading}
-                className="min-h-[48px] flex-1 cursor-pointer rounded-xl bg-linear-to-r from-blue-600 to-blue-500 px-3 py-3 text-sm font-bold text-white shadow-lg shadow-blue-500/20 transition-all hover:from-blue-500 hover:to-blue-400 active:scale-95 active:from-blue-700 active:to-blue-600 disabled:cursor-not-allowed disabled:opacity-50 disabled:active:scale-100 lg:min-h-[44px] lg:rounded-xl lg:px-4 lg:text-base"
+                className={cn(
+                  'min-h-[48px] flex-1 cursor-pointer rounded-xl bg-linear-to-r from-blue-600 to-blue-500',
+                  'px-3 py-3 text-sm font-bold text-white shadow-lg shadow-blue-500/20 transition-all',
+                  'hover:from-blue-500 hover:to-blue-400 active:scale-95 active:from-blue-700',
+                  'active:to-blue-600 disabled:cursor-not-allowed disabled:opacity-50',
+                  'disabled:active:scale-100 lg:min-h-[44px] lg:rounded-xl lg:px-4 lg:text-base'
+                )}
               >
                 {loading ? (
                   <span className="flex items-center justify-center gap-2">
@@ -598,7 +638,11 @@ export const LessonQuizModal = ({
                       setIsSubmitted(false);
                       setSelectedOption(null);
                     }}
-                    className="min-h-[48px] flex-1 cursor-pointer rounded-xl bg-slate-700 px-3 py-3 text-sm font-bold text-white shadow-md transition-all hover:bg-slate-600 active:scale-95 active:bg-slate-500 lg:min-h-[44px] lg:rounded-xl lg:px-4 lg:text-base"
+                    className={cn(
+                      'min-h-[48px] flex-1 cursor-pointer rounded-xl bg-slate-700 px-3 py-3 text-sm font-bold',
+                      'text-white shadow-md transition-all hover:bg-slate-600 active:scale-95 active:bg-slate-500',
+                      'lg:min-h-[44px] lg:rounded-xl lg:px-4 lg:text-base'
+                    )}
                   >
                     Reintentar
                   </button>
@@ -606,7 +650,12 @@ export const LessonQuizModal = ({
                 {isCorrect && !isLastQuestion && (
                   <button
                     onClick={handleNextQuestion}
-                    className="min-h-[48px] flex-1 cursor-pointer rounded-xl bg-linear-to-r from-green-600 to-green-500 px-3 py-3 text-sm font-bold text-white shadow-lg shadow-green-500/20 transition-all hover:from-green-500 hover:to-green-400 active:scale-95 active:from-green-700 active:to-green-600 lg:min-h-[44px] lg:rounded-xl lg:px-4 lg:text-base"
+                    className={cn(
+                      'min-h-[48px] flex-1 cursor-pointer rounded-xl bg-linear-to-r from-green-600 to-green-500',
+                      'px-3 py-3 text-sm font-bold text-white shadow-lg shadow-green-500/20 transition-all',
+                      'hover:from-green-500 hover:to-green-400 active:scale-95 active:from-green-700',
+                      'active:to-green-600 lg:min-h-[44px] lg:rounded-xl lg:px-4 lg:text-base'
+                    )}
                   >
                     <span className="hidden lg:inline">Siguiente </span>
                     <span className="lg:hidden">Sig.</span>

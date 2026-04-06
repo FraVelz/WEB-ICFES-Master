@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { cn } from '@/utils/cn';
 import { Icon } from '@/shared/components/Icon';
 import { useDailyChallenges } from '../hooks/useDailyChallenges';
 import { ChallengeCard } from '../components/ChallengeCard';
@@ -71,9 +72,10 @@ export const DailyChallengesPage = () => {
             <button
               onClick={handleNextDay}
               disabled={isToday}
-              className={`h-10 w-10 cursor-pointer rounded-full transition-colors ${
+              className={cn(
+                'h-10 w-10 cursor-pointer rounded-full transition-colors',
                 isToday ? 'cursor-not-allowed text-slate-700' : 'text-slate-400 hover:bg-slate-800 hover:text-white'
-              }`}
+              )}
             >
               <Icon name="chevron-right" />
             </button>

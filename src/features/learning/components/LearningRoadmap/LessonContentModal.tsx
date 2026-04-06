@@ -1,5 +1,6 @@
 'use client';
 
+import { cn } from '@/utils/cn';
 import React, { useState, useMemo } from 'react';
 import ReactMarkdown from 'react-markdown';
 import { Icon } from '@/shared/components/Icon';
@@ -114,10 +115,18 @@ export const LessonContentModal = ({
   return (
     <div ref={modalRef} className="fixed inset-0 z-60 flex h-full w-full flex-col bg-slate-950">
       {/* Header compacto */}
-      <div className="flex shrink-0 items-center justify-between border-b border-slate-800/80 bg-slate-900/90 px-3 py-2.5 backdrop-blur-md sm:px-4 sm:py-3">
+      <div
+        className={cn(
+          'flex shrink-0 items-center justify-between border-b border-slate-800/80 bg-slate-900/90',
+          'px-3 py-2.5 backdrop-blur-md sm:px-4 sm:py-3'
+        )}
+      >
         <button
           onClick={onClose}
-          className="-ml-1 flex min-w-[44px] cursor-pointer items-center gap-2 rounded-xl p-2 text-slate-400 transition-colors hover:bg-slate-800 hover:text-white"
+          className={cn(
+            '-ml-1 flex min-w-[44px] cursor-pointer items-center gap-2 rounded-xl p-2 text-slate-400',
+            'transition-colors hover:bg-slate-800 hover:text-white'
+          )}
         >
           <Icon name="arrow-left" className="text-lg" />
           <span className="hidden text-sm font-medium sm:inline">Salir</span>
@@ -131,7 +140,7 @@ export const LessonContentModal = ({
       {/* Barra de progreso */}
       <div className="h-1.5 shrink-0 bg-slate-800/80">
         <div
-          className={`h-full bg-linear-to-r ${gradientClass} transition-all duration-300 ease-out`}
+          className={cn('h-full bg-linear-to-r transition-all duration-300 ease-out', gradientClass)}
           style={{ width: `${progress}%` }}
         />
       </div>
@@ -150,11 +159,18 @@ export const LessonContentModal = ({
             <div className="relative w-full max-w-sm sm:order-1 sm:max-w-md sm:flex-1">
               {/* Cola del globo: móvil abajo, desktop derecha apuntando a mascota */}
               <div
-                className="absolute top-full left-1/2 h-0 w-0 -translate-x-1/2 -translate-y-px border-[10px] border-transparent border-t-slate-800 sm:top-1/2 sm:right-auto sm:left-full sm:translate-x-0 sm:-translate-y-1/2 sm:border-t-transparent sm:border-r-slate-800"
+                className={cn(
+                  'absolute top-full left-1/2 h-0 w-0 -translate-x-1/2 -translate-y-px border-[10px]',
+                  'border-transparent border-t-slate-800 sm:top-1/2 sm:right-auto sm:left-full',
+                  'sm:translate-x-0 sm:-translate-y-1/2 sm:border-t-transparent sm:border-r-slate-800'
+                )}
                 aria-hidden
               />
               <div
-                className={`rounded-2xl border-2 ${bubbleBorder} bg-slate-800/95 p-4 shadow-xl backdrop-blur-sm sm:p-5`}
+                className={cn(
+                  'rounded-2xl border-2 bg-slate-800/95 p-4 shadow-xl backdrop-blur-sm sm:p-5',
+                  bubbleBorder
+                )}
               >
                 <p className="text-center text-base leading-relaxed font-semibold text-white sm:text-left sm:text-lg">
                   {mascotDialogue}
@@ -203,7 +219,10 @@ export const LessonContentModal = ({
               </p>
               <button
                 onClick={() => setIsQuizOpen(true)}
-                className={`w-full transform cursor-pointer rounded-xl bg-linear-to-r ${gradientClass} px-6 py-3.5 font-bold text-white shadow-lg transition-all hover:scale-[1.02] active:scale-[0.98] sm:w-auto sm:min-w-[200px] sm:px-8 sm:py-4`}
+                className={cn(
+                  'w-full transform cursor-pointer rounded-xl bg-linear-to-r px-6 py-3.5 font-bold text-white shadow-lg transition-all hover:scale-[1.02] active:scale-[0.98] sm:w-auto sm:min-w-[200px] sm:px-8 sm:py-4',
+                  gradientClass
+                )}
               >
                 Realizar Prueba
               </button>
@@ -245,7 +264,10 @@ export const LessonContentModal = ({
                   li: ({ node, ...props }) => <li className="ml-3 sm:ml-4" {...props} />,
                   blockquote: ({ node, ...props }) => (
                     <blockquote
-                      className="my-3 rounded-r-lg border-l-4 border-blue-500/80 bg-slate-800/50 py-2 pr-3 pl-3 text-slate-400 italic sm:my-4 sm:pr-4 sm:pl-4"
+                      className={cn(
+                        'my-3 rounded-r-lg border-l-4 border-blue-500/80 bg-slate-800/50 py-2 pr-3 pl-3',
+                        'text-slate-400 italic sm:my-4 sm:pr-4 sm:pl-4'
+                      )}
                       {...props}
                     />
                   ),
@@ -263,7 +285,7 @@ export const LessonContentModal = ({
                       </code>
                     ) : (
                       <div className="my-3 overflow-x-auto rounded-lg border border-slate-700 bg-slate-800/80 p-3 sm:my-4 sm:p-4">
-                        <code className={`font-mono text-xs text-slate-200 sm:text-sm ${className ?? ''}`} {...props}>
+                        <code className={cn('font-mono text-xs text-slate-200 sm:text-sm', className)} {...props}>
                           {content}
                         </code>
                       </div>
@@ -303,11 +325,21 @@ export const LessonContentModal = ({
       </div>
 
       {/* Navegación: Anterior / Siguiente - responsive */}
-      <div className="fixed right-0 bottom-0 left-0 flex shrink-0 items-center justify-between gap-2 border-t border-slate-800/80 bg-slate-950/95 px-3 py-3 backdrop-blur-md sm:gap-4 sm:px-4 sm:py-4">
+      <div
+        className={cn(
+          'fixed right-0 bottom-0 left-0 flex shrink-0 items-center justify-between gap-2 border-t',
+          'border-slate-800/80 bg-slate-950/95 px-3 py-3 backdrop-blur-md sm:gap-4 sm:px-4 sm:py-4'
+        )}
+      >
         <button
           onClick={handlePrev}
           disabled={currentSection === 0}
-          className="flex min-w-[44px] cursor-pointer items-center justify-center gap-1.5 rounded-xl border border-slate-700 bg-slate-800/80 px-3 py-2.5 font-medium text-slate-300 transition-all hover:bg-slate-700/80 hover:text-white disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:bg-slate-800/80 disabled:hover:text-slate-300 sm:gap-2 sm:px-4 sm:py-3"
+          className={cn(
+            'flex min-w-[44px] cursor-pointer items-center justify-center gap-1.5 rounded-xl border',
+            'border-slate-700 bg-slate-800/80 px-3 py-2.5 font-medium text-slate-300 transition-all',
+            'hover:bg-slate-700/80 hover:text-white disabled:cursor-not-allowed disabled:opacity-40',
+            'disabled:hover:bg-slate-800/80 disabled:hover:text-slate-300 sm:gap-2 sm:px-4 sm:py-3'
+          )}
         >
           <Icon name="arrow-left" className="text-sm" />
           <span className="hidden text-sm sm:inline">Anterior</span>
@@ -318,7 +350,10 @@ export const LessonContentModal = ({
         <button
           onClick={handleNext}
           disabled={currentSection >= totalSteps - 1}
-          className={`flex min-w-[44px] cursor-pointer items-center justify-center gap-1.5 rounded-xl bg-linear-to-r ${gradientClass} px-3 py-2.5 font-medium text-white shadow-lg transition-all hover:opacity-95 disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:opacity-40 sm:gap-2 sm:px-4 sm:py-3`}
+          className={cn(
+            'flex min-w-[44px] cursor-pointer items-center justify-center gap-1.5 rounded-xl bg-linear-to-r px-3 py-2.5 font-medium text-white shadow-lg transition-all hover:opacity-95 disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:opacity-40 sm:gap-2 sm:px-4 sm:py-3',
+            gradientClass
+          )}
         >
           <span className="hidden text-sm sm:inline">Siguiente</span>
           <Icon name="arrow-right" className="text-sm" />

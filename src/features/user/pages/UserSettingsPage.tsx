@@ -1,5 +1,6 @@
 'use client';
 
+import { cn } from '@/utils/cn';
 import { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -20,7 +21,9 @@ interface SettingsSectionProps {
 }
 
 const SettingsSection = ({ title, icon, children, className = '' }: SettingsSectionProps) => (
-  <div className={`mb-6 rounded-2xl border border-slate-800 bg-slate-900/60 p-5 backdrop-blur-md sm:p-6 ${className}`}>
+  <div
+    className={cn('mb-6 rounded-2xl border border-slate-800 bg-slate-900/60 p-5 backdrop-blur-md sm:p-6', className)}
+  >
     {title && (
       <h2 className="mb-6 flex items-center gap-3 border-b border-slate-800 pb-4 text-lg font-bold text-white sm:text-xl">
         <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-slate-800 text-cyan-400 shadow-inner">
@@ -45,26 +48,28 @@ interface SettingOptionProps {
 const SettingOption = ({ label, description, icon, action, danger = false, onClick }: SettingOptionProps) => (
   <div
     onClick={onClick}
-    className={`group flex flex-col justify-between rounded-xl border p-4 transition-all duration-200 sm:flex-row sm:items-center ${
+    className={cn(
+      'group flex flex-col justify-between rounded-xl border p-4 transition-all duration-200 sm:flex-row sm:items-center',
       danger
         ? 'cursor-pointer border-red-500/20 bg-red-500/5 hover:border-red-500/30 hover:bg-red-500/10'
         : 'border-slate-700/50 bg-slate-800/30 hover:border-slate-600 hover:bg-slate-800/60'
-    }`}
+    )}
   >
     <div className="mb-3 flex items-start gap-4 sm:mb-0">
       {icon && (
         <div
-          className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-full transition-colors ${
+          className={cn(
+            'flex h-10 w-10 shrink-0 items-center justify-center rounded-full transition-colors',
             danger
               ? 'bg-red-500/10 text-red-400 group-hover:bg-red-500/20'
               : 'bg-slate-700/50 text-slate-400 group-hover:bg-slate-700 group-hover:text-cyan-400'
-          }`}
+          )}
         >
           <Icon name={icon ?? 'settings'} />
         </div>
       )}
       <div>
-        <h3 className={`text-base font-medium ${danger ? 'text-red-400' : 'text-slate-200'}`}>{label}</h3>
+        <h3 className={cn('text-base font-medium', danger ? 'text-red-400' : 'text-slate-200')}>{label}</h3>
         {description && <p className="mt-0.5 text-sm leading-relaxed text-slate-400">{description}</p>}
       </div>
     </div>
@@ -279,11 +284,12 @@ export const UserSettingsPage = () => {
           {/* Alert Messages */}
           {message && (
             <div
-              className={`animate-fadeIn fixed top-20 right-4 z-50 max-w-sm rounded-xl border p-4 shadow-xl backdrop-blur-md ${
+              className={cn(
+                'animate-fadeIn fixed top-20 right-4 z-50 max-w-sm rounded-xl border p-4 shadow-xl backdrop-blur-md',
                 messageType === 'success'
                   ? 'border-green-500/30 bg-green-500/10 text-green-400'
                   : 'border-red-500/30 bg-red-500/10 text-red-400'
-              }`}
+              )}
             >
               <div className="flex items-center gap-3">
                 <Icon name={messageType === 'success' ? 'check-circle' : 'warning'} />
@@ -311,7 +317,11 @@ export const UserSettingsPage = () => {
                     </div>
                     <button
                       onClick={() => fileInputRef.current?.click()}
-                      className="absolute right-0 bottom-0 flex h-10 w-10 cursor-pointer items-center justify-center rounded-full border-4 border-slate-900 bg-cyan-500 text-white shadow-lg transition-transform hover:scale-110 hover:bg-cyan-400"
+                      className={cn(
+                        'absolute right-0 bottom-0 flex h-10 w-10 cursor-pointer items-center justify-center',
+                        'rounded-full border-4 border-slate-900 bg-cyan-500 text-white shadow-lg',
+                        'transition-transform hover:scale-110 hover:bg-cyan-400'
+                      )}
                     >
                       <Icon name="camera" className="text-sm" />
                     </button>
@@ -334,13 +344,19 @@ export const UserSettingsPage = () => {
                           type="text"
                           value={username}
                           onChange={(e) => setUsername(e.target.value.slice(0, 30))}
-                          className="flex-1 rounded-lg border border-slate-800 bg-slate-950 px-3 py-2 text-sm text-white transition-all outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500"
+                          className={cn(
+                            'flex-1 rounded-lg border border-slate-800 bg-slate-950 px-3 py-2 text-sm text-white',
+                            'transition-all outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500'
+                          )}
                           placeholder="Tu nombre"
                         />
                         <button
                           onClick={handleUsernameUpdate}
                           disabled={loading}
-                          className="cursor-pointer rounded-lg bg-slate-800 px-3 py-2 text-slate-400 transition-colors hover:bg-cyan-500/20 hover:text-cyan-400"
+                          className={cn(
+                            'cursor-pointer rounded-lg bg-slate-800 px-3 py-2 text-slate-400 transition-colors',
+                            'hover:bg-cyan-500/20 hover:text-cyan-400'
+                          )}
                         >
                           <Icon name="check" />
                         </button>
@@ -355,13 +371,21 @@ export const UserSettingsPage = () => {
                         <textarea
                           value={bio}
                           onChange={(e) => setBio(e.target.value.slice(0, 150))}
-                          className="h-24 w-full resize-none rounded-lg border border-slate-800 bg-slate-950 px-3 py-2 text-sm text-white transition-all outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500"
+                          className={cn(
+                            'h-24 w-full resize-none rounded-lg border border-slate-800 bg-slate-950 px-3 py-2 text-sm',
+                            'text-white transition-all outline-none focus:border-cyan-500 focus:ring-1',
+                            'focus:ring-cyan-500'
+                          )}
                           placeholder="Cuéntanos sobre ti..."
                         />
                         <button
                           onClick={handleBioUpdate}
                           disabled={loading}
-                          className="absolute right-2 bottom-2 flex h-8 w-8 cursor-pointer items-center justify-center rounded-md bg-slate-800 text-xs text-slate-400 transition-colors hover:bg-cyan-500/20 hover:text-cyan-400"
+                          className={cn(
+                            'absolute right-2 bottom-2 flex h-8 w-8 cursor-pointer items-center justify-center',
+                            'rounded-md bg-slate-800 text-xs text-slate-400 transition-colors hover:bg-cyan-500/20',
+                            'hover:text-cyan-400'
+                          )}
                         >
                           <Icon name="check" />
                         </button>
@@ -425,20 +449,22 @@ export const UserSettingsPage = () => {
                 <div className="mb-6 flex rounded-xl border border-slate-800 bg-slate-950/50 p-1">
                   <button
                     onClick={() => setSupportMode('response')}
-                    className={`flex-1 cursor-pointer rounded-lg px-4 py-2 text-sm font-medium transition-all ${
+                    className={cn(
+                      'flex-1 cursor-pointer rounded-lg px-4 py-2 text-sm font-medium transition-all',
                       supportMode === 'response'
                         ? 'bg-slate-800 text-white shadow-sm'
                         : 'text-slate-400 hover:text-white'
-                    }`}
+                    )}
                   >
                     <Icon name="paper-plane" className="mr-2" />
                     Contactar
                   </button>
                   <button
                     onClick={() => setSupportMode('report')}
-                    className={`flex-1 cursor-pointer rounded-lg px-4 py-2 text-sm font-medium transition-all ${
+                    className={cn(
+                      'flex-1 cursor-pointer rounded-lg px-4 py-2 text-sm font-medium transition-all',
                       supportMode === 'report' ? 'bg-slate-800 text-white shadow-sm' : 'text-slate-400 hover:text-white'
-                    }`}
+                    )}
                   >
                     <Icon name="bug" className="mr-2" />
                     Reportar Bug
@@ -483,7 +509,10 @@ export const UserSettingsPage = () => {
                       value={supportMessage}
                       onChange={(e) => setSupportMessage(e.target.value)}
                       required
-                      className="h-32 w-full resize-none rounded-lg border border-slate-800 bg-slate-950 px-3 py-3 text-sm text-white outline-none focus:border-cyan-500"
+                      className={cn(
+                        'h-32 w-full resize-none rounded-lg border border-slate-800 bg-slate-950 px-3 py-3 text-sm',
+                        'text-white outline-none focus:border-cyan-500'
+                      )}
                       placeholder={
                         supportMode === 'response' ? '¿En qué podemos ayudarte?' : 'Describe el error encontrado...'
                       }
@@ -493,7 +522,11 @@ export const UserSettingsPage = () => {
                   <button
                     type="submit"
                     disabled={sendingSupport}
-                    className="w-full cursor-pointer rounded-xl bg-linear-to-r from-cyan-600 to-blue-600 py-3 font-bold text-white shadow-lg shadow-cyan-500/20 transition-all hover:from-cyan-500 hover:to-blue-500 disabled:cursor-not-allowed disabled:opacity-50"
+                    className={cn(
+                      'w-full cursor-pointer rounded-xl bg-linear-to-r from-cyan-600 to-blue-600 py-3 font-bold',
+                      'text-white shadow-lg shadow-cyan-500/20 transition-all hover:from-cyan-500',
+                      'hover:to-blue-500 disabled:cursor-not-allowed disabled:opacity-50'
+                    )}
                   >
                     {sendingSupport ? 'Enviando...' : 'Enviar Mensaje'}
                   </button>
@@ -574,7 +607,10 @@ export const UserSettingsPage = () => {
                     disabled={
                       loading || (deleteConfirmation !== 'BORRAR TODO' && deleteConfirmation !== 'BORRAR MI CUENTA')
                     }
-                    className="flex-1 cursor-pointer rounded-lg bg-red-600 py-2.5 font-medium text-white transition-colors hover:bg-red-500 disabled:cursor-not-allowed disabled:opacity-50"
+                    className={cn(
+                      'flex-1 cursor-pointer rounded-lg bg-red-600 py-2.5 font-medium text-white',
+                      'transition-colors hover:bg-red-500 disabled:cursor-not-allowed disabled:opacity-50'
+                    )}
                   >
                     {loading ? 'Procesando...' : 'Confirmar'}
                   </button>
@@ -590,7 +626,11 @@ export const UserSettingsPage = () => {
             const element = document.getElementById('donation-section');
             element?.scrollIntoView({ behavior: 'smooth' });
           }}
-          className="fixed right-6 bottom-6 z-40 cursor-pointer rounded-full bg-linear-to-r from-pink-500 to-rose-500 p-4 text-white shadow-lg shadow-pink-500/30 transition-transform duration-300 hover:scale-110 lg:hidden"
+          className={cn(
+            'fixed right-6 bottom-6 z-40 cursor-pointer rounded-full bg-linear-to-r from-pink-500',
+            'to-rose-500 p-4 text-white shadow-lg shadow-pink-500/30 transition-transform duration-300',
+            'hover:scale-110 lg:hidden'
+          )}
         >
           <Icon name="heart" className="text-xl" />
         </button>

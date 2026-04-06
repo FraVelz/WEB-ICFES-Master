@@ -1,3 +1,4 @@
+import { cn } from '@/utils/cn';
 import { Card } from '../atoms/Card';
 import { Badge } from '../atoms/Badge';
 import { Text, Title } from '../atoms/Text';
@@ -26,7 +27,7 @@ export const QuestionCard = ({ question, number, onSelect, isSelected = false, c
   };
 
   return (
-    <Card hover onClick={onSelect} className={` ${isSelected ? 'ring-2 ring-blue-500' : ''} ${className} `}>
+    <Card hover onClick={onSelect} className={cn(isSelected && 'ring-2 ring-blue-500', className)}>
       <div className="mb-4 flex items-start justify-between">
         <div className="flex-1">
           <Title level={5} className="mb-2">

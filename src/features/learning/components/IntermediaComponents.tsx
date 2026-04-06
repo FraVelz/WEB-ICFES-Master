@@ -1,4 +1,5 @@
 import { Icon } from '@/shared/components/Icon';
+import { cn } from '@/utils/cn';
 import Link from 'next/link';
 
 export interface Exam {
@@ -79,7 +80,7 @@ interface ExamHeaderProps {
 export const ExamHeader = ({ subject, exam, isExpanded }: ExamHeaderProps) => (
   <button className="flex w-full items-center justify-between p-4 transition-colors hover:bg-slate-700/50">
     <div className="flex items-center gap-3 text-left">
-      <Icon name={subject.icon} size="xl" className={`text-xl ${subject.color}`} />
+      <Icon name={subject.icon} size="xl" className={cn('text-xl', subject.color)} />
       <div>
         <h3 className="text-lg font-semibold text-white">{exam.title}</h3>
         <p className="text-xs text-slate-400">
@@ -89,7 +90,7 @@ export const ExamHeader = ({ subject, exam, isExpanded }: ExamHeaderProps) => (
     </div>
     <Icon
       name="chevron-down"
-      className={`text-slate-400 transition-transform duration-300 ${isExpanded ? 'rotate-180' : ''}`}
+      className={cn('text-slate-400 transition-transform duration-300', isExpanded && 'rotate-180')}
     />
   </button>
 );
@@ -103,9 +104,10 @@ interface IntermediaExamCardProps {
 
 export const IntermediaExamCard = ({ subject, exam, isExpanded, onToggle }: IntermediaExamCardProps) => (
   <div
-    className={`overflow-hidden rounded-xl border-2 transition-all ${
-      isExpanded ? `${subject.borderColor} ${subject.bgColor}` : 'border-slate-700'
-    }`}
+    className={cn(
+      'overflow-hidden rounded-xl border-2 transition-all',
+      isExpanded ? cn(subject.borderColor, subject.bgColor) : 'border-slate-700'
+    )}
   >
     <button onClick={onToggle} className="w-full">
       <ExamHeader subject={subject} exam={exam} isExpanded={isExpanded} />

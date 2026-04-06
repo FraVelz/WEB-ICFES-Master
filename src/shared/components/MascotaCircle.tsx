@@ -1,3 +1,5 @@
+import { cn } from '@/utils/cn';
+
 export type MascotaCircleSize = 'sm' | 'md' | 'lg' | 'xl' | 'medium' | 'large';
 
 export type MascotaCircleProps = {
@@ -36,11 +38,15 @@ export const MascotaCircle = ({
   const circleClass = size ? (sizeMap[size] ?? sizeMap.lg) : sizeMap.lg;
 
   return (
-    <div className={`${containerClass} ${className}`}>
+    <div className={cn(containerClass, className)}>
       <div
-        className={`${circleClass} flex items-center justify-center overflow-hidden rounded-full bg-linear-to-br from-slate-800 to-slate-900 shadow-lg ${circleClassName}`}
+        className={cn(
+          circleClass,
+          'flex items-center justify-center overflow-hidden rounded-full bg-linear-to-br from-slate-800 to-slate-900 shadow-lg',
+          circleClassName
+        )}
       >
-        <img draggable="false" src={src} alt={alt} className={`${imgSize} object-cover drop-shadow-lg select-none`} />
+        <img draggable="false" src={src} alt={alt} className={cn(imgSize, 'object-cover drop-shadow-lg select-none')} />
       </div>
     </div>
   );

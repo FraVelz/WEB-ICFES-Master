@@ -1,5 +1,6 @@
 'use client';
 
+import { cn } from '@/utils/cn';
 import { useState, useMemo } from 'react';
 import { Icon } from '@/shared/components/Icon';
 
@@ -96,6 +97,13 @@ export const UnifiedAchievementsHub = ({
       textColor: 'text-yellow-300',
       badge: 'border-yellow-500',
     },
+  };
+
+  const rarityHoverShadow: Record<string, string> = {
+    común: 'hover:shadow-gray-500/30',
+    raro: 'hover:shadow-blue-500/30',
+    épico: 'hover:shadow-purple-500/30',
+    legendario: 'hover:shadow-yellow-500/30',
   };
 
   // Datos de estadísticas
@@ -200,14 +208,21 @@ export const UnifiedAchievementsHub = ({
         {stats.map((stat, idx) => (
           <div
             key={idx}
-            className={`group relative rounded-xl border ${stat.borderColor} ${stat.bgColor} hover:border-opacity-100 overflow-hidden p-6 backdrop-blur-md transition-all duration-300`}
+            className={cn(
+              'group hover:border-opacity-100 relative overflow-hidden rounded-xl border p-6 backdrop-blur-md transition-all duration-300',
+              stat.borderColor,
+              stat.bgColor
+            )}
           >
             <div
-              className={`absolute inset-0 bg-linear-to-r opacity-0 group-hover:opacity-10 ${stat.color} transition-opacity`}
+              className={cn(
+                'absolute inset-0 bg-linear-to-r opacity-0 transition-opacity group-hover:opacity-10',
+                stat.color
+              )}
             ></div>
             <div className="relative z-10">
               <div className="mb-4 flex items-start justify-between">
-                <div className={`bg-linear-to-r bg-clip-text text-3xl text-transparent ${stat.color}`}>
+                <div className={cn('bg-linear-to-r bg-clip-text text-3xl text-transparent', stat.color)}>
                   <Icon name={stat.icon} />
                 </div>
               </div>
@@ -230,11 +245,12 @@ export const UnifiedAchievementsHub = ({
           <button
             key={tab.id}
             onClick={() => setActiveTab(tab.id)}
-            className={`flex items-center gap-2 rounded-lg px-6 py-3 font-semibold whitespace-nowrap transition-all duration-300 ${
+            className={cn(
+              'flex items-center gap-2 rounded-lg px-6 py-3 font-semibold whitespace-nowrap transition-all duration-300',
               activeTab === tab.id
                 ? 'bg-linear-to-r from-cyan-500 to-blue-500 text-white shadow-lg shadow-cyan-500/50'
                 : 'text-slate-400 hover:bg-slate-800/50 hover:text-slate-200'
-            }`}
+            )}
           >
             <Icon name={tab.icon} size="sm" className="text-sm" />
             {tab.label}
@@ -258,7 +274,13 @@ export const UnifiedAchievementsHub = ({
               <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-6">
                 {badges.slice(0, 6).map((badge, idx) => (
                   <div key={badge.id || idx} className="group cursor-pointer" onClick={() => setSelectedBadge(badge)}>
-                    <div className="relative overflow-hidden rounded-lg border border-slate-700 bg-slate-800 p-4 transition-all duration-300 hover:border-cyan-500/50 hover:shadow-lg hover:shadow-cyan-500/20">
+                    <div
+                      className={cn(
+                        'relative overflow-hidden rounded-lg border border-slate-700 bg-slate-800 p-4',
+                        'transition-all duration-300 hover:border-cyan-500/50 hover:shadow-lg',
+                        'hover:shadow-cyan-500/20'
+                      )}
+                    >
                       <div className="flex aspect-square items-center justify-center text-4xl">
                         {badge.icon ? (
                           <Icon
@@ -269,7 +291,12 @@ export const UnifiedAchievementsHub = ({
                           <Icon name="trophy" className="text-amber-400" />
                         )}
                       </div>
-                      <div className="absolute inset-0 flex items-center justify-center rounded-lg bg-black/60 opacity-0 transition-opacity group-hover:opacity-100">
+                      <div
+                        className={cn(
+                          'absolute inset-0 flex items-center justify-center rounded-lg bg-black/60 opacity-0',
+                          'transition-opacity group-hover:opacity-100'
+                        )}
+                      >
                         <p className="px-2 text-center text-xs font-bold text-white">{badge.name}</p>
                       </div>
                     </div>
@@ -331,11 +358,12 @@ export const UnifiedAchievementsHub = ({
               <button
                 key={key}
                 onClick={() => setFilterCategory(key)}
-                className={`rounded-lg px-4 py-2 font-medium transition-all duration-300 ${
+                className={cn(
+                  'rounded-lg px-4 py-2 font-medium transition-all duration-300',
                   filterCategory === key
                     ? 'bg-linear-to-r from-cyan-500 to-blue-500 text-white'
                     : 'bg-slate-800 text-slate-300 hover:bg-slate-700'
-                }`}
+                )}
               >
                 {label}
               </button>
@@ -352,9 +380,13 @@ export const UnifiedAchievementsHub = ({
                 return (
                   <div key={badge.id || idx} className="group cursor-pointer" onClick={() => setSelectedBadge(badge)}>
                     <div
-                      className={`relative rounded-xl border ${config.badge} bg-linear-to-br ${config.color} overflow-hidden p-6 transition-all duration-300 hover:shadow-lg hover:shadow-${rarity}-500/30 ${
+                      className={cn(
+                        'relative overflow-hidden rounded-xl border bg-linear-to-br p-6 transition-all duration-300 hover:shadow-lg',
+                        config.badge,
+                        config.color,
+                        rarityHoverShadow[rarity] ?? 'hover:shadow-slate-500/30',
                         badge.unlocked ? 'opacity-100' : 'opacity-50'
-                      }`}
+                      )}
                     >
                       {/* Background glow */}
                       <div className="absolute inset-0 bg-white opacity-0 transition-opacity group-hover:opacity-20"></div>
@@ -362,7 +394,7 @@ export const UnifiedAchievementsHub = ({
                       {/* Content */}
                       <div className="relative z-10 flex flex-col items-center space-y-3 text-center">
                         {/* Icon */}
-                        <div className={`text-5xl ${config.textColor}`}>
+                        <div className={cn('text-5xl', config.textColor)}>
                           {badge.icon ? (
                             <Icon name={typeof badge.icon === 'string' ? badge.icon : 'trophy'} />
                           ) : (
@@ -433,24 +465,26 @@ export const UnifiedAchievementsHub = ({
                 return (
                   <div
                     key={lv}
-                    className={`rounded-lg border ${
+                    className={cn(
+                      'rounded-lg border p-6 transition-all duration-300',
                       isCurrentLevel
                         ? 'border-cyan-500/50 bg-cyan-500/10'
                         : isCompleted
                           ? 'border-green-500/30 bg-green-500/10'
                           : 'border-slate-700 bg-slate-800/50'
-                    } p-6 transition-all duration-300`}
+                    )}
                   >
                     <div className="mb-4 flex items-center justify-between">
                       <div className="flex items-center gap-4">
                         <div
-                          className={`flex h-16 w-16 items-center justify-center rounded-lg text-3xl font-bold ${
+                          className={cn(
+                            'flex h-16 w-16 items-center justify-center rounded-lg text-3xl font-bold',
                             isCurrentLevel
                               ? 'bg-linear-to-br from-cyan-500 to-blue-500 text-white'
                               : isCompleted
                                 ? 'bg-linear-to-br from-green-500 to-emerald-500 text-white'
                                 : 'bg-slate-700 text-slate-400'
-                          }`}
+                          )}
                         >
                           {lv}
                         </div>
@@ -469,7 +503,12 @@ export const UnifiedAchievementsHub = ({
                         </span>
                       )}
                       {isCompleted && (
-                        <span className="flex inline-block items-center gap-2 rounded-full border border-green-500/50 bg-green-500/20 px-3 py-1 text-sm font-semibold text-green-400">
+                        <span
+                          className={cn(
+                            'flex inline-block items-center gap-2 rounded-full border border-green-500/50',
+                            'bg-green-500/20 px-3 py-1 text-sm font-semibold text-green-400'
+                          )}
+                        >
                           <Icon name="check-circle" />
                           Completado
                         </span>
@@ -518,11 +557,12 @@ export const UnifiedAchievementsHub = ({
               ].map((challenge, idx) => (
                 <div
                   key={idx}
-                  className={`rounded-lg border p-6 transition-all duration-300 ${
+                  className={cn(
+                    'rounded-lg border p-6 transition-all duration-300',
                     challenge.completed
                       ? 'border-green-500/30 bg-green-500/10'
                       : 'border-blue-500/30 bg-blue-500/10 hover:border-blue-500/50'
-                  }`}
+                  )}
                 >
                   <div className="flex items-start justify-between">
                     <div>
@@ -640,7 +680,10 @@ export const UnifiedAchievementsHub = ({
 
             <button
               onClick={() => setSelectedBadge(null)}
-              className="w-full rounded-lg bg-linear-to-r from-cyan-500 to-blue-500 py-3 font-bold text-white transition-all hover:shadow-lg hover:shadow-cyan-500/50"
+              className={cn(
+                'w-full rounded-lg bg-linear-to-r from-cyan-500 to-blue-500 py-3 font-bold text-white',
+                'transition-all hover:shadow-lg hover:shadow-cyan-500/50'
+              )}
             >
               Cerrar
             </button>

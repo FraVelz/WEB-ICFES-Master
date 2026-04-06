@@ -1,3 +1,5 @@
+import { cn } from '@/utils/cn';
+
 export interface BillingPeriodSelectorProps {
   billingPeriod: 'monthly' | 'annual';
   setBillingPeriod: React.Dispatch<React.SetStateAction<'monthly' | 'annual'>>;
@@ -11,22 +13,24 @@ export const BillingPeriodSelector = ({ billingPeriod, setBillingPeriod }: Billi
         <button
           type="button"
           onClick={() => setBillingPeriod('monthly')}
-          className={`rounded-lg px-4 py-3 font-semibold transition-all duration-300 ${
+          className={cn(
+            'rounded-lg px-4 py-3 font-semibold transition-all duration-300',
             billingPeriod === 'monthly'
               ? 'border border-cyan-400 bg-cyan-500 text-white'
               : 'border border-slate-600 bg-slate-700 text-slate-300 hover:border-slate-500'
-          }`}
+          )}
         >
           Mensual
         </button>
         <button
           type="button"
           onClick={() => setBillingPeriod('annual')}
-          className={`relative rounded-lg px-4 py-3 font-semibold transition-all duration-300 ${
+          className={cn(
+            'relative rounded-lg px-4 py-3 font-semibold transition-all duration-300',
             billingPeriod === 'annual'
               ? 'border border-cyan-400 bg-cyan-500 text-white'
               : 'border border-slate-600 bg-slate-700 text-slate-300 hover:border-slate-500'
-          }`}
+          )}
         >
           Anual
           {billingPeriod === 'annual' && (

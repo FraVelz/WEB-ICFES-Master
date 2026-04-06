@@ -1,3 +1,4 @@
+import { cn } from '@/utils/cn';
 import Link from 'next/link';
 import { Icon } from '@/shared/components/Icon';
 
@@ -11,7 +12,8 @@ export const Algebra = () => {
       {
         name: 'Ecuaciones Lineales',
         description:
-          'Aprende a resolver ecuaciones de primer grado con una o más variables. Dominando técnicas de despeje y balanceo.',
+          'Aprende a resolver ecuaciones de primer grado con una o más variables. ' +
+          'Dominando técnicas de despeje y balanceo.',
         subtopics: [
           'Ecuaciones con una variable',
           'Ecuaciones con dos variables',
@@ -95,7 +97,10 @@ export const Algebra = () => {
               <Icon name="book" /> {content.lessons} lecciones
             </span>
             <span
-              className={`rounded-full px-4 py-1 ${content.difficulty === 'fácil' ? 'bg-green-500/30' : 'bg-yellow-500/30'} text-sm`}
+              className={cn(
+                'rounded-full px-4 py-1 text-sm',
+                content.difficulty === 'fácil' ? 'bg-green-500/30' : 'bg-yellow-500/30'
+              )}
             >
               {content.difficulty}
             </span>
@@ -174,7 +179,11 @@ export const Algebra = () => {
         <div className="text-center">
           <Link
             href="/aprendizaje"
-            className="inline-block rounded-xl bg-linear-to-r from-purple-600 to-purple-700 px-8 py-3 font-semibold text-white transition-all duration-300 hover:scale-105 hover:from-purple-700 hover:to-purple-800 hover:shadow-lg"
+            className={cn(
+              'inline-block rounded-xl bg-linear-to-r from-purple-600 to-purple-700 px-8 py-3',
+              'font-semibold text-white transition-all duration-300 hover:scale-105 hover:from-purple-700',
+              'hover:to-purple-800 hover:shadow-lg'
+            )}
           >
             Volver al Aprendizaje
           </Link>

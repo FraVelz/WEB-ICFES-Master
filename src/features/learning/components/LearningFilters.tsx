@@ -1,5 +1,6 @@
 'use client';
 
+import { cn } from '@/utils/cn';
 import { Icon } from '@/shared/components/Icon';
 import { useRef, useState, useEffect } from 'react';
 
@@ -128,7 +129,10 @@ export const LearningFilters = ({
       <div className="mb-8 flex items-center justify-between gap-4">
         <button
           onClick={() => setShowFilters(!showFilters)}
-          className="flex w-full cursor-pointer items-center justify-between gap-3 text-2xl font-bold text-white transition-colors hover:text-cyan-400"
+          className={cn(
+            'flex w-full cursor-pointer items-center justify-between gap-3 text-2xl font-bold',
+            'text-white transition-colors hover:text-cyan-400'
+          )}
         >
           <span className="flex items-center gap-3">
             <Icon name="filter" className="text-cyan-400" />
@@ -155,11 +159,12 @@ export const LearningFilters = ({
             <div className="flex flex-wrap gap-3 md:grid md:grid-cols-5">
               <button
                 onClick={() => onAreaChange('all')}
-                className={`cursor-pointer rounded-lg px-4 py-2 font-semibold transition-all ${
+                className={cn(
+                  'cursor-pointer rounded-lg px-4 py-2 font-semibold transition-all',
                   activeArea === 'all'
                     ? 'scale-105 bg-blue-600 text-white'
                     : 'bg-white/10 text-gray-300 hover:bg-white/20'
-                }`}
+                )}
               >
                 Todas
               </button>
@@ -167,11 +172,12 @@ export const LearningFilters = ({
                 <button
                   key={area}
                   onClick={() => onAreaChange(area)}
-                  className={`flex cursor-pointer items-center justify-center gap-2 rounded-lg px-4 py-2 font-semibold transition-all ${
+                  className={cn(
+                    'flex cursor-pointer items-center justify-center gap-2 rounded-lg px-4 py-2 font-semibold transition-all',
                     activeArea === area
                       ? 'scale-105 bg-blue-600 text-white'
                       : 'bg-white/10 text-gray-300 hover:bg-white/20'
-                  }`}
+                  )}
                 >
                   <Icon name={icon} className={color} />
                   <span className="inline">{label}</span>
@@ -191,7 +197,11 @@ export const LearningFilters = ({
                   placeholder="Escribe para buscar temas (ej: 'Derivadas', 'Células'...)"
                   value={searchTerm}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) => onSearchChange(e.target.value)}
-                  className="w-full rounded-xl border border-white/20 bg-white/10 px-4 py-3 text-white placeholder-gray-400 transition-all focus:border-cyan-500/50 focus:bg-white/15 focus:outline-none"
+                  className={cn(
+                    'w-full rounded-xl border border-white/20 bg-white/10 px-4 py-3 text-white',
+                    'placeholder-gray-400 transition-all focus:border-cyan-500/50 focus:bg-white/15',
+                    'focus:outline-none'
+                  )}
                 />
                 {searchTerm && (
                   <button
@@ -228,11 +238,12 @@ export const LearningFilters = ({
                       <button
                         key={topic}
                         onClick={() => onTopicToggle(topic)}
-                        className={`shrink-0 cursor-pointer rounded-lg px-4 py-3 text-sm font-semibold whitespace-nowrap transition-all ${
+                        className={cn(
+                          'shrink-0 cursor-pointer rounded-lg px-4 py-3 text-sm font-semibold whitespace-nowrap transition-all',
                           selectedTopics.includes(topic)
                             ? 'border border-purple-400 bg-purple-600 text-white shadow-lg'
                             : 'border border-white/20 bg-white/10 text-gray-300 hover:bg-white/20'
-                        }`}
+                        )}
                       >
                         {topic}
                       </button>
@@ -247,7 +258,10 @@ export const LearningFilters = ({
                   {/* Left Arrow Button */}
                   <button
                     onClick={() => scroll('left')}
-                    className="shrink-0 cursor-pointer rounded-full bg-blue-600 p-3 text-white shadow-lg transition-all hover:bg-blue-700 active:scale-95"
+                    className={cn(
+                      'shrink-0 cursor-pointer rounded-full bg-blue-600 p-3 text-white shadow-lg transition-all',
+                      'hover:bg-blue-700 active:scale-95'
+                    )}
                   >
                     <Icon name="chevron-left" size="lg" />
                   </button>
@@ -269,7 +283,10 @@ export const LearningFilters = ({
                   {/* Right Arrow Button */}
                   <button
                     onClick={() => scroll('right')}
-                    className="shrink-0 cursor-pointer rounded-full bg-blue-600 p-3 text-white shadow-lg transition-all hover:bg-blue-700 active:scale-95"
+                    className={cn(
+                      'shrink-0 cursor-pointer rounded-full bg-blue-600 p-3 text-white shadow-lg transition-all',
+                      'hover:bg-blue-700 active:scale-95'
+                    )}
                   >
                     <Icon name="chevron-right" size="lg" />
                   </button>

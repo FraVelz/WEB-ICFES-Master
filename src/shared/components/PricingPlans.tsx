@@ -1,3 +1,4 @@
+import { cn } from '@/utils/cn';
 import { Icon } from '@/shared/components/Icon';
 import { useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
@@ -85,15 +86,21 @@ export const PricingPlans = ({ plans = [] }: { plans?: Plan[] }) => {
         {plans.map((plan, idx) => (
           <div
             key={idx}
-            className={`rounded-xl border transition-all duration-300 ${
+            className={cn(
+              'rounded-xl border p-8 transition-all duration-300',
               plan.popular
                 ? 'scale-105 border-cyan-500/50 bg-linear-to-br from-cyan-600/20 to-blue-600/20 shadow-lg shadow-cyan-500/20'
                 : 'border-slate-700 bg-slate-800/50 hover:border-slate-600'
-            } p-8`}
+            )}
           >
             {plan.popular && (
               <div className="mb-4 text-center">
-                <span className="inline-flex items-center gap-1 rounded-full border border-cyan-500/50 bg-cyan-500/30 px-4 py-1 text-sm font-bold text-cyan-400">
+                <span
+                  className={cn(
+                    'inline-flex items-center gap-1 rounded-full border border-cyan-500/50 bg-cyan-500/30 px-4',
+                    'py-1 text-sm font-bold text-cyan-400'
+                  )}
+                >
                   <Icon name="crown" />
                   Más Popular
                 </span>
@@ -110,11 +117,12 @@ export const PricingPlans = ({ plans = [] }: { plans?: Plan[] }) => {
 
             <button
               onClick={() => handlePlanClick(plan)}
-              className={`mb-8 w-full cursor-pointer rounded-lg px-4 py-3 font-bold transition-all duration-300 ${
+              className={cn(
+                'mb-8 w-full cursor-pointer rounded-lg px-4 py-3 font-bold transition-all duration-300',
                 plan.popular
                   ? 'bg-linear-to-r from-cyan-500 to-blue-500 text-white hover:shadow-lg hover:shadow-cyan-500/50'
                   : 'bg-slate-700 text-white hover:bg-slate-600'
-              }`}
+              )}
             >
               {plan.cta}
             </button>

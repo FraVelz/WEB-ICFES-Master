@@ -1,3 +1,4 @@
+import { cn } from '@/utils/cn';
 import { Icon } from '@/shared/components/Icon';
 import type { PlanItem } from '../types';
 
@@ -27,11 +28,12 @@ export const PaymentButtons = ({ isProcessing, isFormValid, onClose, price, plan
           type="submit"
           form="payment-form"
           disabled={isFree ? isProcessing : !isFormValid || isProcessing}
-          className={`flex cursor-pointer items-center justify-center gap-2 rounded-lg px-4 py-3 font-bold transition-all duration-300 ${
+          className={cn(
+            'flex cursor-pointer items-center justify-center gap-2 rounded-lg px-4 py-3 font-bold transition-all duration-300',
             isFree || (isFormValid && !isProcessing)
               ? 'bg-linear-to-r from-cyan-500 to-blue-600 text-white hover:shadow-lg hover:shadow-cyan-500/50'
               : 'cursor-not-allowed bg-slate-700 text-slate-500'
-          }`}
+          )}
         >
           {isProcessing ? (
             <>

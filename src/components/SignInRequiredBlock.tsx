@@ -1,5 +1,6 @@
 'use client';
 
+import { cn } from '@/utils/cn';
 import Link from 'next/link';
 import { Icon } from '@/shared/components/Icon';
 
@@ -30,14 +31,22 @@ export default function SignInRequiredBlock({
         <div className="flex flex-col gap-3">
           <Link
             href="/login"
-            className="flex w-full items-center justify-center gap-2 rounded-lg bg-linear-to-r from-cyan-500 to-blue-600 px-6 py-3 font-semibold text-white transition-all duration-300 hover:shadow-lg hover:shadow-cyan-500/30"
+            className={cn(
+              'flex w-full items-center justify-center gap-2 rounded-lg bg-linear-to-r from-cyan-500',
+              'to-blue-600 px-6 py-3 font-semibold text-white transition-all duration-300 hover:shadow-lg',
+              'hover:shadow-cyan-500/30'
+            )}
           >
             <Icon name="sign-in-alt" />
             Iniciar Sesión
           </Link>
           <button
             onClick={handleCloseDemo}
-            className="flex w-full cursor-pointer items-center justify-center gap-2 rounded-lg border-2 border-slate-600 bg-transparent px-6 py-3 font-semibold text-slate-400 transition-all duration-300 hover:border-slate-500 hover:text-white"
+            className={cn(
+              'flex w-full cursor-pointer items-center justify-center gap-2 rounded-lg border-2',
+              'border-slate-600 bg-transparent px-6 py-3 font-semibold text-slate-400 transition-all',
+              'duration-300 hover:border-slate-500 hover:text-white'
+            )}
           >
             <Icon name="times" />
             Cerrar Demo

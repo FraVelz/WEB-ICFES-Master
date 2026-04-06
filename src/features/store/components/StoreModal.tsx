@@ -1,5 +1,6 @@
 'use client';
 
+import { cn } from '@/utils/cn';
 import React, { useState } from 'react';
 import { Icon } from '@/shared/components/Icon';
 import { useShop } from '../hooks/useShop';
@@ -81,11 +82,12 @@ export const StoreModal = ({ isOpen, onClose }: StoreModalProps) => {
                   <button
                     key={f.id}
                     onClick={() => setFilter(f.id)}
-                    className={`cursor-pointer rounded-full border px-4 py-2 font-medium whitespace-nowrap transition-all ${
+                    className={cn(
+                      'cursor-pointer rounded-full border px-4 py-2 font-medium whitespace-nowrap transition-all',
                       filter === f.id
                         ? 'border-purple-500 bg-purple-600 text-white shadow-lg shadow-purple-500/25'
                         : 'border-slate-700 bg-slate-800 text-slate-400 hover:bg-slate-700 hover:text-white'
-                    }`}
+                    )}
                   >
                     {f.label}
                   </button>
