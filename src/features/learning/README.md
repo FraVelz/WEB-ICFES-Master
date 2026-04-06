@@ -109,11 +109,7 @@ import { LearningRoadmap } from '@/features/learning/components';
 ### Desde páginas
 
 ```javascript
-import {
-  LearningPage,
-  LearningRoadmapPage,
-  ProgressiveICFESMapPage,
-} from '@/features/learning/pages';
+import { LearningPage, LearningRoadmapPage, ProgressiveICFESMapPage } from '@/features/learning/pages';
 ```
 
 ## Ventajas de esta estructura

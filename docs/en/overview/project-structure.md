@@ -60,15 +60,15 @@ See [Services Documentation](../backend/services-api.md).
 
 ## Next.js Routes (`src/app/`)
 
-| Route                      | Description          |
-| -------------------------- | -------------------- |
-| `/`                        | Home page            |
-| `/login`, `/signup`        | Authentication       |
-| `/onboarding`              | Onboarding flow      |
-| `/practica/[area]`         | Practice by area     |
-| `/examen-completo`         | Full exam            |
-| `/ruta-aprendizaje`        | Learning roadmap     |
-| `/lessons/[area]/[topic]`  | Lessons by topic     |
-| `/logros`                  | Achievements center  |
-| `/perfil`                  | User profile         |
-| `/configuracion`           | Settings             |
+| Route                     | Description         |
+| ------------------------- | ------------------- |
+| `/`                       | Home page           |
+| `/login`, `/signup`       | Authentication      |
+| `/onboarding`             | Onboarding flow     |
+| `/practica/[area]`        | Practice by area    |
+| `/examen-completo`        | Full exam           |
+| `/ruta-aprendizaje`       | Learning roadmap    |
+| `/lessons/[area]/[topic]` | Lessons by topic    |
+| `/logros`                 | Achievements center |
+| `/perfil`                 | User profile        |
+| `/configuracion`          | Settings            |

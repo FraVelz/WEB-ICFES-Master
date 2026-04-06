@@ -208,12 +208,8 @@ export const LearningPathMap = () => {
     <div className="w-full space-y-6">
       {/* Encabezado */}
       <div className="rounded-xl border border-slate-700 bg-linear-to-r from-slate-900 via-slate-800 to-slate-900 p-6">
-        <h2 className="mb-2 text-3xl font-bold text-white">
-          Tu Ruta de Aprendizaje
-        </h2>
-        <p className="text-slate-400">
-          Progresa paso a paso a través de módulos cuidadosamente diseñados
-        </p>
+        <h2 className="mb-2 text-3xl font-bold text-white">Tu Ruta de Aprendizaje</h2>
+        <p className="text-slate-400">Progresa paso a paso a través de módulos cuidadosamente diseñados</p>
       </div>
 
       {/* Áreas de Conocimiento */}
@@ -222,22 +218,16 @@ export const LearningPathMap = () => {
           <div key={path.id} className="group">
             {/* Card Principal del Área */}
             <button
-              onClick={() =>
-                setExpandedArea(expandedArea === path.id ? null : path.id)
-              }
+              onClick={() => setExpandedArea(expandedArea === path.id ? null : path.id)}
               className="w-full rounded-lg border border-slate-700 bg-linear-to-r from-slate-800 to-slate-900 p-6 text-left transition-all duration-300 hover:border-slate-600 hover:shadow-lg hover:shadow-slate-900/50"
             >
               <div className="flex items-start justify-between">
                 <div className="flex flex-1 items-start gap-4">
-                  <div
-                    className={`bg-linear-to-br ${path.color} rounded-lg p-3 text-2xl`}
-                  >
+                  <div className={`bg-linear-to-br ${path.color} rounded-lg p-3 text-2xl`}>
                     <Icon name={path.icon} className="text-white" />
                   </div>
                   <div className="flex-1">
-                    <h3 className="mb-1 text-xl font-bold text-white">
-                      {path.name}
-                    </h3>
+                    <h3 className="mb-1 text-xl font-bold text-white">{path.name}</h3>
                     <div className="mb-3 flex gap-4 text-sm text-slate-400">
                       <span className="flex items-center gap-1">
                         <Icon name="star" className="text-yellow-400" />
@@ -256,9 +246,7 @@ export const LearningPathMap = () => {
                         style={{ width: `${path.completion}%` }}
                       />
                     </div>
-                    <p className="mt-1 text-xs text-slate-500">
-                      {path.completion}% completado
-                    </p>
+                    <p className="mt-1 text-xs text-slate-500">{path.completion}% completado</p>
                   </div>
                 </div>
 
@@ -290,12 +278,8 @@ export const LearningPathMap = () => {
                           }`}
                         />
                         <div>
-                          <p className="font-semibold text-white">
-                            {module.name}
-                          </p>
-                          <p className="text-sm text-slate-400">
-                            {module.lessons} lecciones
-                          </p>
+                          <p className="font-semibold text-white">{module.name}</p>
+                          <p className="text-sm text-slate-400">{module.lessons} lecciones</p>
                         </div>
                       </div>
 
@@ -315,25 +299,17 @@ export const LearningPathMap = () => {
                             style={{ width: `${module.progress}%` }}
                           />
                         </div>
-                        <span className="text-xs text-slate-400">
-                          {module.progress}%
-                        </span>
+                        <span className="text-xs text-slate-400">{module.progress}%</span>
                       </div>
                     )}
 
                     {/* Botón de Acción */}
                     {module.status !== 'locked' && (
                       <Link
-                        href={
-                          module.status === 'in-progress'
-                            ? `/practica/${path.id}`
-                            : `/aprendizaje`
-                        }
+                        href={module.status === 'in-progress' ? `/practica/${path.id}` : `/aprendizaje`}
                         className="mt-3 inline-block w-full rounded-lg bg-linear-to-r from-cyan-500 to-blue-500 px-4 py-2 text-center text-sm font-semibold text-white transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-blue-500/50"
                       >
-                        {module.status === 'completed'
-                          ? 'Revisar'
-                          : 'Continuar'}
+                        {module.status === 'completed' ? 'Revisar' : 'Continuar'}
                       </Link>
                     )}
                   </div>

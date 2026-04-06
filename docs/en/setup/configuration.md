@@ -8,12 +8,12 @@ Project configuration files.
 
 File: `.env.local` (not committed to git)
 
-| Variable                        | Description                    | Required              |
-| ------------------------------- | ------------------------------ | --------------------- |
-| `NEXT_PUBLIC_SUPABASE_URL`      | Supabase project URL           | Yes (supabase mode)   |
-| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Supabase anonymous key         | Yes (supabase mode)   |
-| `NEXT_PUBLIC_API_MODE`          | `supabase` or `localStorage`   | No (default: supabase)|
-| `OPENAI_API_KEY`                | OpenAI key for chat assistant   | No                    |
+| Variable                        | Description                   | Required               |
+| ------------------------------- | ----------------------------- | ---------------------- |
+| `NEXT_PUBLIC_SUPABASE_URL`      | Supabase project URL          | Yes (supabase mode)    |
+| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Supabase anonymous key        | Yes (supabase mode)    |
+| `NEXT_PUBLIC_API_MODE`          | `supabase` or `localStorage`  | No (default: supabase) |
+| `OPENAI_API_KEY`                | OpenAI key for chat assistant | No                     |
 
 ---
 
@@ -29,13 +29,13 @@ File: `.env.local` (not committed to git)
 
 Main scripts:
 
-| Script   | Command              | Use                  |
-| -------- | -------------------- | -------------------- |
-| `dev`    | `next dev`           | Local development    |
-| `build`  | `next build`         | Production build     |
-| `start`  | `next start`         | Production server    |
-| `lint`   | `eslint .`           | Code review          |
-| `format` | `prettier --write .` | Format code          |
+| Script   | Command              | Use               |
+| -------- | -------------------- | ----------------- |
+| `dev`    | `next dev`           | Local development |
+| `build`  | `next build`         | Production build  |
+| `start`  | `next start`         | Production server |
+| `lint`   | `eslint .`           | Code review       |
+| `format` | `prettier --write .` | Format code       |
 
 ---
 

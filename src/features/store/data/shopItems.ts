@@ -28,8 +28,7 @@ export const SHOP_ITEMS: ShopItem[] = [
     category: 'avatar',
     icon: 'fire',
     color: 'from-red-500 to-orange-600',
-    image:
-      'https://api.dicebear.com/7.x/avataaars/svg?seed=Dragon&clothing=graphicShirt',
+    image: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Dragon&clothing=graphicShirt',
   },
   {
     id: 'theme_dark_purple',

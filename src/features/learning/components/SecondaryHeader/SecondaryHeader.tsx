@@ -20,10 +20,7 @@ export interface SecondaryHeaderProps {
   onAreaChange?: (area: string) => void;
 }
 
-export const SecondaryHeader = ({
-  currentArea = 'lectura-critica',
-  onAreaChange,
-}: SecondaryHeaderProps) => {
+export const SecondaryHeader = ({ currentArea = 'lectura-critica', onAreaChange }: SecondaryHeaderProps) => {
   const [activeModal, setActiveModal] = useState<'areas' | 'streak' | 'store' | 'coins' | null>(null);
   const { user } = useAuth();
 
@@ -48,7 +45,8 @@ export const SecondaryHeader = ({
 
   // Obtener información del área actual
   const currentAreaInfo =
-    (AREA_INFO as Record<string, { name?: string; color?: string; icon?: string }>)[currentArea] || (AREA_INFO as Record<string, { name?: string; color?: string; icon?: string }>)['lectura-critica'];
+    (AREA_INFO as Record<string, { name?: string; color?: string; icon?: string }>)[currentArea] ||
+    (AREA_INFO as Record<string, { name?: string; color?: string; icon?: string }>)['lectura-critica'];
 
   // Datos de racha
   const streakData = {
@@ -80,9 +78,7 @@ export const SecondaryHeader = ({
       <div className="sticky top-0 z-50 flex h-16 items-center justify-between border-b border-slate-800 bg-slate-950/90 px-4 shadow-lg backdrop-blur-md">
         {/* Elemento 1: Área Actual */}
         <button
-          onClick={() =>
-            setActiveModal(activeModal === 'areas' ? null : 'areas')
-          }
+          onClick={() => setActiveModal(activeModal === 'areas' ? null : 'areas')}
           className="flex cursor-pointer items-center gap-3 rounded-xl p-2 transition-colors hover:bg-slate-800/50"
           title="Cambiar área"
         >
@@ -94,12 +90,8 @@ export const SecondaryHeader = ({
           </div>
           {/* Nombre del área - Oculto en móvil muy pequeño */}
           <div className="hidden flex-col items-start sm:flex">
-            <span className="text-xs font-bold tracking-wider text-slate-400 uppercase">
-              Área actual
-            </span>
-            <span className="text-sm font-bold text-slate-200">
-              {currentAreaInfo.name}
-            </span>
+            <span className="text-xs font-bold tracking-wider text-slate-400 uppercase">Área actual</span>
+            <span className="text-sm font-bold text-slate-200">{currentAreaInfo.name}</span>
           </div>
           <Icon
             name="chevron-down"
@@ -110,9 +102,7 @@ export const SecondaryHeader = ({
         <div className="flex items-center gap-3">
           {/* Elemento 2: Racha de Días */}
           <button
-            onClick={() =>
-              setActiveModal(activeModal === 'streak' ? null : 'streak')
-            }
+            onClick={() => setActiveModal(activeModal === 'streak' ? null : 'streak')}
             className="group flex cursor-pointer items-center gap-2 rounded-full border border-slate-800 bg-slate-900 px-3 py-1.5 transition-colors hover:border-orange-500/50"
             title="Ver información de racha"
           >
@@ -129,9 +119,7 @@ export const SecondaryHeader = ({
 
           {/* Elemento 3: Monedas / Tienda */}
           <button
-            onClick={() =>
-              setActiveModal(activeModal === 'store' ? null : 'store')
-            }
+            onClick={() => setActiveModal(activeModal === 'store' ? null : 'store')}
             className="group flex cursor-pointer items-center gap-2 rounded-full border border-slate-800 bg-slate-900 px-3 py-1.5 transition-colors hover:border-yellow-500/50"
             title="Abrir tienda"
           >
@@ -149,17 +137,9 @@ export const SecondaryHeader = ({
         onSelectArea={handleSelectArea}
       />
 
-      <StreakModal
-        isOpen={activeModal === 'streak'}
-        onClose={closeModals}
-        streakData={streakData}
-      />
+      <StreakModal isOpen={activeModal === 'streak'} onClose={closeModals} streakData={streakData} />
 
-      <CoinsModal
-        isOpen={activeModal === 'coins'}
-        onClose={closeModals}
-        coins={coins}
-      />
+      <CoinsModal isOpen={activeModal === 'coins'} onClose={closeModals} coins={coins} />
 
       <StoreModal isOpen={activeModal === 'store'} onClose={closeModals} />
     </div>

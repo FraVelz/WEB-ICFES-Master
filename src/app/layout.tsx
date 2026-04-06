@@ -44,8 +44,7 @@ export const metadata: Metadata = {
     locale: 'es_CO',
     siteName: 'ICFES Master',
     title: 'Domina el ICFES desde Cero | ICFES Master',
-    description:
-      'La plataforma #1 para preparar el ICFES: +500 preguntas, simulacros reales y aprendizaje guiado.',
+    description: 'La plataforma #1 para preparar el ICFES: +500 preguntas, simulacros reales y aprendizaje guiado.',
     url: '/',
     images: [
       {
@@ -59,11 +58,8 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'Domina el ICFES desde Cero | ICFES Master',
-    description:
-      'Preparate con simulacros y preguntas reales para lograr un gran puntaje en el ICFES.',
-    images: [
-      'https://github.com/FraVelz/WEB-ICFES-Master/blob/main/public/images/screenshot.png?raw=true',
-    ],
+    description: 'Preparate con simulacros y preguntas reales para lograr un gran puntaje en el ICFES.',
+    images: ['https://github.com/FraVelz/WEB-ICFES-Master/blob/main/public/images/screenshot.png?raw=true'],
   },
 };
 

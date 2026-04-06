@@ -6,6 +6,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { Icon } from '@/shared/components/Icon';
 import { useAuth } from '@/context/AuthContext';
 import { GoogleSignInButton } from '@/shared/components/atoms/GoogleSignInButton';
+import { mapSupabaseAuthError } from '@/utils/mapSupabaseAuthError';
 
 export const LoginPage = () => {
   const [email, setEmail] = useState('');
@@ -33,7 +34,7 @@ export const LoginPage = () => {
         router.push('/ruta-aprendizaje');
       }
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Error al iniciar sesión');
+      setError(mapSupabaseAuthError(err, 'Error al iniciar sesión'));
     } finally {
       setIsLoading(false);
     }
@@ -50,10 +51,7 @@ export const LoginPage = () => {
       {/* Header Mobile - Solo visible en móvil */}
       <div className="relative z-10">
         <div className="flex items-center justify-between py-4">
-          <Link
-            href="/"
-            className="text-slate-400 transition-colors hover:text-slate-300"
-          >
+          <Link href="/" className="text-slate-400 transition-colors hover:text-slate-300">
             <Icon name="times" size="2xl" className="text-2xl" />
           </Link>
           <h2 className="text-lg font-semibold">Ingresa tus datos</h2>
@@ -80,17 +78,11 @@ export const LoginPage = () => {
           <form onSubmit={handleSubmit} className="space-y-6">
             {/* Email */}
             <div>
-              <label
-                htmlFor="email"
-                className="mb-2 block text-sm font-semibold"
-              >
+              <label htmlFor="email" className="mb-2 block text-sm font-semibold">
                 Email
               </label>
               <div className="relative">
-                <Icon
-                  name="envelope"
-                  className="absolute top-1/2 left-4 -translate-y-1/2 text-slate-400"
-                />
+                <Icon name="envelope" className="absolute top-1/2 left-4 -translate-y-1/2 text-slate-400" />
                 <input
                   id="email"
                   type="email"
@@ -105,17 +97,11 @@ export const LoginPage = () => {
 
             {/* Password */}
             <div>
-              <label
-                htmlFor="password"
-                className="mb-2 block text-sm font-semibold"
-              >
+              <label htmlFor="password" className="mb-2 block text-sm font-semibold">
                 Contraseña
               </label>
               <div className="relative">
-                <Icon
-                  name="lock"
-                  className="absolute top-1/2 left-4 -translate-y-1/2 text-slate-400"
-                />
+                <Icon name="lock" className="absolute top-1/2 left-4 -translate-y-1/2 text-slate-400" />
                 <input
                   id="password"
                   type={showPassword ? 'text' : 'password'}
@@ -138,10 +124,7 @@ export const LoginPage = () => {
             {/* Error Message */}
             {error && (
               <div className="flex items-start gap-3 rounded-lg border border-red-500/50 bg-red-500/20 p-4">
-                <Icon
-                  name="exclamation-circle"
-                  className="mt-0.5 shrink-0 text-red-400"
-                />
+                <Icon name="exclamation-circle" className="mt-0.5 shrink-0 text-red-400" />
                 <p className="text-sm text-red-400">{error}</p>
               </div>
             )}
@@ -167,16 +150,13 @@ export const LoginPage = () => {
           </form>
 
           {/* Google Sign-In */}
-          <GoogleSignInButton />
+          <GoogleSignInButton redirectAfterLogin={from === 'pricing' ? '/' : '/ruta-aprendizaje'} />
 
           {/* Links */}
           <div className="mt-6 space-y-4">
             {/* Forgot Password Link */}
             <p className="text-center">
-              <Link
-                href="/forgot-password"
-                className="text-sm text-slate-400 transition-colors hover:text-slate-300"
-              >
+              <Link href="/forgot-password" className="text-sm text-slate-400 transition-colors hover:text-slate-300">
                 ¿Olvidaste tu contraseña?
               </Link>
             </p>
@@ -191,17 +171,11 @@ export const LoginPage = () => {
             Al registrarte, aceptas nuestros términos de servicio
           </p>
           <div className="flex items-center justify-center gap-4 text-xs">
-            <a
-              href="/privacidad"
-              className="text-slate-400 transition-colors hover:text-slate-300"
-            >
+            <a href="/privacidad" className="text-slate-400 transition-colors hover:text-slate-300">
               Política de Privacidad
             </a>
             <span className="text-slate-600">|</span>
-            <a
-              href="/terminos"
-              className="text-slate-400 transition-colors hover:text-slate-300"
-            >
+            <a href="/terminos" className="text-slate-400 transition-colors hover:text-slate-300">
               Términos y Condiciones
             </a>
           </div>

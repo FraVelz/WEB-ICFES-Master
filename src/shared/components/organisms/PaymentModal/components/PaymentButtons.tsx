@@ -9,13 +9,7 @@ export interface PaymentButtonsProps {
   plan: PlanItem | null;
 }
 
-export const PaymentButtons = ({
-  isProcessing,
-  isFormValid,
-  onClose,
-  price,
-  plan,
-}: PaymentButtonsProps) => {
+export const PaymentButtons = ({ isProcessing, isFormValid, onClose, price, plan }: PaymentButtonsProps) => {
   const isFree = plan?.price === 'Gratis';
 
   return (

@@ -10,8 +10,7 @@ export const Historia = () => {
     topics: [
       {
         name: 'Periodo Precolombino',
-        description:
-          'Historia de civilizaciones indígenas antes de la conquista española.',
+        description: 'Historia de civilizaciones indígenas antes de la conquista española.',
         subtopics: [
           'Pueblos indígenas: Muiscas, Taironas, Quimbayas',
           'Organización social y política',
@@ -26,19 +25,14 @@ export const Historia = () => {
       },
       {
         name: 'Época Colonial',
-        description:
-          'Dominio español y cambios socioculturales en el territorio.',
+        description: 'Dominio español y cambios socioculturales en el territorio.',
         subtopics: [
           'Conquista y colonización',
           'Encomienda y sistemas de trabajo',
           'Mestizaje y mezcla cultural',
           'Estructuras coloniales',
         ],
-        examples: [
-          'Llegada de Colón en 1492',
-          'Fundación de Cartagena y Bogotá',
-          'Virreinato de Nueva Granada',
-        ],
+        examples: ['Llegada de Colón en 1492', 'Fundación de Cartagena y Bogotá', 'Virreinato de Nueva Granada'],
       },
       {
         name: 'República',
@@ -49,11 +43,7 @@ export const Historia = () => {
           'Constituciones y reformas políticas',
           'Conflictos internos y bipartidismo',
         ],
-        examples: [
-          'Grito de Independencia: 20 de julio',
-          'Constitución de 1886',
-          'Frente Nacional (1958-1974)',
-        ],
+        examples: ['Grito de Independencia: 20 de julio', 'Constitución de 1886', 'Frente Nacional (1958-1974)'],
       },
     ],
     keyFormulas: [
@@ -103,9 +93,7 @@ export const Historia = () => {
             <span className="flex items-center gap-2">
               <Icon name="book" /> {content.lessons} lecciones
             </span>
-            <span className="rounded-full bg-green-500/30 px-4 py-1 text-sm">
-              {content.difficulty}
-            </span>
+            <span className="rounded-full bg-green-500/30 px-4 py-1 text-sm">{content.difficulty}</span>
           </div>
         </header>
 
@@ -115,22 +103,16 @@ export const Historia = () => {
               key={idx}
               className="rounded-2xl border border-white/10 bg-white/5 p-8 backdrop-blur-sm transition-all hover:bg-white/10"
             >
-              <h2 className="mb-4 text-3xl font-bold text-orange-400">
-                {topic.name}
-              </h2>
+              <h2 className="mb-4 text-3xl font-bold text-orange-400">{topic.name}</h2>
               <p className="mb-6 text-lg text-gray-300">{topic.description}</p>
 
               <div className="grid gap-8 md:grid-cols-2">
                 <div>
-                  <h3 className="mb-4 text-xl font-semibold text-blue-400">
-                    Subtemas
-                  </h3>
+                  <h3 className="mb-4 text-xl font-semibold text-blue-400">Subtemas</h3>
                   <ul className="space-y-3">
                     {topic.subtopics.map((sub, i) => (
                       <li key={i} className="flex items-start gap-3">
-                        <span className="mt-1 font-bold text-orange-400">
-                          →
-                        </span>
+                        <span className="mt-1 font-bold text-orange-400">→</span>
                         <span className="text-gray-300">{sub}</span>
                       </li>
                     ))}
@@ -138,15 +120,10 @@ export const Historia = () => {
                 </div>
 
                 <div>
-                  <h3 className="mb-4 text-xl font-semibold text-green-400">
-                    Ejemplos
-                  </h3>
+                  <h3 className="mb-4 text-xl font-semibold text-green-400">Ejemplos</h3>
                   <div className="space-y-3">
                     {topic.examples.map((example, i) => (
-                      <div
-                        key={i}
-                        className="rounded border-l-4 border-green-400 bg-gray-900/50 p-4"
-                      >
+                      <div key={i} className="rounded border-l-4 border-green-400 bg-gray-900/50 p-4">
                         <p className="text-sm text-green-300">{example}</p>
                       </div>
                     ))}
@@ -158,15 +135,10 @@ export const Historia = () => {
         </div>
 
         <section className="mb-16">
-          <h2 className="mb-8 text-3xl font-bold text-cyan-400">
-            Hitos Importantes
-          </h2>
+          <h2 className="mb-8 text-3xl font-bold text-cyan-400">Hitos Importantes</h2>
           <div className="grid gap-4 md:grid-cols-2">
             {content.keyFormulas.map((formula, idx) => (
-              <div
-                key={idx}
-                className="rounded-xl border border-cyan-500/30 bg-cyan-500/10 p-6"
-              >
+              <div key={idx} className="rounded-xl border border-cyan-500/30 bg-cyan-500/10 p-6">
                 <p className="text-center text-lg text-cyan-300">{formula}</p>
               </div>
             ))}
@@ -174,9 +146,7 @@ export const Historia = () => {
         </section>
 
         <section className="mb-16">
-          <h2 className="mb-8 text-3xl font-bold text-purple-400">
-            Ejercicios de Práctica
-          </h2>
+          <h2 className="mb-8 text-3xl font-bold text-purple-400">Ejercicios de Práctica</h2>
           <div className="space-y-4">
             {content.practiceExercises.map((exercise, idx) => (
               <div
@@ -184,9 +154,7 @@ export const Historia = () => {
                 className="rounded-xl border border-white/10 bg-white/5 p-6 transition-all hover:bg-white/10"
               >
                 <div className="flex items-start gap-4">
-                  <span className="min-w-fit text-xl font-bold text-purple-400">
-                    {idx + 1}.
-                  </span>
+                  <span className="min-w-fit text-xl font-bold text-purple-400">{idx + 1}.</span>
                   <p className="text-gray-300">{exercise}</p>
                 </div>
               </div>

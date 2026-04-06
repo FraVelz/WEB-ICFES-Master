@@ -14,7 +14,7 @@
 
 ## Estructura de Archivos
 
-```txt
+````txt
 src/
 ├── app/                          # Next.js App Router
 │   ├── (auth)/                   # Rutas de autenticación
@@ -76,7 +76,7 @@ src/
 
 ```txt
 Estilos principales: `app/globals.css` (Tailwind + tema)
-```
+````
 
 ## Guía de Navegación
 

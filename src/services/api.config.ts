@@ -1,7 +1,8 @@
 /**
  * CONFIGURACIÓN CENTRAL DE API
  * Este archivo centraliza toda la configuración de conexión
- * Permite cambiar entre localStorage y supabase
+ * Permite cambiar entre localStorage y supabase.
+ * La lógica que depende del modo debe usar `@/services/persistence` (helpers isSupabaseMode, etc.).
  */
 
 // Cambiar estos valores según el ambiente (Next.js usa NEXT_PUBLIC_ para cliente)

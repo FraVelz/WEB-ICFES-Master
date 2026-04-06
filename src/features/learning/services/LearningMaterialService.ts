@@ -2,10 +2,7 @@
  * Servicio de materiales de aprendizaje - Supabase o local
  */
 import { BASICO_TOPICS } from '../data/roadmapData';
-import {
-  getCompletedLessons,
-  markLessonAsCompleted as markLesson,
-} from '@/shared/utils/progressStorage';
+import { getCompletedLessons, markLessonAsCompleted as markLesson } from '@/shared/utils/progressStorage';
 import API_CONFIG from '@/services/api.config';
 import LearningSupabaseService from '@/services/supabase/LearningSupabaseService';
 
@@ -51,9 +48,7 @@ class LearningMaterialService {
   async getUserLessonsProgress(userId: string, area: string) {
     const lessons = await this.getLessonsByArea(area);
     const completed = getCompletedLessons();
-    const completedCount = lessons.filter((l: { id: string }) =>
-      completed.includes(l.id)
-    ).length;
+    const completedCount = lessons.filter((l: { id: string }) => completed.includes(l.id)).length;
     return {
       totalLessons: lessons.length,
       completedLessons: completedCount,

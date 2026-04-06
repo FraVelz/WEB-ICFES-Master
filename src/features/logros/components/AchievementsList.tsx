@@ -24,9 +24,7 @@ export const AchievementsList = ({ achievements = [] }: AchievementsListProps) =
   const [activeCategory, setActiveCategory] = useState('all');
 
   const filteredAchievements =
-    activeCategory === 'all'
-      ? achievements
-      : achievements.filter((a) => a.category === activeCategory);
+    activeCategory === 'all' ? achievements : achievements.filter((a) => a.category === activeCategory);
 
   const getStatusColor = (status: string) => {
     switch (status) {
@@ -55,22 +53,20 @@ export const AchievementsList = ({ achievements = [] }: AchievementsListProps) =
 
         {/* Scrollable Categories */}
         <div className="scrollbar-hide -mx-4 flex gap-3 overflow-x-auto px-4 pb-2 md:mx-0 md:px-0">
-          {Object.entries(ACHIEVEMENT_CATEGORIES).map(
-            ([key, { label, icon }]) => (
-              <button
-                key={key}
-                onClick={() => setActiveCategory(key)}
-                className={`flex cursor-pointer items-center gap-2 rounded-full border px-4 py-2 text-sm font-semibold whitespace-nowrap transition-all duration-300 ${
-                  activeCategory === key
-                    ? 'border-cyan-500 bg-cyan-500/20 text-cyan-400 shadow-lg shadow-cyan-500/20'
-                    : 'border-slate-700 bg-slate-800/50 text-slate-400 hover:border-slate-600 hover:bg-slate-800'
-                }`}
-              >
-                <Icon name={icon} />
-                {label}
-              </button>
-            )
-          )}
+          {Object.entries(ACHIEVEMENT_CATEGORIES).map(([key, { label, icon }]) => (
+            <button
+              key={key}
+              onClick={() => setActiveCategory(key)}
+              className={`flex cursor-pointer items-center gap-2 rounded-full border px-4 py-2 text-sm font-semibold whitespace-nowrap transition-all duration-300 ${
+                activeCategory === key
+                  ? 'border-cyan-500 bg-cyan-500/20 text-cyan-400 shadow-lg shadow-cyan-500/20'
+                  : 'border-slate-700 bg-slate-800/50 text-slate-400 hover:border-slate-600 hover:bg-slate-800'
+              }`}
+            >
+              <Icon name={icon} />
+              {label}
+            </button>
+          ))}
         </div>
       </div>
 
@@ -79,10 +75,7 @@ export const AchievementsList = ({ achievements = [] }: AchievementsListProps) =
         {filteredAchievements.map((achievement: AchievementItem) => {
           const isCompleted = achievement.status === 'completed';
           const isIncomplete = achievement.status === 'incomplete';
-          const percent = Math.min(
-            100,
-            Math.max(0, ((achievement.progress ?? 0) / (achievement.target ?? 1)) * 100)
-          );
+          const percent = Math.min(100, Math.max(0, ((achievement.progress ?? 0) / (achievement.target ?? 1)) * 100));
 
           return (
             <div
@@ -106,40 +99,22 @@ export const AchievementsList = ({ achievements = [] }: AchievementsListProps) =
                 {/* Content */}
                 <div className="min-w-0 flex-1">
                   <div className="mb-1 flex items-start justify-between">
-                    <h3
-                      className={`truncate pr-2 font-bold ${isCompleted ? 'text-yellow-100' : 'text-white'}`}
-                    >
+                    <h3 className={`truncate pr-2 font-bold ${isCompleted ? 'text-yellow-100' : 'text-white'}`}>
                       {achievement.title}
                     </h3>
-                    {isCompleted && (
-                      <Icon name="check" className="text-sm text-yellow-400" />
-                    )}
-                    {isIncomplete && (
-                      <Icon name="lock" className="text-sm text-slate-600" />
-                    )}
+                    {isCompleted && <Icon name="check" className="text-sm text-yellow-400" />}
+                    {isIncomplete && <Icon name="lock" className="text-sm text-slate-600" />}
                   </div>
 
-                  <p className="mb-3 line-clamp-2 text-xs text-slate-400">
-                    {achievement.description}
-                  </p>
+                  <p className="mb-3 line-clamp-2 text-xs text-slate-400">{achievement.description}</p>
 
                   {/* Progress Bar */}
                   <div className="space-y-1.5">
                     <div className="flex justify-between text-xs font-medium">
-                      <span
-                        className={
-                          isCompleted
-                            ? 'text-yellow-500/80'
-                            : 'text-cyan-500/80'
-                        }
-                      >
-                        {isCompleted
-                          ? '¡Completado!'
-                          : `${achievement.progress ?? 0} / ${achievement.target ?? 0}`}
+                      <span className={isCompleted ? 'text-yellow-500/80' : 'text-cyan-500/80'}>
+                        {isCompleted ? '¡Completado!' : `${achievement.progress ?? 0} / ${achievement.target ?? 0}`}
                       </span>
-                      <span className="text-slate-500">
-                        +{achievement.xpReward ?? 0} XP
-                      </span>
+                      <span className="text-slate-500">+{achievement.xpReward ?? 0} XP</span>
                     </div>
                     <div className="h-1.5 w-full overflow-hidden rounded-full bg-slate-950">
                       <div

@@ -4,19 +4,10 @@ import { useState, useEffect } from 'react';
 import { useParams } from 'next/navigation';
 import Link from 'next/link';
 import { Icon } from '@/shared/components/Icon';
-import {
-  ExamConfigModal,
-  AnswerSheet,
-  ResultsAnalysis,
-} from '@/features/exam/components';
+import { ExamConfigModal, AnswerSheet, ResultsAnalysis } from '@/features/exam/components';
 import { formatTimeExtended } from '@/shared/utils';
 import { AREA_INFO } from '@/shared/constants';
-import {
-  MATHEMATICS_QUESTIONS,
-  LANGUAGE_QUESTIONS,
-  SCIENCE_QUESTIONS,
-  SOCIAL_QUESTIONS,
-} from '@/shared/data';
+import { MATHEMATICS_QUESTIONS, LANGUAGE_QUESTIONS, SCIENCE_QUESTIONS, SOCIAL_QUESTIONS } from '@/shared/data';
 import type { ExamQuestion } from '@/shared/types/question';
 import type { ExamConfig } from '@/features/exam/types';
 
@@ -29,14 +20,9 @@ const AREA_QUESTIONS: Record<string, ExamQuestion[]> = {
 
 export const PracticePage = () => {
   const params = useParams<{ area: string }>();
-  const areaStr = Array.isArray(params?.area)
-    ? params.area[0]
-    : (params?.area ?? '');
+  const areaStr = Array.isArray(params?.area) ? params.area[0] : (params?.area ?? '');
   const allQuestions = AREA_QUESTIONS[areaStr] ?? [];
-  const areaInfo =
-    (AREA_INFO as Record<string, { name: string; color: string; icon?: string }>)[
-      areaStr
-    ] ?? {
+  const areaInfo = (AREA_INFO as Record<string, { name: string; color: string; icon?: string }>)[areaStr] ?? {
     name: 'Examen Completo',
     color: 'from-pink-400 to-pink-600',
   };
@@ -65,9 +51,7 @@ export const PracticePage = () => {
     setExamConfig(config);
 
     if (config.useTimer) {
-      setTimeRemaining(
-        config.numQuestions * (config.timePerQuestion ?? 2) * 60
-      );
+      setTimeRemaining(config.numQuestions * (config.timePerQuestion ?? 2) * 60);
     }
   };
 
@@ -102,13 +86,7 @@ export const PracticePage = () => {
   // Guardar examen cuando se finaliza
 
   if (!examConfig) {
-    return (
-      <ExamConfigModal
-        area={areaInfo.name}
-        totalQuestions={allQuestions.length}
-        onStart={handleExamStart}
-      />
-    );
+    return <ExamConfigModal area={areaInfo.name} totalQuestions={allQuestions.length} onStart={handleExamStart} />;
   }
 
   if (isFinished || showResults) {
@@ -151,10 +129,7 @@ export const PracticePage = () => {
 
               {/* Mobile Menu Button */}
               <div className="relative md:hidden">
-                <button
-                  onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                  className="p-2 text-white"
-                >
+                <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)} className="p-2 text-white">
                   <Icon name="ellipsis-vertical" className="text-xl" />
                 </button>
 
@@ -222,12 +197,7 @@ export const PracticePage = () => {
   }
 
   const timeValue = timeRemaining ?? 0;
-  const timeColor =
-    timeValue < 300
-      ? 'text-red-400'
-      : timeValue < 600
-        ? 'text-yellow-400'
-        : 'text-cyan-300';
+  const timeColor = timeValue < 300 ? 'text-red-400' : timeValue < 600 ? 'text-yellow-400' : 'text-cyan-300';
 
   return (
     <div className="min-h-dvh bg-linear-to-br from-gray-900 via-slate-900 to-gray-900 text-white">
@@ -246,15 +216,11 @@ export const PracticePage = () => {
               >
                 {areaInfo.name}
               </div>
-              <p className="text-sm text-gray-400">
-                Preguntas: {questions.length}
-              </p>
+              <p className="text-sm text-gray-400">Preguntas: {questions.length}</p>
             </div>
 
             {examConfig.useTimer && (
-              <div className={`font-mono text-2xl font-bold ${timeColor}`}>
-                {formatTimeExtended(timeValue)}
-              </div>
+              <div className={`font-mono text-2xl font-bold ${timeColor}`}>{formatTimeExtended(timeValue)}</div>
             )}
 
             {/* Desktop Exit Button */}
@@ -267,10 +233,7 @@ export const PracticePage = () => {
 
             {/* Mobile Menu Button */}
             <div className="relative md:hidden">
-              <button
-                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className="p-2 text-white"
-              >
+              <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)} className="p-2 text-white">
                 <Icon name="ellipsis-vertical" className="text-xl" />
               </button>
 
@@ -319,14 +282,9 @@ export const PracticePage = () => {
                         {index + 1}
                       </div>
                       <div className="flex-1">
-                        <p className="text-lg leading-relaxed font-semibold text-white">
-                          {question.text}
-                        </p>
+                        <p className="text-lg leading-relaxed font-semibold text-white">{question.text}</p>
                         <p className="mt-2 text-xs text-gray-500">
-                          Dificultad:{' '}
-                          <span className="text-cyan-300">
-                            {question.difficulty}
-                          </span>
+                          Dificultad: <span className="text-cyan-300">{question.difficulty}</span>
                         </p>
                       </div>
                     </div>
@@ -340,9 +298,7 @@ export const PracticePage = () => {
                       return (
                         <button
                           key={option.letter}
-                          onClick={() =>
-                            handleAnswer(question.id, option.letter ?? option.id)
-                          }
+                          onClick={() => handleAnswer(question.id, option.letter ?? option.id)}
                           className={`w-full rounded-lg border-2 p-4 text-left transition-all duration-300 ${
                             isSelected
                               ? 'border-cyan-400 bg-cyan-500/20 text-cyan-100'
@@ -352,9 +308,7 @@ export const PracticePage = () => {
                           <div className="flex items-center gap-3">
                             <div
                               className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full border-2 text-sm font-bold ${
-                                isSelected
-                                  ? 'border-cyan-400 bg-cyan-500 text-white'
-                                  : 'border-white/30'
+                                isSelected ? 'border-cyan-400 bg-cyan-500 text-white' : 'border-white/30'
                               }`}
                             >
                               {option.letter}
@@ -367,18 +321,12 @@ export const PracticePage = () => {
                   </div>
 
                   {/* Explanation - Only shown after exam finishes */}
-                  {showResults &&
-                    examConfig.showExplanations &&
-                    answers[question.id] && (
-                      <div className="mt-6 ml-14 rounded-lg border border-blue-500/30 bg-blue-500/10 p-4">
-                        <p className="mb-2 text-xs font-semibold text-blue-300">
-                          EXPLICACIÓN:
-                        </p>
-                        <p className="text-sm text-gray-200">
-                          {question.explanation}
-                        </p>
-                      </div>
-                    )}
+                  {showResults && examConfig.showExplanations && answers[question.id] && (
+                    <div className="mt-6 ml-14 rounded-lg border border-blue-500/30 bg-blue-500/10 p-4">
+                      <p className="mb-2 text-xs font-semibold text-blue-300">EXPLICACIÓN:</p>
+                      <p className="text-sm text-gray-200">{question.explanation}</p>
+                    </div>
+                  )}
                 </div>
               ))}
 

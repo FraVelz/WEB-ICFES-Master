@@ -18,21 +18,14 @@ interface CodeContentProps {
   showLineNumbers?: boolean;
 }
 
-export const CodeContent = ({
-  language = 'pseudocode',
-  code,
-  title,
-  showLineNumbers = true,
-}: CodeContentProps) => {
+export const CodeContent = ({ language = 'pseudocode', code, title, showLineNumbers = true }: CodeContentProps) => {
   const lines = (code ?? '').split('\n');
 
   return (
     <div className="my-6 overflow-hidden rounded-lg border border-green-500/20">
       {title && (
         <div className="border-b border-green-500/20 bg-linear-to-r from-green-500/20 to-emerald-500/20 px-4 py-2">
-          <p className="text-xs font-semibold text-green-300">
-            {language.toUpperCase()}
-          </p>
+          <p className="text-xs font-semibold text-green-300">{language.toUpperCase()}</p>
           <p className="mt-1 text-xs text-gray-300">{title}</p>
         </div>
       )}

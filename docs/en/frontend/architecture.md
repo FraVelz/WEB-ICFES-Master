@@ -79,17 +79,17 @@ Main styles: `app/globals.css` (Tailwind + theme)
 
 ## Navigation Guide
 
-| What you need          | Location                                  |
-| ---------------------- | ------------------------------------------ |
-| Exam pages             | `features/exam/pages/`                     |
-| Config modal           | `features/exam/components/ExamConfigModal/`|
-| Home page              | `features/home/pages/HomePage.tsx`         |
-| Learning path          | `app/(dashboard)/ruta-aprendizaje/`        |
-| Lessons by area        | `features/learning/lessons/`               |
-| Atomic components      | `shared/components/atoms/`                 |
-| Question data          | `shared/data/questions.ts`                |
-| Area info              | `shared/constants/areaInfo.ts`            |
-| GSAP animations        | `lib/gsap.ts`, `hooks/useGSAP*.ts`         |
+| What you need     | Location                                    |
+| ----------------- | ------------------------------------------- |
+| Exam pages        | `features/exam/pages/`                      |
+| Config modal      | `features/exam/components/ExamConfigModal/` |
+| Home page         | `features/home/pages/HomePage.tsx`          |
+| Learning path     | `app/(dashboard)/ruta-aprendizaje/`         |
+| Lessons by area   | `features/learning/lessons/`                |
+| Atomic components | `shared/components/atoms/`                  |
+| Question data     | `shared/data/questions.ts`                  |
+| Area info         | `shared/constants/areaInfo.ts`              |
+| GSAP animations   | `lib/gsap.ts`, `hooks/useGSAP*.ts`          |
 
 ## How to Import
 

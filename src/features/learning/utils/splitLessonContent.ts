@@ -34,10 +34,7 @@ export function extractSectionTitle(section: string): string {
  * Elimina el primer encabezado de la sección si coincide con el título del globo,
  * para evitar duplicar el título en pantalla.
  */
-export function stripFirstHeadingIfDuplicate(
-  section: string,
-  bubbleTitle: string
-): string {
+export function stripFirstHeadingIfDuplicate(section: string, bubbleTitle: string): string {
   if (!bubbleTitle || !section.trim()) return section;
   const match = section.match(/^(#{2,3}\s+.+?)(?:\n\n|\n|$)/);
   if (!match) return section;

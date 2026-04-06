@@ -39,9 +39,7 @@ export const useDailyChallenges = (dateString?: string) => {
     }
 
     const typedChallenges = dayChallenges as DailyChallenge[];
-    const completed = typedChallenges.filter(
-      (c: DailyChallenge) => c.status === 'completed'
-    ).length;
+    const completed = typedChallenges.filter((c: DailyChallenge) => c.status === 'completed').length;
     const totalXP = typedChallenges
       .filter((c: DailyChallenge) => c.status === 'completed')
       .reduce((acc: number, c: DailyChallenge) => acc + (c.xpReward ?? 0), 0);

@@ -1,17 +1,8 @@
-import {
-  SUBJECTS,
-  BASICO_TOPICS,
-  INTERMEDIO_TOPICS,
-} from '../../data/roadmapData';
+import { SUBJECTS, BASICO_TOPICS, INTERMEDIO_TOPICS } from '../../data/roadmapData';
 import { SubjectCard } from '../BasicoComponents';
 import { IntermediaExamCard } from '../IntermediaComponents';
 import type { Exam } from '../IntermediaComponents';
-import {
-  AvanzadoStats,
-  AvanzadoExamComposition,
-  AvanzadoNote,
-  AvanzadoButton,
-} from '../LevelComponents';
+import { AvanzadoStats, AvanzadoExamComposition, AvanzadoNote, AvanzadoButton } from '../LevelComponents';
 import { Icon } from '@/shared/components/Icon';
 
 /**
@@ -22,13 +13,10 @@ export const AdvancedContent = () => {
     <div className="mb-6 rounded-xl bg-slate-900/50 p-6">
       <div className="mb-4 flex items-center gap-3">
         <Icon name="microchip" size="lg" className="text-red-400" />
-        <h3 className="text-xl font-bold text-white">
-          Examen Completo ICFES 500
-        </h3>
+        <h3 className="text-xl font-bold text-white">Examen Completo ICFES 500</h3>
       </div>
       <p className="mb-6 text-slate-300">
-        Simula el examen real completo con todas las materias. Condiciones
-        idénticas al examen oficial.
+        Simula el examen real completo con todas las materias. Condiciones idénticas al examen oficial.
       </p>
 
       <AvanzadoStats />
@@ -55,7 +43,9 @@ export const BasicContent = ({ expandedSubject, onToggleSubject }: BasicContentP
           key={subject.id}
           subject={subject}
           isExpanded={expandedSubject === subject.id}
-          topics={(BASICO_TOPICS as Record<string, { title: string; duration: string; content: string }[]>)[subject.id] ?? []}
+          topics={
+            (BASICO_TOPICS as Record<string, { title: string; duration: string; content: string }[]>)[subject.id] ?? []
+          }
           onToggle={() => onToggleSubject('basico', subject.id)}
         />
       ))}
@@ -78,7 +68,15 @@ export const IntermediaContent = ({ expandedSubject, onToggleSubject }: Intermed
         <IntermediaExamCard
           key={subject.id}
           subject={subject}
-          exam={((INTERMEDIO_TOPICS as Record<string, Exam>)[subject.id] ?? { description: '', topics: [], questions: 0, duration: '', difficulty: '' })}
+          exam={
+            (INTERMEDIO_TOPICS as Record<string, Exam>)[subject.id] ?? {
+              description: '',
+              topics: [],
+              questions: 0,
+              duration: '',
+              difficulty: '',
+            }
+          }
           isExpanded={expandedSubject === subject.id}
           onToggle={() => onToggleSubject('intermedio', subject.id)}
         />

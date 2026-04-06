@@ -37,8 +37,7 @@ const LearningSupabaseService = {
       .eq('published', true)
       .order('order_index', { ascending: true });
 
-    if (error)
-      throw new Error(`Error leyendo learning_content: ${error.message}`);
+    if (error) throw new Error(`Error leyendo learning_content: ${error.message}`);
 
     if (!data || data.length === 0) return [];
 
@@ -64,11 +63,7 @@ const LearningSupabaseService = {
   async getLesson(lessonId: string) {
     const sb = getSupabase();
     if (!sb) return null;
-    const { data, error } = await sb
-      .from(TABLE)
-      .select('*')
-      .eq('id', lessonId)
-      .maybeSingle();
+    const { data, error } = await sb.from(TABLE).select('*').eq('id', lessonId).maybeSingle();
     if (error) throw new Error(`Error leyendo lección: ${error.message}`);
     if (!data) return null;
     const content = data.content || {};

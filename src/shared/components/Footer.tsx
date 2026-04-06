@@ -4,10 +4,7 @@ export const Footer = () => {
       <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 text-sm text-gray-400 md:flex-row">
         <div className="flex items-center gap-2">
           <span>Contacto:</span>
-          <a
-            href="mailto:fravelz@proton.me"
-            className="text-blue-400 transition-colors hover:text-blue-300"
-          >
+          <a href="mailto:fravelz@proton.me" className="text-blue-400 transition-colors hover:text-blue-300">
             fravelz@proton.me
           </a>
         </div>
@@ -21,9 +18,7 @@ export const Footer = () => {
           </a>
         </div>
 
-        <div className="text-xs text-gray-600">
-          © {new Date().getFullYear()} ICFES Master
-        </div>
+        <div className="text-xs text-gray-600">© {new Date().getFullYear()} ICFES Master</div>
       </div>
     </footer>
   );

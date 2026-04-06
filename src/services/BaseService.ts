@@ -92,9 +92,7 @@ export class BaseService {
   _createInLocalStorage(data: Record<string, unknown>) {
     return new Promise((resolve, reject) => {
       try {
-        const items = JSON.parse(
-          localStorage.getItem(this.localStorageKey) || '[]'
-        );
+        const items = JSON.parse(localStorage.getItem(this.localStorageKey) || '[]');
 
         const newItem = {
           id: `${this.resourceName}_${Date.now()}_${Math.random()}`,
@@ -118,9 +116,7 @@ export class BaseService {
   protected _updateInLocalStorage(id: string, data: Record<string, unknown>) {
     return new Promise((resolve, reject) => {
       try {
-        const items = JSON.parse(
-          localStorage.getItem(this.localStorageKey) || '[]'
-        );
+        const items = JSON.parse(localStorage.getItem(this.localStorageKey) || '[]');
         const index = items.findIndex((item: { id?: string }) => item.id === id);
 
         if (index === -1) {
@@ -138,7 +134,9 @@ export class BaseService {
         resolve(items[index]);
       } catch (error) {
         reject(
-          new Error(`Error actualizando ${this.resourceName}: ${error instanceof Error ? error.message : String(error)}`)
+          new Error(
+            `Error actualizando ${this.resourceName}: ${error instanceof Error ? error.message : String(error)}`
+          )
         );
       }
     });
@@ -147,9 +145,7 @@ export class BaseService {
   _deleteFromLocalStorage(id: string) {
     return new Promise((resolve, reject) => {
       try {
-        const items = JSON.parse(
-          localStorage.getItem(this.localStorageKey) || '[]'
-        );
+        const items = JSON.parse(localStorage.getItem(this.localStorageKey) || '[]');
         const filtered = items.filter((item: { id?: string }) => item.id !== id);
 
         if (items.length === filtered.length) {

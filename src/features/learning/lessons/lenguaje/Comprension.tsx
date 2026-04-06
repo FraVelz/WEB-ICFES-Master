@@ -33,8 +33,7 @@ export const Comprension = () => {
       },
       {
         name: 'Inferencias y Deducción',
-        description:
-          'Desarrollo de habilidades para deducir información implícita y hacer conclusiones lógicas.',
+        description: 'Desarrollo de habilidades para deducir información implícita y hacer conclusiones lógicas.',
         subtopics: [
           'Inferencias por contexto',
           'Significado de palabras desconocidas por contexto',
@@ -56,8 +55,7 @@ export const Comprension = () => {
       },
       {
         name: 'Vocabulario Contextual',
-        description:
-          'Técnicas para determinar significados de palabras según el contexto y ampliar vocabulario.',
+        description: 'Técnicas para determinar significados de palabras según el contexto y ampliar vocabulario.',
         subtopics: [
           'Sinónimos y antónimos en contexto',
           'Palabras polisémicas (múltiples significados)',
@@ -79,8 +77,7 @@ export const Comprension = () => {
       },
       {
         name: 'Tipos de Texto y Géneros',
-        description:
-          'Análisis y características de diferentes tipos de textos literarios y no literarios.',
+        description: 'Análisis y características de diferentes tipos de textos literarios y no literarios.',
         subtopics: [
           'Textos narrativos (cuento, novela, crónica)',
           'Textos descriptivos',
@@ -100,8 +97,7 @@ export const Comprension = () => {
       },
       {
         name: 'Estrategias de Lectura Crítica',
-        description:
-          'Técnicas para analizar críticamente textos, identificar sesgos y evaluar credibilidad.',
+        description: 'Técnicas para analizar críticamente textos, identificar sesgos y evaluar credibilidad.',
         subtopics: [
           'Lectura exploratoria',
           'Lectura selectiva',
@@ -176,9 +172,7 @@ export const Comprension = () => {
             <span className="flex items-center gap-2">
               <Icon name="book" /> {content.lessons} lecciones
             </span>
-            <span className="rounded-full bg-yellow-500/30 px-4 py-1 text-sm">
-              {content.difficulty}
-            </span>
+            <span className="rounded-full bg-yellow-500/30 px-4 py-1 text-sm">{content.difficulty}</span>
           </div>
         </header>
 
@@ -188,16 +182,12 @@ export const Comprension = () => {
               key={idx}
               className="rounded-2xl border border-white/10 bg-white/5 p-8 backdrop-blur-sm transition-all hover:bg-white/10"
             >
-              <h2 className="mb-4 text-3xl font-bold text-blue-400">
-                {topic.name}
-              </h2>
+              <h2 className="mb-4 text-3xl font-bold text-blue-400">{topic.name}</h2>
               <p className="mb-6 text-lg text-gray-300">{topic.description}</p>
 
               <div className="grid gap-8 md:grid-cols-2">
                 <div>
-                  <h3 className="mb-4 text-xl font-semibold text-purple-400">
-                    Subtemas
-                  </h3>
+                  <h3 className="mb-4 text-xl font-semibold text-purple-400">Subtemas</h3>
                   <ul className="space-y-3">
                     {topic.subtopics.map((sub, i) => (
                       <li key={i} className="flex items-start gap-3">
@@ -209,15 +199,10 @@ export const Comprension = () => {
                 </div>
 
                 <div>
-                  <h3 className="mb-4 text-xl font-semibold text-green-400">
-                    Ejemplos
-                  </h3>
+                  <h3 className="mb-4 text-xl font-semibold text-green-400">Ejemplos</h3>
                   <div className="space-y-3">
                     {topic.examples.map((example, i) => (
-                      <div
-                        key={i}
-                        className="rounded border-l-4 border-green-400 bg-gray-900/50 p-4"
-                      >
+                      <div key={i} className="rounded border-l-4 border-green-400 bg-gray-900/50 p-4">
                         <p className="text-sm text-green-300">{example}</p>
                       </div>
                     ))}
@@ -229,15 +214,10 @@ export const Comprension = () => {
         </div>
 
         <section className="mb-16">
-          <h2 className="mb-8 text-3xl font-bold text-cyan-400">
-            Estrategias Clave
-          </h2>
+          <h2 className="mb-8 text-3xl font-bold text-cyan-400">Estrategias Clave</h2>
           <div className="grid gap-4 md:grid-cols-2">
             {content.keyFormulas.map((formula, idx) => (
-              <div
-                key={idx}
-                className="rounded-xl border border-cyan-500/30 bg-cyan-500/10 p-6"
-              >
+              <div key={idx} className="rounded-xl border border-cyan-500/30 bg-cyan-500/10 p-6">
                 <p className="text-center text-lg text-cyan-300">{formula}</p>
               </div>
             ))}
@@ -245,9 +225,7 @@ export const Comprension = () => {
         </section>
 
         <section className="mb-16">
-          <h2 className="mb-8 text-3xl font-bold text-purple-400">
-            Ejercicios de Práctica
-          </h2>
+          <h2 className="mb-8 text-3xl font-bold text-purple-400">Ejercicios de Práctica</h2>
           <div className="space-y-4">
             {content.practiceExercises.map((exercise, idx) => (
               <div
@@ -255,9 +233,7 @@ export const Comprension = () => {
                 className="rounded-xl border border-white/10 bg-white/5 p-6 transition-all hover:bg-white/10"
               >
                 <div className="flex items-start gap-4">
-                  <span className="min-w-fit text-xl font-bold text-purple-400">
-                    {idx + 1}.
-                  </span>
+                  <span className="min-w-fit text-xl font-bold text-purple-400">{idx + 1}.</span>
                   <p className="text-gray-300">{exercise}</p>
                 </div>
               </div>

@@ -1,1 +1,1 @@
-export * from './LearningMaterialService';
+export { default as LearningMaterialService } from './LearningMaterialService';

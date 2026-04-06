@@ -28,10 +28,7 @@ export const ExamDetailHeader = ({ exam }: ExamDetailHeaderProps) => (
     <p className="mb-2 text-white">{exam.description}</p>
     <div className="mb-4 flex flex-wrap gap-2">
       {exam.topics.map((topic: string, i: number) => (
-        <span
-          key={i}
-          className="rounded-full bg-slate-700/50 px-3 py-1 text-xs text-slate-300"
-        >
+        <span key={i} className="rounded-full bg-slate-700/50 px-3 py-1 text-xs text-slate-300">
           {topic}
         </span>
       ))}
@@ -82,11 +79,7 @@ interface ExamHeaderProps {
 export const ExamHeader = ({ subject, exam, isExpanded }: ExamHeaderProps) => (
   <button className="flex w-full items-center justify-between p-4 transition-colors hover:bg-slate-700/50">
     <div className="flex items-center gap-3 text-left">
-      <Icon
-        name={subject.icon}
-        size="xl"
-        className={`text-xl ${subject.color}`}
-      />
+      <Icon name={subject.icon} size="xl" className={`text-xl ${subject.color}`} />
       <div>
         <h3 className="text-lg font-semibold text-white">{exam.title}</h3>
         <p className="text-xs text-slate-400">
@@ -96,9 +89,7 @@ export const ExamHeader = ({ subject, exam, isExpanded }: ExamHeaderProps) => (
     </div>
     <Icon
       name="chevron-down"
-      className={`text-slate-400 transition-transform duration-300 ${
-        isExpanded ? 'rotate-180' : ''
-      }`}
+      className={`text-slate-400 transition-transform duration-300 ${isExpanded ? 'rotate-180' : ''}`}
     />
   </button>
 );
@@ -113,9 +104,7 @@ interface IntermediaExamCardProps {
 export const IntermediaExamCard = ({ subject, exam, isExpanded, onToggle }: IntermediaExamCardProps) => (
   <div
     className={`overflow-hidden rounded-xl border-2 transition-all ${
-      isExpanded
-        ? `${subject.borderColor} ${subject.bgColor}`
-        : 'border-slate-700'
+      isExpanded ? `${subject.borderColor} ${subject.bgColor}` : 'border-slate-700'
     }`}
   >
     <button onClick={onToggle} className="w-full">

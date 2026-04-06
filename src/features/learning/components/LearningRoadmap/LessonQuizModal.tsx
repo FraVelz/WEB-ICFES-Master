@@ -4,11 +4,8 @@ import React, { useState, useEffect } from 'react';
 import { Icon } from '@/shared/components/Icon';
 import { useAuth } from '@/context/AuthContext';
 import { useGSAPModalEntrance } from '@/hooks/useGSAPModalEntrance';
-import GamificationServiceAdapter from '@/services/GamificationServiceAdapter';
-import {
-  getCompletedLessons,
-  markLessonAsCompleted,
-} from '@/shared/utils/progressStorage';
+import { gamificationPersistence } from '@/services/persistence';
+import { getCompletedLessons, markLessonAsCompleted } from '@/shared/utils/progressStorage';
 
 interface QuizQuestionInput {
   id?: string;
@@ -134,12 +131,7 @@ export const LessonQuizModal = ({
       });
     }
     // Prioridad 2: quiz.questions (array de preguntas dentro del quiz)
-    else if (
-      quiz &&
-      quiz.questions &&
-      Array.isArray(quiz.questions) &&
-      quiz.questions.length > 0
-    ) {
+    else if (quiz && quiz.questions && Array.isArray(quiz.questions) && quiz.questions.length > 0) {
       return quiz.questions.map((q, index) => {
         const options = normalizeOptions(q.options);
 
@@ -263,9 +255,7 @@ export const LessonQuizModal = ({
 
     // Verificar si todas las preguntas están respondidas
     const allQuestionsAnswered = normalizedQuestions.every((q) => {
-      return (
-        updatedAnswers[q.id] !== undefined && updatedAnswers[q.id] !== null
-      );
+      return updatedAnswers[q.id] !== undefined && updatedAnswers[q.id] !== null;
     });
 
     // Verificar si todas las preguntas están correctas (incluyendo la actual)
@@ -287,12 +277,7 @@ export const LessonQuizModal = ({
 
     // Otorgar recompensas cuando se complete la última pregunta (todas respondidas)
     // Solo si no se ha completado antes
-    if (
-      isLastQuestion &&
-      allQuestionsAnswered &&
-      !alreadyCompleted &&
-      user?.uid
-    ) {
+    if (isLastQuestion && allQuestionsAnswered && !alreadyCompleted && user?.uid) {
       setLoading(true);
       try {
         // Obtener recompensas: prioridad: lessonXp/lessonCoins > quiz.rewards > valores por defecto (500/250)
@@ -314,15 +299,11 @@ export const LessonQuizModal = ({
 
         // Otorgar XP y monedas
         console.log('Llamando addXP...');
-        const xpResult = await GamificationServiceAdapter.addXP(
-          user.uid,
-          xpAmount,
-          `lesson_quiz_${lessonId}`
-        );
+        const xpResult = await gamificationPersistence.addXP(user.uid, xpAmount, `lesson_quiz_${lessonId}`);
         console.log('XP otorgado:', xpResult);
 
         console.log('Llamando addCoins...');
-        const coinsResult = await GamificationServiceAdapter.addCoins(
+        const coinsResult = await gamificationPersistence.addCoins(
           user.uid,
           coinsAmount,
           `lesson_quiz_${lessonId ?? 'unknown'}`
@@ -353,12 +334,7 @@ export const LessonQuizModal = ({
         // Mostrar error al usuario si es necesario
       }
       setLoading(false);
-    } else if (
-      totalQuestions === 1 &&
-      correct &&
-      !alreadyCompleted &&
-      user?.uid
-    ) {
+    } else if (totalQuestions === 1 && correct && !alreadyCompleted && user?.uid) {
       // Si solo hay una pregunta y está correcta, otorgar recompensas inmediatamente
       setLoading(true);
       try {
@@ -377,12 +353,8 @@ export const LessonQuizModal = ({
         });
 
         // Otorgar XP y monedas
-        const xpResult = await GamificationServiceAdapter.addXP(
-          user.uid,
-          xpAmount,
-          `lesson_quiz_${lessonId}`
-        );
-        const coinsResult = await GamificationServiceAdapter.addCoins(
+        const xpResult = await gamificationPersistence.addXP(user.uid, xpAmount, `lesson_quiz_${lessonId}`);
+        const coinsResult = await gamificationPersistence.addCoins(
           user.uid,
           coinsAmount,
           `lesson_quiz_${lessonId ?? 'unknown'}`
@@ -431,18 +403,10 @@ export const LessonQuizModal = ({
         {/* Header */}
         <div className="shrink-0 border-b border-slate-800 bg-slate-800/50 p-3.5 lg:p-6">
           <div className="mb-1 flex items-center justify-center gap-2">
-            <Icon
-              name="trophy"
-              size="lg"
-              className="text-base text-yellow-400 lg:text-lg"
-            />
-            <h3 className="text-center text-base font-bold text-white lg:text-xl">
-              Prueba de Conocimiento
-            </h3>
+            <Icon name="trophy" size="lg" className="text-base text-yellow-400 lg:text-lg" />
+            <h3 className="text-center text-base font-bold text-white lg:text-xl">Prueba de Conocimiento</h3>
           </div>
-          <p className="mt-1.5 line-clamp-2 text-center text-xs text-slate-400 lg:text-sm">
-            {lessonTitle}
-          </p>
+          <p className="mt-1.5 line-clamp-2 text-center text-xs text-slate-400 lg:text-sm">{lessonTitle}</p>
           {totalQuestions > 1 && (
             <div className="mt-2.5 flex items-center justify-center gap-2">
               {/* Barra de progreso visual */}
@@ -504,26 +468,13 @@ export const LessonQuizModal = ({
                       {String.fromCharCode(65 + index)}
                     </div>
                     <div className="flex min-w-0 flex-1 items-center justify-between gap-2">
-                      <span className="flex-1 leading-snug wrap-break-word">
-                        {option.text}
-                      </span>
-                      {isSubmitted &&
-                        option.id === currentQuestion.correctAnswer && (
-                          <Icon
-                            name="check"
-                            size="xl"
-                            className="ml-2 shrink-0 text-lg text-green-400 lg:text-xl"
-                          />
-                        )}
-                      {isSubmitted &&
-                        option.id === selectedOption &&
-                        option.id !== currentQuestion.correctAnswer && (
-                          <Icon
-                            name="times"
-                            size="xl"
-                            className="ml-2 shrink-0 text-lg text-red-400 lg:text-xl"
-                          />
-                        )}
+                      <span className="flex-1 leading-snug wrap-break-word">{option.text}</span>
+                      {isSubmitted && option.id === currentQuestion.correctAnswer && (
+                        <Icon name="check" size="xl" className="ml-2 shrink-0 text-lg text-green-400 lg:text-xl" />
+                      )}
+                      {isSubmitted && option.id === selectedOption && option.id !== currentQuestion.correctAnswer && (
+                        <Icon name="times" size="xl" className="ml-2 shrink-0 text-lg text-red-400 lg:text-xl" />
+                      )}
                     </div>
                   </div>
                 </button>
@@ -534,9 +485,7 @@ export const LessonQuizModal = ({
             {isSubmitted && currentQuestion.explanation && (
               <div className="mt-3 rounded-r-lg border-l-4 border-blue-500 bg-blue-500/10 p-3.5 lg:mt-4 lg:rounded-xl lg:p-4">
                 <p className="text-xs leading-relaxed text-blue-200 lg:text-sm">
-                  <strong className="mb-1.5 block text-blue-300">
-                    💡 Explicación:
-                  </strong>
+                  <strong className="mb-1.5 block text-blue-300">💡 Explicación:</strong>
                   <span className="block">{currentQuestion.explanation}</span>
                 </p>
               </div>
@@ -554,21 +503,11 @@ export const LessonQuizModal = ({
             >
               <div className="mb-2 flex items-center justify-center gap-2">
                 {isCorrect ? (
-                  <Icon
-                    name="check"
-                    size="2xl"
-                    className="text-xl text-green-400 lg:text-2xl"
-                  />
+                  <Icon name="check" size="2xl" className="text-xl text-green-400 lg:text-2xl" />
                 ) : (
-                  <Icon
-                    name="times"
-                    size="2xl"
-                    className="text-xl text-red-400 lg:text-2xl"
-                  />
+                  <Icon name="times" size="2xl" className="text-xl text-red-400 lg:text-2xl" />
                 )}
-                <h5
-                  className={`text-lg font-bold lg:text-xl ${isCorrect ? 'text-green-300' : 'text-red-300'}`}
-                >
+                <h5 className={`text-lg font-bold lg:text-xl ${isCorrect ? 'text-green-300' : 'text-red-300'}`}>
                   {isCorrect ? '¡Correcto!' : 'Incorrecto'}
                 </h5>
               </div>
@@ -576,28 +515,18 @@ export const LessonQuizModal = ({
               {isCorrect && rewards && isLastQuestion && (
                 <div className="mt-3 flex flex-wrap items-center justify-center gap-2.5 lg:gap-4">
                   <div className="flex items-center gap-2 rounded-full border border-yellow-400/20 bg-yellow-400/15 px-3 py-1.5 text-sm font-bold text-yellow-300 shadow-md lg:px-4 lg:py-2 lg:text-base">
-                    <Icon
-                      name="coins"
-                      size="md"
-                      className="text-sm lg:text-base"
-                    />
+                    <Icon name="coins" size="md" className="text-sm lg:text-base" />
                     <span>+{rewards.coins}</span>
                   </div>
                   <div className="flex items-center gap-2 rounded-full border border-blue-400/20 bg-blue-400/15 px-3 py-1.5 text-sm font-bold text-blue-300 shadow-md lg:px-4 lg:py-2 lg:text-base">
-                    <Icon
-                      name="star"
-                      size="md"
-                      className="text-sm lg:text-base"
-                    />
+                    <Icon name="star" size="md" className="text-sm lg:text-base" />
                     <span>+{rewards.xp} XP</span>
                   </div>
                 </div>
               )}
 
               {isCorrect && alreadyCompleted && !rewards && isLastQuestion && (
-                <p className="mt-2 text-xs text-slate-300 lg:text-sm">
-                  Ya has completado esta lección anteriormente.
-                </p>
+                <p className="mt-2 text-xs text-slate-300 lg:text-sm">Ya has completado esta lección anteriormente.</p>
               )}
 
               {!isCorrect && (
@@ -621,11 +550,7 @@ export const LessonQuizModal = ({
                 className="min-h-[48px] cursor-pointer rounded-xl bg-slate-800/80 px-3.5 py-3 font-bold text-slate-300 shadow-md transition-all hover:bg-slate-700 active:scale-95 active:bg-slate-600 lg:min-h-[44px] lg:rounded-xl lg:px-4"
                 aria-label="Pregunta anterior"
               >
-                <Icon
-                  name="arrow-left"
-                  size="lg"
-                  className="text-base lg:text-lg"
-                />
+                <Icon name="arrow-left" size="lg" className="text-base lg:text-lg" />
               </button>
             )}
 
@@ -633,21 +558,20 @@ export const LessonQuizModal = ({
             <button
               onClick={() => {
                 // Si se completó el quiz exitosamente, cerrar también el modal de contenido
-                if (
-                  isLastQuestion &&
-                  (isCorrect || allQuestionsAnswered) &&
-                  onComplete
-                ) {
-                  onComplete({ correct: Object.keys(answers).filter((k) => answers[k] === normalizedQuestions.find((q) => q.id === k)?.correctAnswer).length, total: totalQuestions });
+                if (isLastQuestion && (isCorrect || allQuestionsAnswered) && onComplete) {
+                  onComplete({
+                    correct: Object.keys(answers).filter(
+                      (k) => answers[k] === normalizedQuestions.find((q) => q.id === k)?.correctAnswer
+                    ).length,
+                    total: totalQuestions,
+                  });
                 } else {
                   onClose();
                 }
               }}
               className="min-h-[48px] flex-1 cursor-pointer rounded-xl bg-slate-800/80 px-3 py-3 text-sm font-semibold text-slate-300 shadow-md transition-all hover:bg-slate-700 active:scale-95 active:bg-slate-600 lg:min-h-[44px] lg:rounded-xl lg:px-4 lg:text-base"
             >
-              {isLastQuestion && (isCorrect || allQuestionsAnswered)
-                ? 'Cerrar'
-                : 'Cancelar'}
+              {isLastQuestion && (isCorrect || allQuestionsAnswered) ? 'Cerrar' : 'Cancelar'}
             </button>
 
             {!isSubmitted ? (
@@ -686,11 +610,7 @@ export const LessonQuizModal = ({
                   >
                     <span className="hidden lg:inline">Siguiente </span>
                     <span className="lg:hidden">Sig.</span>
-                    <Icon
-                      name="arrow-right"
-                      size="md"
-                      className="ml-1 text-sm lg:ml-2 lg:text-base"
-                    />
+                    <Icon name="arrow-right" size="md" className="ml-1 text-sm lg:ml-2 lg:text-base" />
                   </button>
                 )}
               </>

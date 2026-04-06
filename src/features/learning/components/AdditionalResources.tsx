@@ -9,8 +9,8 @@ export const AdditionalResources = () => {
           Recursos Adicionales
         </h2>
         <p className="mb-8 max-w-3xl text-lg leading-relaxed text-blue-100">
-          Descarga nuestros materiales de estudio en PDF, videos tutoriales y
-          ejercicios interactivos diseñados para maximizar tu comprensión
+          Descarga nuestros materiales de estudio en PDF, videos tutoriales y ejercicios interactivos diseñados para
+          maximizar tu comprensión
         </p>
         <div className="flex flex-wrap gap-4">
           <button className="cursor-pointer rounded-xl bg-white px-8 py-3 font-semibold text-blue-600 transition-all duration-300 hover:scale-105 hover:bg-gray-100 hover:shadow-lg">

@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { Icon } from '@/shared/components/Icon';
 import { useAuth } from '@/context/AuthContext';
 import { EMAIL_MESSAGES } from '@/config/emailMessages';
+import { mapSupabaseAuthError } from '@/utils/mapSupabaseAuthError';
 
 export const ForgotPasswordPage = () => {
   const [email, setEmail] = useState('');
@@ -26,10 +27,7 @@ export const ForgotPasswordPage = () => {
       setStep(2);
       setEmail('');
     } catch (err) {
-      setError(
-        (err instanceof Error ? err.message : undefined) ||
-          EMAIL_MESSAGES.forgotPasswordPage.errorSendingEmail
-      );
+      setError(mapSupabaseAuthError(err, EMAIL_MESSAGES.forgotPasswordPage.errorSendingEmail));
     } finally {
       setIsLoading(false);
     }
@@ -59,9 +57,7 @@ export const ForgotPasswordPage = () => {
           <h1 className="mb-4 bg-linear-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-3xl font-black text-transparent md:text-4xl">
             {EMAIL_MESSAGES.forgotPasswordPage.headerTitle}
           </h1>
-          <p className="text-slate-400">
-            {EMAIL_MESSAGES.forgotPasswordPage.headerSubtitle}
-          </p>
+          <p className="text-slate-400">{EMAIL_MESSAGES.forgotPasswordPage.headerSubtitle}</p>
         </div>
 
         {/* Step 1: Email Verification */}
@@ -71,25 +67,17 @@ export const ForgotPasswordPage = () => {
             <form onSubmit={handleSubmit} className="space-y-6">
               {/* Email */}
               <div>
-                <label
-                  htmlFor="email"
-                  className="mb-2 block text-sm font-semibold"
-                >
+                <label htmlFor="email" className="mb-2 block text-sm font-semibold">
                   {EMAIL_MESSAGES.forgotPasswordPage.emailLabel}
                 </label>
                 <div className="relative">
-                  <Icon
-                    name="envelope"
-                    className="absolute top-1/2 left-4 -translate-y-1/2 text-slate-400"
-                  />
+                  <Icon name="envelope" className="absolute top-1/2 left-4 -translate-y-1/2 text-slate-400" />
                   <input
                     id="email"
                     type="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    placeholder={
-                      EMAIL_MESSAGES.forgotPasswordPage.emailPlaceholder
-                    }
+                    placeholder={EMAIL_MESSAGES.forgotPasswordPage.emailPlaceholder}
                     className="w-full rounded-lg border border-slate-700 bg-slate-800/50 py-3 pr-4 pl-10 transition-all focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/30 focus:outline-none"
                     required
                   />
@@ -99,10 +87,7 @@ export const ForgotPasswordPage = () => {
               {/* Error Message */}
               {error && (
                 <div className="flex items-start gap-3 rounded-lg border border-red-500/50 bg-red-500/20 p-4">
-                  <Icon
-                    name="exclamation-circle"
-                    className="mt-0.5 shrink-0 text-red-400"
-                  />
+                  <Icon name="exclamation-circle" className="mt-0.5 shrink-0 text-red-400" />
                   <p className="text-sm text-red-400">{error}</p>
                 </div>
               )}
@@ -126,11 +111,7 @@ export const ForgotPasswordPage = () => {
           <div className="space-y-6">
             <div className="mb-6 flex justify-center">
               <div className="flex h-20 w-20 items-center justify-center rounded-full border border-green-500/50 bg-green-500/20">
-                <Icon
-                  name="check-circle"
-                  size="2xl"
-                  className="text-4xl text-green-400"
-                />
+                <Icon name="check-circle" size="2xl" className="text-4xl text-green-400" />
               </div>
             </div>
 
@@ -138,23 +119,17 @@ export const ForgotPasswordPage = () => {
               <h2 className="mb-3 text-center text-2xl font-bold text-white">
                 {EMAIL_MESSAGES.forgotPasswordPage.successTitle}
               </h2>
-              <p className="text-center text-slate-400">
-                {EMAIL_MESSAGES.forgotPasswordPage.successMessage}
-              </p>
+              <p className="text-center text-slate-400">{EMAIL_MESSAGES.forgotPasswordPage.successMessage}</p>
             </div>
 
             <div className="space-y-2 rounded-lg border border-slate-700 bg-slate-800/50 p-4">
               <p className="text-sm text-slate-300">
-                <strong>
-                  {EMAIL_MESSAGES.forgotPasswordPage.importantLabel}
-                </strong>
+                <strong>{EMAIL_MESSAGES.forgotPasswordPage.importantLabel}</strong>
               </p>
               <ul className="list-inside list-disc space-y-1 text-sm text-slate-400">
-                {EMAIL_MESSAGES.forgotPasswordPage.importanceList.map(
-                  (item, idx) => (
-                    <li key={idx}>{item}</li>
-                  )
-                )}
+                {EMAIL_MESSAGES.forgotPasswordPage.importanceList.map((item, idx) => (
+                  <li key={idx}>{item}</li>
+                ))}
               </ul>
             </div>
 

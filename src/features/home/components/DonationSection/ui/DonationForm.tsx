@@ -45,46 +45,30 @@ export const DonationForm = ({
             {currentMethod?.name}
           </h4>
           <p className="mb-6 border-b border-white/10 pb-4 text-sm text-gray-400">
-            {currentMethod?.description ||
-              'Sigue los pasos para completar tu donación.'}
+            {currentMethod?.description || 'Sigue los pasos para completar tu donación.'}
           </p>
 
           <div className="space-y-4">
             <div className="rounded-xl border border-white/10 bg-white/5 p-4">
-              <p className="mb-1 text-xs text-gray-500 uppercase">
-                Monto a donar
-              </p>
+              <p className="mb-1 text-xs text-gray-500 uppercase">Monto a donar</p>
               <p className="text-2xl font-bold text-white">
-                ${Number(currentAmount).toLocaleString()}{' '}
-                <span className="text-sm font-normal text-gray-400">COP</span>
+                ${Number(currentAmount).toLocaleString()} <span className="text-sm font-normal text-gray-400">COP</span>
               </p>
             </div>
 
             {/* FORMULARIO DE TARJETA */}
             {currentMethod?.type === 'card' && (
-              <form
-                onSubmit={handlePayment}
-                className="animate-fadeIn space-y-4"
-              >
+              <form onSubmit={handlePayment} className="animate-fadeIn space-y-4">
                 {paymentSuccess ? (
                   <div className="rounded-xl border border-green-500/50 bg-green-500/20 p-6 text-center">
-                    <Icon
-                      name="check"
-                      className="mb-3 text-4xl text-green-400"
-                    />
-                    <h5 className="text-lg font-bold text-white">
-                      ¡Gracias por tu Sprite!
-                    </h5>
-                    <p className="text-sm text-gray-300">
-                      Tu apoyo ha sido recibido.
-                    </p>
+                    <Icon name="check" className="mb-3 text-4xl text-green-400" />
+                    <h5 className="text-lg font-bold text-white">¡Gracias por tu Sprite!</h5>
+                    <p className="text-sm text-gray-300">Tu apoyo ha sido recibido.</p>
                   </div>
                 ) : (
                   <>
                     <div>
-                      <label className="mb-1 block text-xs font-medium text-gray-400">
-                        Número de Tarjeta
-                      </label>
+                      <label className="mb-1 block text-xs font-medium text-gray-400">Número de Tarjeta</label>
                       <div className="relative">
                         <input
                           type="text"
@@ -94,26 +78,19 @@ export const DonationForm = ({
                           className="w-full rounded-lg border border-white/10 bg-black/30 py-2.5 pr-4 pl-10 text-sm text-white placeholder-gray-600 transition-colors focus:border-purple-500 focus:outline-none"
                           required
                         />
-                        <Icon
-                          name="credit-card"
-                          className="absolute top-1/2 left-3 -translate-y-1/2 text-gray-500"
-                        />
+                        <Icon name="credit-card" className="absolute top-1/2 left-3 -translate-y-1/2 text-gray-500" />
                       </div>
                     </div>
 
                     <div className="grid grid-cols-2 gap-3">
                       <div>
-                        <label className="mb-1 block text-xs font-medium text-gray-400">
-                          Vencimiento
-                        </label>
+                        <label className="mb-1 block text-xs font-medium text-gray-400">Vencimiento</label>
                         <div className="flex gap-2">
                           <input
                             type="text"
                             placeholder="MM"
                             value={cardData.expiryMonth}
-                            onChange={(e) =>
-                              handleExpiryChange('month', e.target.value)
-                            }
+                            onChange={(e) => handleExpiryChange('month', e.target.value)}
                             className="w-full rounded-lg border border-white/10 bg-black/30 px-3 py-2.5 text-center text-sm text-white placeholder-gray-600 transition-colors focus:border-purple-500 focus:outline-none"
                             required
                           />
@@ -121,18 +98,14 @@ export const DonationForm = ({
                             type="text"
                             placeholder="AA"
                             value={cardData.expiryYear}
-                            onChange={(e) =>
-                              handleExpiryChange('year', e.target.value)
-                            }
+                            onChange={(e) => handleExpiryChange('year', e.target.value)}
                             className="w-full rounded-lg border border-white/10 bg-black/30 px-3 py-2.5 text-center text-sm text-white placeholder-gray-600 transition-colors focus:border-purple-500 focus:outline-none"
                             required
                           />
                         </div>
                       </div>
                       <div>
-                        <label className="mb-1 block text-xs font-medium text-gray-400">
-                          CVC
-                        </label>
+                        <label className="mb-1 block text-xs font-medium text-gray-400">CVC</label>
                         <div className="relative">
                           <input
                             type="text"
@@ -151,9 +124,7 @@ export const DonationForm = ({
                     </div>
 
                     <div>
-                      <label className="mb-1 block text-xs font-medium text-gray-400">
-                        Nombre en la Tarjeta
-                      </label>
+                      <label className="mb-1 block text-xs font-medium text-gray-400">Nombre en la Tarjeta</label>
                       <input
                         type="text"
                         placeholder="COMO APARECE EN LA TARJETA"
@@ -199,29 +170,22 @@ export const DonationForm = ({
 
             {currentMethod?.type === 'copy' && (
               <div className="animate-fadeIn rounded-xl border border-white/10 bg-white/5 p-4">
-                <p className="mb-2 text-xs text-gray-500 uppercase">
-                  Número de cuenta / Billetera
-                </p>
+                <p className="mb-2 text-xs text-gray-500 uppercase">Número de cuenta / Billetera</p>
                 <div className="mb-2 flex items-center gap-2">
                   <code className="flex-1 rounded-lg bg-black/30 p-3 font-mono text-sm break-all text-purple-300">
                     {currentMethod.detail}
                   </code>
                   <button
-                    onClick={() =>
-                      copyToClipboard(currentMethod.detail, currentMethod.id)
-                    }
+                    onClick={() => copyToClipboard(currentMethod.detail, currentMethod.id)}
                     className="rounded-lg bg-purple-600 p-3 text-white transition-colors hover:bg-purple-700"
                     title="Copiar"
                   >
-                    <Icon
-                      name={copied === currentMethod.id ? 'check' : 'copy'}
-                    />
+                    <Icon name={copied === currentMethod.id ? 'check' : 'copy'} />
                   </button>
                 </div>
                 {currentMethod.owner && (
                   <p className="text-xs text-gray-400">
-                    Titular:{' '}
-                    <span className="text-gray-300">{currentMethod.owner}</span>
+                    Titular: <span className="text-gray-300">{currentMethod.owner}</span>
                   </p>
                 )}
               </div>
@@ -230,8 +194,7 @@ export const DonationForm = ({
             {currentMethod?.type === 'url' && (
               <div className="animate-fadeIn rounded-xl border border-white/10 bg-white/5 p-4 text-center">
                 <p className="mb-4 text-sm text-gray-300">
-                  Serás redirigido a la plataforma segura de{' '}
-                  {currentMethod.name} para completar la donación.
+                  Serás redirigido a la plataforma segura de {currentMethod.name} para completar la donación.
                 </p>
                 <a
                   href={currentMethod.detail}

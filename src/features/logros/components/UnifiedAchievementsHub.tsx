@@ -160,11 +160,7 @@ export const UnifiedAchievementsHub = ({
         <div className="relative z-10 p-8 md:p-12">
           <div className="max-w-2xl">
             <div className="mb-4 flex items-center gap-3">
-              <Icon
-                name="trophy"
-                size="2xl"
-                className="text-4xl text-amber-400"
-              />
+              <Icon name="trophy" size="2xl" className="text-4xl text-amber-400" />
               <h1 className="bg-linear-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-5xl font-bold text-transparent">
                 Centro de Logros
               </h1>
@@ -177,11 +173,7 @@ export const UnifiedAchievementsHub = ({
             <div className="space-y-3 rounded-xl border border-white/10 bg-black/30 p-6 backdrop-blur-md">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
-                  <Icon
-                    name="zap"
-                    size="lg"
-                    className="text-lg text-yellow-400"
-                  />
+                  <Icon name="zap" size="lg" className="text-lg text-yellow-400" />
                   <span className="font-semibold text-white">Experiencia</span>
                 </div>
                 <span className="text-lg font-bold text-cyan-400">
@@ -215,15 +207,11 @@ export const UnifiedAchievementsHub = ({
             ></div>
             <div className="relative z-10">
               <div className="mb-4 flex items-start justify-between">
-                <div
-                  className={`bg-linear-to-r bg-clip-text text-3xl text-transparent ${stat.color}`}
-                >
+                <div className={`bg-linear-to-r bg-clip-text text-3xl text-transparent ${stat.color}`}>
                   <Icon name={stat.icon} />
                 </div>
               </div>
-              <p className="mb-1 text-sm font-medium text-slate-400">
-                {stat.label}
-              </p>
+              <p className="mb-1 text-sm font-medium text-slate-400">{stat.label}</p>
               <p className="text-3xl font-bold text-white">{stat.value}</p>
             </div>
           </div>
@@ -262,33 +250,19 @@ export const UnifiedAchievementsHub = ({
           {/* Recent Achievements */}
           <div className="rounded-xl border border-slate-700 bg-linear-to-b from-slate-900/50 to-slate-950/50 p-8 backdrop-blur-md">
             <div className="mb-6 flex items-center gap-3">
-              <Icon
-                name="tasks"
-                size="2xl"
-                className="text-2xl text-cyan-400"
-              />
-              <h2 className="text-2xl font-bold text-white">
-                Logros Recientes
-              </h2>
+              <Icon name="tasks" size="2xl" className="text-2xl text-cyan-400" />
+              <h2 className="text-2xl font-bold text-white">Logros Recientes</h2>
             </div>
 
             {badges && badges.slice(0, 6).length > 0 ? (
               <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-6">
                 {badges.slice(0, 6).map((badge, idx) => (
-                  <div
-                    key={badge.id || idx}
-                    className="group cursor-pointer"
-                    onClick={() => setSelectedBadge(badge)}
-                  >
+                  <div key={badge.id || idx} className="group cursor-pointer" onClick={() => setSelectedBadge(badge)}>
                     <div className="relative overflow-hidden rounded-lg border border-slate-700 bg-slate-800 p-4 transition-all duration-300 hover:border-cyan-500/50 hover:shadow-lg hover:shadow-cyan-500/20">
                       <div className="flex aspect-square items-center justify-center text-4xl">
                         {badge.icon ? (
                           <Icon
-                            name={
-                              typeof badge.icon === 'string'
-                                ? badge.icon
-                                : 'trophy'
-                            }
+                            name={typeof badge.icon === 'string' ? badge.icon : 'trophy'}
                             className="text-amber-400"
                           />
                         ) : (
@@ -296,9 +270,7 @@ export const UnifiedAchievementsHub = ({
                         )}
                       </div>
                       <div className="absolute inset-0 flex items-center justify-center rounded-lg bg-black/60 opacity-0 transition-opacity group-hover:opacity-100">
-                        <p className="px-2 text-center text-xs font-bold text-white">
-                          {badge.name}
-                        </p>
+                        <p className="px-2 text-center text-xs font-bold text-white">{badge.name}</p>
                       </div>
                     </div>
                   </div>
@@ -306,14 +278,8 @@ export const UnifiedAchievementsHub = ({
               </div>
             ) : (
               <div className="py-12 text-center">
-                <Icon
-                  name="lock"
-                  size="2xl"
-                  className="mb-3 text-4xl text-slate-600"
-                />
-                <p className="text-slate-400">
-                  Aún no has desbloqueado logros. ¡Comienza a estudiar!
-                </p>
+                <Icon name="lock" size="2xl" className="mb-3 text-4xl text-slate-600" />
+                <p className="text-slate-400">Aún no has desbloqueado logros. ¡Comienza a estudiar!</p>
               </div>
             )}
           </div>
@@ -323,54 +289,33 @@ export const UnifiedAchievementsHub = ({
             {/* Next Milestone */}
             <div className="rounded-xl border border-blue-500/30 bg-linear-to-br from-blue-900/20 to-blue-950/20 p-8 backdrop-blur-md">
               <div className="mb-4 flex items-center gap-3">
-                <Icon
-                  name="tasks"
-                  size="2xl"
-                  className="text-2xl text-blue-400"
-                />
+                <Icon name="tasks" size="2xl" className="text-2xl text-blue-400" />
                 <h3 className="text-xl font-bold text-white">Próximo Hito</h3>
               </div>
               <div className="space-y-4">
-                <p className="text-slate-300">
-                  Nivel {level + 1}: Maestría Avanzada
-                </p>
+                <p className="text-slate-300">Nivel {level + 1}: Maestría Avanzada</p>
                 <div className="h-3 w-full overflow-hidden rounded-full bg-slate-800">
                   <div
                     className="h-full bg-linear-to-r from-blue-500 to-cyan-500"
                     style={{ width: `${levelProgress.percentage}%` }}
                   />
                 </div>
-                <p className="text-sm text-slate-400">
-                  Requiere {levelProgress.needed - levelProgress.current} XP más
-                </p>
+                <p className="text-sm text-slate-400">Requiere {levelProgress.needed - levelProgress.current} XP más</p>
               </div>
             </div>
 
             {/* Achievements Unlocked */}
             <div className="rounded-xl border border-green-500/30 bg-linear-to-br from-green-900/20 to-green-950/20 p-8 backdrop-blur-md">
               <div className="mb-4 flex items-center gap-3">
-                <Icon
-                  name="check-circle"
-                  size="2xl"
-                  className="text-2xl text-green-400"
-                />
-                <h3 className="text-xl font-bold text-white">
-                  Logros Desbloqueados
-                </h3>
+                <Icon name="check-circle" size="2xl" className="text-2xl text-green-400" />
+                <h3 className="text-xl font-bold text-white">Logros Desbloqueados</h3>
               </div>
               <div className="space-y-4">
-                <p className="text-3xl font-bold text-green-400">
-                  {badges?.length || 0}
-                </p>
+                <p className="text-3xl font-bold text-green-400">{badges?.length || 0}</p>
                 <div className="h-3 w-full overflow-hidden rounded-full bg-slate-800">
-                  <div
-                    className="h-full bg-linear-to-r from-green-500 to-emerald-500"
-                    style={{ width: '60%' }}
-                  />
+                  <div className="h-full bg-linear-to-r from-green-500 to-emerald-500" style={{ width: '60%' }} />
                 </div>
-                <p className="text-sm text-slate-400">
-                  60% de todos los logros disponibles
-                </p>
+                <p className="text-sm text-slate-400">60% de todos los logros disponibles</p>
               </div>
             </div>
           </div>
@@ -405,11 +350,7 @@ export const UnifiedAchievementsHub = ({
                 const config = rarityConfig[rarity] || rarityConfig.común;
 
                 return (
-                  <div
-                    key={badge.id || idx}
-                    className="group cursor-pointer"
-                    onClick={() => setSelectedBadge(badge)}
-                  >
+                  <div key={badge.id || idx} className="group cursor-pointer" onClick={() => setSelectedBadge(badge)}>
                     <div
                       className={`relative rounded-xl border ${config.badge} bg-linear-to-br ${config.color} overflow-hidden p-6 transition-all duration-300 hover:shadow-lg hover:shadow-${rarity}-500/30 ${
                         badge.unlocked ? 'opacity-100' : 'opacity-50'
@@ -423,22 +364,14 @@ export const UnifiedAchievementsHub = ({
                         {/* Icon */}
                         <div className={`text-5xl ${config.textColor}`}>
                           {badge.icon ? (
-                            <Icon
-                              name={
-                                typeof badge.icon === 'string'
-                                  ? badge.icon
-                                  : 'trophy'
-                              }
-                            />
+                            <Icon name={typeof badge.icon === 'string' ? badge.icon : 'trophy'} />
                           ) : (
                             <Icon name="trophy" />
                           )}
                         </div>
 
                         {/* Name */}
-                        <h3 className="text-sm font-bold text-white md:text-base">
-                          {badge.name}
-                        </h3>
+                        <h3 className="text-sm font-bold text-white md:text-base">{badge.name}</h3>
 
                         {/* Rarity Badge */}
                         <span className="inline-block rounded-full bg-black/30 px-2 py-1 text-xs font-bold text-white uppercase">
@@ -478,14 +411,8 @@ export const UnifiedAchievementsHub = ({
               })
             ) : (
               <div className="col-span-full py-12 text-center">
-                <Icon
-                  name="lock"
-                  size="2xl"
-                  className="mb-3 text-4xl text-slate-600"
-                />
-                <p className="text-slate-400">
-                  No hay insignias disponibles en esta categoría
-                </p>
+                <Icon name="lock" size="2xl" className="mb-3 text-4xl text-slate-600" />
+                <p className="text-slate-400">No hay insignias disponibles en esta categoría</p>
               </div>
             )}
           </div>
@@ -496,9 +423,7 @@ export const UnifiedAchievementsHub = ({
       {activeTab === 'levels' && (
         <div className="space-y-6">
           <div className="rounded-xl border border-slate-700 bg-linear-to-b from-slate-900/50 to-slate-950/50 p-8 backdrop-blur-md">
-            <h2 className="mb-6 text-2xl font-bold text-white">
-              Progresión de Niveles
-            </h2>
+            <h2 className="mb-6 text-2xl font-bold text-white">Progresión de Niveles</h2>
 
             <div className="space-y-6">
               {[1, 2, 3].map((lv) => {
@@ -571,9 +496,7 @@ export const UnifiedAchievementsHub = ({
       {activeTab === 'challenges' && (
         <div className="space-y-6">
           <div className="rounded-xl border border-slate-700 bg-linear-to-b from-slate-900/50 to-slate-950/50 p-8 backdrop-blur-md">
-            <h2 className="mb-6 text-2xl font-bold text-white">
-              Desafíos Diarios
-            </h2>
+            <h2 className="mb-6 text-2xl font-bold text-white">Desafíos Diarios</h2>
 
             <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
               {[
@@ -603,25 +526,13 @@ export const UnifiedAchievementsHub = ({
                 >
                   <div className="flex items-start justify-between">
                     <div>
-                      <h3 className="mb-1 font-bold text-white">
-                        {challenge.title}
-                      </h3>
-                      <p className="text-sm text-slate-400">
-                        Recompensa: {challenge.reward}
-                      </p>
+                      <h3 className="mb-1 font-bold text-white">{challenge.title}</h3>
+                      <p className="text-sm text-slate-400">Recompensa: {challenge.reward}</p>
                     </div>
                     {challenge.completed ? (
-                      <Icon
-                        name="check-circle"
-                        size="2xl"
-                        className="text-2xl text-green-400"
-                      />
+                      <Icon name="check-circle" size="2xl" className="text-2xl text-green-400" />
                     ) : (
-                      <Icon
-                        name="calendar-alt"
-                        size="2xl"
-                        className="text-2xl text-blue-400"
-                      />
+                      <Icon name="calendar-alt" size="2xl" className="text-2xl text-blue-400" />
                     )}
                   </div>
                 </div>
@@ -643,9 +554,7 @@ export const UnifiedAchievementsHub = ({
               <div className="space-y-4">
                 <div className="flex justify-between border-b border-slate-700 py-3">
                   <span className="text-slate-400">Logros Totales</span>
-                  <span className="font-bold text-white">
-                    {badges?.length || 0}
-                  </span>
+                  <span className="font-bold text-white">{badges?.length || 0}</span>
                 </div>
                 <div className="flex justify-between border-b border-slate-700 py-3">
                   <span className="text-slate-400">Nivel Alcanzado</span>
@@ -653,15 +562,11 @@ export const UnifiedAchievementsHub = ({
                 </div>
                 <div className="flex justify-between border-b border-slate-700 py-3">
                   <span className="text-slate-400">Experiencia Total</span>
-                  <span className="font-bold text-white">
-                    {totalXP.toLocaleString()}
-                  </span>
+                  <span className="font-bold text-white">{totalXP.toLocaleString()}</span>
                 </div>
                 <div className="flex justify-between py-3">
                   <span className="text-slate-400">Desafíos Completados</span>
-                  <span className="font-bold text-white">
-                    {completedChallenges}
-                  </span>
+                  <span className="font-bold text-white">{completedChallenges}</span>
                 </div>
               </div>
             </div>
@@ -674,21 +579,15 @@ export const UnifiedAchievementsHub = ({
               <div className="space-y-4">
                 <div className="flex justify-between border-b border-slate-700 py-3">
                   <span className="text-slate-400">Racha Actual</span>
-                  <span className="font-bold text-orange-400">
-                    {currentStreak} días
-                  </span>
+                  <span className="font-bold text-orange-400">{currentStreak} días</span>
                 </div>
                 <div className="flex justify-between border-b border-slate-700 py-3">
                   <span className="text-slate-400">Racha Máxima</span>
-                  <span className="font-bold text-yellow-400">
-                    {maxStreak} días
-                  </span>
+                  <span className="font-bold text-yellow-400">{maxStreak} días</span>
                 </div>
                 <div className="flex justify-between border-b border-slate-700 py-3">
                   <span className="text-slate-400">Horas Estudiadas</span>
-                  <span className="font-bold text-cyan-400">
-                    {totalHours.toLocaleString()}
-                  </span>
+                  <span className="font-bold text-cyan-400">{totalHours.toLocaleString()}</span>
                 </div>
                 <div className="flex justify-between py-3">
                   <span className="text-slate-400">Preguntas Contestadas</span>
@@ -713,21 +612,13 @@ export const UnifiedAchievementsHub = ({
             <div className="space-y-4 text-center">
               <div className="text-6xl">
                 <Icon
-                  name={
-                    typeof selectedBadge?.icon === 'string'
-                      ? selectedBadge.icon
-                      : 'trophy'
-                  }
+                  name={typeof selectedBadge?.icon === 'string' ? selectedBadge.icon : 'trophy'}
                   className="text-amber-400"
                 />
               </div>
               <div>
-                <h2 className="text-2xl font-bold text-white">
-                  {String(selectedBadge?.name ?? '')}
-                </h2>
-                <p className="mt-1 text-sm text-slate-400 uppercase">
-                  {String(selectedBadge?.rarity ?? '')}
-                </p>
+                <h2 className="text-2xl font-bold text-white">{String(selectedBadge?.name ?? '')}</h2>
+                <p className="mt-1 text-sm text-slate-400 uppercase">{String(selectedBadge?.rarity ?? '')}</p>
               </div>
             </div>
 
@@ -743,9 +634,7 @@ export const UnifiedAchievementsHub = ({
 
             {selectedBadge.unlocked && selectedBadge.unlockedDate && (
               <div className="rounded-lg border border-green-500/30 bg-green-500/10 p-4 text-center">
-                <p className="text-sm text-green-400">
-                  ✓ Desbloqueado el {selectedBadge.unlockedDate}
-                </p>
+                <p className="text-sm text-green-400">✓ Desbloqueado el {selectedBadge.unlockedDate}</p>
               </div>
             )}
 

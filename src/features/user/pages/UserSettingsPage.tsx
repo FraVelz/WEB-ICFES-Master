@@ -7,11 +7,7 @@ import { Icon } from '@/shared/components/Icon';
 import { useUser } from '@/features/user/hooks/useUser';
 import { useAuth } from '@/context/AuthContext';
 import { useUserData, useProgress, useExam } from '@/hooks/FirestoreHooks';
-import {
-  updateUsername,
-  updateUserBio,
-  updateProfileImage,
-} from '@/shared/utils/userProfile';
+import { updateUsername, updateUserBio, updateProfileImage } from '@/shared/utils/userProfile';
 // import { DonationSection } from '@/features/home';
 
 // --- Internal Components for UI Consistency ---
@@ -24,9 +20,7 @@ interface SettingsSectionProps {
 }
 
 const SettingsSection = ({ title, icon, children, className = '' }: SettingsSectionProps) => (
-  <div
-    className={`mb-6 rounded-2xl border border-slate-800 bg-slate-900/60 p-5 backdrop-blur-md sm:p-6 ${className}`}
-  >
+  <div className={`mb-6 rounded-2xl border border-slate-800 bg-slate-900/60 p-5 backdrop-blur-md sm:p-6 ${className}`}>
     {title && (
       <h2 className="mb-6 flex items-center gap-3 border-b border-slate-800 pb-4 text-lg font-bold text-white sm:text-xl">
         <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-slate-800 text-cyan-400 shadow-inner">
@@ -48,14 +42,7 @@ interface SettingOptionProps {
   onClick?: () => void;
 }
 
-const SettingOption = ({
-  label,
-  description,
-  icon,
-  action,
-  danger = false,
-  onClick,
-}: SettingOptionProps) => (
+const SettingOption = ({ label, description, icon, action, danger = false, onClick }: SettingOptionProps) => (
   <div
     onClick={onClick}
     className={`group flex flex-col justify-between rounded-xl border p-4 transition-all duration-200 sm:flex-row sm:items-center ${
@@ -77,21 +64,11 @@ const SettingOption = ({
         </div>
       )}
       <div>
-        <h3
-          className={`text-base font-medium ${danger ? 'text-red-400' : 'text-slate-200'}`}
-        >
-          {label}
-        </h3>
-        {description && (
-          <p className="mt-0.5 text-sm leading-relaxed text-slate-400">
-            {description}
-          </p>
-        )}
+        <h3 className={`text-base font-medium ${danger ? 'text-red-400' : 'text-slate-200'}`}>{label}</h3>
+        {description && <p className="mt-0.5 text-sm leading-relaxed text-slate-400">{description}</p>}
       </div>
     </div>
-    <div className="flex w-full items-center justify-end pl-14 sm:w-auto sm:pl-0">
-      {action}
-    </div>
+    <div className="flex w-full items-center justify-end pl-14 sm:w-auto sm:pl-0">{action}</div>
   </div>
 );
 
@@ -208,10 +185,7 @@ export const UserSettingsPage = () => {
     try {
       setSendingSupport(true);
       // Modo visual: mensaje guardado localmente (backend pendiente)
-      showMessage(
-        'Gracias 🙌 Tu mensaje se ha registrado. Te responderemos pronto.',
-        'success'
-      );
+      showMessage('Gracias 🙌 Tu mensaje se ha registrado. Te responderemos pronto.', 'success');
       setSupportMessage('');
       setSupportCategory('technical');
       if (!user?.email && !userData?.email) setSupportEmail('');
@@ -312,9 +286,7 @@ export const UserSettingsPage = () => {
               }`}
             >
               <div className="flex items-center gap-3">
-                <Icon
-                  name={messageType === 'success' ? 'check-circle' : 'warning'}
-                />
+                <Icon name={messageType === 'success' ? 'check-circle' : 'warning'} />
                 <p className="text-sm font-medium">{message}</p>
               </div>
             </div>
@@ -330,11 +302,7 @@ export const UserSettingsPage = () => {
                   <div className="group relative mb-4 inline-block">
                     <div className="h-32 w-32 overflow-hidden rounded-full border-4 border-slate-800 bg-slate-800 shadow-2xl">
                       {user?.profileImage ? (
-                        <img
-                          src={user.profileImage}
-                          alt="Profile"
-                          className="h-full w-full object-cover"
-                        />
+                        <img src={user.profileImage} alt="Profile" className="h-full w-full object-cover" />
                       ) : (
                         <div className="flex h-full w-full items-center justify-center bg-slate-700 text-slate-500">
                           <Icon name="user" className="text-4xl" />
@@ -365,9 +333,7 @@ export const UserSettingsPage = () => {
                         <input
                           type="text"
                           value={username}
-                          onChange={(e) =>
-                            setUsername(e.target.value.slice(0, 30))
-                          }
+                          onChange={(e) => setUsername(e.target.value.slice(0, 30))}
                           className="flex-1 rounded-lg border border-slate-800 bg-slate-950 px-3 py-2 text-sm text-white transition-all outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500"
                           placeholder="Tu nombre"
                         />
@@ -400,9 +366,7 @@ export const UserSettingsPage = () => {
                           <Icon name="check" />
                         </button>
                       </div>
-                      <p className="mt-1 text-right text-xs text-slate-600">
-                        {bio.length}/150
-                      </p>
+                      <p className="mt-1 text-right text-xs text-slate-600">{bio.length}/150</p>
                     </div>
 
                     {user?.profileImage && (
@@ -443,9 +407,7 @@ export const UserSettingsPage = () => {
                   icon="trash"
                   danger={true}
                   onClick={() => setShowDeleteModal(true)}
-                  action={
-                    <Icon name="chevron-right" className="text-slate-600" />
-                  }
+                  action={<Icon name="chevron-right" className="text-slate-600" />}
                 />
 
                 <SettingOption
@@ -454,9 +416,7 @@ export const UserSettingsPage = () => {
                   icon="warning"
                   danger={true}
                   onClick={() => setShowDeleteModal(true)}
-                  action={
-                    <Icon name="chevron-right" className="text-slate-600" />
-                  }
+                  action={<Icon name="chevron-right" className="text-slate-600" />}
                 />
               </SettingsSection>
 
@@ -477,9 +437,7 @@ export const UserSettingsPage = () => {
                   <button
                     onClick={() => setSupportMode('report')}
                     className={`flex-1 cursor-pointer rounded-lg px-4 py-2 text-sm font-medium transition-all ${
-                      supportMode === 'report'
-                        ? 'bg-slate-800 text-white shadow-sm'
-                        : 'text-slate-400 hover:text-white'
+                      supportMode === 'report' ? 'bg-slate-800 text-white shadow-sm' : 'text-slate-400 hover:text-white'
                     }`}
                   >
                     <Icon name="bug" className="mr-2" />
@@ -490,9 +448,7 @@ export const UserSettingsPage = () => {
                 <form onSubmit={handleSupportSubmit} className="space-y-4">
                   <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                     <div>
-                      <label className="mb-1 block text-xs font-bold text-slate-500 uppercase">
-                        Categoría
-                      </label>
+                      <label className="mb-1 block text-xs font-bold text-slate-500 uppercase">Categoría</label>
                       <select
                         value={supportCategory}
                         onChange={(e) => setSupportCategory(e.target.value)}
@@ -522,18 +478,14 @@ export const UserSettingsPage = () => {
                   </div>
 
                   <div>
-                    <label className="mb-1 block text-xs font-bold text-slate-500 uppercase">
-                      Mensaje
-                    </label>
+                    <label className="mb-1 block text-xs font-bold text-slate-500 uppercase">Mensaje</label>
                     <textarea
                       value={supportMessage}
                       onChange={(e) => setSupportMessage(e.target.value)}
                       required
                       className="h-32 w-full resize-none rounded-lg border border-slate-800 bg-slate-950 px-3 py-3 text-sm text-white outline-none focus:border-cyan-500"
                       placeholder={
-                        supportMode === 'response'
-                          ? '¿En qué podemos ayudarte?'
-                          : 'Describe el error encontrado...'
+                        supportMode === 'response' ? '¿En qué podemos ayudarte?' : 'Describe el error encontrado...'
                       }
                     />
                   </div>
@@ -557,8 +509,7 @@ export const UserSettingsPage = () => {
                       Cloud Sync
                     </h3>
                     <p className="text-xs leading-relaxed text-slate-400">
-                      Tus datos se guardan localmente en tu dispositivo. En el
-                      futuro se sincronizarán con la nube.
+                      Tus datos se guardan localmente en tu dispositivo. En el futuro se sincronizarán con la nube.
                     </p>
                   </div>
                   <div className="rounded-xl border border-slate-800 bg-slate-950/50 p-4">
@@ -567,8 +518,8 @@ export const UserSettingsPage = () => {
                       Privacidad
                     </h3>
                     <p className="text-xs leading-relaxed text-slate-400">
-                      Tus datos están encriptados y protegidos. Solo tú tienes
-                      acceso a tu información personal y progreso.
+                      Tus datos están encriptados y protegidos. Solo tú tienes acceso a tu información personal y
+                      progreso.
                     </p>
                   </div>
                 </div>
@@ -586,12 +537,9 @@ export const UserSettingsPage = () => {
               <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-red-500/10 text-red-500">
                 <Icon name="warning" className="text-xl" />
               </div>
-              <h2 className="mb-2 text-center text-xl font-bold text-white">
-                Zona de Peligro
-              </h2>
+              <h2 className="mb-2 text-center text-xl font-bold text-white">Zona de Peligro</h2>
               <p className="mb-6 text-center text-sm text-slate-400">
-                Estas acciones son irreversibles. Por favor confirma tu
-                intención.
+                Estas acciones son irreversibles. Por favor confirma tu intención.
               </p>
 
               <div className="space-y-4">
@@ -599,11 +547,7 @@ export const UserSettingsPage = () => {
                   <p className="mb-2 text-sm font-medium text-slate-300">
                     Escribe{' '}
                     <span className="font-bold text-white">
-                      "
-                      {deleteConfirmation === 'BORRAR TODO'
-                        ? 'BORRAR TODO'
-                        : 'BORRAR MI CUENTA'}
-                      "
+                      "{deleteConfirmation === 'BORRAR TODO' ? 'BORRAR TODO' : 'BORRAR MI CUENTA'}"
                     </span>
                   </p>
                   <input
@@ -626,15 +570,9 @@ export const UserSettingsPage = () => {
                     Cancelar
                   </button>
                   <button
-                    onClick={
-                      deleteConfirmation === 'BORRAR TODO'
-                        ? handleClearAllData
-                        : handleDeleteAccount
-                    }
+                    onClick={deleteConfirmation === 'BORRAR TODO' ? handleClearAllData : handleDeleteAccount}
                     disabled={
-                      loading ||
-                      (deleteConfirmation !== 'BORRAR TODO' &&
-                        deleteConfirmation !== 'BORRAR MI CUENTA')
+                      loading || (deleteConfirmation !== 'BORRAR TODO' && deleteConfirmation !== 'BORRAR MI CUENTA')
                     }
                     className="flex-1 cursor-pointer rounded-lg bg-red-600 py-2.5 font-medium text-white transition-colors hover:bg-red-500 disabled:cursor-not-allowed disabled:opacity-50"
                   >

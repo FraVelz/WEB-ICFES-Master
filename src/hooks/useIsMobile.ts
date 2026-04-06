@@ -3,8 +3,7 @@
 import { useState, useEffect } from 'react';
 
 const getDevice = () => {
-  if (typeof window === 'undefined')
-    return { isMobile: false, isTablet: false };
+  if (typeof window === 'undefined') return { isMobile: false, isTablet: false };
 
   return {
     isMobile: window.innerWidth < 768,

@@ -174,9 +174,7 @@ export const purchaseBadge = (badgeId: string | number) => {
   const currentMoney = getVirtualMoney();
 
   if (currentMoney < badge.price) {
-    throw new Error(
-      `No tienes suficiente dinero. Necesitas ${badge.price} y tienes ${currentMoney}`
-    );
+    throw new Error(`No tienes suficiente dinero. Necesitas ${badge.price} y tienes ${currentMoney}`);
   }
 
   // Restar dinero

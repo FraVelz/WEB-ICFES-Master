@@ -42,13 +42,7 @@ interface ChartContentProps {
   description?: string;
 }
 
-export const ChartContent = ({
-  type = 'bar',
-  labels,
-  datasets,
-  title,
-  description = '',
-}: ChartContentProps) => {
+export const ChartContent = ({ type = 'bar', labels, datasets, title, description = '' }: ChartContentProps) => {
   // Versión simplificada con barras ASCII/visual
   const renderSimpleBar = () => {
     const ds = datasets ?? [];
@@ -61,9 +55,7 @@ export const ChartContent = ({
       <div className="space-y-4">
         {ds[0]?.data.map((value: number, idx: number) => (
           <div key={idx} className="flex items-center gap-4">
-            <span className="w-16 text-right text-sm font-semibold text-gray-300">
-              {lb[idx]}
-            </span>
+            <span className="w-16 text-right text-sm font-semibold text-gray-300">{lb[idx]}</span>
             <div className="flex flex-1 items-center gap-2">
               <div
                 className="h-8 rounded bg-linear-to-r from-cyan-500 to-blue-500"
@@ -79,23 +71,13 @@ export const ChartContent = ({
 
   return (
     <div className="my-6 rounded-lg border border-cyan-500/20 bg-linear-to-r from-slate-700/20 to-slate-800/20 p-6">
-      {title && (
-        <h4 className="mb-4 text-center text-sm font-semibold text-cyan-300">
-          {title}
-        </h4>
-      )}
+      {title && <h4 className="mb-4 text-center text-sm font-semibold text-cyan-300">{title}</h4>}
 
       {type === 'bar' && renderSimpleBar()}
 
-      {description && (
-        <p className="mt-4 text-center text-xs text-gray-400 italic">
-          {description}
-        </p>
-      )}
+      {description && <p className="mt-4 text-center text-xs text-gray-400 italic">{description}</p>}
 
-      <p className="mt-3 text-center text-xs text-gray-500">
-        💡 Para gráficas interactivas avanzadas, usa Chart.js
-      </p>
+      <p className="mt-3 text-center text-xs text-gray-500">💡 Para gráficas interactivas avanzadas, usa Chart.js</p>
     </div>
   );
 };

@@ -54,11 +54,7 @@ function ensureSupabase() {
 const UserSupabaseService = {
   async getByUserId(userId: string): Promise<MappedUser | null> {
     const sb = ensureSupabase();
-    const { data, error } = await sb
-      .from(TABLE)
-      .select('*')
-      .eq('id', userId)
-      .maybeSingle();
+    const { data, error } = await sb.from(TABLE).select('*').eq('id', userId).maybeSingle();
     if (error) throw new Error(`Error leyendo usuario: ${error.message}`);
     return data ? mapFromDb(data) : null;
   },
@@ -90,11 +86,7 @@ const UserSupabaseService = {
       created_at: new Date().toISOString(),
       updated_at: new Date().toISOString(),
     };
-    const { data, error } = await sb
-      .from(TABLE)
-      .upsert(payload, { onConflict: 'id' })
-      .select()
-      .single();
+    const { data, error } = await sb.from(TABLE).upsert(payload, { onConflict: 'id' }).select().single();
     if (error) throw new Error(`Error creando usuario: ${error.message}`);
     return mapFromDb(data as DbUserRow)!;
   },
@@ -119,15 +111,8 @@ const UserSupabaseService = {
       virtual_money: pd.virtualMoney ?? pd.virtual_money,
       updated_at: new Date().toISOString(),
     };
-    Object.keys(payload).forEach(
-      (k) => payload[k] === undefined && delete payload[k]
-    );
-    const { data, error } = await sb
-      .from(TABLE)
-      .update(payload)
-      .eq('id', userId)
-      .select()
-      .single();
+    Object.keys(payload).forEach((k) => payload[k] === undefined && delete payload[k]);
+    const { data, error } = await sb.from(TABLE).update(payload).eq('id', userId).select().single();
     if (error) throw new Error(`Error actualizando perfil: ${error.message}`);
     return mapFromDb(data as DbUserRow)!;
   },

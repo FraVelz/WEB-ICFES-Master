@@ -45,7 +45,7 @@ export const CompositeContent = ({ blocks }: CompositeContentProps) => {
 
     switch (type) {
       case 'text':
-        return <TextContent key={idx} text={(content as unknown) as string} />;
+        return <TextContent key={idx} text={content as unknown as string} />;
 
       case 'image':
         return <ImageContent key={idx} {...(content as Record<string, unknown>)} />;
@@ -76,9 +76,5 @@ export const CompositeContent = ({ blocks }: CompositeContentProps) => {
     }
   };
 
-  return (
-    <div className="space-y-4">
-      {blocks.map((block: ContentBlock, idx: number) => renderBlock(block, idx))}
-    </div>
-  );
+  return <div className="space-y-4">{blocks.map((block: ContentBlock, idx: number) => renderBlock(block, idx))}</div>;
 };

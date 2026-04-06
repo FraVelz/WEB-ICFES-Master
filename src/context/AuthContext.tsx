@@ -5,6 +5,8 @@ import { createContext, useContext, useEffect, useState } from 'react';
 import { supabase } from '@/config/supabase';
 import API_CONFIG from '@/services/api.config';
 import UserSupabaseService from '@/services/supabase/UserSupabaseService';
+import { getAggregatedUserData } from '@/services/persistence';
+import { mapSupabaseAuthError, REQUIRES_EMAIL_CONFIRMATION } from '@/utils/mapSupabaseAuthError';
 
 export interface AuthUser {
   uid: string;
@@ -28,11 +30,7 @@ type AuthContextType = {
   loading: boolean;
   error: string | null;
   isAuthenticated: boolean;
-  signup: (
-    email: string,
-    password: string,
-    displayName?: string
-  ) => Promise<AuthUser | null>;
+  signup: (email: string, password: string, displayName?: string) => Promise<AuthUser | null>;
   login: (email: string, password: string) => Promise<AuthUser | null>;
   loginWithGoogle: () => Promise<AuthUser | null>;
   logout: () => Promise<void>;
@@ -83,12 +81,8 @@ const mapSupabaseUser = (user: SupabaseUserLike | null): AuthUser | null => {
     id: user.id,
     email: user.email ?? null,
     displayName:
-      user.user_metadata?.display_name ||
-      user.user_metadata?.full_name ||
-      user.email?.split('@')[0] ||
-      'Usuario',
-    photoURL:
-      user.user_metadata?.avatar_url || user.user_metadata?.picture || null,
+      user.user_metadata?.display_name || user.user_metadata?.full_name || user.email?.split('@')[0] || 'Usuario',
+    photoURL: user.user_metadata?.avatar_url || user.user_metadata?.picture || null,
   };
 };
 
@@ -98,20 +92,14 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    if (
-      API_CONFIG.MODE !== 'supabase' ||
-      !process.env.NEXT_PUBLIC_SUPABASE_URL ||
-      !supabase
-    ) {
+    if (API_CONFIG.MODE !== 'supabase' || !process.env.NEXT_PUBLIC_SUPABASE_URL || !supabase) {
       try {
-        const stored =
-          typeof window !== 'undefined' && localStorage.getItem(MOCK_USER_KEY);
+        const stored = typeof window !== 'undefined' && localStorage.getItem(MOCK_USER_KEY);
         if (stored) {
           setUser(JSON.parse(stored));
         } else {
           const demoUser = createMockUser();
-          if (typeof window !== 'undefined')
-            localStorage.setItem(MOCK_USER_KEY, JSON.stringify(demoUser));
+          if (typeof window !== 'undefined') localStorage.setItem(MOCK_USER_KEY, JSON.stringify(demoUser));
           setUser(demoUser);
         }
       } catch {
@@ -136,16 +124,11 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     return () => subscription?.unsubscribe();
   }, []);
 
-  const signup = async (
-    email: string,
-    password: string,
-    displayName?: string
-  ): Promise<AuthUser | null> => {
+  const signup = async (email: string, password: string, displayName?: string): Promise<AuthUser | null> => {
     setError(null);
     if (API_CONFIG.MODE !== 'supabase') {
       const newUser = createMockUser({ email, displayName });
-      if (typeof window !== 'undefined')
-        localStorage.setItem(MOCK_USER_KEY, JSON.stringify(newUser));
+      if (typeof window !== 'undefined') localStorage.setItem(MOCK_USER_KEY, JSON.stringify(newUser));
       setUser(newUser);
       return newUser;
     }
@@ -156,37 +139,46 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       options: { data: { display_name: displayName } },
     });
     if (err) {
-      setError(err.message);
-      throw err;
+      const msg = mapSupabaseAuthError(err);
+      setError(msg);
+      throw new Error(msg);
     }
-    if (data.user) {
+    if (!data.user) {
+      const msg = mapSupabaseAuthError(new Error('Error en el registro'), 'No se pudo completar el registro.');
+      setError(msg);
+      throw new Error(msg);
+    }
+
+    // Confirmación por correo: sin sesión aún; el trigger en BD crea public.users al insertar en auth.users
+    if (!data.session) {
+      setError(null);
+      throw new Error(REQUIRES_EMAIL_CONFIRMATION);
+    }
+
+    try {
       await UserSupabaseService.createUser(data.user.id, {
         email: data.user.email,
         displayName: displayName || data.user.email?.split('@')[0],
         username: null,
         bio: null,
       });
-      return mapSupabaseUser(data.user);
+    } catch (profileErr) {
+      console.warn('Perfil tras registro (puede existir por trigger):', profileErr);
     }
-    throw new Error('Error en el registro');
+    return mapSupabaseUser(data.user);
   };
 
-  const login = async (
-    email: string,
-    password: string
-  ): Promise<AuthUser | null> => {
+  const login = async (email: string, password: string): Promise<AuthUser | null> => {
     setError(null);
     if (API_CONFIG.MODE !== 'supabase') {
-      const existing =
-        typeof window !== 'undefined' && localStorage.getItem(MOCK_USER_KEY);
+      const existing = typeof window !== 'undefined' && localStorage.getItem(MOCK_USER_KEY);
       if (existing) {
         const parsed = JSON.parse(existing);
         setUser({ ...parsed, email: email || parsed.email });
         return parsed;
       }
       const newUser = createMockUser({ email });
-      if (typeof window !== 'undefined')
-        localStorage.setItem(MOCK_USER_KEY, JSON.stringify(newUser));
+      if (typeof window !== 'undefined') localStorage.setItem(MOCK_USER_KEY, JSON.stringify(newUser));
       setUser(newUser);
       return newUser;
     }
@@ -196,8 +188,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       password,
     });
     if (err) {
-      setError(err.message);
-      throw err;
+      const msg = mapSupabaseAuthError(err);
+      setError(msg);
+      throw new Error(msg);
     }
     return mapSupabaseUser(data.user);
   };
@@ -209,24 +202,30 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         displayName: 'Usuario Google',
         email: 'google@icfes.local',
       });
-      if (typeof window !== 'undefined')
-        localStorage.setItem(MOCK_USER_KEY, JSON.stringify(newUser));
+      if (typeof window !== 'undefined') localStorage.setItem(MOCK_USER_KEY, JSON.stringify(newUser));
       setUser(newUser);
       return newUser;
     }
     if (!supabase) throw new Error('Supabase no configurado');
+    const origin = typeof window !== 'undefined' ? window.location.origin : '';
     const { data, error: err } = await supabase.auth.signInWithOAuth({
       provider: 'google',
+      options: {
+        redirectTo: origin ? `${origin}/ruta-aprendizaje` : undefined,
+      },
     });
     if (err) {
-      setError(err.message);
-      throw err;
+      const msg = mapSupabaseAuthError(err);
+      setError(msg);
+      throw new Error(msg);
     }
     if (data?.url) {
       window.location.href = data.url;
       return null;
     }
-    throw new Error('Error al iniciar con Google');
+    const msg = mapSupabaseAuthError(new Error('oauth_no_url'), 'No se pudo iniciar sesión con Google.');
+    setError(msg);
+    throw new Error(msg);
   };
 
   const logout = async (): Promise<void> => {
@@ -252,8 +251,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       redirectTo: `${origin}/reset-password`,
     });
     if (err) {
-      setError(err.message);
-      throw err;
+      const msg = mapSupabaseAuthError(err);
+      setError(msg);
+      throw new Error(msg);
     }
     return true;
   };
@@ -268,36 +268,15 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       password: newPassword,
     });
     if (err) {
-      setError(err.message);
-      throw err;
+      const msg = mapSupabaseAuthError(err);
+      setError(msg);
+      throw new Error(msg);
     }
     return true;
   };
 
   const getUserData = async (uid: string): Promise<Record<string, unknown>> => {
-    if (API_CONFIG.MODE !== 'supabase') {
-      const profile =
-        typeof window !== 'undefined'
-          ? JSON.parse(localStorage.getItem('icfes_user_profile') || '{}')
-          : {};
-      const progress =
-        typeof window !== 'undefined'
-          ? JSON.parse(localStorage.getItem('icfes_progress') || 'null')
-          : null;
-      const gamification =
-        typeof window !== 'undefined'
-          ? JSON.parse(localStorage.getItem('icfes_gamification') || '{}')
-          : {};
-      return { profile, progress, gamification };
-    }
-    const profile = await UserSupabaseService.getByUserId(uid);
-    const { ProgressSupabaseService } = await import('@/services/supabase');
-    const { GamificationSupabaseService } = await import('@/services/supabase');
-    const [progress, gamification] = await Promise.all([
-      ProgressSupabaseService.getByUserId(uid),
-      GamificationSupabaseService.getByUserId(uid),
-    ]);
-    return { profile, progress, gamification };
+    return getAggregatedUserData(uid);
   };
 
   const getUserPlan = async (): Promise<Record<string, unknown>> => {
@@ -312,10 +291,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       },
     };
     if (API_CONFIG.MODE !== 'supabase') {
-      const plan =
-        typeof window !== 'undefined'
-          ? JSON.parse(localStorage.getItem('icfes_user_plan') || 'null')
-          : null;
+      const plan = typeof window !== 'undefined' ? JSON.parse(localStorage.getItem('icfes_user_plan') || 'null') : null;
       return plan || defaultPlan;
     }
     const { supabase: sb } = await import('@/config/supabase');
@@ -330,11 +306,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         status: 'active',
         features: {},
       };
-    const { data } = await sb
-      .from('user_plans')
-      .select('*')
-      .eq('user_id', authUser.id)
-      .maybeSingle();
+    const { data } = await sb.from('user_plans').select('*').eq('user_id', authUser.id).maybeSingle();
     if (data) {
       return {
         planType: data.plan_type || 'free',
@@ -346,22 +318,15 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     return defaultPlan;
   };
 
-  const updateUserPlan = async (
-    uid: string,
-    planData: PlanData
-  ): Promise<void> => {
+  const updateUserPlan = async (uid: string, planData: PlanData): Promise<void> => {
     if (API_CONFIG.MODE !== 'supabase') {
-      const current =
-        typeof window !== 'undefined'
-          ? JSON.parse(localStorage.getItem('icfes_user_plan') || '{}')
-          : {};
+      const current = typeof window !== 'undefined' ? JSON.parse(localStorage.getItem('icfes_user_plan') || '{}') : {};
       const updated = {
         ...current,
         ...planData,
         updatedAt: new Date().toISOString(),
       };
-      if (typeof window !== 'undefined')
-        localStorage.setItem('icfes_user_plan', JSON.stringify(updated));
+      if (typeof window !== 'undefined') localStorage.setItem('icfes_user_plan', JSON.stringify(updated));
       return;
     }
     const { supabase: sb } = await import('@/config/supabase');

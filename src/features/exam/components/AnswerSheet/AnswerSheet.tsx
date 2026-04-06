@@ -5,12 +5,7 @@ interface AnswerSheetProps {
   onQuestionClick: (index: number) => void;
 }
 
-export const AnswerSheet = ({
-  totalQuestions,
-  answers,
-  currentQuestion,
-  onQuestionClick,
-}: AnswerSheetProps) => {
+export const AnswerSheet = ({ totalQuestions, answers, currentQuestion, onQuestionClick }: AnswerSheetProps) => {
   return (
     <div className="sticky top-6 h-fit rounded-xl border border-white/10 bg-linear-to-br from-gray-800/40 via-gray-900/40 to-gray-950/40 p-4 shadow-2xl backdrop-blur-md">
       <h3 className="mb-4 flex items-center gap-2 text-sm font-bold text-white">
@@ -37,11 +32,7 @@ export const AnswerSheet = ({
                     : 'border border-white/20 bg-white/10 text-gray-400 hover:bg-white/20'
               }`}
             >
-              {isAnswered ? (
-                <span className="text-xs">{answer}</span>
-              ) : (
-                <span>{questionNum}</span>
-              )}
+              {isAnswered ? <span className="text-xs">{answer}</span> : <span>{questionNum}</span>}
             </button>
           );
         })}

@@ -51,11 +51,7 @@ export const ShopItemCard = ({ item, isPurchased, canAfford, onClick }: ShopItem
         >
           <div className="flex h-full w-full items-center justify-center overflow-hidden rounded-xl bg-slate-900">
             {item.image ? (
-              <img
-                src={item.image}
-                alt={item.name}
-                className="h-full w-full object-cover"
-              />
+              <img src={item.image} alt={item.name} className="h-full w-full object-cover" />
             ) : (
               <Icon name={item.icon} className="text-4xl text-white" />
             )}
@@ -65,12 +61,8 @@ export const ShopItemCard = ({ item, isPurchased, canAfford, onClick }: ShopItem
 
       {/* Info */}
       <div className="text-center">
-        <h3 className="mb-1 text-lg font-bold text-white transition-colors group-hover:text-cyan-400">
-          {item.name}
-        </h3>
-        <p className="mb-4 line-clamp-2 h-10 text-sm text-slate-400">
-          {item.description}
-        </p>
+        <h3 className="mb-1 text-lg font-bold text-white transition-colors group-hover:text-cyan-400">{item.name}</h3>
+        <p className="mb-4 line-clamp-2 h-10 text-sm text-slate-400">{item.description}</p>
 
         {/* Price Button */}
         <div

@@ -49,10 +49,7 @@ export const getCompletedLessons = (): string[] => {
 export const markLessonAsCompleted = (_userId: string, lessonId: string): void => {
   const completed = getCompletedLessons();
   if (!completed.includes(lessonId)) completed.push(lessonId);
-  localStorage.setItem(
-    STORAGE_KEYS.COMPLETED_LESSONS,
-    JSON.stringify(completed)
-  );
+  localStorage.setItem(STORAGE_KEYS.COMPLETED_LESSONS, JSON.stringify(completed));
 };
 
 /**
@@ -66,7 +63,9 @@ export const getStoredExams = (): AttemptWithQuestions[] => {
 /**
  * Guarda un nuevo examen completo
  */
-export const saveFullExam = (examData: Record<string, unknown>): AttemptWithQuestions & { id: number; type: string; date: string } => {
+export const saveFullExam = (
+  examData: Record<string, unknown>
+): AttemptWithQuestions & { id: number; type: string; date: string } => {
   const exams = getStoredExams();
   const newExam = {
     id: Date.now(),
@@ -91,7 +90,9 @@ export const getStoredPractices = (): AttemptWithQuestions[] => {
 /**
  * Guarda una nueva práctica
  */
-export const savePractice = (practiceData: Record<string, unknown>): AttemptWithQuestions & { id: number; type: string; date: string } => {
+export const savePractice = (
+  practiceData: Record<string, unknown>
+): AttemptWithQuestions & { id: number; type: string; date: string } => {
   const practices = getStoredPractices();
   const newPractice = {
     id: Date.now(),
@@ -156,13 +157,9 @@ export const updateProgress = (): ProgressData => {
     totalAttempts: allAttempts.length,
     totalQuestions,
     totalCorrect,
-    percentage:
-      totalQuestions > 0
-        ? Math.round((totalCorrect / totalQuestions) * 100)
-        : 0,
+    percentage: totalQuestions > 0 ? Math.round((totalCorrect / totalQuestions) * 100) : 0,
     streakDays,
-    lastAttemptDate:
-      allAttempts[allAttempts.length - 1]?.date || new Date().toISOString(),
+    lastAttemptDate: allAttempts[allAttempts.length - 1]?.date || new Date().toISOString(),
     areaStats: {
       matematicas: {
         name: 'Matemáticas',
@@ -170,11 +167,7 @@ export const updateProgress = (): ProgressData => {
         total: areaStats['Matemáticas'].total,
         percentage:
           areaStats['Matemáticas'].total > 0
-            ? Math.round(
-                (areaStats['Matemáticas'].correct /
-                  areaStats['Matemáticas'].total) *
-                  100
-              )
+            ? Math.round((areaStats['Matemáticas'].correct / areaStats['Matemáticas'].total) * 100)
             : 0,
         icon: 'faRuler',
         color: 'from-yellow-500 to-yellow-600',
@@ -185,11 +178,7 @@ export const updateProgress = (): ProgressData => {
         total: areaStats['Lectura Crítica'].total,
         percentage:
           areaStats['Lectura Crítica'].total > 0
-            ? Math.round(
-                (areaStats['Lectura Crítica'].correct /
-                  areaStats['Lectura Crítica'].total) *
-                  100
-              )
+            ? Math.round((areaStats['Lectura Crítica'].correct / areaStats['Lectura Crítica'].total) * 100)
             : 0,
         icon: 'faBook',
         color: 'from-blue-500 to-blue-600',
@@ -200,11 +189,7 @@ export const updateProgress = (): ProgressData => {
         total: areaStats['Ciencias Naturales'].total,
         percentage:
           areaStats['Ciencias Naturales'].total > 0
-            ? Math.round(
-                (areaStats['Ciencias Naturales'].correct /
-                  areaStats['Ciencias Naturales'].total) *
-                  100
-              )
+            ? Math.round((areaStats['Ciencias Naturales'].correct / areaStats['Ciencias Naturales'].total) * 100)
             : 0,
         icon: 'faFlask',
         color: 'from-green-500 to-green-600',
@@ -215,11 +200,7 @@ export const updateProgress = (): ProgressData => {
         total: areaStats['Sociales y Ciudadanas'].total,
         percentage:
           areaStats['Sociales y Ciudadanas'].total > 0
-            ? Math.round(
-                (areaStats['Sociales y Ciudadanas'].correct /
-                  areaStats['Sociales y Ciudadanas'].total) *
-                  100
-              )
+            ? Math.round((areaStats['Sociales y Ciudadanas'].correct / areaStats['Sociales y Ciudadanas'].total) * 100)
             : 0,
         icon: 'faGlobe',
         color: 'from-orange-500 to-orange-600',
@@ -372,9 +353,7 @@ export const getRecommendations = (progress: ProgressData): string[] => {
   const recommendations: string[] = [];
 
   if (progress.weakArea) {
-    recommendations.push(
-      `Enfócate en fortalecer ${progress.weakArea.name} para mejorar tu promedio`
-    );
+    recommendations.push(`Enfócate en fortalecer ${progress.weakArea.name} para mejorar tu promedio`);
   }
 
   if (progress.streakDays > 0 && progress.streakDays < 7) {
@@ -382,14 +361,10 @@ export const getRecommendations = (progress: ProgressData): string[] => {
       `Mantén tu racha de estudio diario - ¡Solo ${progress.streakDays} ${progress.streakDays === 1 ? 'día' : 'días'}! Puedes alcanzar más`
     );
   } else if (progress.streakDays === 0) {
-    recommendations.push(
-      '¡Comienza tu racha de estudio hoy! Realiza al menos un examen o práctica'
-    );
+    recommendations.push('¡Comienza tu racha de estudio hoy! Realiza al menos un examen o práctica');
   }
 
-  recommendations.push(
-    'Revisa las explicaciones de preguntas incorrectas para aprender'
-  );
+  recommendations.push('Revisa las explicaciones de preguntas incorrectas para aprender');
 
   recommendations.push('Realiza simulacros completos para prepararte mejor');
 

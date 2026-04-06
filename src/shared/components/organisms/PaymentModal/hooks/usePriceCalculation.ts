@@ -1,9 +1,6 @@
 import { useMemo } from 'react';
 
-export const usePriceCalculation = (
-  price: number | string | undefined,
-  billingPeriod: string
-) => {
+export const usePriceCalculation = (price: number | string | undefined, billingPeriod: string) => {
   return useMemo(() => {
     if (price === undefined || price === null || price === 'Gratis')
       return {
@@ -13,7 +10,8 @@ export const usePriceCalculation = (
         monthlyPrice: '$0',
       };
 
-    const numPrice = typeof price === 'number' ? price : parseInt(String(price).replace('$', '').replace(/\D/g, ''), 10);
+    const numPrice =
+      typeof price === 'number' ? price : parseInt(String(price).replace('$', '').replace(/\D/g, ''), 10);
     const basePrice = isNaN(numPrice) ? 0 : numPrice;
 
     if (billingPeriod === 'annual') {

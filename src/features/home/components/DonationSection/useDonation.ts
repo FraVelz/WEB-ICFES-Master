@@ -85,8 +85,7 @@ export const useDonation = () => {
   };
 
   const currentMethod = paymentMethods.find((m) => m.id === selectedMethod);
-  const currentAmount =
-    selectedAmount === 'custom' ? customAmount || '0' : selectedAmount;
+  const currentAmount = selectedAmount === 'custom' ? customAmount || '0' : selectedAmount;
 
   return {
     selectedAmount,
@@ -111,6 +110,6 @@ export const useDonation = () => {
     handleCVVChange,
     currentMethod,
     currentAmount,
-    handlePayment
-  }
-}
+    handlePayment,
+  };
+};

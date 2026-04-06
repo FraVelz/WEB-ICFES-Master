@@ -54,10 +54,7 @@ const HomePageDesktopComponent = ({
   return (
     <div className="min-h-dvh overflow-x-hidden bg-linear-to-b from-black via-slate-950 to-black text-white">
       {/* Background glow effects with improved visuals */}
-      <div
-        className="pointer-events-none fixed inset-0 z-0 overflow-hidden lg:px-20"
-        role="presentation"
-      >
+      <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden lg:px-20" role="presentation">
         <div className="absolute inset-0 bg-linear-to-b from-transparent via-transparent to-black/50" />
         {GLOW_EFFECTS.map((effect, index) => (
           <GSAPGlowBlob
@@ -96,11 +93,7 @@ const HomePageDesktopComponent = ({
 
         {/* FAQ Section */}
         <section className="relative overflow-hidden py-12 md:py-16">
-          <FAQSection
-            faqSection={faqSection}
-            expandedFaq={expandedFaq}
-            setExpandedFaq={setExpandedFaq}
-          />
+          <FAQSection faqSection={faqSection} expandedFaq={expandedFaq} setExpandedFaq={setExpandedFaq} />
         </section>
 
         {/* Final CTA Section */}

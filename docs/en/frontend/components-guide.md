@@ -27,11 +27,11 @@ export function QuizExample() {
 
   return (
     <div>
-      <p>{quiz.progress} / {quiz.totalQuestions}</p>
+      <p>
+        {quiz.progress} / {quiz.totalQuestions}
+      </p>
       <h2>{quiz.currentQuestion.text}</h2>
-      <button onClick={() => quiz.handleAnswer('A')}>
-        Answer A
-      </button>
+      <button onClick={() => quiz.handleAnswer('A')}>Answer A</button>
       <button onClick={quiz.handleNextQuestion} disabled={!quiz.answered}>
         Next
       </button>
@@ -81,19 +81,19 @@ Location: `src/data/questions.ts`
 export const NEW_AREA_QUESTIONS = [
   {
     id: 101,
-    text: "Sample question",
-    area: "new_area",
-    areaLabel: "New Area",
-    difficulty: "easy",
+    text: 'Sample question',
+    area: 'new_area',
+    areaLabel: 'New Area',
+    difficulty: 'easy',
     options: [
-      { letter: "A", text: "Option 1" },
-      { letter: "B", text: "Option 2" },
-      { letter: "C", text: "Option 3" },
-      { letter: "D", text: "Option 4" }
+      { letter: 'A', text: 'Option 1' },
+      { letter: 'B', text: 'Option 2' },
+      { letter: 'C', text: 'Option 3' },
+      { letter: 'D', text: 'Option 4' },
     ],
-    correctAnswer: "A",
-    explanation: "Explanation of why A is correct"
-  }
+    correctAnswer: 'A',
+    explanation: 'Explanation of why A is correct',
+  },
 ];
 
 // Then update ALL_QUESTIONS
@@ -102,7 +102,7 @@ export const ALL_QUESTIONS = [
   ...LANGUAGE_QUESTIONS,
   ...SCIENCE_QUESTIONS,
   ...SOCIAL_QUESTIONS,
-  ...NEW_AREA_QUESTIONS
+  ...NEW_AREA_QUESTIONS,
 ];
 ```
 

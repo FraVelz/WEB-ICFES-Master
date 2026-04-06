@@ -25,11 +25,7 @@ export const ImageContent = ({ src, alt, caption, maxWidth = '100%' }: ImageCont
         style={{ maxWidth }}
         className="rounded-lg border border-white/20 shadow-lg"
       />
-      {caption && (
-        <figcaption className="mt-3 text-center text-xs text-gray-400 italic">
-          {caption}
-        </figcaption>
-      )}
+      {caption && <figcaption className="mt-3 text-center text-xs text-gray-400 italic">{caption}</figcaption>}
     </figure>
   );
 };

@@ -39,36 +39,17 @@ interface MapContentProps {
   svgContent?: string;
 }
 
-export const MapContent = ({
-  title,
-  description,
-  imageSrc,
-  regions = [],
-  svgContent,
-}: MapContentProps) => {
+export const MapContent = ({ title, description, imageSrc, regions = [], svgContent }: MapContentProps) => {
   return (
     <figure className="my-6 rounded-lg border border-purple-500/20 bg-linear-to-r from-slate-700/20 to-slate-800/20 p-6">
-      {title && (
-        <h4 className="mb-3 text-center text-sm font-semibold text-purple-300">
-          {title}
-        </h4>
-      )}
+      {title && <h4 className="mb-3 text-center text-sm font-semibold text-purple-300">{title}</h4>}
 
       {/* Si hay contenido SVG */}
-      {svgContent && (
-        <div
-          className="mb-4 flex justify-center"
-          dangerouslySetInnerHTML={{ __html: svgContent }}
-        />
-      )}
+      {svgContent && <div className="mb-4 flex justify-center" dangerouslySetInnerHTML={{ __html: svgContent }} />}
 
       {/* Si hay imagen */}
       {imageSrc && (
-        <img
-          src={imageSrc}
-          alt={title}
-          className="mx-auto mb-4 w-full max-w-md rounded-lg border border-white/10"
-        />
+        <img src={imageSrc} alt={title} className="mx-auto mb-4 w-full max-w-md rounded-lg border border-white/10" />
       )}
 
       {/* Lista de regiones */}
@@ -84,19 +65,13 @@ export const MapContent = ({
               }`}
             >
               <span className="font-semibold">{region.name}</span>
-              {region.info && (
-                <span className="ml-2 text-gray-400">{region.info}</span>
-              )}
+              {region.info && <span className="ml-2 text-gray-400">{region.info}</span>}
             </div>
           ))}
         </div>
       )}
 
-      {description && (
-        <figcaption className="mt-4 text-center text-xs text-gray-400 italic">
-          {description}
-        </figcaption>
-      )}
+      {description && <figcaption className="mt-4 text-center text-xs text-gray-400 italic">{description}</figcaption>}
     </figure>
   );
 };

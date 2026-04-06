@@ -71,9 +71,7 @@ export const ResultsAnalysis = ({
 
       {/* Detailed Results */}
       <div className="space-y-6">
-        <h2 className="mb-8 text-2xl font-bold text-white">
-          Análisis Detallado
-        </h2>
+        <h2 className="mb-8 text-2xl font-bold text-white">Análisis Detallado</h2>
         {results.map((result, idx) => {
           const isCorrect = result.correct;
 
@@ -96,22 +94,16 @@ export const ResultsAnalysis = ({
                   </div>
                   <div className="flex-1">
                     <div className="mb-2 flex items-center justify-between">
-                      <p className="text-lg leading-relaxed font-semibold text-white">
-                        Pregunta {idx + 1}
-                      </p>
+                      <p className="text-lg leading-relaxed font-semibold text-white">Pregunta {idx + 1}</p>
                       <span
                         className={`rounded-lg px-3 py-1 text-xs font-bold ${
-                          isCorrect
-                            ? 'bg-green-500/20 text-green-300'
-                            : 'bg-red-500/20 text-red-300'
+                          isCorrect ? 'bg-green-500/20 text-green-300' : 'bg-red-500/20 text-red-300'
                         }`}
                       >
                         {isCorrect ? 'Correcta' : 'Incorrecta'}
                       </span>
                     </div>
-                    <p className="text-lg leading-relaxed font-semibold text-white">
-                      {result.question.text}
-                    </p>
+                    <p className="text-lg leading-relaxed font-semibold text-white">{result.question.text}</p>
                   </div>
                 </div>
               </div>
@@ -119,21 +111,12 @@ export const ResultsAnalysis = ({
               {/* User Answer and Correct Answer */}
               <div className="ml-14 space-y-4">
                 <div>
-                  <p className="mb-2 text-sm font-semibold text-cyan-300">
-                    Tu respuesta:
-                  </p>
+                  <p className="mb-2 text-sm font-semibold text-cyan-300">Tu respuesta:</p>
                   <div className="rounded-lg border border-cyan-500/30 bg-cyan-500/10 p-3">
                     {result.userAnswer ? (
                       <p className="text-white">
-                        <span className="font-bold text-cyan-300">
-                          {result.userAnswer}.
-                        </span>{' '}
-                        {
-                          result.question.options.find(
-                            (o) =>
-                              (o.letter ?? o.id) === result.userAnswer
-                          )?.text
-                        }
+                        <span className="font-bold text-cyan-300">{result.userAnswer}.</span>{' '}
+                        {result.question.options.find((o) => (o.letter ?? o.id) === result.userAnswer)?.text}
                       </p>
                     ) : (
                       <p className="text-gray-400 italic">Sin responder</p>
@@ -143,20 +126,13 @@ export const ResultsAnalysis = ({
 
                 {!isCorrect && (
                   <div>
-                    <p className="mb-2 text-sm font-semibold text-green-300">
-                      Respuesta correcta:
-                    </p>
+                    <p className="mb-2 text-sm font-semibold text-green-300">Respuesta correcta:</p>
                     <div className="rounded-lg border border-green-500/30 bg-green-500/10 p-3">
                       <p className="text-white">
-                        <span className="font-bold text-green-300">
-                          {result.question.correctAnswer}.
-                        </span>{' '}
+                        <span className="font-bold text-green-300">{result.question.correctAnswer}.</span>{' '}
                         {
-                          result.question.options.find(
-                            (o) =>
-                              (o.letter ?? o.id) ===
-                              result.question.correctAnswer
-                          )?.text
+                          result.question.options.find((o) => (o.letter ?? o.id) === result.question.correctAnswer)
+                            ?.text
                         }
                       </p>
                     </div>
@@ -166,13 +142,9 @@ export const ResultsAnalysis = ({
                 {/* Explanation */}
                 {examConfig?.showExplanations && (
                   <div>
-                    <p className="mb-2 text-sm font-semibold text-blue-300">
-                      Explicación:
-                    </p>
+                    <p className="mb-2 text-sm font-semibold text-blue-300">Explicación:</p>
                     <div className="rounded-lg border border-blue-500/30 bg-blue-500/10 p-4">
-                      <p className="text-gray-200">
-                        {result.question.explanation}
-                      </p>
+                      <p className="text-gray-200">{result.question.explanation}</p>
                     </div>
                   </div>
                 )}

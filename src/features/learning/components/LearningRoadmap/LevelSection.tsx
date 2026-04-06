@@ -12,13 +12,7 @@ export interface LevelSectionProps {
   icon?: string;
 }
 
-export const LevelSection = ({
-  config,
-  isExpanded,
-  onToggle,
-  children,
-  icon,
-}: LevelSectionProps) => {
+export const LevelSection = ({ config, isExpanded, onToggle, children, icon }: LevelSectionProps) => {
   const colorMap = {
     green: {
       borderColor: 'border-green-600',
@@ -49,9 +43,7 @@ export const LevelSection = ({
   const colors = colorMap[config.color ?? 'green'];
 
   return (
-    <div
-      className={`border-2 ${colors.borderColor} ${colors.bgColor} overflow-hidden rounded-2xl`}
-    >
+    <div className={`border-2 ${colors.borderColor} ${colors.bgColor} overflow-hidden rounded-2xl`}>
       <div
         onClick={onToggle}
         className={`flex w-full items-center justify-between p-6 ${colors.hoverBg} cursor-pointer transition-colors`}
@@ -66,11 +58,7 @@ export const LevelSection = ({
       >
         <div className="flex items-center gap-4">
           <div className={colors.iconBg + ' rounded-xl p-4'}>
-            <Icon
-              name={icon ?? 'book'}
-              size="3xl"
-              className={`text-3xl ${colors.iconColor}`}
-            />
+            <Icon name={icon ?? 'book'} size="3xl" className={`text-3xl ${colors.iconColor}`} />
           </div>
           <div className="text-left">
             <h2 className="text-2xl font-bold text-white">{config.title ?? ''}</h2>
@@ -86,11 +74,7 @@ export const LevelSection = ({
         />
       </div>
 
-      {isExpanded && (
-        <div className={`border-t ${colors.borderColor} space-y-4 p-6`}>
-          {children}
-        </div>
-      )}
+      {isExpanded && <div className={`border-t ${colors.borderColor} space-y-4 p-6`}>{children}</div>}
     </div>
   );
 };

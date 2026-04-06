@@ -85,17 +85,10 @@ export const PathNode = ({
       <div
         className={`relative flex shrink-0 items-center justify-center rounded-full border-b-4 transition-transform group-hover:scale-105 ${isCheckpoint ? 'h-16 w-16 text-2xl' : 'h-12 w-12 text-lg'} ${styles.container} `}
       >
-        <Icon
-          name={isCompleted ? 'check' : icon || 'star'}
-          className={styles.iconColor}
-        />
+        <Icon name={isCompleted ? 'check' : icon || 'star'} className={styles.iconColor} />
 
         {/* Ping animation for available */}
-        {isAvailable && (
-          <div
-            className={`absolute inset-0 rounded-full ${colorClass} animate-ping opacity-20`}
-          />
-        )}
+        {isAvailable && <div className={`absolute inset-0 rounded-full ${colorClass} animate-ping opacity-20`} />}
       </div>
 
       {/* Contenido de Texto */}

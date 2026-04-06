@@ -1,8 +1,4 @@
-export default function AuthLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function AuthLayout({ children }: { children: React.ReactNode }) {
   return (
     <div className="relative flex h-dvh flex-col bg-linear-to-b from-black via-slate-950 to-black">
       <div className="pointer-events-none fixed inset-0 z-0">

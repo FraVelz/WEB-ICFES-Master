@@ -32,9 +32,7 @@ export const LearningService = {
           const rawContent =
             l.body ??
             l.markdown ??
-            (typeof l.content === 'string'
-              ? l.content
-              : (l.content?.body ?? l.content?.markdown));
+            (typeof l.content === 'string' ? l.content : (l.content?.body ?? l.content?.markdown));
           const contentStr = typeof rawContent === 'string' ? rawContent : '';
           return {
             id: l.id,

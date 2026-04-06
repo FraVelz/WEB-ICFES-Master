@@ -22,7 +22,8 @@ export const LearningRoadmap = ({ initialArea = 'lectura-critica' }: { initialAr
   const [viewingLesson, setViewingLesson] = useState<PathNodeData | null>(null);
 
   const currentAreaData =
-    (AREA_INFO as Record<string, { name?: string; color?: string }>)[currentArea] || (AREA_INFO as Record<string, { name?: string; color?: string }>)['lectura-critica'];
+    (AREA_INFO as Record<string, { name?: string; color?: string }>)[currentArea] ||
+    (AREA_INFO as Record<string, { name?: string; color?: string }>)['lectura-critica'];
 
   // Hook para obtener datos de gamificación
   const { sections, loading, error } = useLearningPath(currentArea);
@@ -49,28 +50,19 @@ export const LearningRoadmap = ({ initialArea = 'lectura-critica' }: { initialAr
   };
 
   return (
-    <div
-      className={`relative flex flex-col bg-slate-950 ${viewingLesson ? 'h-dvh overflow-hidden' : 'min-h-dvh'}`}
-    >
+    <div className={`relative flex flex-col bg-slate-950 ${viewingLesson ? 'h-dvh overflow-hidden' : 'min-h-dvh'}`}>
       {/* Header Secundario Sticky - Ahora parte del componente */}
       <div className="sticky top-0 z-50">
-        <SecondaryHeader
-          currentArea={currentArea}
-          onAreaChange={setCurrentArea}
-        />
+        <SecondaryHeader currentArea={currentArea} onAreaChange={setCurrentArea} />
       </div>
 
       <div className="relative flex-1 px-4 pt-8 pb-24">
         {/* Título del Área (Contexto) */}
         <AnimatedOnMount className="mb-8 text-center" duration={0.7} y={16}>
-          <h2
-            className={`bg-linear-to-r bg-clip-text text-3xl font-bold text-transparent ${currentAreaData.color}`}
-          >
+          <h2 className={`bg-linear-to-r bg-clip-text text-3xl font-bold text-transparent ${currentAreaData.color}`}>
             {currentAreaData.name}
           </h2>
-          <p className="mt-2 text-sm font-medium tracking-wide text-slate-400 uppercase">
-            Ruta de Aprendizaje
-          </p>
+          <p className="mt-2 text-sm font-medium tracking-wide text-slate-400 uppercase">Ruta de Aprendizaje</p>
         </AnimatedOnMount>
 
         {/* Estado de Carga y Error */}
@@ -84,12 +76,7 @@ export const LearningRoadmap = ({ initialArea = 'lectura-critica' }: { initialAr
 
         {/* Camino Visual */}
         {!loading && !error && (
-          <AreaPath
-            areaId={currentArea}
-            onNodeClick={handleNodeClick}
-            colorClass={colorClass}
-            sections={sections}
-          />
+          <AreaPath areaId={currentArea} onNodeClick={handleNodeClick} colorClass={colorClass} sections={sections} />
         )}
 
         {/* Modal de Previsualización */}

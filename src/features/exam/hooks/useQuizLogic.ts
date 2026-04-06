@@ -8,8 +8,7 @@ export const useQuizLogic = (questions: ExamQuestion[] = []) => {
   const [isFinished, setIsFinished] = useState(false);
 
   const currentQuestion = questions[currentQuestionIndex];
-  const answered =
-    currentQuestion && answers[currentQuestion.id] !== undefined;
+  const answered = currentQuestion && answers[currentQuestion.id] !== undefined;
 
   const handleAnswer = useCallback(
     (selectedAnswer: string) => {

@@ -10,36 +10,20 @@ export const AreasSection = ({
   areasSection: { elementRef: RefObject<null>; isVisible: boolean };
 }) => {
   return (
-    <section
-      ref={areasSection.elementRef}
-      className="mx-auto max-w-7xl px-6 py-20 md:px-8"
-    >
-      <AnimatedReveal
-        isVisible={areasSection.isVisible}
-        delay={0.8}
-        className="mb-16 text-center"
-      >
-        <h2 className="mb-4 text-4xl font-bold md:text-5xl">
-          Domina Cada Área
-        </h2>
+    <section ref={areasSection.elementRef} className="mx-auto max-w-7xl px-6 py-20 md:px-8">
+      <AnimatedReveal isVisible={areasSection.isVisible} delay={0.8} className="mb-16 text-center">
+        <h2 className="mb-4 text-4xl font-bold md:text-5xl">Domina Cada Área</h2>
 
         <p className="mx-auto max-w-2xl text-lg text-slate-400">
-          Contenido especializado, preguntas ICFES de simulacro y cursos para
-          temas básicos, para las 5 áreas principales del ICFES
+          Contenido especializado, preguntas ICFES de simulacro y cursos para temas básicos, para las 5 áreas
+          principales del ICFES
         </p>
       </AnimatedReveal>
 
       <div className="mx-auto grid max-w-6xl grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
         {AREAS.map((area, idx) => (
-          <AnimatedReveal
-            key={area.id}
-            isVisible={areasSection.isVisible}
-            delay={0.9 + idx * 0.15}
-          >
-            <Link
-              href={`/practica/${area.id}`}
-              className="group relative block"
-            >
+          <AnimatedReveal key={area.id} isVisible={areasSection.isVisible} delay={0.9 + idx * 0.15}>
+            <Link href={`/practica/${area.id}`} className="group relative block">
               <div
                 className={`bg-linear-to-br ${area.gradient} h-full cursor-pointer rounded-xl border border-slate-700 p-8 transition-all duration-300 hover:scale-105 hover:border-slate-500 hover:shadow-lg hover:shadow-slate-900/50`}
               >
@@ -55,9 +39,7 @@ export const AreasSection = ({
                       <Icon name={area.icon} size="xl" className="text-white" />
                     </div>
 
-                    <h3 className="text-2xl font-bold text-white">
-                      {area.name}
-                    </h3>
+                    <h3 className="text-2xl font-bold text-white">{area.name}</h3>
                   </div>
 
                   <p className="mb-6 text-white/80">{area.description}</p>
@@ -66,17 +48,12 @@ export const AreasSection = ({
                     <span className="rounded-full bg-white/20 px-3 py-1 text-sm font-semibold">
                       {area.preguntas} preguntas
                     </span>
-                    <span className="rounded-full bg-white/20 px-3 py-1 text-sm font-semibold">
-                      {area.dificultad}
-                    </span>
+                    <span className="rounded-full bg-white/20 px-3 py-1 text-sm font-semibold">{area.dificultad}</span>
                   </div>
 
                   <div className="flex items-center gap-2 font-bold text-white transition-all duration-300 group-hover:gap-4">
                     Empezar
-                    <Icon
-                      name="arrow-right"
-                      className="shrink-0 transition-transform group-hover:translate-x-2"
-                    />
+                    <Icon name="arrow-right" className="shrink-0 transition-transform group-hover:translate-x-2" />
                   </div>
                 </div>
               </div>
@@ -93,8 +70,8 @@ export const AreasSection = ({
         </h3>
 
         <p className="mx-auto mb-6 max-w-2xl text-slate-300">
-          Realiza un simulacro completo bajo condiciones reales. 150 preguntas,
-          tiempo limitado 4 horas y 30 minutos, puntuación exacta.
+          Realiza un simulacro completo bajo condiciones reales. 150 preguntas, tiempo limitado 4 horas y 30 minutos,
+          puntuación exacta.
         </p>
 
         <Link

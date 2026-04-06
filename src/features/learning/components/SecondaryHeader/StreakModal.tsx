@@ -30,11 +30,7 @@ export const StreakModal = ({ isOpen, onClose, streakData }: StreakModalProps) =
 
   if (!isOpen) return null;
 
-  const {
-    currentStreak = 0,
-    longestStreak = 0,
-    streakHistory = [],
-  } = streakData || {};
+  const { currentStreak = 0, longestStreak = 0, streakHistory = [] } = streakData || {};
   const [viewDate, setViewDate] = useState(new Date());
 
   const getDaysInMonth = (date: Date) => {
@@ -107,10 +103,7 @@ export const StreakModal = ({ isOpen, onClose, streakData }: StreakModalProps) =
               <Icon name="fire" className="text-orange-400" />
               Mi Racha
             </h2>
-            <button
-              onClick={onClose}
-              className="cursor-pointer text-slate-500 hover:text-white"
-            >
+            <button onClick={onClose} className="cursor-pointer text-slate-500 hover:text-white">
               <Icon name="times" />
             </button>
           </div>
@@ -118,20 +111,12 @@ export const StreakModal = ({ isOpen, onClose, streakData }: StreakModalProps) =
           {/* Big Number */}
           <div className="mb-6 grid grid-cols-2 gap-4">
             <div className="rounded-xl border border-slate-700 bg-slate-800/50 p-4 text-center">
-              <div className="mb-1 text-3xl font-bold text-orange-500">
-                {currentStreak}
-              </div>
-              <div className="text-xs font-medium text-slate-400 uppercase">
-                Racha Actual
-              </div>
+              <div className="mb-1 text-3xl font-bold text-orange-500">{currentStreak}</div>
+              <div className="text-xs font-medium text-slate-400 uppercase">Racha Actual</div>
             </div>
             <div className="rounded-xl border border-slate-700 bg-slate-800/50 p-4 text-center">
-              <div className="mb-1 text-3xl font-bold text-yellow-500">
-                {longestStreak}
-              </div>
-              <div className="text-xs font-medium text-slate-400 uppercase">
-                Mejor Racha
-              </div>
+              <div className="mb-1 text-3xl font-bold text-yellow-500">{longestStreak}</div>
+              <div className="text-xs font-medium text-slate-400 uppercase">Mejor Racha</div>
             </div>
           </div>
 
@@ -139,19 +124,13 @@ export const StreakModal = ({ isOpen, onClose, streakData }: StreakModalProps) =
           <div className="rounded-xl border border-slate-800 bg-slate-950 p-3">
             {/* Calendar Header */}
             <div className="mb-3 flex items-center justify-between px-1">
-              <button
-                onClick={() => changeMonth(-1)}
-                className="cursor-pointer p-1 text-slate-500 hover:text-white"
-              >
+              <button onClick={() => changeMonth(-1)} className="cursor-pointer p-1 text-slate-500 hover:text-white">
                 <Icon name="chevron-left" size="sm" />
               </button>
               <span className="text-sm font-bold text-slate-200">
                 {monthNames[viewDate.getMonth()]} {viewDate.getFullYear()}
               </span>
-              <button
-                onClick={() => changeMonth(1)}
-                className="cursor-pointer p-1 text-slate-500 hover:text-white"
-              >
+              <button onClick={() => changeMonth(1)} className="cursor-pointer p-1 text-slate-500 hover:text-white">
                 <Icon name="chevron-right" size="sm" />
               </button>
             </div>
@@ -159,10 +138,7 @@ export const StreakModal = ({ isOpen, onClose, streakData }: StreakModalProps) =
             {/* Days Grid */}
             <div className="mb-1 grid grid-cols-7 gap-1 text-center">
               {dayNames.map((d, i) => (
-                <div
-                  key={i}
-                  className="py-1 text-xs font-medium text-slate-500"
-                >
+                <div key={i} className="py-1 text-xs font-medium text-slate-500">
                   {d}
                 </div>
               ))}
@@ -195,9 +171,7 @@ export const StreakModal = ({ isOpen, onClose, streakData }: StreakModalProps) =
             </div>
           </div>
 
-          <p className="mt-4 text-center text-xs text-slate-500">
-            ¡Practica cada día para mantener tu racha!
-          </p>
+          <p className="mt-4 text-center text-xs text-slate-500">¡Practica cada día para mantener tu racha!</p>
         </div>
       </div>
     </>

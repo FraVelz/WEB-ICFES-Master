@@ -11,10 +11,7 @@ interface UseGSAPRevealOptions {
   ease?: string;
 }
 
-export const useGSAPReveal = (
-  isVisible: boolean,
-  options: UseGSAPRevealOptions = {}
-) => {
+export const useGSAPReveal = (isVisible: boolean, options: UseGSAPRevealOptions = {}) => {
   const ref = useRef<HTMLDivElement>(null);
   const { delay = 0, duration = 0.8, y = 40, ease = 'power2.out' } = options;
 

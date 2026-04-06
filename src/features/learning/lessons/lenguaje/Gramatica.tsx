@@ -10,8 +10,7 @@ export const Gramatica = () => {
     topics: [
       {
         name: 'Verbos: Conjugación y Uso',
-        description:
-          'Estudio exhaustivo de clasificación, conjugación y usos avanzados de verbos en español.',
+        description: 'Estudio exhaustivo de clasificación, conjugación y usos avanzados de verbos en español.',
         subtopics: [
           'Verbos regulares e irregulares',
           'Tiempos verbales (presente, pasado, futuro)',
@@ -39,8 +38,7 @@ export const Gramatica = () => {
       },
       {
         name: 'Sustantivos y Adjetivos',
-        description:
-          'Análisis profundo de clasificación, género, número y concordancia.',
+        description: 'Análisis profundo de clasificación, género, número y concordancia.',
         subtopics: [
           'Género (masculino, femenino, neutro)',
           'Número (singular, plural)',
@@ -67,8 +65,7 @@ export const Gramatica = () => {
       },
       {
         name: 'Conjugaciones Verbales Detalladas',
-        description:
-          'Patrones completos de conjugación en los tres grupos y formas irregulares.',
+        description: 'Patrones completos de conjugación en los tres grupos y formas irregulares.',
         subtopics: [
           'Primera conjugación (-ar): amar, hablar, comprar',
           'Segunda conjugación (-er): comer, beber, temer',
@@ -93,8 +90,7 @@ export const Gramatica = () => {
       },
       {
         name: 'Pronombres y Relaciones Pronominales',
-        description:
-          'Análisis de tipos de pronombres y su correcto uso en construcciones sintácticas.',
+        description: 'Análisis de tipos de pronombres y su correcto uso en construcciones sintácticas.',
         subtopics: [
           'Pronombres personales: sujeto, objeto directo, indirecto',
           'Pronombres reflexivos',
@@ -120,8 +116,7 @@ export const Gramatica = () => {
       },
       {
         name: 'Oraciones Complejas y Análisis Sintáctico',
-        description:
-          'Estudio de estructura oracional, coordinación y subordinación.',
+        description: 'Estudio de estructura oracional, coordinación y subordinación.',
         subtopics: [
           'Oraciones simples',
           'Oraciones compuestas (coordinadas, subordinadas)',
@@ -205,9 +200,7 @@ export const Gramatica = () => {
             <span className="flex items-center gap-2">
               <Icon name="book" /> {content.lessons} lecciones
             </span>
-            <span className="rounded-full bg-green-500/30 px-4 py-1 text-sm">
-              {content.difficulty}
-            </span>
+            <span className="rounded-full bg-green-500/30 px-4 py-1 text-sm">{content.difficulty}</span>
           </div>
         </header>
 
@@ -217,16 +210,12 @@ export const Gramatica = () => {
               key={idx}
               className="rounded-2xl border border-white/10 bg-white/5 p-8 backdrop-blur-sm transition-all hover:bg-white/10"
             >
-              <h2 className="mb-4 text-3xl font-bold text-blue-400">
-                {topic.name}
-              </h2>
+              <h2 className="mb-4 text-3xl font-bold text-blue-400">{topic.name}</h2>
               <p className="mb-6 text-lg text-gray-300">{topic.description}</p>
 
               <div className="grid gap-8 md:grid-cols-2">
                 <div>
-                  <h3 className="mb-4 text-xl font-semibold text-purple-400">
-                    Subtemas
-                  </h3>
+                  <h3 className="mb-4 text-xl font-semibold text-purple-400">Subtemas</h3>
                   <ul className="space-y-3">
                     {topic.subtopics.map((sub, i) => (
                       <li key={i} className="flex items-start gap-3">
@@ -238,18 +227,11 @@ export const Gramatica = () => {
                 </div>
 
                 <div>
-                  <h3 className="mb-4 text-xl font-semibold text-green-400">
-                    Ejemplos
-                  </h3>
+                  <h3 className="mb-4 text-xl font-semibold text-green-400">Ejemplos</h3>
                   <div className="space-y-3">
                     {topic.examples.map((example, i) => (
-                      <div
-                        key={i}
-                        className="rounded border-l-4 border-green-400 bg-gray-900/50 p-4"
-                      >
-                        <code className="text-sm text-green-300">
-                          {example}
-                        </code>
+                      <div key={i} className="rounded border-l-4 border-green-400 bg-gray-900/50 p-4">
+                        <code className="text-sm text-green-300">{example}</code>
                       </div>
                     ))}
                   </div>
@@ -260,15 +242,10 @@ export const Gramatica = () => {
         </div>
 
         <section className="mb-16">
-          <h2 className="mb-8 text-3xl font-bold text-cyan-400">
-            Conceptos Clave
-          </h2>
+          <h2 className="mb-8 text-3xl font-bold text-cyan-400">Conceptos Clave</h2>
           <div className="grid gap-4 md:grid-cols-2">
             {content.keyFormulas.map((formula, idx) => (
-              <div
-                key={idx}
-                className="rounded-xl border border-cyan-500/30 bg-cyan-500/10 p-6"
-              >
+              <div key={idx} className="rounded-xl border border-cyan-500/30 bg-cyan-500/10 p-6">
                 <p className="text-center text-lg text-cyan-300">{formula}</p>
               </div>
             ))}
@@ -276,9 +253,7 @@ export const Gramatica = () => {
         </section>
 
         <section className="mb-16">
-          <h2 className="mb-8 text-3xl font-bold text-purple-400">
-            Ejercicios de Práctica
-          </h2>
+          <h2 className="mb-8 text-3xl font-bold text-purple-400">Ejercicios de Práctica</h2>
           <div className="space-y-4">
             {content.practiceExercises.map((exercise, idx) => (
               <div
@@ -286,9 +261,7 @@ export const Gramatica = () => {
                 className="rounded-xl border border-white/10 bg-white/5 p-6 transition-all hover:bg-white/10"
               >
                 <div className="flex items-start gap-4">
-                  <span className="min-w-fit text-xl font-bold text-purple-400">
-                    {idx + 1}.
-                  </span>
+                  <span className="min-w-fit text-xl font-bold text-purple-400">{idx + 1}.</span>
                   <p className="text-gray-300">{exercise}</p>
                 </div>
               </div>

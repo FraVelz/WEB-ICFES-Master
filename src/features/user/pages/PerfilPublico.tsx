@@ -33,9 +33,7 @@ export const PerfilPublico = () => {
             <Icon name="user-slash" />
           </div>
           <h2 className="text-2xl font-bold">Enlace inválido</h2>
-          <p className="text-slate-400">
-            Debes proporcionar un ID de usuario en la URL.
-          </p>
+          <p className="text-slate-400">Debes proporcionar un ID de usuario en la URL.</p>
           <button
             onClick={() => router.push('/')}
             className="cursor-pointer rounded-lg bg-cyan-600 px-6 py-2 font-medium transition-colors hover:bg-cyan-500"
@@ -86,9 +84,7 @@ export const PerfilPublico = () => {
             <Icon name="user-slash" />
           </div>
           <h2 className="text-2xl font-bold">Usuario no encontrado</h2>
-          <p className="text-slate-400">
-            El perfil que buscas no existe o ha sido eliminado.
-          </p>
+          <p className="text-slate-400">El perfil que buscas no existe o ha sido eliminado.</p>
           <button
             onClick={() => router.push('/')}
             className="cursor-pointer rounded-lg bg-cyan-600 px-6 py-2 font-medium transition-colors hover:bg-cyan-500"
@@ -118,9 +114,7 @@ export const PerfilPublico = () => {
               title="Copiar enlace"
             >
               <Icon name={copied ? 'check' : 'share-nodes'} />
-              <span className="hidden sm:inline">
-                {copied ? '¡Copiado!' : 'Compartir'}
-              </span>
+              <span className="hidden sm:inline">{copied ? '¡Copiado!' : 'Compartir'}</span>
             </button>
             <button
               onClick={handleReport}
@@ -136,10 +130,7 @@ export const PerfilPublico = () => {
             <div className="group relative">
               <div className="h-32 w-32 rounded-full border-4 border-purple-500/30 bg-slate-950 p-1 shadow-lg shadow-purple-500/20 md:h-40 md:w-40">
                 <img
-                  src={
-                    photoUrl ||
-                    `https://api.dicebear.com/7.x/avataaars/svg?seed=${name}`
-                  }
+                  src={photoUrl || `https://api.dicebear.com/7.x/avataaars/svg?seed=${name}`}
                   alt={name}
                   className="h-full w-full rounded-full bg-slate-800 object-cover"
                 />
@@ -151,12 +142,8 @@ export const PerfilPublico = () => {
 
             {/* Info */}
             <div className="flex-1 space-y-3 text-center md:text-left">
-              <h1 className="text-3xl font-bold text-white md:text-4xl">
-                {name}
-              </h1>
-              <p className="text-lg text-slate-400 italic">
-                "{personalPhrase}"
-              </p>
+              <h1 className="text-3xl font-bold text-white md:text-4xl">{name}</h1>
+              <p className="text-lg text-slate-400 italic">"{personalPhrase}"</p>
 
               <div className="flex items-center justify-center gap-4 pt-2 text-sm text-slate-500 md:justify-start">
                 <span className="flex items-center gap-2">
@@ -169,29 +156,18 @@ export const PerfilPublico = () => {
               <div className="mt-4 max-w-md">
                 <div className="mb-2 flex items-center justify-between text-xs font-bold">
                   <div className="flex items-center gap-2">
-                    <span
-                      className="text-base font-bold text-purple-400"
-                      title={`XP Total: ${totalXP || 0}`}
-                    >
+                    <span className="text-base font-bold text-purple-400" title={`XP Total: ${totalXP || 0}`}>
                       {typeof totalXP === 'number' ? totalXP : 0}
                     </span>
                     <span className="text-slate-400">XP Total</span>
-                    {false && (
-                      <span className="ml-2 text-xs text-red-400">
-                        ⚠️ Diferencia detectada
-                      </span>
-                    )}
+                    {false && <span className="ml-2 text-xs text-red-400">⚠️ Diferencia detectada</span>}
                   </div>
-                  {levelInfo?.xpForNextLevel !== null &&
-                  levelInfo?.xpForNextLevel > 0 ? (
+                  {levelInfo?.xpForNextLevel !== null && levelInfo?.xpForNextLevel > 0 ? (
                     <span className="text-slate-500">
-                      {levelInfo?.xpForNextLevel} XP para Nivel{' '}
-                      {(levelInfo?.level || level) + 1}
+                      {levelInfo?.xpForNextLevel} XP para Nivel {(levelInfo?.level || level) + 1}
                     </span>
                   ) : (
-                    <span className="font-semibold text-yellow-400">
-                      Nivel Máximo
-                    </span>
+                    <span className="font-semibold text-yellow-400">Nivel Máximo</span>
                   )}
                 </div>
                 <div className="h-4 overflow-hidden rounded-full border border-slate-700 bg-slate-800 shadow-inner">
@@ -202,21 +178,13 @@ export const PerfilPublico = () => {
                 </div>
                 <div className="mt-2 flex items-center justify-between text-xs">
                   <div className="flex items-center gap-2">
-                    <span className="font-semibold text-slate-300">
-                      Nivel {levelInfo?.level || level}
-                    </span>
+                    <span className="font-semibold text-slate-300">Nivel {levelInfo?.level || level}</span>
                     <span className="text-slate-500">•</span>
-                    <span className="text-slate-400">
-                      {levelInfo?.levelName || 'Aprendiz'}
-                    </span>
-                    {levelInfo?.levelIcon && (
-                      <span className="text-lg">{levelInfo?.levelIcon}</span>
-                    )}
+                    <span className="text-slate-400">{levelInfo?.levelName || 'Aprendiz'}</span>
+                    {levelInfo?.levelIcon && <span className="text-lg">{levelInfo?.levelIcon}</span>}
                   </div>
                   {levelInfo?.xpProgress !== null && (
-                    <span className="text-slate-500">
-                      {Math.round(levelInfo?.xpProgress || 0)}%
-                    </span>
+                    <span className="text-slate-500">{Math.round(levelInfo?.xpProgress || 0)}%</span>
                   )}
                 </div>
               </div>
@@ -236,28 +204,17 @@ export const PerfilPublico = () => {
               <div className="grid grid-cols-3 gap-4">
                 <div className="rounded-xl bg-slate-800/50 p-4 text-center">
                   <div className="text-2xl font-bold text-white">
-                    {
-                      achievements.filter((a) => a.status === 'completed')
-                        .length
-                    }
+                    {achievements.filter((a) => a.status === 'completed').length}
                   </div>
-                  <div className="mt-1 text-xs text-slate-400 uppercase">
-                    Logros
-                  </div>
+                  <div className="mt-1 text-xs text-slate-400 uppercase">Logros</div>
                 </div>
                 <div className="rounded-xl bg-slate-800/50 p-4 text-center">
                   <div className="text-2xl font-bold text-white">{level}</div>
-                  <div className="mt-1 text-xs text-slate-400 uppercase">
-                    Nivel
-                  </div>
+                  <div className="mt-1 text-xs text-slate-400 uppercase">Nivel</div>
                 </div>
                 <div className="rounded-xl bg-slate-800/50 p-4 text-center">
-                  <div className="text-2xl font-bold text-white">
-                    {typeof totalXP === 'number' ? totalXP : 0}
-                  </div>
-                  <div className="mt-1 text-xs text-slate-400 uppercase">
-                    XP Total
-                  </div>
+                  <div className="text-2xl font-bold text-white">{typeof totalXP === 'number' ? totalXP : 0}</div>
+                  <div className="mt-1 text-xs text-slate-400 uppercase">XP Total</div>
                 </div>
               </div>
             </div>
@@ -271,26 +228,17 @@ export const PerfilPublico = () => {
 
               <div className="space-y-6">
                 {Object.entries(coursesProgress).length > 0 ? (
-                  Object.entries(coursesProgress).map(
-                    ([courseId, progress]) => (
-                      <div key={courseId} className="group">
-                        <div className="mb-2 flex justify-between">
-                          <span className="font-medium text-slate-200 capitalize">
-                            {courseId.replace('-', ' ')}
-                          </span>
-                          <span className="font-bold text-purple-400">
-                            {Number(progress)}%
-                          </span>
-                        </div>
-                        <div className="h-2.5 overflow-hidden rounded-full bg-slate-800">
-                          <div
-                            className="h-full rounded-full bg-purple-500"
-                            style={{ width: `${Number(progress)}%` }}
-                          />
-                        </div>
+                  Object.entries(coursesProgress).map(([courseId, progress]) => (
+                    <div key={courseId} className="group">
+                      <div className="mb-2 flex justify-between">
+                        <span className="font-medium text-slate-200 capitalize">{courseId.replace('-', ' ')}</span>
+                        <span className="font-bold text-purple-400">{Number(progress)}%</span>
                       </div>
-                    )
-                  )
+                      <div className="h-2.5 overflow-hidden rounded-full bg-slate-800">
+                        <div className="h-full rounded-full bg-purple-500" style={{ width: `${Number(progress)}%` }} />
+                      </div>
+                    </div>
+                  ))
                 ) : (
                   <div className="py-8 text-center text-slate-500">
                     <p>Este usuario aún no ha iniciado cursos.</p>
@@ -324,19 +272,11 @@ export const PerfilPublico = () => {
                       title={achievement.title}
                     >
                       <Icon
-                        name={
-                          typeof achievement.icon === 'string'
-                            ? achievement.icon
-                            : 'star'
-                        }
+                        name={typeof achievement.icon === 'string' ? achievement.icon : 'star'}
                         className="mb-1 text-2xl"
                       />
                       {isUnlocked && (
-                        <Icon
-                          name="star"
-                          size="sm"
-                          className="absolute top-2 right-2 text-[8px] text-yellow-200"
-                        />
+                        <Icon name="star" size="sm" className="absolute top-2 right-2 text-[8px] text-yellow-200" />
                       )}
                     </div>
                   );
@@ -344,9 +284,7 @@ export const PerfilPublico = () => {
               </div>
 
               {achievements.length === 0 && (
-                <p className="py-4 text-center text-sm text-slate-500">
-                  Sin logros desbloqueados aún.
-                </p>
+                <p className="py-4 text-center text-sm text-slate-500">Sin logros desbloqueados aún.</p>
               )}
             </div>
           </div>

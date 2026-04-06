@@ -2,12 +2,12 @@
 
 ## 📌 Tech Stack
 
-| Technology     | Use                                      |
-| -------------- | ---------------------------------------- |
-| **Next.js 15** | React framework with App Router          |
-| **Supabase**   | Backend: Auth, PostgreSQL, persistence    |
-| **Tailwind CSS** | Styling and design                      |
-| **pnpm**       | Package manager                          |
+| Technology       | Use                                    |
+| ---------------- | -------------------------------------- |
+| **Next.js 15**   | React framework with App Router        |
+| **Supabase**     | Backend: Auth, PostgreSQL, persistence |
+| **Tailwind CSS** | Styling and design                     |
+| **pnpm**         | Package manager                        |
 
 ---
 

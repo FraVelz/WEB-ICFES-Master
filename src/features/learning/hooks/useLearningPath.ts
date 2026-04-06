@@ -25,9 +25,7 @@ export const useLearningPath = (areaId: string | undefined) => {
         // 1. Obtener lecciones y progreso en paralelo
         const [lessons, progress] = await Promise.all([
           LearningService.getLearningPath(areaId),
-          user
-            ? LearningService.getUserProgress(user.uid, areaId)
-            : Promise.resolve(null),
+          user ? LearningService.getUserProgress(user.uid, areaId) : Promise.resolve(null),
         ]);
 
         // 2. Agrupar lecciones por dificultad para mantener el diseño de "Secciones"
@@ -54,48 +52,52 @@ export const useLearningPath = (areaId: string | undefined) => {
 
         // 3. Distribuir lecciones en las secciones
         const completedIds = (progress as { completedLessons?: string[] } | null)?.completedLessons ?? [];
-        lessons.forEach((lesson: { id?: string; difficulty?: string; rewards?: { xp?: number; coins?: number }; xp?: number; coins?: number }) => {
-          // Normalizar dificultad a minúsculas por si acaso
-          const difficulty = lesson.difficulty?.toLowerCase() || 'facil';
-          const sectionIndex = groupedSections.findIndex(
-            (s) => s.id === difficulty
-          );
+        lessons.forEach(
+          (lesson: {
+            id?: string;
+            difficulty?: string;
+            rewards?: { xp?: number; coins?: number };
+            xp?: number;
+            coins?: number;
+          }) => {
+            // Normalizar dificultad a minúsculas por si acaso
+            const difficulty = lesson.difficulty?.toLowerCase() || 'facil';
+            const sectionIndex = groupedSections.findIndex((s) => s.id === difficulty);
 
-          if (sectionIndex !== -1) {
-            // Calcular estado basado en progreso
-            let status = 'locked';
-            const isCompleted = completedIds.includes(lesson.id ?? '');
+            if (sectionIndex !== -1) {
+              // Calcular estado basado en progreso
+              let status = 'locked';
+              const isCompleted = completedIds.includes(lesson.id ?? '');
 
-            if (isCompleted) {
-              status = 'completed';
-            } else {
-              // Lógica simple: si no está completada, verificar si es la primera disponible
-              // Por defecto dejamos 'available' para que el usuario pueda verlas
-              // En una implementación estricta, verificaríamos si la anterior está completada
-              status = 'available';
+              if (isCompleted) {
+                status = 'completed';
+              } else {
+                // Lógica simple: si no está completada, verificar si es la primera disponible
+                // Por defecto dejamos 'available' para que el usuario pueda verlas
+                // En una implementación estricta, verificaríamos si la anterior está completada
+                status = 'available';
+              }
+
+              // Aplanar recompensas para que el UI las entienda
+              const xp = lesson.rewards?.xp || lesson.xp || 0;
+              const coins = lesson.rewards?.coins || lesson.coins || 0;
+
+              groupedSections[sectionIndex].nodes.push({
+                ...lesson,
+                id: lesson.id ?? '',
+                title: (lesson as { title?: string }).title,
+                description: (lesson as { description?: string }).description,
+                xp,
+                coins,
+                type: 'lesson',
+                status,
+              } as PathNodeData);
             }
-
-            // Aplanar recompensas para que el UI las entienda
-            const xp = lesson.rewards?.xp || lesson.xp || 0;
-            const coins = lesson.rewards?.coins || lesson.coins || 0;
-
-            groupedSections[sectionIndex].nodes.push({
-              ...lesson,
-              id: lesson.id ?? '',
-              title: (lesson as { title?: string }).title,
-              description: (lesson as { description?: string }).description,
-              xp,
-              coins,
-              type: 'lesson',
-              status,
-            } as PathNodeData);
           }
-        });
+        );
 
         // Filtrar secciones vacías
-        const activeSections = groupedSections.filter(
-          (s) => s.nodes.length > 0
-        );
+        const activeSections = groupedSections.filter((s) => s.nodes.length > 0);
 
         setSections(activeSections);
       } catch (err) {

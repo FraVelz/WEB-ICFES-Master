@@ -9,12 +9,7 @@ interface TextProps {
   className?: string;
 }
 
-export const Text = ({
-  children,
-  as: As = 'p',
-  variant = 'default',
-  className = '',
-}: TextProps) => {
+export const Text = ({ children, as: As = 'p', variant = 'default', className = '' }: TextProps) => {
   const Component = As as React.ElementType;
 
   const variants: Record<TextVariant, string> = {
@@ -25,11 +20,7 @@ export const Text = ({
     bold: 'text-white font-bold text-base md:text-lg',
   };
 
-  return (
-    <Component className={`${variants[variant]} ${className}`}>
-      {children}
-    </Component>
-  );
+  return <Component className={`${variants[variant]} ${className}`}>{children}</Component>;
 };
 
 interface TitleProps {
@@ -49,9 +40,5 @@ export const Title = ({ children, level = 1, className = '' }: TitleProps) => {
   };
 
   const l = level in sizes ? level : 1;
-  return (
-    <h1 className={`font-bold text-white ${sizes[l as keyof typeof sizes]} ${className}`}>
-      {children}
-    </h1>
-  );
+  return <h1 className={`font-bold text-white ${sizes[l as keyof typeof sizes]} ${className}`}>{children}</h1>;
 };

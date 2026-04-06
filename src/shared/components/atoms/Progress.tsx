@@ -1,9 +1,4 @@
-export const Progress = ({
-  value = 0,
-  max = 100,
-  className = '',
-  showPercentage = true,
-}) => {
+export const Progress = ({ value = 0, max = 100, className = '', showPercentage = true }) => {
   const percentage = (value / max) * 100;
 
   const getColor = () => {

@@ -171,11 +171,7 @@ export const INTERMEDIO_TOPICS = {
   'lectura-critica': {
     title: 'Examen Lectura Crítica - Nivel Intermedio',
     description: 'Demuestra tu análisis de textos',
-    topics: [
-      'Argumentos complejos',
-      'Análisis crítico',
-      'Inferencias avanzadas',
-    ],
+    topics: ['Argumentos complejos', 'Análisis crítico', 'Inferencias avanzadas'],
     questions: 25,
     duration: '1h 15m',
     difficulty: 'Intermedio',

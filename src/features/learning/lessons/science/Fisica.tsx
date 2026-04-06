@@ -10,19 +10,14 @@ export const Fisica = () => {
     topics: [
       {
         name: 'Fuerzas',
-        description:
-          'Estudio de fuerzas, leyes de Newton y tipos de movimiento.',
+        description: 'Estudio de fuerzas, leyes de Newton y tipos de movimiento.',
         subtopics: [
           'Primera ley de Newton',
           'Segunda ley (F = ma)',
           'Tercera ley (acción-reacción)',
           'Fricción y fuerzas de contacto',
         ],
-        examples: [
-          'F = ma → a = F/m',
-          'Fricción opone el movimiento',
-          'Acción-reacción: pares de fuerzas',
-        ],
+        examples: ['F = ma → a = F/m', 'Fricción opone el movimiento', 'Acción-reacción: pares de fuerzas'],
       },
       {
         name: 'Movimiento',
@@ -33,36 +28,16 @@ export const Fisica = () => {
           'Caída libre',
           'Movimiento circular',
         ],
-        examples: [
-          'v = d/t (velocidad)',
-          'a = Δv/Δt (aceleración)',
-          'h = gt²/2 (caída libre)',
-        ],
+        examples: ['v = d/t (velocidad)', 'a = Δv/Δt (aceleración)', 'h = gt²/2 (caída libre)'],
       },
       {
         name: 'Energía y Trabajo',
         description: 'Conceptos de energía cinética, potencial y conservación.',
-        subtopics: [
-          'Trabajo mecánico',
-          'Energía cinética y potencial',
-          'Conservación de energía',
-          'Potencia',
-        ],
-        examples: [
-          'W = F·d (trabajo)',
-          'Ec = ½mv² (energía cinética)',
-          'Ep = mgh (energía potencial)',
-        ],
+        subtopics: ['Trabajo mecánico', 'Energía cinética y potencial', 'Conservación de energía', 'Potencia'],
+        examples: ['W = F·d (trabajo)', 'Ec = ½mv² (energía cinética)', 'Ep = mgh (energía potencial)'],
       },
     ],
-    keyFormulas: [
-      'F = ma',
-      'v = v₀ + at',
-      'W = F·d',
-      'Ec = ½mv²',
-      'Ep = mgh',
-      'E_total = Ec + Ep',
-    ],
+    keyFormulas: ['F = ma', 'v = v₀ + at', 'W = F·d', 'Ec = ½mv²', 'Ep = mgh', 'E_total = Ec + Ep'],
     practiceExercises: [
       'Calcular aceleración con F = 50N y m = 10kg',
       'Hallar velocidad final: v₀=5m/s, a=2m/s², t=3s',
@@ -104,9 +79,7 @@ export const Fisica = () => {
             <span className="flex items-center gap-2">
               <Icon name="book" /> {content.lessons} lecciones
             </span>
-            <span className="rounded-full bg-yellow-500/30 px-4 py-1 text-sm">
-              {content.difficulty}
-            </span>
+            <span className="rounded-full bg-yellow-500/30 px-4 py-1 text-sm">{content.difficulty}</span>
           </div>
         </header>
 
@@ -116,16 +89,12 @@ export const Fisica = () => {
               key={idx}
               className="rounded-2xl border border-white/10 bg-white/5 p-8 backdrop-blur-sm transition-all hover:bg-white/10"
             >
-              <h2 className="mb-4 text-3xl font-bold text-green-400">
-                {topic.name}
-              </h2>
+              <h2 className="mb-4 text-3xl font-bold text-green-400">{topic.name}</h2>
               <p className="mb-6 text-lg text-gray-300">{topic.description}</p>
 
               <div className="grid gap-8 md:grid-cols-2">
                 <div>
-                  <h3 className="mb-4 text-xl font-semibold text-blue-400">
-                    Subtemas
-                  </h3>
+                  <h3 className="mb-4 text-xl font-semibold text-blue-400">Subtemas</h3>
                   <ul className="space-y-3">
                     {topic.subtopics.map((sub, i) => (
                       <li key={i} className="flex items-start gap-3">
@@ -137,18 +106,11 @@ export const Fisica = () => {
                 </div>
 
                 <div>
-                  <h3 className="mb-4 text-xl font-semibold text-green-400">
-                    Ejemplos
-                  </h3>
+                  <h3 className="mb-4 text-xl font-semibold text-green-400">Ejemplos</h3>
                   <div className="space-y-3">
                     {topic.examples.map((example, i) => (
-                      <div
-                        key={i}
-                        className="rounded border-l-4 border-green-400 bg-gray-900/50 p-4"
-                      >
-                        <code className="text-sm text-green-300">
-                          {example}
-                        </code>
+                      <div key={i} className="rounded border-l-4 border-green-400 bg-gray-900/50 p-4">
+                        <code className="text-sm text-green-300">{example}</code>
                       </div>
                     ))}
                   </div>
@@ -159,27 +121,18 @@ export const Fisica = () => {
         </div>
 
         <section className="mb-16">
-          <h2 className="mb-8 text-3xl font-bold text-cyan-400">
-            Fórmulas Clave
-          </h2>
+          <h2 className="mb-8 text-3xl font-bold text-cyan-400">Fórmulas Clave</h2>
           <div className="grid gap-4 md:grid-cols-2">
             {content.keyFormulas.map((formula, idx) => (
-              <div
-                key={idx}
-                className="rounded-xl border border-cyan-500/30 bg-cyan-500/10 p-6"
-              >
-                <code className="block text-center text-lg text-cyan-300">
-                  {formula}
-                </code>
+              <div key={idx} className="rounded-xl border border-cyan-500/30 bg-cyan-500/10 p-6">
+                <code className="block text-center text-lg text-cyan-300">{formula}</code>
               </div>
             ))}
           </div>
         </section>
 
         <section className="mb-16">
-          <h2 className="mb-8 text-3xl font-bold text-purple-400">
-            Ejercicios de Práctica
-          </h2>
+          <h2 className="mb-8 text-3xl font-bold text-purple-400">Ejercicios de Práctica</h2>
           <div className="space-y-4">
             {content.practiceExercises.map((exercise, idx) => (
               <div
@@ -187,9 +140,7 @@ export const Fisica = () => {
                 className="rounded-xl border border-white/10 bg-white/5 p-6 transition-all hover:bg-white/10"
               >
                 <div className="flex items-start gap-4">
-                  <span className="min-w-fit text-xl font-bold text-purple-400">
-                    {idx + 1}.
-                  </span>
+                  <span className="min-w-fit text-xl font-bold text-purple-400">{idx + 1}.</span>
                   <p className="text-gray-300">{exercise}</p>
                 </div>
               </div>

@@ -46,26 +46,14 @@ const getMascotDialogue = (emotion: EmotionKey, context?: ContextKey | null): st
       '¡Bienvenido! Hoy vamos a aprender juntos',
       '¿Qué tal? ¡Vamos a conquistar esos 500 puntos!',
     ],
-    thinking: [
-      'Hmm... Vamos a resolver esto',
-      'Interesante pregunta...',
-      'Déjame ayudarte a entender esto',
-    ],
-    celebrating: [
-      '¡Excelente! ¡Así se hace!',
-      '¡Eso es! ¡Vas muy bien!',
-      '¡Increíble progreso! ',
-    ],
+    thinking: ['Hmm... Vamos a resolver esto', 'Interesante pregunta...', 'Déjame ayudarte a entender esto'],
+    celebrating: ['¡Excelente! ¡Así se hace!', '¡Eso es! ¡Vas muy bien!', '¡Increíble progreso! '],
     sad: [
       'No te preocupes, lo harás mejor próxima vez',
       'No desistas, ¡te veo mejorando!',
       'Cada error es una lección aprendida',
     ],
-    neutral: [
-      '¿En qué puedo ayudarte?',
-      'Estoy aquí para ti',
-      'Continuemos adelante',
-    ],
+    neutral: ['¿En qué puedo ayudarte?', 'Estoy aquí para ti', 'Continuemos adelante'],
   };
 
   const contextDialogues = {
@@ -74,16 +62,8 @@ const getMascotDialogue = (emotion: EmotionKey, context?: ContextKey | null): st
       'Hoy es un gran día para aprender',
       '¡Vamos a comenzar esta aventura!',
     ],
-    practice: [
-      '¡A practicar se ha dicho! ',
-      'Vamos con esas preguntas',
-      'Mostrémonos de qué estamos hechos',
-    ],
-    achievement: [
-      '¡Lograste un hito! ',
-      '¡Eres increíble!',
-      'Este es tu momento de brillar ',
-    ],
+    practice: ['¡A practicar se ha dicho! ', 'Vamos con esas preguntas', 'Mostrémonos de qué estamos hechos'],
+    achievement: ['¡Lograste un hito! ', '¡Eres increíble!', 'Este es tu momento de brillar '],
   };
 
   const selected = context ? contextDialogues[context as ContextKey] : dialogues[emotion];
@@ -127,8 +107,7 @@ export const AppMascot = ({
 
     const emotionTimer = setInterval(() => {
       const emotions = ['greeting', 'thinking', 'neutral'];
-      const randomEmotion =
-        emotions[Math.floor(Math.random() * emotions.length)];
+      const randomEmotion = emotions[Math.floor(Math.random() * emotions.length)];
       setCurrentEmotion(randomEmotion as EmotionKey);
       setDialogue(getMascotDialogue(randomEmotion as EmotionKey));
     }, 5000);
@@ -167,9 +146,7 @@ export const AppMascot = ({
   const sizeKey = ['sm', 'md', 'lg', 'xl'].includes(size) ? size : 'md';
   const sizes = sizeClasses[sizeKey as keyof typeof sizeClasses] || sizeClasses.md;
 
-  const currentAvatar =
-    MASCOT_AVATARS.find((a) => a.emotion === currentEmotion) ||
-    MASCOT_AVATARS[0];
+  const currentAvatar = MASCOT_AVATARS.find((a) => a.emotion === currentEmotion) || MASCOT_AVATARS[0];
 
   const handleMascotClick = () => {
     if (!interactive) return;
@@ -220,17 +197,11 @@ export const AppMascot = ({
 
           {/* Speech bubble */}
           <div className="rounded-2xl border border-cyan-400/50 bg-linear-to-r from-cyan-400/10 to-blue-400/10 p-4 shadow-xl shadow-cyan-400/20 backdrop-blur-xl transition-all duration-300 hover:border-cyan-400">
-            <p
-              className={`${sizes.text} text-center leading-relaxed font-semibold text-white`}
-            >
-              {dialogue}
-            </p>
+            <p className={`${sizes.text} text-center leading-relaxed font-semibold text-white`}>{dialogue}</p>
           </div>
 
           {/* Quote mark decoration */}
-          <div className="absolute -top-2 -left-2 font-serif text-4xl text-cyan-400/30">
-            "
-          </div>
+          <div className="absolute -top-2 -left-2 font-serif text-4xl text-cyan-400/30">"</div>
         </div>
       )}
 
@@ -255,11 +226,7 @@ export const AppMascot = ({
       )}
 
       {/* Hint: Click to interact */}
-      {interactive && (
-        <p className="mt-2 text-center text-xs text-slate-400 italic">
-          ¡Haz clic para interactuar!
-        </p>
-      )}
+      {interactive && <p className="mt-2 text-center text-xs text-slate-400 italic">¡Haz clic para interactuar!</p>}
     </div>
   );
 };

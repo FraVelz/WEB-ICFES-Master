@@ -1,12 +1,6 @@
 // Componente de Layout reutilizable para mantener consistencia
 
-export const OnboardingLayout = ({
-  children,
-  className = '',
-}: {
-  children: React.ReactNode;
-  className?: string;
-}) => (
+export const OnboardingLayout = ({ children, className = '' }: { children: React.ReactNode; className?: string }) => (
   <div
     className={`relative flex min-h-dvh flex-col bg-linear-to-b from-black via-slate-950 to-black text-white ${className}`}
   >

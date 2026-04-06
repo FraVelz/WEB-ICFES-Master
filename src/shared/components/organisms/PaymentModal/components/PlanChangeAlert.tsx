@@ -7,19 +7,23 @@ export interface PlanChangeAlertProps {
 }
 
 export const PlanChangeAlert = ({ currentPlan, newPlan }: PlanChangeAlertProps) => {
-  const isFreeToPaid =
-    currentPlan?.planType === 'free' && newPlan?.id !== 'free';
-  const isPaidToFree =
-    currentPlan?.planType !== 'free' && newPlan?.id === 'free';
-  const isPaidToPaid =
-    currentPlan?.planType !== 'free' && newPlan?.id !== 'free';
+  const isFreeToPaid = currentPlan?.planType === 'free' && newPlan?.id !== 'free';
+  const isPaidToFree = currentPlan?.planType !== 'free' && newPlan?.id === 'free';
+  const isPaidToPaid = currentPlan?.planType !== 'free' && newPlan?.id !== 'free';
 
   // Convertir nextBillingDate correctamente
-  const getFormattedDate = (date: Date | string | number | { toDate?: () => Date } | null | undefined): string | null => {
+  const getFormattedDate = (
+    date: Date | string | number | { toDate?: () => Date } | null | undefined
+  ): string | null => {
     if (!date) return null;
     try {
       // Si es un objeto de Firebase Timestamp
-      if (typeof date === 'object' && date !== null && 'toDate' in date && typeof (date as { toDate: () => Date }).toDate === 'function') {
+      if (
+        typeof date === 'object' &&
+        date !== null &&
+        'toDate' in date &&
+        typeof (date as { toDate: () => Date }).toDate === 'function'
+      ) {
         return new Date((date as { toDate: () => Date }).toDate()).toLocaleDateString('es-CO');
       }
       // Si es un objeto Date
@@ -88,34 +92,19 @@ export const PlanChangeAlert = ({ currentPlan, newPlan }: PlanChangeAlertProps) 
   if (!alertConfig) return null;
 
   return (
-    <div
-      className={`rounded-lg border-l-4 p-4 ${alertConfig.bgColor} ${alertConfig.borderColor}`}
-    >
+    <div className={`rounded-lg border-l-4 p-4 ${alertConfig.bgColor} ${alertConfig.borderColor}`}>
       <div className="flex gap-3">
-        <Icon
-          name={alertConfig.icon}
-          className={`text-xl ${alertConfig.titleColor} mt-0.5 shrink-0`}
-        />
+        <Icon name={alertConfig.icon} className={`text-xl ${alertConfig.titleColor} mt-0.5 shrink-0`} />
         <div>
-          <h4 className={`font-bold ${alertConfig.titleColor} mb-1`}>
-            {alertConfig.title}
-          </h4>
-          <p className={`text-sm ${alertConfig.textColor}`}>
-            {alertConfig.message}
-          </p>
+          <h4 className={`font-bold ${alertConfig.titleColor} mb-1`}>{alertConfig.title}</h4>
+          <p className={`text-sm ${alertConfig.textColor}`}>{alertConfig.message}</p>
           {isPaidToPaid && currentPlan?.nextBillingDate && (
-            <div
-              className={`text-xs ${alertConfig.textColor} mt-3 border-t border-current/20 pt-3`}
-            >
+            <div className={`text-xs ${alertConfig.textColor} mt-3 border-t border-current/20 pt-3`}>
               <p className="opacity-75">
                 Tu plan actual finaliza el{' '}
-                <span className="font-semibold">
-                  {getFormattedDate(currentPlan.nextBillingDate)}
-                </span>
+                <span className="font-semibold">{getFormattedDate(currentPlan.nextBillingDate)}</span>
               </p>
-              <p className="mt-1 opacity-60">
-                El nuevo plan se activará automáticamente después de esa fecha.
-              </p>
+              <p className="mt-1 opacity-60">El nuevo plan se activará automáticamente después de esa fecha.</p>
             </div>
           )}
         </div>

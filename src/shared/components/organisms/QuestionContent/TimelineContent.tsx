@@ -28,19 +28,11 @@ interface TimelineContentProps {
   orientation?: 'vertical' | 'horizontal';
 }
 
-export const TimelineContent = ({
-  events = [],
-  title,
-  orientation = 'vertical',
-}: TimelineContentProps) => {
+export const TimelineContent = ({ events = [], title, orientation = 'vertical' }: TimelineContentProps) => {
   if (orientation === 'vertical') {
     return (
       <div className="my-6 rounded-lg border border-orange-500/20 bg-linear-to-r from-slate-700/20 to-slate-800/20 p-6">
-        {title && (
-          <h4 className="mb-6 text-center text-sm font-semibold text-orange-300">
-            {title}
-          </h4>
-        )}
+        {title && <h4 className="mb-6 text-center text-sm font-semibold text-orange-300">{title}</h4>}
 
         <div className="relative space-y-4">
           {/* Línea vertical */}
@@ -66,11 +58,7 @@ export const TimelineContent = ({
   // Horizontal timeline
   return (
     <div className="my-6 overflow-x-auto rounded-lg border border-orange-500/20 bg-linear-to-r from-slate-700/20 to-slate-800/20 p-6">
-      {title && (
-        <h4 className="mb-6 text-center text-sm font-semibold text-orange-300">
-          {title}
-        </h4>
-      )}
+      {title && <h4 className="mb-6 text-center text-sm font-semibold text-orange-300">{title}</h4>}
 
       <div className="flex min-w-max gap-4">
         {events.map((event: TimelineEvent, idx: number) => (

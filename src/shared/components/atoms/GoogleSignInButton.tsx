@@ -1,9 +1,19 @@
+'use client';
+
 import { useState } from 'react';
 import { Icon } from '@/shared/components/Icon';
 import { useAuth } from '@/context/AuthContext';
 import { useRouter } from 'next/navigation';
+import { mapSupabaseAuthError } from '@/utils/mapSupabaseAuthError';
 
-export const GoogleSignInButton = () => {
+const DEFAULT_REDIRECT = '/ruta-aprendizaje';
+
+type GoogleSignInButtonProps = {
+  /** Tras login simulado (localStorage) o si el flujo devuelve usuario sin redirect OAuth */
+  redirectAfterLogin?: string;
+};
+
+export function GoogleSignInButton({ redirectAfterLogin = DEFAULT_REDIRECT }: GoogleSignInButtonProps) {
   const { loginWithGoogle, error } = useAuth();
   const [isLoading, setIsLoading] = useState(false);
   const [localError, setLocalError] = useState('');
@@ -13,11 +23,13 @@ export const GoogleSignInButton = () => {
     try {
       setLocalError('');
       setIsLoading(true);
-      await loginWithGoogle();
-      // Redirigir al dashboard después del login exitoso
-      router.push('/dashboard');
+      const result = await loginWithGoogle();
+      // OAuth real redirige a Google; solo aquí llega con usuario (modo local o edge case)
+      if (result) {
+        router.push(redirectAfterLogin);
+      }
     } catch (err) {
-      setLocalError('No se pudo iniciar sesión con Google. Intenta de nuevo.');
+      setLocalError(mapSupabaseAuthError(err, 'No se pudo iniciar sesión con Google. Intenta de nuevo.'));
       console.error('Error en Google Sign-In:', err);
     } finally {
       setIsLoading(false);
@@ -28,7 +40,6 @@ export const GoogleSignInButton = () => {
 
   return (
     <div className="space-y-3">
-      {/* Divisor */}
       <div className="relative">
         <div className="absolute inset-0 flex items-center">
           <div className="w-full border-t border-slate-700"></div>
@@ -38,7 +49,6 @@ export const GoogleSignInButton = () => {
         </div>
       </div>
 
-      {/* Botón Google */}
       <button
         onClick={handleGoogleSignIn}
         disabled={isLoading}
@@ -58,16 +68,12 @@ export const GoogleSignInButton = () => {
         )}
       </button>
 
-      {/* Error Message */}
-      {displayError && (
+      {displayError ? (
         <div className="flex items-start gap-3 rounded-lg border border-red-500/50 bg-red-500/20 p-3">
-          <Icon
-            name="exclamation-circle"
-            className="mt-0.5 shrink-0 text-red-400"
-          />
+          <Icon name="exclamation-circle" className="mt-0.5 shrink-0 text-red-400" />
           <p className="text-sm text-red-400">{displayError}</p>
         </div>
-      )}
+      ) : null}
     </div>
   );
-};
+}
