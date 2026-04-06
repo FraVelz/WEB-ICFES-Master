@@ -16,6 +16,8 @@ export interface PathNodeData {
   title?: string;
   description?: string;
   type?: string;
+  /** `/lessons/...` cuando `learning_content.content` incluye `topic_slug` o `topic` */
+  lessonHref?: string;
   [key: string]: unknown;
 }
 
@@ -61,6 +63,7 @@ export const AreaPath = ({ areaId, onNodeClick, colorClass, sections = [] }: Are
                   type={node.type === 'checkpoint' ? 'checkpoint' : 'lesson'}
                   icon={node.type === 'checkpoint' ? 'trophy' : areaIcon}
                   colorClass={colorClass}
+                  lessonHref={typeof node.lessonHref === 'string' ? node.lessonHref : undefined}
                   onClick={() => onNodeClick(node)}
                 />
               </div>

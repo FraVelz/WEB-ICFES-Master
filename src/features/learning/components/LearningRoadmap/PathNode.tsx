@@ -1,4 +1,5 @@
 import React from 'react';
+import Link from 'next/link';
 import { Icon } from '@/shared/components/Icon';
 import { cn } from '@/utils/cn';
 
@@ -31,6 +32,7 @@ export interface PathNodeProps {
   icon?: string;
   onClick?: () => void;
   colorClass?: string;
+  lessonHref?: string;
 }
 
 export const PathNode = ({
@@ -41,6 +43,7 @@ export const PathNode = ({
   icon,
   onClick,
   colorClass = 'bg-blue-500',
+  lessonHref,
 }: PathNodeProps) => {
   const isCheckpoint = type === 'checkpoint';
   const isAvailable = status === 'available';
@@ -112,6 +115,16 @@ export const PathNode = ({
           {title}
         </h4>
         <p className="truncate text-xs text-slate-400">{description}</p>
+        {lessonHref && type !== 'checkpoint' && (
+          <Link
+            href={lessonHref}
+            onClick={(e) => e.stopPropagation()}
+            className="mt-1 inline-flex items-center gap-1 text-xs font-medium text-cyan-400 underline-offset-2 hover:text-cyan-300 hover:underline"
+          >
+            Lección interactiva
+            <Icon name="arrow-right" size="sm" className="inline" />
+          </Link>
+        )}
       </div>
 
       {/* Botón de Acción (Solo visible si disponible o completado) */}

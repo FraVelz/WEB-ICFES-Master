@@ -3,6 +3,7 @@
 import { cn } from '@/utils/cn';
 import React, { useState } from 'react';
 import { AreaPath } from './AreaPath';
+import { LessonAreaLinks } from './LessonAreaLinks';
 import { LessonPreview } from './LessonPreview';
 import { LessonContentModal } from './LessonContentModal';
 import { SecondaryHeader } from '../SecondaryHeader';
@@ -65,6 +66,8 @@ export const LearningRoadmap = ({ initialArea = 'lectura-critica' }: { initialAr
           </h2>
           <p className="mt-2 text-sm font-medium tracking-wide text-slate-400 uppercase">Ruta de Aprendizaje</p>
         </AnimatedOnMount>
+
+        <LessonAreaLinks roadmapAreaId={currentArea} />
 
         {/* Estado de Carga y Error */}
         {loading && (

@@ -6,6 +6,7 @@ import { useAuth } from '@/context/AuthContext';
  * Hook para manejar la lógica de la ruta de aprendizaje.
  * Transforma los datos planos de Supabase/localStorage en la estructura de secciones que necesita el UI.
  */
+import { buildLessonHrefFromNode } from '@/features/learning/constants/lessonDynamicRoutes';
 import type { PathSection, PathNodeData } from '@/features/learning/components/LearningRoadmap/AreaPath';
 
 export type { PathSection, PathNodeData };
@@ -82,6 +83,9 @@ export const useLearningPath = (areaId: string | undefined) => {
               const xp = lesson.rewards?.xp || lesson.xp || 0;
               const coins = lesson.rewards?.coins || lesson.coins || 0;
 
+              const nodePayload = lesson as PathNodeData & { topic_slug?: string; topic?: string };
+              const lessonHref = buildLessonHrefFromNode(areaId, nodePayload);
+
               groupedSections[sectionIndex].nodes.push({
                 ...lesson,
                 id: lesson.id ?? '',
@@ -91,6 +95,7 @@ export const useLearningPath = (areaId: string | undefined) => {
                 coins,
                 type: 'lesson',
                 status,
+                lessonHref: lessonHref ?? undefined,
               } as PathNodeData);
             }
           }
