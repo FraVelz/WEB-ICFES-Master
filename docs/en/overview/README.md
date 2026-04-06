@@ -8,6 +8,7 @@ Welcome to the technical documentation of the project. This documentation is org
 
 - **[Executive Summary](executive-summary.md)**: High-level vision for managers and new team members.
 - **[Project Structure](project-structure.md)**: Explanation of folder architecture and modules.
+- **[Redundancy cleanup](architecture-redundancies.md)**: Active routes map and notes after pruning duplicate code.
 
 ### 2. Setup (`/setup`)
 

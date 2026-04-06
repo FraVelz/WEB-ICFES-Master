@@ -160,5 +160,5 @@ En `src/utils/quiz.js`:
 - `HomePage` - Página de inicio
 - `PracticePage` - Página de práctica
 - `FullExamPage` - Examen completo
-- `LearningPage` - Material de estudio
+- `LearningRoadmapPage` - Ruta de aprendizaje (`/ruta-aprendizaje`)
 - `ProgressPage` - Seguimiento de progreso
