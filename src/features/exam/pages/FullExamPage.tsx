@@ -149,12 +149,12 @@ export const FullExamPage = () => {
                 <p className="text-sm text-gray-400">Análisis de Resultados</p>
               </div>
 
-              <Link
-                href="/"
+              <button
+                onClick={window.history.back}
                 className="rounded-lg bg-white/10 px-4 py-2 text-sm text-white transition-all duration-300 hover:bg-white/20"
               >
                 Salir
-              </Link>
+              </button>
             </div>
           </div>
 
@@ -327,7 +327,7 @@ export const FullExamPage = () => {
                   className={cn(
                     'rounded-xl bg-linear-to-r from-green-500 to-emerald-500 px-12 py-4 text-lg font-bold',
                     'text-white transition-all duration-300 hover:from-green-600 hover:to-emerald-600',
-                    'hover:shadow-lg hover:shadow-green-500/50'
+                    'cursor-pointer hover:shadow-lg hover:shadow-green-500/50'
                   )}
                 >
                   Finalizar Examen
