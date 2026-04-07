@@ -1,6 +1,28 @@
+'use client';
+
 import { LearningRoadmap } from '@/features/learning/components';
 import { ChatAssistant } from '@/features/learning/components/ChatAssistant/ChatAssistant';
 
+import { StoreProvider, useIsActiveStore } from '@/features/learning/hooks/context-isActiveStore';
+import { cn } from '@/utils/cn';
+
+const Component = () => {
+  const { isActive } = useIsActiveStore();
+
+  return (
+    <div
+      id="container-main"
+      className={cn(
+        'min-h-dvh bg-linear-to-b from-slate-950 via-slate-900 to-slate-950 p-0 lg:relative',
+        isActive && 'h-screen overflow-hidden'
+      )}
+    >
+      <div className="mx-auto max-w-7xl">
+        <LearningRoadmap />
+      </div>
+    </div>
+  );
+};
 /**
  * Página de Ruta de Aprendizaje
  * Muestra la ruta estructurada por áreas y niveles
@@ -8,11 +30,9 @@ import { ChatAssistant } from '@/features/learning/components/ChatAssistant/Chat
 export const LearningRoadmapPage = () => {
   return (
     <>
-      <div className="min-h-dvh bg-linear-to-b from-slate-950 via-slate-900 to-slate-950 p-0">
-        <div className="mx-auto max-w-7xl">
-          <LearningRoadmap />
-        </div>
-      </div>
+      <StoreProvider>
+        <Component />
+      </StoreProvider>
 
       <ChatAssistant />
     </>

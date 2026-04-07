@@ -115,21 +115,21 @@ export const ExamConfigModal = ({
 
           {/* Actions */}
           <div className="flex gap-3 pt-6">
-            <Link
-              href="/"
+            <button
+              onClick={() => window.history.back()}
               className={cn(
                 'flex-1 rounded-lg border border-white/20 bg-white/10 px-6 py-3 text-center font-semibold',
                 'text-white transition-all duration-300 hover:bg-white/20'
               )}
             >
               Cancelar
-            </Link>
+            </button>
             <button
               onClick={handleStart}
               className={cn(
                 'flex-1 rounded-lg bg-linear-to-r from-cyan-500 to-blue-500 px-6 py-3 font-semibold',
                 'text-white transition-all duration-300 hover:from-cyan-600 hover:to-blue-600',
-                'hover:shadow-lg hover:shadow-cyan-500/50'
+                'cursor-pointer hover:shadow-lg hover:shadow-cyan-500/50'
               )}
             >
               Comenzar

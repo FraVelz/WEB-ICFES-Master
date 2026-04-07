@@ -405,7 +405,7 @@ export const PracticePage = () => {
                   className={cn(
                     'rounded-xl bg-linear-to-r from-green-500 to-emerald-500 px-12 py-4 text-lg font-bold',
                     'text-white transition-all duration-300 hover:from-green-600 hover:to-emerald-600',
-                    'hover:shadow-lg hover:shadow-green-500/50'
+                    'cursor-pointer hover:shadow-lg hover:shadow-green-500/50'
                   )}
                 >
                   Finalizar Examen

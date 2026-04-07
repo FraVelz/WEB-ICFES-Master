@@ -40,7 +40,7 @@ export const StoreModal = ({ isOpen, onClose }: StoreModalProps) => {
   if (!isOpen) return null;
 
   return (
-    <div ref={modalRef} className="fixed inset-0 z-100 flex flex-col bg-slate-950">
+    <div ref={modalRef} className={cn('flex w-full flex-col bg-slate-950', 'absolute inset-0 z-60')}>
       <div className="flex h-full w-full flex-col overflow-hidden bg-slate-900">
         {/* Header */}
         <div className="flex shrink-0 items-center justify-between border-b border-slate-800 bg-slate-900 p-4 lg:p-6">
@@ -60,7 +60,7 @@ export const StoreModal = ({ isOpen, onClose }: StoreModalProps) => {
         </div>
 
         {/* Content - Scrollable */}
-        <div className="min-h-0 flex-1 overflow-x-hidden overflow-y-auto scroll-smooth p-4 lg:p-6">
+        <div className="min-h-fit flex-1 overflow-x-hidden overflow-y-auto scroll-smooth p-4 lg:p-6">
           {loading ? (
             <div className="flex items-center justify-center py-20">
               <div className="space-y-4 text-center">

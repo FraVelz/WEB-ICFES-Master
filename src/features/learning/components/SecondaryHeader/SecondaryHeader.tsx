@@ -11,6 +11,8 @@ import { StreakModal } from './StreakModal';
 import { CoinsModal } from './CoinsModal';
 import { StoreModal } from '@/features/store/components/StoreModal';
 
+import { createPortal } from 'react-dom';
+
 /**
  * Header secundario tipo Duolingo para la página de ruta de aprendizaje
  * Visible en móvil y desktop
@@ -24,6 +26,8 @@ export interface SecondaryHeaderProps {
 export const SecondaryHeader = ({ currentArea = 'lectura-critica', onAreaChange }: SecondaryHeaderProps) => {
   const [activeModal, setActiveModal] = useState<'areas' | 'streak' | 'store' | 'coins' | null>(null);
   const { user } = useAuth();
+
+  const container_main = document.getElementById('container-main');
 
   // Gamification snapshot (XP, coins, streak)
   const {
@@ -64,6 +68,8 @@ export const SecondaryHeader = ({ currentArea = 'lectura-critica', onAreaChange 
   };
 
   const closeModals = () => setActiveModal(null);
+
+  if (!container_main) return null;
 
   if (loading) {
     return (
@@ -167,7 +173,7 @@ export const SecondaryHeader = ({ currentArea = 'lectura-critica', onAreaChange 
 
       <CoinsModal isOpen={activeModal === 'coins'} onClose={closeModals} coins={coins} />
 
-      <StoreModal isOpen={activeModal === 'store'} onClose={closeModals} />
+      {createPortal(<StoreModal isOpen={activeModal === 'store'} onClose={closeModals} />, container_main)}
     </div>
   );
 };
