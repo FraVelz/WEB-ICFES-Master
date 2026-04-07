@@ -3,42 +3,18 @@
 import { cn } from '@/utils/cn';
 import { useState } from 'react';
 import Link from 'next/link';
-import { useRouter, useSearchParams } from 'next/navigation';
 import { Icon } from '@/shared/components/Icon';
-import { useAuth } from '@/context/AuthContext';
 import { GoogleSignInButton } from '@/shared/components/atoms/GoogleSignInButton';
-import { mapSupabaseAuthError } from '@/utils/mapSupabaseAuthError';
+import { AUTH_NOT_CONFIGURED_ALERT } from '@/features/auth/constants/authMessages';
 
 export const LoginPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState('');
-  const { login } = useAuth();
-  const router = useRouter();
-  const searchParams = useSearchParams();
-  const from = searchParams.get('from');
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setError('');
-    setIsLoading(true);
-
-    try {
-      await login(email, password);
-
-      if (from === 'pricing') {
-        localStorage.setItem('fromPricing', 'true');
-        router.replace('/');
-      } else {
-        router.push('/ruta-aprendizaje');
-      }
-    } catch (err) {
-      setError(mapSupabaseAuthError(err, 'Error al iniciar sesión'));
-    } finally {
-      setIsLoading(false);
-    }
+    window.alert(AUTH_NOT_CONFIGURED_ALERT);
   };
 
   return (
@@ -133,44 +109,30 @@ export const LoginPage = () => {
               </div>
             </div>
 
-            {/* Error Message */}
-            {error && (
-              <div className="flex items-start gap-3 rounded-lg border border-red-500/50 bg-red-500/20 p-4">
-                <Icon name="exclamation-circle" className="mt-0.5 shrink-0 text-red-400" />
-                <p className="text-sm text-red-400">{error}</p>
-              </div>
-            )}
-
             {/* Submit Button */}
             <button
               type="submit"
-              disabled={isLoading}
               className={cn(
                 'flex w-full cursor-pointer items-center justify-center gap-2 rounded-lg bg-linear-to-r',
                 'from-cyan-500 to-blue-600 px-4 py-3 font-bold text-white transition-all duration-300',
-                'hover:shadow-lg hover:shadow-cyan-500/50 disabled:cursor-not-allowed disabled:opacity-50'
+                'hover:shadow-lg hover:shadow-cyan-500/50'
               )}
             >
-              {isLoading ? (
-                <>
-                  <div className="h-4 w-4 animate-spin rounded-full border-2 border-white/30 border-t-white"></div>
-                  Iniciando sesión...
-                </>
-              ) : (
-                <>
-                  <Icon name="rocket" />
-                  Iniciar Sesión
-                </>
-              )}
+              <Icon name="rocket" />
+              Iniciar Sesión
             </button>
           </form>
 
-          {/* Google Sign-In */}
-          <GoogleSignInButton redirectAfterLogin={from === 'pricing' ? '/' : '/ruta-aprendizaje'} />
+          <GoogleSignInButton authNotConfigured />
 
           {/* Links */}
           <div className="mt-6 space-y-4">
-            {/* Forgot Password Link */}
+            <p className="text-center text-sm text-slate-400">
+              ¿No tienes cuenta?{' '}
+              <Link href="/signup" className="font-semibold text-cyan-400 transition-colors hover:text-cyan-300">
+                Crear cuenta
+              </Link>
+            </p>
             <p className="text-center">
               <Link href="/forgot-password" className="text-sm text-slate-400 transition-colors hover:text-slate-300">
                 ¿Olvidaste tu contraseña?

@@ -4,9 +4,8 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { Icon } from '@/shared/components/Icon';
-import { useAuth } from '@/context/AuthContext';
 import { GoogleSignInButton } from '@/shared/components/atoms/GoogleSignInButton';
-import { mapSupabaseAuthError, REQUIRES_EMAIL_CONFIRMATION } from '@/utils/mapSupabaseAuthError';
+import { AUTH_NOT_CONFIGURED_ALERT } from '@/features/auth/constants/authMessages';
 
 export const SignupPage = () => {
   const [formData, setFormData] = useState({
@@ -18,15 +17,12 @@ export const SignupPage = () => {
   const [onboardingAnswers, setOnboardingAnswers] = useState(null);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
-  const [pendingEmailConfirmation, setPendingEmailConfirmation] = useState(false);
   const [validations, setValidations] = useState({
     minLength: false,
     hasNumber: false,
     hasUppercase: false,
   });
-  const { signup } = useAuth();
   const router = useRouter();
 
   // Prefill from onboarding session when present
@@ -58,11 +54,10 @@ export const SignupPage = () => {
     }
   };
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError('');
 
-    // Validaciones
     if (!formData.displayName.trim()) {
       setError('Por favor ingresa tu nombre');
       return;
@@ -78,20 +73,7 @@ export const SignupPage = () => {
       return;
     }
 
-    setIsLoading(true);
-
-    try {
-      await signup(formData.email, formData.password, formData.displayName);
-      router.push('/perfil');
-    } catch (err) {
-      if (err instanceof Error && err.message === REQUIRES_EMAIL_CONFIRMATION) {
-        setPendingEmailConfirmation(true);
-        return;
-      }
-      setError(mapSupabaseAuthError(err, 'Error en el registro'));
-    } finally {
-      setIsLoading(false);
-    }
+    window.alert(AUTH_NOT_CONFIGURED_ALERT);
   };
 
   return (
@@ -109,7 +91,15 @@ export const SignupPage = () => {
 
       {/* Signup Card */}
       <div className="relative z-10 w-full max-w-md">
-        {/* Header with back button if from onboarding */}
+        <Link
+          href="/login"
+          className="mb-6 inline-flex items-center gap-2 text-slate-400 transition-colors hover:text-slate-300"
+        >
+          <Icon name="arrow-left" />
+          Volver al login
+        </Link>
+
+        {/* Back to onboarding when coming from that flow */}
         {onboardingAnswers && (
           <button
             onClick={() => router.push('/onboarding')}
@@ -137,26 +127,7 @@ export const SignupPage = () => {
           </p>
         </div>
 
-        {pendingEmailConfirmation ? (
-          <div className="space-y-6 rounded-xl border border-cyan-500/30 bg-cyan-950/20 p-6 text-center">
-            <Icon name="envelope" className="mx-auto text-4xl text-cyan-400" />
-            <p className="text-lg text-slate-200">
-              Revisa tu correo y abre el enlace para confirmar tu cuenta. Luego podrás iniciar sesión.
-            </p>
-            <Link
-              href="/login"
-              className={cn(
-                'inline-flex items-center justify-center rounded-lg bg-cyan-600 px-6 py-3 font-semibold',
-                'text-white transition hover:bg-cyan-500'
-              )}
-            >
-              Ir a iniciar sesión
-            </Link>
-          </div>
-        ) : null}
-
-        {!pendingEmailConfirmation ? (
-          <form onSubmit={handleSubmit} className="space-y-5">
+        <form onSubmit={handleSubmit} className="space-y-5">
             {/* Display Name */}
             <div>
               <label htmlFor="displayName" className="mb-2 block text-sm font-semibold">
@@ -299,33 +270,20 @@ export const SignupPage = () => {
             {/* Submit Button */}
             <button
               type="submit"
-              disabled={isLoading}
               className={cn(
                 'flex w-full items-center justify-center gap-2 rounded-lg bg-linear-to-r from-cyan-500',
                 'to-blue-600 px-4 py-3 font-bold text-white transition-all duration-300 hover:shadow-lg',
-                'hover:shadow-cyan-500/50 disabled:cursor-not-allowed disabled:opacity-50'
+                'hover:shadow-cyan-500/50'
               )}
             >
-              {isLoading ? (
-                <>
-                  <div className="h-4 w-4 animate-spin rounded-full border-2 border-white/30 border-t-white"></div>
-                  Creando cuenta...
-                </>
-              ) : (
-                <>
-                  <Icon name="rocket" />
-                  Crear Cuenta
-                </>
-              )}
+              <Icon name="rocket" />
+              Crear Cuenta
             </button>
           </form>
-        ) : null}
 
-        {!pendingEmailConfirmation ? (
-          <div className="mt-6">
-            <GoogleSignInButton redirectAfterLogin="/perfil" />
-          </div>
-        ) : null}
+        <div className="mt-6">
+          <GoogleSignInButton authNotConfigured />
+        </div>
       </div>
     </div>
   );
