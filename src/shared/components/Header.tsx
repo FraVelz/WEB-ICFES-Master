@@ -6,7 +6,7 @@ import { usePathname } from 'next/navigation';
 import { Icon } from '@/shared/components/Icon';
 import { useUser } from '@/features/user/hooks/useUser';
 
-export const Header = () => {
+export const Header = ({ className }: { className?: string }) => {
   const pathname = usePathname();
   const { user, rank, virtualMoney } = useUser();
   const [profileMenuOpen, setProfileMenuOpen] = useState(false);
@@ -28,13 +28,7 @@ export const Header = () => {
   return (
     <>
       {/* Desktop header — left sidebar */}
-      <header
-        className={cn(
-          'sticky top-0 z-50 hidden h-screen flex-col border-r border-cyan-500/20 bg-slate-950/95',
-          'shadow-2xl shadow-cyan-500/10 backdrop-blur-xl transition-all duration-300 lg:flex',
-          sidebarExpanded ? 'w-72' : 'w-20'
-        )}
-      >
+      <header className={cn(className, sidebarExpanded ? 'w-72' : 'w-20')}>
         {/* 1. Logo & Brand */}
         <div
           className={cn(
@@ -202,7 +196,7 @@ export const Header = () => {
       {/* Mobile Bottom Navigation */}
       <nav
         className={cn(
-          'fixed right-0 bottom-0 left-0 z-50 border-t border-cyan-500/20 bg-linear-to-t',
+          'border-t border-cyan-500/20 bg-linear-to-t',
           'from-slate-950/95 via-slate-950/90 to-slate-950/80 backdrop-blur-xl lg:hidden'
         )}
       >
