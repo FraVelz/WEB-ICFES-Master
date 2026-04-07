@@ -1,9 +1,10 @@
-# Web Icfes Master
+# Web Icfes Master - Master the ICFES from Scratch 📝
 
-[Version en español](README.md)
+[Spanish version](README.md)
 
 An interactive platform to practice questions and learn topics from the ICFES state exam (Saber 11) in Colombia. Built with **Feature-Based** and **Atomic Design** architecture using Next.js 15, React 19, Tailwind CSS 3, and Supabase.
 
+> [!NOTE]
 > The goal was to cover many more countries besides Colombia, but each country handles education differently—questions, topics, and subjects vary. In some countries, the exam is not mandatory or does not exist.
 
 ![Hero section of the ICFES platform - Master the ICFES from Scratch](public/images/screenshot.png)
@@ -12,7 +13,7 @@ An interactive platform to practice questions and learn topics from the ICFES st
 
 ## Table of Contents
 
-- [Web Icfes Master](#web-icfes-master)
+- [Web Icfes Master - Master the ICFES from Scratch 📝](#web-icfes-master---master-the-icfes-from-scratch-)
   - [Table of Contents](#table-of-contents)
   - [Main Features](#main-features)
   - [Question Content](#question-content)
@@ -33,6 +34,7 @@ An interactive platform to practice questions and learn topics from the ICFES st
 
 ## Main Features
 
+> [!WARNING]
 > Mostly implemented. However, some features are not fully implemented.
 
 - **3 Learning Levels**:
@@ -56,6 +58,7 @@ An interactive platform to practice questions and learn topics from the ICFES st
 
 ## Question Content
 
+> [!WARNING]
 > Not fully implemented.
 
 - **Mathematics**: Algebra, Geometry, Calculus, Statistics
@@ -70,6 +73,7 @@ Total: 40+ questions with advanced content (images, tables, formulas, charts)
 
 ## Achievement System
 
+> [!WARNING]
 > Logic not yet implemented.
 
 ### Achievement Categories (40+ total)
