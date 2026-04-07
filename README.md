@@ -1,9 +1,10 @@
-# Web Icfes Master
+# Web Icfes Master - Domina el ICFES desde Cero 📝
 
 [English version](README.en.md)
 
 Una plataforma interactiva para practicar preguntas y aprender temas del examen de estado ICFES (Saber 11) en colombia. Diseñada con arquitectura **Feature-Based** y **Atomic Design** usando Next.js 15, React 19, Tailwind CSS 3 y Supabase.
 
+> [!NOTE]
 > se buscaba abarcar muchos mas paises, aparte de colombia, pero cada pais maneja la educacion de forma diferente, las preguntas, los temas, las materias cambian, incruso, hay paises donde el examen no es obligatorio o es inexistente.
 
 ![Hero section de la plataforma ICFES - Domina el ICFES desde Cero](public/images/screenshot.png)
@@ -12,7 +13,7 @@ Una plataforma interactiva para practicar preguntas y aprender temas del examen 
 
 ## Temario
 
-- [Web Icfes Master](#web-icfes-master)
+- [Web Icfes Master - Domina el ICFES desde Cero 📝](#web-icfes-master---domina-el-icfes-desde-cero-)
   - [Temario](#temario)
   - [Características Principales](#características-principales)
   - [Contenido de Preguntas](#contenido-de-preguntas)
@@ -33,6 +34,7 @@ Una plataforma interactiva para practicar preguntas y aprender temas del examen 
 
 ## Características Principales
 
+> [!WARNING]
 > Mayormente implementado. Sin embargo, algunas características no están completamente implementadas.
 
 - **3 Niveles de Aprendizaje**:
@@ -56,6 +58,7 @@ Una plataforma interactiva para practicar preguntas y aprender temas del examen 
 
 ## Contenido de Preguntas
 
+> [!WARNING]
 > No implementado completamente.
 
 - **Matemáticas**: Álgebra, Geometría, Cálculo, Estadística
@@ -70,6 +73,7 @@ Total: 40+ preguntas con contenido avanzado (imágenes, tablas, fórmulas, gráf
 
 ## Sistema de Logros
 
+> [!WARNING]
 > Lógica aun no implementado.
 
 ### Categorías de Logros (40+ total)
