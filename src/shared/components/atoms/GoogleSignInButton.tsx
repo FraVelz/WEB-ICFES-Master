@@ -6,21 +6,31 @@ import { Icon } from '@/shared/components/Icon';
 import { useAuth } from '@/context/AuthContext';
 import { useRouter } from 'next/navigation';
 import { mapSupabaseAuthError } from '@/utils/mapSupabaseAuthError';
+import { AUTH_NOT_CONFIGURED_ALERT } from '@/features/auth/constants/authMessages';
 
 const DEFAULT_REDIRECT = '/ruta-aprendizaje';
 
 type GoogleSignInButtonProps = {
-  /** Tras login simulado (localStorage) o si el flujo devuelve usuario sin redirect OAuth */
+  /** After mock login or when OAuth returns without redirect */
   redirectAfterLogin?: string;
+  /** Skip OAuth and show alert (auth not configured yet) */
+  authNotConfigured?: boolean;
 };
 
-export function GoogleSignInButton({ redirectAfterLogin = DEFAULT_REDIRECT }: GoogleSignInButtonProps) {
+export function GoogleSignInButton({
+  redirectAfterLogin = DEFAULT_REDIRECT,
+  authNotConfigured = false,
+}: GoogleSignInButtonProps) {
   const { loginWithGoogle, error } = useAuth();
   const [isLoading, setIsLoading] = useState(false);
   const [localError, setLocalError] = useState('');
   const router = useRouter();
 
   const handleGoogleSignIn = async () => {
+    if (authNotConfigured) {
+      window.alert(AUTH_NOT_CONFIGURED_ALERT);
+      return;
+    }
     try {
       setLocalError('');
       setIsLoading(true);
