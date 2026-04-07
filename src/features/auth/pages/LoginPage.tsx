@@ -28,9 +28,12 @@ export const LoginPage = () => {
       {/* Mobile-only header */}
       <div className="relative z-10">
         <div className="flex items-center justify-between py-4">
-          <Link href="/" className="text-slate-400 transition-colors hover:text-slate-300">
+          <button
+            onClick={() => window.history.back()}
+            className="cursor-pointer text-slate-400 transition-colors hover:text-slate-300"
+          >
             <Icon name="times" size="2xl" className="text-2xl" />
-          </Link>
+          </button>
           <h2 className="text-lg font-semibold">Ingresa tus datos</h2>
           <div className="w-6"></div>
         </div>

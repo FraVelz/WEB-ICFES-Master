@@ -31,6 +31,7 @@ export const ChallengeCard = ({ challenge, onComplete }: ChallengeCardProps) => 
     if (area === 'lectura-critica') return '/practica/lectura-critica';
     if (area === 'ciencias-naturales') return '/practica/ciencias-naturales';
     if (area === 'sociales') return '/practica/sociales';
+    if (area === 'ingles') return '/practica/ingles';
     return '/examen-completo'; // Default
   };
 

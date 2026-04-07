@@ -6,6 +6,7 @@ export const PRACTICA_AREA_SLUGS = [
   'matematicas',
   'ciencias-naturales',
   'sociales-ciudadanas',
+  'ingles',
 ] as const;
 
 export type PracticaAreaSlug = (typeof PRACTICA_AREA_SLUGS)[number];

@@ -29,10 +29,10 @@ export const StreakModal = ({ isOpen, onClose, streakData }: StreakModalProps) =
     duration: 0.2,
   });
 
-  if (!isOpen) return null;
-
   const { currentStreak = 0, longestStreak = 0, streakHistory = [] } = streakData || {};
   const [viewDate, setViewDate] = useState(new Date());
+
+  if (!isOpen) return null;
 
   const getDaysInMonth = (date: Date) => {
     return new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();

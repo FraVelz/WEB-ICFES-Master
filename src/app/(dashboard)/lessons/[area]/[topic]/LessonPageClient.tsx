@@ -26,6 +26,12 @@ import { Economia } from '@/features/learning/lessons/social/Economia';
 import { Ciudadania } from '@/features/learning/lessons/social/Ciudadania';
 import { Filosofia } from '@/features/learning/lessons/social/Filosofia';
 
+import { GramaticaIngles } from '@/features/learning/lessons/ingles/GramaticaIngles';
+import { Vocabulario } from '@/features/learning/lessons/ingles/Vocabulario';
+import { Lectura } from '@/features/learning/lessons/ingles/Lectura';
+import { TiemposVerbales } from '@/features/learning/lessons/ingles/TiemposVerbales';
+import { Conectores } from '@/features/learning/lessons/ingles/Conectores';
+
 const LESSONS: Record<string, Record<string, React.ComponentType>> = {
   matematicas: {
     algebra: Algebra,
@@ -54,6 +60,13 @@ const LESSONS: Record<string, Record<string, React.ComponentType>> = {
     economia: Economia,
     ciudadania: Ciudadania,
     filosofia: Filosofia,
+  },
+  ingles: {
+    gramatica: GramaticaIngles,
+    vocabulario: Vocabulario,
+    lectura: Lectura,
+    'tiempos-verbales': TiemposVerbales,
+    conectores: Conectores,
   },
 };
 

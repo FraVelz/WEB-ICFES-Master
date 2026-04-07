@@ -22,6 +22,11 @@ export const LESSON_ROUTE_PAIRS = [
   { area: 'sociales', topic: 'economia' },
   { area: 'sociales', topic: 'ciudadania' },
   { area: 'sociales', topic: 'filosofia' },
+  { area: 'ingles', topic: 'gramatica' },
+  { area: 'ingles', topic: 'vocabulario' },
+  { area: 'ingles', topic: 'lectura' },
+  { area: 'ingles', topic: 'tiempos-verbales' },
+  { area: 'ingles', topic: 'conectores' },
 ] as const;
 
 /** Roadmap area id (header) → `/lessons/...` URL segment */
@@ -30,6 +35,7 @@ export const ROADMAP_AREA_TO_LESSON_AREA: Record<string, string> = {
   'lectura-critica': 'lenguaje',
   'ciencias-naturales': 'ciencias',
   'sociales-ciudadanas': 'sociales',
+  ingles: 'ingles',
 };
 
 export function getLessonAreaSlugForRoadmap(roadmapAreaId: string): string | null {
