@@ -163,7 +163,8 @@ export const ChatAssistant = () => {
       <button
         onClick={() => setIsOpen(!isOpen)}
         className={cn(
-          'fixed right-6 bottom-6 z-50 flex h-14 w-14 cursor-pointer items-center justify-center',
+          'fixed bottom-28 left-6 z-10 flex h-14 w-14 cursor-pointer items-center justify-center',
+          'lg:right-6 lg:bottom-6 lg:left-auto',
           'rounded-full border-2 border-cyan-400/50 bg-linear-to-r from-cyan-500 to-blue-600',
           'text-white shadow-lg shadow-cyan-500/30 transition-all duration-300 hover:scale-110',
           'hover:shadow-cyan-500/50'
