@@ -7,7 +7,13 @@ import { Icon } from '@/shared/components/Icon';
 import { ExamConfigModal, AnswerSheet, ResultsAnalysis } from '@/features/exam/components';
 import { formatTimeExtended } from '@/shared/utils/timeFormatter';
 import { savePractice } from '@/shared/utils/progressStorage';
-import { MATHEMATICS_QUESTIONS, LANGUAGE_QUESTIONS, SCIENCE_QUESTIONS, SOCIAL_QUESTIONS } from '@/shared/data';
+import {
+  MATHEMATICS_QUESTIONS,
+  LANGUAGE_QUESTIONS,
+  SCIENCE_QUESTIONS,
+  SOCIAL_QUESTIONS,
+  ENGLISH_QUESTIONS,
+} from '@/shared/data';
 import type { ExamQuestion } from '@/shared/types/question';
 import type { ExamConfig } from '@/features/exam/types';
 
@@ -16,6 +22,7 @@ const AREA_QUESTIONS: Record<string, ExamQuestion[]> = {
   matematicas: MATHEMATICS_QUESTIONS,
   'ciencias-naturales': SCIENCE_QUESTIONS,
   'sociales-ciudadanas': SOCIAL_QUESTIONS,
+  ingles: ENGLISH_QUESTIONS,
 };
 
 const AREA_INFO = {
@@ -32,6 +39,7 @@ const AREA_INFO = {
     name: 'Sociales y Ciudadanas',
     color: 'from-orange-400 to-orange-600',
   },
+  ingles: { name: 'Inglés', color: 'from-indigo-400 to-indigo-600' },
 };
 
 export const PracticePage = () => {
