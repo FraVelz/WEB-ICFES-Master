@@ -3,7 +3,11 @@
 import { cn } from '@/utils/cn';
 import { MascotaCircle } from '@/shared/components/MascotaCircle';
 
+import { useAppDispatch } from '@/store/hooks';
+import { setDemoMode } from '@/store/slices/uiSessionSlice';
+
 export const HomePageMobile = () => {
+  const dispatch = useAppDispatch();
   return (
     <div className="flex h-dvh w-screen flex-col bg-linear-to-b from-black via-slate-950 to-black text-white">
       {/* Background glow — mobile layout */}
@@ -33,8 +37,8 @@ export const HomePageMobile = () => {
       <div className="relative z-10 flex w-full flex-col gap-3 px-6 py-6">
         <button
           onClick={() => {
+            dispatch(setDemoMode(true));
             if (typeof window !== 'undefined') {
-              localStorage.setItem('demoMode', 'true');
               window.location.href = '/ruta-aprendizaje';
             }
           }}
