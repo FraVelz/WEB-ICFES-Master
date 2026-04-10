@@ -2,6 +2,9 @@
 
 import { useState } from 'react';
 
+import { useAppDispatch } from '@/store/hooks';
+import { setDemoMode } from '@/store/slices/uiSessionSlice';
+
 import { HomePageDesktop } from './HomePageDesktop';
 import { HomePageMobile } from './HomePageMobile';
 
@@ -12,9 +15,10 @@ import { HomePageMobile } from './HomePageMobile';
  */
 export const HomePage = () => {
   const [expandedFaq, setExpandedFaq] = useState<number | null>(null);
+  const dispatch = useAppDispatch();
 
   const handleDemoAccess = () => {
-    localStorage.setItem('demoMode', 'true');
+    dispatch(setDemoMode(true));
     window.location.href = '/ruta-aprendizaje';
   };
 

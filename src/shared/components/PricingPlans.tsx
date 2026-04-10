@@ -5,68 +5,53 @@ import { useState, useEffect } from 'react';
 import { PaymentModal } from '@/shared/components';
 import { useAuth } from '@/context/AuthContext';
 
-interface Plan {
-  popular?: boolean;
-  name: string;
-  description: string;
-  price: string;
-  originalPrice?: string;
-  cta: string;
-  features: string[];
-  [key: string]: unknown;
-}
+import { useAppDispatch, useAppSelector } from '@/store/hooks';
+import { consumeFromPricingScroll, setSelectedPlan } from '@/store/slices/uiSessionSlice';
+import type { UiPlan } from '@/store/types/uiPlan';
 
-export const PricingPlans = ({ plans = [] }: { plans?: Plan[] }) => {
+export const PricingPlans = ({ plans = [] }: { plans?: UiPlan[] }) => {
   const router = useRouter();
   const { isAuthenticated } = useAuth();
+  const dispatch = useAppDispatch();
+
+  const persistedPlan = useAppSelector((s) => s.uiSession.selectedPlan);
+  const fromPricingScrollPending = useAppSelector((s) => s.uiSession.fromPricingScrollPending);
+
   const [isPaymentOpen, setIsPaymentOpen] = useState(false);
-  const [selectedPlan, setSelectedPlan] = useState<Plan | null>(null);
+  /** Plan shown in the payment modal (local; Redux holds cross-navigation resume only). */
+  const [checkoutPlan, setCheckoutPlan] = useState<UiPlan | null>(null);
 
-  // Resume checkout after login when a plan was stored
   useEffect(() => {
-    const savedPlan = localStorage.getItem('selectedPlan');
-    const fromPricing = localStorage.getItem('fromPricing');
-
-    if (fromPricing) {
-      // Scroll pricing into view
-      const pricingSection = document.getElementById('planes');
-      if (pricingSection) {
-        setTimeout(() => {
-          pricingSection.scrollIntoView({ behavior: 'smooth' });
-        }, 100);
-      }
-      localStorage.removeItem('fromPricing');
+    if (!fromPricingScrollPending) return;
+    const pricingSection = document.getElementById('planes');
+    if (pricingSection) {
+      setTimeout(() => {
+        pricingSection.scrollIntoView({ behavior: 'smooth' });
+      }, 100);
     }
+    dispatch(consumeFromPricingScroll());
+  }, [fromPricingScrollPending, dispatch]);
 
-    if (savedPlan && isAuthenticated) {
-      try {
-        const plan = JSON.parse(savedPlan) as Plan;
-        setSelectedPlan(plan);
-        setIsPaymentOpen(true);
-        localStorage.removeItem('selectedPlan'); // one-shot
-      } catch (err) {
-        console.error('Error al recuperar plan guardado:', err);
-      }
-    }
-  }, [isAuthenticated]);
+  useEffect(() => {
+    if (!isAuthenticated || !persistedPlan) return;
+    setCheckoutPlan(persistedPlan);
+    setIsPaymentOpen(true);
+    dispatch(setSelectedPlan(null));
+  }, [isAuthenticated, persistedPlan, dispatch]);
 
-  const handlePlanClick = (plan: Plan) => {
-    // Logged in: open payment modal (free or paid)
+  const handlePlanClick = (plan: UiPlan) => {
     if (isAuthenticated) {
-      if (plan.price === 'Gratis') {
-        // Free tier — still show confirmation flow
-        setSelectedPlan(plan);
-        setIsPaymentOpen(true);
-      } else {
-        // Paid plan
-        setSelectedPlan(plan);
-        setIsPaymentOpen(true);
-      }
+      setCheckoutPlan(plan);
+      setIsPaymentOpen(true);
     } else {
-      // Guest: stash plan and send to login
-      localStorage.setItem('selectedPlan', JSON.stringify(plan));
+      dispatch(setSelectedPlan(plan));
       router.push('/login');
     }
+  };
+
+  const handleClosePayment = () => {
+    setIsPaymentOpen(false);
+    setCheckoutPlan(null);
   };
 
   if (!plans || plans.length === 0) {
@@ -139,8 +124,7 @@ export const PricingPlans = ({ plans = [] }: { plans?: Plan[] }) => {
         ))}
       </div>
 
-      {/* Payment Modal */}
-      <PaymentModal isOpen={isPaymentOpen} onClose={() => setIsPaymentOpen(false)} plan={selectedPlan} />
+      <PaymentModal isOpen={isPaymentOpen} onClose={handleClosePayment} plan={checkoutPlan} />
     </section>
   );
 };

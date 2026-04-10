@@ -15,13 +15,14 @@ export type IconName = keyof typeof ICONS;
 export type IconSize = keyof typeof SIZES;
 
 interface IconProps {
-  name: IconName;
+  /** Known keys from `ICONS`; runtime strings (e.g. API-driven) are allowed. */
+  name: IconName | string;
   className?: string;
   size?: IconSize;
 }
 
 export function Icon({ name, className = '', size = 'md' }: IconProps) {
-  const content = ICONS[name];
+  const content = ICONS[name as IconName];
   const dimension = SIZES[size];
 
   if (!content) {

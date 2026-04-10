@@ -4,6 +4,9 @@ import { cn } from '@/utils/cn';
 import Link from 'next/link';
 import { Icon } from '@/shared/components/Icon';
 
+import { useAppDispatch } from '@/store/hooks';
+import { setDemoMode } from '@/store/slices/uiSessionSlice';
+
 interface SignInRequiredBlockProps {
   title?: string;
   message?: string;
@@ -13,9 +16,11 @@ export default function SignInRequiredBlock({
   title = 'Inicia sesión para continuar',
   message = 'Esta sección requiere que inicies sesión con tu cuenta para poder utilizarla.',
 }: SignInRequiredBlockProps) {
+  const dispatch = useAppDispatch();
+
   const handleCloseDemo = () => {
+    dispatch(setDemoMode(false));
     if (typeof window !== 'undefined') {
-      localStorage.removeItem('demoMode');
       window.location.href = '/';
     }
   };

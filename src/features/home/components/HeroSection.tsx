@@ -5,13 +5,18 @@ import Link from 'next/link';
 import { Icon } from '@/shared/components/Icon';
 import { AnimatedReveal } from '@/shared/components/AnimatedReveal';
 
+import { useAppDispatch } from '@/store/hooks';
+import { setDemoMode } from '@/store/slices/uiSessionSlice';
+
 export const HeroSection = ({ onDemoAccess }: { onDemoAccess: () => void }) => {
+  const dispatch = useAppDispatch();
+
   const handleDemoClick = () => {
     if (onDemoAccess) {
       onDemoAccess();
     } else {
+      dispatch(setDemoMode(true));
       if (typeof window !== 'undefined') {
-        localStorage.setItem('demoMode', 'true');
         window.location.href = '/ruta-aprendizaje';
       }
     }
