@@ -24,12 +24,15 @@ export const PricingPlans = ({ plans = [] }: { plans?: UiPlan[] }) => {
   useEffect(() => {
     if (!fromPricingScrollPending) return;
     const pricingSection = document.getElementById('planes');
-    if (pricingSection) {
-      setTimeout(() => {
-        pricingSection.scrollIntoView({ behavior: 'smooth' });
-      }, 100);
+    if (!pricingSection) {
+      dispatch(consumeFromPricingScroll());
+      return;
     }
+    const id = window.setTimeout(() => {
+      pricingSection.scrollIntoView({ behavior: 'smooth' });
+    }, 100);
     dispatch(consumeFromPricingScroll());
+    return () => clearTimeout(id);
   }, [fromPricingScrollPending, dispatch]);
 
   useEffect(() => {
