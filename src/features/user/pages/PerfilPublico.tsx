@@ -25,6 +25,7 @@ export const PerfilPublico = () => {
   } = useUserProfile(userId || undefined);
 
   const [copied, setCopied] = useState(false);
+  const [reported, setReported] = useState(false);
 
   if (!userId) {
     return (
@@ -45,7 +46,6 @@ export const PerfilPublico = () => {
       </div>
     );
   }
-  const [reported, setReported] = useState(false);
 
   const handleShare = () => {
     const url = window.location.href;

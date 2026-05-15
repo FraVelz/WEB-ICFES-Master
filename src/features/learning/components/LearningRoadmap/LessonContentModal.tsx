@@ -297,10 +297,11 @@ export const LessonContentModal = ({
                       {...props}
                     />
                   ),
-                  img: ({ node, ...props }) => (
+                  img: ({ node, alt, ...rest }) => (
                     <img
+                      alt={typeof alt === 'string' ? alt : ''}
                       className="my-3 h-auto max-w-full rounded-xl border border-slate-700 shadow-lg sm:my-4"
-                      {...props}
+                      {...rest}
                     />
                   ),
                 }}
