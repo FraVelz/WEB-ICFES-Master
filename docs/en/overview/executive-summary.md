@@ -1,32 +1,33 @@
 # 🎯 EXECUTIVE SUMMARY - WEB-ICFES Master
 
-## 📌 Tech Stack
+## 📌 Tech stack
 
 | Technology       | Use                                    |
 | ---------------- | -------------------------------------- |
 | **Next.js 15**   | React framework with App Router        |
+| **React 19**     | UI library                             |
 | **Supabase**     | Backend: Auth, PostgreSQL, persistence |
 | **Tailwind CSS** | Styling and design                     |
 | **pnpm**         | Package manager                        |
 
 ---
 
-## 📚 Main Documentation
+## 📚 Main documentation
 
-- **General index:** `_docs/DOCUMENTATION.md`
-- **Installation:** `_docs/setup/installation.md`
-- **Configuration:** `_docs/setup/configuration.md`
+- **General index:** [docs/en/overview/overview.md](./overview.md)
+- **Installation:** [docs/en/setup/installation.md](../setup/installation.md)
+- **Configuration:** [docs/en/setup/configuration.md](../setup/configuration.md)
 
 ---
 
-## 🚀 Quick Start
+## 🚀 Quick start
 
 ### Requirements
 
 - Node.js 18+
 - pnpm
 
-### Initial Setup
+### Initial setup
 
 ```bash
 git clone <url-repo>
@@ -38,7 +39,7 @@ pnpm dev                     # Development server
 
 ---
 
-## 🗂️ Project Structure
+## 🗂️ Project structure
 
 ```txt
 WEB-ICFES-Master/
@@ -48,24 +49,27 @@ WEB-ICFES-Master/
 │   ├── shared/           # Shared components
 │   ├── services/         # Data layer (Supabase, adapters)
 │   └── config/           # Supabase, constants
+├── docs/                 # Technical documentation (es/en)
 ├── package.json
-├── next.config.ts
-└── _docs/
+└── next.config.ts
 ```
 
 ---
 
-## 📞 Quick Commands
+## 📞 Quick commands
 
 ```bash
 # Development
 pnpm dev                   # Local server
 pnpm build                 # Production build
-pnpm start                 # Production preview
+pnpm start                 # Production server (after build)
 ```
 
 ---
 
 ## ⚠️ Important
 
-- **Environment variables:** Configure `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY`
+- **Environment variables:** Configure `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY`.
+
+---
+*AI-generated file. Last updated: Saturday, May 16, 2026.*

@@ -1,32 +1,33 @@
 # 🎯 RESUMEN EJECUTIVO - WEB-ICFES Master
 
-## 📌 Stack Tecnológico
+## 📌 Stack tecnológico
 
 | Tecnología       | Uso                                     |
 | ---------------- | --------------------------------------- |
 | **Next.js 15**   | Framework React con App Router          |
-| **Supabase**     | Backend: Auth, PostgreSQL, persistencia |
+| **React 19**     | Biblioteca de interfaz                  |
+| **Supabase**     | Backend: auth, PostgreSQL, persistencia |
 | **Tailwind CSS** | Estilos y diseño                        |
 | **pnpm**         | Gestor de paquetes                      |
 
 ---
 
-## 📚 Documentación Principal
+## 📚 Documentación principal
 
-- **Índice general:** `_docs/DOCUMENTATION.md`
-- **Instalación:** `_docs/setup/installation.md`
-- **Configuración:** `_docs/setup/configuration.md`
+- **Índice general:** [docs/es/overview/overview.md](./overview.md)
+- **Instalación:** [docs/es/setup/installation.md](../setup/installation.md)
+- **Configuración:** [docs/es/setup/configuration.md](../setup/configuration.md)
 
 ---
 
-## 🚀 Inicio Rápido
+## 🚀 Inicio rápido
 
 ### Requisitos
 
 - Node.js 18+
 - pnpm
 
-### Setup Inicial
+### Configuración inicial
 
 ```bash
 git clone <url-repo>
@@ -38,7 +39,7 @@ pnpm dev                     # Servidor de desarrollo
 
 ---
 
-## 🗂️ Estructura del Proyecto
+## 🗂️ Estructura del proyecto
 
 ```txt
 WEB-ICFES-Master/
@@ -46,26 +47,29 @@ WEB-ICFES-Master/
 │   ├── app/              # Rutas Next.js (App Router)
 │   ├── features/         # Módulos de negocio
 │   ├── shared/           # Componentes compartidos
-│   ├── services/         # Capa de datos (Supabase, adaptadores)
-│   └── config/           # Supabase, constantes
+│   ├── services/        # Capa de datos (Supabase, adaptadores)
+│   └── config/          # Supabase, constantes
+├── docs/                 # Documentación técnica (es/en)
 ├── package.json
-├── next.config.ts
-└── _docs/
+└── next.config.ts
 ```
 
 ---
 
-## 📞 Comandos Rápidos
+## 📞 Comandos rápidos
 
 ```bash
 # Desarrollo
 pnpm dev                   # Servidor local
 pnpm build                 # Build de producción
-pnpm start                 # Preview de producción
+pnpm start                 # Servidor de producción (tras el build)
 ```
 
 ---
 
 ## ⚠️ Importante
 
-- **Variables de entorno:** Configurar `NEXT_PUBLIC_SUPABASE_URL` y `NEXT_PUBLIC_SUPABASE_ANON_KEY`
+- **Variables de entorno:** Configurar `NEXT_PUBLIC_SUPABASE_URL` y `NEXT_PUBLIC_SUPABASE_ANON_KEY`.
+
+---
+*Archivo generado por IA. Última actualización: sábado, 16 de mayo de 2026.*

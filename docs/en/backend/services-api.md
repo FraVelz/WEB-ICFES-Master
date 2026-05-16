@@ -30,8 +30,8 @@ The ICFES application uses a **decoupled architecture** that allows switching be
 
               ↓
 
-    Services / Adapters
-  (UserSupabaseService, GamificationServiceAdapter, LearningService, etc)
+    Persistence layer + Supabase services
+  (userPersistence, progressPersistence, examPersistence, gamificationPersistence, *SupabaseService, LearningService, …)
 
               ↓
 
@@ -77,24 +77,23 @@ Services that connect directly to PostgreSQL tables in Supabase:
 | **ExamSupabaseService**         | `exam_results`      | Completed exams, scores, answers                   |
 | **LearningSupabaseService**     | `learning_content`  | Lessons by area, content, quizzes                  |
 
-### 4. **GamificationServiceAdapter**
+### 4. **`gamificationPersistence`**
 
-- **Location**: `src/services/GamificationServiceAdapter.ts`
-- **Purpose**: Adapter that selects GamificationSupabaseService or GamificationLocalService based on `API_CONFIG.MODE`
-- **Methods**: `addXP()`, `addCoins()`, `spendCoins()`, `getProfile()`
+- **Location**: `src/services/persistence/gamificationPersistence.ts`
+- **Purpose**: Single entry for gamification on Supabase or `GamificationLocalService` depending on `API_CONFIG.MODE`
+- **API**: `addXP()`, `addCoins()`, `spendCoins()`, `getProfile()` (delegate to `GamificationSupabaseService` or `GamificationLocalService`)
 
-### 5. **Feature services** (`src/features/*/services/`)
+### 5. **Feature modules and `persistence` layer**
 
-| Feature      | Service                 | Description                                                                           |
-| ------------ | ----------------------- | ------------------------------------------------------------------------------------- |
-| **user**     | UserService             | useUserData uses UserSupabaseService or utils                                         |
-| **progress** | ProgressService         | useProgress uses ProgressSupabaseService or progressStorage                           |
-| **logros**   | GamificationService     | useGamification uses GamificationSupabaseService or localStorage                      |
-| **exam**     | ExamService             | useExam uses ExamSupabaseService or progressStorage                                   |
-| **learning** | LearningService         | Supabase or static roadmapData (`learning_content` via LearningSupabaseService)     |
-| **store**    | SubscriptionPlanService | Plans (localStorage for now)                                                          |
-| **store**    | PlanScheduleService     | Plan verification                                                                     |
-| **auth**     | AuthService             | Reset code verification (local)                                                       |
+| Feature      | Main code | Description |
+| ------------ | --------- | ----------- |
+| **user**     | `src/services/persistence/userPersistence.ts` | `useUserData` uses `loadUserProfile`, `patchUserProfile`, etc. |
+| **progress** | `src/services/persistence/progressPersistence.ts` | `useProgress` uses `loadProgressViewState`, etc. |
+| **exam**     | `src/services/persistence/examPersistence.ts` | `useExam` uses `getExamById`, `resetUserExams`, … |
+| **logros**   | `GamificationSupabaseService` + localStorage; `gamificationPersistence` in lessons | `useGamification`; `LessonQuizModal` uses **`gamificationPersistence`** |
+| **learning** | `src/features/learning/services/LearningService.ts` | Supabase (`learning_content`) or static roadmap data |
+| **store**    | `SubscriptionPlanService`, `PlanScheduleService` | Plans and scheduling (store feature) |
+| **auth**     | `src/features/auth/services/AuthService.ts` | Reset codes, etc. |
 
 ---
 
@@ -339,8 +338,8 @@ Rewards are only granted **once** per lesson (verified with `getCompletedLessons
 
 1. User answers all quiz questions in `LessonQuizModal`.
 2. All answers are validated as correct.
-3. If it's the first time completing the lesson and user is authenticated:
-   - `GamificationServiceAdapter.addXP()` and `addCoins()`
+3. If it's the first time completing the lesson and the user is authenticated:
+   - `gamificationPersistence.addXP()` and `addCoins()` (`@/services/persistence`)
    - `markLessonAsCompleted()` in `progressStorage` (localStorage)
 4. Feedback (Correct/Incorrect) and earned rewards are displayed.
 
@@ -352,24 +351,24 @@ Rewards are only granted **once** per lesson (verified with `getCompletedLessons
 
 ```txt
 1. Component: <button onClick={() => updateProfile({ username: 'new' })}>
-2. Hook (useUserData): Calls UserSupabaseService.updateProfile(user.uid, updates)
-3. UserSupabaseService: supabase.from('users').update(...).eq('id', userId)
-4. Result: PostgreSQL updated
+2. Hook (useUserData): delegates to `@/services/persistence` (e.g. `patchUserProfile`)
+3. Supabase mode: UserSupabaseService → `supabase.from('users').update(...).eq('id', userId)`
+4. Result: PostgreSQL updated (or local profile when using `localStorage`)
 ```
 
-### Example: Add XP (GamificationServiceAdapter)
+### Example: add XP (`gamificationPersistence`)
 
-```javascript
-import GamificationServiceAdapter from '@/services/GamificationServiceAdapter';
+```typescript
+import { gamificationPersistence } from '@/services/persistence';
 
-await GamificationServiceAdapter.addXP(userId, 50, 'lesson_quiz_lessonId');
+await gamificationPersistence.addXP(userId, 50, 'lesson_quiz_lessonId');
 ```
 
-### Example: Complete lesson and earn rewards
+### Example: complete lesson and earn rewards
 
 ```txt
 1. User completes quiz in LessonQuizModal
-2. LessonQuizModal: GamificationServiceAdapter.addXP/addCoins
+2. LessonQuizModal: gamificationPersistence.addXP / addCoins
 3. LessonQuizModal: markLessonAsCompleted(userId, lessonId) → progressStorage (localStorage)
 4. Lesson marked as completed (rewards are not granted again)
 ```
@@ -381,7 +380,7 @@ await GamificationServiceAdapter.addXP(userId, 50, 'lesson_quiz_lessonId');
 ### Switch to Supabase (production)
 
 ```bash
-# .env
+# .env.local
 NEXT_PUBLIC_API_MODE=supabase
 NEXT_PUBLIC_SUPABASE_URL=https://xxx.supabase.co
 NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJ...
@@ -397,7 +396,7 @@ NEXT_PUBLIC_API_MODE=localStorage
 
 ## Exports from `@/services`
 
-```javascript
+```typescript
 import {
   SubscriptionPlanService,
   PlanScheduleService,
@@ -405,7 +404,14 @@ import {
   LEVELS,
 } from '@/services';
 
-import * as persistence from '@/services/persistence';
-
-import GamificationServiceAdapter from '@/services/GamificationServiceAdapter';
+import {
+  gamificationPersistence,
+  loadUserProfile,
+  loadProgressViewState,
+} from '@/services/persistence';
 ```
+
+The `@/services` barrel re-exports `./persistence`; for gamification and lessons, `gamificationPersistence` and the helpers used by hooks are the usual entry points.
+
+---
+*AI-generated file. Last updated: Saturday, May 16, 2026.*

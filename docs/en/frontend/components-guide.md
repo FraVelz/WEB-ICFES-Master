@@ -1,12 +1,12 @@
-# Development Guide
+# Components guide
 
-## useQuizLogic Hook
+## `useQuizLogic` hook
 
-Example usage of the useQuizLogic hook with MATHEMATICS_QUESTIONS:
+Example with `MATHEMATICS_QUESTIONS` (defined in `src/shared/data/questions.ts`):
 
-```javascript
-import { useQuizLogic } from '../hooks/useQuizLogic';
-import { MATHEMATICS_QUESTIONS } from '../data/questions';
+```typescript
+import { useQuizLogic } from '@/features/exam/hooks/useQuizLogic';
+import { MATHEMATICS_QUESTIONS } from '@/shared/data/questions';
 
 export function QuizExample() {
   const quiz = useQuizLogic(MATHEMATICS_QUESTIONS);
@@ -31,8 +31,10 @@ export function QuizExample() {
         {quiz.progress} / {quiz.totalQuestions}
       </p>
       <h2>{quiz.currentQuestion.text}</h2>
-      <button onClick={() => quiz.handleAnswer('A')}>Answer A</button>
-      <button onClick={quiz.handleNextQuestion} disabled={!quiz.answered}>
+      <button type="button" onClick={() => quiz.handleAnswer('A')}>
+        Answer A
+      </button>
+      <button type="button" onClick={quiz.handleNextQuestion} disabled={!quiz.answered}>
         Next
       </button>
     </div>
@@ -40,21 +42,27 @@ export function QuizExample() {
 }
 ```
 
-## Create New Atomic Component
+## Example area highlight card (atomic pattern)
 
-Location: `src/components/atoms/AreaCard.tsx`
+Illustrative example using existing atoms under `src/shared/components/atoms/` (e.g. `Card`, `Badge`, `Text`). Add a new file such as `src/shared/components/atoms/AreaHighlightCard.tsx`:
 
-```typescript
-import { Card } from './Card';
-import { Title, Text } from './Text';
-import { Badge } from './Badge';
+```tsx
+import { Card } from '@/shared/components/atoms/Card';
+import { Title, Text } from '@/shared/components/atoms/Text';
+import { Badge } from '@/shared/components/atoms/Badge';
 
-export const AreaCard = ({
+export const AreaHighlightCard = ({
   title,
   icon,
   description,
   questionsCount,
-  onClick
+  onClick,
+}: {
+  title: string;
+  icon: React.ReactNode;
+  description: string;
+  questionsCount: number;
+  onClick?: () => void;
 }) => {
   return (
     <Card hover onClick={onClick}>
@@ -62,7 +70,9 @@ export const AreaCard = ({
         <div className="text-4xl">{icon}</div>
         <div className="flex-1">
           <Title level={4}>{title}</Title>
-          <Text variant="small" className="mt-2">{description}</Text>
+          <Text variant="small" className="mt-2">
+            {description}
+          </Text>
           <Badge variant="default" className="mt-3">
             {questionsCount} questions
           </Badge>
@@ -73,9 +83,9 @@ export const AreaCard = ({
 };
 ```
 
-## Add New Question Area
+## Add questions for an area
 
-Location: `src/data/questions.ts`
+Location: `src/shared/data/questions.ts`.
 
 ```typescript
 export const NEW_AREA_QUESTIONS = [
@@ -83,7 +93,7 @@ export const NEW_AREA_QUESTIONS = [
     id: 101,
     text: 'Sample question',
     area: 'new_area',
-    areaLabel: 'New Area',
+    areaLabel: 'New area',
     difficulty: 'easy',
     options: [
       { letter: 'A', text: 'Option 1' },
@@ -96,73 +106,42 @@ export const NEW_AREA_QUESTIONS = [
   },
 ];
 
-// Then update ALL_QUESTIONS
-export const ALL_QUESTIONS = [
-  ...MATHEMATICS_QUESTIONS,
-  ...LANGUAGE_QUESTIONS,
-  ...SCIENCE_QUESTIONS,
-  ...SOCIAL_QUESTIONS,
-  ...NEW_AREA_QUESTIONS,
-];
+// Then include the block in the exported aggregate (e.g. ALL_QUESTIONS)
 ```
 
-## Available Utility Functions
+## Quiz utilities
 
-In `src/utils/quiz.ts`:
+In `src/shared/utils/quiz.ts`:
 
-- `calculateScore(results)` - Calculates percentage
-- `getAreaResults(results)` - Results by area
-- `shuffleArray(array)` - Shuffles questions
-- `getQuestionsByArea(questions, area)` - Filter by area
-- `getDifficultyStats(questions)` - Difficulty statistics
-- `ALL_QUESTIONS` - Imports all questions
+- `calculateScore(results)` — percentage
+- `getAreaResults(results)` — per-area results
+- `shuffleArray(array)` — shuffle questions
+- `getQuestionsByArea(questions, area)` — filter by area
+- `getDifficultyStats(questions)` — difficulty stats
 
-## Question Structure
+## Question shape (reference)
 
 ```typescript
 {
-  id: 1,                          // Unique ID
-  text: "Question here",          // Question text
-  area: "mathematics",            // Area (mathematics, language, science, social)
-  areaLabel: "Mathematics",       // Readable area label
-  difficulty: "easy",             // Difficulty (easy, medium, hard)
-  options: [                      // Array of 4 options
-    { letter: "A", text: "Option A" },
-    { letter: "B", text: "Option B" },
-    { letter: "C", text: "Option C" },
-    { letter: "D", text: "Option D" }
+  id: 1,
+  text: 'Question here',
+  area: 'mathematics',
+  areaLabel: 'Mathematics',
+  difficulty: 'easy',
+  options: [
+    { letter: 'A', text: 'Option A' },
+    { letter: 'B', text: 'Option B' },
+    { letter: 'C', text: 'Option C' },
+    { letter: 'D', text: 'Option D' },
   ],
-  correctAnswer: "B",             // Letter of correct answer
-  explanation: "Because..."       // Answer explanation
+  correctAnswer: 'B',
+  explanation: 'Because...',
 }
 ```
 
-## Available Components
+## Components (repo convention)
 
-### Atoms
+Primitives live under **`src/shared/components/atoms/`**. Larger compositions usually sit in `molecules/` and `organisms/` under `src/shared/components/`. Feature pages are wired from `src/features/*` and routes from `src/app/`.
 
-- `Button` - Buttons with variants
-- `Card` - Container cards
-- `Badge` - Small labels
-- `Input` - Input fields
-- `Text/Title` - Typography
-- `Progress` - Progress bar
-
-### Molecules
-
-- `QuestionCard` - Question card
-- `AnswerOption` - Answer option
-
-### Organisms
-
-- `QuestionPanel` - Full question panel
-- `ResultsPanel` - Results panel
-- `Header/Navigation` - Headers and navigation
-
-### Pages
-
-- `HomePage` - Home page
-- `PracticePage` - Practice page
-- `FullExamPage` - Full exam
-- `LearningRoadmapPage` - Learning path (`/ruta-aprendizaje`)
-- `ProgressPage` - Progress tracking
+---
+*AI-generated file. Last updated: Saturday, May 16, 2026.*

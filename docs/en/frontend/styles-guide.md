@@ -1,24 +1,22 @@
-# Styles Guide
+# Styles guide
 
-> **Last updated:** March 19, 2025
+Reference for styling and animation conventions in the project.
 
-## Styling Stack
+## Styling stack
 
-- **Tailwind CSS 4** – Utilities and theme
-- **GSAP** – Entrance animations, modals, and blobs
-- **globals.css** – Keyframes, utilities, and theme
+- **Tailwind CSS 4** — utilities and theme (`@import 'tailwindcss'` in `src/app/globals.css`)
+- **GSAP** — entrance animations, modals, and blobs
+- **`globals.css`** — theme keyframes and `@theme` variables
 
-## Main Files
+## Main files
 
-| File                    | Purpose                              |
-| ----------------------- | ------------------------------------ |
-| `src/app/globals.css`   | Tailwind theme, keyframes, utilities |
-| `src/lib/gsap.ts`       | GSAP and ScrollTrigger config        |
-| `src/styles/global.css` | Additional styles                    |
+| File                    | Purpose                               |
+| ----------------------- | ------------------------------------- |
+| `src/app/globals.css`   | Tailwind theme, keyframes, utilities  |
+| `src/lib/gsap.ts`       | GSAP and ScrollTrigger setup          |
+| `src/styles/global.css` | Additional global styles              |
 
-## Theme and Keyframes (globals.css)
-
-The theme defines reusable keyframes:
+## Theme and keyframes (`globals.css`)
 
 | Keyframe       | Description                     |
 | -------------- | ------------------------------- |
@@ -26,10 +24,10 @@ The theme defines reusable keyframes:
 | `slideInLeft`  | From translateX(-30px)          |
 | `slideInRight` | From translateX(30px)           |
 | `scaleIn`      | From scale(0.95)                |
-| `float`        | Smooth vertical movement (loop) |
+| `float`        | Smooth vertical motion (loop)   |
 | `glow`         | Pulsing box-shadow              |
-| `blob`         | Organic movement (loop)         |
-| `slideInUp`    | From translateY(40px)           |
+| `blob`         | Organic motion (loop)           |
+| `slideInUp`    | From translateY(40px)          |
 | `fadeInScale`  | Opacity + scale(0.95)→1         |
 
 Animation variables in `@theme`:
@@ -37,85 +35,60 @@ Animation variables in `@theme`:
 - `--animate-fadeIn`, `--animate-slideInLeft`, `--animate-slideInRight`
 - `--animate-scaleIn`, `--animate-float`, `--animate-glow`, `--animate-blob`
 
-## GSAP Animations
+## GSAP animations
 
-Entrance and modal animations use GSAP:
+| Component / hook       | Use                                                  |
+| ---------------------- | ---------------------------------------------------- |
+| `AnimatedReveal`       | Reveal on scroll or initial load (e.g. home)         |
+| `AnimatedOnMount`      | Entrance on component mount                          |
+| `useGSAPModalEntrance` | Modal timing (`src/hooks/useGSAPModalEntrance.ts`)   |
+| `GSAPGlowBlob`         | Decorative blobs with opacity pulse                  |
 
-| Component              | Use                                          |
-| ---------------------- | -------------------------------------------- |
-| `AnimatedReveal`       | Reveal on scroll or initial load (Home)      |
-| `AnimatedOnMount`      | Entrance on mount                            |
-| `useGSAPModalEntrance` | Modal entrance (fade, slideUp, slideFromTop) |
-| `GSAPGlowBlob`         | Decorative blobs with opacity pulse          |
+Related hooks: `useGSAPReveal` (`src/hooks/useGSAPReveal.ts`), `useGSAPModalEntrance`.
 
-Hooks: `useGSAPReveal`, `useGSAPModalEntrance`
+## Color palette
 
-## Color Palette
-
-**By area (AREA_INFO):**
+**By area (`AREA_INFO` in `src/shared/constants/areaInfo.ts`):**
 
 | Area             | Tailwind gradient               |
 | ---------------- | ------------------------------- |
 | Reading          | `from-blue-400 to-blue-600`     |
 | Mathematics      | `from-green-400 to-green-600`   |
-| Natural Sciences | `from-purple-400 to-purple-600` |
-| Social Studies   | `from-orange-400 to-orange-600` |
-| English          | `from-indigo-400 to-indigo-600` |
-| Full Exam        | `from-pink-400 to-pink-600`     |
+| Natural sciences | `from-purple-400 to-purple-600` |
+| Social studies   | `from-orange-400 to-orange-600`   |
+| English          | `from-indigo-400 to-indigo-600`   |
+| Full exam        | `from-pink-400 to-pink-600`       |
 
-**Accents:**
+**Accents:** cyan, blue, purple (`cyan-400`, `blue-500`, `purple-500`, etc.).
 
-- Cyan: `cyan-400`, `cyan-500`
-- Blue: `blue-500`, `blue-600`
-- Purple: `purple-500`, `purple-600`
+**States:** success (`green-*`), warning (`yellow-*`, `amber-*`), error (`red-*`).
 
-**States:**
-
-- Success: `green-400`, `green-500`
-- Warning: `yellow-400`, `amber-500`
-- Error: `red-400`, `red-500`
-
-## CSS Utilities
+## CSS utilities
 
 ```css
 /* Hidden scrollbar */
 .hide-scrollbar
 
-/* Fade-in animation */
+/* Fade-in utility */
 .animate-fadeIn
 ```
 
-## Dark Mode
+## Dark theme
 
-The app uses dark theme by default. Main background: `bg-black`, `bg-slate-950`. Text: `text-white`, `text-slate-300`, `text-slate-400`.
+The UI is dark-first: backgrounds `bg-black`, `bg-slate-950`; text `text-white`, `text-slate-300`, `text-slate-400`.
 
-## Component Patterns
+## Component patterns
 
-**Buttons:**
+- **Buttons:** `bg-linear-to-r` gradients, `hover:shadow-lg`, `transition-all duration-300`
+- **Cards:** `bg-slate-800/50`, borders `border-slate-700`, `backdrop-blur-xl`
+- **Inputs:** `bg-slate-800/50`, focus `focus:border-cyan-500`, `focus:ring-cyan-500/30`
+- **Badges / progress:** area gradients, `rounded-xl`, `rounded-full`
 
-- Gradients: `bg-linear-to-r from-cyan-500 to-blue-600`
-- Hover: `hover:shadow-lg`, `hover:scale-105`
-- Transitions: `transition-all duration-300`
-
-**Cards:**
-
-- Background: `bg-slate-800/50`, `bg-white/5`
-- Borders: `border-slate-700`, `border-cyan-500/20`
-- Backdrop: `backdrop-blur-xl`
-
-**Inputs:**
-
-- Background: `bg-slate-800/50`
-- Focus: `focus:border-cyan-500`, `focus:ring-2 focus:ring-cyan-500/30`
-
-**Badges and progress:**
-
-- Gradients by area: `bg-linear-to-r ${area.color}`
-- Rounded borders: `rounded-xl`, `rounded-full`
-
-## Common Class Structure
+## Typical class structure
 
 - Containers: `max-w-7xl mx-auto px-6 md:px-8`
-- Spacing: `py-8`, `py-12`, `gap-4`, `gap-6`
-- Text: `text-lg`, `text-slate-300`, `font-bold`
-- Text gradients: `bg-clip-text text-transparent bg-linear-to-r from-cyan-400 via-blue-400 to-purple-400`
+- Spacing: `py-8`, `gap-4`, `gap-6`
+- Gradient text: `bg-clip-text text-transparent bg-linear-to-r from-cyan-400 via-blue-400 to-purple-400`
+
+---
+*AI-generated file. Last updated: Saturday, May 16, 2026.*

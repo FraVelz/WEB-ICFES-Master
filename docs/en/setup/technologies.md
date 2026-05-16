@@ -1,6 +1,6 @@
-# Project Technologies
+# Project technologies
 
-This document describes the technologies used in the **Pruebas ICFES** project, for both development and production.
+This document describes the technologies used in **Pruebas ICFES**, for both development and production.
 
 ---
 
@@ -8,18 +8,18 @@ This document describes the technologies used in the **Pruebas ICFES** project, 
 
 ### Framework and UI
 
-| Technology     | Version | Description                                            |
-| -------------- | ------- | ------------------------------------------------------ |
-| **Next.js**    | 15.1    | React framework with App Router, SSR and static export |
-| **React**      | 19.2    | Library for building user interfaces                   |
-| **TypeScript** | 5.9     | Statically typed language (project uses TS)            |
+| Technology     | Version | Description                                                         |
+| -------------- | ------- | ------------------------------------------------------------------- |
+| **Next.js**    | 15.1    | React framework with App Router, SSR, and server rendering            |
+| **React**      | 19.2    | Library for building user interfaces                                |
+| **TypeScript** | 5.9     | Static typing (new code and most of the repo is TypeScript)         |
 
 ### Styling
 
-| Technology       | Version | Description                                       |
-| ---------------- | ------- | ------------------------------------------------- |
-| **Tailwind CSS** | 4.2     | Utility-first CSS framework for responsive design |
-| **PostCSS**      | 8.4     | CSS processor with Tailwind plugin                |
+| Technology       | Version | Description                                        |
+| ---------------- | ------- | -------------------------------------------------- |
+| **Tailwind CSS** | 4.2     | Utility-first CSS framework for responsive design  |
+| **PostCSS**      | 8.4     | CSS processor with Tailwind plugin                 |
 
 ### Code quality
 
@@ -31,9 +31,9 @@ This document describes the technologies used in the **Pruebas ICFES** project, 
 
 ### Tools
 
-| Technology | Description                               |
-| ---------- | ----------------------------------------- |
-| **pnpm**   | Package manager (alternative to npm/yarn) |
+| Technology | Description                                 |
+| ---------- | ------------------------------------------- |
+| **pnpm**   | Package manager (alternative to npm/yarn)   |
 
 ---
 
@@ -41,11 +41,11 @@ This document describes the technologies used in the **Pruebas ICFES** project, 
 
 ### Frontend
 
-| Technology       | Description                                     |
-| ---------------- | ----------------------------------------------- |
-| **Next.js**      | Generates static export (HTML/CSS/JS) in `out/` |
-| **React**        | Client-side rendering                           |
-| **Tailwind CSS** | Compiled and optimized styles                   |
+| Technology       | Description                                                                    |
+| ---------------- | ------------------------------------------------------------------------------ |
+| **Next.js**      | Production build (output in `.next/`); typical deploy with `next start`        |
+| **React**        | Client and server rendering depending on the route                             |
+| **Tailwind CSS** | Compiled and optimized styles                                                  |
 
 ### Backend and services
 
@@ -57,11 +57,11 @@ This document describes the technologies used in the **Pruebas ICFES** project, 
 
 ### Deployment
 
-| Environment      | Description                              |
-| ---------------- | ---------------------------------------- |
-| **Vercel**       | Hosting for Next.js (recommended)        |
-| **Netlify**      | Static or serverless hosting             |
-| **GitHub Pages** | Static hosting (with `output: 'export'`) |
+| Environment      | Description                                                                                              |
+| ---------------- | -------------------------------------------------------------------------------------------------------- |
+| **Vercel**       | Hosting for Next.js (recommended)                                                                        |
+| **Netlify**      | Serverless or static hosting depending on setup                                                          |
+| **GitHub Pages** | Only if `output: 'export'` is enabled in `next.config` (not enabled by default in this repo)              |
 
 ---
 
@@ -71,3 +71,6 @@ This document describes the technologies used in the **Pruebas ICFES** project, 
 Development:  Next.js, React, TypeScript, Tailwind, PostCSS, ESLint, Prettier, globals, pnpm
 Production:   Next.js, React, Supabase, OpenAI, Tailwind, react-markdown
 ```
+
+---
+*AI-generated file. Last updated: Saturday, May 16, 2026.*

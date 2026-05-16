@@ -1,6 +1,6 @@
-# Project Scripts
+# Project scripts
 
-This document describes all scripts available in `package.json` and their purpose.
+This document describes the scripts defined in `package.json` and what they do.
 
 ---
 
@@ -14,7 +14,19 @@ pnpm dev
 
 **Command:** `next dev`
 
-**Description:** Starts the Next.js development server with hot-reload. By default runs at `http://localhost:3000`.
+**Description:** Starts the Next.js development server with hot reload. Defaults to `http://localhost:3000`.
+
+---
+
+### `dev:clean`
+
+```bash
+pnpm dev:clean
+```
+
+**Command:** `rm -rf .next && next dev`
+
+**Description:** Deletes `.next` and starts the dev server again (useful when build cache causes issues).
 
 ---
 
@@ -26,7 +38,7 @@ pnpm start
 
 **Command:** `next start`
 
-**Description:** Starts the Next.js production server. Requires running `build` first.
+**Description:** Starts the Next.js production server. Run `pnpm build` first.
 
 ---
 
@@ -38,7 +50,7 @@ pnpm preview
 
 **Command:** `next start`
 
-**Description:** Same as `start`. Used to preview the production build locally.
+**Description:** Alias of `start` to preview the production build locally.
 
 ---
 
@@ -52,7 +64,7 @@ pnpm build
 
 **Command:** `next build`
 
-**Description:** Compiles the application for production. If using `output: 'export'` in next.config, generates the `out/` folder for static hosting.
+**Description:** Production build (output in `.next/`). This repo does **not** enable `output: 'export'` by default; `out/` is not generated unless you add that option in `next.config`.
 
 ---
 
@@ -66,7 +78,7 @@ pnpm lint
 
 **Command:** `eslint .`
 
-**Description:** Runs ESLint across the entire project.
+**Description:** Runs ESLint across the project.
 
 ---
 
@@ -78,7 +90,7 @@ pnpm format
 
 **Command:** `prettier --write .`
 
-**Description:** Automatically formats all code according to Prettier.
+**Description:** Formats code with Prettier.
 
 ---
 
@@ -90,31 +102,35 @@ pnpm format:check
 
 **Command:** `prettier --check .`
 
-**Description:** Verifies format without modifying files. Useful for CI/CD.
+**Description:** Checks formatting without writing files. Useful in CI.
 
 ---
 
-## Deployment
-
-### `deploy`
+### `react:doctor`
 
 ```bash
-pnpm deploy
+pnpm react:doctor
 ```
 
-**Command:** `pnpm run build && echo 'Build complete. Push out/ to GitHub Pages or gh-pages branch.'`
+**Command:** `react-doctor . --verbose --full`
 
-**Description:** Builds and shows reminder to push to static hosting.
+**Description:** React-focused health scan of the codebase.
 
 ---
 
 ## Recommended workflow
 
-| Task              | Script(s)                           |
-| ----------------- | ----------------------------------- |
-| Local development | `pnpm dev`                          |
-| Production build  | `pnpm build`                        |
-| Local preview     | `pnpm start`                        |
-| Deploy            | `pnpm deploy` or Vercel/Netlify     |
-| Code review       | `pnpm lint` and `pnpm format:check` |
-| Format code       | `pnpm format`                       |
+| Task                 | Script(s)                        |
+| -------------------- | -------------------------------- |
+| Local development    | `pnpm dev`                       |
+| Dev after bad cache  | `pnpm dev:clean`                 |
+| Production build     | `pnpm build`                     |
+| Local preview        | `pnpm start` or `pnpm preview`   |
+| Deploy               | Vercel / Netlify / Node host      |
+| Lint                 | `pnpm lint`                      |
+| Format check         | `pnpm format:check`              |
+| Format code          | `pnpm format`                    |
+| React audit          | `pnpm react:doctor`              |
+
+---
+*AI-generated file. Last updated: Saturday, May 16, 2026.*

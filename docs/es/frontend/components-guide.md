@@ -1,12 +1,12 @@
-# Guía de Desarrollo
+# Guía de componentes
 
-## Hook useQuizLogic
+## Hook `useQuizLogic`
 
-Ejemplo de uso del hook useQuizLogic con MATHEMATICS_QUESTIONS:
+Ejemplo con `MATHEMATICS_QUESTIONS` (definidas en `src/shared/data/questions.ts`):
 
-```javascript
-import { useQuizLogic } from '../hooks/useQuizLogic';
-import { MATHEMATICS_QUESTIONS } from '../data/questions';
+```typescript
+import { useQuizLogic } from '@/features/exam/hooks/useQuizLogic';
+import { MATHEMATICS_QUESTIONS } from '@/shared/data/questions';
 
 export function QuizExample() {
   const quiz = useQuizLogic(MATHEMATICS_QUESTIONS);
@@ -31,8 +31,10 @@ export function QuizExample() {
         {quiz.progress} / {quiz.totalQuestions}
       </p>
       <h2>{quiz.currentQuestion.text}</h2>
-      <button onClick={() => quiz.handleAnswer('A')}>Responder A</button>
-      <button onClick={quiz.handleNextQuestion} disabled={!quiz.answered}>
+      <button type="button" onClick={() => quiz.handleAnswer('A')}>
+        Responder A
+      </button>
+      <button type="button" onClick={quiz.handleNextQuestion} disabled={!quiz.answered}>
         Siguiente
       </button>
     </div>
@@ -40,16 +42,28 @@ export function QuizExample() {
 }
 ```
 
-## Crear Nuevo Componente Atómico
+## Crear un ejemplo de átomo compuesto (tarjeta de área)
 
-Ubicación: `src/components/atoms/AreaCard.jsx`
+Ejemplo ilustrativo siguiendo átomos existentes en `src/shared/components/atoms/` (p. ej. `Card`, `Badge`, `Text`). Crea un archivo nuevo como `src/shared/components/atoms/AreaHighlightCard.tsx`:
 
-```javascript
-import { Card } from './Card';
-import { Title, Text } from './Text';
-import { Badge } from './Badge';
+```tsx
+import { Card } from '@/shared/components/atoms/Card';
+import { Title, Text } from '@/shared/components/atoms/Text';
+import { Badge } from '@/shared/components/atoms/Badge';
 
-export const AreaCard = ({ title, icon, description, questionsCount, onClick }) => {
+export const AreaHighlightCard = ({
+  title,
+  icon,
+  description,
+  questionsCount,
+  onClick,
+}: {
+  title: string;
+  icon: React.ReactNode;
+  description: string;
+  questionsCount: number;
+  onClick?: () => void;
+}) => {
   return (
     <Card hover onClick={onClick}>
       <div className="flex items-start gap-4">
@@ -69,17 +83,17 @@ export const AreaCard = ({ title, icon, description, questionsCount, onClick }) 
 };
 ```
 
-## Agregar Nueva Área de Preguntas
+## Añadir preguntas de un área
 
-Ubicación: `src/data/questions.js`
+Ubicación: `src/shared/data/questions.ts`.
 
-```javascript
+```typescript
 export const NEW_AREA_QUESTIONS = [
   {
     id: 101,
     text: 'Pregunta de ejemplo',
     area: 'new_area',
-    areaLabel: 'Nueva Área',
+    areaLabel: 'Nueva área',
     difficulty: 'fácil',
     options: [
       { letter: 'A', text: 'Opción 1' },
@@ -92,73 +106,42 @@ export const NEW_AREA_QUESTIONS = [
   },
 ];
 
-// Luego actualizar ALL_QUESTIONS
-export const ALL_QUESTIONS = [
-  ...MATHEMATICS_QUESTIONS,
-  ...LANGUAGE_QUESTIONS,
-  ...SCIENCE_QUESTIONS,
-  ...SOCIAL_QUESTIONS,
-  ...NEW_AREA_QUESTIONS,
-];
+// Luego incorporar el bloque en el agregado exportado (p. ej. ALL_QUESTIONS)
 ```
 
-## Funciones de Utilidad Disponibles
+## Utilidades de quiz
 
-En `src/utils/quiz.js`:
+En `src/shared/utils/quiz.ts`:
 
-- `calculateScore(results)` - Calcula el porcentaje
-- `getAreaResults(results)` - Resultados por área
-- `shuffleArray(array)` - Mezcla preguntas
-- `getQuestionsByArea(questions, area)` - Filtra por área
-- `getDifficultyStats(questions)` - Estadísticas de dificultad
-- `ALL_QUESTIONS` - Importa todas las preguntas
+- `calculateScore(results)` — calcula el porcentaje
+- `getAreaResults(results)` — resultados por área
+- `shuffleArray(array)` — mezcla preguntas
+- `getQuestionsByArea(questions, area)` — filtra por área
+- `getDifficultyStats(questions)` — estadísticas de dificultad
 
-## Estructura de una Pregunta
+## Estructura de una pregunta (referencia)
 
-```javascript
+```typescript
 {
-  id: 1,                          // ID único
-  text: "Pregunta aquí",          // Texto de la pregunta
-  area: "mathematics",            // Área (matemáticas, lenguaje, science, social)
-  areaLabel: "Matemáticas",       // Etiqueta legible del área
-  difficulty: "fácil",            // Dificultad (fácil, medio, difícil)
-  options: [                      // Array de 4 opciones
-    { letter: "A", text: "Opción A" },
-    { letter: "B", text: "Opción B" },
-    { letter: "C", text: "Opción C" },
-    { letter: "D", text: "Opción D" }
+  id: 1,
+  text: 'Pregunta aquí',
+  area: 'mathematics',
+  areaLabel: 'Matemáticas',
+  difficulty: 'fácil',
+  options: [
+    { letter: 'A', text: 'Opción A' },
+    { letter: 'B', text: 'Opción B' },
+    { letter: 'C', text: 'Opción C' },
+    { letter: 'D', text: 'Opción D' },
   ],
-  correctAnswer: "B",             // Letra de la respuesta correcta
-  explanation: "Porque..."        // Explicación de la respuesta
+  correctAnswer: 'B',
+  explanation: 'Porque...',
 }
 ```
 
-## Componentes Disponibles
+## Componentes (convención del repo)
 
-### Atoms
+Los primitivos viven en **`src/shared/components/atoms/`**. Composiciones mayores suelen estar en `molecules/` y `organisms/` bajo `src/shared/components/`. Las páginas de feature se integran desde `src/features/*` y las rutas en `src/app/`.
 
-- `Button` - Botones con variantes
-- `Card` - Tarjetas contenedoras
-- `Badge` - Etiquetas pequeñas
-- `Input` - Campos de entrada
-- `Text/Title` - Tipografía
-- `Progress` - Barra de progreso
-
-### Molecules
-
-- `QuestionCard` - Tarjeta de pregunta
-- `AnswerOption` - Opción de respuesta
-
-### Organisms
-
-- `QuestionPanel` - Panel completo de pregunta
-- `ResultsPanel` - Panel de resultados
-- `Header/Navigation` - Encabezados y navegación
-
-### Pages
-
-- `HomePage` - Página de inicio
-- `PracticePage` - Página de práctica
-- `FullExamPage` - Examen completo
-- `LearningRoadmapPage` - Ruta de aprendizaje (`/ruta-aprendizaje`)
-- `ProgressPage` - Seguimiento de progreso
+---
+*Archivo generado por IA. Última actualización: sábado, 16 de mayo de 2026.*

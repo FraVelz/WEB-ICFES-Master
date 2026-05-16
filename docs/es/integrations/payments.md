@@ -1,38 +1,37 @@
-# Resumen: Integración de Pagos
+# Resumen: integración de pagos
 
-> No implementado: aun en desarrollo (apartado de donaciones / apartado de suscripcion)
+> No implementado: aún en desarrollo (donaciones / suscripciones).
 
 ## Problema Identificado
 
 Usuarios podían intentar pagar sin estar autenticados → Se perdía el UID para atribuir la suscripción.
 
-## Solución Implementada
+## Solución prevista / parcial
 
-Flujo seguro y auditado:
+Flujo documentado como objetivo (puede variar mientras el módulo está en desarrollo):
 
-### 1. **PricingPlans** - Requiere Login
+### 1. **PricingPlans** — requiere sesión
 
 - Si hace clic en un plan de pago sin estar autenticado → **Redirige a /login**
 - Si está autenticado → **Abre modal de pago**
 
-### 2. **PaymentModal** - Guarda en Supabase
+### 2. **PaymentModal** — persistencia
 
-- Verifica que `user.uid` exista (autenticado)
-- Procesa el pago (simulado en desarrollo, Stripe en producción)
-- **Guarda la suscripción en Supabase:** tabla `user_plans` (o equivalente)
-- Muestra errores si algo falla
+- Comprueba que exista `user.uid` (usuario autenticado).
+- Procesamiento del pago: simulado en desarrollo; en producción se puede enlazar con un proveedor (p. ej. Stripe).
+- **Suscripción en Supabase:** tabla `user_plans` (usada también desde `AuthContext` en el código actual).
 
-### 3. **pricing.js** - IDs de Planes
+### 3. **`pricing.ts`** — identificadores de planes
 
 - `id: 'free'`, `id: 'premium'`, `id: 'pro'`
-- Se usa al guardar en Supabase
+- Se usan al preparar la UI y al persistir en Supabase
 
 ---
 
 ## Datos Guardados (Supabase)
 
 ```txt
-user_plans (o userPlans)
+user_plans
 ├── user_id (uuid)
 ├── plan_type: "premium"
 ├── plan_name: "Premium"
@@ -45,8 +44,11 @@ user_plans (o userPlans)
 
 ---
 
-## Archivos Principales
+## Archivos principales
 
-1. `src/shared/components/PricingPlans.tsx` - Verificación de autenticación
-2. `src/shared/components/organisms/PaymentModal/PaymentModal.tsx` - Guardar en Supabase
-3. `src/features/home/data/pricing.js` - IDs de planes
+1. [`src/shared/components/PricingPlans.tsx`](../../../src/shared/components/PricingPlans.tsx) — comprobación de autenticación
+2. [`src/shared/components/organisms/PaymentModal/PaymentModal.tsx`](../../../src/shared/components/organisms/PaymentModal/PaymentModal.tsx) — flujo de pago y persistencia
+3. [`src/features/home/data/pricing.ts`](../../../src/features/home/data/pricing.ts) — definición de planes
+
+---
+*Archivo generado por IA. Última actualización: sábado, 16 de mayo de 2026.*

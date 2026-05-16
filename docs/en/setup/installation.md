@@ -38,7 +38,7 @@ pnpm install
 Create `.env.local` in the project root:
 
 ```bash
-# Supabase (required for production mode)
+# Supabase (required if using NEXT_PUBLIC_API_MODE=supabase)
 NEXT_PUBLIC_SUPABASE_URL=https://your-project.supabase.co
 NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJ...
 
@@ -66,3 +66,6 @@ Open [http://localhost:3000](http://localhost:3000).
 - `pnpm build` should complete without errors
 - With `NEXT_PUBLIC_API_MODE=localStorage` the app works without Supabase
 - With `NEXT_PUBLIC_API_MODE=supabase` you need a configured Supabase project
+
+---
+*AI-generated file. Last updated: Saturday, May 16, 2026.*

@@ -1,6 +1,6 @@
-# Scripts del Proyecto
+# Scripts del proyecto
 
-Este documento describe todos los scripts disponibles en `package.json` y su función.
+Este documento describe los scripts definidos en `package.json` y su función.
 
 ---
 
@@ -14,7 +14,19 @@ pnpm dev
 
 **Comando:** `next dev`
 
-**Descripción:** Inicia el servidor de desarrollo de Next.js con hot-reload. Por defecto corre en `http://localhost:3000`.
+**Descripción:** Inicia el servidor de desarrollo de Next.js con recarga en caliente. Por defecto corre en `http://localhost:3000`.
+
+---
+
+### `dev:clean`
+
+```bash
+pnpm dev:clean
+```
+
+**Comando:** `rm -rf .next && next dev`
+
+**Descripción:** Borra la carpeta `.next` y arranca de nuevo el servidor de desarrollo (útil si el caché de build causa problemas).
 
 ---
 
@@ -26,7 +38,7 @@ pnpm start
 
 **Comando:** `next start`
 
-**Descripción:** Inicia el servidor de producción de Next.js. Requiere haber ejecutado `build` previamente.
+**Descripción:** Inicia el servidor de producción de Next.js. Requiere haber ejecutado `pnpm build` antes.
 
 ---
 
@@ -38,7 +50,7 @@ pnpm preview
 
 **Comando:** `next start`
 
-**Descripción:** Igual que `start`. Sirve para previsualizar el build de producción localmente.
+**Descripción:** Alias de `start` para previsualizar el build de producción en local.
 
 ---
 
@@ -52,7 +64,7 @@ pnpm build
 
 **Comando:** `next build`
 
-**Descripción:** Compila la aplicación para producción. Si usas `output: 'export'` en next.config, genera la carpeta `out/` para hosting estático.
+**Descripción:** Compila la aplicación para producción (salida en `.next/`). En este repo **no** está configurado `output: 'export'` por defecto; no se genera `out/` salvo que se añada esa opción en `next.config`.
 
 ---
 
@@ -78,7 +90,7 @@ pnpm format
 
 **Comando:** `prettier --write .`
 
-**Descripción:** Formatea automáticamente todo el código según Prettier.
+**Descripción:** Formatea el código con Prettier.
 
 ---
 
@@ -90,21 +102,19 @@ pnpm format:check
 
 **Comando:** `prettier --check .`
 
-**Descripción:** Verifica el formato sin modificar archivos. Útil para CI/CD.
+**Descripción:** Comprueba el formato sin modificar archivos. Útil en CI.
 
 ---
 
-## Despliegue
-
-### `deploy`
+### `react:doctor`
 
 ```bash
-pnpm deploy
+pnpm react:doctor
 ```
 
-**Comando:** `pnpm run build && echo 'Build complete. Push out/ to GitHub Pages or gh-pages branch.'`
+**Comando:** `react-doctor . --verbose --full`
 
-**Descripción:** Compila y muestra recordatorio para subir a hosting estático.
+**Descripción:** Análisis de deuda técnica / patrones de React en el árbol del proyecto.
 
 ---
 
@@ -113,8 +123,14 @@ pnpm deploy
 | Tarea                    | Script(s)                         |
 | ------------------------ | --------------------------------- |
 | Desarrollo local         | `pnpm dev`                        |
+| Desarrollo tras caché raro | `pnpm dev:clean`                |
 | Compilar para producción | `pnpm build`                      |
-| Preview local            | `pnpm start`                      |
-| Desplegar                | `pnpm deploy` o Vercel/Netlify    |
-| Revisar código           | `pnpm lint` y `pnpm format:check` |
+| Vista previa local       | `pnpm start` o `pnpm preview`     |
+| Despliegue               | Vercel / Netlify / host con Node  |
+| Revisar código           | `pnpm lint`                       |
+| Comprobar formato        | `pnpm format:check`               |
 | Formatear código         | `pnpm format`                     |
+| Auditoría React          | `pnpm react:doctor`               |
+
+---
+*Archivo generado por IA. Última actualización: sábado, 16 de mayo de 2026.*

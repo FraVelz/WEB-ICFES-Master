@@ -22,3 +22,6 @@ Where progress lives that is **not** automatically synced with Supabase or anoth
 - Learning paths backed by **Supabase** do not replace these keys: locally completed lessons remain separate until persistence is unified.
 
 Treat this module and its callers as the source of truth for local storage behavior.
+
+---
+*AI-generated file. Last updated: Saturday, May 16, 2026.*
