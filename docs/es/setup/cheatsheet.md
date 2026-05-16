@@ -1,26 +1,25 @@
-# Hoja de Referencia Rápida (Cheatsheet)
+# Hoja de referencia rápida (cheatsheet)
 
-## Comandos de Terminal
+## Comandos de terminal
 
 ### Desarrollo
 
-| Acción                 | Comando      |
-| ---------------------- | ------------ |
-| Iniciar servidor local | `pnpm dev`   |
-| Compilar proyecto      | `pnpm build` |
-| Preview de producción  | `pnpm start` |
+| Acción                    | Comando          |
+| ------------------------- | ---------------- |
+| Iniciar servidor local    | `pnpm dev`       |
+| Limpiar `.next` y arrancar | `pnpm dev:clean` |
+| Compilar proyecto         | `pnpm build`     |
+| Vista previa de producción | `pnpm start`   |
 
-### Despliegue Web
+### Despliegue web
 
-Plataforma Actual:
-
-- CubePath
+La plataforma concreta depende del entorno (por ejemplo Vercel, Netlify u otro proveedor).
 
 ---
 
-## Snippets de Código
+## Fragmentos de código
 
-### Hooks de Servicios
+### Hooks de servicios
 
 **useUserData:**
 
@@ -56,9 +55,12 @@ const { exam, getUserExams, resetUserExams, refresh } = useExam(examId);
 
 ### Configuración de API
 
-```javascript
+```typescript
 import API_CONFIG from '@/services/api.config';
 
-// Modo actual: supabase | localStorage
+// Modo actual: supabase | localStorage (ver `NEXT_PUBLIC_API_MODE`)
 console.log(API_CONFIG.MODE);
 ```
+
+---
+*Archivo generado por IA. Última actualización: sábado, 16 de mayo de 2026.*

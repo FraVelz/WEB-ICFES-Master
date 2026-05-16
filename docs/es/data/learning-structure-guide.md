@@ -2,7 +2,7 @@
 
 Esta guía documenta cómo estructurar y gestionar los datos en **Supabase** para el módulo de aprendizaje. Está diseñada para que cualquier desarrollador o administrador de contenido pueda agregar, editar o eliminar lecciones correctamente.
 
-> En un futuro se piensa hacer un panel de administracion para actualizar datos de la base de datos, y agregar contenido en web mas facilmente.
+> En el futuro se plantea un panel de administración para actualizar la base de datos y publicar contenido desde la web con más comodidad.
 
 ---
 
@@ -35,11 +35,11 @@ El sistema de aprendizaje funciona leyendo datos de la tabla **`learning_content
 
 | Área en la App (ID)  | Valor en BD          |
 | -------------------- | -------------------- |
-| `lectura-critica`    | `lectura_critica`    |
-| `matematicas`        | `matematicas`        |
-| `sociales`           | `sociales`           |
+| `lectura-critica`     | `lectura_critica`    |
+| `matematicas`         | `matematicas`        |
+| `sociales-ciudadanas` | `sociales`           |
 | `ciencias-naturales` | `ciencias_naturales` |
-| `ingles`             | `ingles`             |
+| `ingles`              | `ingles`             |
 
 ---
 
@@ -66,8 +66,9 @@ El sistema de aprendizaje funciona leyendo datos de la tabla **`learning_content
 | title     | string | Sí          | Título visible de la lección                                                                        |
 | summary   | string | No          | Breve descripción                                                                                   |
 | type      | string | No          | `lesson` por defecto                                                                                |
-| questions | array  | No          | Preguntas de contenido                                                                              |
+| questions | array  | No          | Preguntas del quiz u otro contenido interactivo |
 | quiz      | object | No          | Examen asociado (ver [services-api.md](../backend/services-api.md#módulo-de-aprendizaje-y-quizzes)) |
+| body      | string | No          | Cuerpo en Markdown (opcional; se muestra en la lección) |
 
 ---
 
@@ -118,3 +119,6 @@ En Supabase Table Editor:
   "quiz": null
 }
 ```
+
+---
+*Archivo generado por IA. Última actualización: sábado, 16 de mayo de 2026.*

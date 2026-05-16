@@ -1,19 +1,19 @@
 # URLs
 
-These are the project **URLs**:
+These are the project **URLs**. The public path `/aprendizaje` permanently redirects to **`/ruta-aprendizaje`** (see `next.config.ts`).
 
 ## Main pages
 
-| URL                | Description          |
-| ------------------ | -------------------- |
-| `/`                | Home                 |
-| `/login`           | Sign in              |
-| `/signup`          | Registration         |
-| `/onboarding`      | Initial onboarding   |
-| `/forgot-password` | Password recovery    |
-| `/reset-password`  | Reset password       |
-| `/privacidad`      | Privacy policy       |
-| `/terminos`        | Terms and conditions |
+| URL                | Description             |
+| ------------------ | ----------------------- |
+| `/`                | Home                    |
+| `/login`           | Sign in                 |
+| `/signup`          | Registration            |
+| `/onboarding`      | Initial onboarding      |
+| `/forgot-password` | Password recovery       |
+| `/reset-password`  | Reset password          |
+| `/privacidad`      | Privacy policy          |
+| `/terminos`        | Terms and conditions    |
 
 ## Dashboard (requires session or demo)
 
@@ -36,6 +36,7 @@ These are the project **URLs**:
 | `/practica/matematicas`         | Math practice             |
 | `/practica/ciencias-naturales`  | Natural sciences practice |
 | `/practica/sociales-ciudadanas` | Social studies practice   |
+| `/practica/ingles`              | English practice          |
 
 ## Lessons (by area and topic)
 
@@ -43,7 +44,7 @@ These are the project **URLs**:
 | ------------------------- | ------------------------------------------------------------------- |
 | `/lessons/[area]/[topic]` | `/lessons/matematicas/algebra`, `/lessons/lenguaje/gramatica`, etc. |
 
-**Areas and topics:**
+**Areas and topics (examples):**
 
 - **Mathematics:** algebra, geometria, calculo, trigonometria, numeros-complejos
 - **Language:** gramatica, comprension, literatura, ortografia, semantica
@@ -52,6 +53,9 @@ These are the project **URLs**:
 
 ## API
 
-| URL         | Method | Description                           |
-| ----------- | ------ | ------------------------------------- |
-| `/api/chat` | POST   | Chat with ChatGPT for ICFES assistant |
+| URL         | Method | Description                                   |
+| ----------- | ------ | --------------------------------------------- |
+| `/api/chat` | POST   | AI model integration for the assistant       |
+
+---
+*AI-generated file. Last updated: Saturday, May 16, 2026.*

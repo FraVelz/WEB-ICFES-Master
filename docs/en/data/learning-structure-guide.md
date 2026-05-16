@@ -35,11 +35,11 @@ The learning system works by reading data from the **`learning_content`** table 
 
 | Area in App (ID)     | Value in DB          |
 | -------------------- | -------------------- |
-| `lectura-critica`    | `lectura_critica`    |
-| `matematicas`        | `matematicas`        |
-| `sociales`           | `sociales`           |
+| `lectura-critica`     | `lectura_critica`    |
+| `matematicas`         | `matematicas`        |
+| `sociales-ciudadanas` | `sociales`           |
 | `ciencias-naturales` | `ciencias_naturales` |
-| `ingles`             | `ingles`             |
+| `ingles`              | `ingles`             |
 
 ---
 
@@ -66,8 +66,9 @@ The learning system works by reading data from the **`learning_content`** table 
 | title     | string | Yes      | Visible lesson title                                                                            |
 | summary   | string | No       | Brief description                                                                               |
 | type      | string | No       | `lesson` by default                                                                             |
-| questions | array  | No       | Content questions                                                                               |
+| questions | array  | No       | Quiz questions or other interactive blocks                                                       |
 | quiz      | object | No       | Associated exam (see [services-api.md](../backend/services-api.md#learning-module-and-quizzes)) |
+| body      | string | No       | Markdown body (optional; shown in the lesson)                                                   |
 
 ---
 
@@ -118,3 +119,6 @@ In Supabase Table Editor:
   "quiz": null
 }
 ```
+
+---
+*AI-generated file. Last updated: Saturday, May 16, 2026.*

@@ -19,6 +19,9 @@ Este documento describe dónde vive el progreso que **no** se sincroniza automá
 ## Relación con otros datos
 
 - **Gamificación** (logros, niveles con persistencia híbrida) puede usar [`src/services/persistence/gamificationPersistence.ts`](../../../src/services/persistence/gamificationPersistence.ts) y Supabase según configuración.
-- Las rutas de aprendizaje con contenido en **Supabase** no sustituyen estas claves: el progreso de lecciones completadas en local sigue siendo independiente hasta que unifiquen persistencia.
+- Las rutas de aprendizaje con contenido en **Supabase** no sustituyen estas claves: el progreso de lecciones completadas en local sigue siendo independiente hasta que **se unifique** la persistencia.
 
-Para cambiar comportamiento, tratar este archivo y las APIs que lo llaman como la fuente de verdad del almacenamiento local.
+Para cambiar el comportamiento, tratar este archivo y las APIs que lo llaman como la fuente de verdad del almacenamiento local.
+
+---
+*Archivo generado por IA. Última actualización: sábado, 16 de mayo de 2026.*

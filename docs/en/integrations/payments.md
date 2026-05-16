@@ -1,38 +1,37 @@
-# Payment Integration Summary
+# Payment integration summary
 
-> Not implemented: still in development (donations section / subscription section)
+> Not implemented: still in development (donations / subscriptions).
 
-## Identified Problem
+## Problem addressed
 
-Users could attempt to pay without being authenticated → UID was lost to attribute the subscription.
+Users could try to pay without being authenticated → the UID was not available to attach a subscription.
 
-## Implemented Solution
+## Intended / partial solution
 
-Secure and audited flow:
+Documented target flow (may change while the module is under development):
 
-### 1. **PricingPlans** - Requires Login
+### 1. **PricingPlans** — requires session
 
-- If user clicks on a paid plan without being authenticated → **Redirects to /login**
-- If authenticated → **Opens payment modal**
+- Clicks on a paid plan without auth → **redirect to /login**
+- When authenticated → **open payment modal**
 
-### 2. **PaymentModal** - Saves to Supabase
+### 2. **PaymentModal** — persistence
 
-- Verifies that `user.uid` exists (authenticated)
-- Processes payment (simulated in development, Stripe in production)
-- **Saves subscription to Supabase:** table `user_plans` (or equivalent)
-- Shows errors if something fails
+- Ensures `user.uid` exists (authenticated user).
+- Payment processing: simulated in development; production may integrate a provider (e.g. Stripe).
+- **Subscription in Supabase:** `user_plans` table (also referenced from `AuthContext` in the current codebase).
 
-### 3. **pricing.ts** - Plan IDs
+### 3. **`pricing.ts`** — plan identifiers
 
 - `id: 'free'`, `id: 'premium'`, `id: 'pro'`
-- Used when saving to Supabase
+- Used when rendering UI and when persisting to Supabase
 
 ---
 
-## Saved Data (Supabase)
+## Stored data (Supabase)
 
 ```txt
-user_plans (or userPlans)
+user_plans
 ├── user_id (uuid)
 ├── plan_type: "premium"
 ├── plan_name: "Premium"
@@ -45,8 +44,11 @@ user_plans (or userPlans)
 
 ---
 
-## Main Files
+## Main files
 
-1. `src/shared/components/PricingPlans.tsx` - Authentication verification
-2. `src/shared/components/organisms/PaymentModal/PaymentModal.tsx` - Save to Supabase
-3. `src/features/home/data/pricing.ts` - Plan IDs
+1. [`src/shared/components/PricingPlans.tsx`](../../../src/shared/components/PricingPlans.tsx) — auth gate
+2. [`src/shared/components/organisms/PaymentModal/PaymentModal.tsx`](../../../src/shared/components/organisms/PaymentModal/PaymentModal.tsx) — payment flow and persistence
+3. [`src/features/home/data/pricing.ts`](../../../src/features/home/data/pricing.ts) — plan definitions
+
+---
+*AI-generated file. Last updated: Saturday, May 16, 2026.*

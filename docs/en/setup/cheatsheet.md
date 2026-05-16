@@ -1,24 +1,25 @@
-# Quick Reference Cheatsheet
+# Quick reference cheatsheet
 
-## Terminal Commands
+## Terminal commands
 
 ### Development
 
-| Action             | Command      |
-| ------------------ | ------------ |
-| Start local server | `pnpm dev`   |
-| Build project      | `pnpm build` |
-| Production preview | `pnpm start` |
+| Action              | Command           |
+| ------------------- | ----------------- |
+| Start local server  | `pnpm dev`        |
+| Clear `.next` & run | `pnpm dev:clean`  |
+| Build project       | `pnpm build`      |
+| Production preview  | `pnpm start`      |
 
-### Web Deployment
+### Web deployment
 
-Current platform: CubePath
+The hosting target depends on your environment (e.g. Vercel, Netlify, or another provider).
 
 ---
 
-## Code Snippets
+## Code snippets
 
-### Service Hooks
+### Service hooks
 
 **useUserData:**
 
@@ -52,11 +53,14 @@ import { useExam } from '@/features/exam/hooks/useExam';
 const { exam, getUserExams, resetUserExams, refresh } = useExam(examId);
 ```
 
-### API Configuration
+### API configuration
 
-```javascript
+```typescript
 import API_CONFIG from '@/services/api.config';
 
-// Current mode: supabase | localStorage
+// Current mode: supabase | localStorage (see `NEXT_PUBLIC_API_MODE`)
 console.log(API_CONFIG.MODE);
 ```
+
+---
+*AI-generated file. Last updated: Saturday, May 16, 2026.*

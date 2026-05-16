@@ -38,14 +38,14 @@ pnpm install
 Crea `.env.local` en la raíz del proyecto:
 
 ```bash
-# Supabase (obligatorio para modo producción)
+# Supabase (necesario si usas NEXT_PUBLIC_API_MODE=supabase)
 NEXT_PUBLIC_SUPABASE_URL=https://tu-proyecto.supabase.co
 NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJ...
 
 # Modo de datos: 'supabase' | 'localStorage'
 NEXT_PUBLIC_API_MODE=supabase
 
-# OpenAI (opcional, para chat asistente)
+# OpenAI (opcional, para el asistente de chat)
 OPENAI_API_KEY=sk-...
 ```
 
@@ -66,3 +66,6 @@ Abre [http://localhost:3000](http://localhost:3000).
 - `pnpm build` debe completar sin errores
 - Con `NEXT_PUBLIC_API_MODE=localStorage` la app funciona sin Supabase
 - Con `NEXT_PUBLIC_API_MODE=supabase` necesitas un proyecto Supabase configurado
+
+---
+*Archivo generado por IA. Última actualización: sábado, 16 de mayo de 2026.*
