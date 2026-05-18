@@ -1,5 +1,5 @@
-export { LearningRoadmap } from './LearningRoadmap';
-export { SecondaryHeader } from './SecondaryHeader';
+export { LearningRoadmap } from '../roadmap';
+export { SecondaryHeader } from '../shell/SecondaryHeader';
 
 export {
   ContentStep,
@@ -10,4 +10,4 @@ export {
   QuizStep,
   ResourceStep,
   renderLessonStep,
-} from './LessonFlow';
+} from '../lesson-flow';

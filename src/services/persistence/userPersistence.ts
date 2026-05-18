@@ -10,9 +10,9 @@ import {
   updateProfileImage as updateProfileImageUtil,
   addVirtualMoney,
   removeVirtualMoney,
-} from '@/shared/utils/userProfile';
+} from '@/storage/userProfile';
 import type { MappedUser } from '@/services/supabase/UserSupabaseService';
-import type { UserProfile } from '@/shared/utils/userProfile';
+import type { UserProfile } from '@/storage/userProfile';
 import { isSupabaseMode } from './apiMode';
 
 export async function loadUserProfile(

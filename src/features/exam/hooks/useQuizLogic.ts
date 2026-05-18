@@ -1,5 +1,5 @@
 import { useState, useCallback } from 'react';
-import type { ExamQuestion } from '@/shared/types/question';
+import type { ExamQuestion } from '@/features/exam/types/question';
 
 export const useQuizLogic = (questions: ExamQuestion[] = []) => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);

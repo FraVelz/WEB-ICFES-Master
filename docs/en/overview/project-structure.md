@@ -8,80 +8,92 @@ This document describes the file organization and feature-based architecture of 
 src/
 ├── app/                   # Next.js App Router (routes, layouts)
 │   ├── (auth)/           # Authentication (login, signup, onboarding)
-│   ├── (dashboard)/      # Dashboard (exam, lessons, achievements, etc.)
+│   ├── (dashboard)/      # Dashboard (exam, lessons, achievements, progress, etc.)
 │   └── api/              # API routes (e.g. chat)
 ├── features/             # Main business modules
-├── shared/               # Reusable components and utilities
-├── services/             # Data layer (Supabase, adapters)
+├── shared/               # Cross-feature UI (Icon, Footer, ConstructionAlert…)
+├── storage/              # localStorage implementation (internal)
+├── services/             # Supabase/local persistence + store + gamification
+│   ├── persistence/      # Public API for features
+│   ├── supabase/
+│   ├── store/
+│   └── gamification/
 ├── config/               # Configuration (Supabase, constants)
-├── components/           # Global components (providers, etc.)
-├── context/              # React context providers
-├── hooks/                # Global hooks
-├── lib/                  # Client-side utilities
-├── store/                # Redux store and related types
+├── components/           # App shell (Providers, guards, DashboardHeader)
+├── context/              # AuthContext
+├── hooks/                # Hook facade + GSAP utilities
+├── lib/                  # GSAP (ScrollTrigger)
+├── store/                # Redux: uiSession (demo, plan UI)
 ├── styles/               # Global styles (Tailwind)
 ├── types/                # Global TypeScript types
-├── utils/                # Root utilities (e.g. `cn`)
-└── ...
+└── utils/                # Pure utilities (cn, auth errors)
 ```
 
 ## Feature-based architecture (`src/features/`)
 
-Each folder under `features/` represents a business domain and groups what it needs to work in isolation.
+Each folder under `features/` represents a business domain.
 
-### Feature layout
+### Typical feature layout
 
 ```txt
 features/feature-name/
-├── components/         # Components specific to this feature
-├── pages/              # Views (if used outside `app/`)
-├── hooks/              # Local state logic
-├── services/           # Feature-specific services
-├── utils/              # Helper functions
-└── index.ts            # Barrel export
+├── components/
+├── pages/
+├── hooks/
+├── services/          # optional; local domain logic
+├── data/ | types/ | utils/
+└── index.ts
 ```
 
 ### Current features
 
-- **exam/**: Exams, simulations, and results.
-- **learning/**: Study material, lessons, and roadmap.
-- **progress/**: User statistics and tracking.
-- **home/**: Landing and dashboard entry points.
-- **auth/**: Login, registration, onboarding.
-- **user/**: Profile and account settings.
-- **logros/**: Gamification, achievements, and challenges.
-- **store/**: Shop, plans, and subscriptions.
-- **legal/**: Pointers to legal content (e.g. terms and privacy under `src/app`).
+| Feature | Responsibility |
+| ------- | -------------- |
+| **auth/** | Login, signup, OAuth, onboarding |
+| **home/** | Landing, marketing sections, donations |
+| **learning/** | Roadmap, lessons (`roadmap/`, `lesson-flow/`, `lessons-legacy/`, `shell/`) |
+| **exam/** | Practice, full exam, ranking; data under `exam/data/` |
+| **progress/** | Academic progress page and hook |
+| **user/** | Profile, settings |
+| **logros/** | Badges, challenges, gamification UI |
+| **store/** | Virtual shop, purchase modals |
 
-## Shared components (`src/shared/`)
+## Shared layer (`src/shared/`)
 
-- **atoms/**: Small primitives (buttons, badges, text).
-- **molecules/**: Simple compositions (cards, inputs with labels).
-- **organisms/**: Larger sections (headers, PaymentModal, QuestionContent).
+Components and types used across features:
 
-## Services (`src/services/`)
+- **Icon**, **Footer**, **MascotaCircle**, **ConstructionAlert**
+- `@deprecated` re-exports toward `features/exam` and `@/services/persistence`
 
-Abstraction layer for Supabase and shared business logic.
+Dashboard navigation lives in **`src/components/DashboardHeader.tsx`** (not under `shared/`).
+
+## Persistence
+
+- **UI API:** `@/services/persistence` (progress, profile, exams, gamification).
+- **Local implementation:** `src/storage/` (`progressStorage`, `userProfile`, `dataEncryption`).
+- **Supabase:** `src/services/supabase/*`.
+
+## Cross-cutting services (`src/services/`)
+
 See [services documentation](../backend/services-api.md).
 
 ## Next.js routes (`src/app/`)
 
-| Route                     | Description              |
-| ------------------------- | ------------------------ |
-| `/`                       | Home page                |
-| `/login`, `/signup`       | Authentication           |
-| `/onboarding`             | Onboarding flow          |
-| `/practica/[area]`        | Practice by subject area |
-| `/examen-completo`        | Full exam                |
-| `/clasificatoria`         | Ranking / leaderboard    |
-| `/ruta-aprendizaje`       | Learning roadmap         |
-| `/lessons/[area]/[topic]` | Lessons by topic         |
-| `/desafios-diarios`       | Daily challenges         |
-| `/logros`                 | Achievements hub         |
-| `/perfil`                 | User profile             |
-| `/configuracion`          | Settings                 |
-| `/terminos`               | Terms of use             |
-| `/privacidad`             | Privacy policy           |
+| Route | Description |
+| ----- | ----------- |
+| `/` | Home page |
+| `/login`, `/signup`, `/auth/callback` | Authentication |
+| `/onboarding` | Onboarding |
+| `/ruta-aprendizaje` | Learning roadmap |
+| `/lessons/[area]/[topic]` | Lesson (Supabase or legacy) |
+| `/practica/[area]` | Practice by area |
+| `/examen-completo` | Full exam |
+| `/clasificatoria` | Ranking / leaderboard |
+| `/progreso` | Progress summary |
+| `/desafios-diarios` | Daily challenges |
+| `/logros` | Achievements hub |
+| `/perfil`, `/configuracion` | Profile and settings |
+| `/terminos`, `/privacidad` | Legal |
 
 ---
-*AI-generated file. Last updated: Saturday, May 16, 2026.*
+*AI-generated file. Last updated: Monday, May 18, 2026.*

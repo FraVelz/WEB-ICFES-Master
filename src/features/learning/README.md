@@ -1,47 +1,49 @@
-# Learning Feature Structure
+# Learning feature structure
 
-## Organización actual
+## Current layout
 
-```
+```txt
 learning/
   pages/
-    index.ts                 # Exporta LearningRoadmapPage
-    Roadmap/
-      LearningRoadmapPage.tsx
-  components/
-    index.ts
-    LearningRoadmap/         # Ruta de aprendizaje (Supabase + UI)
-    SecondaryHeader/
-    LessonFlow/              # Pasos de lección (flujo interactivo)
+    LearningRoadmapPage.tsx
+  roadmap/                 # Learning path UI (modals, PathNode, AreaPath)
+  lesson-flow/             # Supabase step-based lessons (LessonFlowClient)
+  shell/
+    SecondaryHeader/       # Streak, coins, areas, store entry
     ChatAssistant/
+  lessons-legacy/          # Static topic components + registry.ts
   data/
-    roadmapData.ts           # Fallback local (BASICO_TOPICS, etc.) para LearningService
-  lessons/                   # Contenido estático por tema (LessonPageClient)
+    roadmapData.ts
   services/
-    LearningService.ts       # Ruta de aprendizaje (Supabase o roadmapData)
+    LearningService.ts
   hooks/
     useLearningPath.ts
+    RoadmapUiContext.tsx   # UI lock while modals open (was context-isActiveStore)
   constants/
     lessonDynamicRoutes.ts
     practiceDynamicRoutes.ts
-  index.ts
+  utils/
+    splitLessonContent.ts
+  AnimatedOnMount.tsx
+  components/index.ts      # Barrel: roadmap, shell, lesson-flow exports
 ```
 
-## Rutas de la app
+## App routes
 
-- `/ruta-aprendizaje` — `LearningRoadmapPage` + asistente
-- `/lessons/[area]/[topic]` — flujo con pasos (Supabase) o `LessonPageClient`
-- `/practica/[area]` — práctica por área (feature exam)
+- `/ruta-aprendizaje` — `LearningRoadmapPage` + chat assistant
+- `/lessons/[area]/[topic]` — `LessonFlowClient` (Supabase) or `lessons-legacy/registry` fallback
+- `/practica/[area]` — practice (exam feature)
 
-## Imports típicos
+## Typical imports
 
-```javascript
-import { LearningRoadmapPage } from '@/features/learning/pages';
+```typescript
+import { LearningRoadmapPage } from '@/features/learning/pages/LearningRoadmapPage';
 import { LearningRoadmap, LessonFlowClient } from '@/features/learning/components';
-import { LearningService } from '@/features/learning/services/LearningService';
+import { RoadmapUiProvider } from '@/features/learning/hooks/RoadmapUiContext';
+import { getLegacyLessonComponent } from '@/features/learning/lessons-legacy/registry';
 ```
 
-## Datos
+## Data
 
-- `roadmapData.ts`: usado por `LearningService` cuando no hay datos en Supabase.
-- Lecciones en `lessons/`: usadas como fallback en `LessonPageClient` si no hay flujo en BD.
+- `roadmapData.ts`: fallback when Supabase has no roadmap rows.
+- `lessons-legacy/`: static React lessons; registry maps `area/topic` slugs to components.

@@ -121,4 +121,4 @@ En Supabase Table Editor:
 ```
 
 ---
-*Archivo generado por IA. Última actualización: sábado, 16 de mayo de 2026.*
+*Archivo generado por IA. Última actualización: lunes, 18 de mayo de 2026.*

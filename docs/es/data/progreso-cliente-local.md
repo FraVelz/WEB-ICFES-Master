@@ -4,7 +4,8 @@ Este documento describe dónde vive el progreso que **no** se sincroniza automá
 
 ## Módulo canónico
 
-- Implementación: [`src/shared/utils/progressStorage.ts`](../../../src/shared/utils/progressStorage.ts)
+- **API para features:** importar desde `@/services/persistence` (`savePractice`, `getProgress`, etc.).
+- **Implementación interna:** [`src/storage/progressStorage.ts`](../../../src/storage/progressStorage.ts)
 - Entorno: **solo navegador** (`localStorage`). No usar en Server Components sin comprobar `typeof window`.
 
 ## Claves almacenadas
@@ -24,4 +25,4 @@ Este documento describe dónde vive el progreso que **no** se sincroniza automá
 Para cambiar el comportamiento, tratar este archivo y las APIs que lo llaman como la fuente de verdad del almacenamiento local.
 
 ---
-*Archivo generado por IA. Última actualización: sábado, 16 de mayo de 2026.*
+*Archivo generado por IA. Última actualización: lunes, 18 de mayo de 2026.*

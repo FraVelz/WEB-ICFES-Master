@@ -32,9 +32,6 @@ importers:
       openai:
         specifier: ^6.32.0
         version: 6.32.0(ws@8.19.0)(zod@3.25.76)
-      prop-types:
-        specifier: ^15.8.1
-        version: 15.8.1
       react:
         specifier: ^19.2.0
         version: 19.2.1

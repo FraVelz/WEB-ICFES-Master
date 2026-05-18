@@ -1,43 +1,40 @@
-# Payment integration summary
+# Payments integration summary
 
-> Not implemented: still in development (donations / subscriptions).
+> Not fully implemented: home donations and store plans are still in development.
 
-## Problem addressed
+## Problem identified
 
-Users could try to pay without being authenticated → the UID was not available to attach a subscription.
+Users could attempt to pay without being authenticated → the UID was lost for subscription attribution.
 
-## Intended / partial solution
+## Current code state
 
-Documented target flow (may change while the module is under development):
+Legacy components **`PricingPlans`** and **`PaymentModal`** (under `shared/organisms/`) were **removed** during the architecture refactor.
 
-### 1. **PricingPlans** — requires session
+### Active flows
 
-- Clicks on a paid plan without auth → **redirect to /login**
-- When authenticated → **open payment modal**
+| Area | Location | Notes |
+| ---- | -------- | ----- |
+| Donations | `src/features/home/components/DonationSection/` | Simulated form on the landing page |
+| Plans / shop | `src/features/store/` + `src/services/store/` | `SubscriptionPlanService`, `PlanScheduleService` |
+| Session and plan UI | `src/context/AuthContext.tsx`, Redux `uiSession` | Selected plan and demo mode |
+| Persistence | `@/services/persistence`, Supabase `user_plans` table | Per `API_CONFIG.MODE` |
 
-### 2. **PaymentModal** — persistence
+### Plan identifiers
 
-- Ensures `user.uid` exists (authenticated user).
-- Payment processing: simulated in development; production may integrate a provider (e.g. Stripe).
-- **Subscription in Supabase:** `user_plans` table (also referenced from `AuthContext` in the current codebase).
-
-### 3. **`pricing.ts`** — plan identifiers
-
-- `id: 'free'`, `id: 'premium'`, `id: 'pro'`
-- Used when rendering UI and when persisting to Supabase
+UI plans use ids such as `free`, `premium`, `pro` (see `src/store/types/uiPlan.ts` and `src/services/store/`).
 
 ---
 
-## Stored data (Supabase)
+## Supabase data (target)
 
 ```txt
 user_plans
 ├── user_id (uuid)
-├── plan_type: "premium"
-├── plan_name: "Premium"
-├── status: "active"
-├── price: 1800
-├── billing_period: "monthly"
+├── plan_type
+├── plan_name
+├── status
+├── price
+├── billing_period
 ├── purchase_date
 └── next_billing_date
 ```
@@ -46,9 +43,10 @@ user_plans
 
 ## Main files
 
-1. [`src/shared/components/PricingPlans.tsx`](../../../src/shared/components/PricingPlans.tsx) — auth gate
-2. [`src/shared/components/organisms/PaymentModal/PaymentModal.tsx`](../../../src/shared/components/organisms/PaymentModal/PaymentModal.tsx) — payment flow and persistence
-3. [`src/features/home/data/pricing.ts`](../../../src/features/home/data/pricing.ts) — plan definitions
+1. [`src/features/home/components/DonationSection/`](../../../src/features/home/components/DonationSection/) — home donations
+2. [`src/features/store/components/StoreModal.tsx`](../../../src/features/store/components/StoreModal.tsx) — dashboard shop
+3. [`src/services/store/SubscriptionPlanService.ts`](../../../src/services/store/SubscriptionPlanService.ts) — plan stub / localStorage
+4. [`src/context/AuthContext.tsx`](../../../src/context/AuthContext.tsx) — `getUserPlan`, `updateUserPlan`
 
 ---
-*AI-generated file. Last updated: Saturday, May 16, 2026.*
+*AI-generated file. Last updated: Monday, May 18, 2026.*

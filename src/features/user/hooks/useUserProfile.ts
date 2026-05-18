@@ -3,7 +3,7 @@ import { useAuth } from '@/context/AuthContext';
 import { useGamification } from '@/features/logros/hooks/useGamification';
 import { getLevelInfo } from '@/features/logros/utils/gamificationUtils';
 import { RANKS } from '@/features/logros/constants/ranks';
-import { getUserProfile } from '@/shared/utils/userProfile';
+import { getUserProfile } from '@/services/persistence';
 
 const levelToRankId = (level: number): string => {
   const rankOrder = Math.min(Math.max(level, 1), 7);

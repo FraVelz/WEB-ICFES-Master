@@ -1,11 +1,11 @@
-import DemoProtectedPage from '@/components/DemoProtectedPage';
+import ProtectedPage from '@/components/ProtectedPage';
 
 import { LearningRoadmapPage } from '@/features/learning';
 
 export default function Page() {
   return (
-    <DemoProtectedPage>
+    <ProtectedPage blockDemoContent={false}>
       <LearningRoadmapPage />
-    </DemoProtectedPage>
+    </ProtectedPage>
   );
 }

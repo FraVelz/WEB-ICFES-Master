@@ -80,7 +80,7 @@ Services that connect directly to PostgreSQL tables in Supabase:
 ### 4. **`gamificationPersistence`**
 
 - **Location**: `src/services/persistence/gamificationPersistence.ts`
-- **Purpose**: Single entry for gamification on Supabase or `GamificationLocalService` depending on `API_CONFIG.MODE`
+- **Purpose**: Single entry for gamification on Supabase or `GamificationLocalService` (`src/services/gamification/`) depending on `API_CONFIG.MODE`
 - **API**: `addXP()`, `addCoins()`, `spendCoins()`, `getProfile()` (delegate to `GamificationSupabaseService` or `GamificationLocalService`)
 
 ### 5. **Feature modules and `persistence` layer**
@@ -92,8 +92,8 @@ Services that connect directly to PostgreSQL tables in Supabase:
 | **exam**     | `src/services/persistence/examPersistence.ts` | `useExam` uses `getExamById`, `resetUserExams`, … |
 | **logros**   | `GamificationSupabaseService` + localStorage; `gamificationPersistence` in lessons | `useGamification`; `LessonQuizModal` uses **`gamificationPersistence`** |
 | **learning** | `src/features/learning/services/LearningService.ts` | Supabase (`learning_content`) or static roadmap data |
-| **store**    | `SubscriptionPlanService`, `PlanScheduleService` | Plans and scheduling (store feature) |
-| **auth**     | `src/features/auth/services/AuthService.ts` | Reset codes, etc. |
+| **store**    | `src/services/store/` (`SubscriptionPlanService`, `PlanScheduleService`) | Plans and scheduling |
+| **auth**     | `src/context/AuthContext.tsx`, pages under `features/auth/` | Supabase/OAuth session; no `AuthService` stub |
 
 ---
 
@@ -109,7 +109,7 @@ const { user, loading, updateProfile, updateUsername, updateBio, updateProfileIm
 ```
 
 - **Supabase**: UserSupabaseService
-- **localStorage**: `@/shared/utils/userProfile`
+- **localStorage**: `@/services/persistence` (implementation in `src/storage/userProfile`)
 
 ### **useProgress()**
 
@@ -118,7 +118,7 @@ const { progress, areaStats, recommendations, attemptHistory, resetProgress, ref
 ```
 
 - **Supabase**: ProgressSupabaseService
-- **localStorage**: `@/shared/utils/progressStorage`
+- **localStorage**: `@/services/persistence` (implementation in `src/storage/progressStorage`)
 
 ### **useGamification(userId)**
 
@@ -414,4 +414,4 @@ import {
 The `@/services` barrel re-exports `./persistence`; for gamification and lessons, `gamificationPersistence` and the helpers used by hooks are the usual entry points.
 
 ---
-*AI-generated file. Last updated: Saturday, May 16, 2026.*
+*AI-generated file. Last updated: Monday, May 18, 2026.*

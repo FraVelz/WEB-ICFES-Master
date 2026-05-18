@@ -4,7 +4,7 @@ import { cn } from '@/utils/cn';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 
-import { OnboardingLayout } from './OndboardingLayout';
+import { OnboardingLayout } from './OnboardingLayout';
 
 import { Icon } from '@/shared/components/Icon';
 import { MascotaCircle } from '@/shared/components/MascotaCircle';

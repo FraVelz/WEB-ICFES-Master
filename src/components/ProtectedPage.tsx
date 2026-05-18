@@ -8,7 +8,13 @@ import { useAppSelector } from '@/store/hooks';
 
 import SignInRequiredBlock from './SignInRequiredBlock';
 
-export default function ProtectedPage({ children }: { children: React.ReactNode }) {
+type ProtectedPageProps = {
+  children: React.ReactNode;
+  /** When true, demo mode without auth shows SignInRequiredBlock instead of content */
+  blockDemoContent?: boolean;
+};
+
+export default function ProtectedPage({ children, blockDemoContent = true }: ProtectedPageProps) {
   const { isAuthenticated, loading } = useAuth();
   const router = useRouter();
   const demoMode = useAppSelector((s) => s.uiSession.demoMode);
@@ -31,11 +37,11 @@ export default function ProtectedPage({ children }: { children: React.ReactNode 
     );
   }
 
-  if (!isAuthenticated && demoMode) {
+  if (!isAuthenticated && demoMode && blockDemoContent) {
     return <SignInRequiredBlock />;
   }
 
-  if (!isAuthenticated) return null;
+  if (!isAuthenticated && !demoMode) return null;
 
   return <>{children}</>;
 }

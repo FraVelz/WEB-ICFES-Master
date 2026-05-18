@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import { getVirtualMoney } from '@/shared/utils/userProfile';
-import { getProgress } from '@/shared/utils/progressStorage';
+import { getVirtualMoney } from '@/services/persistence';
+import { getProgress } from '@/services/persistence';
 
 /**
  * Hook de clasificación - Versión local con datos mock

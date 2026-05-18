@@ -7,7 +7,7 @@ import { cn } from '@/utils/cn';
 import { gsap } from '@/lib/gsap';
 
 import { Footer } from '@/shared/components';
-import { GSAPGlowBlob } from '@/shared/components/GSAPGlowBlob';
+import { GSAPGlowBlob } from '@/features/home/components/GSAPGlowBlob';
 
 import {
   HeroSection,

@@ -5,10 +5,10 @@ import Link from 'next/link';
 import { ExamConfigModal } from '@/features/exam/components';
 import { AnswerSheet } from '@/features/exam/components';
 import { ResultsAnalysis } from '@/features/exam/components';
-import { formatTimeExtended } from '@/shared/utils/timeFormatter';
-import { saveFullExam } from '@/shared/utils/progressStorage';
-import { MATHEMATICS_QUESTIONS, LANGUAGE_QUESTIONS, SCIENCE_QUESTIONS, SOCIAL_QUESTIONS } from '@/shared/data';
-import type { ExamQuestion } from '@/shared/types/question';
+import { formatTimeExtended } from '@/services/persistence';
+import { saveFullExam } from '@/services/persistence';
+import { MATHEMATICS_QUESTIONS, LANGUAGE_QUESTIONS, SCIENCE_QUESTIONS, SOCIAL_QUESTIONS } from '@/features/exam/data';
+import type { ExamQuestion } from '@/features/exam/types/question';
 import type { ExamConfig } from '@/features/exam/types';
 
 const AREA_INFO = {

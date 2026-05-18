@@ -7,7 +7,7 @@ import { useRouter } from 'next/navigation';
 import { Icon } from '@/shared/components/Icon';
 import { useAuth } from '@/context/AuthContext';
 import { useUser, useUserData, useProgress, useExam } from '@/hooks';
-import { updateUsername, updateUserBio, updateProfileImage } from '@/shared/utils/userProfile';
+import { updateUsername, updateUserBio, updateProfileImage } from '@/services/persistence';
 // import { DonationSection } from '@/features/home';
 
 // --- Internal Components for UI Consistency ---

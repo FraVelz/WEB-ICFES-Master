@@ -3,7 +3,7 @@
 import { cn } from '@/utils/cn';
 import Link from 'next/link';
 import { Icon } from '@/shared/components/Icon';
-import { AnimatedReveal } from '@/shared/components/AnimatedReveal';
+import { AnimatedReveal } from '@/features/home/components/AnimatedReveal';
 
 import { useAppDispatch } from '@/store/hooks';
 import { setDemoMode } from '@/store/slices/uiSessionSlice';

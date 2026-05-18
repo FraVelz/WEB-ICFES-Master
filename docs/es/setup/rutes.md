@@ -21,6 +21,7 @@ Estas son las **URLs** del proyecto. La ruta pública `/aprendizaje` redirige de
 | ------------------- | ---------------------------------- |
 | `/ruta-aprendizaje` | Ruta de aprendizaje (con chat IA)  |
 | `/logros`           | Logros y gamificación              |
+| `/progreso`         | Resumen de progreso académico      |
 | `/perfil`           | Perfil del usuario                 |
 | `/perfil/public`    | Perfil público                     |
 | `/clasificatoria`   | Clasificación / ranking            |
@@ -58,4 +59,4 @@ Estas son las **URLs** del proyecto. La ruta pública `/aprendizaje` redirige de
 | `/api/chat` | POST   | Chat con modelo de IA para el asistente  |
 
 ---
-*Archivo generado por IA. Última actualización: sábado, 16 de mayo de 2026.*
+*Archivo generado por IA. Última actualización: lunes, 18 de mayo de 2026.*

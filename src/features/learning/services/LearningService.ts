@@ -1,5 +1,5 @@
 import { BASICO_TOPICS, INTERMEDIO_TOPICS } from '../data/roadmapData';
-import { getCompletedLessons } from '@/shared/utils/progressStorage';
+import { getCompletedLessons } from '@/services/persistence';
 import API_CONFIG from '@/services/api.config';
 import LearningSupabaseService from '@/services/supabase/LearningSupabaseService';
 

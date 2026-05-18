@@ -1,8 +1,10 @@
+'use client';
+
 /** Aggregate progress + recommendations */
 import { useState, useEffect, useCallback } from 'react';
 import { useAuth } from '@/context/AuthContext';
 import { loadProgressViewState, resetProgressData, type ProgressViewState } from '@/services/persistence';
-import type { ProgressData, AttemptWithQuestions } from '@/shared/utils/progressStorage';
+import type { ProgressData, AttemptWithQuestions } from '@/services/persistence';
 
 export function useProgress() {
   const { user } = useAuth();
