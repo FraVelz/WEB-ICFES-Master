@@ -139,7 +139,7 @@
   display: none;
 }
 
-/* Enlace “Volver arriba”: oculto salvo al tabular (flotante y centrado al enfocar) */
+/* Control “Volver arriba”: oculto salvo al tabular (flotante y centrado al enfocar) */
 .skip-link {
   position: absolute;
   width: 1px;
@@ -152,6 +152,10 @@
   white-space: nowrap;
   border: 0;
   outline: none;
+  background: transparent;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
 }
 
 .skip-link:focus,
