@@ -91,7 +91,7 @@ export function LessonRenderer({ lessonId, steps }: LessonRendererProps) {
         </span>
         <div className="h-2 flex-1 overflow-hidden rounded-full bg-slate-800">
           <div
-            className="h-full rounded-full bg-cyan-500 transition-all duration-300 ease-out"
+            className="h-full rounded-full bg-app-ring transition-all duration-300 ease-out"
             style={{ width: `${((currentIndex + 1) / total) * 100}%` }}
           />
         </div>
@@ -120,8 +120,8 @@ export function LessonRenderer({ lessonId, steps }: LessonRendererProps) {
             onClick={goNext}
             disabled={!canProceed}
             className={cn(
-              'min-h-[52px] rounded-xl bg-cyan-600 px-8 text-lg font-semibold text-white transition',
-              'enabled:hover:bg-cyan-500 disabled:cursor-not-allowed disabled:opacity-40'
+              'min-h-[52px] rounded-xl bg-app-accent-strong px-8 text-lg font-semibold text-white transition',
+              'enabled:hover:bg-app-ring disabled:cursor-not-allowed disabled:opacity-40'
             )}
           >
             Siguiente

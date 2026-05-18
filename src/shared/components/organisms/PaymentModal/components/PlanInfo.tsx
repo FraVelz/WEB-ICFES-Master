@@ -15,7 +15,7 @@ export const PlanInfo = ({ plan, billingPeriod, priceCalculation }: PlanInfoProp
     <div className="mb-6 rounded-lg border border-slate-700/50 bg-linear-to-r from-slate-800/50 to-slate-800/30 p-4">
       <div className="mb-3 flex items-center justify-between">
         <span className="font-medium text-slate-300">{plan?.name}</span>
-        <span className="text-3xl font-bold text-cyan-400">{getPrice()}</span>
+        <span className="text-3xl font-bold text-app-accent">{getPrice()}</span>
       </div>
       <div className="space-y-2">
         <div className="flex items-center justify-between text-sm">

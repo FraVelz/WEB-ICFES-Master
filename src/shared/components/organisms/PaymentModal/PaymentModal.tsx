@@ -248,7 +248,7 @@ export const PaymentModal = ({ isOpen, onClose, plan }: PaymentModalProps) => {
             />
           ) : isSamePlanActive ? (
             <div className="py-12 text-center">
-              <div className="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full border-2 border-blue-500 bg-blue-500/20">
+              <div className="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full border-2 border-blue-500 bg-lesson-lc-glow-a/20">
                 <Icon name="check-circle" size="2xl" className="text-4xl text-blue-400" />
               </div>
               <h3 className="mb-4 text-2xl font-bold text-white">Plan ya Activo</h3>

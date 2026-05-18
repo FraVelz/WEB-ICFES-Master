@@ -8,8 +8,8 @@ export const ProfileCard = ({
 }) => (
   <div
     className={cn(
-      'rounded-2xl border border-cyan-500/20 bg-white/5 p-8 backdrop-blur-xl transition-all',
-      'duration-300 hover:border-cyan-500/50 hover:shadow-lg hover:shadow-cyan-500/20'
+      'rounded-2xl border border-app-ring/20 bg-white/5 p-8 backdrop-blur-xl transition-all',
+      'duration-300 hover:border-app-ring/50 hover:shadow-lg hover:shadow-app-ring/20'
     )}
   >
     {/* Avatar Section */}
@@ -17,8 +17,8 @@ export const ProfileCard = ({
       <div
         className={cn(
           'mx-auto flex h-32 w-32 items-center justify-center overflow-hidden rounded-full border-4',
-          'border-cyan-500/30 bg-linear-to-r from-cyan-500 to-blue-600 shadow-lg shadow-cyan-500/20',
-          'transition-all duration-300 hover:scale-110 hover:border-cyan-400'
+          'border-app-ring/30 bg-linear-to-r from-cta-from to-cta-to shadow-lg shadow-app-ring/20',
+          'transition-all duration-300 hover:scale-110 hover:border-app-accent'
         )}
       >
         {user?.profileImage ? (
@@ -39,17 +39,17 @@ export const ProfileCard = ({
     </div>
 
     {/* Username */}
-    <div className="mb-4 border-b border-cyan-500/20 pb-4 text-center">
-      <h2 className="bg-linear-to-r from-cyan-400 to-blue-400 bg-clip-text text-2xl font-bold text-transparent">
+    <div className="mb-4 border-b border-app-ring/20 pb-4 text-center">
+      <h2 className="bg-linear-to-r from-hub-title-from to-blue-400 bg-clip-text text-2xl font-bold text-transparent">
         {user?.username || user?.displayName || 'Usuario'}
       </h2>
-      <p className="mt-2 text-sm text-cyan-300/60">Miembro desde {new Date().toLocaleDateString()}</p>
+      <p className="mt-2 text-sm text-app-accent-muted/60">Miembro desde {new Date().toLocaleDateString()}</p>
     </div>
 
     {/* Bio */}
     {user?.bio && (
       <div className="pt-4 text-center">
-        <p className="max-w-xs text-sm text-cyan-100/80 italic">"{user.bio}"</p>
+        <p className="max-w-xs text-sm text-app-on-accent/80 italic">"{user.bio}"</p>
       </div>
     )}
   </div>
@@ -129,15 +129,15 @@ export const RanksGrid = ({
           className={cn(
             'rounded-xl border-2 p-4 transition-all duration-300 hover:scale-105',
             isCurrentRank
-              ? 'border-cyan-500/60 bg-cyan-500/15 shadow-lg shadow-cyan-500/20'
-              : 'border-slate-700/50 bg-slate-800/20 hover:border-cyan-500/40'
+              ? 'border-app-ring/60 bg-app-ring/15 shadow-lg shadow-app-ring/20'
+              : 'border-slate-700/50 bg-slate-800/20 hover:border-app-ring/40'
           )}
         >
           <div className="mb-2 text-4xl">{r.icon}</div>
           <div className="text-sm font-bold text-white">{r.name}</div>
           <div className="text-xs text-slate-400">+{r.minScore}%</div>
           {isCurrentRank && (
-            <div className="mt-3 flex items-center gap-1 text-xs font-semibold text-cyan-400">
+            <div className="mt-3 flex items-center gap-1 text-xs font-semibold text-app-accent">
               <Icon name="check-circle" />
               Actual
             </div>

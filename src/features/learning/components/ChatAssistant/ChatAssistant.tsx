@@ -165,9 +165,9 @@ export const ChatAssistant = () => {
         className={cn(
           'fixed bottom-28 left-6 z-10 flex h-14 w-14 cursor-pointer items-center justify-center',
           'lg:right-6 lg:bottom-6 lg:left-auto',
-          'rounded-full border-2 border-cyan-400/50 bg-linear-to-r from-cyan-500 to-blue-600',
-          'text-white shadow-lg shadow-cyan-500/30 transition-all duration-300 hover:scale-110',
-          'hover:shadow-cyan-500/50'
+          'rounded-full border-2 border-app-accent/50 bg-linear-to-r from-cta-from to-cta-to',
+          'text-white shadow-lg shadow-app-ring/30 transition-all duration-300 hover:scale-110',
+          'hover:shadow-app-ring/50'
         )}
         aria-label="Abrir asistente de chat"
       >
@@ -180,19 +180,19 @@ export const ChatAssistant = () => {
           ref={chatPanelRef}
           className={cn(
             'fixed right-6 bottom-24 z-50 flex h-[min(500px,70vh)] w-[min(400px,calc(100vw-3rem))]',
-            'flex-col overflow-hidden rounded-2xl border border-cyan-500/30 bg-slate-900/98 shadow-2xl',
-            'shadow-cyan-500/20 backdrop-blur-xl'
+            'flex-col overflow-hidden rounded-2xl border border-app-ring/30 bg-slate-900/98 shadow-2xl',
+            'shadow-app-ring/20 backdrop-blur-xl'
           )}
         >
           {/* Header */}
-          <div className="flex items-center justify-between border-b border-cyan-500/20 bg-linear-to-r from-cyan-600/30 to-blue-600/30 px-4 py-3">
+          <div className="flex items-center justify-between border-b border-app-ring/20 bg-linear-to-r from-app-accent-strong/30 to-blue-600/30 px-4 py-3">
             <div className="flex items-center gap-3">
-              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-linear-to-r from-cyan-500 to-blue-600">
+              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-linear-to-r from-cta-from to-cta-to">
                 <Icon name="robot" className="text-white" />
               </div>
               <div>
                 <h3 className="font-bold text-white">Asistente ICFES</h3>
-                <p className="text-xs text-cyan-300/80">
+                <p className="text-xs text-app-accent-muted/80">
                   {isAnonymous
                     ? anonQuotaReached
                       ? 'Límite de invitado alcanzado'
@@ -214,8 +214,8 @@ export const ChatAssistant = () => {
           <div className="custom-scrollbar flex-1 space-y-4 overflow-y-auto p-4">
             {messages.length === 0 && (
               <div className="flex h-full flex-col items-center justify-center px-4 text-center">
-                <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-cyan-500/20">
-                  <Icon name="message" size="xl" className="text-cyan-400" />
+                <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-app-ring/20">
+                  <Icon name="message" size="xl" className="text-app-accent" />
                 </div>
                 <p className="mb-2 text-sm text-slate-400">¿Tienes preguntas sobre el ICFES?</p>
                 <p className="text-xs text-slate-500">
@@ -231,19 +231,19 @@ export const ChatAssistant = () => {
                 <div
                   className={cn(
                     'flex h-8 w-8 shrink-0 items-center justify-center rounded-full',
-                    msg.role === 'user' ? 'bg-blue-500/30' : 'bg-cyan-500/30'
+                    msg.role === 'user' ? 'bg-ambient-a/30' : 'bg-app-ring/30'
                   )}
                 >
                   <Icon
                     name={msg.role === 'user' ? 'user' : 'robot'}
-                    className={msg.role === 'user' ? 'text-blue-400' : 'text-cyan-400'}
+                    className={msg.role === 'user' ? 'text-blue-400' : 'text-app-accent'}
                   />
                 </div>
                 <div
                   className={cn(
                     'max-w-[85%] rounded-2xl px-4 py-2.5',
                     msg.role === 'user'
-                      ? 'rounded-br-md border border-blue-500/30 bg-blue-500/30'
+                      ? 'rounded-br-md border border-blue-500/30 bg-ambient-a/30'
                       : 'rounded-bl-md border border-slate-700/50 bg-slate-800/80'
                   )}
                 >
@@ -265,21 +265,21 @@ export const ChatAssistant = () => {
 
             {isTyping && (
               <div className="flex gap-3">
-                <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-cyan-500/30">
-                  <Icon name="robot" className="text-cyan-400" />
+                <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-app-ring/30">
+                  <Icon name="robot" className="text-app-accent" />
                 </div>
                 <div className="rounded-2xl rounded-bl-md border border-slate-700/50 bg-slate-800/80 px-4 py-3">
                   <div className="flex gap-1.5">
                     <span
-                      className="h-2 w-2 animate-bounce rounded-full bg-cyan-400"
+                      className="h-2 w-2 animate-bounce rounded-full bg-hub-orb"
                       style={{ animationDelay: '0ms' }}
                     />
                     <span
-                      className="h-2 w-2 animate-bounce rounded-full bg-cyan-400"
+                      className="h-2 w-2 animate-bounce rounded-full bg-hub-orb"
                       style={{ animationDelay: '150ms' }}
                     />
                     <span
-                      className="h-2 w-2 animate-bounce rounded-full bg-cyan-400"
+                      className="h-2 w-2 animate-bounce rounded-full bg-hub-orb"
                       style={{ animationDelay: '300ms' }}
                     />
                   </div>
@@ -294,7 +294,7 @@ export const ChatAssistant = () => {
             {anonQuotaReached ? (
               <p className="text-center text-sm text-slate-300">
                 Has usado las {CHAT_ANON_LIMIT} preguntas gratis.{' '}
-                <Link href="/login" className="font-semibold text-cyan-400 underline hover:text-cyan-300">
+                <Link href="/login" className="font-semibold text-app-accent underline hover:text-app-accent-muted">
                   Inicia sesión
                 </Link>{' '}
                 para seguir.
@@ -311,16 +311,16 @@ export const ChatAssistant = () => {
                   disabled={isTyping}
                   className={cn(
                     'flex-1 rounded-xl border border-slate-600 bg-slate-800 px-4 py-3 text-white',
-                    'placeholder-slate-500 transition-all focus:border-cyan-500 focus:ring-2',
-                    'focus:ring-cyan-500/30 focus:outline-none disabled:opacity-60'
+                    'placeholder-slate-500 transition-all focus:border-app-ring focus:ring-2',
+                    'focus:ring-app-ring/30 focus:outline-none disabled:opacity-60'
                   )}
                 />
                 <button
                   onClick={handleSend}
                   disabled={!inputValue.trim() || isTyping}
                   className={cn(
-                    'cursor-pointer rounded-xl bg-linear-to-r from-cyan-500 to-blue-600 px-4 py-3 text-white',
-                    'transition-all hover:from-cyan-600 hover:to-blue-700 disabled:cursor-not-allowed',
+                    'cursor-pointer rounded-xl bg-linear-to-r from-cta-from to-cta-to px-4 py-3 text-white',
+                    'transition-all hover:from-app-accent-strong hover:to-blue-700 disabled:cursor-not-allowed',
                     'disabled:opacity-50'
                   )}
                 >

@@ -22,8 +22,8 @@ export default function DemoProtectedPage({ children }: { children: React.ReactN
     return (
       <div className="flex min-h-dvh flex-col items-center justify-center bg-linear-to-b from-black via-slate-950 to-black text-white">
         <div className="text-center">
-          <div className="mx-auto mb-4 h-16 w-16 animate-spin rounded-full border-4 border-cyan-500/30 border-t-cyan-500" />
-          <p className="text-lg font-semibold text-cyan-400">Verificando sesión...</p>
+          <div className="mx-auto mb-4 h-16 w-16 animate-spin rounded-full border-4 border-app-ring/30 border-t-app-ring" />
+          <p className="text-lg font-semibold text-app-accent">Verificando sesión...</p>
         </div>
       </div>
     );

@@ -11,7 +11,7 @@ export const PaymentHeader = ({ plan, onClose }: PaymentHeaderProps) => {
     <div className="flex shrink-0 items-center justify-between border-b border-slate-700 p-6">
       <div>
         <h2 className="flex items-center gap-2 text-2xl font-bold text-white">
-          <Icon name="credit-card" className="text-cyan-400" />
+          <Icon name="credit-card" className="text-app-accent" />
           Pago Seguro
         </h2>
         <p className="mt-1 text-sm text-slate-400">{plan?.name}</p>

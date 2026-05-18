@@ -58,7 +58,7 @@ export const LessonAreaLinks = ({ roadmapAreaId, className }: LessonAreaLinksPro
               href={practicaHref}
               className={cn(
                 'rounded-full border border-amber-500/40 bg-amber-500/10 px-4 py-2 text-sm font-semibold text-amber-200',
-                'transition-colors hover:border-amber-400/60 hover:bg-amber-500/20 hover:text-white'
+                'transition-colors hover:border-amber-400/60 hover:bg-lesson-soc-glow-b/20 hover:text-white'
               )}
             >
               Modo práctica ICFES
@@ -79,7 +79,7 @@ export const LessonAreaLinks = ({ roadmapAreaId, className }: LessonAreaLinksPro
                 href={href}
                 className={cn(
                   'rounded-full border border-slate-600/80 bg-slate-800/60 px-3 py-1.5 text-xs font-medium text-slate-200',
-                  'transition-colors hover:border-cyan-500/50 hover:bg-slate-700/80 hover:text-white'
+                  'transition-colors hover:border-app-ring/50 hover:bg-slate-700/80 hover:text-white'
                 )}
               >
                 {formatTopicLabel(topic)}

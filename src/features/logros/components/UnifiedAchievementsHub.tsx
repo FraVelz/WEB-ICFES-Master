@@ -135,9 +135,9 @@ export const UnifiedAchievementsHub = ({
       label: 'Horas Estudiadas',
       value: totalHours,
       icon: 'chart-line',
-      color: 'from-cyan-600 to-cyan-400',
-      bgColor: 'bg-cyan-500/10',
-      borderColor: 'border-cyan-500/30',
+      color: 'from-app-accent-strong to-app-accent',
+      bgColor: 'bg-app-ring/10',
+      borderColor: 'border-app-ring/30',
     },
   ];
 
@@ -145,7 +145,7 @@ export const UnifiedAchievementsHub = ({
     return (
       <div className="flex min-h-dvh items-center justify-center bg-linear-to-b from-slate-950 via-slate-900 to-slate-950">
         <div className="space-y-4 text-center">
-          <div className="animate-spin text-4xl text-cyan-400">
+          <div className="animate-spin text-4xl text-app-accent">
             <Icon name="tasks" />
           </div>
           <p className="text-lg text-slate-300">Cargando tus logros...</p>
@@ -157,10 +157,10 @@ export const UnifiedAchievementsHub = ({
   return (
     <div className="w-full space-y-8">
       {/* HERO HEADER */}
-      <div className="border-gradient-to-r relative overflow-hidden rounded-2xl border from-cyan-500/50 via-blue-500/50 to-purple-500/50">
-        <div className="absolute inset-0 bg-linear-to-r from-cyan-900/20 via-blue-900/20 to-purple-900/20"></div>
+      <div className="border-gradient-to-r relative overflow-hidden rounded-2xl border from-hub-border-from/50 via-blue-500/50 to-purple-500/50">
+        <div className="absolute inset-0 bg-linear-to-r from-hub-sheet-from/20 via-blue-900/20 to-purple-900/20"></div>
         <div className="absolute inset-0 opacity-20">
-          <div className="absolute top-0 left-1/4 h-64 w-64 rounded-full bg-cyan-400 blur-3xl"></div>
+          <div className="absolute top-0 left-1/4 h-64 w-64 rounded-full bg-hub-orb blur-3xl"></div>
           <div className="absolute right-1/4 bottom-0 h-64 w-64 rounded-full bg-purple-400 blur-3xl"></div>
         </div>
 
@@ -168,7 +168,7 @@ export const UnifiedAchievementsHub = ({
           <div className="max-w-2xl">
             <div className="mb-4 flex items-center gap-3">
               <Icon name="trophy" size="2xl" className="text-4xl text-amber-400" />
-              <h1 className="bg-linear-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-5xl font-bold text-transparent">
+              <h1 className="bg-linear-to-r from-cta-text-start via-cta-text-via to-cta-text-end bg-clip-text text-5xl font-bold text-transparent">
                 Centro de Logros
               </h1>
             </div>
@@ -183,7 +183,7 @@ export const UnifiedAchievementsHub = ({
                   <Icon name="zap" size="lg" className="text-lg text-yellow-400" />
                   <span className="font-semibold text-white">Experiencia</span>
                 </div>
-                <span className="text-lg font-bold text-cyan-400">
+                <span className="text-lg font-bold text-app-accent">
                   {levelProgress.current} / {levelProgress.needed} XP
                 </span>
               </div>
@@ -247,7 +247,7 @@ export const UnifiedAchievementsHub = ({
             className={cn(
               'flex items-center gap-2 rounded-lg px-6 py-3 font-semibold whitespace-nowrap transition-all duration-300',
               activeTab === tab.id
-                ? 'bg-linear-to-r from-cyan-500 to-blue-500 text-white shadow-lg shadow-cyan-500/50'
+                ? 'bg-linear-to-r from-cta-from to-cta-progress-end text-white shadow-lg shadow-app-ring/50'
                 : 'text-slate-400 hover:bg-slate-800/50 hover:text-slate-200'
             )}
           >
@@ -265,7 +265,7 @@ export const UnifiedAchievementsHub = ({
           {/* Recent Achievements */}
           <div className="rounded-xl border border-slate-700 bg-linear-to-b from-slate-900/50 to-slate-950/50 p-8 backdrop-blur-md">
             <div className="mb-6 flex items-center gap-3">
-              <Icon name="tasks" size="2xl" className="text-2xl text-cyan-400" />
+              <Icon name="tasks" size="2xl" className="text-2xl text-app-accent" />
               <h2 className="text-2xl font-bold text-white">Logros Recientes</h2>
             </div>
 
@@ -276,8 +276,8 @@ export const UnifiedAchievementsHub = ({
                     <div
                       className={cn(
                         'relative overflow-hidden rounded-lg border border-slate-700 bg-slate-800 p-4',
-                        'transition-all duration-300 hover:border-cyan-500/50 hover:shadow-lg',
-                        'hover:shadow-cyan-500/20'
+                        'transition-all duration-300 hover:border-app-ring/50 hover:shadow-lg',
+                        'hover:shadow-app-ring/20'
                       )}
                     >
                       <div className="flex aspect-square items-center justify-center text-4xl">
@@ -322,7 +322,7 @@ export const UnifiedAchievementsHub = ({
                 <p className="text-slate-300">Nivel {level + 1}: Maestría Avanzada</p>
                 <div className="h-3 w-full overflow-hidden rounded-full bg-slate-800">
                   <div
-                    className="h-full bg-linear-to-r from-blue-500 to-cyan-500"
+                    className="h-full bg-linear-to-r from-blue-500 to-app-ring"
                     style={{ width: `${levelProgress.percentage}%` }}
                   />
                 </div>
@@ -360,7 +360,7 @@ export const UnifiedAchievementsHub = ({
                 className={cn(
                   'rounded-lg px-4 py-2 font-medium transition-all duration-300',
                   filterCategory === key
-                    ? 'bg-linear-to-r from-cyan-500 to-blue-500 text-white'
+                    ? 'bg-linear-to-r from-cta-from to-cta-progress-end text-white'
                     : 'bg-slate-800 text-slate-300 hover:bg-slate-700'
                 )}
               >
@@ -467,7 +467,7 @@ export const UnifiedAchievementsHub = ({
                     className={cn(
                       'rounded-lg border p-6 transition-all duration-300',
                       isCurrentLevel
-                        ? 'border-cyan-500/50 bg-cyan-500/10'
+                        ? 'border-app-ring/50 bg-app-ring/10'
                         : isCompleted
                           ? 'border-green-500/30 bg-green-500/10'
                           : 'border-slate-700 bg-slate-800/50'
@@ -479,7 +479,7 @@ export const UnifiedAchievementsHub = ({
                           className={cn(
                             'flex h-16 w-16 items-center justify-center rounded-lg text-3xl font-bold',
                             isCurrentLevel
-                              ? 'bg-linear-to-br from-cyan-500 to-blue-500 text-white'
+                              ? 'bg-linear-to-br from-cta-from to-cta-progress-end text-white'
                               : isCompleted
                                 ? 'bg-linear-to-br from-green-500 to-emerald-500 text-white'
                                 : 'bg-slate-700 text-slate-400'
@@ -497,7 +497,7 @@ export const UnifiedAchievementsHub = ({
                         </div>
                       </div>
                       {isCurrentLevel && (
-                        <span className="inline-block rounded-full border border-cyan-500/50 bg-cyan-500/20 px-3 py-1 text-sm font-semibold text-cyan-400">
+                        <span className="inline-block rounded-full border border-app-ring/50 bg-app-ring/20 px-3 py-1 text-sm font-semibold text-app-accent">
                           Actual
                         </span>
                       )}
@@ -505,7 +505,7 @@ export const UnifiedAchievementsHub = ({
                         <span
                           className={cn(
                             'flex inline-block items-center gap-2 rounded-full border border-green-500/50',
-                            'bg-green-500/20 px-3 py-1 text-sm font-semibold text-green-400'
+                            'bg-lesson-sci-glow-a/20 px-3 py-1 text-sm font-semibold text-green-400'
                           )}
                         >
                           <Icon name="check-circle" />
@@ -517,7 +517,7 @@ export const UnifiedAchievementsHub = ({
                     {isCurrentLevel && (
                       <div className="h-3 w-full overflow-hidden rounded-full border border-slate-700 bg-slate-800">
                         <div
-                          className="h-full bg-linear-to-r from-cyan-500 to-blue-500"
+                          className="h-full bg-linear-to-r from-cta-from to-cta-progress-end"
                           style={{ width: `${levelProgress.percentage}%` }}
                         />
                       </div>
@@ -626,7 +626,7 @@ export const UnifiedAchievementsHub = ({
                 </div>
                 <div className="flex justify-between border-b border-slate-700 py-3">
                   <span className="text-slate-400">Horas Estudiadas</span>
-                  <span className="font-bold text-cyan-400">{totalHours.toLocaleString()}</span>
+                  <span className="font-bold text-app-accent">{totalHours.toLocaleString()}</span>
                 </div>
                 <div className="flex justify-between py-3">
                   <span className="text-slate-400">Preguntas Contestadas</span>
@@ -680,8 +680,8 @@ export const UnifiedAchievementsHub = ({
             <button
               onClick={() => setSelectedBadge(null)}
               className={cn(
-                'w-full rounded-lg bg-linear-to-r from-cyan-500 to-blue-500 py-3 font-bold text-white',
-                'transition-all hover:shadow-lg hover:shadow-cyan-500/50'
+                'w-full rounded-lg bg-linear-to-r from-cta-from to-cta-progress-end py-3 font-bold text-white',
+                'transition-all hover:shadow-lg hover:shadow-app-ring/50'
               )}
             >
               Cerrar

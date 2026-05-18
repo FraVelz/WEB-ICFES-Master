@@ -470,12 +470,12 @@ export const LessonQuizModal = ({
                         'mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-xs font-bold lg:h-7 lg:w-7 lg:text-sm',
                         isSubmitted
                           ? option.id === currentQuestion.correctAnswer
-                            ? 'border border-green-500/30 bg-green-500/20 text-green-400'
+                            ? 'border border-green-500/30 bg-lesson-sci-glow-a/20 text-green-400'
                             : option.id === selectedOption
                               ? 'border border-red-500/30 bg-red-500/20 text-red-400'
                               : 'border border-slate-600/50 bg-slate-700/50 text-slate-500'
                           : selectedOption === option.id
-                            ? 'border border-blue-500/30 bg-blue-500/20 text-blue-400'
+                            ? 'border border-blue-500/30 bg-lesson-lc-glow-a/20 text-blue-400'
                             : 'border border-slate-600/50 bg-slate-700/50 text-slate-400'
                       )}
                     >

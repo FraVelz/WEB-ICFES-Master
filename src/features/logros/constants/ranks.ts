@@ -30,7 +30,7 @@ export const RANKS = {
     id: 'competente',
     label: 'Competente',
     order: 4,
-    color: 'from-cyan-400 to-cyan-600',
+    color: 'from-app-accent to-app-accent-strong',
     icon: '💡',
     promoteCount: 5,
     demoteCount: 10,

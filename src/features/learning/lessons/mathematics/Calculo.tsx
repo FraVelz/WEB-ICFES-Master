@@ -59,8 +59,8 @@ export const Calculo = () => {
   return (
     <div className="min-h-dvh bg-linear-to-br from-gray-900 via-slate-900 to-gray-900 text-white">
       <div className="pointer-events-none fixed inset-0 overflow-hidden">
-        <div className="absolute top-0 left-1/4 h-96 w-96 animate-pulse rounded-full bg-yellow-500/20 blur-3xl"></div>
-        <div className="absolute right-1/4 bottom-0 h-96 w-96 animate-pulse rounded-full bg-orange-500/20 blur-3xl"></div>
+        <div className="absolute top-0 left-1/4 h-96 w-96 animate-pulse rounded-full bg-lesson-math-glow-a/20 blur-3xl"></div>
+        <div className="absolute right-1/4 bottom-0 h-96 w-96 animate-pulse rounded-full bg-lesson-math-glow-b/20 blur-3xl"></div>
       </div>
 
       <div className="relative z-10 mx-auto max-w-4xl px-6 py-10">
@@ -131,11 +131,11 @@ export const Calculo = () => {
         </div>
 
         <section className="mb-16">
-          <h2 className="mb-8 text-3xl font-bold text-cyan-400">Fórmulas Clave</h2>
+          <h2 className="mb-8 text-3xl font-bold text-app-accent">Fórmulas Clave</h2>
           <div className="grid gap-4 md:grid-cols-2">
             {content.keyFormulas.map((formula, idx) => (
-              <div key={idx} className="rounded-xl border border-cyan-500/30 bg-cyan-500/10 p-6">
-                <code className="block text-center text-lg text-cyan-300">{formula}</code>
+              <div key={idx} className="rounded-xl border border-app-ring/30 bg-app-ring/10 p-6">
+                <code className="block text-center text-lg text-app-accent-muted">{formula}</code>
               </div>
             ))}
           </div>

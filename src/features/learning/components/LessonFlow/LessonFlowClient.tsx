@@ -20,7 +20,7 @@ export function LessonFlowClient({ lessonId, lessonTitle, steps }: LessonFlowCli
       <header className="mx-auto mb-6 max-w-2xl border-b border-slate-700/60 px-4 pt-2 pb-6">
         <Link
           href="/ruta-aprendizaje"
-          className="mb-3 inline-block text-sm font-medium text-cyan-400 transition hover:text-cyan-300"
+          className="mb-3 inline-block text-sm font-medium text-app-accent transition hover:text-app-accent-muted"
         >
           ← Volver a la ruta
         </Link>

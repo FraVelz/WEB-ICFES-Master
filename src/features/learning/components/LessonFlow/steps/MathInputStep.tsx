@@ -45,7 +45,7 @@ export function MathInputStep({ data, onStepReady }: MathInputStepProps) {
           }}
           className={cn(
             'min-h-[52px] w-full rounded-xl border border-slate-600 bg-slate-900/80 px-4 text-center',
-            'text-xl text-white placeholder:text-slate-500 focus:border-cyan-500 focus:outline-none',
+            'text-xl text-white placeholder:text-slate-500 focus:border-app-ring focus:outline-none',
             'sm:max-w-md'
           )}
           placeholder="Tu respuesta"
@@ -54,7 +54,7 @@ export function MathInputStep({ data, onStepReady }: MathInputStepProps) {
         <button
           type="button"
           onClick={verify}
-          className="min-h-[52px] rounded-xl bg-cyan-600 px-6 text-lg font-semibold text-white transition hover:bg-cyan-500"
+          className="min-h-[52px] rounded-xl bg-app-accent-strong px-6 text-lg font-semibold text-white transition hover:bg-app-ring"
         >
           Comprobar
         </button>

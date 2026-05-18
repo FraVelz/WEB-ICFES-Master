@@ -119,7 +119,7 @@ export const PathNode = ({
           <Link
             href={lessonHref}
             onClick={(e) => e.stopPropagation()}
-            className="mt-1 inline-flex items-center gap-1 text-xs font-medium text-cyan-400 underline-offset-2 hover:text-cyan-300 hover:underline"
+            className="mt-1 inline-flex items-center gap-1 text-xs font-medium text-app-accent underline-offset-2 hover:text-app-accent-muted hover:underline"
           >
             Lección interactiva
             <Icon name="arrow-right" size="sm" className="inline" />

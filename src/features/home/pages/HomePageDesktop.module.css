@@ -1,0 +1,19 @@
+/*
+ * Estado inicial alineado con el "from" de GSAP ScrollTrigger — evita un frame en estado final antes del JS.
+ * Con prefers-reduced-motion no se ejecuta GSAP y estas reglas muestran el contenido estable.
+ */
+
+.revealScroll {
+  opacity: 0;
+  transform: translate3d(0, 80px, 0) scale(0.9);
+  will-change: transform, opacity, filter;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .revealScroll {
+    opacity: 1;
+    transform: none;
+    filter: none;
+    will-change: auto;
+  }
+}

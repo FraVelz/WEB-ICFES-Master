@@ -5,37 +5,51 @@ Referencia del sistema de estilos y animaciones del proyecto.
 ## Stack de estilos
 
 - **Tailwind CSS 4** — utilidades y tema (`@import 'tailwindcss'` en `src/app/globals.css`)
-- **GSAP** — animaciones de entrada, modales y blobs
-- **`globals.css`** — keyframes del tema y variables en `@theme`
+- **`tailwind-animations`** — utilidades `animate-*` adicionales (import en el mismo `globals.css`)
+- **GSAP** — animaciones de entrada, modales y blobs decorativos
+- **`globals.css`** — paleta semántica y variables en `@theme` (sin keyframes propios de animación UI)
 
 ## Archivos principales
 
-| Archivo                 | Propósito                              |
-| ----------------------- | -------------------------------------- |
-| `src/app/globals.css`   | Tema Tailwind, keyframes, utilidades   |
-| `src/lib/gsap.ts`      | Configuración de GSAP y ScrollTrigger  |
-| `src/styles/global.css` | Estilos globales adicionales            |
+| Archivo                 | Propósito                                                                 |
+| ----------------------- | ------------------------------------------------------------------------- |
+| `src/app/globals.css`   | Tailwind, `tailwind-animations`, tokens `--color-*` en `@theme`, `.hide-scrollbar` |
+| `src/lib/gsap.ts`       | Configuración de GSAP y ScrollTrigger                                     |
+| `src/styles/global.css` | Reexporta el tema: `@import '../app/globals.css'`                         |
 
-## Tema y keyframes (`globals.css`)
+## Paleta y tema (`globals.css`)
 
-| Keyframe       | Descripción                      |
-| -------------- | -------------------------------- |
-| `fadeIn`       | Opacidad 0→1, translateY(20px)→0 |
-| `slideInLeft`  | Desde translateX(-30px)          |
-| `slideInRight` | Desde translateX(30px)           |
-| `scaleIn`      | Desde scale(0.95)                |
-| `float`        | Movimiento vertical suave (bucle) |
-| `glow`         | Box-shadow pulsante               |
-| `blob`         | Movimiento orgánico (bucle)       |
-| `slideInUp`    | Desde translateY(40px)            |
-| `fadeInScale`  | Opacidad + scale(0.95)→1          |
+Los colores de marca y por área se definen como **aliases** en `@theme` (por ejemplo `--color-app-accent: var(--color-cyan-400)`). Eso genera utilidades Tailwind como `text-app-accent`, `from-subject-lc-from`, `bg-ambient-a/30`, etc.
 
-Variables de animación en `@theme`:
+### Grupos habituales
 
-- `--animate-fadeIn`, `--animate-slideInLeft`, `--animate-slideInRight`
-- `--animate-scaleIn`, `--animate-float`, `--animate-glow`, `--animate-blob`
+| Prefijo / uso        | Ejemplos de utilidades | Notas |
+| -------------------- | ---------------------- | ----- |
+| Marca / foco         | `text-app-accent`, `border-app-ring`, `bg-app-ring/20` | Sustituyen el antiguo uso directo de `cyan-*` en muchos sitios |
+| CTA y titulares      | `from-cta-from to-cta-to`, `from-cta-text-start via-cta-text-via to-cta-text-end` | Botones y textos con gradiente (auth, hero) |
+| Ambiente (orbes)     | `bg-ambient-a/30`, `bg-ambient-b-strong/30` | Fondos difuminados en auth y home |
+| Áreas ICFES          | `from-subject-*-from to-subject-*-to`, `text-subject-lc`, `*-grad-*` en datos de home | Alineados con `AREA_INFO` y datos en `src/features/home/data/`, `roadmapData`, etc. |
+| Perfil / stats / nav | `from-stat-*`, `from-nav-*`, `text-profile-*-icon` | Tarjetas de perfil y métricas |
+| Lecciones            | `bg-lesson-*-glow-a/20` | Brillos de fondo por materia |
+| Home “por qué elegirnos” | `from-feature-N-from to-feature-N-to` | Lista en `src/features/home/data/features.ts` |
 
-## Animaciones con GSAP
+La lista completa de tokens está comentada por bloques en `src/app/globals.css`. Para nuevas pantallas, **prefiere estos nombres** a tonos sueltos (`blue-500`, `cyan-400`, …) salvo casos puntuales.
+
+## Animaciones
+
+### Paquete `tailwind-animations`
+
+Definiciones y keyframes vienen del paquete; en componentes se usan clases como:
+
+- `animate-fade-in`, `animate-fade-in-up` — aparición
+- `animate-zoom-in` — entrada tipo modal
+- Otras: ver documentación del paquete o la lista en su CSS
+
+### Tailwind (núcleo)
+
+Utilidades integradas: `animate-spin`, `animate-pulse`, `animate-bounce`, `animate-ping`, etc.
+
+### GSAP
 
 | Componente / hook        | Uso                                                |
 | ------------------------ | -------------------------------------------------- |
@@ -46,32 +60,31 @@ Variables de animación en `@theme`:
 
 Hooks relacionados: `useGSAPReveal` (`src/hooks/useGSAPReveal.ts`), `useGSAPModalEntrance`.
 
-## Paleta de colores
+## Colores por área (`AREA_INFO`)
 
-**Por área (`AREA_INFO` en `src/shared/constants/areaInfo.ts`):**
+En `src/shared/constants/areaInfo.ts`, el campo `color` usa **gradientes semánticos** (no clases `from-blue-400` sueltas), por ejemplo:
 
-| Área                  | Gradiente Tailwind              |
-| --------------------- | ------------------------------- |
-| Lectura Crítica       | `from-blue-400 to-blue-600`     |
-| Matemáticas           | `from-green-400 to-green-600`   |
-| Ciencias Naturales    | `from-purple-400 to-purple-600` |
-| Sociales y Ciudadanas | `from-orange-400 to-orange-600` |
-| Inglés                | `from-indigo-400 to-indigo-600` |
-| Examen completo       | `from-pink-400 to-pink-600`     |
+| Área                  | Clases de gradiente (resumen)        |
+| --------------------- | ------------------------------------ |
+| Lectura Crítica       | `from-subject-lc-from to-subject-lc-to` |
+| Matemáticas           | `from-subject-math-from to-subject-math-to` |
+| Ciencias Naturales    | `from-subject-sci-from to-subject-sci-to` |
+| Sociales y Ciudadanas | `from-subject-soc-from to-subject-soc-to` |
+| Inglés                | `from-subject-eng-from to-subject-eng-to` |
+| Examen completo       | `from-subject-full-from to-subject-full-to` |
 
-**Acentos:** cyan, azul, púrpura (`cyan-400`, `blue-500`, `purple-500`, etc.).
+Otros datos (home, ruta de aprendizaje, perfil) reutilizan los mismos tokens donde aplica.
 
-**Estados:** éxito (`green-*`), advertencia (`yellow-*`, `amber-*`), error (`red-*`).
+**Estados:** éxito (`green-*`), advertencia (`yellow-*`, `amber-*`), error (`red-*`), además de tokens específicos del tema cuando existan.
 
 ## Utilidades CSS
 
 ```css
 /* Scrollbar oculto */
 .hide-scrollbar
-
-/* Animación de aparición */
-.animate-fadeIn
 ```
+
+Animaciones: usar clases `animate-*` de Tailwind o `tailwind-animations` (no hay clase personalizada `.animate-fadeIn` en el proyecto).
 
 ## Tema oscuro
 
@@ -79,16 +92,16 @@ La app prioriza tema oscuro: fondos `bg-black`, `bg-slate-950`; texto `text-whit
 
 ## Patrones de componentes
 
-- **Botones:** gradientes `bg-linear-to-r`, `hover:shadow-lg`, `transition-all duration-300`
+- **Botones:** gradientes `bg-linear-to-r`, `hover:shadow-lg`, `transition-all duration-300`; a menudo `from-cta-from to-cta-to`
 - **Cards:** `bg-slate-800/50`, bordes `border-slate-700`, `backdrop-blur-xl`
-- **Inputs:** `bg-slate-800/50`, foco `focus:border-cyan-500`, `focus:ring-cyan-500/30`
-- **Badges / progreso:** gradientes por área, `rounded-xl`, `rounded-full`
+- **Inputs:** `bg-slate-800/50`, foco `focus:border-app-ring`, `focus:ring-app-ring/30`
+- **Badges / progreso:** gradientes por área (tokens `subject-*`), `rounded-xl`, `rounded-full`
 
 ## Estructura de clases habitual
 
 - Contenedores: `max-w-7xl mx-auto px-6 md:px-8`
 - Espaciado: `py-8`, `gap-4`, `gap-6`
-- Título con gradiente: `bg-clip-text text-transparent bg-linear-to-r from-cyan-400 via-blue-400 to-purple-400`
+- Título con gradiente: `bg-clip-text text-transparent bg-linear-to-r from-cta-text-start via-cta-text-via to-cta-text-end`
 
 ---
 *Archivo generado por IA. Última actualización: sábado, 16 de mayo de 2026.*

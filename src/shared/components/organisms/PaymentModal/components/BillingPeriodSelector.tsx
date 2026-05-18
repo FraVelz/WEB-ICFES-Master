@@ -16,7 +16,7 @@ export const BillingPeriodSelector = ({ billingPeriod, setBillingPeriod }: Billi
           className={cn(
             'rounded-lg px-4 py-3 font-semibold transition-all duration-300',
             billingPeriod === 'monthly'
-              ? 'border border-cyan-400 bg-cyan-500 text-white'
+              ? 'border border-app-accent bg-app-ring text-white'
               : 'border border-slate-600 bg-slate-700 text-slate-300 hover:border-slate-500'
           )}
         >
@@ -28,7 +28,7 @@ export const BillingPeriodSelector = ({ billingPeriod, setBillingPeriod }: Billi
           className={cn(
             'relative rounded-lg px-4 py-3 font-semibold transition-all duration-300',
             billingPeriod === 'annual'
-              ? 'border border-cyan-400 bg-cyan-500 text-white'
+              ? 'border border-app-accent bg-app-ring text-white'
               : 'border border-slate-600 bg-slate-700 text-slate-300 hover:border-slate-500'
           )}
         >

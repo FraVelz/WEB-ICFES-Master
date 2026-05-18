@@ -16,6 +16,7 @@ import {
 } from '@/shared/data';
 import type { ExamQuestion } from '@/shared/types/question';
 import type { ExamConfig } from '@/features/exam/types';
+import { AREA_INFO as SHARED_AREA_INFO } from '@/shared/constants/areaInfo';
 
 const AREA_QUESTIONS: Record<string, ExamQuestion[]> = {
   'lectura-critica': LANGUAGE_QUESTIONS,
@@ -25,31 +26,14 @@ const AREA_QUESTIONS: Record<string, ExamQuestion[]> = {
   ingles: ENGLISH_QUESTIONS,
 };
 
-const AREA_INFO = {
-  'lectura-critica': {
-    name: 'Lectura Crítica',
-    color: 'from-blue-400 to-blue-600',
-  },
-  matematicas: { name: 'Matemáticas', color: 'from-green-400 to-green-600' },
-  'ciencias-naturales': {
-    name: 'Ciencias Naturales',
-    color: 'from-purple-400 to-purple-600',
-  },
-  'sociales-ciudadanas': {
-    name: 'Sociales y Ciudadanas',
-    color: 'from-orange-400 to-orange-600',
-  },
-  ingles: { name: 'Inglés', color: 'from-indigo-400 to-indigo-600' },
-};
-
 export const PracticePage = () => {
   const { area } = useParams<{ area: string }>();
   const areaStr = Array.isArray(area) ? area[0] : (area ?? '');
   const allQuestions = AREA_QUESTIONS[areaStr] ?? [];
-  const areaInfo = AREA_INFO[areaStr as keyof typeof AREA_INFO] ?? {
-    name: 'Examen Completo',
-    color: 'from-pink-400 to-pink-600',
-  };
+  const shared = SHARED_AREA_INFO[areaStr as keyof typeof SHARED_AREA_INFO];
+  const areaInfo = shared
+    ? { name: shared.name, color: shared.color }
+    : { name: SHARED_AREA_INFO['examen-completo'].name, color: SHARED_AREA_INFO['examen-completo'].color };
 
   const [examConfig, setExamConfig] = useState<ExamConfig | null>(null);
   const [questions, setQuestions] = useState<ExamQuestion[]>([]);
@@ -141,7 +125,7 @@ export const PracticePage = () => {
     return (
       <div className="min-h-dvh bg-linear-to-br from-gray-900 via-slate-900 to-gray-900 text-white">
         <div className="pointer-events-none fixed inset-0 overflow-hidden">
-          <div className="absolute top-0 left-1/4 h-96 w-96 animate-pulse rounded-full bg-blue-500/20 blur-3xl"></div>
+          <div className="absolute top-0 left-1/4 h-96 w-96 animate-pulse rounded-full bg-lesson-lc-glow-a/20 blur-3xl"></div>
           <div className="absolute right-1/4 bottom-0 h-96 w-96 animate-pulse rounded-full bg-purple-500/20 blur-3xl"></div>
         </div>
 
@@ -246,12 +230,12 @@ export const PracticePage = () => {
       ? 'text-red-400'
       : timeRemaining !== null && timeRemaining < 600
         ? 'text-yellow-400'
-        : 'text-cyan-300';
+        : 'text-app-accent-muted';
 
   return (
     <div className="min-h-dvh bg-linear-to-br from-gray-900 via-slate-900 to-gray-900 text-white">
       <div className="pointer-events-none fixed inset-0 overflow-hidden">
-        <div className="absolute top-0 left-1/4 h-96 w-96 animate-pulse rounded-full bg-blue-500/20 blur-3xl"></div>
+        <div className="absolute top-0 left-1/4 h-96 w-96 animate-pulse rounded-full bg-lesson-lc-glow-a/20 blur-3xl"></div>
         <div className="absolute right-1/4 bottom-0 h-96 w-96 animate-pulse rounded-full bg-purple-500/20 blur-3xl"></div>
       </div>
 
@@ -342,7 +326,7 @@ export const PracticePage = () => {
                       <div
                         className={cn(
                           'flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-linear-to-r',
-                          'from-cyan-500 to-blue-500 text-sm font-bold'
+                          'from-cta-from to-cta-progress-end text-sm font-bold'
                         )}
                       >
                         {index + 1}
@@ -350,7 +334,7 @@ export const PracticePage = () => {
                       <div className="flex-1">
                         <p className="text-lg leading-relaxed font-semibold text-white">{question.text}</p>
                         <p className="mt-2 text-xs text-gray-500">
-                          Dificultad: <span className="text-cyan-300">{question.difficulty}</span>
+                          Dificultad: <span className="text-app-accent-muted">{question.difficulty}</span>
                         </p>
                       </div>
                     </div>
@@ -368,15 +352,15 @@ export const PracticePage = () => {
                           className={cn(
                             'w-full rounded-lg border-2 p-4 text-left transition-all duration-300',
                             isSelected
-                              ? 'border-cyan-400 bg-cyan-500/20 text-cyan-100'
-                              : 'border-white/20 bg-white/5 text-white hover:border-cyan-400/50 hover:bg-cyan-500/10'
+                              ? 'border-app-accent bg-app-ring/20 text-app-on-accent'
+                              : 'border-white/20 bg-white/5 text-white hover:border-app-accent/50 hover:bg-app-ring/10'
                           )}
                         >
                           <div className="flex items-center gap-3">
                             <div
                               className={cn(
                                 'flex h-8 w-8 shrink-0 items-center justify-center rounded-full border-2 text-sm font-bold',
-                                isSelected ? 'border-cyan-400 bg-cyan-500 text-white' : 'border-white/30'
+                                isSelected ? 'border-app-accent bg-app-ring text-white' : 'border-white/30'
                               )}
                             >
                               {option.letter}

@@ -98,8 +98,8 @@ export const ResetPasswordPage = () => {
         )}
       >
         <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
-          <div className="absolute top-1/3 left-1/4 h-96 w-96 animate-pulse rounded-full bg-blue-500/30 blur-3xl"></div>
-          <div className="absolute right-1/4 bottom-1/3 h-96 w-96 animate-pulse rounded-full bg-purple-500/30 blur-3xl"></div>
+          <div className="absolute top-1/3 left-1/4 h-96 w-96 animate-pulse rounded-full bg-ambient-a/30 blur-3xl"></div>
+          <div className="absolute right-1/4 bottom-1/3 h-96 w-96 animate-pulse rounded-full bg-ambient-b/30 blur-3xl"></div>
         </div>
 
         <div className="relative z-10 text-center">
@@ -118,8 +118,8 @@ export const ResetPasswordPage = () => {
     >
       {/* Background glow effects */}
       <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
-        <div className="absolute top-1/3 left-1/4 h-96 w-96 animate-pulse rounded-full bg-blue-500/30 blur-3xl"></div>
-        <div className="absolute right-1/4 bottom-1/3 h-96 w-96 animate-pulse rounded-full bg-purple-500/30 blur-3xl"></div>
+        <div className="absolute top-1/3 left-1/4 h-96 w-96 animate-pulse rounded-full bg-ambient-a/30 blur-3xl"></div>
+        <div className="absolute right-1/4 bottom-1/3 h-96 w-96 animate-pulse rounded-full bg-ambient-b/30 blur-3xl"></div>
       </div>
 
       {/* Card */}
@@ -128,7 +128,7 @@ export const ResetPasswordPage = () => {
         {success ? (
           <div className="space-y-6 text-center">
             <div className="mb-6 flex justify-center">
-              <div className="flex h-20 w-20 animate-pulse items-center justify-center rounded-full border border-green-500/50 bg-green-500/20">
+              <div className="flex h-20 w-20 animate-pulse items-center justify-center rounded-full border border-green-500/50 bg-lesson-sci-glow-a/20">
                 <Icon name="check-circle" size="2xl" className="text-4xl text-green-400" />
               </div>
             </div>
@@ -136,7 +136,7 @@ export const ResetPasswordPage = () => {
             <div>
               <h1
                 className={cn(
-                  'mb-4 bg-linear-to-r from-green-400 via-cyan-400 to-blue-400 bg-clip-text text-3xl',
+                  'mb-4 bg-linear-to-r from-green-400 via-app-accent to-blue-400 bg-clip-text text-3xl',
                   'font-black text-transparent md:text-4xl'
                 )}
               >
@@ -148,8 +148,8 @@ export const ResetPasswordPage = () => {
             <Link
               href="/login"
               className={cn(
-                'block rounded-lg bg-linear-to-r from-cyan-500 to-blue-600 px-4 py-3 text-center font-bold',
-                'text-white transition-all hover:shadow-lg hover:shadow-cyan-500/50'
+                'block rounded-lg bg-linear-to-r from-cta-from to-cta-to px-4 py-3 text-center font-bold',
+                'text-white transition-all hover:shadow-lg hover:shadow-app-ring/50'
               )}
             >
               {EMAIL_MESSAGES.resetPasswordPage.goToLoginButton}
@@ -160,13 +160,13 @@ export const ResetPasswordPage = () => {
             {/* Header */}
             <div className="mb-8 text-center">
               <div className="mb-4 flex justify-center">
-                <div className="flex h-16 w-16 items-center justify-center rounded-full border border-cyan-500/50 bg-cyan-500/20">
-                  <Icon name="lock" size="2xl" className="text-2xl text-cyan-400" />
+                <div className="flex h-16 w-16 items-center justify-center rounded-full border border-app-ring/50 bg-app-ring/20">
+                  <Icon name="lock" size="2xl" className="text-2xl text-app-accent" />
                 </div>
               </div>
               <h1
                 className={cn(
-                  'mb-4 bg-linear-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-3xl',
+                  'mb-4 bg-linear-to-r from-cta-text-start via-cta-text-via to-cta-text-end bg-clip-text text-3xl',
                   'font-black text-transparent md:text-4xl'
                 )}
               >
@@ -200,7 +200,7 @@ export const ResetPasswordPage = () => {
                     placeholder={EMAIL_MESSAGES.resetPasswordPage.passwordPlaceholder}
                     className={cn(
                       'w-full rounded-lg border border-slate-700 bg-slate-800/50 py-3 pr-10 pl-10 transition-all',
-                      'focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/30 focus:outline-none'
+                      'focus:border-app-ring focus:ring-2 focus:ring-app-ring/30 focus:outline-none'
                     )}
                   />
                   <button
@@ -228,7 +228,7 @@ export const ResetPasswordPage = () => {
                     placeholder={EMAIL_MESSAGES.resetPasswordPage.passwordPlaceholder}
                     className={cn(
                       'w-full rounded-lg border border-slate-700 bg-slate-800/50 py-3 pr-10 pl-10 transition-all',
-                      'focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/30 focus:outline-none'
+                      'focus:border-app-ring focus:ring-2 focus:ring-app-ring/30 focus:outline-none'
                     )}
                   />
                   <button
@@ -267,8 +267,8 @@ export const ResetPasswordPage = () => {
                 type="submit"
                 disabled={isLoading}
                 className={cn(
-                  'w-full rounded-lg bg-linear-to-r from-cyan-500 to-blue-600 px-4 py-3 font-bold text-white',
-                  'transition-all duration-300 hover:shadow-lg hover:shadow-cyan-500/50',
+                  'w-full rounded-lg bg-linear-to-r from-cta-from to-cta-to px-4 py-3 font-bold text-white',
+                  'transition-all duration-300 hover:shadow-lg hover:shadow-app-ring/50',
                   'disabled:cursor-not-allowed disabled:opacity-50'
                 )}
               >

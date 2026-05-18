@@ -23,16 +23,16 @@ export const HeroSection = ({ onDemoAccess }: { onDemoAccess: () => void }) => {
   };
 
   return (
-    <section className="flex min-h-dvh items-center justify-center px-6 pt-5 sm:pt-20 md:px-8">
+    <section className="focus:ring-app-accent flex min-h-dvh scroll-mt-4 items-center justify-center px-6 pt-5 outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-slate-950 sm:scroll-mt-6 sm:pt-20 md:px-8">
       <div className="mx-auto max-w-6xl space-y-8 text-center">
         {/* Badge */}
         <AnimatedReveal
           isVisible
           delay={0}
-          className="inline-flex items-center gap-2 rounded-full border border-cyan-500/50 bg-cyan-500/20 px-4 py-2"
+          className="border-app-ring/50 bg-app-ring/20 inline-flex items-center gap-2 rounded-full border px-4 py-2"
         >
-          <Icon name="star" className="text-cyan-400" />
-          <span className="text-sm font-semibold text-cyan-400">
+          <Icon name="star" className="text-app-accent" />
+          <span className="text-app-accent text-sm font-semibold">
             Conviertete en en uno de los primeros estudiantes en alcanzar +400
           </span>
         </AnimatedReveal>
@@ -41,7 +41,7 @@ export const HeroSection = ({ onDemoAccess }: { onDemoAccess: () => void }) => {
         <AnimatedReveal isVisible delay={0.15}>
           <h1
             className={cn(
-              'mb-6 bg-linear-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-5xl',
+              'from-cta-text-start via-cta-text-via to-cta-text-end mb-6 bg-linear-to-r bg-clip-text text-5xl',
               'leading-tight font-black text-transparent md:text-7xl lg:text-8xl'
             )}
           >
@@ -52,7 +52,7 @@ export const HeroSection = ({ onDemoAccess }: { onDemoAccess: () => void }) => {
         {/* Subtitle */}
         <AnimatedReveal isVisible delay={0.3}>
           <p className="mx-auto max-w-3xl text-lg leading-relaxed text-slate-300 md:text-xl">
-            La plataforma #1 con <span className="font-bold text-cyan-400">+500 preguntas</span>, simulacros reales,
+            La plataforma #1 con <span className="text-app-accent font-bold">+500 preguntas</span>, simulacros reales,
             gamificación adictiva y eficiente, y una comunidad de estudiantes preparándose contigo.
           </p>
         </AnimatedReveal>
@@ -60,11 +60,14 @@ export const HeroSection = ({ onDemoAccess }: { onDemoAccess: () => void }) => {
         {/* CTA Buttons */}
         <AnimatedReveal isVisible delay={0.45} className="flex flex-col justify-center gap-4 pt-4 md:flex-row">
           <button
+            type="button"
             onClick={handleDemoClick}
             className={cn(
               'flex cursor-pointer items-center justify-center gap-2 rounded-lg bg-linear-to-r',
-              'from-cyan-500 to-blue-600 px-8 py-4 text-lg font-bold text-white transition-all',
-              'duration-300 hover:scale-105 hover:shadow-lg hover:shadow-cyan-500/50'
+              'from-cta-from to-cta-to px-8 py-4 text-lg font-bold text-white transition-all',
+              'hover:shadow-app-ring/50 duration-300 hover:scale-105 hover:shadow-lg',
+              'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:outline-none',
+              'focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950'
             )}
           >
             <Icon name="play" />
@@ -73,9 +76,11 @@ export const HeroSection = ({ onDemoAccess }: { onDemoAccess: () => void }) => {
           <Link
             href="/login"
             className={cn(
-              'flex items-center justify-center gap-2 rounded-lg border-2 border-cyan-500 px-8 py-4',
-              'text-lg font-bold text-white transition-all duration-300 hover:border-cyan-400',
-              'hover:bg-cyan-500/10 hover:shadow-lg hover:shadow-cyan-500/30'
+              'border-app-ring flex items-center justify-center gap-2 rounded-lg border-2 px-8 py-4',
+              'hover:border-app-accent text-lg font-bold text-white transition-all duration-300',
+              'hover:bg-app-ring/10 hover:shadow-app-ring/30 hover:shadow-lg',
+              'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:outline-none',
+              'focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950'
             )}
           >
             <Icon name="rocket" />
@@ -86,7 +91,7 @@ export const HeroSection = ({ onDemoAccess }: { onDemoAccess: () => void }) => {
         {/* Stats */}
         <AnimatedReveal isVisible delay={0.6} className="mx-auto grid max-w-2xl grid-cols-3 gap-4 pt-8">
           <div className="rounded-lg border border-slate-700 bg-slate-800/50 p-2 sm:p-4">
-            <p className="text-3xl font-bold text-cyan-400">+500</p>
+            <p className="text-app-accent text-3xl font-bold">+500</p>
             <p className="mt-1 text-xs text-slate-400">Preguntas</p>
           </div>
           <div className="rounded-lg border border-slate-700 bg-slate-800/50 p-2 sm:p-4">

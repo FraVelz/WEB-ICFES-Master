@@ -20,7 +20,7 @@ export const ShopItemCard = ({ item, isPurchased, canAfford, onClick }: ShopItem
         isPurchased
           ? 'border-green-500/30 bg-slate-900/50 hover:border-green-500/50'
           : canAfford
-            ? 'border-slate-700 bg-slate-800/40 hover:-translate-y-1 hover:border-cyan-500 hover:bg-slate-800/60 hover:shadow-xl hover:shadow-cyan-500/10'
+            ? 'border-slate-700 bg-slate-800/40 hover:-translate-y-1 hover:border-app-ring hover:bg-slate-800/60 hover:shadow-xl hover:shadow-app-ring/10'
             : 'border-slate-800 bg-slate-900/30 opacity-70 hover:opacity-100'
       )}
     >
@@ -37,7 +37,7 @@ export const ShopItemCard = ({ item, isPurchased, canAfford, onClick }: ShopItem
         {isPurchased ? (
           <span
             className={cn(
-              'flex items-center gap-1 rounded-full border border-green-500/30 bg-green-500/20 px-2 py-1',
+              'flex items-center gap-1 rounded-full border border-green-500/30 bg-lesson-sci-glow-a/20 px-2 py-1',
               'text-xs font-bold text-green-400'
             )}
           >
@@ -74,7 +74,7 @@ export const ShopItemCard = ({ item, isPurchased, canAfford, onClick }: ShopItem
 
       {/* Info */}
       <div className="text-center">
-        <h3 className="mb-1 text-lg font-bold text-white transition-colors group-hover:text-cyan-400">{item.name}</h3>
+        <h3 className="mb-1 text-lg font-bold text-white transition-colors group-hover:text-app-accent">{item.name}</h3>
         <p className="mb-4 line-clamp-2 h-10 text-sm text-slate-400">{item.description}</p>
 
         {/* Price Button */}

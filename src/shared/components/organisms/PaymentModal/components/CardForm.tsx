@@ -34,7 +34,7 @@ export const CardForm = ({
           onChange={handleCardNumberChange}
           className={cn(
             'w-full rounded-lg border border-slate-700 bg-slate-800 px-4 py-3 text-white',
-            'placeholder-slate-500 transition-colors focus:border-cyan-500 focus:outline-none'
+            'placeholder-slate-500 transition-colors focus:border-app-ring focus:outline-none'
           )}
           required
         />
@@ -55,7 +55,7 @@ export const CardForm = ({
           }
           className={cn(
             'w-full rounded-lg border border-slate-700 bg-slate-800 px-4 py-3 text-white',
-            'placeholder-slate-500 transition-colors focus:border-cyan-500 focus:outline-none'
+            'placeholder-slate-500 transition-colors focus:border-app-ring focus:outline-none'
           )}
           required
         />
@@ -73,7 +73,7 @@ export const CardForm = ({
             onChange={(e) => handleExpiryChange('month', e.target.value)}
             className={cn(
               'w-full rounded-lg border border-slate-700 bg-slate-800 px-3 py-3 text-center text-sm',
-              'text-white placeholder-slate-500 transition-colors focus:border-cyan-500',
+              'text-white placeholder-slate-500 transition-colors focus:border-app-ring',
               'focus:outline-none'
             )}
             required
@@ -92,7 +92,7 @@ export const CardForm = ({
             onChange={(e) => handleExpiryChange('year', e.target.value)}
             className={cn(
               'w-full rounded-lg border border-slate-700 bg-slate-800 px-3 py-3 text-center text-sm',
-              'text-white placeholder-slate-500 transition-colors focus:border-cyan-500',
+              'text-white placeholder-slate-500 transition-colors focus:border-app-ring',
               'focus:outline-none'
             )}
             required
@@ -111,7 +111,7 @@ export const CardForm = ({
             onChange={handleCVVChange}
             className={cn(
               'w-full rounded-lg border border-slate-700 bg-slate-800 px-3 py-3 text-center text-sm',
-              'text-white placeholder-slate-500 transition-colors focus:border-cyan-500',
+              'text-white placeholder-slate-500 transition-colors focus:border-app-ring',
               'focus:outline-none'
             )}
             required

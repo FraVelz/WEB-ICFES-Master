@@ -2,7 +2,7 @@ export const BADGE_CATEGORIES_CONFIG = {
   primeros_pasos: {
     title: 'Primeros Pasos',
     icon: 'award',
-    color: 'from-blue-500 to-cyan-500',
+    color: 'from-blue-500 to-app-ring',
   },
   streak: {
     title: 'Rachas',
@@ -42,7 +42,7 @@ export const BADGE_CATEGORIES_CONFIG = {
   conocimiento: {
     title: 'Conocimiento Profundo',
     icon: 'fire',
-    color: 'from-cyan-500 to-blue-500',
+    color: 'from-cta-from to-cta-progress-end',
   },
   hitos: {
     title: 'Hitos Especiales',
@@ -62,6 +62,6 @@ export const BADGE_CATEGORIES_CONFIG = {
   estrategia: {
     title: 'Estrategia y Táctica',
     icon: 'lightbulb',
-    color: 'from-teal-500 to-cyan-500',
+    color: 'from-teal-500 to-app-ring',
   },
 };

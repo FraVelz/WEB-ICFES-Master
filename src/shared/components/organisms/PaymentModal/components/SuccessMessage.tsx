@@ -20,23 +20,23 @@ export const SuccessMessage = ({ plan, onClose, currentPlan }: SuccessMessagePro
         className={cn(
           'mx-auto mb-6 flex h-20 w-20 animate-pulse items-center justify-center rounded-full',
           isFree
-            ? 'border-2 border-green-500 bg-green-500/20'
+            ? 'border-2 border-green-500 bg-lesson-sci-glow-a/20'
             : isPro
               ? 'border-2 border-purple-500 bg-purple-500/20'
-              : 'border-2 border-cyan-500 bg-cyan-500/20'
+              : 'border-2 border-app-ring bg-app-ring/20'
         )}
       >
         <Icon
           name={isFree ? 'check-circle' : isPro ? 'trophy' : 'crown'}
           size="2xl"
-          className={cn('text-4xl', isFree ? 'text-green-400' : isPro ? 'text-purple-400' : 'text-cyan-400')}
+          className={cn('text-4xl', isFree ? 'text-green-400' : isPro ? 'text-purple-400' : 'text-app-accent')}
         />
       </div>
 
       <h3 className="mb-2 text-3xl font-bold text-white">{isFree ? '¡Felicitaciones!' : '¡Pago Exitoso!'}</h3>
 
       <p className="mb-2 text-slate-300">
-        Tu suscripción a <span className="font-semibold text-cyan-400">{plan?.name}</span>
+        Tu suscripción a <span className="font-semibold text-app-accent">{plan?.name}</span>
         {isWaitingActivation ? ' está en espera de activación.' : ' ha sido activada.'}
       </p>
 
@@ -65,8 +65,8 @@ export const SuccessMessage = ({ plan, onClose, currentPlan }: SuccessMessagePro
         <button
           onClick={onClose}
           className={cn(
-            'w-full cursor-pointer rounded-lg bg-cyan-600 px-6 py-3 font-bold text-white transition-all',
-            'duration-200 hover:bg-cyan-700'
+            'w-full cursor-pointer rounded-lg bg-app-accent-strong px-6 py-3 font-bold text-white transition-all',
+            'duration-200 hover:bg-app-accent-darker'
           )}
         >
           Cerrar

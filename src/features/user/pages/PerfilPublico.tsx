@@ -38,7 +38,7 @@ export const PerfilPublico = () => {
           <p className="text-slate-400">Debes proporcionar un ID de usuario en la URL.</p>
           <button
             onClick={() => router.push('/')}
-            className="cursor-pointer rounded-lg bg-cyan-600 px-6 py-2 font-medium transition-colors hover:bg-cyan-500"
+            className="cursor-pointer rounded-lg bg-app-accent-strong px-6 py-2 font-medium transition-colors hover:bg-app-ring"
           >
             Volver al inicio
           </button>
@@ -68,7 +68,7 @@ export const PerfilPublico = () => {
     return (
       <div className="flex min-h-dvh items-center justify-center bg-slate-950">
         <div className="space-y-4 text-center">
-          <div className="animate-spin text-4xl text-cyan-400">
+          <div className="animate-spin text-4xl text-app-accent">
             <Icon name="spinner" />
           </div>
           <p className="text-lg text-slate-300">Cargando perfil público...</p>
@@ -88,7 +88,7 @@ export const PerfilPublico = () => {
           <p className="text-slate-400">El perfil que buscas no existe o ha sido eliminado.</p>
           <button
             onClick={() => router.push('/')}
-            className="cursor-pointer rounded-lg bg-cyan-600 px-6 py-2 font-medium transition-colors hover:bg-cyan-500"
+            className="cursor-pointer rounded-lg bg-app-accent-strong px-6 py-2 font-medium transition-colors hover:bg-app-ring"
           >
             Volver al inicio
           </button>
@@ -102,7 +102,7 @@ export const PerfilPublico = () => {
       {/* Background Effects */}
       <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
         <div className="absolute top-0 left-0 h-96 w-full bg-linear-to-b from-purple-900/20 to-transparent"></div>
-        <div className="absolute top-1/4 left-0 h-96 w-96 rounded-full bg-cyan-500/10 blur-3xl"></div>
+        <div className="absolute top-1/4 left-0 h-96 w-96 rounded-full bg-app-ring/10 blur-3xl"></div>
       </div>
 
       <div className="relative z-10 container mx-auto max-w-6xl px-4 py-8">
@@ -118,7 +118,7 @@ export const PerfilPublico = () => {
               onClick={handleShare}
               className={cn(
                 'flex cursor-pointer items-center gap-2 rounded-lg bg-slate-800 p-2 text-sm font-medium',
-                'text-cyan-400 transition-colors hover:bg-slate-700'
+                'text-app-accent transition-colors hover:bg-slate-700'
               )}
               title="Copiar enlace"
             >

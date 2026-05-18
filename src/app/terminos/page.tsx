@@ -10,7 +10,7 @@ export default function TerminosPage() {
   return (
     <div className="relative min-h-dvh bg-linear-to-b from-black via-slate-950 to-black px-4 py-12 sm:px-6 lg:px-8">
       <div className="pointer-events-none fixed inset-0 z-0">
-        <div className="absolute top-1/3 left-1/4 h-96 w-96 animate-pulse rounded-full bg-blue-500/20 blur-3xl" />
+        <div className="absolute top-1/3 left-1/4 h-96 w-96 animate-pulse rounded-full bg-lesson-lc-glow-a/20 blur-3xl" />
         <div className="absolute right-1/4 bottom-1/3 h-96 w-96 animate-pulse rounded-full bg-purple-500/20 blur-3xl" />
       </div>
 
@@ -55,7 +55,7 @@ export default function TerminosPage() {
 
           <div>
             <h2 className="mt-8 mb-4 text-2xl font-bold text-purple-400">4. Resultados académicos</h2>
-            <div className="mb-6 rounded-lg border border-yellow-500/50 bg-yellow-500/20 p-4">
+            <div className="mb-6 rounded-lg border border-yellow-500/50 bg-lesson-math-glow-a/20 p-4">
               <p className="text-gray-200">
                 <strong className="text-yellow-300">No garantiza resultados específicos en el examen ICFES</strong>, ya
                 que dependen de múltiples factores.

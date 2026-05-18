@@ -172,7 +172,7 @@ export const AppMascot = ({
         {/* Glow effect */}
         <div
           className={cn(
-            'absolute inset-0 scale-110 rounded-full bg-linear-to-r from-cyan-400 via-blue-400',
+            'absolute inset-0 scale-110 rounded-full bg-linear-to-r from-cta-text-start via-cta-text-via',
             'to-purple-400 opacity-0 blur-xl transition-opacity duration-300 group-hover:opacity-50'
           )}
         ></div>
@@ -200,7 +200,7 @@ export const AppMascot = ({
         {/* Emotion indicator */}
         <div
           className={cn(
-            'absolute -right-2 -bottom-2 rounded-full bg-linear-to-r from-cyan-400 to-blue-500 px-3',
+            'absolute -right-2 -bottom-2 rounded-full bg-linear-to-r from-cta-text-start to-blue-500 px-3',
             'py-1 text-xs font-bold whitespace-nowrap text-white shadow-lg'
           )}
         >
@@ -215,23 +215,23 @@ export const AppMascot = ({
           <div
             className={cn(
               'absolute -top-3 left-1/2 h-0 w-0 -translate-x-1/2 transform border-t-8 border-r-8',
-              'border-l-8 border-t-cyan-400/80 border-r-transparent border-l-transparent'
+              'border-l-8 border-t-app-accent/80 border-r-transparent border-l-transparent'
             )}
           ></div>
 
           {/* Speech bubble */}
           <div
             className={cn(
-              'rounded-2xl border border-cyan-400/50 bg-linear-to-r from-cyan-400/10 to-blue-400/10 p-4',
-              'shadow-xl shadow-cyan-400/20 backdrop-blur-xl transition-all duration-300',
-              'hover:border-cyan-400'
+              'rounded-2xl border border-app-accent/50 bg-linear-to-r from-app-accent/10 to-blue-400/10 p-4',
+              'shadow-xl shadow-app-accent/20 backdrop-blur-xl transition-all duration-300',
+              'hover:border-app-accent'
             )}
           >
             <p className={cn(sizes.text, 'text-center leading-relaxed font-semibold text-white')}>{dialogue}</p>
           </div>
 
           {/* Quote mark decoration */}
-          <div className="absolute -top-2 -left-2 font-serif text-4xl text-cyan-400/30">"</div>
+          <div className="absolute -top-2 -left-2 font-serif text-4xl text-app-accent/30">"</div>
         </div>
       )}
 
@@ -246,10 +246,10 @@ export const AppMascot = ({
             </div>
           </div>
           <div className="flex flex-col items-center">
-            <Icon name="bullseye" className="mb-1 text-xl text-cyan-400" />
+            <Icon name="bullseye" className="mb-1 text-xl text-app-accent" />
             <span className="text-xs text-slate-300">Enfoque</span>
             <div className="mt-1 h-2 w-16 overflow-hidden rounded-full bg-slate-700">
-              <div className="h-full w-3/5 rounded-full bg-linear-to-r from-cyan-400 to-blue-400"></div>
+              <div className="h-full w-3/5 rounded-full bg-linear-to-r from-hub-title-from to-blue-400"></div>
             </div>
           </div>
         </div>

@@ -16,11 +16,11 @@ export const TableContent = ({ headers = [], rows = [], caption }: TableContentP
     <figure className="my-6 overflow-x-auto">
       <table className="w-full border-collapse text-sm">
         <thead>
-          <tr className="border-b border-white/20 bg-linear-to-r from-cyan-500/20 to-blue-500/20">
+          <tr className="border-b border-white/20 bg-linear-to-r from-app-ring/20 to-blue-500/20">
             {headers.map((header: string, idx: number) => (
               <th
                 key={idx}
-                className="border-r border-white/10 px-4 py-3 text-left font-semibold text-cyan-300 last:border-r-0"
+                className="border-r border-white/10 px-4 py-3 text-left font-semibold text-app-accent-muted last:border-r-0"
               >
                 {header}
               </th>

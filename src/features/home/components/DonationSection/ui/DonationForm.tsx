@@ -59,9 +59,9 @@ export const DonationForm = ({
 
             {/* Card form */}
             {currentMethod?.type === 'card' && (
-              <form onSubmit={handlePayment} className="animate-fadeIn space-y-4">
+              <form onSubmit={handlePayment} className="animate-fade-in-up space-y-4">
                 {paymentSuccess ? (
-                  <div className="rounded-xl border border-green-500/50 bg-green-500/20 p-6 text-center">
+                  <div className="rounded-xl border border-green-500/50 bg-lesson-sci-glow-a/20 p-6 text-center">
                     <Icon name="check" className="mb-3 text-4xl text-green-400" />
                     <h5 className="text-lg font-bold text-white">¡Gracias por tu Sprite!</h5>
                     <p className="text-sm text-gray-300">Tu apoyo ha sido recibido.</p>
@@ -192,7 +192,7 @@ export const DonationForm = ({
             )}
 
             {currentMethod?.type === 'copy' && (
-              <div className="animate-fadeIn rounded-xl border border-white/10 bg-white/5 p-4">
+              <div className="animate-fade-in-up rounded-xl border border-white/10 bg-white/5 p-4">
                 <p className="mb-2 text-xs text-gray-500 uppercase">Número de cuenta / Billetera</p>
                 <div className="mb-2 flex items-center gap-2">
                   <code className="flex-1 rounded-lg bg-black/30 p-3 font-mono text-sm break-all text-purple-300">
@@ -215,7 +215,7 @@ export const DonationForm = ({
             )}
 
             {currentMethod?.type === 'url' && (
-              <div className="animate-fadeIn rounded-xl border border-white/10 bg-white/5 p-4 text-center">
+              <div className="animate-fade-in-up rounded-xl border border-white/10 bg-white/5 p-4 text-center">
                 <p className="mb-4 text-sm text-gray-300">
                   Serás redirigido a la plataforma segura de {currentMethod.name} para completar la donación.
                 </p>

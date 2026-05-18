@@ -63,7 +63,7 @@ export const MapContent = ({ title, description, imageSrc, regions = [], svgCont
               className={cn(
                 'rounded p-2 px-3 text-xs font-medium transition-colors',
                 region.highlight
-                  ? 'border border-purple-500/50 bg-purple-500/30 text-purple-200'
+                  ? 'border border-purple-500/50 bg-ambient-b/30 text-purple-200'
                   : 'border border-white/10 bg-white/5 text-gray-300'
               )}
             >

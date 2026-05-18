@@ -85,8 +85,8 @@ export const SignupPage = () => {
     >
       {/* Background glow effects */}
       <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
-        <div className="absolute top-1/3 left-1/4 h-96 w-96 animate-pulse rounded-full bg-blue-500/30 blur-3xl"></div>
-        <div className="absolute right-1/4 bottom-1/3 h-96 w-96 animate-pulse rounded-full bg-purple-500/30 blur-3xl"></div>
+        <div className="absolute top-1/3 left-1/4 h-96 w-96 animate-pulse rounded-full bg-ambient-a/30 blur-3xl"></div>
+        <div className="absolute right-1/4 bottom-1/3 h-96 w-96 animate-pulse rounded-full bg-ambient-b/30 blur-3xl"></div>
       </div>
 
       {/* Signup Card */}
@@ -103,7 +103,7 @@ export const SignupPage = () => {
         {onboardingAnswers && (
           <button
             onClick={() => router.push('/onboarding')}
-            className="mb-6 inline-flex cursor-pointer items-center gap-2 text-sm text-cyan-400 transition-colors hover:text-cyan-300"
+            className="mb-6 inline-flex cursor-pointer items-center gap-2 text-sm text-app-accent transition-colors hover:text-app-accent-muted"
           >
             <Icon name="arrow-left" />
             Hacer de nuevo el Cuestionario
@@ -111,12 +111,12 @@ export const SignupPage = () => {
         )}
 
         <div className="mb-8 text-center">
-          <div className="mb-4 inline-flex h-16 w-16 items-center justify-center rounded-full bg-linear-to-r from-cyan-500 to-blue-600">
+          <div className="mb-4 inline-flex h-16 w-16 items-center justify-center rounded-full bg-linear-to-r from-cta-from to-cta-to">
             <Icon name="rocket" size="2xl" className="text-2xl" />
           </div>
           <h1
             className={cn(
-              'mb-2 bg-linear-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-3xl',
+              'mb-2 bg-linear-to-r from-cta-text-start via-cta-text-via to-cta-text-end bg-clip-text text-3xl',
               'font-black text-transparent md:text-4xl'
             )}
           >
@@ -144,7 +144,7 @@ export const SignupPage = () => {
                   placeholder="Juan Pérez"
                   className={cn(
                     'w-full rounded-lg border border-slate-700 bg-slate-800/50 py-3 pr-4 pl-10 transition-all',
-                    'focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/30 focus:outline-none'
+                    'focus:border-app-ring focus:ring-2 focus:ring-app-ring/30 focus:outline-none'
                   )}
                   required
                 />
@@ -167,7 +167,7 @@ export const SignupPage = () => {
                   placeholder="tu@email.com"
                   className={cn(
                     'w-full rounded-lg border border-slate-700 bg-slate-800/50 py-3 pr-4 pl-10 transition-all',
-                    'focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/30 focus:outline-none'
+                    'focus:border-app-ring focus:ring-2 focus:ring-app-ring/30 focus:outline-none'
                   )}
                   required
                 />
@@ -190,7 +190,7 @@ export const SignupPage = () => {
                   placeholder="••••••••"
                   className={cn(
                     'w-full rounded-lg border border-slate-700 bg-slate-800/50 py-3 pr-12 pl-10 transition-all',
-                    'focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/30 focus:outline-none'
+                    'focus:border-app-ring focus:ring-2 focus:ring-app-ring/30 focus:outline-none'
                   )}
                   required
                 />
@@ -245,7 +245,7 @@ export const SignupPage = () => {
                   placeholder="••••••••"
                   className={cn(
                     'w-full rounded-lg border border-slate-700 bg-slate-800/50 py-3 pr-12 pl-10 transition-all',
-                    'focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/30 focus:outline-none'
+                    'focus:border-app-ring focus:ring-2 focus:ring-app-ring/30 focus:outline-none'
                   )}
                   required
                 />
@@ -271,9 +271,9 @@ export const SignupPage = () => {
             <button
               type="submit"
               className={cn(
-                'flex w-full items-center justify-center gap-2 rounded-lg bg-linear-to-r from-cyan-500',
-                'to-blue-600 px-4 py-3 font-bold text-white transition-all duration-300 hover:shadow-lg',
-                'hover:shadow-cyan-500/50'
+                'flex w-full items-center justify-center gap-2 rounded-lg bg-linear-to-r from-cta-from',
+                'to-cta-to px-4 py-3 font-bold text-white transition-all duration-300 hover:shadow-lg',
+                'hover:shadow-app-ring/50'
               )}
             >
               <Icon name="rocket" />
