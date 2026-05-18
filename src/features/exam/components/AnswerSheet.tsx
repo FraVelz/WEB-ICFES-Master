@@ -1,5 +1,5 @@
 import { cn } from '@/utils/cn';
-import type { ExamQuestion } from '@/shared/types/question';
+import type { ExamQuestion } from '@/features/exam/types/question';
 
 interface AnswerSheetProps {
   totalQuestions: number;

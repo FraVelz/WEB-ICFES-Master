@@ -1,7 +1,7 @@
 import { cn } from '@/utils/cn';
 import { Icon } from '@/shared/components/Icon';
-import { AnswerOption } from '@/shared/components';
-import type { ExamQuestion } from '@/shared/types/question';
+import { AnswerOption } from './AnswerOption';
+import type { ExamQuestion } from '@/features/exam/types/question';
 
 interface QuestionPanelProps {
   question: ExamQuestion;

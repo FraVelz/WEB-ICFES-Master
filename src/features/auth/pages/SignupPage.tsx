@@ -4,10 +4,13 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { Icon } from '@/shared/components/Icon';
-import { GoogleSignInButton } from '@/shared/components/atoms/GoogleSignInButton';
-import { AUTH_NOT_CONFIGURED_ALERT } from '@/features/auth/constants/authMessages';
+import { GoogleSignInButton } from '@/features/auth/components/GoogleSignInButton';
+import { useAuth } from '@/context/AuthContext';
+import { AUTH_DEFAULT_REDIRECT } from '@/features/auth/constants/authRoutes';
+import { mapSupabaseAuthError, REQUIRES_EMAIL_CONFIRMATION } from '@/utils/mapSupabaseAuthError';
 
 export const SignupPage = () => {
+  const { signup } = useAuth();
   const [formData, setFormData] = useState({
     displayName: '',
     email: '',
@@ -18,6 +21,8 @@ export const SignupPage = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [error, setError] = useState('');
+  const [successMessage, setSuccessMessage] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [validations, setValidations] = useState({
     minLength: false,
     hasNumber: false,
@@ -54,9 +59,10 @@ export const SignupPage = () => {
     }
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError('');
+    setSuccessMessage('');
 
     if (!formData.displayName.trim()) {
       setError('Por favor ingresa tu nombre');
@@ -68,12 +74,38 @@ export const SignupPage = () => {
       return;
     }
 
+    if (!/[0-9]/.test(formData.password)) {
+      setError('La contraseña debe incluir al menos un número');
+      return;
+    }
+
+    if (!/[A-Z]/.test(formData.password)) {
+      setError('La contraseña debe incluir al menos una mayúscula');
+      return;
+    }
+
     if (formData.password !== formData.confirmPassword) {
       setError('Las contraseñas no coinciden');
       return;
     }
 
-    window.alert(AUTH_NOT_CONFIGURED_ALERT);
+    setIsSubmitting(true);
+    try {
+      await signup(formData.email.trim(), formData.password, formData.displayName.trim());
+      sessionStorage.removeItem('onboardingAnswers');
+      router.push(AUTH_DEFAULT_REDIRECT);
+    } catch (err) {
+      const message = err instanceof Error ? err.message : String(err);
+      if (message === REQUIRES_EMAIL_CONFIRMATION) {
+        setSuccessMessage(
+          'Te enviamos un correo de confirmación. Ábrelo y luego inicia sesión con tu cuenta.'
+        );
+        return;
+      }
+      setError(mapSupabaseAuthError(err, 'No se pudo crear la cuenta. Intenta de nuevo.'));
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -259,30 +291,45 @@ export const SignupPage = () => {
               </div>
             </div>
 
-            {/* Error Message */}
-            {error && (
+            {successMessage ? (
+              <div className="flex items-start gap-3 rounded-lg border border-green-500/50 bg-green-500/20 p-4">
+                <Icon name="check-circle" className="mt-0.5 shrink-0 text-green-400" />
+                <p className="text-sm text-green-300">{successMessage}</p>
+              </div>
+            ) : null}
+
+            {error ? (
               <div className="flex items-start gap-3 rounded-lg border border-red-500/50 bg-red-500/20 p-4">
                 <Icon name="exclamation-circle" className="mt-0.5 shrink-0 text-red-400" />
                 <p className="text-sm text-red-400">{error}</p>
               </div>
-            )}
+            ) : null}
 
-            {/* Submit Button */}
             <button
               type="submit"
+              disabled={isSubmitting || Boolean(successMessage)}
               className={cn(
                 'flex w-full items-center justify-center gap-2 rounded-lg bg-linear-to-r from-cta-from',
                 'to-cta-to px-4 py-3 font-bold text-white transition-all duration-300 hover:shadow-lg',
-                'hover:shadow-app-ring/50'
+                'hover:shadow-app-ring/50 disabled:cursor-not-allowed disabled:opacity-60'
               )}
             >
-              <Icon name="rocket" />
-              Crear Cuenta
+              {isSubmitting ? (
+                <>
+                  <Icon name="spinner" className="animate-spin" />
+                  Creando cuenta...
+                </>
+              ) : (
+                <>
+                  <Icon name="rocket" />
+                  Crear Cuenta
+                </>
+              )}
             </button>
           </form>
 
         <div className="mt-6">
-          <GoogleSignInButton authNotConfigured />
+          <GoogleSignInButton />
         </div>
       </div>
     </div>

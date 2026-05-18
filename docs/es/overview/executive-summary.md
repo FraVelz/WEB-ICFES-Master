@@ -72,4 +72,4 @@ pnpm start                 # Servidor de producción (tras el build)
 - **Variables de entorno:** Configurar `NEXT_PUBLIC_SUPABASE_URL` y `NEXT_PUBLIC_SUPABASE_ANON_KEY`.
 
 ---
-*Archivo generado por IA. Última actualización: sábado, 16 de mayo de 2026.*
+*Archivo generado por IA. Última actualización: lunes, 18 de mayo de 2026.*

@@ -1,10 +1,10 @@
-import DemoProtectedPage from '@/components/DemoProtectedPage';
+import ProtectedPage from '@/components/ProtectedPage';
 import LogrosPage from '@/features/logros';
 
 export default function Page() {
   return (
-    <DemoProtectedPage>
+    <ProtectedPage blockDemoContent={false}>
       <LogrosPage />
-    </DemoProtectedPage>
+    </ProtectedPage>
   );
 }

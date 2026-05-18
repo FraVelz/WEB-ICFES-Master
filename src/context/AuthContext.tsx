@@ -111,9 +111,25 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
     const {
       data: { subscription },
-    } = supabase.auth.onAuthStateChange((_event, session) => {
+    } = supabase.auth.onAuthStateChange(async (event, session) => {
       setUser(session?.user ? mapSupabaseUser(session.user) : null);
       setLoading(false);
+
+      if (event === 'SIGNED_IN' && session?.user) {
+        try {
+          const existing = await UserSupabaseService.getByUserId(session.user.id);
+          if (!existing) {
+            const meta = session.user.user_metadata;
+            await UserSupabaseService.createUser(session.user.id, {
+              email: session.user.email,
+              displayName:
+                meta?.display_name || meta?.full_name || session.user.email?.split('@')[0] || 'Usuario',
+            });
+          }
+        } catch (profileErr) {
+          console.warn('Perfil tras inicio de sesión (puede existir por trigger):', profileErr);
+        }
+      }
     });
 
     supabase.auth.getSession().then(({ data: { session } }) => {
@@ -211,7 +227,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     const { data, error: err } = await supabase.auth.signInWithOAuth({
       provider: 'google',
       options: {
-        redirectTo: origin ? `${origin}/ruta-aprendizaje` : undefined,
+        redirectTo: origin ? `${origin}/auth/callback?next=/ruta-aprendizaje` : undefined,
       },
     });
     if (err) {

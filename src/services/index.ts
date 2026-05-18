@@ -1,11 +1,8 @@
 /**
  * Application services barrel
  *
- * Dual persistence (Supabase / localStorage): prefer `@/services/persistence` helpers.
+ * Dual persistence (Supabase / localStorage): use `@/services/persistence`.
  */
-export { default as SubscriptionPlanService } from '@/features/store/services/SubscriptionPlanService';
-export { default as PlanScheduleService } from '@/features/store/services/PlanScheduleService';
-
+export * from './store';
+export * from './gamification';
 export * from './persistence';
-
-export { BADGES, LEVELS } from '@/features/logros/services/gamificationConstants';

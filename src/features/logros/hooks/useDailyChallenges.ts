@@ -3,7 +3,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useAuth } from '@/context/AuthContext';
 import { generateDailyChallenges } from '../utils/challengeGenerator';
-import { addVirtualMoney } from '@/shared/utils/userProfile';
+import { addVirtualMoney } from '@/services/persistence';
 
 const CHALLENGES_KEY = 'icfes_daily_challenges';
 

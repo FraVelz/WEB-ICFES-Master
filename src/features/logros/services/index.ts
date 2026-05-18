@@ -1,2 +1,2 @@
-export * from './gamificationConstants';
-export { default as GamificationLocalService } from './GamificationLocalService';
+export { BADGES, LEVELS } from '@/services/gamification/gamificationConstants';
+export { default as GamificationLocalService } from '@/services/gamification/GamificationLocalService';

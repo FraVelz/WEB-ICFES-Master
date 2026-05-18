@@ -2,93 +2,22 @@
 
 import { useParams } from 'next/navigation';
 
-import { Algebra } from '@/features/learning/lessons/mathematics/Algebra';
-import { Geometria } from '@/features/learning/lessons/mathematics/Geometria';
-import { Calculo } from '@/features/learning/lessons/mathematics/Calculo';
-import { Trigonometria } from '@/features/learning/lessons/mathematics/Trigonometria';
-import { NumerosComplejos } from '@/features/learning/lessons/mathematics/NumerosComplejos';
-
-import { Gramatica } from '@/features/learning/lessons/lenguaje/Gramatica';
-import { Comprension } from '@/features/learning/lessons/lenguaje/Comprension';
-import { Literatura } from '@/features/learning/lessons/lenguaje/Literatura';
-import { Ortografia } from '@/features/learning/lessons/lenguaje/Ortografia';
-import { Semantica } from '@/features/learning/lessons/lenguaje/Semantica';
-
-import { Biologia } from '@/features/learning/lessons/science/Biologia';
-import { Fisica } from '@/features/learning/lessons/science/Fisica';
-import { Quimica } from '@/features/learning/lessons/science/Quimica';
-import { Ecologia } from '@/features/learning/lessons/science/Ecologia';
-import { Termodinamica } from '@/features/learning/lessons/science/Termodinamica';
-
-import { Historia } from '@/features/learning/lessons/social/Historia';
-import { Geografia } from '@/features/learning/lessons/social/Geografia';
-import { Economia } from '@/features/learning/lessons/social/Economia';
-import { Ciudadania } from '@/features/learning/lessons/social/Ciudadania';
-import { Filosofia } from '@/features/learning/lessons/social/Filosofia';
-
-import { GramaticaIngles } from '@/features/learning/lessons/ingles/GramaticaIngles';
-import { Vocabulario } from '@/features/learning/lessons/ingles/Vocabulario';
-import { Lectura } from '@/features/learning/lessons/ingles/Lectura';
-import { TiemposVerbales } from '@/features/learning/lessons/ingles/TiemposVerbales';
-import { Conectores } from '@/features/learning/lessons/ingles/Conectores';
-
-const LESSONS: Record<string, Record<string, React.ComponentType>> = {
-  matematicas: {
-    algebra: Algebra,
-    geometria: Geometria,
-    calculo: Calculo,
-    trigonometria: Trigonometria,
-    'numeros-complejos': NumerosComplejos,
-  },
-  lenguaje: {
-    gramatica: Gramatica,
-    comprension: Comprension,
-    literatura: Literatura,
-    ortografia: Ortografia,
-    semantica: Semantica,
-  },
-  ciencias: {
-    biologia: Biologia,
-    fisica: Fisica,
-    quimica: Quimica,
-    ecologia: Ecologia,
-    termodinamica: Termodinamica,
-  },
-  sociales: {
-    historia: Historia,
-    geografia: Geografia,
-    economia: Economia,
-    ciudadania: Ciudadania,
-    filosofia: Filosofia,
-  },
-  ingles: {
-    gramatica: GramaticaIngles,
-    vocabulario: Vocabulario,
-    lectura: Lectura,
-    'tiempos-verbales': TiemposVerbales,
-    conectores: Conectores,
-  },
-};
+import { getLegacyLessonComponent } from '@/features/learning/lessons-legacy/registry';
 
 export function LessonPageClient() {
   const params = useParams();
   const area = params.area as string;
   const topic = params.topic as string;
 
-  const Component = LESSONS[area]?.[topic];
+  const Component = getLegacyLessonComponent(area, topic);
 
   if (!Component) {
     return (
-      <div className="flex min-h-[60vh] items-center justify-center text-white">
-        <div className="text-center">
-          <h2 className="mb-2 text-2xl font-bold">Lección no encontrada</h2>
-          <p className="text-slate-400">
-            No se encontró la lección para {area}/{topic}
-          </p>
-          <a href="/ruta-aprendizaje" className="mt-4 inline-block text-app-accent hover:underline">
-            Volver a la ruta de aprendizaje
-          </a>
-        </div>
+      <div className="flex min-h-[50vh] flex-col items-center justify-center p-8 text-center text-white">
+        <h1 className="mb-4 text-2xl font-bold">Lección no encontrada</h1>
+        <p className="text-slate-400">
+          No hay contenido para <strong>{area}</strong> / <strong>{topic}</strong>.
+        </p>
       </div>
     );
   }

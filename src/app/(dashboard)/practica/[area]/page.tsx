@@ -1,4 +1,4 @@
-import DemoProtectedPage from '@/components/DemoProtectedPage';
+import ProtectedPage from '@/components/ProtectedPage';
 import { PracticePage } from '@/features/exam/pages';
 import { PRACTICA_AREA_SLUGS } from '@/features/learning/constants/practiceDynamicRoutes';
 
@@ -8,8 +8,8 @@ export function generateStaticParams() {
 
 export default function Page() {
   return (
-    <DemoProtectedPage>
+    <ProtectedPage blockDemoContent={false}>
       <PracticePage />
-    </DemoProtectedPage>
+    </ProtectedPage>
   );
 }

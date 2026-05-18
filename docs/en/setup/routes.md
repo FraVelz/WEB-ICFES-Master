@@ -21,6 +21,7 @@ These are the project **URLs**. The public path `/aprendizaje` permanently redir
 | ------------------- | ----------------------------- |
 | `/ruta-aprendizaje` | Learning path (with AI chat)  |
 | `/logros`           | Achievements and gamification |
+| `/progreso`         | Academic progress summary     |
 | `/perfil`           | User profile                  |
 | `/perfil/public`    | Public profile                |
 | `/clasificatoria`   | Ranking / leaderboard         |
@@ -58,4 +59,4 @@ These are the project **URLs**. The public path `/aprendizaje` permanently redir
 | `/api/chat` | POST   | AI model integration for the assistant       |
 
 ---
-*AI-generated file. Last updated: Saturday, May 16, 2026.*
+*AI-generated file. Last updated: Monday, May 18, 2026.*

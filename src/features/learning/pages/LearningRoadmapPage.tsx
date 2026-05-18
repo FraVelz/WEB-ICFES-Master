@@ -1,13 +1,13 @@
 'use client';
 
 import { LearningRoadmap } from '@/features/learning/components';
-import { ChatAssistant } from '@/features/learning/components/ChatAssistant/ChatAssistant';
+import { ChatAssistant } from '@/features/learning/shell/ChatAssistant/ChatAssistant';
 
-import { StoreProvider, useIsActiveStore } from '@/features/learning/hooks/context-isActiveStore';
+import { RoadmapUiProvider, useRoadmapUi } from '@/features/learning/hooks/RoadmapUiContext';
 import { cn } from '@/utils/cn';
 
 const Component = () => {
-  const { isActive } = useIsActiveStore();
+  const { isActive } = useRoadmapUi();
 
   return (
     <div
@@ -23,16 +23,13 @@ const Component = () => {
     </div>
   );
 };
-/**
- * Página de Ruta de Aprendizaje
- * Muestra la ruta estructurada por áreas y niveles
- */
+
 export const LearningRoadmapPage = () => {
   return (
     <>
-      <StoreProvider>
+      <RoadmapUiProvider>
         <Component />
-      </StoreProvider>
+      </RoadmapUiProvider>
 
       <ChatAssistant />
     </>

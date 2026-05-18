@@ -5,16 +5,16 @@ import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import { Icon } from '@/shared/components/Icon';
 import { ExamConfigModal, AnswerSheet, ResultsAnalysis } from '@/features/exam/components';
-import { formatTimeExtended } from '@/shared/utils/timeFormatter';
-import { savePractice } from '@/shared/utils/progressStorage';
+import { formatTimeExtended } from '@/services/persistence';
+import { savePractice } from '@/services/persistence';
 import {
   MATHEMATICS_QUESTIONS,
   LANGUAGE_QUESTIONS,
   SCIENCE_QUESTIONS,
   SOCIAL_QUESTIONS,
   ENGLISH_QUESTIONS,
-} from '@/shared/data';
-import type { ExamQuestion } from '@/shared/types/question';
+} from '@/features/exam/data';
+import type { ExamQuestion } from '@/features/exam/types/question';
 import type { ExamConfig } from '@/features/exam/types';
 import { AREA_INFO as SHARED_AREA_INFO } from '@/shared/constants/areaInfo';
 

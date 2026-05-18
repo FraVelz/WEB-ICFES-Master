@@ -8,80 +8,92 @@ Este documento describe la organización de archivos y la arquitectura por carac
 src/
 ├── app/                   # Next.js App Router (rutas, layouts)
 │   ├── (auth)/           # Autenticación (login, registro, onboarding)
-│   ├── (dashboard)/      # Dashboard (examen, lecciones, logros, etc.)
+│   ├── (dashboard)/      # Dashboard (examen, lecciones, logros, progreso, etc.)
 │   └── api/              # API Routes (p. ej. chat)
 ├── features/             # Módulos principales de negocio
-├── shared/               # Componentes y utilidades reutilizables
-├── services/             # Capa de datos (Supabase, adaptadores)
+├── shared/               # UI transversal (Icon, Footer, ConstructionAlert…)
+├── storage/              # Implementación localStorage (uso interno)
+├── services/             # Persistencia Supabase/local + store + gamificación
+│   ├── persistence/      # API pública para features
+│   ├── supabase/
+│   ├── store/
+│   └── gamification/
 ├── config/               # Configuración (Supabase, constantes)
-├── components/           # Componentes globales (proveedores, etc.)
-├── context/              # Contextos de React
-├── hooks/                # Hooks globales
-├── lib/                  # Utilidades del cliente
-├── store/                # Store Redux y tipos relacionados
+├── components/           # Shell global (Providers, guards, DashboardHeader)
+├── context/              # AuthContext
+├── hooks/                # Facade de hooks + utilidades GSAP
+├── lib/                  # GSAP (ScrollTrigger)
+├── store/                # Redux: uiSession (demo, plan UI)
 ├── styles/               # Estilos globales (Tailwind)
 ├── types/                # Tipos TypeScript globales
-├── utils/                # Utilidades en raíz (p. ej. `cn`)
-└── ...
+└── utils/                # Utilidades puras (cn, errores auth)
 ```
 
 ## Arquitectura por características (`src/features/`)
 
-Cada carpeta dentro de `features/` representa un dominio de negocio y agrupa lo necesario para funcionar de forma aislada.
+Cada carpeta dentro de `features/` representa un dominio de negocio.
 
-### Estructura de una feature
+### Estructura típica de una feature
 
 ```txt
 features/nombre-feature/
-├── components/         # Componentes exclusivos de esta feature
-├── pages/              # Vistas (si se usan fuera de `app/`)
-├── hooks/              # Lógica de estado local
-├── services/           # Servicios específicos
-├── utils/              # Funciones auxiliares
-└── index.ts            # Barril de exportación
+├── components/
+├── pages/
+├── hooks/
+├── services/          # opcional; lógica de dominio local
+├── data/ | types/ | utils/
+└── index.ts
 ```
 
 ### Features actuales
 
-- **exam/**: Lógica de exámenes, simulacros y resultados.
-- **learning/**: Material de estudio, lecciones y *roadmap*.
-- **progress/**: Estadísticas y seguimiento del usuario.
-- **home/**: Página de inicio y *dashboard*.
-- **auth/**: Inicio de sesión, registro, *onboarding*.
-- **user/**: Perfil y configuración de cuenta.
-- **logros/**: Gamificación, logros y desafíos.
-- **store/**: Tienda, planes y suscripciones.
-- **legal/**: Referencia a contenido legal (p. ej. términos y privacidad en `src/app`).
+| Feature | Responsabilidad |
+| ------- | ---------------- |
+| **auth/** | Login, registro, OAuth, onboarding |
+| **home/** | Landing, secciones marketing, donaciones |
+| **learning/** | Roadmap, lecciones (`roadmap/`, `lesson-flow/`, `lessons-legacy/`, `shell/`) |
+| **exam/** | Práctica, examen completo, clasificatoria; datos en `exam/data/` |
+| **progress/** | Vista y hook de progreso académico |
+| **user/** | Perfil, configuración |
+| **logros/** | Badges, desafíos, gamificación (UI) |
+| **store/** | Tienda virtual, modales de compra |
 
-## Componentes compartidos (`src/shared/`)
+## Capa compartida (`src/shared/`)
 
-- **atoms/**: Elementos indivisibles (botones, *badges*, textos).
-- **molecules/**: Combinaciones simples (tarjetas, campos con etiqueta).
-- **organisms/**: Estructuras complejas (*headers*, *PaymentModal*, *QuestionContent*).
+Componentes y tipos usados en varias features:
 
-## Servicios (`src/services/`)
+- **Icon**, **Footer**, **MascotaCircle**, **ConstructionAlert**
+- Reexportaciones `@deprecated` hacia `features/exam` y `@/services/persistence`
 
-Capa de abstracción para la comunicación con Supabase y la lógica de negocio compartida.
+La navegación del dashboard vive en **`src/components/DashboardHeader.tsx`** (no en `shared/`).
+
+## Persistencia
+
+- **API para UI:** `@/services/persistence` (progreso, perfil, exámenes, gamificación).
+- **Implementación local:** `src/storage/` (`progressStorage`, `userProfile`, `dataEncryption`).
+- **Supabase:** `src/services/supabase/*`.
+
+## Servicios transversales (`src/services/`)
+
 Ver [documentación de servicios](../backend/services-api.md).
 
 ## Rutas Next.js (`src/app/`)
 
-| Ruta                       | Descripción              |
-| -------------------------- | ------------------------ |
-| `/`                        | Página de inicio         |
-| `/login`, `/signup`        | Autenticación            |
-| `/onboarding`              | Flujo de *onboarding*    |
-| `/practica/[area]`         | Práctica por área        |
-| `/examen-completo`         | Examen completo          |
-| `/clasificatoria`          | Clasificatoria / ranking |
-| `/ruta-aprendizaje`        | *Roadmap* de aprendizaje |
-| `/lessons/[area]/[topic]`  | Lecciones por tema       |
-| `/desafios-diarios`        | Desafíos diarios         |
-| `/logros`                  | Centro de logros         |
-| `/perfil`                  | Perfil de usuario        |
-| `/configuracion`           | Configuración            |
-| `/terminos`                | Términos de uso          |
-| `/privacidad`              | Política de privacidad   |
+| Ruta | Descripción |
+| ---- | ----------- |
+| `/` | Página de inicio |
+| `/login`, `/signup`, `/auth/callback` | Autenticación |
+| `/onboarding` | Onboarding |
+| `/ruta-aprendizaje` | Roadmap de aprendizaje |
+| `/lessons/[area]/[topic]` | Lección (Supabase o legacy) |
+| `/practica/[area]` | Práctica por área |
+| `/examen-completo` | Examen completo |
+| `/clasificatoria` | Clasificatoria / ranking |
+| `/progreso` | Resumen de progreso |
+| `/desafios-diarios` | Desafíos diarios |
+| `/logros` | Centro de logros |
+| `/perfil`, `/configuracion` | Perfil y ajustes |
+| `/terminos`, `/privacidad` | Legal |
 
 ---
-*Archivo generado por IA. Última actualización: sábado, 16 de mayo de 2026.*
+*Archivo generado por IA. Última actualización: lunes, 18 de mayo de 2026.*

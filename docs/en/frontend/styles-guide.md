@@ -104,4 +104,4 @@ The UI is dark-first: backgrounds `bg-black`, `bg-slate-950`; text `text-white`,
 - Gradient text: `bg-clip-text text-transparent bg-linear-to-r from-cta-text-start via-cta-text-via to-cta-text-end`
 
 ---
-*AI-generated file. Last updated: Saturday, May 16, 2026.*
+*AI-generated file. Last updated: Monday, May 18, 2026.*

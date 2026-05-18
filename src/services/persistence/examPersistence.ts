@@ -2,7 +2,7 @@
  * Exámenes / intentos: una sola entrada para Supabase o localStorage.
  */
 import ExamSupabaseService from '@/services/supabase/ExamSupabaseService';
-import { getStoredExams, clearExamsOnly, type AttemptWithQuestions } from '@/shared/utils/progressStorage';
+import { getStoredExams, clearExamsOnly, type AttemptWithQuestions } from '@/storage/progressStorage';
 import { isSupabaseMode } from './apiMode';
 
 export async function getExamById(examId: string, userId: string | undefined): Promise<unknown> {

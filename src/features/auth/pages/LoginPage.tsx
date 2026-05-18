@@ -1,20 +1,42 @@
 'use client';
 
 import { cn } from '@/utils/cn';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { Icon } from '@/shared/components/Icon';
-import { GoogleSignInButton } from '@/shared/components/atoms/GoogleSignInButton';
-import { AUTH_NOT_CONFIGURED_ALERT } from '@/features/auth/constants/authMessages';
+import { GoogleSignInButton } from '@/features/auth/components/GoogleSignInButton';
+import { useAuth } from '@/context/AuthContext';
+import { AUTH_DEFAULT_REDIRECT } from '@/features/auth/constants/authRoutes';
+import { mapSupabaseAuthError } from '@/utils/mapSupabaseAuthError';
 
 export const LoginPage = () => {
+  const router = useRouter();
+  const { login, isAuthenticated, loading: authLoading } = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+  const [error, setError] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  useEffect(() => {
+    if (!authLoading && isAuthenticated) {
+      router.replace(AUTH_DEFAULT_REDIRECT);
+    }
+  }, [authLoading, isAuthenticated, router]);
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    window.alert(AUTH_NOT_CONFIGURED_ALERT);
+    setError('');
+    setIsSubmitting(true);
+    try {
+      await login(email.trim(), password);
+      router.push(AUTH_DEFAULT_REDIRECT);
+    } catch (err) {
+      setError(mapSupabaseAuthError(err, 'No se pudo iniciar sesión. Intenta de nuevo.'));
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -112,21 +134,38 @@ export const LoginPage = () => {
               </div>
             </div>
 
+            {error ? (
+              <div className="flex items-start gap-3 rounded-lg border border-red-500/50 bg-red-500/20 p-4">
+                <Icon name="exclamation-circle" className="mt-0.5 shrink-0 text-red-400" />
+                <p className="text-sm text-red-400">{error}</p>
+              </div>
+            ) : null}
+
             {/* Submit Button */}
             <button
               type="submit"
+              disabled={isSubmitting || authLoading}
               className={cn(
                 'flex w-full cursor-pointer items-center justify-center gap-2 rounded-lg bg-linear-to-r',
                 'from-cta-from to-cta-to px-4 py-3 font-bold text-white transition-all duration-300',
-                'hover:shadow-lg hover:shadow-app-ring/50'
+                'hover:shadow-lg hover:shadow-app-ring/50 disabled:cursor-not-allowed disabled:opacity-60'
               )}
             >
-              <Icon name="rocket" />
-              Iniciar Sesión
+              {isSubmitting ? (
+                <>
+                  <Icon name="spinner" className="animate-spin" />
+                  Iniciando sesión...
+                </>
+              ) : (
+                <>
+                  <Icon name="rocket" />
+                  Iniciar Sesión
+                </>
+              )}
             </button>
           </form>
 
-          <GoogleSignInButton authNotConfigured />
+          <GoogleSignInButton />
 
           {/* Links */}
           <div className="mt-6 space-y-4">

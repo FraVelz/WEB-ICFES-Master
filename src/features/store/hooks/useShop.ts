@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '@/context/AuthContext';
 import { SHOP_ITEMS } from '../data/shopItems';
-import { getVirtualMoney, removeVirtualMoney } from '@/shared/utils/userProfile';
+import { getVirtualMoney, removeVirtualMoney } from '@/services/persistence';
 import type { ShopItem } from '../data/shopItems';
 
 const PURCHASES_KEY = 'icfes_shop_purchases';

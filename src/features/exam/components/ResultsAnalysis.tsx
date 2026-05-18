@@ -1,6 +1,6 @@
 import { cn } from '@/utils/cn';
 import Link from 'next/link';
-import type { ExamQuestion } from '@/shared/types/question';
+import type { ExamQuestion } from '@/features/exam/types/question';
 import type { ExamConfig } from '@/features/exam/types';
 
 interface ResultItem {

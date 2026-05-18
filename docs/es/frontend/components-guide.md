@@ -42,50 +42,35 @@ export function QuizExample() {
 }
 ```
 
-## Crear un ejemplo de átomo compuesto (tarjeta de área)
+## Crear un componente de feature (tarjeta de área)
 
-Ejemplo ilustrativo siguiendo átomos existentes en `src/shared/components/atoms/` (p. ej. `Card`, `Badge`, `Text`). Crea un archivo nuevo como `src/shared/components/atoms/AreaHighlightCard.tsx`:
+Los átomos genéricos en `shared/atoms/` se eliminaron. Crea el componente en la feature, p. ej. `src/features/exam/components/AreaHighlightCard.tsx`, con Tailwind y `Icon`:
 
 ```tsx
-import { Card } from '@/shared/components/atoms/Card';
-import { Title, Text } from '@/shared/components/atoms/Text';
-import { Badge } from '@/shared/components/atoms/Badge';
+import { Icon } from '@/shared/components/Icon';
+import { cn } from '@/utils/cn';
 
-export const AreaHighlightCard = ({
-  title,
-  icon,
-  description,
-  questionsCount,
-  onClick,
-}: {
-  title: string;
-  icon: React.ReactNode;
-  description: string;
-  questionsCount: number;
-  onClick?: () => void;
-}) => {
+export function AreaHighlightCard({ title, iconName, description, questionsCount, onClick, className }: {
+  title: string; iconName: string; description: string; questionsCount: number; onClick?: () => void; className?: string;
+}) {
   return (
-    <Card hover onClick={onClick}>
-      <div className="flex items-start gap-4">
-        <div className="text-4xl">{icon}</div>
-        <div className="flex-1">
-          <Title level={4}>{title}</Title>
-          <Text variant="small" className="mt-2">
-            {description}
-          </Text>
-          <Badge variant="default" className="mt-3">
-            {questionsCount} preguntas
-          </Badge>
+    <button type="button" onClick={onClick} className={cn('w-full rounded-xl border border-slate-700 bg-slate-900/50 p-4 text-left hover:border-app-ring/40', className)}>
+      <div className="flex gap-4">
+        <Icon name={iconName} className="text-3xl text-app-accent" />
+        <div>
+          <h3 className="font-bold text-white">{title}</h3>
+          <p className="mt-1 text-sm text-slate-400">{description}</p>
+          <p className="mt-2 text-xs text-app-accent">{questionsCount} preguntas</p>
         </div>
       </div>
-    </Card>
+    </button>
   );
-};
+}
 ```
 
 ## Añadir preguntas de un área
 
-Ubicación: `src/shared/data/questions.ts`.
+Ubicación: `src/features/exam/data/questions.ts`.
 
 ```typescript
 export const NEW_AREA_QUESTIONS = [
@@ -109,15 +94,9 @@ export const NEW_AREA_QUESTIONS = [
 // Luego incorporar el bloque en el agregado exportado (p. ej. ALL_QUESTIONS)
 ```
 
-## Utilidades de quiz
+## Lógica de quiz
 
-En `src/shared/utils/quiz.ts`:
-
-- `calculateScore(results)` — calcula el porcentaje
-- `getAreaResults(results)` — resultados por área
-- `shuffleArray(array)` — mezcla preguntas
-- `getQuestionsByArea(questions, area)` — filtra por área
-- `getDifficultyStats(questions)` — estadísticas de dificultad
+Usa `src/features/exam/hooks/useQuizLogic.ts` y tipos en `src/features/exam/types/question.ts`.
 
 ## Estructura de una pregunta (referencia)
 
@@ -141,7 +120,7 @@ En `src/shared/utils/quiz.ts`:
 
 ## Componentes (convención del repo)
 
-Los primitivos viven en **`src/shared/components/atoms/`**. Composiciones mayores suelen estar en `molecules/` y `organisms/` bajo `src/shared/components/`. Las páginas de feature se integran desde `src/features/*` y las rutas en `src/app/`.
+UI compartida: **`Icon`**, **`Footer`**, **`MascotaCircle`**, **`ConstructionAlert`**. Navegación del dashboard: **`src/components/DashboardHeader.tsx`**. Dominio examen: `AnswerOption` en `features/exam/components/`. Features en `src/features/*`; rutas en `src/app/`.
 
 ---
-*Archivo generado por IA. Última actualización: sábado, 16 de mayo de 2026.*
+*Archivo generado por IA. Última actualización: lunes, 18 de mayo de 2026.*

@@ -104,4 +104,4 @@ La app prioriza tema oscuro: fondos `bg-black`, `bg-slate-950`; texto `text-whit
 - Título con gradiente: `bg-clip-text text-transparent bg-linear-to-r from-cta-text-start via-cta-text-via to-cta-text-end`
 
 ---
-*Archivo generado por IA. Última actualización: sábado, 16 de mayo de 2026.*
+*Archivo generado por IA. Última actualización: lunes, 18 de mayo de 2026.*

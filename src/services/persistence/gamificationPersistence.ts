@@ -2,7 +2,7 @@
  * Gamificación: una sola entrada para Supabase o localStorage.
  */
 import GamificationSupabaseService from '@/services/supabase/GamificationSupabaseService';
-import GamificationLocalService from '@/features/logros/services/GamificationLocalService';
+import GamificationLocalService from '@/services/gamification/GamificationLocalService';
 import { isSupabaseMode } from './apiMode';
 
 const impl = () => (isSupabaseMode() ? GamificationSupabaseService : GamificationLocalService);

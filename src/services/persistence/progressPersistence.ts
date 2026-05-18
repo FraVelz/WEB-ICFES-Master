@@ -11,7 +11,7 @@ import {
   getDefaultProgress,
   type ProgressData,
   type AttemptWithQuestions,
-} from '@/shared/utils/progressStorage';
+} from '@/storage/progressStorage';
 import { isSupabaseMode } from './apiMode';
 
 export type ProgressViewState = {

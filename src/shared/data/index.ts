@@ -1,2 +1,2 @@
-export * from './questions';
-export * from './learningMaterials';
+/** @deprecated Import from `@/features/exam/data` */
+export * from '@/features/exam/data/questions';

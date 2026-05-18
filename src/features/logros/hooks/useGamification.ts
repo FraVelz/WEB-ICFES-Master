@@ -5,8 +5,8 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import { ACHIEVEMENTS_DATA } from '../constants/achievements';
-import { getVirtualMoney } from '@/shared/utils/userProfile';
-import { getProgress } from '@/shared/utils/progressStorage';
+import { getVirtualMoney } from '@/services/persistence';
+import { getProgress } from '@/services/persistence';
 import API_CONFIG from '@/services/api.config';
 import GamificationSupabaseService from '@/services/supabase/GamificationSupabaseService';
 
@@ -197,7 +197,7 @@ export const useGamification = (userId: string | undefined) => {
     let newTotalXP = gam.totalXP || 0;
     if (unlocked) {
       newTotalXP += ach.xpReward || 0;
-      const { addVirtualMoney } = await import('@/shared/utils/userProfile');
+      const { addVirtualMoney } = await import('@/services/persistence');
       addVirtualMoney(ach.coinsReward || 0);
     }
 

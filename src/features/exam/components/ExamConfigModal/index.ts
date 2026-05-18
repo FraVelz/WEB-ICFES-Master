@@ -1,1 +1,0 @@
-export { ExamConfigModal } from './ExamConfigModal';

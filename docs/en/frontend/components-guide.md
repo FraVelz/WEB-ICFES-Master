@@ -42,50 +42,35 @@ export function QuizExample() {
 }
 ```
 
-## Example area highlight card (atomic pattern)
+## Create a feature component (area card)
 
-Illustrative example using existing atoms under `src/shared/components/atoms/` (e.g. `Card`, `Badge`, `Text`). Add a new file such as `src/shared/components/atoms/AreaHighlightCard.tsx`:
+Generic atoms under `shared/atoms/` were removed. Add the component under the feature, e.g. `src/features/exam/components/AreaHighlightCard.tsx`, using Tailwind and `Icon`:
 
 ```tsx
-import { Card } from '@/shared/components/atoms/Card';
-import { Title, Text } from '@/shared/components/atoms/Text';
-import { Badge } from '@/shared/components/atoms/Badge';
+import { Icon } from '@/shared/components/Icon';
+import { cn } from '@/utils/cn';
 
-export const AreaHighlightCard = ({
-  title,
-  icon,
-  description,
-  questionsCount,
-  onClick,
-}: {
-  title: string;
-  icon: React.ReactNode;
-  description: string;
-  questionsCount: number;
-  onClick?: () => void;
-}) => {
+export function AreaHighlightCard({ title, iconName, description, questionsCount, onClick, className }: {
+  title: string; iconName: string; description: string; questionsCount: number; onClick?: () => void; className?: string;
+}) {
   return (
-    <Card hover onClick={onClick}>
-      <div className="flex items-start gap-4">
-        <div className="text-4xl">{icon}</div>
-        <div className="flex-1">
-          <Title level={4}>{title}</Title>
-          <Text variant="small" className="mt-2">
-            {description}
-          </Text>
-          <Badge variant="default" className="mt-3">
-            {questionsCount} questions
-          </Badge>
+    <button type="button" onClick={onClick} className={cn('w-full rounded-xl border border-slate-700 bg-slate-900/50 p-4 text-left hover:border-app-ring/40', className)}>
+      <div className="flex gap-4">
+        <Icon name={iconName} className="text-3xl text-app-accent" />
+        <div>
+          <h3 className="font-bold text-white">{title}</h3>
+          <p className="mt-1 text-sm text-slate-400">{description}</p>
+          <p className="mt-2 text-xs text-app-accent">{questionsCount} questions</p>
         </div>
       </div>
-    </Card>
+    </button>
   );
-};
+}
 ```
 
 ## Add questions for an area
 
-Location: `src/shared/data/questions.ts`.
+Location: `src/features/exam/data/questions.ts`.
 
 ```typescript
 export const NEW_AREA_QUESTIONS = [
@@ -109,9 +94,9 @@ export const NEW_AREA_QUESTIONS = [
 // Then include the block in the exported aggregate (e.g. ALL_QUESTIONS)
 ```
 
-## Quiz utilities
+## Quiz logic
 
-In `src/shared/utils/quiz.ts`:
+Use `src/features/exam/hooks/useQuizLogic.ts` and types in `src/features/exam/types/question.ts`.
 
 - `calculateScore(results)` — percentage
 - `getAreaResults(results)` — per-area results
@@ -141,7 +126,7 @@ In `src/shared/utils/quiz.ts`:
 
 ## Components (repo convention)
 
-Primitives live under **`src/shared/components/atoms/`**. Larger compositions usually sit in `molecules/` and `organisms/` under `src/shared/components/`. Feature pages are wired from `src/features/*` and routes from `src/app/`.
+Shared UI: **`Icon`**, **`Footer`**, **`MascotaCircle`**, **`ConstructionAlert`**. Dashboard nav: **`src/components/DashboardHeader.tsx`**. Exam domain: `AnswerOption` in `features/exam/components/`. Features under `src/features/*`; routes in `src/app/`.
 
 ---
-*AI-generated file. Last updated: Saturday, May 16, 2026.*
+*AI-generated file. Last updated: Monday, May 18, 2026.*

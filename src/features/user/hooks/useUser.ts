@@ -7,7 +7,7 @@ import {
   removeVirtualMoney,
   type UserProfile,
   type UserRank,
-} from '@/shared/utils/userProfile';
+} from '@/services/persistence';
 import { useAuth } from '@/context/AuthContext';
 
 /**

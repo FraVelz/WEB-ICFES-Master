@@ -4,7 +4,8 @@ Where progress lives that is **not** automatically synced with Supabase or anoth
 
 ## Canonical module
 
-- Implementation: [`src/shared/utils/progressStorage.ts`](../../../src/shared/utils/progressStorage.ts)
+- **Feature API:** import from `@/services/persistence` (`savePractice`, `getProgress`, etc.).
+- **Internal implementation:** [`src/storage/progressStorage.ts`](../../../src/storage/progressStorage.ts)
 - Environment: **browser only** (`localStorage`). Do not use in Server Components without a `typeof window` guard.
 
 ## Storage keys
@@ -24,4 +25,4 @@ Where progress lives that is **not** automatically synced with Supabase or anoth
 Treat this module and its callers as the source of truth for local storage behavior.
 
 ---
-*AI-generated file. Last updated: Saturday, May 16, 2026.*
+*AI-generated file. Last updated: Monday, May 18, 2026.*

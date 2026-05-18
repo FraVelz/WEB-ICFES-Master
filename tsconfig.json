@@ -33,7 +33,6 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "src/features/learning/hooks/asldfk"
   ],
   "exclude": [
     "node_modules"

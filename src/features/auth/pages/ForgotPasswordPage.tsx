@@ -4,14 +4,29 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { Icon } from '@/shared/components/Icon';
 import { EMAIL_MESSAGES } from '@/config/emailMessages';
-import { AUTH_NOT_CONFIGURED_ALERT } from '@/features/auth/constants/authMessages';
+import { useAuth } from '@/context/AuthContext';
+import { mapSupabaseAuthError } from '@/utils/mapSupabaseAuthError';
 
 export const ForgotPasswordPage = () => {
+  const { resetPassword } = useAuth();
   const [email, setEmail] = useState('');
+  const [error, setError] = useState('');
+  const [success, setSuccess] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    window.alert(AUTH_NOT_CONFIGURED_ALERT);
+    setError('');
+    setSuccess(false);
+    setIsSubmitting(true);
+    try {
+      await resetPassword(email.trim());
+      setSuccess(true);
+    } catch (err) {
+      setError(mapSupabaseAuthError(err, 'No se pudo enviar el correo. Intenta de nuevo.'));
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -73,14 +88,39 @@ export const ForgotPasswordPage = () => {
             </div>
           </div>
 
+          {success ? (
+            <div className="flex items-start gap-3 rounded-lg border border-green-500/50 bg-green-500/20 p-4">
+              <Icon name="check-circle" className="mt-0.5 shrink-0 text-green-400" />
+              <p className="text-sm text-green-300">
+                Si existe una cuenta con ese correo, recibirás un enlace para restablecer tu contraseña.
+              </p>
+            </div>
+          ) : null}
+
+          {error ? (
+            <div className="flex items-start gap-3 rounded-lg border border-red-500/50 bg-red-500/20 p-4">
+              <Icon name="exclamation-circle" className="mt-0.5 shrink-0 text-red-400" />
+              <p className="text-sm text-red-400">{error}</p>
+            </div>
+          ) : null}
+
           <button
             type="submit"
+            disabled={isSubmitting || success}
             className={cn(
               'w-full cursor-pointer rounded-lg bg-linear-to-r from-cta-from to-cta-to px-4 py-3',
-              'font-bold text-white transition-all duration-300 hover:shadow-lg hover:shadow-app-ring/50'
+              'font-bold text-white transition-all duration-300 hover:shadow-lg hover:shadow-app-ring/50',
+              'disabled:cursor-not-allowed disabled:opacity-60'
             )}
           >
-            {EMAIL_MESSAGES.forgotPasswordPage.buttonText}
+            {isSubmitting ? (
+              <span className="inline-flex items-center justify-center gap-2">
+                <Icon name="spinner" className="animate-spin" />
+                Enviando...
+              </span>
+            ) : (
+              EMAIL_MESSAGES.forgotPasswordPage.buttonText
+            )}
           </button>
         </form>
       </div>
