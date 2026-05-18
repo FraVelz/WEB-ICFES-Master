@@ -4,25 +4,27 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Icon } from '@/shared/components/Icon';
+import { isAccountOnlyPath } from '@/features/auth/constants/accountOnlyRoutes';
 import { useUser } from '@/features/user/hooks/useUser';
+import { useAppSelector } from '@/store/hooks';
 
 export const DashboardHeader = ({ className }: { className?: string }) => {
   const pathname = usePathname();
   const { user, rank, virtualMoney } = useUser();
-  const [profileMenuOpen, setProfileMenuOpen] = useState(false);
+  const demoMode = useAppSelector((s) => s.uiSession.demoMode);
   const [mobileOptionsMenuOpen, setMobileOptionsMenuOpen] = useState(false);
   const [sidebarExpanded, setSidebarExpanded] = useState(false);
 
+  const isLockedInDemo = (path: string) => demoMode && isAccountOnlyPath(path);
+
   const mainOptions = [
     { path: '/ruta-aprendizaje', label: 'Aprendizaje', icon: 'graduation-cap' },
-    { path: '/progreso', label: 'Progreso', icon: 'chart-line' },
     { path: '/logros', label: 'Logros', icon: 'medal' },
     { path: '/clasificatoria', label: 'Clasificatoria', icon: 'trophy' },
   ];
 
   const mobileMenuOptions = [
     { path: '/perfil', label: 'Perfil', icon: 'circle-user' },
-    { path: '/progreso', label: 'Progreso', icon: 'chart-line' },
     { path: '/desafios-diarios', label: 'Desafíos Diarios', icon: 'fire' },
     { path: '/configuracion', label: 'Configuración', icon: 'cog' },
   ];
@@ -89,7 +91,8 @@ export const DashboardHeader = ({ className }: { className?: string }) => {
                 'group/item relative flex h-12 items-center rounded-xl px-3 transition-all duration-300',
                 pathname === option.path
                   ? 'bg-app-ring/10 text-app-accent shadow-lg shadow-app-ring/5'
-                  : 'text-slate-400 hover:bg-white/5 hover:text-white'
+                  : 'text-slate-400 hover:bg-white/5 hover:text-white',
+                isLockedInDemo(option.path) && 'opacity-70'
               )}
             >
               <div className="flex w-6 shrink-0 justify-center">
@@ -102,6 +105,9 @@ export const DashboardHeader = ({ className }: { className?: string }) => {
                 )}
               >
                 {option.label}
+                {isLockedInDemo(option.path) && (
+                  <Icon name="lock" size="sm" className="ml-1.5 inline text-slate-500" />
+                )}
               </span>
 
               {/* Active Indicator */}
@@ -120,7 +126,8 @@ export const DashboardHeader = ({ className }: { className?: string }) => {
               'group/item relative flex h-12 items-center rounded-xl px-3 transition-all duration-300',
               pathname === '/desafios-diarios'
                 ? 'bg-orange-500/10 text-orange-400'
-                : 'text-slate-400 hover:bg-white/5 hover:text-white'
+                : 'text-slate-400 hover:bg-white/5 hover:text-white',
+              isLockedInDemo('/desafios-diarios') && 'opacity-70'
             )}
           >
             <div className="flex w-6 shrink-0 justify-center">
@@ -133,6 +140,9 @@ export const DashboardHeader = ({ className }: { className?: string }) => {
               )}
             >
               Desafíos
+              {isLockedInDemo('/desafios-diarios') && (
+                <Icon name="lock" size="sm" className="ml-1.5 inline text-slate-500" />
+              )}
             </span>
           </Link>
         </nav>
@@ -163,7 +173,10 @@ export const DashboardHeader = ({ className }: { className?: string }) => {
           {/* Profile Link */}
           <Link
             href="/perfil"
-            className="group/profile relative flex items-center gap-3 overflow-hidden rounded-xl p-2 transition-colors hover:bg-white/5"
+            className={cn(
+              'group/profile relative flex items-center gap-3 overflow-hidden rounded-xl p-2 transition-colors hover:bg-white/5',
+              isLockedInDemo('/perfil') && 'opacity-70'
+            )}
           >
             <div className="z-10 h-10 w-10 shrink-0 overflow-hidden rounded-full border-2 border-app-ring/30 bg-slate-800">
               {user?.profileImage ? (
@@ -188,9 +201,14 @@ export const DashboardHeader = ({ className }: { className?: string }) => {
           {/* Settings Link */}
           <Link
             href="/configuracion"
-            className="mt-2 flex h-10 items-center justify-center p-2 text-slate-500 transition-colors hover:text-app-accent"
+            className={cn(
+              'mt-2 flex h-10 items-center justify-center gap-1 p-2 text-slate-500 transition-colors hover:text-app-accent',
+              isLockedInDemo('/configuracion') && 'opacity-70'
+            )}
+            title={isLockedInDemo('/configuracion') ? 'Requiere cuenta' : 'Configuración'}
           >
             <Icon name="cog" size="lg" />
+            {isLockedInDemo('/configuracion') && <Icon name="lock" size="sm" />}
           </Link>
         </div>
       </header>
@@ -244,11 +262,17 @@ export const DashboardHeader = ({ className }: { className?: string }) => {
               <Link
                 key={option.path}
                 href={option.path}
-                className="flex items-center gap-4 px-6 py-4 text-slate-300 transition-colors hover:bg-app-ring/10 active:bg-app-ring/20"
+                className={cn(
+                  'flex items-center gap-4 px-6 py-4 text-slate-300 transition-colors hover:bg-app-ring/10 active:bg-app-ring/20',
+                  isLockedInDemo(option.path) && 'opacity-70'
+                )}
                 onClick={() => setMobileOptionsMenuOpen(false)}
               >
                 <Icon name={option.icon} size="xl" className="text-app-accent" />
-                <span className="text-lg font-semibold">{option.label}</span>
+                <span className="flex flex-1 items-center justify-between text-lg font-semibold">
+                  {option.label}
+                  {isLockedInDemo(option.path) && <Icon name="lock" className="text-slate-500" />}
+                </span>
               </Link>
             ))}
           </div>

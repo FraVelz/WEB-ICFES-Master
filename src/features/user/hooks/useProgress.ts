@@ -1,11 +1,16 @@
 'use client';
 
-/** Aggregate progress + recommendations */
 import { useState, useEffect, useCallback } from 'react';
 import { useAuth } from '@/context/AuthContext';
-import { loadProgressViewState, resetProgressData, type ProgressViewState } from '@/services/persistence';
-import type { ProgressData, AttemptWithQuestions } from '@/services/persistence';
+import {
+  loadProgressViewState,
+  resetProgressData,
+  type ProgressViewState,
+  type ProgressData,
+  type AttemptWithQuestions,
+} from '@/services/persistence';
 
+/** Progreso académico agregado (localStorage / persistencia). */
 export function useProgress() {
   const { user } = useAuth();
   const [progress, setProgress] = useState<ProgressData | null>(null);

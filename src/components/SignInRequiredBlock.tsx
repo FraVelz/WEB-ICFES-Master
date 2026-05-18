@@ -1,11 +1,11 @@
 'use client';
 
+import { useState } from 'react';
 import { cn } from '@/utils/cn';
 import Link from 'next/link';
 import { Icon } from '@/shared/components/Icon';
 
-import { useAppDispatch } from '@/store/hooks';
-import { setDemoMode } from '@/store/slices/uiSessionSlice';
+import { exitDemoModeToHome } from '@/features/home/utils/enterDemoMode';
 
 interface SignInRequiredBlockProps {
   title?: string;
@@ -13,21 +13,29 @@ interface SignInRequiredBlockProps {
 }
 
 export default function SignInRequiredBlock({
-  title = 'Inicia sesión para continuar',
-  message = 'Esta sección requiere que inicies sesión con tu cuenta para poder utilizarla.',
+  title = 'Crea una cuenta para continuar',
+  message = 'Esta sección solo está disponible para usuarios registrados. Inicia sesión o crea una cuenta gratuita para acceder.',
 }: SignInRequiredBlockProps) {
-  const dispatch = useAppDispatch();
+  const [isLeaving, setIsLeaving] = useState(false);
 
   const handleCloseDemo = () => {
-    dispatch(setDemoMode(false));
-    if (typeof window !== 'undefined') {
-      window.location.href = '/';
-    }
+    setIsLeaving(true);
+    exitDemoModeToHome();
   };
 
   return (
-    <div className="flex min-h-dvh items-center justify-center bg-linear-to-b from-black via-slate-950 to-black p-6">
-      <div className="w-full max-w-md rounded-2xl border border-slate-700 bg-slate-800/50 p-8 text-center">
+    <div className="relative flex min-h-dvh items-center justify-center bg-linear-to-b from-black via-slate-950 to-black p-6">
+      {isLeaving && (
+        <div className="absolute inset-0 z-10 flex items-center justify-center bg-black/60 backdrop-blur-sm">
+          <div className="h-12 w-12 animate-spin rounded-full border-4 border-app-ring/30 border-t-app-ring" />
+        </div>
+      )}
+      <div
+        className={cn(
+          'w-full max-w-md rounded-2xl border border-slate-700 bg-slate-800/50 p-8 text-center transition-opacity',
+          isLeaving && 'pointer-events-none opacity-40'
+        )}
+      >
         <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full border-2 border-app-ring/50 bg-app-ring/20">
           <Icon name="lock" size="xl" className="text-app-accent" />
         </div>
@@ -39,22 +47,46 @@ export default function SignInRequiredBlock({
             className={cn(
               'flex w-full items-center justify-center gap-2 rounded-lg bg-linear-to-r from-cta-from',
               'to-cta-to px-6 py-3 font-semibold text-white transition-all duration-300 hover:shadow-lg',
-              'hover:shadow-app-ring/30'
+              'hover:shadow-app-ring/30',
+              isLeaving && 'pointer-events-none opacity-50'
             )}
           >
             <Icon name="sign-in-alt" />
-            Iniciar Sesión
+            Iniciar sesión
+          </Link>
+          <Link
+            href="/signup"
+            className={cn(
+              'flex w-full items-center justify-center gap-2 rounded-lg border-2 border-app-ring/40',
+              'bg-app-ring/10 px-6 py-3 font-semibold text-app-accent transition-all duration-300',
+              'hover:border-app-ring/60 hover:bg-app-ring/20',
+              isLeaving && 'pointer-events-none opacity-50'
+            )}
+          >
+            <Icon name="circle-user" />
+            Crear cuenta
           </Link>
           <button
+            type="button"
             onClick={handleCloseDemo}
+            disabled={isLeaving}
             className={cn(
               'flex w-full cursor-pointer items-center justify-center gap-2 rounded-lg border-2',
               'border-slate-600 bg-transparent px-6 py-3 font-semibold text-slate-400 transition-all',
-              'duration-300 hover:border-slate-500 hover:text-white'
+              'duration-300 hover:border-slate-500 hover:text-white disabled:cursor-wait disabled:opacity-60'
             )}
           >
-            <Icon name="times" />
-            Cerrar Demo
+            {isLeaving ? (
+              <>
+                <Icon name="spinner" className="animate-spin" />
+                Saliendo...
+              </>
+            ) : (
+              <>
+                <Icon name="times" />
+                Volver al inicio
+              </>
+            )}
           </button>
         </div>
       </div>

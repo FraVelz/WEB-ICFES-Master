@@ -2,11 +2,14 @@
 // Questions grouped by area
 
 import type { ExamQuestion } from '@/features/exam/types/question';
+import {
+  LANGUAGE_QUESTIONS,
+  MATHEMATICS_QUESTIONS,
+  SCIENCE_QUESTIONS,
+  SOCIAL_QUESTIONS,
+} from './areaQuestions';
 
-export const MATHEMATICS_QUESTIONS: ExamQuestion[] = [];
-export const LANGUAGE_QUESTIONS: ExamQuestion[] = [];
-export const SCIENCE_QUESTIONS: ExamQuestion[] = [];
-export const SOCIAL_QUESTIONS: ExamQuestion[] = [];
+export { LANGUAGE_QUESTIONS, MATHEMATICS_QUESTIONS, SCIENCE_QUESTIONS, SOCIAL_QUESTIONS };
 
 /** Práctica básica ICFES Inglés (gramática, vocabulario, lectura). */
 export const ENGLISH_QUESTIONS: ExamQuestion[] = [

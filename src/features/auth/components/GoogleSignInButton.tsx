@@ -29,7 +29,7 @@ export function GoogleSignInButton({
 
   const handleGoogleSignIn = async () => {
     if (authNotConfigured) {
-      window.alert(AUTH_NOT_CONFIGURED_ALERT);
+      setLocalError(AUTH_NOT_CONFIGURED_ALERT);
       return;
     }
     try {

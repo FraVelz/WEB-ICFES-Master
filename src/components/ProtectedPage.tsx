@@ -10,21 +10,28 @@ import SignInRequiredBlock from './SignInRequiredBlock';
 
 type ProtectedPageProps = {
   children: React.ReactNode;
-  /** When true, demo mode without auth shows SignInRequiredBlock instead of content */
+  /** Si true, en modo demo se muestra pantalla de cuenta; sin sesión redirige a login */
   blockDemoContent?: boolean;
+  authGateTitle?: string;
+  authGateMessage?: string;
 };
 
-export default function ProtectedPage({ children, blockDemoContent = true }: ProtectedPageProps) {
-  const { isAuthenticated, loading } = useAuth();
+export default function ProtectedPage({
+  children,
+  blockDemoContent = true,
+  authGateTitle,
+  authGateMessage,
+}: ProtectedPageProps) {
+  const { isAccountAuth, loading } = useAuth();
   const router = useRouter();
   const demoMode = useAppSelector((s) => s.uiSession.demoMode);
   const hydrated = useAppSelector((s) => s.uiSession.hydrated);
 
   useEffect(() => {
-    if (!loading && hydrated && !isAuthenticated && !demoMode) {
+    if (!loading && hydrated && blockDemoContent && !demoMode && !isAccountAuth) {
       router.replace('/login');
     }
-  }, [loading, hydrated, isAuthenticated, demoMode, router]);
+  }, [loading, hydrated, blockDemoContent, isAccountAuth, demoMode, router]);
 
   if (loading || !hydrated) {
     return (
@@ -37,11 +44,13 @@ export default function ProtectedPage({ children, blockDemoContent = true }: Pro
     );
   }
 
-  if (!isAuthenticated && demoMode && blockDemoContent) {
-    return <SignInRequiredBlock />;
+  if (blockDemoContent && demoMode) {
+    return <SignInRequiredBlock title={authGateTitle} message={authGateMessage} />;
   }
 
-  if (!isAuthenticated && !demoMode) return null;
+  if (blockDemoContent && !isAccountAuth) {
+    return null;
+  }
 
   return <>{children}</>;
 }

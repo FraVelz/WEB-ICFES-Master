@@ -1,8 +1,10 @@
 'use client';
 
 import type { ReactNode } from 'react';
-import { createContext, useContext, useEffect, useState } from 'react';
+import { createContext, useContext, useEffect, useState, useCallback } from 'react';
 import { supabase } from '@/config/supabase';
+import { useAppDispatch } from '@/store/hooks';
+import { setDemoMode } from '@/store/slices/uiSessionSlice';
 import API_CONFIG from '@/services/api.config';
 import UserSupabaseService from '@/services/supabase/UserSupabaseService';
 import { getAggregatedUserData } from '@/services/persistence';
@@ -30,6 +32,8 @@ type AuthContextType = {
   loading: boolean;
   error: string | null;
   isAuthenticated: boolean;
+  /** Sesión real (Supabase o login explícito en modo local), no visitante en demo */
+  isAccountAuth: boolean;
   signup: (email: string, password: string, displayName?: string) => Promise<AuthUser | null>;
   login: (email: string, password: string) => Promise<AuthUser | null>;
   loginWithGoogle: () => Promise<AuthUser | null>;
@@ -87,9 +91,14 @@ const mapSupabaseUser = (user: SupabaseUserLike | null): AuthUser | null => {
 };
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
+  const dispatch = useAppDispatch();
   const [user, setUser] = useState<AuthUser | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+
+  const clearDemoMode = useCallback(() => {
+    dispatch(setDemoMode(false));
+  }, [dispatch]);
 
   useEffect(() => {
     if (API_CONFIG.MODE !== 'supabase' || !process.env.NEXT_PUBLIC_SUPABASE_URL || !supabase) {
@@ -98,12 +107,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         if (stored) {
           setUser(JSON.parse(stored));
         } else {
-          const demoUser = createMockUser();
-          if (typeof window !== 'undefined') localStorage.setItem(MOCK_USER_KEY, JSON.stringify(demoUser));
-          setUser(demoUser);
+          setUser(null);
         }
       } catch {
-        setUser(createMockUser());
+        setUser(null);
       }
       setLoading(false);
       return;
@@ -116,6 +123,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       setLoading(false);
 
       if (event === 'SIGNED_IN' && session?.user) {
+        clearDemoMode();
         try {
           const existing = await UserSupabaseService.getByUserId(session.user.id);
           if (!existing) {
@@ -138,7 +146,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     });
 
     return () => subscription?.unsubscribe();
-  }, []);
+  }, [clearDemoMode]);
 
   const signup = async (email: string, password: string, displayName?: string): Promise<AuthUser | null> => {
     setError(null);
@@ -146,6 +154,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       const newUser = createMockUser({ email, displayName });
       if (typeof window !== 'undefined') localStorage.setItem(MOCK_USER_KEY, JSON.stringify(newUser));
       setUser(newUser);
+      clearDemoMode();
       return newUser;
     }
     if (!supabase) throw new Error('Supabase no configurado');
@@ -181,6 +190,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     } catch (profileErr) {
       console.warn('Perfil tras registro (puede existir por trigger):', profileErr);
     }
+    clearDemoMode();
     return mapSupabaseUser(data.user);
   };
 
@@ -191,11 +201,13 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       if (existing) {
         const parsed = JSON.parse(existing);
         setUser({ ...parsed, email: email || parsed.email });
+        clearDemoMode();
         return parsed;
       }
       const newUser = createMockUser({ email });
       if (typeof window !== 'undefined') localStorage.setItem(MOCK_USER_KEY, JSON.stringify(newUser));
       setUser(newUser);
+      clearDemoMode();
       return newUser;
     }
     if (!supabase) throw new Error('Supabase no configurado');
@@ -208,6 +220,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       setError(msg);
       throw new Error(msg);
     }
+    clearDemoMode();
     return mapSupabaseUser(data.user);
   };
 
@@ -220,6 +233,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       });
       if (typeof window !== 'undefined') localStorage.setItem(MOCK_USER_KEY, JSON.stringify(newUser));
       setUser(newUser);
+      clearDemoMode();
       return newUser;
     }
     if (!supabase) throw new Error('Supabase no configurado');
@@ -373,6 +387,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     verifyEmailExists,
     getUserData,
     isAuthenticated: !!user,
+    isAccountAuth: !!user,
     getUserPlan,
     updateUserPlan,
   };
