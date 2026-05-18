@@ -25,7 +25,7 @@ const SettingsSection = ({ title, icon, children, className = '' }: SettingsSect
   >
     {title && (
       <h2 className="mb-6 flex items-center gap-3 border-b border-slate-800 pb-4 text-lg font-bold text-white sm:text-xl">
-        <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-slate-800 text-cyan-400 shadow-inner">
+        <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-slate-800 text-app-accent shadow-inner">
           <Icon name={icon ?? 'settings'} />
         </div>
         {title}
@@ -61,7 +61,7 @@ const SettingOption = ({ label, description, icon, action, danger = false, onCli
             'flex h-10 w-10 shrink-0 items-center justify-center rounded-full transition-colors',
             danger
               ? 'bg-red-500/10 text-red-400 group-hover:bg-red-500/20'
-              : 'bg-slate-700/50 text-slate-400 group-hover:bg-slate-700 group-hover:text-cyan-400'
+              : 'bg-slate-700/50 text-slate-400 group-hover:bg-slate-700 group-hover:text-app-accent'
           )}
         >
           <Icon name={icon ?? 'settings'} />
@@ -261,7 +261,7 @@ export const UserSettingsPage = () => {
     <div className="min-h-dvh bg-slate-950 pb-24 text-white md:pb-0">
       {/* Background Effects */}
       <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
-        <div className="absolute top-0 left-0 h-96 w-full bg-linear-to-b from-cyan-900/10 to-transparent"></div>
+        <div className="absolute top-0 left-0 h-96 w-full bg-linear-to-b from-hub-sheet-from/10 to-transparent"></div>
         <div className="absolute right-0 bottom-0 h-96 w-96 rounded-full bg-blue-500/5 blur-3xl"></div>
       </div>
 
@@ -284,7 +284,7 @@ export const UserSettingsPage = () => {
           {message && (
             <div
               className={cn(
-                'animate-fadeIn fixed top-20 right-4 z-50 max-w-sm rounded-xl border p-4 shadow-xl backdrop-blur-md',
+                'animate-fade-in-up fixed top-20 right-4 z-50 max-w-sm rounded-xl border p-4 shadow-xl backdrop-blur-md',
                 messageType === 'success'
                   ? 'border-green-500/30 bg-green-500/10 text-green-400'
                   : 'border-red-500/30 bg-red-500/10 text-red-400'
@@ -302,7 +302,7 @@ export const UserSettingsPage = () => {
             <div className="space-y-6 lg:col-span-4">
               <div className="lg:sticky lg:top-24">
                 <SettingsSection className="relative overflow-hidden text-center">
-                  <div className="absolute top-0 left-0 h-24 w-full bg-linear-to-b from-cyan-500/10 to-transparent"></div>
+                  <div className="absolute top-0 left-0 h-24 w-full bg-linear-to-b from-app-ring/10 to-transparent"></div>
 
                   <div className="group relative mb-4 inline-block">
                     <div className="h-32 w-32 overflow-hidden rounded-full border-4 border-slate-800 bg-slate-800 shadow-2xl">
@@ -318,8 +318,8 @@ export const UserSettingsPage = () => {
                       onClick={() => fileInputRef.current?.click()}
                       className={cn(
                         'absolute right-0 bottom-0 flex h-10 w-10 cursor-pointer items-center justify-center',
-                        'rounded-full border-4 border-slate-900 bg-cyan-500 text-white shadow-lg',
-                        'transition-transform hover:scale-110 hover:bg-cyan-400'
+                        'rounded-full border-4 border-slate-900 bg-app-ring text-white shadow-lg',
+                        'transition-transform hover:scale-110 hover:bg-hub-orb'
                       )}
                     >
                       <Icon name="camera" className="text-sm" />
@@ -345,7 +345,7 @@ export const UserSettingsPage = () => {
                           onChange={(e) => setUsername(e.target.value.slice(0, 30))}
                           className={cn(
                             'flex-1 rounded-lg border border-slate-800 bg-slate-950 px-3 py-2 text-sm text-white',
-                            'transition-all outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500'
+                            'transition-all outline-none focus:border-app-ring focus:ring-1 focus:ring-app-ring'
                           )}
                           placeholder="Tu nombre"
                         />
@@ -354,7 +354,7 @@ export const UserSettingsPage = () => {
                           disabled={loading}
                           className={cn(
                             'cursor-pointer rounded-lg bg-slate-800 px-3 py-2 text-slate-400 transition-colors',
-                            'hover:bg-cyan-500/20 hover:text-cyan-400'
+                            'hover:bg-app-ring/20 hover:text-app-accent'
                           )}
                         >
                           <Icon name="check" />
@@ -372,8 +372,8 @@ export const UserSettingsPage = () => {
                           onChange={(e) => setBio(e.target.value.slice(0, 150))}
                           className={cn(
                             'h-24 w-full resize-none rounded-lg border border-slate-800 bg-slate-950 px-3 py-2 text-sm',
-                            'text-white transition-all outline-none focus:border-cyan-500 focus:ring-1',
-                            'focus:ring-cyan-500'
+                            'text-white transition-all outline-none focus:border-app-ring focus:ring-1',
+                            'focus:ring-app-ring'
                           )}
                           placeholder="Cuéntanos sobre ti..."
                         />
@@ -382,8 +382,8 @@ export const UserSettingsPage = () => {
                           disabled={loading}
                           className={cn(
                             'absolute right-2 bottom-2 flex h-8 w-8 cursor-pointer items-center justify-center',
-                            'rounded-md bg-slate-800 text-xs text-slate-400 transition-colors hover:bg-cyan-500/20',
-                            'hover:text-cyan-400'
+                            'rounded-md bg-slate-800 text-xs text-slate-400 transition-colors hover:bg-app-ring/20',
+                            'hover:text-app-accent'
                           )}
                         >
                           <Icon name="check" />
@@ -477,7 +477,7 @@ export const UserSettingsPage = () => {
                       <select
                         value={supportCategory}
                         onChange={(e) => setSupportCategory(e.target.value)}
-                        className="w-full rounded-lg border border-slate-800 bg-slate-950 px-3 py-2.5 text-sm text-white outline-none focus:border-cyan-500"
+                        className="w-full rounded-lg border border-slate-800 bg-slate-950 px-3 py-2.5 text-sm text-white outline-none focus:border-app-ring"
                       >
                         <option value="technical">Error técnico</option>
                         <option value="content">Contenido</option>
@@ -495,7 +495,7 @@ export const UserSettingsPage = () => {
                           value={supportEmail}
                           onChange={(e) => setSupportEmail(e.target.value)}
                           required
-                          className="w-full rounded-lg border border-slate-800 bg-slate-950 px-3 py-2.5 text-sm text-white outline-none focus:border-cyan-500"
+                          className="w-full rounded-lg border border-slate-800 bg-slate-950 px-3 py-2.5 text-sm text-white outline-none focus:border-app-ring"
                           placeholder="tu@email.com"
                         />
                       </div>
@@ -510,7 +510,7 @@ export const UserSettingsPage = () => {
                       required
                       className={cn(
                         'h-32 w-full resize-none rounded-lg border border-slate-800 bg-slate-950 px-3 py-3 text-sm',
-                        'text-white outline-none focus:border-cyan-500'
+                        'text-white outline-none focus:border-app-ring'
                       )}
                       placeholder={
                         supportMode === 'response' ? '¿En qué podemos ayudarte?' : 'Describe el error encontrado...'
@@ -522,8 +522,8 @@ export const UserSettingsPage = () => {
                     type="submit"
                     disabled={sendingSupport}
                     className={cn(
-                      'w-full cursor-pointer rounded-xl bg-linear-to-r from-cyan-600 to-blue-600 py-3 font-bold',
-                      'text-white shadow-lg shadow-cyan-500/20 transition-all hover:from-cyan-500',
+                      'w-full cursor-pointer rounded-xl bg-linear-to-r from-app-accent-strong to-blue-600 py-3 font-bold',
+                      'text-white shadow-lg shadow-app-ring/20 transition-all hover:from-cta-from',
                       'hover:to-blue-500 disabled:cursor-not-allowed disabled:opacity-50'
                     )}
                   >
@@ -537,7 +537,7 @@ export const UserSettingsPage = () => {
                 <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                   <div className="rounded-xl border border-slate-800 bg-slate-950/50 p-4">
                     <h3 className="mb-2 flex items-center gap-2 font-bold text-white">
-                      <Icon name="cloud" className="text-cyan-400" />
+                      <Icon name="cloud" className="text-app-accent" />
                       Cloud Sync
                     </h3>
                     <p className="text-xs leading-relaxed text-slate-400">
@@ -546,7 +546,7 @@ export const UserSettingsPage = () => {
                   </div>
                   <div className="rounded-xl border border-slate-800 bg-slate-950/50 p-4">
                     <h3 className="mb-2 flex items-center gap-2 font-bold text-white">
-                      <Icon name="lock" className="text-cyan-400" />
+                      <Icon name="lock" className="text-app-accent" />
                       Privacidad
                     </h3>
                     <p className="text-xs leading-relaxed text-slate-400">
@@ -565,7 +565,7 @@ export const UserSettingsPage = () => {
         {/* Delete Modal */}
         {showDeleteModal && (
           <div className="fixed inset-0 z-60 flex items-center justify-center bg-black/80 p-4 backdrop-blur-sm">
-            <div className="animate-scaleIn w-full max-w-md rounded-2xl border border-slate-800 bg-slate-900 p-6 shadow-2xl">
+            <div className="animate-zoom-in w-full max-w-md rounded-2xl border border-slate-800 bg-slate-900 p-6 shadow-2xl">
               <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-red-500/10 text-red-500">
                 <Icon name="warning" className="text-xl" />
               </div>

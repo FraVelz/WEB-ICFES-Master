@@ -1,83 +1,132 @@
 @import 'tailwindcss';
+@import 'tailwind-animations';
 
+/**
+ * Paleta semántica (alias sobre colores Tailwind por defecto).
+ * Usar estas utilidades en componentes y datos en lugar de tonos sueltos.
+ */
 @theme {
-  @keyframes fadeIn {
-    0% {
-      opacity: 0;
-      transform: translateY(20px);
-    }
-    100% {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-  @keyframes slideInLeft {
-    0% {
-      opacity: 0;
-      transform: translateX(-30px);
-    }
-    100% {
-      opacity: 1;
-      transform: translateX(0);
-    }
-  }
-  @keyframes slideInRight {
-    0% {
-      opacity: 0;
-      transform: translateX(30px);
-    }
-    100% {
-      opacity: 1;
-      transform: translateX(0);
-    }
-  }
-  @keyframes scaleIn {
-    0% {
-      opacity: 0;
-      transform: scale(0.95);
-    }
-    100% {
-      opacity: 1;
-      transform: scale(1);
-    }
-  }
-  @keyframes float {
-    0%,
-    100% {
-      transform: translateY(0px);
-    }
-    50% {
-      transform: translateY(-10px);
-    }
-  }
-  @keyframes glow {
-    0%,
-    100% {
-      box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
-    }
-    50% {
-      box-shadow: 0 0 40px rgba(59, 130, 246, 0.5);
-    }
-  }
-  @keyframes blob {
-    0%,
-    100% {
-      transform: translate(0, 0) scale(1);
-    }
-    33% {
-      transform: translate(30px, -50px) scale(1.1);
-    }
-    66% {
-      transform: translate(-20px, 20px) scale(0.9);
-    }
-  }
-  --animate-fadeIn: fadeIn 0.6s ease-out;
-  --animate-slideInLeft: slideInLeft 0.6s ease-out;
-  --animate-slideInRight: slideInRight 0.6s ease-out;
-  --animate-scaleIn: scaleIn 0.5s ease-out;
-  --animate-float: float 3s ease-in-out infinite;
-  --animate-glow: glow 2s ease-in-out infinite;
-  --animate-blob: blob 7s infinite;
+  /* Marca / acento principal (antes cyan-*) */
+  --color-app-accent: var(--color-cyan-400);
+  --color-app-accent-muted: var(--color-cyan-300);
+  --color-app-ring: var(--color-cyan-500);
+  --color-app-accent-strong: var(--color-cyan-600);
+  --color-app-accent-bright: var(--color-cyan-200);
+  --color-app-on-accent: var(--color-cyan-100);
+  --color-app-accent-darker: var(--color-cyan-700);
+
+  /* Botones / titulares con gradiente (auth, hero, CTA) */
+  --color-cta-from: var(--color-cyan-500);
+  --color-cta-to: var(--color-blue-600);
+  --color-cta-text-start: var(--color-cyan-400);
+  --color-cta-text-via: var(--color-blue-400);
+  --color-cta-text-end: var(--color-purple-400);
+  --color-cta-progress-end: var(--color-blue-500);
+
+  /* Gamificación / logros — cabecera */
+  --color-hub-orb: var(--color-cyan-400);
+  --color-hub-border-from: var(--color-cyan-500);
+  --color-hub-sheet-from: var(--color-cyan-900);
+  --color-hub-title-from: var(--color-cyan-400);
+  --color-ambient-a: var(--color-blue-500);
+  --color-ambient-b: var(--color-purple-500);
+  --color-ambient-c: var(--color-indigo-500);
+  --color-ambient-a-strong: var(--color-blue-600);
+  --color-ambient-b-strong: var(--color-purple-600);
+  --color-ambient-c-muted: var(--color-indigo-600);
+
+  /* Áreas ICFES — texto */
+  --color-subject-lc: var(--color-blue-400);
+  --color-subject-math: var(--color-green-400);
+  --color-subject-sci: var(--color-purple-400);
+  --color-subject-soc: var(--color-orange-400);
+  --color-subject-eng: var(--color-indigo-400);
+  --color-subject-full: var(--color-pink-400);
+
+  /* Áreas — superficie/borde (600) */
+  --color-subject-lc-bold: var(--color-blue-600);
+  --color-subject-math-bold: var(--color-green-600);
+  --color-subject-sci-bold: var(--color-purple-600);
+  --color-subject-soc-bold: var(--color-orange-600);
+  --color-subject-eng-bold: var(--color-indigo-600);
+
+  /* Áreas — gradientes lineales (from / to) */
+  --color-subject-lc-from: var(--color-blue-400);
+  --color-subject-lc-to: var(--color-blue-600);
+  --color-subject-math-from: var(--color-green-400);
+  --color-subject-math-to: var(--color-green-600);
+  --color-subject-sci-from: var(--color-purple-400);
+  --color-subject-sci-to: var(--color-purple-600);
+  --color-subject-soc-from: var(--color-orange-400);
+  --color-subject-soc-to: var(--color-orange-600);
+  --color-subject-eng-from: var(--color-indigo-400);
+  --color-subject-eng-to: var(--color-indigo-600);
+  --color-subject-full-from: var(--color-pink-400);
+  --color-subject-full-to: var(--color-pink-600);
+
+  /* Variantes home (gradientes más largos) */
+  --color-subject-lc-grad-from: var(--color-blue-600);
+  --color-subject-lc-grad-to: var(--color-blue-400);
+  --color-subject-math-grad-from: var(--color-green-600);
+  --color-subject-math-grad-to: var(--color-green-400);
+  --color-subject-sci-grad-from: var(--color-purple-600);
+  --color-subject-sci-grad-to: var(--color-purple-400);
+  --color-subject-soc-grad-from: var(--color-orange-600);
+  --color-subject-soc-grad-to: var(--color-orange-400);
+  --color-subject-eng-grad-from: var(--color-pink-600);
+  --color-subject-eng-grad-to: var(--color-pink-400);
+
+  /* Perfil / stats rápidas */
+  --color-stat-streak-from: var(--color-red-600);
+  --color-stat-streak-to: var(--color-orange-600);
+  --color-stat-accuracy-from: var(--color-green-600);
+  --color-stat-accuracy-to: var(--color-emerald-600);
+  --color-stat-hours-from: var(--color-blue-600);
+  --color-stat-hours-to: var(--color-cyan-600);
+  --color-stat-xp-from: var(--color-purple-600);
+  --color-stat-xp-to: var(--color-pink-600);
+  --color-nav-roadmap-from: var(--color-blue-600);
+  --color-nav-roadmap-to: var(--color-blue-400);
+  --color-nav-challenges-from: var(--color-orange-600);
+  --color-nav-challenges-to: var(--color-red-400);
+
+  /* Iconografía por área (perfil) */
+  --color-profile-math-icon: var(--color-yellow-400);
+  --color-profile-lc-icon: var(--color-blue-400);
+  --color-profile-sci-icon: var(--color-green-400);
+  --color-profile-soc-icon: var(--color-orange-400);
+
+  /* Acentos decorativos rotativos */
+  --color-icon-wash-1: var(--color-cyan-400);
+  --color-icon-wash-2: var(--color-orange-400);
+  --color-icon-wash-3: var(--color-yellow-400);
+  --color-icon-wash-4: var(--color-pink-400);
+
+  /* Lecciones — brillos de fondo por materia */
+  --color-lesson-math-glow-a: var(--color-yellow-500);
+  --color-lesson-math-glow-b: var(--color-orange-500);
+  --color-lesson-lc-glow-a: var(--color-blue-500);
+  --color-lesson-lc-glow-b: var(--color-cyan-500);
+  --color-lesson-sci-glow-a: var(--color-green-500);
+  --color-lesson-sci-glow-b: var(--color-emerald-500);
+  --color-lesson-soc-glow-a: var(--color-orange-500);
+  --color-lesson-soc-glow-b: var(--color-amber-500);
+  --color-lesson-eng-glow-a: var(--color-indigo-500);
+  --color-lesson-eng-glow-b: var(--color-violet-500);
+
+  /* Tarjetas "Por qué elegirnos" (home) */
+  --color-feature-1-from: var(--color-blue-600);
+  --color-feature-1-to: var(--color-cyan-600);
+  --color-feature-2-from: var(--color-purple-600);
+  --color-feature-2-to: var(--color-pink-600);
+  --color-feature-3-from: var(--color-green-600);
+  --color-feature-3-to: var(--color-emerald-600);
+  --color-feature-4-from: var(--color-amber-600);
+  --color-feature-4-to: var(--color-orange-600);
+  --color-feature-5-from: var(--color-red-600);
+  --color-feature-5-to: var(--color-pink-600);
+  --color-feature-6-from: var(--color-indigo-600);
+  --color-feature-6-to: var(--color-purple-600);
 }
 
 /* Hide scrollbar while maintaining scroll functionality */
@@ -90,29 +139,49 @@
   display: none;
 }
 
-@keyframes slideInUp {
-  from {
-    opacity: 0;
-    transform: translateY(40px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+/* Enlace “Volver arriba”: oculto salvo al tabular (flotante y centrado al enfocar) */
+.skip-link {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+  outline: none;
 }
 
-@keyframes fadeInScale {
-  from {
-    opacity: 0;
-    transform: scale(0.95);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
+.skip-link:focus,
+.skip-link:focus-visible {
+  position: fixed;
+  top: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10000;
+  width: auto;
+  height: auto;
+  padding: 0.625rem 1.25rem;
+  margin: 0;
+  overflow: visible;
+  clip: auto;
+  clip-path: none;
+  white-space: normal;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: white;
+  text-decoration: none;
+  background-color: color-mix(in oklab, var(--color-app-ring) 45%, transparent);
+  box-shadow:
+    0 0 0 2px #000,
+    0 0 0 4px var(--color-app-accent);
 }
 
-/* Minimal utility for legacy animate-fadeIn usage */
-.animate-fadeIn {
-  animation: fadeIn 0.3s ease-in-out;
+.skip-link:focus:hover,
+.skip-link:focus-visible:hover {
+  color: white;
+  background-color: color-mix(in oklab, var(--color-app-ring) 55%, transparent);
 }

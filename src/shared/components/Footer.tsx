@@ -4,16 +4,25 @@ export const Footer = () => {
       <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 text-sm text-gray-400 md:flex-row">
         <div className="flex items-center gap-2">
           <span>Contacto:</span>
-          <a href="mailto:fravelz@proton.me" className="text-blue-400 transition-colors hover:text-blue-300">
+          <a
+            href="mailto:fravelz@proton.me"
+            className="text-blue-400 transition-colors hover:text-blue-300 focus-visible:rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-app-accent focus-visible:ring-offset-2 focus-visible:ring-offset-black/80"
+          >
             fravelz@proton.me
           </a>
         </div>
 
         <div className="flex items-center gap-6">
-          <a href="/privacidad" className="transition-colors hover:text-white">
+          <a
+            href="/privacidad"
+            className="rounded transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-app-accent focus-visible:ring-offset-2 focus-visible:ring-offset-black/80"
+          >
             Política de Privacidad
           </a>
-          <a href="/terminos" className="transition-colors hover:text-white">
+          <a
+            href="/terminos"
+            className="rounded transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-app-accent focus-visible:ring-offset-2 focus-visible:ring-offset-black/80"
+          >
             Términos y Condiciones
           </a>
         </div>

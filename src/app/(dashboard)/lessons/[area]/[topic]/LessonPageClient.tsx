@@ -85,7 +85,7 @@ export function LessonPageClient() {
           <p className="text-slate-400">
             No se encontró la lección para {area}/{topic}
           </p>
-          <a href="/ruta-aprendizaje" className="mt-4 inline-block text-cyan-400 hover:underline">
+          <a href="/ruta-aprendizaje" className="mt-4 inline-block text-app-accent hover:underline">
             Volver a la ruta de aprendizaje
           </a>
         </div>

@@ -17,97 +17,99 @@ En paralelo cuando tenga sentido:
 
 **No** incluir en el commit archivos que parezcan secretos (`.env`, credenciales, etc.).
 
-## Formato de mensaje (Conventional Commits)
+## Formas de mensaje (elegir una)
 
-Estructura recomendada:
+### A) Formato lista — **preferido** si el commit toca **varias áreas** del repo
+
+Cada línea del mensaje (asunto + cuerpo) sigue **exactamente**:
+
+`<type>(<scope>): <acción en imperativo, inglés, sin punto final>`
+
+- **`type`:** `feat`, `fix`, `docs`, `refactor`, `chore`, `build`, etc.
+- **`scope`:** zona afectada en una sola palabra o con guiones: `readme`, `overview`, `setup`, `frontend`, `backend`, `data`, `integrations`, `cursor`, `scripts`, `auth`, `learning`, …
+- **Primera línea:** la que resume mejor el conjunto; es la que muestra `git log --oneline`.
+- **Líneas siguientes:** una por **bloque lógico** del diff (misma plantilla). Línea en blanco opcional entre la primera y el resto (Git separa asunto y cuerpo).
+- **Sin** párrafos narrativos largos entre líneas; cada línea debe ser autónoma.
+
+Ejemplo:
 
 ```text
-<type>(<optional-scope>): <descripción en imperativo, en inglés, sin punto final>
+docs(readme): simplify bilingual README and document Tailwind CSS 4
 
-<cuerpo opcional: qué y por qué, frases completas.>
-
-<Footers opcionales: BREAKING CHANGE:, Refs:, etc.>
+docs(setup): align installation and scripts documentation ES/EN
+docs(backend): describe persistence layer instead of removed adapter
+chore(cursor): add agent command specs for docs and commits
 ```
 
-### Tipos (`type`) — priorizar estos
+**Scope con `type` `docs`:** aquí **sí** se usa `docs(overview): …`, `docs(setup): …`: el scope indica **qué parte** de la documentación cambió, no duplica el tipo.
 
-| Tipo       | Uso en este repo |
-|-----------|-------------------|
-| `feat`    | Nueva capacidad o comportamiento visible para el usuario. |
-| `fix`     | Corrección de bug o regresión. |
-| `docs`    | Solo documentación (`README`, `docs/`, comentarios de archivo de doc). |
-| `style`   | Formato, espacios, Prettier; sin cambiar lógica. |
-| `refactor`| Reestructuración sin cambiar comportamiento observado. |
-| `perf`    | Mejora de rendimiento. |
-| `test`    | Tests (añadir, corregir, refinar). |
-| `build`   | Empaquetado, dependencias, herramientas de build. |
-| `ci`      | Pipelines, checks de CI. |
-| `chore`   | Mantenimiento rutinario (scripts auxiliares, `.gitignore`, tareas internas). |
+### B) Formato clásico — un commit **pequeño** o un solo tema
 
-**Evitar** tipos no estándar en commits nuevos (`delete:`, `update:` como tipo único). Preferir:
+Una línea de asunto; cuerpo opcional en **frases completas** (inglés) si hace falta contexto; pies `BREAKING CHANGE:` si aplica.
 
-- Borrado de código muerto → `refactor:` o `chore:` con descripción clara.
-- Cambio solo en `tsconfig` / tooling → `chore:` o `build:`.
+```text
+<type>(<scope opcional>): <descripción breve en imperativo>
 
-### Scope (`optional-scope`)
+Optional body explaining why this change was needed, in full sentences.
 
-Opcional, en minúsculas y corto. Ejemplos que ya aparecen en el historial:
+BREAKING CHANGE: only if consumers must migrate.
+```
 
-- `auth`, `learning`, `logros`, `exam`, `store`, `global`
-- Rutas o áreas: `ruta-aprendizaje`, `dashboard`
-- `docs` como scope es redundante si `type` ya es `docs`; usar solo si aclara (p. ej. `docs(es)` raramente; mejor `docs: ...` sin scope).
+Si el `type` ya es `docs` y todo el cambio es genérico, puede usarse **sin** scope: `docs: fix broken links in overview`.
 
-### Descripción (línea de asunto)
+---
 
-- **Inglés** (como en los commits más recientes y limpios del repo).
+## Tipos (`type`) — priorizar
+
+| Tipo        | Uso en este repo |
+| ----------- | ---------------- |
+| `feat`      | Nueva capacidad o comportamiento visible para el usuario. |
+| `fix`       | Corrección de bug o regresión. |
+| `docs`      | Documentación (`README`, `docs/`, comandos bajo `.cursor/commands/`, etc.). |
+| `style`     | Formato, Prettier; sin cambiar lógica. |
+| `refactor`  | Reestructuración sin cambiar comportamiento observable. |
+| `perf`      | Rendimiento. |
+| `test`      | Tests. |
+| `build`     | Build, dependencias. |
+| `ci`        | CI. |
+| `chore`     | Mantenimiento (scripts auxiliares, `.gitignore`, etc.). |
+
+**Evitar** tipos no estándar (`delete:`, `update:` como tipo único). Preferir `refactor:` / `chore:` con descripción clara.
+
+## Descripción y estilo
+
+- **Inglés** en asunto y cuerpo del commit.
 - Imperativo: *add*, *fix*, *update*, *remove*, no *added* / *fixes*.
-- **Máximo ~72 caracteres** en la primera línea cuando sea posible.
-- **Un** cambio lógico por commit cuando se pueda; no repetir varias frases `feat: ... feat: ...` en una sola línea (patrón antiguo a corregir).
+- **~72 caracteres** en la primera línea cuando sea razonable.
+- No encadenar `feat: ... feat: ...` en una sola línea (patrón antiguo del repo).
 
-### Cuerpo (opcional, recomendado si el diff no es trivial)
-
-Volver a un estilo cercano a commits como:
-
-`fix: clear react-doctor blockers and stabilize scan config`
-
-con párrafo que explique *qué* y *por qué*, en frases completas.
-
-## Ejemplos alineados al proyecto
-
-**Solo docs EN/ES:**
-
-```text
-docs: align overview paths with docs tree
-```
-
-**Feature de UI:**
+## Ejemplos rápidos (formato clásico)
 
 ```text
 feat(learning): add lesson preview modal on roadmap
-```
-
-**Bugfix:**
-
-```text
 fix(logros): restore streak modal state after navigation
-```
-
-**Refactor / limpieza:**
-
-```text
 refactor(services): remove unused re-exports from barrel
-```
-
-**Chore / config:**
-
-```text
 chore: bump typescript dev dependency
 ```
 
 ## Cómo crear el commit
 
-1. Añadir solo los archivos que deben entrar: `git add -p` o rutas concretas.
-2. Mensaje con **heredoc** (evitar problemas de comillas y saltos de línea):
+1. Añadir solo lo necesario: `git add -p` o rutas concretas.
+2. Mensaje con **heredoc**:
+
+**Formato lista (varios cambios):**
+
+```bash
+git commit -m "$(cat <<'EOF'
+docs(readme): tighten main README sections ES/EN
+
+docs(overview): fix index links to setup guides
+chore(cursor): document list-style commit messages in auto-commit
+EOF
+)"
+```
+
+**Formato clásico (un tema + cuerpo):**
 
 ```bash
 git commit -m "$(cat <<'EOF'
@@ -118,12 +120,12 @@ EOF
 )"
 ```
 
-3. Tras el commit: `git status` para verificar.
-4. Si un **hook** rechaza el commit: corregir el problema y **nuevo** commit; no usar `--no-verify` salvo petición explícita del usuario.
+3. `git status` para verificar.
+4. Si un **hook** rechaza el commit: corregir y **nuevo** commit; no usar `--no-verify` salvo petición explícita del usuario.
+5. **No** añadir al mensaje ningún pie `Co-authored-by:` (en particular no firmar como coautor a Cursor ni a la IA). El commit debe reflejar solo el resumen acordado arriba.
+6. Si el entorno **insertó** igualmente `Co-authored-by: Cursor ...` y el commit **aún no se ha empujado**, enmendar el último commit repitiendo el mismo texto **sin** esa línea final (no usar `--no-verify` salvo petición explícita del usuario).
 
 ## Romper compatibilidad (`BREAKING CHANGE`)
-
-Si el cambio exige acción en consumidores o despliegue:
 
 ```text
 feat(api)!: rename query param from areaId to subjectId
@@ -131,10 +133,10 @@ feat(api)!: rename query param from areaId to subjectId
 BREAKING CHANGE: clients must send `subjectId` instead of `areaId`.
 ```
 
-(El `!` tras el scope/tipo es opcional pero recomendado en Conventional Commits 1.0.)
-
 ## Resumen para el agente
 
-- Leer **diff + log** antes de redactar el mensaje.
-- Preferir **un tipo + un asunto claro**; cuerpo si el cambio es amplio.
-- **Inglés** en asunto/cuerpo; respuesta al usuario puede seguir en español si el usuario la pide en español.
+- Diff + log antes de redactar.
+- Commits que tocan **muchas carpetas** → **formato lista** (`type(scope): acción` por línea).
+- Commits **atómicos** → formato clásico o una sola línea lista.
+- Mensaje del commit en **inglés**; respuesta al usuario en **español** salvo que pida otro idioma.
+- **Sin** `Co-authored-by:` en el mensaje; si aparece tras el commit local, enmendar y eliminarlo (commit no publicado).

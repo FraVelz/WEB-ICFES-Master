@@ -32,7 +32,7 @@ export const Header = ({ className }: { className?: string }) => {
         {/* 1. Logo & Brand */}
         <div
           className={cn(
-            'relative flex shrink-0 flex-col items-center justify-center gap-0 border-b border-cyan-500/10',
+            'relative flex shrink-0 flex-col items-center justify-center gap-0 border-b border-app-ring/10',
             sidebarExpanded ? 'h-24' : 'h-auto py-4'
           )}
         >
@@ -47,14 +47,14 @@ export const Header = ({ className }: { className?: string }) => {
             <div
               className={cn(
                 'flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-linear-to-br',
-                'from-cyan-500 via-blue-500 to-purple-600 shadow-lg shadow-cyan-500/30'
+                'from-cta-from via-blue-500 to-purple-600 shadow-lg shadow-app-ring/30'
               )}
             >
               <Icon name="rocket" size="lg" className="text-white" />
             </div>
             <span
               className={cn(
-                'bg-linear-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-xl font-bold',
+                'bg-linear-to-r from-cta-text-start via-cta-text-via to-cta-text-end bg-clip-text text-xl font-bold',
                 'whitespace-nowrap text-transparent transition-opacity duration-300',
                 sidebarExpanded ? 'pl-2 opacity-100' : 'w-0 overflow-hidden opacity-0'
               )}
@@ -67,7 +67,7 @@ export const Header = ({ className }: { className?: string }) => {
             onClick={() => setSidebarExpanded(!sidebarExpanded)}
             className={cn(
               'flex h-8 w-8 shrink-0 cursor-pointer items-center justify-center rounded-lg text-slate-400',
-              'transition-colors hover:bg-white/10 hover:text-cyan-400',
+              'transition-colors hover:bg-white/10 hover:text-app-accent',
               sidebarExpanded ? 'absolute top-1/2 right-2 -translate-y-1/2' : 'mt-3'
             )}
             aria-label={sidebarExpanded ? 'Cerrar barra lateral' : 'Abrir barra lateral'}
@@ -86,7 +86,7 @@ export const Header = ({ className }: { className?: string }) => {
               className={cn(
                 'group/item relative flex h-12 items-center rounded-xl px-3 transition-all duration-300',
                 pathname === option.path
-                  ? 'bg-cyan-500/10 text-cyan-400 shadow-lg shadow-cyan-500/5'
+                  ? 'bg-app-ring/10 text-app-accent shadow-lg shadow-app-ring/5'
                   : 'text-slate-400 hover:bg-white/5 hover:text-white'
               )}
             >
@@ -104,7 +104,7 @@ export const Header = ({ className }: { className?: string }) => {
 
               {/* Active Indicator */}
               {pathname === option.path && (
-                <div className="absolute top-1/2 right-0 h-6 w-1 -translate-y-1/2 rounded-l-full bg-cyan-500" />
+                <div className="absolute top-1/2 right-0 h-6 w-1 -translate-y-1/2 rounded-l-full bg-app-ring" />
               )}
             </Link>
           ))}
@@ -136,7 +136,7 @@ export const Header = ({ className }: { className?: string }) => {
         </nav>
 
         {/* 3. User Profile Section (Bottom) */}
-        <div className="border-t border-cyan-500/10 bg-slate-900/50 p-4">
+        <div className="border-t border-app-ring/10 bg-slate-900/50 p-4">
           {/* Coins Display */}
           <div className="relative mb-4 flex h-10 items-center overflow-hidden rounded-lg border border-amber-500/20 bg-slate-800/50">
             <div
@@ -163,7 +163,7 @@ export const Header = ({ className }: { className?: string }) => {
             href="/perfil"
             className="group/profile relative flex items-center gap-3 overflow-hidden rounded-xl p-2 transition-colors hover:bg-white/5"
           >
-            <div className="z-10 h-10 w-10 shrink-0 overflow-hidden rounded-full border-2 border-cyan-500/30 bg-slate-800">
+            <div className="z-10 h-10 w-10 shrink-0 overflow-hidden rounded-full border-2 border-app-ring/30 bg-slate-800">
               {user?.profileImage ? (
                 <img src={user.profileImage} alt="Profile" className="h-full w-full object-cover" />
               ) : (
@@ -179,14 +179,14 @@ export const Header = ({ className }: { className?: string }) => {
               )}
             >
               <p className="max-w-[140px] truncate text-sm font-bold text-white">{user?.username || 'Usuario'}</p>
-              <p className="text-xs text-cyan-400">{rank?.name || 'Novato'}</p>
+              <p className="text-xs text-app-accent">{rank?.name || 'Novato'}</p>
             </div>
           </Link>
 
           {/* Settings Link */}
           <Link
             href="/configuracion"
-            className="mt-2 flex h-10 items-center justify-center p-2 text-slate-500 transition-colors hover:text-cyan-400"
+            className="mt-2 flex h-10 items-center justify-center p-2 text-slate-500 transition-colors hover:text-app-accent"
           >
             <Icon name="cog" size="lg" />
           </Link>
@@ -196,7 +196,7 @@ export const Header = ({ className }: { className?: string }) => {
       {/* Mobile Bottom Navigation */}
       <nav
         className={cn(
-          'border-t border-cyan-500/20 bg-linear-to-t',
+          'border-t border-app-ring/20 bg-linear-to-t',
           'from-slate-950/95 via-slate-950/90 to-slate-950/80 backdrop-blur-xl lg:hidden'
         )}
       >
@@ -208,7 +208,7 @@ export const Header = ({ className }: { className?: string }) => {
               className={cn(
                 'flex h-20 w-16 flex-col items-center justify-center transition-all duration-300',
                 pathname === option.path
-                  ? 'border-t-2 border-cyan-500 text-cyan-400'
+                  ? 'border-t-2 border-app-ring text-app-accent'
                   : 'text-slate-400 hover:text-white'
               )}
             >
@@ -233,7 +233,7 @@ export const Header = ({ className }: { className?: string }) => {
       {mobileOptionsMenuOpen && (
         <div
           className={cn(
-            'fixed right-0 bottom-20 left-0 z-50 h-fit w-screen border-t border-cyan-500/30',
+            'fixed right-0 bottom-20 left-0 z-50 h-fit w-screen border-t border-app-ring/30',
             'bg-slate-900/98 backdrop-blur-xl lg:hidden'
           )}
         >
@@ -242,10 +242,10 @@ export const Header = ({ className }: { className?: string }) => {
               <Link
                 key={option.path}
                 href={option.path}
-                className="flex items-center gap-4 px-6 py-4 text-slate-300 transition-colors hover:bg-cyan-500/10 active:bg-cyan-500/20"
+                className="flex items-center gap-4 px-6 py-4 text-slate-300 transition-colors hover:bg-app-ring/10 active:bg-app-ring/20"
                 onClick={() => setMobileOptionsMenuOpen(false)}
               >
-                <Icon name={option.icon} size="xl" className="text-cyan-400" />
+                <Icon name={option.icon} size="xl" className="text-app-accent" />
                 <span className="text-lg font-semibold">{option.label}</span>
               </Link>
             ))}

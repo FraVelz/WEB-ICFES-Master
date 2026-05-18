@@ -39,7 +39,7 @@ export const PerfilNormal = () => {
     return (
       <div className="flex min-h-dvh items-center justify-center bg-slate-950">
         <div className="space-y-4 text-center">
-          <div className="animate-spin text-4xl text-cyan-400">
+          <div className="animate-spin text-4xl text-app-accent">
             <Icon name="spinner" />
           </div>
           <p className="text-lg text-slate-300">Cargando tu perfil...</p>
@@ -52,7 +52,7 @@ export const PerfilNormal = () => {
     <div className="min-h-dvh bg-slate-950 pb-24 text-white md:pb-0">
       {/* Background Effects */}
       <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
-        <div className="absolute top-0 left-0 h-96 w-full bg-linear-to-b from-cyan-900/20 to-transparent"></div>
+        <div className="absolute top-0 left-0 h-96 w-full bg-linear-to-b from-hub-sheet-from/20 to-transparent"></div>
         <div className="absolute top-1/4 right-0 h-96 w-96 rounded-full bg-purple-500/10 blur-3xl"></div>
       </div>
 
@@ -69,7 +69,7 @@ export const PerfilNormal = () => {
               onClick={handleShare}
               className={cn(
                 'flex cursor-pointer items-center gap-2 rounded-lg bg-slate-800 p-2 text-sm font-medium',
-                'text-cyan-400 transition-colors hover:bg-slate-700'
+                'text-app-accent transition-colors hover:bg-slate-700'
               )}
               title="Copiar enlace público"
             >
@@ -88,7 +88,7 @@ export const PerfilNormal = () => {
           <div className="flex flex-col items-center gap-8 md:flex-row">
             {/* Avatar */}
             <div className="group relative">
-              <div className="h-32 w-32 rounded-full border-4 border-cyan-500/30 bg-slate-950 p-1 shadow-lg shadow-cyan-500/20 md:h-40 md:w-40">
+              <div className="h-32 w-32 rounded-full border-4 border-app-ring/30 bg-slate-950 p-1 shadow-lg shadow-app-ring/20 md:h-40 md:w-40">
                 <img
                   src={photoUrl || `https://api.dicebear.com/7.x/avataaars/svg?seed=${name}`}
                   alt={name}
@@ -98,7 +98,7 @@ export const PerfilNormal = () => {
               <div
                 className={cn(
                   'absolute -right-2 -bottom-2 rounded-full border border-slate-700 bg-slate-900 px-3 py-1',
-                  'text-xs font-bold text-cyan-400 shadow-lg'
+                  'text-xs font-bold text-app-accent shadow-lg'
                 )}
               >
                 {levelInfo?.levelIcon} Nivel {levelInfo?.level || level}
@@ -121,7 +121,7 @@ export const PerfilNormal = () => {
               <div className="mt-4 max-w-md">
                 <div className="mb-2 flex items-center justify-between text-xs font-bold">
                   <div className="flex items-center gap-2">
-                    <span className="text-base font-bold text-cyan-400" title={`XP Total: ${totalXP || 0}`}>
+                    <span className="text-base font-bold text-app-accent" title={`XP Total: ${totalXP || 0}`}>
                       {typeof totalXP === 'number' ? totalXP : 0}
                     </span>
                     <span className="text-slate-400">XP Total</span>
@@ -138,7 +138,7 @@ export const PerfilNormal = () => {
                   <div
                     className={cn(
                       'h-full bg-linear-to-r shadow-lg transition-all duration-1000',
-                      levelInfo?.levelColor || 'from-cyan-500 to-blue-500'
+                      levelInfo?.levelColor || 'from-cta-from to-cta-progress-end'
                     )}
                     style={{ width: `${levelInfo?.xpProgress ?? 0}%` }}
                   />
@@ -238,7 +238,7 @@ export const PerfilNormal = () => {
                 </h2>
                 <button
                   onClick={() => router.push('/logros')}
-                  className="cursor-pointer text-xs font-bold tracking-wider text-cyan-400 uppercase hover:text-cyan-300"
+                  className="cursor-pointer text-xs font-bold tracking-wider text-app-accent uppercase hover:text-app-accent-muted"
                 >
                   Ver todos
                 </button>

@@ -64,7 +64,7 @@ export const StoreModal = ({ isOpen, onClose }: StoreModalProps) => {
           {loading ? (
             <div className="flex items-center justify-center py-20">
               <div className="space-y-4 text-center">
-                <Icon name="spinner" size="2xl" className="animate-spin text-4xl text-cyan-400" />
+                <Icon name="spinner" size="2xl" className="animate-spin text-4xl text-app-accent" />
                 <p className="text-slate-300">Cargando tienda...</p>
               </div>
             </div>

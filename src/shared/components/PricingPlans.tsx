@@ -77,7 +77,7 @@ export const PricingPlans = ({ plans = [] }: { plans?: UiPlan[] }) => {
             className={cn(
               'rounded-xl border p-8 transition-all duration-300',
               plan.popular
-                ? 'scale-105 border-cyan-500/50 bg-linear-to-br from-cyan-600/20 to-blue-600/20 shadow-lg shadow-cyan-500/20'
+                ? 'scale-105 border-app-ring/50 bg-linear-to-br from-app-accent-strong/20 to-blue-600/20 shadow-lg shadow-app-ring/20'
                 : 'border-slate-700 bg-slate-800/50 hover:border-slate-600'
             )}
           >
@@ -85,8 +85,8 @@ export const PricingPlans = ({ plans = [] }: { plans?: UiPlan[] }) => {
               <div className="mb-4 text-center">
                 <span
                   className={cn(
-                    'inline-flex items-center gap-1 rounded-full border border-cyan-500/50 bg-cyan-500/30 px-4',
-                    'py-1 text-sm font-bold text-cyan-400'
+                    'inline-flex items-center gap-1 rounded-full border border-app-ring/50 bg-app-ring/30 px-4',
+                    'py-1 text-sm font-bold text-app-accent'
                   )}
                 >
                   <Icon name="crown" />
@@ -108,7 +108,7 @@ export const PricingPlans = ({ plans = [] }: { plans?: UiPlan[] }) => {
               className={cn(
                 'mb-8 w-full cursor-pointer rounded-lg px-4 py-3 font-bold transition-all duration-300',
                 plan.popular
-                  ? 'bg-linear-to-r from-cyan-500 to-blue-500 text-white hover:shadow-lg hover:shadow-cyan-500/50'
+                  ? 'bg-linear-to-r from-cta-from to-cta-progress-end text-white hover:shadow-lg hover:shadow-app-ring/50'
                   : 'bg-slate-700 text-white hover:bg-slate-600'
               )}
             >

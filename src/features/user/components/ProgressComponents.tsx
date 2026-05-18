@@ -43,29 +43,29 @@ export const AreaPerformanceCard = ({
 }) => (
   <div
     className={cn(
-      'rounded-2xl border border-cyan-500/20 bg-white/5 p-8 backdrop-blur-xl transition-all',
-      'duration-300 hover:scale-105 hover:border-cyan-500/50 hover:bg-cyan-500/10 hover:shadow-lg',
-      'hover:shadow-cyan-500/20'
+      'rounded-2xl border border-app-ring/20 bg-white/5 p-8 backdrop-blur-xl transition-all',
+      'duration-300 hover:scale-105 hover:border-app-ring/50 hover:bg-app-ring/10 hover:shadow-lg',
+      'hover:shadow-app-ring/20'
     )}
   >
     <div className="mb-6 flex items-center justify-between">
       <div className="flex items-center gap-4">
-        <Icon name={area.icon} className="text-3xl text-cyan-400" />
+        <Icon name={area.icon} className="text-3xl text-app-accent" />
         <div>
           <h4 className="text-xl font-semibold text-white">{area.name}</h4>
-          <p className="mt-2 bg-linear-to-r from-cyan-400 to-blue-400 bg-clip-text text-3xl font-black text-transparent">
+          <p className="mt-2 bg-linear-to-r from-hub-title-from to-blue-400 bg-clip-text text-3xl font-black text-transparent">
             {area.percentage}%
           </p>
         </div>
       </div>
       <div className="text-right">
         <p className="mb-2 text-sm font-semibold text-slate-400">Respuestas</p>
-        <p className="text-2xl font-black text-cyan-400">
+        <p className="text-2xl font-black text-app-accent">
           {area.correct}/{area.total}
         </p>
       </div>
     </div>
-    <div className="h-2 overflow-hidden rounded-full border border-cyan-500/30 bg-slate-800/50">
+    <div className="h-2 overflow-hidden rounded-full border border-app-ring/30 bg-slate-800/50">
       <div
         className={cn('h-full bg-linear-to-r transition-all duration-500', area.color)}
         style={{ width: `${area.percentage}%` }}

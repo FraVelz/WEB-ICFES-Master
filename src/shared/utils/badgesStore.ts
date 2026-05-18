@@ -48,8 +48,8 @@ export const BADGES_CATALOG = [
     description: 'Perfecciona tu Lectura Crítica',
     price: 350,
     tier: 3,
-    color: 'from-cyan-400 to-cyan-600',
-    borderColor: 'border-cyan-500',
+    color: 'from-app-accent to-app-accent-strong',
+    borderColor: 'border-app-ring',
     requiresPrevious: 2,
   },
   {

@@ -3,25 +3,25 @@ export const QUICK_STATS = [
     label: 'Racha',
     value: (streak: number) => `${streak}d`,
     icon: 'fire',
-    color: 'from-red-600 to-orange-600',
+    color: 'from-stat-streak-from to-stat-streak-to',
   },
   {
     label: 'Precisión',
     value: (accuracy: number) => `${accuracy}%`,
     icon: 'bullseye',
-    color: 'from-green-600 to-emerald-600',
+    color: 'from-stat-accuracy-from to-stat-accuracy-to',
   },
   {
     label: 'Horas',
     value: (hours: number) => `${hours}h`,
     icon: 'clock',
-    color: 'from-blue-600 to-cyan-600',
+    color: 'from-stat-hours-from to-stat-hours-to',
   },
   {
     label: 'XP Hoy',
     value: (xp: number) => Math.floor(xp),
     icon: 'zap',
-    color: 'from-purple-600 to-pink-600',
+    color: 'from-stat-xp-from to-stat-xp-to',
   },
 ];
 
@@ -31,7 +31,7 @@ export const NAVIGATION_CARDS = [
     title: 'Tu Ruta de Aprendizaje',
     description: 'Aprende de forma estructurada por niveles y áreas',
     icon: 'map',
-    color: 'from-blue-600 to-blue-400',
+    color: 'from-nav-roadmap-from to-nav-roadmap-to',
     link: '/ruta-aprendizaje',
     badge: 'Nueva',
   },
@@ -40,17 +40,17 @@ export const NAVIGATION_CARDS = [
     title: 'Desafíos Diarios',
     description: 'Completa retos para ganar XP y bonificaciones',
     icon: 'fire',
-    color: 'from-orange-600 to-red-400',
+    color: 'from-nav-challenges-from to-nav-challenges-to',
     link: '/desafios-diarios',
     badge: null,
   },
 ];
 
 export const AREA_ICONS = {
-  matematicas: { icon: 'calculator', color: 'text-yellow-400' },
-  lenguaje: { icon: 'book', color: 'text-blue-400' },
-  ciencias: { icon: 'flask', color: 'text-green-400' },
-  sociales: { icon: 'globe', color: 'text-orange-400' },
+  matematicas: { icon: 'calculator', color: 'text-profile-math-icon' },
+  lenguaje: { icon: 'book', color: 'text-profile-lc-icon' },
+  ciencias: { icon: 'flask', color: 'text-profile-sci-icon' },
+  sociales: { icon: 'globe', color: 'text-profile-soc-icon' },
 };
 
 export const TABS = [
@@ -80,4 +80,9 @@ export const RECOMMENDED_SESSIONS = [
   },
 ];
 
-export const ICON_COLORS = ['text-cyan-400', 'text-orange-400', 'text-yellow-400', 'text-pink-400'];
+export const ICON_COLORS = [
+  'text-icon-wash-1',
+  'text-icon-wash-2',
+  'text-icon-wash-3',
+  'text-icon-wash-4',
+];

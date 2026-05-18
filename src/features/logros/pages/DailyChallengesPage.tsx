@@ -61,7 +61,7 @@ export const DailyChallengesPage = () => {
             </button>
 
             <div className="flex min-w-[140px] items-center justify-center gap-2 px-4 font-medium">
-              <Icon name="calendar-alt" className="text-cyan-500" />
+              <Icon name="calendar-alt" className="text-app-ring" />
               {selectedDate.toLocaleDateString('es-CO', {
                 weekday: 'short',
                 day: 'numeric',
@@ -124,7 +124,7 @@ export const DailyChallengesPage = () => {
         <div className="space-y-4">
           {loading ? (
             <div className="py-12 text-center">
-              <Icon name="spinner" className="mb-4 animate-spin text-4xl text-cyan-400" />
+              <Icon name="spinner" className="mb-4 animate-spin text-4xl text-app-accent" />
               <p className="text-slate-400">Cargando desafíos...</p>
             </div>
           ) : challenges.length > 0 ? (

@@ -24,7 +24,7 @@ export const AnswerSheet = ({
       )}
     >
       <h3 className="mb-4 flex items-center gap-2 text-sm font-bold text-white">
-        <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-linear-to-r from-cyan-500 to-blue-500 text-xs font-bold"></span>
+        <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-linear-to-r from-cta-from to-cta-progress-end text-xs font-bold"></span>
         HOJA DE RESPUESTAS
       </h3>
 
@@ -44,7 +44,7 @@ export const AnswerSheet = ({
               className={cn(
                 'flex aspect-square items-center justify-center rounded-lg text-xs font-bold transition-all duration-300',
                 isCurrent
-                  ? 'scale-110 bg-cyan-500/30 text-cyan-300 ring-2 ring-cyan-400'
+                  ? 'scale-110 bg-app-ring/30 text-app-accent-muted ring-2 ring-app-accent'
                   : isAnswered
                     ? 'bg-linear-to-r from-green-500 to-emerald-500 text-white hover:shadow-lg hover:shadow-green-500/50'
                     : 'border border-white/20 bg-white/10 text-gray-400 hover:bg-white/20'

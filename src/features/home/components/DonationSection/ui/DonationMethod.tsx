@@ -56,7 +56,7 @@ export const DonationMethod = ({
           </div>
         </div>
         {selectedAmount === 'custom' && (
-          <div className="animate-fadeIn mt-3">
+          <div className="animate-fade-in-up mt-3">
             <div className="relative">
               <span className="absolute top-1/2 left-4 -translate-y-1/2 text-gray-400">$</span>
               <input
@@ -107,7 +107,7 @@ export const DonationMethod = ({
                 <div
                   className={cn(
                     'flex h-10 w-10 items-center justify-center rounded-full',
-                    method.highlight ? 'bg-green-500/20 text-green-400' : 'bg-white/10 text-gray-300'
+                    method.highlight ? 'bg-lesson-sci-glow-a/20 text-green-400' : 'bg-white/10 text-gray-300'
                   )}
                 >
                   <Icon name={method.icon} className="text-lg" />

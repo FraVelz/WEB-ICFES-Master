@@ -51,7 +51,7 @@ export function QuizStep({ data, onStepReady }: QuizStepProps) {
                     : showWrong
                       ? 'border-rose-500/80 bg-rose-950/40 text-white'
                       : isSel
-                        ? 'border-cyan-500/60 bg-slate-800/80 text-white'
+                        ? 'border-app-ring/60 bg-slate-800/80 text-white'
                         : 'border-slate-600/80 bg-slate-900/60 text-slate-100 hover:border-slate-500'
                 )}
               >

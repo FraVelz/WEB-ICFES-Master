@@ -74,7 +74,7 @@ export const LEVELS = [
     icon: '📖',
     minXP: 1000,
     maxXP: 3000,
-    color: 'from-cyan-400 to-cyan-600',
+    color: 'from-app-accent to-app-accent-strong',
   },
   {
     level: 3,

@@ -5,32 +5,32 @@
 export const AREA_INFO = {
   'lectura-critica': {
     name: 'Lectura Crítica',
-    color: 'from-blue-400 to-blue-600',
+    color: 'from-subject-lc-from to-subject-lc-to',
     icon: 'book-open',
   },
   matematicas: {
     name: 'Matemáticas',
-    color: 'from-green-400 to-green-600',
+    color: 'from-subject-math-from to-subject-math-to',
     icon: 'calculator',
   },
   'ciencias-naturales': {
     name: 'Ciencias Naturales',
-    color: 'from-purple-400 to-purple-600',
+    color: 'from-subject-sci-from to-subject-sci-to',
     icon: 'flask',
   },
   'sociales-ciudadanas': {
     name: 'Sociales y Ciudadanas',
-    color: 'from-orange-400 to-orange-600',
+    color: 'from-subject-soc-from to-subject-soc-to',
     icon: 'landmark',
   },
   ingles: {
     name: 'Inglés',
-    color: 'from-indigo-400 to-indigo-600',
+    color: 'from-subject-eng-from to-subject-eng-to',
     icon: 'language',
   },
   'examen-completo': {
     name: 'Examen Completo ICFES',
-    color: 'from-pink-400 to-pink-600',
+    color: 'from-subject-full-from to-subject-full-to',
     icon: 'clipboard-list',
   },
 };

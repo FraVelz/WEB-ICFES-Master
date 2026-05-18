@@ -28,8 +28,8 @@ export default function SignInRequiredBlock({
   return (
     <div className="flex min-h-dvh items-center justify-center bg-linear-to-b from-black via-slate-950 to-black p-6">
       <div className="w-full max-w-md rounded-2xl border border-slate-700 bg-slate-800/50 p-8 text-center">
-        <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full border-2 border-cyan-500/50 bg-cyan-500/20">
-          <Icon name="lock" size="xl" className="text-cyan-400" />
+        <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full border-2 border-app-ring/50 bg-app-ring/20">
+          <Icon name="lock" size="xl" className="text-app-accent" />
         </div>
         <h2 className="mb-3 text-2xl font-bold text-white">{title}</h2>
         <p className="mb-8 text-slate-400">{message}</p>
@@ -37,9 +37,9 @@ export default function SignInRequiredBlock({
           <Link
             href="/login"
             className={cn(
-              'flex w-full items-center justify-center gap-2 rounded-lg bg-linear-to-r from-cyan-500',
-              'to-blue-600 px-6 py-3 font-semibold text-white transition-all duration-300 hover:shadow-lg',
-              'hover:shadow-cyan-500/30'
+              'flex w-full items-center justify-center gap-2 rounded-lg bg-linear-to-r from-cta-from',
+              'to-cta-to px-6 py-3 font-semibold text-white transition-all duration-300 hover:shadow-lg',
+              'hover:shadow-app-ring/30'
             )}
           >
             <Icon name="sign-in-alt" />

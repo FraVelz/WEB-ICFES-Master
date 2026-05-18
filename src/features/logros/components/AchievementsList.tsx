@@ -32,7 +32,7 @@ export const AchievementsList = ({ achievements = [] }: AchievementsListProps) =
       case 'completed':
         return 'text-yellow-400 border-yellow-500/50 bg-yellow-500/10';
       case 'in_progress':
-        return 'text-cyan-400 border-cyan-500/50 bg-cyan-500/10';
+        return 'text-app-accent border-app-ring/50 bg-app-ring/10';
       default:
         return 'text-slate-500 border-slate-700 bg-slate-800/50';
     }
@@ -41,14 +41,14 @@ export const AchievementsList = ({ achievements = [] }: AchievementsListProps) =
   const getProgressBarColor = (status: string) => {
     if (status === 'completed') return 'bg-yellow-400';
     if (status === 'incomplete') return 'bg-slate-600';
-    return 'bg-cyan-400';
+    return 'bg-hub-orb';
   };
 
   return (
     <div className="animate-fade-in w-full space-y-6">
       {/* Header & Filters */}
       <div className="space-y-4">
-        <h2 className="bg-linear-to-r from-cyan-400 to-blue-400 bg-clip-text px-1 text-2xl font-bold text-transparent">
+        <h2 className="bg-linear-to-r from-hub-title-from to-blue-400 bg-clip-text px-1 text-2xl font-bold text-transparent">
           Logros y Metas
         </h2>
 
@@ -61,7 +61,7 @@ export const AchievementsList = ({ achievements = [] }: AchievementsListProps) =
               className={cn(
                 'flex cursor-pointer items-center gap-2 rounded-full border px-4 py-2 text-sm font-semibold whitespace-nowrap transition-all duration-300',
                 activeCategory === key
-                  ? 'border-cyan-500 bg-cyan-500/20 text-cyan-400 shadow-lg shadow-cyan-500/20'
+                  ? 'border-app-ring bg-app-ring/20 text-app-accent shadow-lg shadow-app-ring/20'
                   : 'border-slate-700 bg-slate-800/50 text-slate-400 hover:border-slate-600 hover:bg-slate-800'
               )}
             >
@@ -88,7 +88,7 @@ export const AchievementsList = ({ achievements = [] }: AchievementsListProps) =
                   ? 'border-yellow-500/30 bg-linear-to-br from-yellow-500/10 to-orange-500/5 hover:border-yellow-500/50'
                   : isIncomplete
                     ? 'border-slate-800 bg-slate-900/50 opacity-75'
-                    : 'border-slate-700 bg-slate-800/30 hover:border-cyan-500/30 hover:bg-slate-800/50'
+                    : 'border-slate-700 bg-slate-800/30 hover:border-app-ring/30 hover:bg-slate-800/50'
               )}
             >
               <div className="flex items-start gap-4">
@@ -117,7 +117,7 @@ export const AchievementsList = ({ achievements = [] }: AchievementsListProps) =
                   {/* Progress Bar */}
                   <div className="space-y-1.5">
                     <div className="flex justify-between text-xs font-medium">
-                      <span className={isCompleted ? 'text-yellow-500/80' : 'text-cyan-500/80'}>
+                      <span className={isCompleted ? 'text-yellow-500/80' : 'text-app-ring/80'}>
                         {isCompleted ? '¡Completado!' : `${achievement.progress ?? 0} / ${achievement.target ?? 0}`}
                       </span>
                       <span className="text-slate-500">+{achievement.xpReward ?? 0} XP</span>

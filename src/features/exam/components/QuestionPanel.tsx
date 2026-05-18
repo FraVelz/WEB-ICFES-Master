@@ -21,10 +21,10 @@ export const QuestionPanel = ({
   const letters = ['A', 'B', 'C', 'D'];
 
   return (
-    <div className="fade-in space-y-8 sm:mx-6">
+    <div className="animate-fade-in-up space-y-8 sm:mx-6">
       <div
         className={cn(
-          'border-cyan-400 bg-linear-to-br from-blue-600 via-purple-600 to-indigo-600 p-8 text-white',
+          'border-app-accent bg-linear-to-br from-blue-600 via-purple-600 to-indigo-600 p-8 text-white',
           'shadow-2xl sm:rounded-3xl sm:border-2 md:p-10'
         )}
       >

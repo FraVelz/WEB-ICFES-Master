@@ -50,7 +50,7 @@ export const PlanChangeAlert = ({ currentPlan, newPlan }: PlanChangeAlertProps) 
       return {
         type: 'upgrade',
         icon: 'info-circle',
-        bgColor: 'bg-blue-500/20',
+        bgColor: 'bg-lesson-lc-glow-a/20',
         borderColor: 'border-blue-500',
         textColor: 'text-blue-300',
         titleColor: 'text-blue-400',
@@ -65,7 +65,7 @@ export const PlanChangeAlert = ({ currentPlan, newPlan }: PlanChangeAlertProps) 
       return {
         type: 'downgrade',
         icon: 'exclamation-triangle',
-        bgColor: 'bg-yellow-500/20',
+        bgColor: 'bg-lesson-math-glow-a/20',
         borderColor: 'border-yellow-500',
         textColor: 'text-yellow-300',
         titleColor: 'text-yellow-400',

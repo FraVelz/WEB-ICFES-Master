@@ -31,7 +31,7 @@ export const PaymentButtons = ({ isProcessing, isFormValid, onClose, price, plan
           className={cn(
             'flex cursor-pointer items-center justify-center gap-2 rounded-lg px-4 py-3 font-bold transition-all duration-300',
             isFree || (isFormValid && !isProcessing)
-              ? 'bg-linear-to-r from-cyan-500 to-blue-600 text-white hover:shadow-lg hover:shadow-cyan-500/50'
+              ? 'bg-linear-to-r from-cta-from to-cta-to text-white hover:shadow-lg hover:shadow-app-ring/50'
               : 'cursor-not-allowed bg-slate-700 text-slate-500'
           )}
         >

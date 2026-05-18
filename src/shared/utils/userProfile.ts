@@ -51,7 +51,7 @@ const RANK_SYSTEM: Record<number, RankInfo> = {
   2: {
     name: 'Estudiante',
     icon: '📖',
-    color: 'from-cyan-400 to-cyan-600',
+    color: 'from-app-accent to-app-accent-strong',
     minScore: 55,
   },
   3: {

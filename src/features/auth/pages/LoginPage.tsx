@@ -21,8 +21,8 @@ export const LoginPage = () => {
     <div className="flex min-h-dvh flex-col overflow-hidden bg-linear-to-b from-black via-slate-950 to-black px-6 text-white">
       {/* Background glow effects */}
       <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
-        <div className="absolute top-1/3 left-1/4 h-96 w-96 animate-pulse rounded-full bg-blue-500/30 blur-3xl"></div>
-        <div className="absolute right-1/4 bottom-1/3 h-96 w-96 animate-pulse rounded-full bg-purple-500/30 blur-3xl"></div>
+        <div className="absolute top-1/3 left-1/4 h-96 w-96 animate-pulse rounded-full bg-ambient-a/30 blur-3xl"></div>
+        <div className="absolute right-1/4 bottom-1/3 h-96 w-96 animate-pulse rounded-full bg-ambient-b/30 blur-3xl"></div>
       </div>
 
       {/* Mobile-only header */}
@@ -45,12 +45,12 @@ export const LoginPage = () => {
         <div className="w-full max-w-md">
           {/* Header */}
           <div className="mb-8 text-center">
-            <div className="mb-4 inline-flex h-16 w-16 items-center justify-center rounded-full bg-linear-to-r from-cyan-500 to-blue-600">
+            <div className="mb-4 inline-flex h-16 w-16 items-center justify-center rounded-full bg-linear-to-r from-cta-from to-cta-to">
               <Icon name="rocket" size="2xl" className="text-2xl" />
             </div>
             <h1
               className={cn(
-                'mb-2 bg-linear-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-3xl',
+                'mb-2 bg-linear-to-r from-cta-text-start via-cta-text-via to-cta-text-end bg-clip-text text-3xl',
                 'font-black text-transparent md:text-4xl'
               )}
             >
@@ -76,7 +76,7 @@ export const LoginPage = () => {
                   placeholder="tu@email.com"
                   className={cn(
                     'w-full rounded-lg border border-slate-700 bg-slate-800/50 py-3 pr-4 pl-10 transition-all',
-                    'focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/30 focus:outline-none'
+                    'focus:border-app-ring focus:ring-2 focus:ring-app-ring/30 focus:outline-none'
                   )}
                   required
                 />
@@ -98,7 +98,7 @@ export const LoginPage = () => {
                   placeholder="••••••••"
                   className={cn(
                     'w-full rounded-lg border border-slate-700 bg-slate-800/50 py-3 pr-12 pl-10 transition-all',
-                    'focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/30 focus:outline-none'
+                    'focus:border-app-ring focus:ring-2 focus:ring-app-ring/30 focus:outline-none'
                   )}
                   required
                 />
@@ -117,8 +117,8 @@ export const LoginPage = () => {
               type="submit"
               className={cn(
                 'flex w-full cursor-pointer items-center justify-center gap-2 rounded-lg bg-linear-to-r',
-                'from-cyan-500 to-blue-600 px-4 py-3 font-bold text-white transition-all duration-300',
-                'hover:shadow-lg hover:shadow-cyan-500/50'
+                'from-cta-from to-cta-to px-4 py-3 font-bold text-white transition-all duration-300',
+                'hover:shadow-lg hover:shadow-app-ring/50'
               )}
             >
               <Icon name="rocket" />
@@ -132,7 +132,7 @@ export const LoginPage = () => {
           <div className="mt-6 space-y-4">
             <p className="text-center text-sm text-slate-400">
               ¿No tienes cuenta?{' '}
-              <Link href="/signup" className="font-semibold text-cyan-400 transition-colors hover:text-cyan-300">
+              <Link href="/signup" className="font-semibold text-app-accent transition-colors hover:text-app-accent-muted">
                 Crear cuenta
               </Link>
             </p>

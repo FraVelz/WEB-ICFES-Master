@@ -7,7 +7,7 @@
  * {
  *   type: "bar",
  *   labels: ["2020", "2021", "2022"],
- *   datasets: [{ label: "Sales", data: [100, 150, 200], color: "bg-cyan-500" }],
+ *   datasets: [{ label: "Sales", data: [100, 150, 200], color: "bg-app-ring" }],
  *   title: "Chart title"
  * }
  *
@@ -43,7 +43,7 @@ export const ChartContent = ({ type = 'bar', labels, datasets, title, descriptio
             <span className="w-16 text-right text-sm font-semibold text-gray-300">{lb[idx]}</span>
             <div className="flex flex-1 items-center gap-2">
               <div
-                className="h-8 rounded bg-linear-to-r from-cyan-500 to-blue-500"
+                className="h-8 rounded bg-linear-to-r from-cta-from to-cta-progress-end"
                 style={{ width: `${value * scale}px` }}
               ></div>
               <span className="text-sm text-gray-400">{value}</span>
@@ -55,8 +55,8 @@ export const ChartContent = ({ type = 'bar', labels, datasets, title, descriptio
   };
 
   return (
-    <div className="my-6 rounded-lg border border-cyan-500/20 bg-linear-to-r from-slate-700/20 to-slate-800/20 p-6">
-      {title && <h4 className="mb-4 text-center text-sm font-semibold text-cyan-300">{title}</h4>}
+    <div className="my-6 rounded-lg border border-app-ring/20 bg-linear-to-r from-slate-700/20 to-slate-800/20 p-6">
+      {title && <h4 className="mb-4 text-center text-sm font-semibold text-app-accent-muted">{title}</h4>}
 
       {type === 'bar' && renderSimpleBar()}
 

@@ -37,13 +37,13 @@ export const ResultsAnalysis = ({
         <div className="mb-12 text-center">
           <h1
             className={cn(
-              'mb-8 bg-linear-to-r from-blue-400 via-purple-400 to-cyan-400 bg-clip-text text-5xl',
+              'mb-8 bg-linear-to-r from-blue-400 via-purple-400 to-app-accent bg-clip-text text-5xl',
               'font-bold text-transparent md:text-6xl'
             )}
           >
             ¡Examen Completado!
           </h1>
-          <div className="mb-4 bg-linear-to-r from-blue-400 to-cyan-400 bg-clip-text text-7xl font-black text-transparent">
+          <div className="mb-4 bg-linear-to-r from-blue-400 to-app-accent bg-clip-text text-7xl font-black text-transparent">
             {percentage}%
           </div>
           <p className="mb-2 text-xl text-gray-300">Calificación Final</p>
@@ -54,7 +54,7 @@ export const ResultsAnalysis = ({
 
         <div className="mb-12 h-3 overflow-hidden rounded-full bg-white/10">
           <div
-            className="h-full bg-linear-to-r from-blue-500 to-cyan-500 transition-all duration-700"
+            className="h-full bg-linear-to-r from-blue-500 to-app-ring transition-all duration-700"
             style={{ width: `${percentage}%` }}
           ></div>
         </div>
@@ -117,7 +117,7 @@ export const ResultsAnalysis = ({
                       <span
                         className={cn(
                           'rounded-lg px-3 py-1 text-xs font-bold',
-                          isCorrect ? 'bg-green-500/20 text-green-300' : 'bg-red-500/20 text-red-300'
+                          isCorrect ? 'bg-lesson-sci-glow-a/20 text-green-300' : 'bg-red-500/20 text-red-300'
                         )}
                       >
                         {isCorrect ? 'Correcta' : 'Incorrecta'}
@@ -131,11 +131,11 @@ export const ResultsAnalysis = ({
               {/* User Answer and Correct Answer */}
               <div className="ml-14 space-y-4">
                 <div>
-                  <p className="mb-2 text-sm font-semibold text-cyan-300">Tu respuesta:</p>
-                  <div className="rounded-lg border border-cyan-500/30 bg-cyan-500/10 p-3">
+                  <p className="mb-2 text-sm font-semibold text-app-accent-muted">Tu respuesta:</p>
+                  <div className="rounded-lg border border-app-ring/30 bg-app-ring/10 p-3">
                     {result.userAnswer ? (
                       <p className="text-white">
-                        <span className="font-bold text-cyan-300">{result.userAnswer}.</span>{' '}
+                        <span className="font-bold text-app-accent-muted">{result.userAnswer}.</span>{' '}
                         {result.question.options.find((o) => (o.letter ?? o.id) === result.userAnswer)?.text}
                       </p>
                     ) : (

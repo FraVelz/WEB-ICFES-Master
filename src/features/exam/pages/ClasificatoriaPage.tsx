@@ -64,7 +64,7 @@ export const ClasificatoriaPage = () => {
       {/* Background Effects */}
       <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
         <div className="absolute top-0 left-0 h-96 w-full bg-linear-to-b from-purple-900/20 to-transparent"></div>
-        <div className="absolute right-0 bottom-0 h-96 w-96 rounded-full bg-cyan-500/10 blur-3xl"></div>
+        <div className="absolute right-0 bottom-0 h-96 w-96 rounded-full bg-app-ring/10 blur-3xl"></div>
       </div>
 
       <div className="relative z-10 container mx-auto max-w-5xl px-4 py-8">
@@ -134,7 +134,7 @@ export const ClasificatoriaPage = () => {
         <div className="space-y-3">
           {loading ? (
             <div className="py-12 text-center">
-              <Icon name="spinner" className="mb-4 animate-spin text-4xl text-cyan-400" />
+              <Icon name="spinner" className="mb-4 animate-spin text-4xl text-app-accent" />
               <p className="text-slate-400">Cargando clasificación...</p>
             </div>
           ) : error ? (
@@ -159,7 +159,7 @@ export const ClasificatoriaPage = () => {
                   className={cn(
                     'group relative flex cursor-pointer items-center gap-4 rounded-xl border p-4 transition-all',
                     isCurrentUser
-                      ? 'border-cyan-500/50 bg-cyan-500/10 shadow-lg shadow-cyan-500/10'
+                      ? 'border-app-ring/50 bg-app-ring/10 shadow-lg shadow-app-ring/10'
                       : cn(style.bg, 'hover:bg-slate-800')
                   )}
                 >
@@ -189,11 +189,11 @@ export const ClasificatoriaPage = () => {
                   {/* Info */}
                   <div className="min-w-0 flex-1">
                     <div className="flex items-center gap-2">
-                      <h3 className={cn('truncate font-bold', isCurrentUser ? 'text-cyan-400' : 'text-white')}>
+                      <h3 className={cn('truncate font-bold', isCurrentUser ? 'text-app-accent' : 'text-white')}>
                         {player.name || player.username || 'Usuario'}
                       </h3>
                       {isCurrentUser && (
-                        <span className="rounded-full border border-cyan-500/30 bg-cyan-500/20 px-2 py-0.5 text-[10px] text-cyan-300">
+                        <span className="rounded-full border border-app-ring/30 bg-app-ring/20 px-2 py-0.5 text-[10px] text-app-accent-muted">
                           Tú
                         </span>
                       )}

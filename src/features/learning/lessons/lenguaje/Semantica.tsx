@@ -178,8 +178,8 @@ export const Semantica = () => {
   return (
     <div className="min-h-dvh bg-linear-to-br from-gray-900 via-slate-900 to-gray-900 text-white">
       <div className="pointer-events-none fixed inset-0 overflow-hidden">
-        <div className="absolute top-0 left-1/4 h-96 w-96 animate-pulse rounded-full bg-blue-500/20 blur-3xl"></div>
-        <div className="absolute right-1/4 bottom-0 h-96 w-96 animate-pulse rounded-full bg-cyan-500/20 blur-3xl"></div>
+        <div className="absolute top-0 left-1/4 h-96 w-96 animate-pulse rounded-full bg-lesson-lc-glow-a/20 blur-3xl"></div>
+        <div className="absolute right-1/4 bottom-0 h-96 w-96 animate-pulse rounded-full bg-app-ring/20 blur-3xl"></div>
       </div>
 
       <div className="relative z-10 mx-auto max-w-4xl px-6 py-10">
@@ -197,7 +197,7 @@ export const Semantica = () => {
         <header className="mb-16 text-center">
           <div className="mb-6 flex items-center justify-center gap-4">
             <Icon name="book" className="text-5xl text-blue-400" />
-            <h1 className="bg-linear-to-r from-blue-400 to-cyan-400 bg-clip-text text-5xl font-bold text-transparent md:text-6xl">
+            <h1 className="bg-linear-to-r from-blue-400 to-app-accent bg-clip-text text-5xl font-bold text-transparent md:text-6xl">
               {content.title}
             </h1>
           </div>
@@ -250,11 +250,11 @@ export const Semantica = () => {
         </div>
 
         <section className="mb-16">
-          <h2 className="mb-8 text-3xl font-bold text-cyan-400">Conceptos Clave</h2>
+          <h2 className="mb-8 text-3xl font-bold text-app-accent">Conceptos Clave</h2>
           <div className="grid gap-4 md:grid-cols-2">
             {content.keyFormulas.map((formula, idx) => (
-              <div key={idx} className="rounded-xl border border-cyan-500/30 bg-cyan-500/10 p-6">
-                <p className="text-center text-lg text-cyan-300">{formula}</p>
+              <div key={idx} className="rounded-xl border border-app-ring/30 bg-app-ring/10 p-6">
+                <p className="text-center text-lg text-app-accent-muted">{formula}</p>
               </div>
             ))}
           </div>

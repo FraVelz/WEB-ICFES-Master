@@ -92,8 +92,8 @@ export const LessonPreview = ({ isOpen, onClose, lesson, onStart }: LessonPrevie
             href={lesson.lessonHref}
             onClick={onClose}
             className={cn(
-              'mt-3 flex w-full items-center justify-center gap-2 rounded-xl border border-cyan-500/40 bg-slate-800/50',
-              'py-3 text-sm font-semibold text-cyan-300 transition-colors hover:bg-slate-800 hover:text-cyan-200'
+              'mt-3 flex w-full items-center justify-center gap-2 rounded-xl border border-app-ring/40 bg-slate-800/50',
+              'py-3 text-sm font-semibold text-app-accent-muted transition-colors hover:bg-slate-800 hover:text-app-accent-bright'
             )}
           >
             <Icon name="arrow-right" size="sm" />

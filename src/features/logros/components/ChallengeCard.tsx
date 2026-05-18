@@ -56,13 +56,13 @@ export const ChallengeCard = ({ challenge, onComplete }: ChallengeCardProps) => 
         'relative overflow-hidden rounded-2xl border transition-all duration-300',
         isCompleted
           ? 'border-green-500/30 bg-slate-900/40 shadow-[0_0_15px_rgba(34,197,94,0.1)]'
-          : 'border-slate-700 bg-slate-800/40 hover:border-cyan-500/50 hover:bg-slate-800/60'
+          : 'border-slate-700 bg-slate-800/40 hover:border-app-ring/50 hover:bg-slate-800/60'
       )}
     >
       {/* Background Progress Bar (Visual effect) */}
       {!isCompleted && (
         <div
-          className="absolute bottom-0 left-0 h-1 bg-cyan-500/50 transition-all duration-500"
+          className="absolute bottom-0 left-0 h-1 bg-app-ring/50 transition-all duration-500"
           style={{ width: `${((challenge.progress ?? 0) / (challenge.target ?? 1)) * 100}%` }}
         />
       )}
@@ -72,7 +72,7 @@ export const ChallengeCard = ({ challenge, onComplete }: ChallengeCardProps) => 
         <div
           className={cn(
             'flex h-12 w-12 shrink-0 items-center justify-center rounded-xl text-xl',
-            isCompleted ? 'bg-green-500/20 text-green-400' : 'bg-slate-700/50 text-cyan-400'
+            isCompleted ? 'bg-lesson-sci-glow-a/20 text-green-400' : 'bg-slate-700/50 text-app-accent'
           )}
         >
           <Icon name={typeof challenge.icon === 'string' ? challenge.icon : 'bolt'} />
@@ -111,8 +111,8 @@ export const ChallengeCard = ({ challenge, onComplete }: ChallengeCardProps) => 
               <button
                 onClick={handleStart}
                 className={cn(
-                  'flex items-center gap-2 rounded-lg bg-cyan-500/10 px-4 py-1.5 text-sm font-medium',
-                  'text-cyan-400 transition-colors hover:bg-cyan-500/20'
+                  'flex items-center gap-2 rounded-lg bg-app-ring/10 px-4 py-1.5 text-sm font-medium',
+                  'text-app-accent transition-colors hover:bg-app-ring/20'
                 )}
               >
                 Comenzar <Icon name="arrow-right" className="text-xs" />
