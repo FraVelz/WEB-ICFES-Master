@@ -156,16 +156,9 @@ const HomePageDesktopComponent = ({
         </section>
 
         <nav aria-label="Navegación al inicio de la página" className="relative">
-          <a
-            href="#top"
-            className="skip-link"
-            onClick={(e) => {
-              e.preventDefault();
-              scrollToTopAndFocusHero();
-            }}
-          >
+          <button type="button" className="skip-link" onClick={scrollToTopAndFocusHero}>
             Volver arriba
-          </a>
+          </button>
         </nav>
 
         <Footer />
