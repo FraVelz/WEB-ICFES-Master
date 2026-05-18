@@ -230,11 +230,6 @@ export const LessonQuizModal = ({
       const completedLessons = getCompletedLessons();
       const wasCompleted = lessonId ? completedLessons.includes(lessonId) : false;
       setAlreadyCompleted(wasCompleted);
-      console.log('Estado de completitud de lección:', {
-        lessonId,
-        wasCompleted,
-        completedLessons,
-      });
     } catch (error) {
       console.error('Error checking completion status:', error);
       // On error, allow retry (treat as not completed)
@@ -265,17 +260,6 @@ export const LessonQuizModal = ({
       return answer === q.correctAnswer;
     });
 
-    console.log('Estado del quiz:', {
-      isLastQuestion,
-      allQuestionsAnswered,
-      allCorrect,
-      alreadyCompleted,
-      totalQuestions,
-      answersCount: Object.keys(updatedAnswers).length,
-      completedQuestionsCount: completedQuestions.size,
-      updatedAnswers,
-    });
-
     // Award on last question when fully answered and not already rewarded
     if (isLastQuestion && allQuestionsAnswered && !alreadyCompleted && user?.uid) {
       setLoading(true);
@@ -284,53 +268,19 @@ export const LessonQuizModal = ({
         const xpAmount = lessonXp ?? quiz?.rewards?.xp ?? 500;
         const coinsAmount = lessonCoins ?? quiz?.rewards?.coins ?? 250;
 
-        console.log('=== OTORGANDO RECOMPENSAS ===');
-        console.log('Datos:', {
-          xpAmount,
-          coinsAmount,
-          lessonXp,
-          lessonCoins,
-          quizRewards: quiz?.rewards,
-          allCorrect,
-          allQuestionsAnswered,
-          userId: user.uid,
-          lessonId,
-        });
-
-        // Grant XP and coins
-        console.log('Llamando addXP...');
-        const xpResult = await gamificationPersistence.addXP(user.uid, xpAmount, `lesson_quiz_${lessonId}`);
-        console.log('XP otorgado:', xpResult);
-
-        console.log('Llamando addCoins...');
-        const coinsResult = await gamificationPersistence.addCoins(
+        await gamificationPersistence.addXP(user.uid, xpAmount, `lesson_quiz_${lessonId}`);
+        await gamificationPersistence.addCoins(
           user.uid,
           coinsAmount,
           `lesson_quiz_${lessonId ?? 'unknown'}`
         );
-        console.log('Monedas otorgadas:', coinsResult);
 
-        console.log('Resultados de recompensas:', { xpResult, coinsResult });
-
-        // Mark lesson completed in local storage
-        console.log('Marcando lección como completada...');
         if (user?.uid && lessonId) markLessonAsCompleted(user.uid, lessonId);
-        console.log('Lección marcada como completada');
 
         setRewards({ xp: xpAmount, coins: coinsAmount });
         setAlreadyCompleted(true);
-        console.log('=== RECOMPENSAS OTORGADAS EXITOSAMENTE ===');
       } catch (err) {
-        const error = err instanceof Error ? err : new Error(String(err));
-        console.error('=== ERROR OTORGANDO RECOMPENSAS ===', error);
-        console.error('Detalles del error:', {
-          message: error.message,
-          stack: error.stack,
-          userId: user?.uid,
-          lessonId,
-          xpAmount: lessonXp ?? quiz?.rewards?.xp ?? 500,
-          coinsAmount: lessonCoins ?? quiz?.rewards?.coins ?? 250,
-        });
+        console.error('Error otorgando recompensas del quiz:', err);
         // Could surface a toast here
       }
       setLoading(false);
@@ -342,30 +292,13 @@ export const LessonQuizModal = ({
         const xpAmount = lessonXp ?? quiz?.rewards?.xp ?? 500;
         const coinsAmount = lessonCoins ?? quiz?.rewards?.coins ?? 250;
 
-        console.log('Otorgando recompensas (pregunta única):', {
-          xpAmount,
-          coinsAmount,
-          lessonXp,
-          lessonCoins,
-          quizRewards: quiz?.rewards,
-          userId: user.uid,
-          lessonId,
-        });
-
-        // Grant XP and coins
-        const xpResult = await gamificationPersistence.addXP(user.uid, xpAmount, `lesson_quiz_${lessonId}`);
-        const coinsResult = await gamificationPersistence.addCoins(
+        await gamificationPersistence.addXP(user.uid, xpAmount, `lesson_quiz_${lessonId}`);
+        await gamificationPersistence.addCoins(
           user.uid,
           coinsAmount,
           `lesson_quiz_${lessonId ?? 'unknown'}`
         );
 
-        console.log('Resultados de recompensas (pregunta única):', {
-          xpResult,
-          coinsResult,
-        });
-
-        // Mark lesson completed in local storage
         if (user?.uid && lessonId) markLessonAsCompleted(user.uid, lessonId);
 
         setRewards({ xp: xpAmount, coins: coinsAmount });

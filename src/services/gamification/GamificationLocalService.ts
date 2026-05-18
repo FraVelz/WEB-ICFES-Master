@@ -1,6 +1,6 @@
 /** Gamification — localStorage implementation */
 import { addVirtualMoney, removeVirtualMoney, getVirtualMoney } from '@/storage/userProfile';
-import { calculateLevel } from '@/features/logros/utils/gamificationUtils';
+import { calculateLevel } from '@/services/gamification/gamificationUtils';
 
 const GAMIFICATION_KEY = 'icfes_gamification';
 

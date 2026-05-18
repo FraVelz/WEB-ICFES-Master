@@ -3,7 +3,7 @@
 import { useState } from 'react';
 
 import { useAppDispatch } from '@/store/hooks';
-import { setDemoMode } from '@/store/slices/uiSessionSlice';
+import { enterDemoMode } from '@/features/home/utils/enterDemoMode';
 
 import { HomePageDesktop } from './HomePageDesktop';
 import { HomePageMobile } from './HomePageMobile';
@@ -18,7 +18,7 @@ export const HomePage = () => {
   const dispatch = useAppDispatch();
 
   const handleDemoAccess = () => {
-    dispatch(setDemoMode(true));
+    enterDemoMode(dispatch);
     window.location.href = '/ruta-aprendizaje';
   };
 

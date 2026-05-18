@@ -4,6 +4,5 @@ export * from './exam';
 export * from './home';
 export * from './learning';
 export * from './logros';
-export * from './progress';
 export * from './store';
 export * from './user';

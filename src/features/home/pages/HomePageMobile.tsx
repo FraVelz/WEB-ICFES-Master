@@ -4,7 +4,7 @@ import { cn } from '@/utils/cn';
 import { MascotaCircle } from '@/shared/components/MascotaCircle';
 
 import { useAppDispatch } from '@/store/hooks';
-import { setDemoMode } from '@/store/slices/uiSessionSlice';
+import { enterDemoMode } from '@/features/home/utils/enterDemoMode';
 
 export const HomePageMobile = () => {
   const dispatch = useAppDispatch();
@@ -37,7 +37,7 @@ export const HomePageMobile = () => {
       <div className="relative z-10 flex w-full flex-col gap-3 px-6 py-6">
         <button
           onClick={() => {
-            dispatch(setDemoMode(true));
+            enterDemoMode(dispatch);
             if (typeof window !== 'undefined') {
               window.location.href = '/ruta-aprendizaje';
             }

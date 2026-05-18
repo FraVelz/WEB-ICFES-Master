@@ -32,7 +32,7 @@ const { user, loading, updateProfile, refresh } = useUserData();
 **useProgress:**
 
 ```javascript
-import { useProgress } from '@/features/progress/hooks/useProgress';
+import { useProgress } from '@/features/user/hooks/useProgress';
 
 const { progress, areaStats, resetProgress, refresh } = useProgress();
 ```

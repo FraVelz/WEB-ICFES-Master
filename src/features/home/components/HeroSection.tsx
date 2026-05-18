@@ -6,7 +6,7 @@ import { Icon } from '@/shared/components/Icon';
 import { AnimatedReveal } from '@/features/home/components/AnimatedReveal';
 
 import { useAppDispatch } from '@/store/hooks';
-import { setDemoMode } from '@/store/slices/uiSessionSlice';
+import { enterDemoMode } from '@/features/home/utils/enterDemoMode';
 
 export const HeroSection = ({ onDemoAccess }: { onDemoAccess: () => void }) => {
   const dispatch = useAppDispatch();
@@ -15,7 +15,7 @@ export const HeroSection = ({ onDemoAccess }: { onDemoAccess: () => void }) => {
     if (onDemoAccess) {
       onDemoAccess();
     } else {
-      dispatch(setDemoMode(true));
+      enterDemoMode(dispatch);
       if (typeof window !== 'undefined') {
         window.location.href = '/ruta-aprendizaje';
       }

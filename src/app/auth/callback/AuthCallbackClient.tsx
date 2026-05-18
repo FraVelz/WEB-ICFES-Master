@@ -13,8 +13,9 @@ export function AuthCallbackClient() {
 
   useEffect(() => {
     const next = searchParams.get('next') || AUTH_DEFAULT_REDIRECT;
+    const client = supabase;
 
-    if (!supabase) {
+    if (!client) {
       setMessage('Supabase no configurado.');
       router.replace('/login');
       return;
@@ -26,7 +27,7 @@ export function AuthCallbackClient() {
     const redirectWhenReady = async () => {
       const {
         data: { session },
-      } = await supabase.auth.getSession();
+      } = await client.auth.getSession();
 
       if (cancelled) return;
 
@@ -37,7 +38,7 @@ export function AuthCallbackClient() {
 
       const {
         data: { subscription },
-      } = supabase.auth.onAuthStateChange((_event, sess) => {
+      } = client.auth.onAuthStateChange((_event, sess) => {
         if (sess && !cancelled) {
           subscription.unsubscribe();
           router.replace(next);

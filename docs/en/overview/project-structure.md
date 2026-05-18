@@ -53,8 +53,7 @@ features/feature-name/
 | **home/** | Landing, marketing sections, donations |
 | **learning/** | Roadmap, lessons (`roadmap/`, `lesson-flow/`, `lessons-legacy/`, `shell/`) |
 | **exam/** | Practice, full exam, ranking; data under `exam/data/` |
-| **progress/** | Academic progress page and hook |
-| **user/** | Profile, settings |
+| **user/** | Profile, settings, `useProgress` hook |
 | **logros/** | Badges, challenges, gamification UI |
 | **store/** | Virtual shop, purchase modals |
 
@@ -89,7 +88,6 @@ See [services documentation](../backend/services-api.md).
 | `/practica/[area]` | Practice by area |
 | `/examen-completo` | Full exam |
 | `/clasificatoria` | Ranking / leaderboard |
-| `/progreso` | Progress summary |
 | `/desafios-diarios` | Daily challenges |
 | `/logros` | Achievements hub |
 | `/perfil`, `/configuracion` | Profile and settings |

@@ -1,6 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
 
 import { uiSessionSyncMiddleware } from '@/store/middleware/uiSessionSyncMiddleware';
+import { readUiSessionFromStorage } from '@/store/readUiSessionFromStorage';
 import { uiSessionSlice } from '@/store/slices/uiSessionSlice';
 
 /**
@@ -12,14 +13,28 @@ import { uiSessionSlice } from '@/store/slices/uiSessionSlice';
  * Client-only progress (`progressStorage`, `userProfile` helpers) can stay as-is; introduce a `progress`
  * slice later only if multiple distant components must react to the same local updates without prop drilling.
  */
-export const makeStore = () =>
-  configureStore({
+export const makeStore = () => {
+  const fromStorage = readUiSessionFromStorage();
+  const preloadedOnClient = typeof window !== 'undefined';
+
+  return configureStore({
     reducer: {
       [uiSessionSlice.name]: uiSessionSlice.reducer,
     },
+    preloadedState: preloadedOnClient
+      ? {
+          uiSession: {
+            hydrated: true,
+            demoMode: fromStorage.demoMode,
+            selectedPlan: fromStorage.selectedPlan,
+            fromPricingScrollPending: fromStorage.fromPricingScrollPending,
+          },
+        }
+      : undefined,
     middleware: (getDefaultMiddleware) =>
       getDefaultMiddleware().prepend(uiSessionSyncMiddleware.middleware),
   });
+};
 
 export type AppStore = ReturnType<typeof makeStore>;
 export type RootState = ReturnType<AppStore['getState']>;

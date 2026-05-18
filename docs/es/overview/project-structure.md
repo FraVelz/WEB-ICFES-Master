@@ -53,8 +53,7 @@ features/nombre-feature/
 | **home/** | Landing, secciones marketing, donaciones |
 | **learning/** | Roadmap, lecciones (`roadmap/`, `lesson-flow/`, `lessons-legacy/`, `shell/`) |
 | **exam/** | Práctica, examen completo, clasificatoria; datos en `exam/data/` |
-| **progress/** | Vista y hook de progreso académico |
-| **user/** | Perfil, configuración |
+| **user/** | Perfil, configuración, hook `useProgress` |
 | **logros/** | Badges, desafíos, gamificación (UI) |
 | **store/** | Tienda virtual, modales de compra |
 
@@ -89,7 +88,6 @@ Ver [documentación de servicios](../backend/services-api.md).
 | `/practica/[area]` | Práctica por área |
 | `/examen-completo` | Examen completo |
 | `/clasificatoria` | Clasificatoria / ranking |
-| `/progreso` | Resumen de progreso |
 | `/desafios-diarios` | Desafíos diarios |
 | `/logros` | Centro de logros |
 | `/perfil`, `/configuracion` | Perfil y ajustes |

@@ -214,27 +214,20 @@ export const deleteUserAccount = (): boolean => {
   }
 
   const finalConfirm = window.confirm(
-    '🚨 ÚLTIMA CONFIRMACIÓN\n\n' + 'Escriba "BORRAR TODO" para confirmar la eliminación permanente.'
+    '🚨 ÚLTIMA CONFIRMACIÓN\n\nSe borrarán permanentemente todos tus datos locales. ¿Continuar?'
   );
 
   if (!finalConfirm) {
     return false;
   }
 
-  const userInput = prompt('Escribe "BORRAR TODO" para confirmar:');
+  localStorage.removeItem(STORAGE_KEYS.USER_PROFILE);
+  localStorage.removeItem(STORAGE_KEYS.USER_SETTINGS);
+  localStorage.removeItem('icfes_exams');
+  localStorage.removeItem('icfes_practice');
+  localStorage.removeItem('icfes_progress');
 
-  if (userInput === 'BORRAR TODO') {
-    // Clear all stored data
-    localStorage.removeItem(STORAGE_KEYS.USER_PROFILE);
-    localStorage.removeItem(STORAGE_KEYS.USER_SETTINGS);
-    localStorage.removeItem('icfes_exams');
-    localStorage.removeItem('icfes_practice');
-    localStorage.removeItem('icfes_progress');
-
-    return true;
-  }
-
-  return false;
+  return true;
 };
 
 /**

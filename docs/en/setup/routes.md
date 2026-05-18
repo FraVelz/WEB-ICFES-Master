@@ -21,7 +21,6 @@ These are the project **URLs**. The public path `/aprendizaje` permanently redir
 | ------------------- | ----------------------------- |
 | `/ruta-aprendizaje` | Learning path (with AI chat)  |
 | `/logros`           | Achievements and gamification |
-| `/progreso`         | Academic progress summary     |
 | `/perfil`           | User profile                  |
 | `/perfil/public`    | Public profile                |
 | `/clasificatoria`   | Ranking / leaderboard         |
