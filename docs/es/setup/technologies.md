@@ -8,18 +8,18 @@ Este documento describe las tecnologías utilizadas en **Pruebas ICFES**, tanto 
 
 ### Framework y UI
 
-| Tecnología     | Versión | Descripción                                                      |
-| -------------- | ------- | ---------------------------------------------------------------- |
-| **Next.js**    | 15.1    | Framework React con App Router, SSR y render en servidor          |
-| **React**      | 19.2    | Biblioteca para construcción de interfaces                       |
+| Tecnología     | Versión | Descripción                                                        |
+| -------------- | ------- | ------------------------------------------------------------------ |
+| **Next.js**    | 15.1    | Framework React con App Router, SSR y render en servidor           |
+| **React**      | 19.2    | Biblioteca para construcción de interfaces                         |
 | **TypeScript** | 5.9     | Tipado estático (el código nuevo y la mayoría del repo está en TS) |
 
 ### Estilos
 
-| Tecnología       | Versión | Descripción                                           |
-| ---------------- | ------- | ----------------------------------------------------- |
-| **Tailwind CSS** | 4.2     | Framework CSS utility-first para diseño responsive     |
-| **PostCSS**      | 8.4     | Procesador de CSS con plugin de Tailwind               |
+| Tecnología       | Versión | Descripción                                        |
+| ---------------- | ------- | -------------------------------------------------- |
+| **Tailwind CSS** | 4.2     | Framework CSS utility-first para diseño responsive |
+| **PostCSS**      | 8.4     | Procesador de CSS con plugin de Tailwind           |
 
 ### Calidad de código
 
@@ -31,9 +31,9 @@ Este documento describe las tecnologías utilizadas en **Pruebas ICFES**, tanto 
 
 ### Herramientas
 
-| Tecnología | Descripción                                   |
-| ---------- | --------------------------------------------- |
-| **pnpm**   | Gestor de paquetes (alternativa a npm/yarn)   |
+| Tecnología | Descripción                                 |
+| ---------- | ------------------------------------------- |
+| **pnpm**   | Gestor de paquetes (alternativa a npm/yarn) |
 
 ---
 
@@ -41,11 +41,11 @@ Este documento describe las tecnologías utilizadas en **Pruebas ICFES**, tanto 
 
 ### Frontend
 
-| Tecnología       | Descripción                                                                   |
-| ---------------- | ----------------------------------------------------------------------------- |
+| Tecnología       | Descripción                                                                  |
+| ---------------- | ---------------------------------------------------------------------------- |
 | **Next.js**      | Build de producción (salida en `.next/`); despliegue típico con `next start` |
-| **React**        | Renderizado en cliente y servidor según la ruta                               |
-| **Tailwind CSS** | Estilos compilados y optimizados                                              |
+| **React**        | Renderizado en cliente y servidor según la ruta                              |
+| **Tailwind CSS** | Estilos compilados y optimizados                                             |
 
 ### Backend y servicios
 
@@ -57,20 +57,21 @@ Este documento describe las tecnologías utilizadas en **Pruebas ICFES**, tanto 
 
 ### Despliegue
 
-| Entorno          | Descripción                                                                                         |
-| ---------------- | --------------------------------------------------------------------------------------------------- |
-| **Vercel**       | Hosting para Next.js (recomendado)                                                                  |
-| **Netlify**      | Hosting con runtime serverless o estático según configuración                                        |
+| Entorno          | Descripción                                                                                              |
+| ---------------- | -------------------------------------------------------------------------------------------------------- |
+| **Vercel**       | Hosting para Next.js (recomendado)                                                                       |
+| **Netlify**      | Hosting con runtime serverless o estático según configuración                                            |
 | **GitHub Pages** | Solo aplica si se habilita `output: 'export'` en `next.config` (no está activo por defecto en este repo) |
 
 ---
 
 ## Resumen por categoría
 
-```
+```text
 Desarrollo:  Next.js, React, TypeScript, Tailwind, PostCSS, ESLint, Prettier, globals, pnpm
 Producción:  Next.js, React, Supabase, OpenAI, Tailwind, react-markdown
 ```
 
 ---
-*Archivo generado por IA. Última actualización: lunes, 18 de mayo de 2026.*
+
+_Archivo generado por IA. Última actualización: lunes, 18 de mayo de 2026._

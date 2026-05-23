@@ -1,6 +1,7 @@
 # Data Structure Guide: Learning Module
 
-This guide documents how to structure and manage data in **Supabase** for the learning module. It is designed so any developer or content administrator can add, edit, or delete lessons correctly.
+This guide documents how to structure and manage data in **Supabase** for the learning module. It is designed so any
+developer or content administrator can add, edit, or delete lessons correctly.
 
 > A future admin panel is planned to update database data and add content more easily via web.
 
@@ -8,7 +9,8 @@ This guide documents how to structure and manage data in **Supabase** for the le
 
 ## 1. Introduction
 
-The learning system works by reading data from the **`learning_content`** table in Supabase. The frontend queries this table to dynamically generate the "Learning Path" for each subject.
+The learning system works by reading data from the **`learning_content`** table in Supabase. The frontend queries this
+table to dynamically generate the "Learning Path" for each subject.
 
 **Data flow:**
 
@@ -33,12 +35,12 @@ The learning system works by reading data from the **`learning_content`** table 
 
 ### Area Mapping
 
-| Area in App (ID)     | Value in DB          |
-| -------------------- | -------------------- |
+| Area in App (ID)      | Value in DB          |
+| --------------------- | -------------------- |
 | `lectura-critica`     | `lectura_critica`    |
 | `matematicas`         | `matematicas`        |
 | `sociales-ciudadanas` | `sociales`           |
-| `ciencias-naturales` | `ciencias_naturales` |
+| `ciencias-naturales`  | `ciencias_naturales` |
 | `ingles`              | `ingles`             |
 
 ---
@@ -66,7 +68,7 @@ The learning system works by reading data from the **`learning_content`** table 
 | title     | string | Yes      | Visible lesson title                                                                            |
 | summary   | string | No       | Brief description                                                                               |
 | type      | string | No       | `lesson` by default                                                                             |
-| questions | array  | No       | Quiz questions or other interactive blocks                                                       |
+| questions | array  | No       | Quiz questions or other interactive blocks                                                      |
 | quiz      | object | No       | Associated exam (see [services-api.md](../backend/services-api.md#learning-module-and-quizzes)) |
 | body      | string | No       | Markdown body (optional; shown in the lesson)                                                   |
 
@@ -121,4 +123,5 @@ In Supabase Table Editor:
 ```
 
 ---
-*AI-generated file. Last updated: Monday, May 18, 2026.*
+
+_AI-generated file. Last updated: Monday, May 18, 2026._

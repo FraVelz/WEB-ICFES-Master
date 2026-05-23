@@ -64,7 +64,8 @@ pnpm build
 
 **Command:** `next build`
 
-**Description:** Production build (output in `.next/`). This repo does **not** enable `output: 'export'` by default; `out/` is not generated unless you add that option in `next.config`.
+**Description:** Production build (output in `.next/`). This repo does **not** enable `output: 'export'` by default;
+`out/` is not generated unless you add that option in `next.config`.
 
 ---
 
@@ -120,17 +121,18 @@ pnpm react:doctor
 
 ## Recommended workflow
 
-| Task                 | Script(s)                        |
-| -------------------- | -------------------------------- |
-| Local development    | `pnpm dev`                       |
-| Dev after bad cache  | `pnpm dev:clean`                 |
-| Production build     | `pnpm build`                     |
-| Local preview        | `pnpm start` or `pnpm preview`   |
-| Deploy               | Vercel / Netlify / Node host      |
-| Lint                 | `pnpm lint`                      |
-| Format check         | `pnpm format:check`              |
-| Format code          | `pnpm format`                    |
-| React audit          | `pnpm react:doctor`              |
+| Task                | Script(s)                      |
+| ------------------- | ------------------------------ |
+| Local development   | `pnpm dev`                     |
+| Dev after bad cache | `pnpm dev:clean`               |
+| Production build    | `pnpm build`                   |
+| Local preview       | `pnpm start` or `pnpm preview` |
+| Deploy              | Vercel / Netlify / Node host   |
+| Lint                | `pnpm lint`                    |
+| Format check        | `pnpm format:check`            |
+| Format code         | `pnpm format`                  |
+| React audit         | `pnpm react:doctor`            |
 
 ---
-*AI-generated file. Last updated: Monday, May 18, 2026.*
+
+_AI-generated file. Last updated: Monday, May 18, 2026._

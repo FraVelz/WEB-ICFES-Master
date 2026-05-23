@@ -68,4 +68,5 @@ Open [http://localhost:3000](http://localhost:3000).
 - With `NEXT_PUBLIC_API_MODE=supabase` you need a configured Supabase project
 
 ---
-*AI-generated file. Last updated: Monday, May 18, 2026.*
+
+_AI-generated file. Last updated: Monday, May 18, 2026._

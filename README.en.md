@@ -2,10 +2,11 @@
 
 [Spanish version](README.md)
 
-An interactive platform to practice questions and learn topics from the ICFES state exam (Saber 11) in Colombia. Built with **Feature-Based** and **Atomic Design** architecture using Next.js 15, React 19, Tailwind CSS 4, and Supabase.
+An interactive platform to practice questions and learn topics from the ICFES state exam (Saber 11) in Colombia. Built
+with **Feature-Based** and **Atomic Design** architecture using Next.js 15, React 19, Tailwind CSS 4, and Supabase.
 
-> [!NOTE]
-> The goal was to reach many more countries beyond Colombia, but each country handles education differently: questions, topics, and subjects change. There are even countries where the exam is not mandatory or does not exist.
+> [!NOTE] The goal was to reach many more countries beyond Colombia, but each country handles education differently:
+> questions, topics, and subjects change. There are even countries where the exam is not mandatory or does not exist.
 
 ![Hero section of the ICFES platform - Master the ICFES from Scratch](public/images/screenshot.png)
 
@@ -62,4 +63,4 @@ For suggestions or to report bugs, open an issue on the GitHub repository or int
 
 ---
 
-*AI-generated file. Last updated: Saturday, May 16, 2026.*
+_AI-generated file. Last updated: Saturday, May 16, 2026._

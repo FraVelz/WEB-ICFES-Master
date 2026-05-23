@@ -47,15 +47,15 @@ features/feature-name/
 
 ### Current features
 
-| Feature | Responsibility |
-| ------- | -------------- |
-| **auth/** | Login, signup, OAuth, onboarding |
-| **home/** | Landing, marketing sections, donations |
+| Feature       | Responsibility                                                             |
+| ------------- | -------------------------------------------------------------------------- |
+| **auth/**     | Login, signup, OAuth, onboarding                                           |
+| **home/**     | Landing, marketing sections, donations                                     |
 | **learning/** | Roadmap, lessons (`roadmap/`, `lesson-flow/`, `lessons-legacy/`, `shell/`) |
-| **exam/** | Practice, full exam, ranking; data under `exam/data/` |
-| **user/** | Profile, settings, `useProgress` hook |
-| **logros/** | Badges, challenges, gamification UI |
-| **store/** | Virtual shop, purchase modals |
+| **exam/**     | Practice, full exam, ranking; data under `exam/data/`                      |
+| **user/**     | Profile, settings, `useProgress` hook                                      |
+| **logros/**   | Badges, challenges, gamification UI                                        |
+| **store/**    | Virtual shop, purchase modals                                              |
 
 ## Shared layer (`src/shared/`)
 
@@ -78,20 +78,21 @@ See [services documentation](../backend/services-api.md).
 
 ## Next.js routes (`src/app/`)
 
-| Route | Description |
-| ----- | ----------- |
-| `/` | Home page |
-| `/login`, `/signup`, `/auth/callback` | Authentication |
-| `/onboarding` | Onboarding |
-| `/ruta-aprendizaje` | Learning roadmap |
-| `/lessons/[area]/[topic]` | Lesson (Supabase or legacy) |
-| `/practica/[area]` | Practice by area |
-| `/examen-completo` | Full exam |
-| `/clasificatoria` | Ranking / leaderboard |
-| `/desafios-diarios` | Daily challenges |
-| `/logros` | Achievements hub |
-| `/perfil`, `/configuracion` | Profile and settings |
-| `/terminos`, `/privacidad` | Legal |
+| Route                                 | Description                 |
+| ------------------------------------- | --------------------------- |
+| `/`                                   | Home page                   |
+| `/login`, `/signup`, `/auth/callback` | Authentication              |
+| `/onboarding`                         | Onboarding                  |
+| `/ruta-aprendizaje`                   | Learning roadmap            |
+| `/lessons/[area]/[topic]`             | Lesson (Supabase or legacy) |
+| `/practica/[area]`                    | Practice by area            |
+| `/examen-completo`                    | Full exam                   |
+| `/clasificatoria`                     | Ranking / leaderboard       |
+| `/desafios-diarios`                   | Daily challenges            |
+| `/logros`                             | Achievements hub            |
+| `/perfil`, `/configuracion`           | Profile and settings        |
+| `/terminos`, `/privacidad`            | Legal                       |
 
 ---
-*AI-generated file. Last updated: Monday, May 18, 2026.*
+
+_AI-generated file. Last updated: Monday, May 18, 2026._

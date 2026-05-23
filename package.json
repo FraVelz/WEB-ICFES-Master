@@ -11,6 +11,8 @@
     "lint": "eslint .",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
+    "lint:md": "markdownlint-cli2",
+    "lint:md:fix": "markdownlint-cli2 --fix",
     "react:doctor": "react-doctor . --verbose --full"
   },
   "dependencies": {
@@ -42,6 +44,7 @@
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-react-hooks": "^7.0.1",
     "globals": "^16.5.0",
+    "markdownlint-cli2": "^0.17.2",
     "postcss": "^8.4.49",
     "prettier": "^3.8.1",
     "prettier-plugin-tailwindcss": "^0.7.2",

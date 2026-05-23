@@ -2,10 +2,11 @@
 
 [English version](README.en.md)
 
-Una plataforma interactiva para practicar preguntas y aprender temas del examen de estado ICFES (Saber 11) en Colombia. Diseñada con arquitectura **Feature-Based** y **Atomic Design** usando Next.js 15, React 19, Tailwind CSS 4 y Supabase.
+Una plataforma interactiva para practicar preguntas y aprender temas del examen de estado ICFES (Saber 11) en Colombia.
+Diseñada con arquitectura **Feature-Based** y **Atomic Design** usando Next.js 15, React 19, Tailwind CSS 4 y Supabase.
 
-> [!NOTE]
-> Se buscaba abarcar muchos más países además de Colombia, pero cada país maneja la educación de forma distinta: las preguntas, los temas y las materias cambian. Incluso hay países donde el examen no es obligatorio o no existe.
+> [!NOTE] Se buscaba abarcar muchos más países además de Colombia, pero cada país maneja la educación de forma distinta:
+> las preguntas, los temas y las materias cambian. Incluso hay países donde el examen no es obligatorio o no existe.
 
 ![Hero section de la plataforma ICFES - Domina el ICFES desde Cero](public/images/screenshot.png)
 
@@ -62,4 +63,4 @@ Para sugerencias o para reportar errores, crea un issue en el repositorio de Git
 
 ---
 
-*Archivo generado por IA. Última actualización: sábado, 16 de mayo de 2026.*
+_Archivo generado por IA. Última actualización: sábado, 16 de mayo de 2026._

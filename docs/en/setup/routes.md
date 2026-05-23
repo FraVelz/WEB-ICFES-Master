@@ -1,19 +1,20 @@
 # URLs
 
-These are the project **URLs**. The public path `/aprendizaje` permanently redirects to **`/ruta-aprendizaje`** (see `next.config.ts`).
+These are the project **URLs**. The public path `/aprendizaje` permanently redirects to **`/ruta-aprendizaje`** (see
+`next.config.ts`).
 
 ## Main pages
 
-| URL                | Description             |
-| ------------------ | ----------------------- |
-| `/`                | Home                    |
-| `/login`           | Sign in                 |
-| `/signup`          | Registration            |
-| `/onboarding`      | Initial onboarding      |
-| `/forgot-password` | Password recovery       |
-| `/reset-password`  | Reset password          |
-| `/privacidad`      | Privacy policy          |
-| `/terminos`        | Terms and conditions    |
+| URL                | Description          |
+| ------------------ | -------------------- |
+| `/`                | Home                 |
+| `/login`           | Sign in              |
+| `/signup`          | Registration         |
+| `/onboarding`      | Initial onboarding   |
+| `/forgot-password` | Password recovery    |
+| `/reset-password`  | Reset password       |
+| `/privacidad`      | Privacy policy       |
+| `/terminos`        | Terms and conditions |
 
 ## Dashboard (requires session or demo)
 
@@ -53,9 +54,10 @@ These are the project **URLs**. The public path `/aprendizaje` permanently redir
 
 ## API
 
-| URL         | Method | Description                                   |
-| ----------- | ------ | --------------------------------------------- |
-| `/api/chat` | POST   | AI model integration for the assistant       |
+| URL         | Method | Description                            |
+| ----------- | ------ | -------------------------------------- |
+| `/api/chat` | POST   | AI model integration for the assistant |
 
 ---
-*AI-generated file. Last updated: Monday, May 18, 2026.*
+
+_AI-generated file. Last updated: Monday, May 18, 2026._

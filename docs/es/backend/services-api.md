@@ -1,6 +1,7 @@
 # Arquitectura de Servicios, Data Layer y Módulo de Aprendizaje
 
-Documento unificado que describe la arquitectura de servicios, la capa de datos y la estructura de lecciones/quizzes del módulo de aprendizaje.
+Documento unificado que describe la arquitectura de servicios, la capa de datos y la estructura de lecciones/quizzes del
+módulo de aprendizaje.
 
 ## Temario
 
@@ -17,7 +18,9 @@ Documento unificado que describe la arquitectura de servicios, la capa de datos 
 
 ## Visión General
 
-La aplicación ICFES utiliza una **arquitectura desacoplada** que permite cambiar entre **Supabase** (producción) y **localStorage** (desarrollo sin backend) sin modificar los componentes. El modo se controla mediante `NEXT_PUBLIC_API_MODE`.
+La aplicación ICFES utiliza una **arquitectura desacoplada** que permite cambiar entre **Supabase** (producción) y
+**localStorage** (desarrollo sin backend) sin modificar los componentes. El modo se controla mediante
+`NEXT_PUBLIC_API_MODE`.
 
 ```txt
          React Components
@@ -63,7 +66,8 @@ NEXT_PUBLIC_API_MODE=supabase     # 'supabase' | 'localStorage'
 
 ### 2. **Capa legacy eliminada**
 
-Las clases genéricas `BaseService` y `SupabaseService` en `src/services/` se retiraron: la app usa `@/services/persistence` y los `*SupabaseService` concretos.
+Las clases genéricas `BaseService` y `SupabaseService` en `src/services/` se retiraron: la app usa
+`@/services/persistence` y los `*SupabaseService` concretos.
 
 ### 3. **Servicios Supabase** (`src/services/supabase/`)
 
@@ -80,20 +84,22 @@ Servicios que conectan directamente con tablas de PostgreSQL en Supabase:
 ### 4. **`gamificationPersistence`**
 
 - **Ubicación**: `src/services/persistence/gamificationPersistence.ts`
-- **Propósito**: Unifica gamificación en Supabase o `GamificationLocalService` (`src/services/gamification/`) según `API_CONFIG.MODE`
-- **API**: `addXP()`, `addCoins()`, `spendCoins()`, `getProfile()` (delegan en `GamificationSupabaseService` o `GamificationLocalService`)
+- **Propósito**: Unifica gamificación en Supabase o `GamificationLocalService` (`src/services/gamification/`) según
+  `API_CONFIG.MODE`
+- **API**: `addXP()`, `addCoins()`, `spendCoins()`, `getProfile()` (delegan en `GamificationSupabaseService` o
+  `GamificationLocalService`)
 
 ### 5. **Módulos por feature y capa `persistence`**
 
-| Feature      | Código principal | Descripción |
-| ------------ | ---------------- | ----------- |
-| **user**     | `src/services/persistence/userPersistence.ts` | `useUserData` usa `loadUserProfile`, `patchUserProfile`, etc. |
-| **progress** | `src/services/persistence/progressPersistence.ts` | `useProgress` usa `loadProgressViewState`, etc. |
-| **exam**     | `src/services/persistence/examPersistence.ts` | `useExam` usa `getExamById`, `resetUserExams`, … |
+| Feature      | Código principal                                                                     | Descripción                                                            |
+| ------------ | ------------------------------------------------------------------------------------ | ---------------------------------------------------------------------- |
+| **user**     | `src/services/persistence/userPersistence.ts`                                        | `useUserData` usa `loadUserProfile`, `patchUserProfile`, etc.          |
+| **progress** | `src/services/persistence/progressPersistence.ts`                                    | `useProgress` usa `loadProgressViewState`, etc.                        |
+| **exam**     | `src/services/persistence/examPersistence.ts`                                        | `useExam` usa `getExamById`, `resetUserExams`, …                       |
 | **logros**   | `GamificationSupabaseService` + localStorage; `gamificationPersistence` en lecciones | `useGamification`; `LessonQuizModal` usa **`gamificationPersistence`** |
-| **learning** | `src/features/learning/services/LearningService.ts` | Supabase (`learning_content`) o datos estáticos de roadmap |
-| **store**    | `src/services/store/` (`SubscriptionPlanService`, `PlanScheduleService`) | Planes y calendario |
-| **auth**     | `src/context/AuthContext.tsx`, páginas en `features/auth/` | Sesión Supabase/OAuth; sin `AuthService` stub |
+| **learning** | `src/features/learning/services/LearningService.ts`                                  | Supabase (`learning_content`) o datos estáticos de roadmap             |
+| **store**    | `src/services/store/` (`SubscriptionPlanService`, `PlanScheduleService`)             | Planes y calendario                                                    |
+| **auth**     | `src/context/AuthContext.tsx`, páginas en `features/auth/`                           | Sesión Supabase/OAuth; sin `AuthService` stub                          |
 
 ---
 
@@ -229,7 +235,8 @@ const { exam, getUserExams, resetUserExams, refresh } = useExam(examId);
 
 2. Las lecciones se ordenan por `order_index` y solo se muestran con `published: true`.
 
-3. **Progreso de lecciones completadas**: se guarda en **localStorage** (`progressStorage`) independientemente del modo API. Clave: `icfes_completed_lessons`.
+3. **Progreso de lecciones completadas**: se guarda en **localStorage** (`progressStorage`) independientemente del modo
+   API. Clave: `icfes_completed_lessons`.
 
 ### Estructura del objeto `content` (JSONB en `learning_content`)
 
@@ -397,21 +404,14 @@ NEXT_PUBLIC_API_MODE=localStorage
 ## Exportaciones desde `@/services`
 
 ```typescript
-import {
-  SubscriptionPlanService,
-  PlanScheduleService,
-  BADGES,
-  LEVELS,
-} from '@/services';
+import { SubscriptionPlanService, PlanScheduleService, BADGES, LEVELS } from '@/services';
 
-import {
-  gamificationPersistence,
-  loadUserProfile,
-  loadProgressViewState,
-} from '@/services/persistence';
+import { gamificationPersistence, loadUserProfile, loadProgressViewState } from '@/services/persistence';
 ```
 
-El barril `@/services` reexporta `./persistence`; para gamificación y lecciones suele bastar `gamificationPersistence` y los helpers ya usados en los hooks.
+El barril `@/services` reexporta `./persistence`; para gamificación y lecciones suele bastar `gamificationPersistence` y
+los helpers ya usados en los hooks.
 
 ---
-*Archivo generado por IA. Última actualización: lunes, 18 de mayo de 2026.*
+
+_Archivo generado por IA. Última actualización: lunes, 18 de mayo de 2026._

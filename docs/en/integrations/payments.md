@@ -8,16 +8,17 @@ Users could attempt to pay without being authenticated → the UID was lost for 
 
 ## Current code state
 
-Legacy components **`PricingPlans`** and **`PaymentModal`** (under `shared/organisms/`) were **removed** during the architecture refactor.
+Legacy components **`PricingPlans`** and **`PaymentModal`** (under `shared/organisms/`) were **removed** during the
+architecture refactor.
 
 ### Active flows
 
-| Area | Location | Notes |
-| ---- | -------- | ----- |
-| Donations | `src/features/home/components/DonationSection/` | Simulated form on the landing page |
-| Plans / shop | `src/features/store/` + `src/services/store/` | `SubscriptionPlanService`, `PlanScheduleService` |
-| Session and plan UI | `src/context/AuthContext.tsx`, Redux `uiSession` | Selected plan and demo mode |
-| Persistence | `@/services/persistence`, Supabase `user_plans` table | Per `API_CONFIG.MODE` |
+| Area                | Location                                              | Notes                                            |
+| ------------------- | ----------------------------------------------------- | ------------------------------------------------ |
+| Donations           | `src/features/home/components/DonationSection/`       | Simulated form on the landing page               |
+| Plans / shop        | `src/features/store/` + `src/services/store/`         | `SubscriptionPlanService`, `PlanScheduleService` |
+| Session and plan UI | `src/context/AuthContext.tsx`, Redux `uiSession`      | Selected plan and demo mode                      |
+| Persistence         | `@/services/persistence`, Supabase `user_plans` table | Per `API_CONFIG.MODE`                            |
 
 ### Plan identifiers
 
@@ -43,10 +44,14 @@ user_plans
 
 ## Main files
 
-1. [`src/features/home/components/DonationSection/`](../../../src/features/home/components/DonationSection/) — home donations
-2. [`src/features/store/components/StoreModal.tsx`](../../../src/features/store/components/StoreModal.tsx) — dashboard shop
-3. [`src/services/store/SubscriptionPlanService.ts`](../../../src/services/store/SubscriptionPlanService.ts) — plan stub / localStorage
+1. [`src/features/home/components/DonationSection/`](../../../src/features/home/components/DonationSection/) — home
+   donations
+2. [`src/features/store/components/StoreModal.tsx`](../../../src/features/store/components/StoreModal.tsx) — dashboard
+   shop
+3. [`src/services/store/SubscriptionPlanService.ts`](../../../src/services/store/SubscriptionPlanService.ts) — plan stub
+   / localStorage
 4. [`src/context/AuthContext.tsx`](../../../src/context/AuthContext.tsx) — `getUserPlan`, `updateUserPlan`
 
 ---
-*AI-generated file. Last updated: Monday, May 18, 2026.*
+
+_AI-generated file. Last updated: Monday, May 18, 2026._

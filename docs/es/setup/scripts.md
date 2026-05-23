@@ -14,7 +14,8 @@ pnpm dev
 
 **Comando:** `next dev`
 
-**Descripción:** Inicia el servidor de desarrollo de Next.js con recarga en caliente. Por defecto corre en `http://localhost:3000`.
+**Descripción:** Inicia el servidor de desarrollo de Next.js con recarga en caliente. Por defecto corre en
+`http://localhost:3000`.
 
 ---
 
@@ -26,7 +27,8 @@ pnpm dev:clean
 
 **Comando:** `rm -rf .next && next dev`
 
-**Descripción:** Borra la carpeta `.next` y arranca de nuevo el servidor de desarrollo (útil si el caché de build causa problemas).
+**Descripción:** Borra la carpeta `.next` y arranca de nuevo el servidor de desarrollo (útil si el caché de build causa
+problemas).
 
 ---
 
@@ -64,7 +66,8 @@ pnpm build
 
 **Comando:** `next build`
 
-**Descripción:** Compila la aplicación para producción (salida en `.next/`). En este repo **no** está configurado `output: 'export'` por defecto; no se genera `out/` salvo que se añada esa opción en `next.config`.
+**Descripción:** Compila la aplicación para producción (salida en `.next/`). En este repo **no** está configurado
+`output: 'export'` por defecto; no se genera `out/` salvo que se añada esa opción en `next.config`.
 
 ---
 
@@ -120,17 +123,18 @@ pnpm react:doctor
 
 ## Flujo de trabajo recomendado
 
-| Tarea                    | Script(s)                         |
-| ------------------------ | --------------------------------- |
-| Desarrollo local         | `pnpm dev`                        |
-| Desarrollo tras caché raro | `pnpm dev:clean`                |
-| Compilar para producción | `pnpm build`                      |
-| Vista previa local       | `pnpm start` o `pnpm preview`     |
-| Despliegue               | Vercel / Netlify / host con Node  |
-| Revisar código           | `pnpm lint`                       |
-| Comprobar formato        | `pnpm format:check`               |
-| Formatear código         | `pnpm format`                     |
-| Auditoría React          | `pnpm react:doctor`               |
+| Tarea                      | Script(s)                        |
+| -------------------------- | -------------------------------- |
+| Desarrollo local           | `pnpm dev`                       |
+| Desarrollo tras caché raro | `pnpm dev:clean`                 |
+| Compilar para producción   | `pnpm build`                     |
+| Vista previa local         | `pnpm start` o `pnpm preview`    |
+| Despliegue                 | Vercel / Netlify / host con Node |
+| Revisar código             | `pnpm lint`                      |
+| Comprobar formato          | `pnpm format:check`              |
+| Formatear código           | `pnpm format`                    |
+| Auditoría React            | `pnpm react:doctor`              |
 
 ---
-*Archivo generado por IA. Última actualización: lunes, 18 de mayo de 2026.*
+
+_Archivo generado por IA. Última actualización: lunes, 18 de mayo de 2026._

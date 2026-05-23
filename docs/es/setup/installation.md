@@ -68,4 +68,5 @@ Abre [http://localhost:3000](http://localhost:3000).
 - Con `NEXT_PUBLIC_API_MODE=supabase` necesitas un proyecto Supabase configurado
 
 ---
-*Archivo generado por IA. Última actualización: lunes, 18 de mayo de 2026.*
+
+_Archivo generado por IA. Última actualización: lunes, 18 de mayo de 2026._

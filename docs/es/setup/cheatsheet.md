@@ -4,12 +4,12 @@
 
 ### Desarrollo
 
-| Acción                    | Comando          |
-| ------------------------- | ---------------- |
-| Iniciar servidor local    | `pnpm dev`       |
+| Acción                     | Comando          |
+| -------------------------- | ---------------- |
+| Iniciar servidor local     | `pnpm dev`       |
 | Limpiar `.next` y arrancar | `pnpm dev:clean` |
-| Compilar proyecto         | `pnpm build`     |
-| Vista previa de producción | `pnpm start`   |
+| Compilar proyecto          | `pnpm build`     |
+| Vista previa de producción | `pnpm start`     |
 
 ### Despliegue web
 
@@ -63,4 +63,5 @@ console.log(API_CONFIG.MODE);
 ```
 
 ---
-*Archivo generado por IA. Última actualización: lunes, 18 de mayo de 2026.*
+
+_Archivo generado por IA. Última actualización: lunes, 18 de mayo de 2026._

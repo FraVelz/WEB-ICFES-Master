@@ -44,23 +44,43 @@ export function QuizExample() {
 
 ## Crear un componente de feature (tarjeta de área)
 
-Los átomos genéricos en `shared/atoms/` se eliminaron. Crea el componente en la feature, p. ej. `src/features/exam/components/AreaHighlightCard.tsx`, con Tailwind y `Icon`:
+Los átomos genéricos en `shared/atoms/` se eliminaron. Crea el componente en la feature, p. ej.
+`src/features/exam/components/AreaHighlightCard.tsx`, con Tailwind y `Icon`:
 
 ```tsx
 import { Icon } from '@/shared/components/Icon';
 import { cn } from '@/utils/cn';
 
-export function AreaHighlightCard({ title, iconName, description, questionsCount, onClick, className }: {
-  title: string; iconName: string; description: string; questionsCount: number; onClick?: () => void; className?: string;
+export function AreaHighlightCard({
+  title,
+  iconName,
+  description,
+  questionsCount,
+  onClick,
+  className,
+}: {
+  title: string;
+  iconName: string;
+  description: string;
+  questionsCount: number;
+  onClick?: () => void;
+  className?: string;
 }) {
   return (
-    <button type="button" onClick={onClick} className={cn('w-full rounded-xl border border-slate-700 bg-slate-900/50 p-4 text-left hover:border-app-ring/40', className)}>
+    <button
+      type="button"
+      onClick={onClick}
+      className={cn(
+        'hover:border-app-ring/40 w-full rounded-xl border border-slate-700 bg-slate-900/50 p-4 text-left',
+        className
+      )}
+    >
       <div className="flex gap-4">
-        <Icon name={iconName} className="text-3xl text-app-accent" />
+        <Icon name={iconName} className="text-app-accent text-3xl" />
         <div>
           <h3 className="font-bold text-white">{title}</h3>
           <p className="mt-1 text-sm text-slate-400">{description}</p>
-          <p className="mt-2 text-xs text-app-accent">{questionsCount} preguntas</p>
+          <p className="text-app-accent mt-2 text-xs">{questionsCount} preguntas</p>
         </div>
       </div>
     </button>
@@ -120,7 +140,10 @@ Usa `src/features/exam/hooks/useQuizLogic.ts` y tipos en `src/features/exam/type
 
 ## Componentes (convención del repo)
 
-UI compartida: **`Icon`**, **`Footer`**, **`MascotaCircle`**, **`ConstructionAlert`**. Navegación del dashboard: **`src/components/DashboardHeader.tsx`**. Dominio examen: `AnswerOption` en `features/exam/components/`. Features en `src/features/*`; rutas en `src/app/`.
+UI compartida: **`Icon`**, **`Footer`**, **`MascotaCircle`**, **`ConstructionAlert`**. Navegación del dashboard:
+**`src/components/DashboardHeader.tsx`**. Dominio examen: `AnswerOption` en `features/exam/components/`. Features en
+`src/features/*`; rutas en `src/app/`.
 
 ---
-*Archivo generado por IA. Última actualización: lunes, 18 de mayo de 2026.*
+
+_Archivo generado por IA. Última actualización: lunes, 18 de mayo de 2026._

@@ -1,6 +1,7 @@
 # WEB-ICFES project documentation
 
-Welcome to the technical documentation of the project. This documentation is organized to facilitate onboarding for new developers and serve as a technical reference.
+Welcome to the technical documentation of the project. This documentation is organized to facilitate onboarding for new
+developers and serve as a technical reference.
 
 ## 📚 Documentation structure
 
@@ -11,7 +12,8 @@ Welcome to the technical documentation of the project. This documentation is org
 
 ### 2. Setup (`/setup`)
 
-- **[Installation](../setup/installation.md)**: Step-by-step guide to configure the local environment (includes environment variables).
+- **[Installation](../setup/installation.md)**: Step-by-step guide to configure the local environment (includes
+  environment variables).
 - **[Technologies](../setup/technologies.md)**: Complete project stack.
 - **[Routes](../setup/routes.md)**: Application URLs and routes.
 - **[Scripts](../setup/scripts.md)**: `package.json` commands.
@@ -30,7 +32,8 @@ Welcome to the technical documentation of the project. This documentation is org
 ### 5. Data (`/data`)
 
 - **[Learning structure guide](../data/learning-structure-guide.md)**: `learning_content` table in Supabase.
-- **[Client-only progress](../data/client-local-progress.md)**: Progress in `localStorage` that is not automatically synced with the backend.
+- **[Client-only progress](../data/client-local-progress.md)**: Progress in `localStorage` that is not automatically
+  synced with the backend.
 
 ### 6. Integrations (`/integrations`)
 
@@ -46,4 +49,4 @@ Welcome to the technical documentation of the project. This documentation is org
 
 ---
 
-*AI-generated file. Last updated: Monday, May 18, 2026.*
+_AI-generated file. Last updated: Monday, May 18, 2026._

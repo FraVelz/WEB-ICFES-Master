@@ -1,6 +1,7 @@
 # Autocommit — WEB-ICFES-Master (Next.js + Supabase)
 
-Usar cuando el usuario pida **hacer commit** del trabajo actual. Mensajes **Conventional Commits**, coherentes con `git log` de este repo. **No** hacer `git push` salvo petición explícita.
+Usar cuando el usuario pida **hacer commit** del trabajo actual. Mensajes **Conventional Commits**, coherentes con
+`git log` de este repo. **No** hacer `git push` salvo petición explícita.
 
 ## Cuándo ejecutar
 
@@ -17,9 +18,11 @@ Usar cuando el usuario pida **hacer commit** del trabajo actual. Mensajes **Conv
 
 ## Ámbitos (`scope`) habituales en este repo
 
-`home`, `demo`, `learning`, `exam`, `auth`, `logros`, `store`, `user`, `theme`, `dashboard`, `services`, `persistence`, `readme`, `docs`, `cursor`, `ci`, `deps`.
+`home`, `demo`, `learning`, `exam`, `auth`, `logros`, `store`, `user`, `theme`, `dashboard`, `services`, `persistence`,
+`readme`, `docs`, `cursor`, `ci`, `deps`.
 
-Rutas de referencia: `src/app/(dashboard)/`, `src/features/`, `src/services/`, `src/storage/`, `docs/es|en/`, `README.md` / `README.en.md`, `.cursor/`.
+Rutas de referencia: `src/app/(dashboard)/`, `src/features/`, `src/services/`, `src/storage/`, `docs/es|en/`,
+`README.md` / `README.en.md`, `.cursor/`.
 
 ## Formas de mensaje
 
@@ -40,14 +43,14 @@ fix(demo): persist demo flag and gate account routes without flash
 
 ## Tipos
 
-| Tipo | Uso aquí |
-| --- | --- |
-| `feat` | Aprendizaje, examen, tienda, gamificación |
-| `fix` | Demo, auth, UI, accesibilidad |
-| `docs` | `docs/es`, `docs/en`, README, comandos Cursor |
-| `refactor` | Features, servicios, persistencia local |
-| `chore` / `build` | Deps, react-doctor, config |
-| `ci` | Workflows |
+| Tipo              | Uso aquí                                      |
+| ----------------- | --------------------------------------------- |
+| `feat`            | Aprendizaje, examen, tienda, gamificación     |
+| `fix`             | Demo, auth, UI, accesibilidad                 |
+| `docs`            | `docs/es`, `docs/en`, README, comandos Cursor |
+| `refactor`        | Features, servicios, persistencia local       |
+| `chore` / `build` | Deps, react-doctor, config                    |
+| `ci`              | Workflows                                     |
 
 ## Commit
 

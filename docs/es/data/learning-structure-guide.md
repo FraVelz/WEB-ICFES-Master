@@ -1,14 +1,17 @@
 # Guía de Estructura de Datos: Módulo de Aprendizaje
 
-Esta guía documenta cómo estructurar y gestionar los datos en **Supabase** para el módulo de aprendizaje. Está diseñada para que cualquier desarrollador o administrador de contenido pueda agregar, editar o eliminar lecciones correctamente.
+Esta guía documenta cómo estructurar y gestionar los datos en **Supabase** para el módulo de aprendizaje. Está diseñada
+para que cualquier desarrollador o administrador de contenido pueda agregar, editar o eliminar lecciones correctamente.
 
-> En el futuro se plantea un panel de administración para actualizar la base de datos y publicar contenido desde la web con más comodidad.
+> En el futuro se plantea un panel de administración para actualizar la base de datos y publicar contenido desde la web
+> con más comodidad.
 
 ---
 
 ## 1. Introducción
 
-El sistema de aprendizaje funciona leyendo datos de la tabla **`learning_content`** en Supabase. El frontend consulta esta tabla para generar dinámicamente la "Ruta de Aprendizaje" (Learning Path) de cada materia.
+El sistema de aprendizaje funciona leyendo datos de la tabla **`learning_content`** en Supabase. El frontend consulta
+esta tabla para generar dinámicamente la "Ruta de Aprendizaje" (Learning Path) de cada materia.
 
 **Flujo de datos:**
 
@@ -33,12 +36,12 @@ El sistema de aprendizaje funciona leyendo datos de la tabla **`learning_content
 
 ### Mapeo de Áreas
 
-| Área en la App (ID)  | Valor en BD          |
-| -------------------- | -------------------- |
+| Área en la App (ID)   | Valor en BD          |
+| --------------------- | -------------------- |
 | `lectura-critica`     | `lectura_critica`    |
 | `matematicas`         | `matematicas`        |
 | `sociales-ciudadanas` | `sociales`           |
-| `ciencias-naturales` | `ciencias_naturales` |
+| `ciencias-naturales`  | `ciencias_naturales` |
 | `ingles`              | `ingles`             |
 
 ---
@@ -66,9 +69,9 @@ El sistema de aprendizaje funciona leyendo datos de la tabla **`learning_content
 | title     | string | Sí          | Título visible de la lección                                                                        |
 | summary   | string | No          | Breve descripción                                                                                   |
 | type      | string | No          | `lesson` por defecto                                                                                |
-| questions | array  | No          | Preguntas del quiz u otro contenido interactivo |
+| questions | array  | No          | Preguntas del quiz u otro contenido interactivo                                                     |
 | quiz      | object | No          | Examen asociado (ver [services-api.md](../backend/services-api.md#módulo-de-aprendizaje-y-quizzes)) |
-| body      | string | No          | Cuerpo en Markdown (opcional; se muestra en la lección) |
+| body      | string | No          | Cuerpo en Markdown (opcional; se muestra en la lección)                                             |
 
 ---
 
@@ -121,4 +124,5 @@ En Supabase Table Editor:
 ```
 
 ---
-*Archivo generado por IA. Última actualización: lunes, 18 de mayo de 2026.*
+
+_Archivo generado por IA. Última actualización: lunes, 18 de mayo de 2026._

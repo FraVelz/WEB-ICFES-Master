@@ -17,7 +17,9 @@ Unified document describing the services architecture, data layer, and lesson/qu
 
 ## Overview
 
-The ICFES application uses a **decoupled architecture** that allows switching between **Supabase** (production) and **localStorage** (development without backend) without modifying components. The mode is controlled via `NEXT_PUBLIC_API_MODE`.
+The ICFES application uses a **decoupled architecture** that allows switching between **Supabase** (production) and
+**localStorage** (development without backend) without modifying components. The mode is controlled via
+`NEXT_PUBLIC_API_MODE`.
 
 ```txt
          React Components
@@ -63,7 +65,8 @@ NEXT_PUBLIC_API_MODE=supabase     # 'supabase' | 'localStorage'
 
 ### 2. **Removed legacy layer**
 
-The generic `BaseService` and `SupabaseService` classes under `src/services/` were removed; the app uses `@/services/persistence` and concrete `*SupabaseService` modules.
+The generic `BaseService` and `SupabaseService` classes under `src/services/` were removed; the app uses
+`@/services/persistence` and concrete `*SupabaseService` modules.
 
 ### 3. **Supabase Services** (`src/services/supabase/`)
 
@@ -80,20 +83,22 @@ Services that connect directly to PostgreSQL tables in Supabase:
 ### 4. **`gamificationPersistence`**
 
 - **Location**: `src/services/persistence/gamificationPersistence.ts`
-- **Purpose**: Single entry for gamification on Supabase or `GamificationLocalService` (`src/services/gamification/`) depending on `API_CONFIG.MODE`
-- **API**: `addXP()`, `addCoins()`, `spendCoins()`, `getProfile()` (delegate to `GamificationSupabaseService` or `GamificationLocalService`)
+- **Purpose**: Single entry for gamification on Supabase or `GamificationLocalService` (`src/services/gamification/`)
+  depending on `API_CONFIG.MODE`
+- **API**: `addXP()`, `addCoins()`, `spendCoins()`, `getProfile()` (delegate to `GamificationSupabaseService` or
+  `GamificationLocalService`)
 
 ### 5. **Feature modules and `persistence` layer**
 
-| Feature      | Main code | Description |
-| ------------ | --------- | ----------- |
-| **user**     | `src/services/persistence/userPersistence.ts` | `useUserData` uses `loadUserProfile`, `patchUserProfile`, etc. |
-| **progress** | `src/services/persistence/progressPersistence.ts` | `useProgress` uses `loadProgressViewState`, etc. |
-| **exam**     | `src/services/persistence/examPersistence.ts` | `useExam` uses `getExamById`, `resetUserExams`, … |
+| Feature      | Main code                                                                          | Description                                                             |
+| ------------ | ---------------------------------------------------------------------------------- | ----------------------------------------------------------------------- |
+| **user**     | `src/services/persistence/userPersistence.ts`                                      | `useUserData` uses `loadUserProfile`, `patchUserProfile`, etc.          |
+| **progress** | `src/services/persistence/progressPersistence.ts`                                  | `useProgress` uses `loadProgressViewState`, etc.                        |
+| **exam**     | `src/services/persistence/examPersistence.ts`                                      | `useExam` uses `getExamById`, `resetUserExams`, …                       |
 | **logros**   | `GamificationSupabaseService` + localStorage; `gamificationPersistence` in lessons | `useGamification`; `LessonQuizModal` uses **`gamificationPersistence`** |
-| **learning** | `src/features/learning/services/LearningService.ts` | Supabase (`learning_content`) or static roadmap data |
-| **store**    | `src/services/store/` (`SubscriptionPlanService`, `PlanScheduleService`) | Plans and scheduling |
-| **auth**     | `src/context/AuthContext.tsx`, pages under `features/auth/` | Supabase/OAuth session; no `AuthService` stub |
+| **learning** | `src/features/learning/services/LearningService.ts`                                | Supabase (`learning_content`) or static roadmap data                    |
+| **store**    | `src/services/store/` (`SubscriptionPlanService`, `PlanScheduleService`)           | Plans and scheduling                                                    |
+| **auth**     | `src/context/AuthContext.tsx`, pages under `features/auth/`                        | Supabase/OAuth session; no `AuthService` stub                           |
 
 ---
 
@@ -229,7 +234,8 @@ const { exam, getUserExams, resetUserExams, refresh } = useExam(examId);
 
 2. Lessons are ordered by `order_index` and only shown with `published: true`.
 
-3. **Completed lessons progress**: stored in **localStorage** (`progressStorage`) regardless of API mode. Key: `icfes_completed_lessons`.
+3. **Completed lessons progress**: stored in **localStorage** (`progressStorage`) regardless of API mode. Key:
+   `icfes_completed_lessons`.
 
 ### `content` object structure (JSONB in `learning_content`)
 
@@ -397,21 +403,14 @@ NEXT_PUBLIC_API_MODE=localStorage
 ## Exports from `@/services`
 
 ```typescript
-import {
-  SubscriptionPlanService,
-  PlanScheduleService,
-  BADGES,
-  LEVELS,
-} from '@/services';
+import { SubscriptionPlanService, PlanScheduleService, BADGES, LEVELS } from '@/services';
 
-import {
-  gamificationPersistence,
-  loadUserProfile,
-  loadProgressViewState,
-} from '@/services/persistence';
+import { gamificationPersistence, loadUserProfile, loadProgressViewState } from '@/services/persistence';
 ```
 
-The `@/services` barrel re-exports `./persistence`; for gamification and lessons, `gamificationPersistence` and the helpers used by hooks are the usual entry points.
+The `@/services` barrel re-exports `./persistence`; for gamification and lessons, `gamificationPersistence` and the
+helpers used by hooks are the usual entry points.
 
 ---
-*AI-generated file. Last updated: Monday, May 18, 2026.*
+
+_AI-generated file. Last updated: Monday, May 18, 2026._

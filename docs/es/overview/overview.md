@@ -1,6 +1,7 @@
 # Documentación del proyecto WEB-ICFES
 
-Bienvenido a la documentación técnica del proyecto. Esta documentación está organizada para facilitar la incorporación de nuevos desarrolladores y servir como referencia técnica.
+Bienvenido a la documentación técnica del proyecto. Esta documentación está organizada para facilitar la incorporación
+de nuevos desarrolladores y servir como referencia técnica.
 
 ## 📚 Estructura de la documentación
 
@@ -11,7 +12,8 @@ Bienvenido a la documentación técnica del proyecto. Esta documentación está 
 
 ### 2. Configuración (`/setup`)
 
-- **[Instalación](../setup/installation.md)**: Guía paso a paso para configurar el entorno local (incluye variables de entorno).
+- **[Instalación](../setup/installation.md)**: Guía paso a paso para configurar el entorno local (incluye variables de
+  entorno).
 - **[Tecnologías](../setup/technologies.md)**: Stack completo del proyecto.
 - **[Rutas](../setup/rutes.md)**: URLs y rutas de la aplicación.
 - **[Scripts](../setup/scripts.md)**: Comandos de `package.json`.
@@ -29,7 +31,8 @@ Bienvenido a la documentación técnica del proyecto. Esta documentación está 
 ### 5. Datos (`/data`)
 
 - **[Estructura de aprendizaje](../data/learning-structure-guide.md)**: Tabla `learning_content` en Supabase.
-- **[Progreso solo en cliente](../data/progreso-cliente-local.md)**: Progreso en `localStorage` que no se sincroniza automáticamente con el backend.
+- **[Progreso solo en cliente](../data/progreso-cliente-local.md)**: Progreso en `localStorage` que no se sincroniza
+  automáticamente con el backend.
 
 ### 6. Integraciones (`/integrations`)
 
@@ -45,4 +48,4 @@ Bienvenido a la documentación técnica del proyecto. Esta documentación está 
 
 ---
 
-*Archivo generado por IA. Última actualización: lunes, 18 de mayo de 2026.*
+_Archivo generado por IA. Última actualización: lunes, 18 de mayo de 2026._

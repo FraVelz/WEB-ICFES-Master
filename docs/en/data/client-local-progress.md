@@ -10,19 +10,23 @@ Where progress lives that is **not** automatically synced with Supabase or anoth
 
 ## Storage keys
 
-| Key                       | Short description                                              |
-| ------------------------- | -------------------------------------------------------------- |
-| `icfes_exams`             | Full exam attempts (`saveFullExam`)                            |
-| `icfes_practice`          | Area practice attempts (`savePractice`)                        |
-| `icfes_progress`          | Derived aggregate (percentages, areas, streak, etc.)           |
-| `icfes_completed_lessons` | Completed lesson IDs (`LearningService` / local progress)      |
+| Key                       | Short description                                         |
+| ------------------------- | --------------------------------------------------------- |
+| `icfes_exams`             | Full exam attempts (`saveFullExam`)                       |
+| `icfes_practice`          | Area practice attempts (`savePractice`)                   |
+| `icfes_progress`          | Derived aggregate (percentages, areas, streak, etc.)      |
+| `icfes_completed_lessons` | Completed lesson IDs (`LearningService` / local progress) |
 
 ## Relation to other data
 
-- **Gamification** (achievements, levels with hybrid persistence) may use [`src/services/persistence/gamificationPersistence.ts`](../../../src/services/persistence/gamificationPersistence.ts) and Supabase depending on configuration.
-- Learning paths backed by **Supabase** do not replace these keys: locally completed lessons remain separate until persistence is unified.
+- **Gamification** (achievements, levels with hybrid persistence) may use
+  [`src/services/persistence/gamificationPersistence.ts`](../../../src/services/persistence/gamificationPersistence.ts)
+  and Supabase depending on configuration.
+- Learning paths backed by **Supabase** do not replace these keys: locally completed lessons remain separate until
+  persistence is unified.
 
 Treat this module and its callers as the source of truth for local storage behavior.
 
 ---
-*AI-generated file. Last updated: Monday, May 18, 2026.*
+
+_AI-generated file. Last updated: Monday, May 18, 2026._

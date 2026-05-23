@@ -1,6 +1,7 @@
 # Estructura del proyecto
 
-Este documento describe la organización de archivos y la arquitectura por características (*feature-based*) del proyecto.
+Este documento describe la organización de archivos y la arquitectura por características (_feature-based_) del
+proyecto.
 
 ## Vista general
 
@@ -47,15 +48,15 @@ features/nombre-feature/
 
 ### Features actuales
 
-| Feature | Responsabilidad |
-| ------- | ---------------- |
-| **auth/** | Login, registro, OAuth, onboarding |
-| **home/** | Landing, secciones marketing, donaciones |
+| Feature       | Responsabilidad                                                              |
+| ------------- | ---------------------------------------------------------------------------- |
+| **auth/**     | Login, registro, OAuth, onboarding                                           |
+| **home/**     | Landing, secciones marketing, donaciones                                     |
 | **learning/** | Roadmap, lecciones (`roadmap/`, `lesson-flow/`, `lessons-legacy/`, `shell/`) |
-| **exam/** | Práctica, examen completo, clasificatoria; datos en `exam/data/` |
-| **user/** | Perfil, configuración, hook `useProgress` |
-| **logros/** | Badges, desafíos, gamificación (UI) |
-| **store/** | Tienda virtual, modales de compra |
+| **exam/**     | Práctica, examen completo, clasificatoria; datos en `exam/data/`             |
+| **user/**     | Perfil, configuración, hook `useProgress`                                    |
+| **logros/**   | Badges, desafíos, gamificación (UI)                                          |
+| **store/**    | Tienda virtual, modales de compra                                            |
 
 ## Capa compartida (`src/shared/`)
 
@@ -78,20 +79,21 @@ Ver [documentación de servicios](../backend/services-api.md).
 
 ## Rutas Next.js (`src/app/`)
 
-| Ruta | Descripción |
-| ---- | ----------- |
-| `/` | Página de inicio |
-| `/login`, `/signup`, `/auth/callback` | Autenticación |
-| `/onboarding` | Onboarding |
-| `/ruta-aprendizaje` | Roadmap de aprendizaje |
-| `/lessons/[area]/[topic]` | Lección (Supabase o legacy) |
-| `/practica/[area]` | Práctica por área |
-| `/examen-completo` | Examen completo |
-| `/clasificatoria` | Clasificatoria / ranking |
-| `/desafios-diarios` | Desafíos diarios |
-| `/logros` | Centro de logros |
-| `/perfil`, `/configuracion` | Perfil y ajustes |
-| `/terminos`, `/privacidad` | Legal |
+| Ruta                                  | Descripción                 |
+| ------------------------------------- | --------------------------- |
+| `/`                                   | Página de inicio            |
+| `/login`, `/signup`, `/auth/callback` | Autenticación               |
+| `/onboarding`                         | Onboarding                  |
+| `/ruta-aprendizaje`                   | Roadmap de aprendizaje      |
+| `/lessons/[area]/[topic]`             | Lección (Supabase o legacy) |
+| `/practica/[area]`                    | Práctica por área           |
+| `/examen-completo`                    | Examen completo             |
+| `/clasificatoria`                     | Clasificatoria / ranking    |
+| `/desafios-diarios`                   | Desafíos diarios            |
+| `/logros`                             | Centro de logros            |
+| `/perfil`, `/configuracion`           | Perfil y ajustes            |
+| `/terminos`, `/privacidad`            | Legal                       |
 
 ---
-*Archivo generado por IA. Última actualización: lunes, 18 de mayo de 2026.*
+
+_Archivo generado por IA. Última actualización: lunes, 18 de mayo de 2026._

@@ -4,12 +4,12 @@
 
 ### Development
 
-| Action              | Command           |
-| ------------------- | ----------------- |
-| Start local server  | `pnpm dev`        |
-| Clear `.next` & run | `pnpm dev:clean`  |
-| Build project       | `pnpm build`      |
-| Production preview  | `pnpm start`      |
+| Action              | Command          |
+| ------------------- | ---------------- |
+| Start local server  | `pnpm dev`       |
+| Clear `.next` & run | `pnpm dev:clean` |
+| Build project       | `pnpm build`     |
+| Production preview  | `pnpm start`     |
 
 ### Web deployment
 
@@ -63,4 +63,5 @@ console.log(API_CONFIG.MODE);
 ```
 
 ---
-*AI-generated file. Last updated: Monday, May 18, 2026.*
+
+_AI-generated file. Last updated: Monday, May 18, 2026._
