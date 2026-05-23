@@ -2,9 +2,11 @@
 
 Usar cuando el usuario quiera **refrescar en bloque** la documentación bajo `docs/` que esté **marcada explícitamente como generada por IA**, aplicando las mismas reglas que [update-docs.md](./update-docs.md) (ortografía, hechos del repo, espejo EN/ES, pie con fecha).
 
+**Cuándo tiene sentido este comando:** el repositorio es **grande** y mantiene documentación bilingüe en **`docs/es/`** y **`docs/en/`**. En repos pequeños o sin ese árbol, usar solo **`/update-docs`**.
+
 ## Relación con `update-docs.md`
 
-Este comando **no sustituye** a `update-docs.md`: delega en él la política de contenido (pares `docs/es` ↔ `docs/en`, excepciones de nombres, pies, tabla de tipos, restricciones).
+Este comando **no sustituye** a `update-docs.md`: delega en él la política de contenido (pares `docs/es` ↔ `docs/en`, excepciones de nombres si las hay en `update-docs.md`, pies, tabla de tipos, restricciones).
 
 Aquí solo se define **cómo descubrir el ámbito**, **en qué orden trabajar** y **cuándo se permite tocar estructura o archivos nuevos**.
 
@@ -16,42 +18,42 @@ Archivos `*.md` bajo `docs/` cuyo **final del documento** incluya el pie estánd
 
 - Español: texto tipo `Archivo generado por IA` + `Última actualización:` + fecha.
 - Inglés: texto tipo `AI-generated file` + `Last updated:` + fecha.
+- Bloque cita equivalente en README o docs del proyecto.
 
-**Paso obligatorio al ejecutar:** localizar primero esos archivos (p. ej. búsqueda en el repo por las cadenas anteriores o equivalentes acordadas en `update-docs.md`) y **listar al usuario el inventario** antes de editar: ruta, idioma inferido y par esperado (si existe).
+**Paso obligatorio al ejecutar:** localizar primero esos archivos (búsqueda por las cadenas anteriores o equivalentes) y **listar al usuario el inventario** antes de editar: ruta, idioma inferido y par esperado (si existe).
 
 ### Exclusión por defecto (no entran)
 
-- Markdown en `docs/` **sin** pie de “generado por IA” / “AI-generated file”, aunque tengan otra línea de “Última actualización” o notas sueltas.
-- Archivos fuera de `docs/` (p. ej. `README.md` raíz), salvo que el usuario los mencione aparte; en ese caso usar `update-docs.md` sobre esos `@` concretos.
+- Markdown en `docs/` **sin** pie de “generado por IA” / “AI-generated file”, aunque tengan otra línea de “Última actualización”.
+- Archivos fuera de `docs/` (p. ej. `README.md` raíz), salvo que el usuario los mencione aparte; en ese caso usar **`/update-docs`** sobre esos `@` concretos.
 
-Si el usuario pide **añadir la marca IA** a docs que aún no la tienen, eso es una extensión explícita: normalizar el pie según `update-docs.md` y **después** incluirlos en barridos futuros.
+Si el usuario pide **añadir la marca IA** a docs que aún no la tienen, normalizar el pie según `update-docs.md` y **después** incluirlos en barridos futuros.
 
 ## Flujo para el agente
 
 1. **Inventario (solo lectura)**  
-   Encontrar todos los `.md` en `docs/` con pie IA válido. Agrupar por par bilingüe usando la misma ruta relativa en `docs/es/` y `docs/en/`, más la **tabla de excepciones** de nombres ES/EN descrita en `update-docs.md`.
+   Encontrar todos los `.md` en `docs/` con pie IA válido. Agrupar por par bilingüe usando la misma ruta relativa en `docs/es/` y `docs/en/`, más cualquier **tabla de excepciones** en `update-docs.md` de este repo.
 
 2. **Informar**  
-   Mostrar la tabla o lista: archivo → ¿marcado? → par (`Sí` / `No` / `Par incompleto`).
+   Mostrar lista: archivo → ¿marcado? → par (`Sí` / `No` / `Par incompleto`).
 
 3. **Por cada grupo (idealmente par ES+EN)**  
-   Aplicar **íntegramente** los pasos de `update-docs.md`: corregir fuente, alinear hechos con el repo si aplica, actualizar pie con **fecha del día de ejecución**, sincronizar el espejo y enlaces relativos.
+   Aplicar **íntegramente** los pasos de `update-docs.md`: corregir fuente, alinear hechos con el repo, actualizar pie con **fecha del día de ejecución**, sincronizar espejo y enlaces relativos.
 
 4. **Orden sugerido**  
-   - Primero índices y resúmenes que enlazan a otros docs (`overview`, resúmenes ejecutivos).  
-   - Luego guías de estructura, setup, backend, datos, etc.  
-   Así los enlaces rotos se detectan en pasadas posteriores dentro del mismo barrido.
+   - Primero índices y resúmenes que enlazan a otros docs.  
+   - Luego guías de estructura, setup, backend, datos, etc.
 
 5. **Estructura y archivos nuevos**
 
-   - **Permitido:** renombrar, crear o fusionar archivos **solo** entre documentación ya tratada como IA o necesaria para que el índice y los pares EN/ES sigan siendo coherentes (p. ej. un `overview.md` apunta a un path que ya no existe).
-   - **Obligatorio:** si se crea o renombra algo, actualizar **todos** los enlaces internos afectados en `docs/es` y `docs/en` en la misma ejecución (y el pie IA donde corresponda).
-   - **Preferencia:** no reestructurar por gusto; hacerlo cuando el repo o los propios índices lo exijan.
+   - **Permitido:** renombrar, crear o fusionar archivos **solo** entre documentación IA o para coherencia de índices y pares EN/ES.
+   - **Obligatorio:** si se crea o renombra algo, actualizar **todos** los enlaces internos afectados en `docs/es` y `docs/en` en la misma ejecución.
+   - **Preferencia:** no reestructurar por gusto; hacerlo cuando el repo o los índices lo exijan.
 
 6. **Resumen final**  
-   Igual que en `update-docs.md`: archivos tocados, pares sincronizados, huérfanos (marcado en un idioma y no en el otro), cambios estructurales, y **docs candidatos** que tuvieran “última actualización” pero **sin** marca IA (no modificados salvo petición).
+   Archivos tocados, pares sincronizados, huérfanos, cambios estructurales, y docs con “última actualización” pero **sin** marca IA (no modificados salvo petición).
 
 ## Restricciones
 
-- Heredar las de `update-docs.md` (no inventar funcionalidades, no narrativa de relleno en el espejo, etc.).
+- Heredar las de `update-docs.md`.
 - Respuesta al usuario en **español** salvo que pida otro idioma.
