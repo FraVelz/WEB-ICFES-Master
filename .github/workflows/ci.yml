@@ -1,0 +1,59 @@
+name: Continuous Integration - CI
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "src/**"
+      - "public/**"
+      - "package.json"
+      - "pnpm-lock.yaml"
+      - "next.config.*"
+      - "tsconfig.json"
+      - "jsconfig.json"
+      - "postcss.config.*"
+      - "eslint.config.*"
+      - "react-doctor.config.json"
+      - ".github/workflows/**"
+  pull_request:
+    branches: [main]
+    paths:
+      - "src/**"
+      - "public/**"
+      - "package.json"
+      - "pnpm-lock.yaml"
+      - "next.config.*"
+      - "tsconfig.json"
+      - "jsconfig.json"
+      - "postcss.config.*"
+      - "eslint.config.*"
+      - "react-doctor.config.json"
+      - ".github/workflows/**"
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  quality:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "pnpm"
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Lint
+        run: pnpm run lint
+
+      - name: Build
+        run: pnpm run build
