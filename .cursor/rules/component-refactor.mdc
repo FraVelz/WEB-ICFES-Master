@@ -1,0 +1,85 @@
+---
+description: Cómo dividir o fusionar componentes React sin micro-archivos ni prop drilling
+globs: "**/*.{tsx,ts}"
+alwaysApply: true
+---
+
+# Refactor y organización de componentes — ICFES Master
+
+Complementa `component-scope.mdc` (dónde va el archivo). Aquí: **cuándo** extraer, fusionar o usar Context.
+
+## Tamaño de archivo
+
+| Líneas | Acción |
+|--------|--------|
+| &lt; 40, un solo uso, solo JSX trivial | **Inline** en el padre (no archivo propio) |
+| 40–200, una responsabilidad clara | Archivo propio OK |
+| &gt; 200 | Dividir por **etapa, sección o flujo** (~80–150 líneas c/u), no por átomo visual |
+
+Excepción: datos puros (mapas de iconos, preguntas, constantes) pueden superar 200 líneas en un solo archivo.
+
+## No fragmentar por
+
+- Cada `<span>`, `<Icon>` o bloque de &lt; 30 líneas de markup
+- Carpetas `ui/` solo por organización visual
+- Wrappers que solo pasan 1–2 props (`ExpandableText`, `LockIcon`)
+- Barrels o archivos exportados **sin importadores** en el repo
+
+## Sí extraer cuando
+
+- Etapa de flujo (onboarding, examen, modal de lección)
+- Sección reutilizada en **2+** rutas o páginas del mismo dominio
+- Hook con lógica de negocio (`useDonation`, `useShop`) — colocado en la feature
+- Página &gt; 200 líneas: por pestaña/sección semántica, no por cada input
+
+## Prop drilling
+
+1. **Colocation**: estado que solo usa un hijo → `useState` / hook en ese hijo.
+2. **Hook en la hoja**: `useUser()`, Redux `demoMode`, `useShop()` donde se necesitan; no relay desde el padre si el padre no los usa.
+3. **Context local** (feature): hermanos comparten &gt; 8 campos o el hook ya existe → `XProvider` en el contenedor de la sección, **no** Context global.
+4. **Context global** solo para auth, demo/sesión UI ya existentes.
+
+Regla: si hay hook colocado (`useDonation`), los hijos **no** deben recibir 10+ props del mismo hook vía el padre.
+
+## Estructura de carpeta (ejemplo shell)
+
+```
+DashboardHeader/
+  DashboardHeader.tsx   # orquestación mínima
+  DesktopSidebar.tsx
+  MobileNav.tsx
+  constants.ts
+```
+
+Máximo ~4–5 archivos por UI cohesiva salvo que cada archivo tenga &gt; 80 líneas con lógica propia.
+
+## Ejemplos
+
+```tsx
+// ❌ 4 niveles solo para opacidad del label
+Header → Sidebar → NavLink → ExpandableSidebarText
+
+// ✅ opacidad inline en NavLink; sidebarExpanded solo donde hace falta
+
+// ❌ useDonation en padre + 16 props a DonationForm
+<DonationForm selectedAmount={...} setCardData={...} />
+
+// ✅ DonationProvider + useDonationContext() en hijos
+// o un DonationSection.tsx con sub-bloques en el mismo archivo
+
+// ❌ ProfileComponents.tsx sin imports en el proyecto
+// ✅ conectar en PerfilNormal/PerfilPublico o borrar
+```
+
+## Antes de crear un archivo nuevo
+
+1. ¿Quién lo importa? (si nadie → no crear / borrar)
+2. ¿El padre solo reenvía props? → colocation o Context local
+3. ¿El archivo nuevo tendría &lt; 40 líneas? → inline
+
+## Checklist post-refactor
+
+- [ ] Sin archivos huérfanos
+- [ ] Ningún archivo de UI trivial &lt; 40 líneas con un solo consumidor
+- [ ] Páginas/componentes UI principales ≤ 200 líneas (o divididos por sección)
+- [ ] Props no cruzan 3+ niveles sin hook/Context local

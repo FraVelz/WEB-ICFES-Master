@@ -71,6 +71,10 @@ src/components/DashboardHeader/
 
 Preguntarse: **¿quién lo importa?** Si la respuesta es una sola carpeta (`features/exam`, `app/(dashboard)/logros` → feature `achievements`, etc.), el archivo vive **ahí**, no en `shared/` ni `components/` raíz.
 
+## Refactor de componentes
+
+Ver también **`component-refactor.mdc`**: tamaño de archivo (~200 líneas), cuándo inline vs extraer, prop drilling y Context local.
+
 ## Convención URL vs código
 
 - Ruta pública **`/logros/`** → feature **`src/features/achievements/`** (URL en español, código en inglés).
