@@ -1,15 +1,11 @@
 'use client';
 
-import { cn } from '@/utils/cn';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-
-import { OnboardingLayout } from './OnboardingLayout';
-
-import { Icon } from '@/shared/components/Icon';
-import { MascotaCircle } from '@/shared/components/MascotaCircle';
-
 import { INTRODUCTION_SECTIONS, ONBOARDING_QUESTIONS } from './data';
+import { OnboardingIntroStage } from './OnboardingIntroStage';
+import { OnboardingQuizStage } from './OnboardingQuizStage';
+import { OnboardingCompleteStage } from './OnboardingCompleteStage';
 
 interface OnboardingQuestion {
   id: number;
@@ -25,12 +21,11 @@ interface OnboardingQuizProps {
 
 export const OnboardingQuiz = ({ onComplete, avatarConfig = {} }: OnboardingQuizProps) => {
   const router = useRouter();
-  const [stage, setStage] = useState('intro'); // 'intro', 'quiz', 'completed'
+  const [stage, setStage] = useState<'intro' | 'quiz' | 'completed'>('intro');
   const [introIndex, setIntroIndex] = useState(0);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [answers, setAnswers] = useState<Record<string, unknown>>({});
 
-  // Optional avatar overrides from parent
   const avatarSettings = {
     intro1: avatarConfig.intro1 ?? '/avatars/logo.webp',
     intro2: avatarConfig.intro2 ?? '/avatars/logo.webp',
@@ -53,14 +48,10 @@ export const OnboardingQuiz = ({ onComplete, avatarConfig = {} }: OnboardingQuiz
           : [...currentAnswers, value],
       }));
     } else if (currentQuestion) {
-      setAnswers((prev) => ({
-        ...prev,
-        [String(currentQuestion.id)]: value,
-      }));
+      setAnswers((prev) => ({ ...prev, [String(currentQuestion.id)]: value }));
     }
   };
 
-  // Intro carousel
   const handleIntroNext = () => {
     if (introIndex < INTRODUCTION_SECTIONS.length - 1) {
       setIntroIndex((prev) => prev + 1);
@@ -90,214 +81,43 @@ export const OnboardingQuiz = ({ onComplete, avatarConfig = {} }: OnboardingQuiz
     if (currentQuestionIndex > 0) {
       setCurrentQuestionIndex((prev) => prev - 1);
     } else {
-      // Back to last intro slide
       setStage('intro');
       setIntroIndex(INTRODUCTION_SECTIONS.length - 1);
     }
   };
 
-  const handleContinue = () => {
-    onComplete(answers);
-  };
-
   const canProceed = isMultiple ? Array.isArray(currentAnswer) && currentAnswer.length > 0 : currentAnswer !== '';
 
-  // Intro slides (before quiz)
-  if (stage !== 'quiz' && stage !== 'completed') {
+  if (stage === 'intro') {
     const currentIntro = INTRODUCTION_SECTIONS[introIndex];
-    const avatarSrc = introIndex === 0 ? avatarSettings.intro1 : avatarSettings.intro2;
-
     return (
-      <OnboardingLayout>
-        {/* Header */}
-        <div className="flex h-16 items-center px-6">
-          <button
-            onClick={handleIntroBack}
-            className="cursor-pointer rounded-lg p-2 transition-all duration-200 hover:bg-slate-800"
-            title="Volver atrás"
-          >
-            <Icon name="chevron-left" className="text-xl text-app-accent" />
-          </button>
-        </div>
-
-        {/* Main Content */}
-        <div className="flex flex-1 flex-col items-center justify-center px-6 py-8">
-          {/* Avatar */}
-          <MascotaCircle src={avatarSrc} size="large" alt="Zeus - Tu asistente" className="mb-8" />
-
-          {/* Message */}
-          <div className="w-full max-w-2xl rounded-lg border border-slate-700 bg-slate-800/50 p-8 text-center backdrop-blur-sm">
-            <h2
-              className={cn(
-                'mb-2 bg-linear-to-r from-cta-text-start via-cta-text-via to-cta-text-end bg-clip-text text-2xl',
-                'font-bold text-transparent md:text-3xl'
-              )}
-            >
-              {currentIntro.message}
-            </h2>
-            <p className="text-sm text-slate-300">{currentIntro.description}</p>
-          </div>
-        </div>
-
-        {/* Bottom Section - Button */}
-        <div className="mx-auto w-full max-w-md px-6 pb-8">
-          <button
-            onClick={handleIntroNext}
-            className={cn(
-              'flex w-full cursor-pointer items-center justify-center gap-2 rounded-lg bg-linear-to-r',
-              'from-cta-from to-cta-to px-6 py-4 text-lg font-bold text-white transition-all',
-              'duration-300 hover:shadow-lg hover:shadow-app-ring/50'
-            )}
-          >
-            <span>Continuar</span>
-            <Icon name="arrow-right" />
-          </button>
-        </div>
-      </OnboardingLayout>
+      <OnboardingIntroStage
+        message={currentIntro.message}
+        description={currentIntro.description}
+        avatarSrc={introIndex === 0 ? avatarSettings.intro1 : avatarSettings.intro2}
+        onBack={handleIntroBack}
+        onNext={handleIntroNext}
+      />
     );
   }
 
   if (stage === 'completed') {
-    return (
-      <OnboardingLayout className="items-center justify-center">
-        <div className="mx-auto flex w-full max-w-md flex-1 flex-col items-center justify-center space-y-8 px-6 py-12 text-center">
-          <div
-            className={cn(
-              'mx-auto inline-flex h-24 w-24 items-center justify-center rounded-full bg-linear-to-r',
-              'from-green-500 to-emerald-600 shadow-lg shadow-green-500/30'
-            )}
-          >
-            <Icon name="check-circle" className="text-5xl" />
-          </div>
-
-          <div className="space-y-4">
-            <h2 className="bg-linear-to-r from-cta-text-start via-cta-text-via to-cta-text-end bg-clip-text text-3xl font-black text-transparent md:text-4xl">
-              ¡Perfecto!
-            </h2>
-
-            <p className="text-lg text-slate-300">
-              Hemos entendido tus necesidades. Ahora crearemos tu cuenta personalizada con un plan adaptado a ti.
-            </p>
-          </div>
-
-          <button
-            onClick={handleContinue}
-            className={cn(
-              'flex w-full cursor-pointer items-center justify-center gap-2 rounded-lg bg-linear-to-r',
-              'from-cta-from to-cta-to px-6 py-4 text-lg font-bold text-white transition-all',
-              'duration-300 hover:shadow-lg hover:shadow-app-ring/50'
-            )}
-          >
-            <Icon name="arrow-right" />
-            Ir al Registro
-          </button>
-        </div>
-      </OnboardingLayout>
-    );
+    return <OnboardingCompleteStage onContinue={() => onComplete(answers)} />;
   }
 
   return (
-    <OnboardingLayout>
-      {/* Header & Progress - Sticky Top */}
-      <div className="sticky top-0 z-30 border-b border-slate-800 bg-slate-950/95 shadow-lg backdrop-blur-md">
-        <div className="flex h-16 items-center justify-between px-6">
-          <button
-            onClick={handleQuizBack}
-            className="cursor-pointer rounded-lg p-2 transition-all duration-200 hover:bg-slate-800"
-            title="Volver atrás"
-          >
-            <Icon name="chevron-left" className="text-xl text-app-accent" />
-          </button>
-          <div className="flex flex-1 items-center justify-center gap-6">
-            <h3 className="hidden text-sm font-semibold text-slate-400 sm:block">
-              Pregunta {currentQuestionIndex + 1} de {ONBOARDING_QUESTIONS.length}
-            </h3>
-            <span className="text-sm font-semibold text-app-accent">{Math.round(progress)}%</span>
-          </div>
-        </div>
-
-        {/* Progress Bar */}
-        <div className="px-6 py-0">
-          <div className="h-1 w-full overflow-hidden rounded-full bg-slate-800">
-            <div
-              className="h-full bg-linear-to-r from-cta-from to-cta-to transition-all duration-300"
-              style={{ width: `${progress}%` }}
-            ></div>
-          </div>
-        </div>
-      </div>
-
-      {/* Main Content - Scrollable Area */}
-      <div className="mx-auto flex w-full max-w-4xl flex-1 flex-col gap-8 px-4 py-8">
-        {/* Question + Avatar */}
-        <div className="flex flex-col items-center gap-6 sm:flex-row sm:items-start">
-          <div className="shrink-0">
-            <MascotaCircle src="/avatars/pensativo.webp" size="medium" alt="Zeus - Tu asistente" centered={false} />
-          </div>
-          <div className="flex-1 pt-2 text-center sm:text-left">
-            <h2 className="text-xl leading-tight font-bold text-white sm:text-2xl md:text-3xl">
-              {currentQuestion.question}
-            </h2>
-          </div>
-        </div>
-
-        {/* Options List */}
-        <div className="w-full space-y-3">
-          {currentQuestion.options.map((option) => {
-            const selected = isMultiple
-              ? (Array.isArray(currentAnswer) ? currentAnswer : []).includes(option.value)
-              : currentAnswer === option.value;
-            return (
-              <button
-                key={option.value}
-                onClick={() => handleSelectOption(option.value)}
-                className={cn(
-                  'group flex w-full cursor-pointer items-center gap-4 rounded-xl border-2 p-4 text-left font-semibold transition-all duration-200',
-                  selected
-                    ? 'border-app-ring bg-app-ring/20 text-white shadow-lg shadow-app-ring/10'
-                    : 'border-slate-700 bg-slate-800/50 text-slate-300 hover:border-slate-500 hover:bg-slate-800'
-                )}
-              >
-                <div
-                  className={cn(
-                    'flex h-6 w-6 shrink-0 items-center justify-center rounded border-2 transition-all',
-                    selected ? 'scale-110 border-app-ring bg-app-ring' : 'border-slate-600 group-hover:border-slate-400'
-                  )}
-                >
-                  {selected && <span className="text-sm font-bold text-white">✓</span>}
-                </div>
-                <span className="text-base sm:text-lg">{option.label}</span>
-              </button>
-            );
-          })}
-        </div>
-      </div>
-
-      {/* Footer Actions */}
-      <div className="z-20 mx-auto w-full max-w-4xl p-6 pt-2">
-        <button
-          onClick={handleNext}
-          disabled={!canProceed}
-          className={cn(
-            'flex w-full cursor-pointer items-center justify-center gap-2 rounded-xl bg-linear-to-r',
-            'from-cta-from to-cta-to px-6 py-4 text-lg font-bold text-white shadow-md transition-all',
-            'duration-300 hover:shadow-lg hover:shadow-app-ring/50 disabled:cursor-not-allowed',
-            'disabled:opacity-50'
-          )}
-        >
-          {currentQuestionIndex === ONBOARDING_QUESTIONS.length - 1 ? (
-            <>
-              Finalizar
-              <Icon name="check-circle" />
-            </>
-          ) : (
-            <>
-              Continuar
-              <Icon name="arrow-right" />
-            </>
-          )}
-        </button>
-      </div>
-    </OnboardingLayout>
+    <OnboardingQuizStage
+      question={currentQuestion.question}
+      options={currentQuestion.options}
+      isMultiple={isMultiple}
+      currentAnswer={currentAnswer}
+      progress={progress}
+      questionIndex={currentQuestionIndex}
+      totalQuestions={ONBOARDING_QUESTIONS.length}
+      canProceed={canProceed}
+      onBack={handleQuizBack}
+      onSelectOption={handleSelectOption}
+      onNext={handleNext}
+    />
   );
 };

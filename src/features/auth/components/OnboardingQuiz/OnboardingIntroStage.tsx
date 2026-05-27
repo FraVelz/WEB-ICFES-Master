@@ -1,0 +1,59 @@
+import { cn } from '@/utils/cn';
+import { Icon } from '@/shared/components/Icon';
+import { MascotaCircle } from '@/shared/components/MascotaCircle';
+import { OnboardingLayout } from './OnboardingLayout';
+
+type OnboardingIntroStageProps = {
+  message: string;
+  description: string;
+  avatarSrc: string;
+  onBack: () => void;
+  onNext: () => void;
+};
+
+export function OnboardingIntroStage({ message, description, avatarSrc, onBack, onNext }: OnboardingIntroStageProps) {
+  return (
+    <OnboardingLayout>
+      <div className="flex h-16 items-center px-6">
+        <button
+          type="button"
+          onClick={onBack}
+          className="cursor-pointer rounded-lg p-2 transition-all duration-200 hover:bg-slate-800"
+          title="Volver atrás"
+        >
+          <Icon name="chevron-left" className="text-xl text-app-accent" />
+        </button>
+      </div>
+
+      <div className="flex flex-1 flex-col items-center justify-center px-6 py-8">
+        <MascotaCircle src={avatarSrc} size="large" alt="Zeus - Tu asistente" className="mb-8" />
+        <div className="w-full max-w-2xl rounded-lg border border-slate-700 bg-slate-800/50 p-8 text-center backdrop-blur-sm">
+          <h2
+            className={cn(
+              'mb-2 bg-linear-to-r from-cta-text-start via-cta-text-via to-cta-text-end bg-clip-text text-2xl',
+              'font-bold text-transparent md:text-3xl'
+            )}
+          >
+            {message}
+          </h2>
+          <p className="text-sm text-slate-300">{description}</p>
+        </div>
+      </div>
+
+      <div className="mx-auto w-full max-w-md px-6 pb-8">
+        <button
+          type="button"
+          onClick={onNext}
+          className={cn(
+            'flex w-full cursor-pointer items-center justify-center gap-2 rounded-lg bg-linear-to-r',
+            'from-cta-from to-cta-to px-6 py-4 text-lg font-bold text-white transition-all',
+            'duration-300 hover:shadow-lg hover:shadow-app-ring/50'
+          )}
+        >
+          <span>Continuar</span>
+          <Icon name="arrow-right" />
+        </button>
+      </div>
+    </OnboardingLayout>
+  );
+}
