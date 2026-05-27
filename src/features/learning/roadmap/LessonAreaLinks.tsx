@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { cn } from '@/utils/cn';
 import { getLessonRoutesForRoadmapArea } from '@/features/learning/constants/lessonDynamicRoutes';
-import { getPracticaHrefForRoadmapArea } from '@/features/learning/constants/practiceDynamicRoutes';
+import { getPracticaHrefForRoadmapArea } from '@/shared/constants/practiceAreas';
 
 function formatTopicLabel(slug: string) {
   return slug

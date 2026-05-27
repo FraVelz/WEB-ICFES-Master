@@ -4,9 +4,8 @@ import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { Icon } from '@/shared/components/Icon';
 import { useAuth } from '@/features/auth/context/AuthContext';
-import { useLeaderboard, type LeaderboardPlayer } from '@/features/logros/hooks/useLeaderboard';
-import { RANKS, getRankInfo } from '@/features/logros/constants/ranks';
-import { ConstructionAlert } from '@/shared/components';
+import { useLeaderboard, type LeaderboardPlayer } from '@/hooks/gamification';
+import { RANKS, getRankInfo } from '@/shared/constants/ranks';
 import { useUserProfile } from '@/features/user/hooks/useUserProfile';
 
 export const ClasificatoriaPage = () => {

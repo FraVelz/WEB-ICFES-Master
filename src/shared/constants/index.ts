@@ -7,3 +7,10 @@ export {
   type AreaInfo,
   type HomeArea,
 } from './areaInfo';
+export { RANKS, getRankInfo, getNextRank, getPrevRank } from './ranks';
+export {
+  PRACTICA_AREA_SLUGS,
+  type PracticaAreaSlug,
+  isPracticaAreaSlug,
+  getPracticaHrefForRoadmapArea,
+} from './practiceAreas';

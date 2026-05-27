@@ -5,7 +5,7 @@ import { useState, useMemo } from 'react';
 import { Icon } from '@/shared/components/Icon';
 import { getAreaInfo } from '@/shared/constants';
 import { useAuth } from '@/features/auth/context/AuthContext';
-import { useGamification } from '@/features/logros/hooks/useGamification';
+import { useGamification } from '@/hooks/gamification';
 import { AreasModal } from './AreasModal';
 import { StreakModal } from './StreakModal';
 import { CoinsModal } from './CoinsModal';

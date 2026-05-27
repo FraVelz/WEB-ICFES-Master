@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { useAuth } from '@/features/auth/context/AuthContext';
-import { useGamification } from '@/features/logros/hooks/useGamification';
+import { useGamification } from '@/hooks/gamification';
 import { AchievementsList } from '../components/AchievementsList';
 import { Icon } from '@/shared/components/Icon';
 

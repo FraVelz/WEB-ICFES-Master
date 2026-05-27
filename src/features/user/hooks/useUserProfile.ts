@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '@/features/auth/context/AuthContext';
-import { useGamification } from '@/features/logros/hooks/useGamification';
+import { useGamification } from '@/hooks/gamification';
 import { getLevelInfo } from '@/services/gamification/gamificationUtils';
-import { RANKS } from '@/features/logros/constants/ranks';
+import { RANKS } from '@/shared/constants/ranks';
 import { getUserProfile } from '@/services/persistence';
 
 const levelToRankId = (level: number): string => {
