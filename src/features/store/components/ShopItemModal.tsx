@@ -2,6 +2,7 @@
 
 import { cn } from '@/utils/cn';
 import React, { useEffect, useRef } from 'react';
+import Image from 'next/image';
 import { Icon } from '@/shared/components/Icon';
 import { gsap } from '@/lib/gsap';
 import type { ShopItem } from '../data/shopItems';
@@ -68,9 +69,9 @@ export const ShopItemModal = ({
         <div className={cn('relative flex h-32 items-center justify-center', `bg-linear-to-br ${item.color}`)}>
           <div className="absolute inset-0 bg-black/20"></div>
           <div className="relative z-10 h-24 w-24 translate-y-8 rounded-2xl bg-slate-900 p-1 shadow-2xl">
-            <div className="flex h-full w-full items-center justify-center overflow-hidden rounded-xl bg-slate-800">
+            <div className="relative flex h-full w-full items-center justify-center overflow-hidden rounded-xl bg-slate-800">
               {item.image ? (
-                <img src={item.image} alt={item.name} className="h-full w-full object-cover" />
+                <Image src={item.image} alt={item.name} fill className="object-cover" />
               ) : (
                 <Icon name={item.icon} className="text-4xl text-white" />
               )}

@@ -1,5 +1,6 @@
 import { cn } from '@/utils/cn';
 import React from 'react';
+import Image from 'next/image';
 import { Icon } from '@/shared/components/Icon';
 
 import type { ShopItem } from '../data/shopItems';
@@ -65,9 +66,9 @@ export const ShopItemCard = ({ item, isPurchased, canAfford, onClick }: ShopItem
             `bg-linear-to-br ${item.color}`
           )}
         >
-          <div className="flex h-full w-full items-center justify-center overflow-hidden rounded-xl bg-slate-900">
+          <div className="relative flex h-full w-full items-center justify-center overflow-hidden rounded-xl bg-slate-900">
             {item.image ? (
-              <img src={item.image} alt={item.name} className="h-full w-full object-cover" />
+              <Image src={item.image} alt={item.name} fill className="object-cover" />
             ) : (
               <Icon name={item.icon} className="text-4xl text-white" />
             )}

@@ -18,12 +18,6 @@ const getLocalDateString = (date = new Date()) => {
   return `${y}-${m}-${d}`;
 };
 
-const getDefaultGamification = () => ({
-  totalXP: 0,
-  level: 1,
-  achievements: {},
-});
-
 interface AchievementMerged {
   progress: number;
   unlockedAt: string | null;

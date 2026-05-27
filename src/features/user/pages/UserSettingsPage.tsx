@@ -10,6 +10,7 @@ import { useUser } from '@/features/user/hooks/useUser';
 import { useUserData } from '@/features/user/hooks/useUserData';
 import { useProgress } from '@/features/user/hooks/useProgress';
 import { useExam } from '@/features/exam/hooks/useExam';
+import { AvatarImage } from '@/features/user/components/AvatarImage';
 import { updateUsername, updateUserBio, updateProfileImage } from '@/services/persistence';
 // import { DonationSection } from '@/features/home';
 
@@ -323,9 +324,17 @@ export const UserSettingsPage = () => {
                   <div className="absolute top-0 left-0 h-24 w-full bg-linear-to-b from-app-ring/10 to-transparent"></div>
 
                   <div className="group relative mb-4 inline-block">
-                    <div className="h-32 w-32 overflow-hidden rounded-full border-4 border-slate-800 bg-slate-800 shadow-2xl">
+                    <div className="relative h-32 w-32 overflow-hidden rounded-full border-4 border-slate-800 bg-slate-800 shadow-2xl">
                       {user?.profileImage ? (
-                        <img src={user.profileImage} alt="Profile" className="h-full w-full object-cover" />
+                        <AvatarImage
+                          src={user.profileImage}
+                          alt="Profile"
+                          fallback={
+                            <div className="flex h-full w-full items-center justify-center bg-slate-700 text-slate-500">
+                              <Icon name="user" className="text-4xl" />
+                            </div>
+                          }
+                        />
                       ) : (
                         <div className="flex h-full w-full items-center justify-center bg-slate-700 text-slate-500">
                           <Icon name="user" className="text-4xl" />

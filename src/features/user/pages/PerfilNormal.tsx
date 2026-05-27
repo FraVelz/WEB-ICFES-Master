@@ -5,6 +5,7 @@ import React, { useState } from 'react';
 
 import { useRouter } from 'next/navigation';
 import { Icon } from '@/shared/components/Icon';
+import { AvatarImage } from '../components/AvatarImage';
 import { useUserProfile } from '../hooks/useUserProfile';
 
 export const PerfilNormal = () => {
@@ -87,11 +88,13 @@ export const PerfilNormal = () => {
             {/* Avatar */}
             <div className="group relative">
               <div className="h-32 w-32 rounded-full border-4 border-app-ring/30 bg-slate-950 p-1 shadow-lg shadow-app-ring/20 md:h-40 md:w-40">
-                <img
+              <div className="relative h-full w-full overflow-hidden rounded-full bg-slate-800">
+                <AvatarImage
                   src={photoUrl || `https://api.dicebear.com/7.x/avataaars/svg?seed=${name}`}
                   alt={name}
-                  className="h-full w-full rounded-full bg-slate-800 object-cover"
+                  className="rounded-full"
                 />
+              </div>
               </div>
               <div
                 className={cn(

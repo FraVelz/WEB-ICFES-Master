@@ -1,5 +1,6 @@
 import { cn } from '@/utils/cn';
 import { Icon } from '@/shared/components/Icon';
+import { AvatarImage } from './AvatarImage';
 
 export const ProfileCard = ({
   user,
@@ -22,16 +23,13 @@ export const ProfileCard = ({
         )}
       >
         {user?.profileImage ? (
-          <img
-            src={user.profileImage}
-            alt={user.username || user.displayName || 'Usuario'}
-            className="h-full w-full object-cover"
-            onError={(e) => {
-              const el = e.target as HTMLImageElement;
-              el.style.display = 'none';
-              if (el.parentElement) el.parentElement.innerHTML = '<span class="text-6xl">👤</span>';
-            }}
-          />
+          <div className="relative h-full w-full">
+            <AvatarImage
+              src={user.profileImage}
+              alt={user.username || user.displayName || 'Usuario'}
+              fallback={<span className="text-6xl">👤</span>}
+            />
+          </div>
         ) : (
           <span className="text-6xl">👤</span>
         )}

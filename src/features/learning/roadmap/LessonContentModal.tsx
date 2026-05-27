@@ -297,6 +297,7 @@ export const LessonContentModal = ({
                     />
                   ),
                   img: ({ alt, ...rest }) => (
+                    // eslint-disable-next-line @next/next/no-img-element -- markdown lesson assets have unknown dimensions
                     <img
                       alt={typeof alt === 'string' ? alt : ''}
                       className="my-3 h-auto max-w-full rounded-xl border border-slate-700 shadow-lg sm:my-4"

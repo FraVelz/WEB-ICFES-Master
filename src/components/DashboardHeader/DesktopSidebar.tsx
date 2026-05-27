@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { Icon } from '@/shared/components/Icon';
+import { AvatarImage } from '@/features/user/components/AvatarImage';
 import { cn } from '@/utils/cn';
 import type { UserProfile, UserRank } from '@/services/persistence';
 import { FOCUS_RING, mainNavOptions, secondaryNavOptions } from './constants';
@@ -128,9 +129,17 @@ export function DesktopSidebar({
             isLockedInDemo('/perfil') && 'opacity-70'
           )}
         >
-          <div className="border-app-ring/30 z-10 h-10 w-10 min-w-fit shrink-0 overflow-hidden rounded-full border-2 bg-slate-800">
+          <div className="border-app-ring/30 relative z-10 h-10 w-10 min-w-fit shrink-0 overflow-hidden rounded-full border-2 bg-slate-800">
             {user?.profileImage ? (
-              <img src={user.profileImage} alt="Profile" className="h-full w-full object-cover" />
+              <AvatarImage
+                src={user.profileImage}
+                alt="Profile"
+                fallback={
+                  <div className="flex h-full w-full items-center justify-center">
+                    <Icon name="circle-user" size="lg" className="text-slate-400" />
+                  </div>
+                }
+              />
             ) : (
               <div className="flex h-full w-full items-center justify-center">
                 <Icon name="circle-user" size="lg" className="text-slate-400" />

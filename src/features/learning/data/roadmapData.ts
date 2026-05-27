@@ -1,5 +1,3 @@
-import { getStaticRoadmapDataKey } from '@/features/learning/constants/lessonRoutes';
-
 export const BASICO_TOPICS = {
   matematicas: [
     {

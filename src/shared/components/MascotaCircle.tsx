@@ -1,4 +1,5 @@
 import { cn } from '@/utils/cn';
+import Image from 'next/image';
 
 export type MascotaCircleSize = 'sm' | 'md' | 'lg' | 'xl' | 'medium' | 'large';
 
@@ -34,8 +35,18 @@ export const MascotaCircle = ({
     large: 'w-56 h-56',
   };
 
+  const pixelSize: Record<MascotaCircleSize, number> = {
+    sm: 128,
+    md: 160,
+    lg: 192,
+    xl: 224,
+    medium: 160,
+    large: 224,
+  };
+
   const containerClass = centered ? 'flex justify-center' : '';
   const circleClass = size ? (sizeMap[size] ?? sizeMap.lg) : sizeMap.lg;
+  const dimension = pixelSize[size] ?? pixelSize.lg;
 
   return (
     <div className={cn(containerClass, className)}>
@@ -46,7 +57,14 @@ export const MascotaCircle = ({
           circleClassName
         )}
       >
-        <img draggable="false" src={src} alt={alt} className={cn(imgSize, 'object-cover drop-shadow-lg select-none')} />
+        <Image
+          draggable={false}
+          src={src}
+          alt={alt}
+          width={dimension}
+          height={dimension}
+          className={cn(imgSize, 'object-cover drop-shadow-lg select-none')}
+        />
       </div>
     </div>
   );

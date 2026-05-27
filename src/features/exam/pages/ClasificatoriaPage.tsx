@@ -7,6 +7,7 @@ import { useAuth } from '@/features/auth/context/AuthContext';
 import { useLeaderboard, type LeaderboardPlayer } from '@/hooks/gamification';
 import { RANKS, getRankInfo } from '@/shared/constants/ranks';
 import { useUserProfile } from '@/features/user/hooks/useUserProfile';
+import { AvatarImage } from '@/features/user/components/AvatarImage';
 
 export const ClasificatoriaPage = () => {
   const router = useRouter();
@@ -167,15 +168,14 @@ export const ClasificatoriaPage = () => {
 
                   {/* Avatar */}
                   <div className="relative">
-                    <div className="h-12 w-12 overflow-hidden rounded-full border-2 border-slate-700 bg-slate-800">
-                      <img
+                    <div className="relative h-12 w-12 overflow-hidden rounded-full border-2 border-slate-700 bg-slate-800">
+                      <AvatarImage
                         src={
                           player.photoUrl ||
                           player.profileImage ||
                           `https://api.dicebear.com/7.x/avataaars/svg?seed=${player.name || player.username}`
                         }
-                        alt={player.name}
-                        className="h-full w-full object-cover"
+                        alt={player.name || player.username || 'Jugador'}
                       />
                     </div>
                     {index === 0 && (
