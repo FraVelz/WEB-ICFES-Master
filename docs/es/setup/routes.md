@@ -79,11 +79,11 @@ Ver [lessons-steps-guide.md](../data/lessons-steps-guide.md) para el esquema Sup
 
 ## API
 
-| URL         | Método | Descripción                             |
-| ----------- | ------ | --------------------------------------- |
-| `/api/chat` | POST   | Chat con modelo de IA para el asistente |
+| URL         | Método   | Descripción                             |
+| ----------- | -------- | --------------------------------------- |
+| `/api/chat` | GET/POST | Chat con modelo de IA para el asistente |
 
-Requiere `OPENAI_API_KEY` en el servidor. Usuarios anónimos tienen cuota limitada (`src/utils/chatAnonQuota.ts`).
+Requiere `OPENAI_API_KEY` en el servidor. Usuarios anónimos tienen cuota limitada (cookie httpOnly; constantes en `src/features/learning/constants/chatAnonQuota.ts`). El cliente sincroniza el contador con `GET /api/chat`.
 
 ---
 

@@ -21,13 +21,13 @@ src/
 │   ├── supabase/
 │   ├── store/            # Plan services (not features/store or Redux)
 │   └── gamification/
-├── config/               # Supabase client, email messages (`supabase.ts`, `supabaseClient.ts`)
+├── config/               # Supabase (`supabase.ts`, `supabaseClient.ts`) and `emailMessages.ts`
 ├── components/           # App shell (Providers, guards, DashboardHeader)
 ├── hooks/                # GSAP + cross-feature hooks (`hooks/gamification/`)
 ├── lib/                  # GSAP (ScrollTrigger)
 ├── store/                # Redux: uiSession (demo, plan UI) + `demoMode.ts`
 ├── types/                # Global TypeScript types
-└── utils/                # Pure utilities (`cn`; optional legacy re-exports)
+└── utils/                # Pure utilities (`cn`)
 ```
 
 Global styles live in **`src/app/globals.css`** (Tailwind 4 + tokens).
@@ -59,7 +59,7 @@ features/feature-name/
 | **learning/** | Roadmap, lessons (`roadmap/`, `lesson-flow/`, `lessons-legacy/`, `shell/`, `server/`, `context/`) |
 | **exam/**     | Practice, full exam, ranking; data in `exam/data/`                         |
 | **user/**     | Profile, settings, hooks `useProgress`, `useUserData`                      |
-| **achievements/** | Badges, daily challenges, achievements UI (domain hooks in `hooks/gamification/`) |
+| **achievements/** | Badges, daily challenges, achievements UI (route `/logros/`; cross-feature hooks in `hooks/gamification/`) |
 | **store/**    | Virtual shop (UI), purchase modals                                         |
 
 ### Three different “store” names
@@ -119,7 +119,7 @@ URLs end with a **trailing slash** (`trailingSlash: true`). Full list in [routes
 | `/examen-completo`                    | Full exam                   |
 | `/clasificatoria`                     | Ranking                     |
 | `/desafios-diarios`                   | Daily challenges            |
-| `/logros`                             | Achievements hub            |
+| `/logros/`                             | Achievements hub (`features/achievements/`) |
 | `/perfil`, `/perfil/public`           | Private and public profile  |
 | `/configuracion`                      | Settings                    |
 | `/terminos`, `/privacidad`            | Legal                       |

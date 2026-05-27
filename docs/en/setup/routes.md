@@ -81,9 +81,9 @@ See [lessons-steps-guide.md](../data/lessons-steps-guide.md) for the Supabase sc
 
 | URL         | Method | Description       |
 | ----------- | ------ | ----------------- |
-| `/api/chat` | POST   | AI assistant chat |
+| `/api/chat` | GET/POST | AI assistant chat |
 
-Requires `OPENAI_API_KEY` on the server. Anonymous users have a limited quota (`src/utils/chatAnonQuota.ts`).
+Requires `OPENAI_API_KEY` on the server. Anonymous users have a limited quota (httpOnly cookie; constants in `src/features/learning/constants/chatAnonQuota.ts`). The client syncs the counter via `GET /api/chat`.
 
 ---
 

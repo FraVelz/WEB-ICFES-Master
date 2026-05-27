@@ -47,7 +47,24 @@ import { useGSAPReveal } from '@/hooks/useGSAPReveal';
 ```
 
 El barrel `@/hooks` reexporta hooks de features por comodidad, pero **preferir imports directos** desde la feature
-propietaria.
+propietaria (p. ej. `@/features/auth/utils/mapSupabaseAuthError`, no shims en `@/utils/`).
+
+---
+
+## Supabase (`src/config/`)
+
+| Import | Cuándo usarlo |
+| ------ | ------------- |
+| `@/config/supabase` | Cliente browser (`supabase` singleton) y servicios del cliente |
+| `@/config/supabaseClient` | Route Handlers, Server Components, scripts (`createServerSupabaseClient`) |
+
+---
+
+## Convención URL vs código
+
+| URL pública | Feature en código |
+| ----------- | ----------------- |
+| `/logros/`  | `src/features/achievements/` |
 
 ---
 
@@ -83,7 +100,7 @@ Ver [learning-structure-guide.md](../data/learning-structure-guide.md) y
 | Columna `area` en `learning_content` | `lectura_critica`, `matematicas`, `ciencias_naturales`      |
 
 Mapeo en código: `ROADMAP_AREA_TO_LESSON_AREA` en
-`src/features/learning/constants/lessonDynamicRoutes.ts`.
+`src/features/learning/constants/lessonRoutes.ts`.
 
 ---
 

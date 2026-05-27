@@ -35,7 +35,7 @@ In `src/app/(dashboard)/lessons/[area]/[topic]/page.tsx`:
 
 Example: slug `matematicas/algebra` → URL `/lessons/matematicas/algebra/`.
 
-Valid pairs are listed in `LESSON_ROUTE_PAIRS` (`src/features/learning/constants/lessonDynamicRoutes.ts`).
+Valid pairs are listed in `LESSON_ROUTE_PAIRS` (`src/features/learning/constants/lessonRoutes.ts`).
 
 ---
 
@@ -108,7 +108,7 @@ Valid pairs are listed in `LESSON_ROUTE_PAIRS` (`src/features/learning/constants
 | `sociales-ciudadanas` | `sociales`          |
 | `ingles`              | `ingles`            |
 
-See `ROADMAP_AREA_TO_LESSON_AREA` in `lessonDynamicRoutes.ts`.
+See `ROADMAP_AREA_TO_LESSON_AREA` in `lessonRoutes.ts`.
 
 ---
 

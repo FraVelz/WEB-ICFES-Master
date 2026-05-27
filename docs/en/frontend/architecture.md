@@ -46,7 +46,25 @@ import { Icon } from '@/shared/components/Icon';
 import { useGSAPReveal } from '@/hooks/useGSAPReveal';
 ```
 
-The `@/hooks` barrel re-exports feature hooks for convenience, but **prefer direct imports** from the owning feature.
+The `@/hooks` barrel re-exports feature hooks for convenience, but **prefer direct imports** from the owning feature
+(e.g. `@/features/auth/utils/mapSupabaseAuthError`, not shims under `@/utils/`).
+
+---
+
+## Supabase (`src/config/`)
+
+| Import | When to use |
+| ------ | ----------- |
+| `@/config/supabase` | Browser client (`supabase` singleton) and client-side services |
+| `@/config/supabaseClient` | Route Handlers, Server Components, scripts (`createServerSupabaseClient`) |
+
+---
+
+## URL vs code convention
+
+| Public URL | Feature in code |
+| ---------- | --------------- |
+| `/logros/` | `src/features/achievements/` |
 
 ---
 
@@ -82,7 +100,7 @@ See [learning-structure-guide.md](../data/learning-structure-guide.md) and
 | `learning_content.area` column | `lectura_critica`, `matematicas`, `ciencias_naturales`      |
 
 Mapping in code: `ROADMAP_AREA_TO_LESSON_AREA` in
-`src/features/learning/constants/lessonDynamicRoutes.ts`.
+`src/features/learning/constants/lessonRoutes.ts`.
 
 ---
 

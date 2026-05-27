@@ -35,7 +35,7 @@ En `src/app/(dashboard)/lessons/[area]/[topic]/page.tsx`:
 
 Ejemplo: slug `matematicas/algebra` → URL `/lessons/matematicas/algebra/`.
 
-Los pares válidos están en `LESSON_ROUTE_PAIRS` (`src/features/learning/constants/lessonDynamicRoutes.ts`).
+Los pares válidos están en `LESSON_ROUTE_PAIRS` (`src/features/learning/constants/lessonRoutes.ts`).
 
 ---
 
@@ -108,7 +108,7 @@ Las URLs `/lessons/...` usan segmentos distintos a la práctica o al roadmap:
 | `sociales-ciudadanas` | `sociales`              |
 | `ingles`              | `ingles`                |
 
-Ver `ROADMAP_AREA_TO_LESSON_AREA` en `lessonDynamicRoutes.ts`.
+Ver `ROADMAP_AREA_TO_LESSON_AREA` en `lessonRoutes.ts`.
 
 ---
 

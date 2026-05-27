@@ -31,7 +31,8 @@ Coloca cada archivo donde **realmente se usa**. No crear piezas globales si solo
 | Redux (uiSession) | `src/store/` |
 | Hooks GSAP usados en varias features | `src/hooks/` |
 | Hooks de una sola feature | `src/features/<feature>/hooks/` |
-| Utilidades puras (`cn`, errores auth) | `src/utils/` |
+| Utilidades puras (`cn`) | `src/utils/` |
+| Errores auth Supabase | `src/features/auth/utils/` |
 | GSAP | `src/lib/gsap.ts` |
 | Estilos globales | `src/app/globals.css` |
 
@@ -68,4 +69,8 @@ src/components/DashboardHeader/
 
 ## Antes de crear un archivo nuevo
 
-Preguntarse: **¿quién lo importa?** Si la respuesta es una sola carpeta (`features/exam`, `app/(dashboard)/logros`, etc.), el archivo vive **ahí**, no en `shared/` ni `components/` raíz.
+Preguntarse: **¿quién lo importa?** Si la respuesta es una sola carpeta (`features/exam`, `app/(dashboard)/logros` → feature `achievements`, etc.), el archivo vive **ahí**, no en `shared/` ni `components/` raíz.
+
+## Convención URL vs código
+
+- Ruta pública **`/logros/`** → feature **`src/features/achievements/`** (URL en español, código en inglés).
