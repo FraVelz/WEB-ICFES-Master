@@ -129,6 +129,15 @@
   --color-feature-6-to: var(--color-purple-600);
 }
 
+/*
+ * Indicadores de foco por teclado — aplicarlos manualmente en cada control con Tailwind, p. ej.:
+ * focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-app-accent
+ * focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950
+ * Usa ring-offset igual al fondo inmediato (slate-950, slate-900, slate-800, black/transparent).
+ * En botones muy compactos dentro de barras puede servir rounded-md/rounded-xl + ring-offset-2.
+ * Acordeón o chip sobre panel oscuro: focus-visible:ring-inset opcionalmente.
+ */
+
 /* Hide scrollbar while maintaining scroll functionality */
 .hide-scrollbar {
   -ms-overflow-style: none;

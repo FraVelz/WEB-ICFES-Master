@@ -11,11 +11,10 @@ Referencia del sistema de estilos y animaciones del proyecto.
 
 ## Archivos principales
 
-| Archivo                 | Propósito                                                                          |
-| ----------------------- | ---------------------------------------------------------------------------------- |
-| `src/app/globals.css`   | Tailwind, `tailwind-animations`, tokens `--color-*` en `@theme`, `.hide-scrollbar` |
-| `src/lib/gsap.ts`       | Configuración de GSAP y ScrollTrigger                                              |
-| `src/styles/global.css` | Reexporta el tema: `@import '../app/globals.css'`                                  |
+| Archivo               | Propósito                                                                          |
+| --------------------- | ---------------------------------------------------------------------------------- |
+| `src/app/globals.css` | Tailwind, `tailwind-animations`, tokens `--color-*` en `@theme`, `.hide-scrollbar` |
+| `src/lib/gsap.ts`     | Configuración de GSAP y ScrollTrigger                                              |
 
 ## Paleta y tema (`globals.css`)
 

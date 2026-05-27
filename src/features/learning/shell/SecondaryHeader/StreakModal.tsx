@@ -104,7 +104,16 @@ export const StreakModal = ({ isOpen, onClose, streakData }: StreakModalProps) =
               <Icon name="fire" className="text-orange-400" />
               Mi Racha
             </h2>
-            <button onClick={onClose} className="cursor-pointer text-slate-500 hover:text-white">
+            <button
+              type="button"
+              onClick={onClose}
+              aria-label="Cerrar"
+              className={cn(
+                'cursor-pointer rounded-lg p-1 text-slate-500 transition-colors hover:text-white',
+                'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-app-accent focus-visible:ring-offset-2',
+                'focus-visible:ring-offset-slate-900'
+              )}
+            >
               <Icon name="times" />
             </button>
           </div>
@@ -125,13 +134,31 @@ export const StreakModal = ({ isOpen, onClose, streakData }: StreakModalProps) =
           <div className="rounded-xl border border-slate-800 bg-slate-950 p-3">
             {/* Calendar Header */}
             <div className="mb-3 flex items-center justify-between px-1">
-              <button onClick={() => changeMonth(-1)} className="cursor-pointer p-1 text-slate-500 hover:text-white">
+              <button
+                type="button"
+                onClick={() => changeMonth(-1)}
+                aria-label="Mes anterior"
+                className={cn(
+                  'cursor-pointer rounded-lg p-1 text-slate-500 transition-colors hover:text-white',
+                  'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-app-accent focus-visible:ring-offset-2',
+                  'focus-visible:ring-offset-slate-950'
+                )}
+              >
                 <Icon name="chevron-left" size="sm" />
               </button>
               <span className="text-sm font-bold text-slate-200">
                 {monthNames[viewDate.getMonth()]} {viewDate.getFullYear()}
               </span>
-              <button onClick={() => changeMonth(1)} className="cursor-pointer p-1 text-slate-500 hover:text-white">
+              <button
+                type="button"
+                onClick={() => changeMonth(1)}
+                aria-label="Mes siguiente"
+                className={cn(
+                  'cursor-pointer rounded-lg p-1 text-slate-500 transition-colors hover:text-white',
+                  'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-app-accent focus-visible:ring-offset-2',
+                  'focus-visible:ring-offset-slate-950'
+                )}
+              >
                 <Icon name="chevron-right" size="sm" />
               </button>
             </div>

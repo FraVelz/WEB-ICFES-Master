@@ -8,13 +8,10 @@ import { MascotaCircle } from '@/shared/components/MascotaCircle';
 import { LessonQuizModal } from './LessonQuizModal';
 import { useGSAPModalEntrance } from '@/hooks/useGSAPModalEntrance';
 import { splitLessonContent, extractSectionTitle, stripFirstHeadingIfDuplicate } from '../utils/splitLessonContent';
-import { AREA_INFO } from '@/shared/constants';
+import { getAreaInfo } from '@/shared/constants';
 
 const getAreaColor = (areaId: string) => {
-  const info =
-    (AREA_INFO as Record<string, { color?: string }>)[areaId] ||
-    (AREA_INFO as Record<string, { color?: string }>)['lectura-critica'];
-  const color = info?.color ?? '';
+  const color = getAreaInfo(areaId).color ?? '';
   if (color.includes('blue')) return 'from-blue-500 to-blue-600';
   if (color.includes('green')) return 'from-green-500 to-green-600';
   if (color.includes('purple')) return 'from-purple-500 to-purple-600';
@@ -24,10 +21,7 @@ const getAreaColor = (areaId: string) => {
 };
 
 const getBubbleBorderColor = (areaId: string) => {
-  const info =
-    (AREA_INFO as Record<string, { color?: string }>)[areaId] ||
-    (AREA_INFO as Record<string, { color?: string }>)['lectura-critica'];
-  const color = info?.color ?? '';
+  const color = getAreaInfo(areaId).color ?? '';
   if (color.includes('blue')) return 'border-blue-400/50';
   if (color.includes('green')) return 'border-green-400/50';
   if (color.includes('purple')) return 'border-purple-400/50';
@@ -122,10 +116,12 @@ export const LessonContentModal = ({
         )}
       >
         <button
+          type="button"
           onClick={onClose}
           className={cn(
             '-ml-1 flex min-w-[44px] cursor-pointer items-center gap-2 rounded-xl p-2 text-slate-400',
-            'transition-colors hover:bg-slate-800 hover:text-white'
+            'transition-colors hover:bg-slate-800 hover:text-white focus-visible:outline-none',
+            'focus-visible:ring-2 focus-visible:ring-app-accent focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900'
           )}
         >
           <Icon name="arrow-left" className="text-lg" />
@@ -218,9 +214,12 @@ export const LessonContentModal = ({
                 )}
               </p>
               <button
+                type="button"
                 onClick={() => setIsQuizOpen(true)}
                 className={cn(
                   'w-full transform cursor-pointer rounded-xl bg-linear-to-r px-6 py-3.5 font-bold text-white shadow-lg transition-all hover:scale-[1.02] active:scale-[0.98] sm:w-auto sm:min-w-[200px] sm:px-8 sm:py-4',
+                  'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2',
+                  'focus-visible:ring-offset-slate-900',
                   gradientClass
                 )}
               >
@@ -293,7 +292,7 @@ export const LessonContentModal = ({
                   },
                   a: ({ node, ...props }) => (
                     <a
-                      className="text-blue-400 underline decoration-blue-400/30 hover:text-blue-300 hover:decoration-blue-300"
+                      className="rounded-sm text-blue-400 underline decoration-blue-400/30 hover:text-blue-300 hover:decoration-blue-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-app-accent focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
                       {...props}
                     />
                   ),
@@ -314,8 +313,13 @@ export const LessonContentModal = ({
               <p className="text-sm text-slate-400 sm:text-base">No hay contenido disponible para esta lección.</p>
               {canShowQuiz && (
                 <button
+                  type="button"
                   onClick={() => setIsQuizOpen(true)}
-                  className="mt-4 rounded-xl bg-blue-600 px-5 py-2.5 font-bold text-white hover:bg-blue-500 sm:px-6 sm:py-3"
+                  className={cn(
+                    'mt-4 rounded-xl bg-blue-600 px-5 py-2.5 font-bold text-white hover:bg-blue-500 sm:px-6 sm:py-3',
+                    'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-app-accent focus-visible:ring-offset-2',
+                    'focus-visible:ring-offset-slate-900'
+                  )}
                 >
                   Ir al examen
                 </button>
@@ -333,13 +337,16 @@ export const LessonContentModal = ({
         )}
       >
         <button
+          type="button"
           onClick={handlePrev}
           disabled={currentSection === 0}
           className={cn(
             'flex min-w-[44px] cursor-pointer items-center justify-center gap-1.5 rounded-xl border',
             'border-slate-700 bg-slate-800/80 px-3 py-2.5 font-medium text-slate-300 transition-all',
             'hover:bg-slate-700/80 hover:text-white disabled:cursor-not-allowed disabled:opacity-40',
-            'disabled:hover:bg-slate-800/80 disabled:hover:text-slate-300 sm:gap-2 sm:px-4 sm:py-3'
+            'disabled:hover:bg-slate-800/80 disabled:hover:text-slate-300 sm:gap-2 sm:px-4 sm:py-3',
+            'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-app-accent focus-visible:ring-offset-2',
+            'focus-visible:ring-offset-slate-950'
           )}
         >
           <Icon name="arrow-left" className="text-sm" />
@@ -349,10 +356,13 @@ export const LessonContentModal = ({
           {currentSection + 1} / {totalSteps || 1}
         </span>
         <button
+          type="button"
           onClick={handleNext}
           disabled={currentSection >= totalSteps - 1}
           className={cn(
             'flex min-w-[44px] cursor-pointer items-center justify-center gap-1.5 rounded-xl bg-linear-to-r px-3 py-2.5 font-medium text-white shadow-lg transition-all hover:opacity-95 disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:opacity-40 sm:gap-2 sm:px-4 sm:py-3',
+            'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2',
+            'focus-visible:ring-offset-slate-950',
             gradientClass
           )}
         >

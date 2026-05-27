@@ -80,17 +80,17 @@ export const PathNode = ({
 
   const styles = getStyles();
 
-  return (
-    <div
-      onClick={onClick}
-      className={cn(
-        'group relative flex w-full cursor-pointer items-center gap-4 rounded-2xl border-2 p-4 transition-all duration-200',
-        status === 'incomplete' && 'border-slate-800 bg-slate-900/50 hover:border-slate-700',
-        isAvailable && cn(borderColor, 'bg-slate-900 hover:bg-slate-800'),
-        isCompleted && 'border-yellow-500/30 bg-slate-900/50 hover:bg-slate-900'
-      )}
-    >
-      {/* Status indicator (left circle) */}
+  const cardClass = cn(
+    'group relative flex w-full cursor-pointer items-center gap-4 rounded-2xl border-2 p-4 text-left transition-all duration-200',
+    'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-app-accent focus-visible:ring-offset-2',
+    'focus-visible:ring-offset-slate-950',
+    status === 'incomplete' && 'border-slate-800 bg-slate-900/50 hover:border-slate-700',
+    isAvailable && cn(borderColor, 'bg-slate-900 hover:bg-slate-800'),
+    isCompleted && 'border-yellow-500/30 bg-slate-900/50 hover:bg-slate-900'
+  );
+
+  const body = (
+    <>
       <div
         className={cn(
           'relative flex shrink-0 items-center justify-center rounded-full border-b-4 transition-transform group-hover:scale-105',
@@ -99,12 +99,9 @@ export const PathNode = ({
         )}
       >
         <Icon name={isCompleted ? 'check' : icon || 'star'} className={styles.iconColor} />
-
-        {/* Ping animation for available */}
         {isAvailable && <div className={cn('absolute inset-0 animate-ping rounded-full opacity-20', colorClass)} />}
       </div>
 
-      {/* Text content */}
       <div className="min-w-0 flex-1">
         <h4
           className={cn(
@@ -115,23 +112,12 @@ export const PathNode = ({
           {title}
         </h4>
         <p className="truncate text-xs text-slate-400">{description}</p>
-        {lessonHref && type !== 'checkpoint' && (
-          <Link
-            href={lessonHref}
-            onClick={(e) => e.stopPropagation()}
-            className="mt-1 inline-flex items-center gap-1 text-xs font-medium text-app-accent underline-offset-2 hover:text-app-accent-muted hover:underline"
-          >
-            Lección interactiva
-            <Icon name="arrow-right" size="sm" className="inline" />
-          </Link>
-        )}
       </div>
 
-      {/* Action button (available or completed) */}
       {(isAvailable || isCompleted) && (
         <div
           className={cn(
-            'flex h-8 w-8 items-center justify-center rounded-full',
+            'flex h-8 w-8 shrink-0 items-center justify-center rounded-full',
             isAvailable ? 'bg-white text-slate-900' : 'bg-slate-800 text-yellow-500'
           )}
         >
@@ -141,6 +127,28 @@ export const PathNode = ({
             className={isAvailable ? 'text-slate-900' : 'text-yellow-500'}
           />
         </div>
+      )}
+    </>
+  );
+
+  return (
+    <div className="w-full">
+      <button type="button" onClick={onClick} className={cardClass}>
+        {body}
+      </button>
+
+      {lessonHref && type !== 'checkpoint' && (
+        <Link
+          href={lessonHref}
+          className={cn(
+            'mt-2 ml-px inline-flex w-fit max-w-full items-center gap-1 rounded-md px-1 py-1 text-xs font-medium text-app-accent',
+            'underline-offset-2 hover:text-app-accent-muted hover:underline focus-visible:outline-none',
+            'focus-visible:ring-2 focus-visible:ring-app-accent focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950'
+          )}
+        >
+          Lección interactiva
+          <Icon name="arrow-right" size="sm" className="inline" />
+        </Link>
       )}
     </div>
   );

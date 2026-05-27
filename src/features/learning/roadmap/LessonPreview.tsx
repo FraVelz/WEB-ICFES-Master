@@ -47,8 +47,14 @@ export const LessonPreview = ({ isOpen, onClose, lesson, onStart }: LessonPrevie
       >
         {/* Close Button */}
         <button
+          type="button"
           onClick={onClose}
-          className="absolute top-4 right-4 cursor-pointer p-2 text-slate-400 transition-colors hover:text-white"
+          aria-label="Cerrar vista previa"
+          className={cn(
+            'absolute top-4 right-4 cursor-pointer rounded-lg p-2 text-slate-400 transition-colors',
+            'hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-app-accent',
+            'focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900'
+          )}
         >
           <Icon name="times" />
         </button>
@@ -73,6 +79,7 @@ export const LessonPreview = ({ isOpen, onClose, lesson, onStart }: LessonPrevie
 
         {/* Action Button */}
         <button
+          type="button"
           onClick={() => {
             onStart(lesson);
             onClose();
@@ -80,7 +87,8 @@ export const LessonPreview = ({ isOpen, onClose, lesson, onStart }: LessonPrevie
           className={cn(
             'flex w-full cursor-pointer items-center justify-center gap-2 rounded-xl bg-green-500 py-4',
             'font-bold text-slate-900 shadow-lg shadow-green-500/20 transition-all hover:bg-green-400',
-            'active:scale-95'
+            'active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white',
+            'focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900'
           )}
         >
           <Icon name="play" />
@@ -93,7 +101,9 @@ export const LessonPreview = ({ isOpen, onClose, lesson, onStart }: LessonPrevie
             onClick={onClose}
             className={cn(
               'mt-3 flex w-full items-center justify-center gap-2 rounded-xl border border-app-ring/40 bg-slate-800/50',
-              'py-3 text-sm font-semibold text-app-accent-muted transition-colors hover:bg-slate-800 hover:text-app-accent-bright'
+              'py-3 text-sm font-semibold text-app-accent-muted transition-colors hover:bg-slate-800 hover:text-app-accent-bright',
+              'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-app-accent focus-visible:ring-offset-2',
+              'focus-visible:ring-offset-slate-900'
             )}
           >
             <Icon name="arrow-right" size="sm" />

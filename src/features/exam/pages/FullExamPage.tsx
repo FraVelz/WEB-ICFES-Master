@@ -11,12 +11,7 @@ import { MATHEMATICS_QUESTIONS, LANGUAGE_QUESTIONS, SCIENCE_QUESTIONS, SOCIAL_QU
 import type { ExamQuestion } from '@/features/exam/types/question';
 import type { ExamConfig } from '@/features/exam/types';
 
-const AREA_INFO = {
-  'examen-completo': {
-    name: 'Examen Completo ICFES',
-    color: 'from-pink-400 to-pink-600',
-  },
-};
+import { AREA_INFO } from '@/shared/constants';
 
 export const FullExamPage = () => {
   const allQuestions: ExamQuestion[] = [
@@ -150,8 +145,13 @@ export const FullExamPage = () => {
               </div>
 
               <button
-                onClick={window.history.back}
-                className="rounded-lg bg-white/10 px-4 py-2 text-sm text-white transition-all duration-300 hover:bg-white/20"
+                type="button"
+                onClick={() => window.history.back()}
+                className={cn(
+                  'rounded-lg bg-white/10 px-4 py-2 text-sm text-white transition-all duration-300',
+                  'hover:bg-white/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-app-accent',
+                  'focus-visible:ring-offset-2 focus-visible:ring-offset-gray-900'
+                )}
               >
                 Salir
               </button>
@@ -236,7 +236,11 @@ export const FullExamPage = () => {
 
             <Link
               href="/"
-              className="rounded-lg bg-white/10 px-4 py-2 text-sm text-white transition-all duration-300 hover:bg-white/20"
+              className={cn(
+                'rounded-lg bg-white/10 px-4 py-2 text-sm text-white transition-all duration-300',
+                'hover:bg-white/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-app-accent',
+                'focus-visible:ring-offset-2 focus-visible:ring-offset-gray-900'
+              )}
             >
               Salir
             </Link>
@@ -285,10 +289,15 @@ export const FullExamPage = () => {
 
                       return (
                         <button
+                          type="button"
                           key={option.letter}
-                          onClick={() => handleAnswer(question.id, option.letter ?? option.id ?? String(option.text))}
+                          onClick={() =>
+                            handleAnswer(question.id, option.letter ?? option.id ?? String(option.text))
+                          }
                           className={cn(
                             'w-full rounded-lg border-2 p-4 text-left transition-all duration-300',
+                            'focus-visible:z-10 focus-visible:outline-none focus-visible:ring-2',
+                            'focus-visible:ring-app-accent focus-visible:ring-offset-2 focus-visible:ring-offset-gray-950',
                             isSelected
                               ? 'border-app-accent bg-app-ring/20 text-app-on-accent'
                               : 'border-white/20 bg-white/5 text-white hover:border-app-accent/50 hover:bg-app-ring/10'
@@ -323,11 +332,14 @@ export const FullExamPage = () => {
               {/* Final Button */}
               <div className="flex justify-center pt-8">
                 <button
+                  type="button"
                   onClick={() => setShowResults(true)}
                   className={cn(
                     'rounded-xl bg-linear-to-r from-green-500 to-emerald-500 px-12 py-4 text-lg font-bold',
                     'text-white transition-all duration-300 hover:from-green-600 hover:to-emerald-600',
-                    'cursor-pointer hover:shadow-lg hover:shadow-green-500/50'
+                    'cursor-pointer hover:shadow-lg hover:shadow-green-500/50',
+                    'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white',
+                    'focus-visible:ring-offset-2 focus-visible:ring-offset-gray-900'
                   )}
                 >
                   Finalizar Examen

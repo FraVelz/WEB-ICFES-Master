@@ -15,7 +15,7 @@ de nuevos desarrolladores y servir como referencia técnica.
 - **[Instalación](../setup/installation.md)**: Guía paso a paso para configurar el entorno local (incluye variables de
   entorno).
 - **[Tecnologías](../setup/technologies.md)**: Stack completo del proyecto.
-- **[Rutas](../setup/rutes.md)**: URLs y rutas de la aplicación.
+- **[Rutas](../setup/routes.md)**: URLs y rutas de la aplicación.
 - **[Scripts](../setup/scripts.md)**: Comandos de `package.json`.
 - **[Cheatsheet](../setup/cheatsheet.md)**: Comandos rápidos y fragmentos de uso frecuente.
 

@@ -47,11 +47,26 @@ interface SettingOptionProps {
 const SettingOption = ({ label, description, icon, action, danger = false, onClick }: SettingOptionProps) => (
   <div
     onClick={onClick}
+    role={onClick ? 'button' : undefined}
+    tabIndex={onClick ? 0 : undefined}
+    onKeyDown={
+      onClick
+        ? (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              onClick();
+            }
+          }
+        : undefined
+    }
     className={cn(
       'group flex flex-col justify-between rounded-xl border p-4 transition-all duration-200 sm:flex-row sm:items-center',
       danger
         ? 'cursor-pointer border-red-500/20 bg-red-500/5 hover:border-red-500/30 hover:bg-red-500/10'
-        : 'border-slate-700/50 bg-slate-800/30 hover:border-slate-600 hover:bg-slate-800/60'
+        : 'border-slate-700/50 bg-slate-800/30 hover:border-slate-600 hover:bg-slate-800/60',
+      onClick &&
+        'outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950',
+      onClick && (danger ? 'focus-visible:ring-red-400' : 'focus-visible:ring-app-accent')
     )}
   >
     <div className="mb-3 flex items-start gap-4 sm:mb-0">
@@ -315,11 +330,15 @@ export const UserSettingsPage = () => {
                       )}
                     </div>
                     <button
+                      type="button"
                       onClick={() => fileInputRef.current?.click()}
+                      aria-label="Cambiar foto de perfil"
                       className={cn(
                         'absolute right-0 bottom-0 flex h-10 w-10 cursor-pointer items-center justify-center',
                         'rounded-full border-4 border-slate-900 bg-app-ring text-white shadow-lg',
-                        'transition-transform hover:scale-110 hover:bg-hub-orb'
+                        'transition-transform hover:scale-110 hover:bg-hub-orb',
+                        'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-app-accent',
+                        'focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950'
                       )}
                     >
                       <Icon name="camera" className="text-sm" />
@@ -350,11 +369,15 @@ export const UserSettingsPage = () => {
                           placeholder="Tu nombre"
                         />
                         <button
+                          type="button"
                           onClick={handleUsernameUpdate}
                           disabled={loading}
+                          aria-label="Guardar nombre de usuario"
                           className={cn(
                             'cursor-pointer rounded-lg bg-slate-800 px-3 py-2 text-slate-400 transition-colors',
-                            'hover:bg-app-ring/20 hover:text-app-accent'
+                            'hover:bg-app-ring/20 hover:text-app-accent',
+                            'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-app-accent',
+                            'focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950'
                           )}
                         >
                           <Icon name="check" />
@@ -378,12 +401,15 @@ export const UserSettingsPage = () => {
                           placeholder="Cuéntanos sobre ti..."
                         />
                         <button
+                          type="button"
                           onClick={handleBioUpdate}
                           disabled={loading}
+                          aria-label="Guardar biografía"
                           className={cn(
                             'absolute right-2 bottom-2 flex h-8 w-8 cursor-pointer items-center justify-center',
                             'rounded-md bg-slate-800 text-xs text-slate-400 transition-colors hover:bg-app-ring/20',
-                            'hover:text-app-accent'
+                            'hover:text-app-accent focus-visible:outline-none focus-visible:ring-2',
+                            'focus-visible:ring-app-accent focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950'
                           )}
                         >
                           <Icon name="check" />
@@ -394,8 +420,9 @@ export const UserSettingsPage = () => {
 
                     {user?.profileImage && (
                       <button
+                        type="button"
                         onClick={handleRemoveProfileImage}
-                        className="cursor-pointer text-xs text-red-400 hover:text-red-300 hover:underline"
+                        className="cursor-pointer text-xs text-red-400 underline-offset-2 hover:text-red-300 hover:underline focus-visible:rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
                       >
                         Eliminar foto de perfil
                       </button>
@@ -415,9 +442,14 @@ export const UserSettingsPage = () => {
                   icon="sign-out"
                   action={
                     <button
+                      type="button"
                       onClick={handleLogout}
                       disabled={loading}
-                      className="cursor-pointer rounded-lg bg-slate-800 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-slate-700"
+                      className={cn(
+                        'cursor-pointer rounded-lg bg-slate-800 px-4 py-2 text-sm font-medium text-white transition-colors',
+                        'hover:bg-slate-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-app-accent',
+                        'focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950'
+                      )}
                     >
                       Cerrar
                     </button>
@@ -447,9 +479,11 @@ export const UserSettingsPage = () => {
               <SettingsSection title="Ayuda y Soporte" icon="headset">
                 <div className="mb-6 flex rounded-xl border border-slate-800 bg-slate-950/50 p-1">
                   <button
+                    type="button"
                     onClick={() => setSupportMode('response')}
                     className={cn(
                       'flex-1 cursor-pointer rounded-lg px-4 py-2 text-sm font-medium transition-all',
+                      'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-app-accent focus-visible:ring-inset',
                       supportMode === 'response'
                         ? 'bg-slate-800 text-white shadow-sm'
                         : 'text-slate-400 hover:text-white'
@@ -459,9 +493,11 @@ export const UserSettingsPage = () => {
                     Contactar
                   </button>
                   <button
+                    type="button"
                     onClick={() => setSupportMode('report')}
                     className={cn(
                       'flex-1 cursor-pointer rounded-lg px-4 py-2 text-sm font-medium transition-all',
+                      'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-app-accent focus-visible:ring-inset',
                       supportMode === 'report' ? 'bg-slate-800 text-white shadow-sm' : 'text-slate-400 hover:text-white'
                     )}
                   >
@@ -524,7 +560,9 @@ export const UserSettingsPage = () => {
                     className={cn(
                       'w-full cursor-pointer rounded-xl bg-linear-to-r from-app-accent-strong to-blue-600 py-3 font-bold',
                       'text-white shadow-lg shadow-app-ring/20 transition-all hover:from-cta-from',
-                      'hover:to-blue-500 disabled:cursor-not-allowed disabled:opacity-50'
+                      'hover:to-blue-500 disabled:cursor-not-allowed disabled:opacity-50',
+                      'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white',
+                      'focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950'
                     )}
                   >
                     {sendingSupport ? 'Enviando...' : 'Enviar Mensaje'}
@@ -593,22 +631,30 @@ export const UserSettingsPage = () => {
 
                 <div className="flex gap-3">
                   <button
+                    type="button"
                     onClick={() => {
                       setShowDeleteModal(false);
                       setDeleteConfirmation('');
                     }}
-                    className="flex-1 cursor-pointer rounded-lg bg-slate-800 py-2.5 font-medium text-white transition-colors hover:bg-slate-700"
+                    className={cn(
+                      'flex-1 cursor-pointer rounded-lg bg-slate-800 py-2.5 font-medium text-white transition-colors',
+                      'hover:bg-slate-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-app-accent',
+                      'focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900'
+                    )}
                   >
                     Cancelar
                   </button>
                   <button
+                    type="button"
                     onClick={deleteConfirmation === 'BORRAR TODO' ? handleClearAllData : handleDeleteAccount}
                     disabled={
                       loading || (deleteConfirmation !== 'BORRAR TODO' && deleteConfirmation !== 'BORRAR MI CUENTA')
                     }
                     className={cn(
                       'flex-1 cursor-pointer rounded-lg bg-red-600 py-2.5 font-medium text-white',
-                      'transition-colors hover:bg-red-500 disabled:cursor-not-allowed disabled:opacity-50'
+                      'transition-colors hover:bg-red-500 disabled:cursor-not-allowed disabled:opacity-50',
+                      'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2',
+                      'focus-visible:ring-offset-slate-900'
                     )}
                   >
                     {loading ? 'Procesando...' : 'Confirmar'}
@@ -621,14 +667,17 @@ export const UserSettingsPage = () => {
 
         {/* Floating Donation Button */}
         <button
+          type="button"
           onClick={() => {
             const element = document.getElementById('donation-section');
             element?.scrollIntoView({ behavior: 'smooth' });
           }}
+          aria-label="Ir a donaciones"
           className={cn(
             'fixed right-6 bottom-6 z-40 cursor-pointer rounded-full bg-linear-to-r from-pink-500',
             'to-rose-500 p-4 text-white shadow-lg shadow-pink-500/30 transition-transform duration-300',
-            'hover:scale-110 lg:hidden'
+            'hover:scale-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white',
+            'focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950 lg:hidden'
           )}
         >
           <Icon name="heart" className="text-xl" />

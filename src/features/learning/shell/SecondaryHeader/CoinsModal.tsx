@@ -1,5 +1,6 @@
 'use client';
 
+import { cn } from '@/utils/cn';
 import { Icon } from '@/shared/components/Icon';
 import { useGSAPModalEntrance } from '@/hooks/useGSAPModalEntrance';
 
@@ -35,7 +36,16 @@ export const CoinsModal = ({ isOpen, onClose, coins = 0 }: CoinsModalProps) => {
               <Icon name="coins" className="text-yellow-400" />
               Mis Monedas
             </h2>
-            <button onClick={onClose} className="cursor-pointer text-slate-500 hover:text-white">
+            <button
+              type="button"
+              onClick={onClose}
+              aria-label="Cerrar"
+              className={cn(
+                'cursor-pointer rounded-lg p-1 text-slate-500 transition-colors hover:text-white',
+                'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-app-accent focus-visible:ring-offset-2',
+                'focus-visible:ring-offset-slate-900'
+              )}
+            >
               <Icon name="times" />
             </button>
           </div>

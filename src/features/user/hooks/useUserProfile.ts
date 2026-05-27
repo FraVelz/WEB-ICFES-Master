@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '@/context/AuthContext';
 import { useGamification } from '@/features/logros/hooks/useGamification';
-import { getLevelInfo } from '@/features/logros/utils/gamificationUtils';
+import { getLevelInfo } from '@/services/gamification/gamificationUtils';
 import { RANKS } from '@/features/logros/constants/ranks';
 import { getUserProfile } from '@/services/persistence';
 

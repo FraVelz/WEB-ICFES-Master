@@ -64,7 +64,7 @@ Components and types used across features:
 - **Icon**, **Footer**, **MascotaCircle**, **ConstructionAlert**
 - `@deprecated` re-exports toward `features/exam` and `@/services/persistence`
 
-Dashboard navigation lives in **`src/components/DashboardHeader.tsx`** (not under `shared/`).
+Dashboard navigation lives in **`src/components/DashboardHeader/`** (not under `shared/`).
 
 ## Persistence
 

@@ -3,62 +3,67 @@ description: Colocar componentes, hooks y utilidades según su alcance real (fea
 alwaysApply: true
 ---
 
-# Alcance de componentes y código compartido
+# Alcance de componentes y código compartido — ICFES Master
 
-Coloca cada archivo donde **realmente se usa**. No crear piezas en `src/components/` si solo sirven a una feature o a una ruta.
+Coloca cada archivo donde **realmente se usa**. No crear piezas globales si solo sirven a una feature o a una ruta.
 
 ## Árbol de decisión
 
-1. **¿Solo una ruta de App Router?** → `src/app/.../_components/` (p. ej. detalle de proyecto, 404).
-2. **¿Solo una feature** (`hero`, `projects`, `about-me`, …)? → `src/features/<feature>/components/` (o `icons/`, `utils/` dentro de esa feature).
-3. **¿Solo la home / scroll horizontal?** → `src/features/PageFeature/components/`.
-4. **¿Cabecera, footer o shell de toda la app?** → `src/components/layout/`.
-5. **¿UI reutilizada en 2+ features o en layout + features?** → `src/components/ui/`.
-6. **¿Duda?** → Empezar en el scope más pequeño (feature o ruta). Subir a `components/ui` solo cuando haya **segundo consumidor** fuera de esa feature.
+1. **¿Solo una ruta de App Router?** → `src/app/.../_components/`.
+2. **¿Solo una feature** (`auth`, `exam`, `learning`, `logros`, `store`, `user`, `home`)? → `src/features/<feature>/components/` (o `hooks/`, `utils/`, `data/` dentro de esa feature).
+3. **¿Shell de toda la app** (providers, guards, header del dashboard)? → `src/components/`.
+4. **¿UI reutilizada en 2+ features** (Icon, Footer, alertas)? → `src/shared/components/`.
+5. **¿Persistencia o integraciones backend?** → `src/services/` (API pública en `@/services/persistence`, `@/services/gamification`, etc.).
+6. **¿Duda?** → Empezar en el scope más pequeño (feature o ruta). Subir a `shared/` o `components/` solo cuando haya **segundo consumidor** fuera de esa feature.
 
 ## Mapa de carpetas
 
 | Alcance | Ubicación |
 |--------|-----------|
 | Una página / ruta | `src/app/.../_components/` |
-| Una sección del portfolio | `src/features/<nombre>/components/` |
-| Layout global (header, footer) | `src/components/layout/` |
-| UI transversal | `src/components/ui/` |
-| Datos de dominio (proyectos, certs) | `src/utils/data/` |
-| i18n, tema, URL del sitio | `src/lib/` |
-| Hooks usados en una sola feature | junto a esa feature (p. ej. `features/.../hooks/`) |
-| Hooks usados en varias features | `src/hooks/` |
+| Un dominio de negocio | `src/features/<nombre>/` |
+| Shell global (Providers, ProtectedPage, DashboardHeader) | `src/components/` |
+| UI transversal (Icon, Footer, MascotaCircle) | `src/shared/components/` |
+| Constantes de dominio compartidas (áreas ICFES) | `src/shared/constants/` |
+| Persistencia / Supabase / gamificación | `src/services/` |
+| Redux (uiSession) | `src/store/` |
+| Hooks GSAP usados en varias features | `src/hooks/` |
+| Hooks de una sola feature | `src/features/<feature>/hooks/` |
+| Utilidades puras (`cn`, errores auth) | `src/utils/` |
+| GSAP | `src/lib/gsap.ts` |
+| Estilos globales | `src/app/globals.css` |
 
 ## Reglas para el agente
 
-- **Prohibido** meter en `src/components/ui/` o `src/components/layout/` algo que solo importa una feature o una página.
+- **Prohibido** meter en `src/shared/` o `src/components/` algo que solo importa una feature o una página.
 - **Prohibido** crear “globales por si acaso” antes de comprobar usos.
 - Al extraer un componente, **mantener el import relativo al scope** (feature → feature; no promover sin necesidad).
-- Misma lógica para **hooks**, **utils** e **iconos** específicos de un dominio: van en la feature, no en `src/components/`.
+- Misma lógica para **hooks**, **utils** e **iconos** específicos de un dominio: van en la feature, no en carpetas globales.
 - Si refactorizas y el archivo pasa a usarse en otro sitio, **mover el archivo** al scope correcto y actualizar imports; no duplicar.
+- **No usar Atomic Design** como capa de carpetas; el proyecto es **feature-based**.
 
 ## Ejemplos
 
 ```tsx
-// ❌ Botón solo usado en ProjectsSection
-src/components/ui/ProjectsViewAllButton.tsx
+// ❌ Modal solo usado en store
+src/shared/components/ShopItemModal.tsx
 
 // ✅
-src/features/projects/components/ProjectsViewAllButton.tsx
+src/features/store/components/ShopItemModal.tsx
 
-// ❌ Slider solo del about-me
-src/components/ui/AboutHistorySlider.tsx
+// ❌ Datos de preguntas del examen en shared
+src/shared/data/questions.ts
 
 // ✅
-src/features/about-me/components/AboutHistorySlider.tsx
+src/features/exam/data/
 
-// ✅ PanelReveal usado en hero, hobbies, projects, about-me
-src/components/ui/PanelReveal.tsx
+// ✅ Icon usado en exam, learning, home, logros
+src/shared/components/Icon/
 
-// ✅ Visor de imágenes solo en /projects/[slug]
-src/app/[lang]/projects/[slug]/_components/ListImageViewer/
+// ✅ Header del dashboard (layout global)
+src/components/DashboardHeader/
 ```
 
 ## Antes de crear un archivo nuevo
 
-Preguntarse: **¿quién lo importa?** Si la respuesta es una sola carpeta (`features/hero`, `app/[lang]/certifications`, etc.), el archivo vive **ahí**, no en `components/` raíz.
+Preguntarse: **¿quién lo importa?** Si la respuesta es una sola carpeta (`features/exam`, `app/(dashboard)/logros`, etc.), el archivo vive **ahí**, no en `shared/` ni `components/` raíz.

@@ -43,10 +43,13 @@ export const AnswerOption = ({
 
   return (
     <button
+      type="button"
       onClick={onClick}
       disabled={disabled}
       className={cn(
         'group mb-4 flex w-full items-start gap-6 rounded-3xl p-4 text-left shadow-lg transition-all duration-300',
+        'focus-visible:z-10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white',
+        'focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950 disabled:focus-visible:opacity-70',
         getBackgroundColor(),
         getTextColor(),
         disabled ? 'cursor-not-allowed opacity-70' : 'cursor-pointer hover:scale-105 hover:shadow-2xl'

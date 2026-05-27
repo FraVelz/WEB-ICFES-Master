@@ -161,13 +161,15 @@ export const ChatAssistant = () => {
     <>
       {/* Floating launcher */}
       <button
+        type="button"
         onClick={() => setIsOpen(!isOpen)}
         className={cn(
           'fixed bottom-28 left-6 z-10 flex h-14 w-14 cursor-pointer items-center justify-center',
           'lg:right-6 lg:bottom-6 lg:left-auto',
           'rounded-full border-2 border-app-accent/50 bg-linear-to-r from-cta-from to-cta-to',
           'text-white shadow-lg shadow-app-ring/30 transition-all duration-300 hover:scale-110',
-          'hover:shadow-app-ring/50'
+          'hover:shadow-app-ring/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-app-accent',
+          'focus-visible:ring-offset-4 focus-visible:ring-offset-slate-950'
         )}
         aria-label="Abrir asistente de chat"
       >
@@ -202,8 +204,13 @@ export const ChatAssistant = () => {
               </div>
             </div>
             <button
+              type="button"
               onClick={() => setIsOpen(false)}
-              className="cursor-pointer rounded-lg p-2 text-slate-400 transition-colors hover:bg-white/10 hover:text-white"
+              className={cn(
+                'cursor-pointer rounded-lg p-2 text-slate-400 transition-colors hover:bg-white/10 hover:text-white',
+                'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-app-accent focus-visible:ring-offset-2',
+                'focus-visible:ring-offset-slate-900'
+              )}
               aria-label="Cerrar chat"
             >
               <Icon name="times" size="lg" />
@@ -294,7 +301,14 @@ export const ChatAssistant = () => {
             {anonQuotaReached ? (
               <p className="text-center text-sm text-slate-300">
                 Has usado las {CHAT_ANON_LIMIT} preguntas gratis.{' '}
-                <Link href="/login" className="font-semibold text-app-accent underline hover:text-app-accent-muted">
+                <Link
+                  href="/login"
+                  className={cn(
+                    'rounded font-semibold text-app-accent underline hover:text-app-accent-muted',
+                    'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-app-accent focus-visible:ring-offset-2',
+                    'focus-visible:ring-offset-slate-900'
+                  )}
+                >
                   Inicia sesión
                 </Link>{' '}
                 para seguir.
@@ -316,12 +330,14 @@ export const ChatAssistant = () => {
                   )}
                 />
                 <button
+                  type="button"
                   onClick={handleSend}
                   disabled={!inputValue.trim() || isTyping}
                   className={cn(
                     'cursor-pointer rounded-xl bg-linear-to-r from-cta-from to-cta-to px-4 py-3 text-white',
                     'transition-all hover:from-app-accent-strong hover:to-blue-700 disabled:cursor-not-allowed',
-                    'disabled:opacity-50'
+                    'disabled:opacity-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white',
+                    'focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900'
                   )}
                 >
                   <Icon name="paper-plane" />

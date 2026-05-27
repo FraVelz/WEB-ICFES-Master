@@ -153,14 +153,28 @@ export const PracticePage = () => {
               {/* Desktop Exit Button */}
               <Link
                 href="/"
-                className="hidden rounded-lg bg-white/10 px-4 py-2 text-sm text-white transition-all duration-300 hover:bg-white/20 md:block"
+                className={cn(
+                  'hidden rounded-lg bg-white/10 px-4 py-2 text-sm text-white transition-all duration-300',
+                  'hover:bg-white/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-app-accent',
+                  'focus-visible:ring-offset-2 focus-visible:ring-offset-gray-900 md:block'
+                )}
               >
                 Salir
               </Link>
 
               {/* Mobile Menu Button */}
               <div className="relative md:hidden">
-                <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)} className="p-2 text-white">
+                <button
+                  type="button"
+                  onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                  aria-expanded={mobileMenuOpen}
+                  aria-label={mobileMenuOpen ? 'Cerrar menú' : 'Menú de examen'}
+                  className={cn(
+                    'rounded-lg p-2 text-white transition-colors hover:bg-white/10',
+                    'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-app-accent',
+                    'focus-visible:ring-offset-2 focus-visible:ring-offset-gray-900'
+                  )}
+                >
                   <Icon name="ellipsis-vertical" size="xl" className="text-xl" />
                 </button>
 
@@ -168,8 +182,13 @@ export const PracticePage = () => {
                 {mobileMenuOpen && (
                   <div className="fixed top-20 right-4 z-50 w-48 overflow-hidden rounded-lg border border-white/20 bg-gray-800 shadow-xl">
                     <button
+                      type="button"
                       onClick={() => setShowAnswerSheetMobile(true)}
-                      className="flex w-full items-center gap-3 border-b border-white/10 px-4 py-3 text-white transition-colors hover:bg-white/10"
+                      className={cn(
+                        'flex w-full items-center gap-3 border-b border-white/10 px-4 py-3 text-white',
+                        'transition-colors hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2',
+                        'focus-visible:ring-app-accent focus-visible:ring-inset'
+                      )}
                     >
                       <Icon name="clipboard" size="sm" className="text-sm" />
                       <span>Ver Respuestas</span>
@@ -177,7 +196,11 @@ export const PracticePage = () => {
                     <Link
                       href="/"
                       onClick={() => setMobileMenuOpen(false)}
-                      className="flex items-center gap-3 px-4 py-3 text-white transition-colors hover:bg-white/10"
+                      className={cn(
+                        'flex items-center gap-3 px-4 py-3 text-white transition-colors hover:bg-white/10',
+                        'rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-app-accent',
+                        'focus-visible:ring-offset-2 focus-visible:ring-offset-gray-900'
+                      )}
                     >
                       <Icon name="arrow-right-from-bracket" size="sm" className="text-sm" />
                       <span>Salir</span>
@@ -267,14 +290,28 @@ export const PracticePage = () => {
             {/* Desktop Exit Button */}
             <Link
               href="/"
-              className="hidden rounded-lg bg-white/10 px-4 py-2 text-sm text-white transition-all duration-300 hover:bg-white/20 md:block"
+              className={cn(
+                'hidden rounded-lg bg-white/10 px-4 py-2 text-sm text-white transition-all duration-300',
+                'hover:bg-white/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-app-accent',
+                'focus-visible:ring-offset-2 focus-visible:ring-offset-gray-900 md:block'
+              )}
             >
               Salir
             </Link>
 
             {/* Mobile Menu Button */}
             <div className="relative md:hidden">
-              <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)} className="p-2 text-white">
+              <button
+                type="button"
+                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                aria-expanded={mobileMenuOpen}
+                aria-label={mobileMenuOpen ? 'Cerrar menú' : 'Menú de examen'}
+                className={cn(
+                  'rounded-lg p-2 text-white transition-colors hover:bg-white/10',
+                  'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-app-accent',
+                  'focus-visible:ring-offset-2 focus-visible:ring-offset-gray-900'
+                )}
+              >
                 <Icon name="ellipsis-vertical" size="xl" className="text-xl" />
               </button>
 
@@ -282,11 +319,16 @@ export const PracticePage = () => {
               {mobileMenuOpen && (
                 <div className="fixed top-20 right-4 z-50 w-48 overflow-hidden rounded-lg border border-white/20 bg-gray-800 shadow-xl">
                   <button
+                    type="button"
                     onClick={() => {
                       setShowAnswerSheetMobile(true);
                       setMobileMenuOpen(false);
                     }}
-                    className="flex w-full items-center gap-3 border-b border-white/10 px-4 py-3 text-white transition-colors hover:bg-white/10"
+                    className={cn(
+                      'flex w-full items-center gap-3 border-b border-white/10 px-4 py-3 text-white',
+                      'transition-colors hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2',
+                      'focus-visible:ring-app-accent focus-visible:ring-inset'
+                    )}
                   >
                     <Icon name="clipboard" size="sm" className="text-sm" />
                     <span>Ver Respuestas</span>
@@ -294,7 +336,11 @@ export const PracticePage = () => {
                   <Link
                     href="/"
                     onClick={() => setMobileMenuOpen(false)}
-                    className="flex items-center gap-3 px-4 py-3 text-white transition-colors hover:bg-white/10"
+                    className={cn(
+                      'flex items-center gap-3 px-4 py-3 text-white transition-colors hover:bg-white/10',
+                      'rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-app-accent',
+                      'focus-visible:ring-offset-2 focus-visible:ring-offset-gray-900'
+                    )}
                   >
                     <Icon name="arrow-right-from-bracket" size="sm" className="text-sm" />
                     <span>Salir</span>
@@ -347,10 +393,13 @@ export const PracticePage = () => {
 
                       return (
                         <button
+                          type="button"
                           key={option.letter}
                           onClick={() => handleAnswer(question.id, option.letter ?? option.id)}
                           className={cn(
                             'w-full rounded-lg border-2 p-4 text-left transition-all duration-300',
+                            'focus-visible:z-10 focus-visible:outline-none focus-visible:ring-2',
+                            'focus-visible:ring-app-accent focus-visible:ring-offset-2 focus-visible:ring-offset-gray-950',
                             isSelected
                               ? 'border-app-accent bg-app-ring/20 text-app-on-accent'
                               : 'border-white/20 bg-white/5 text-white hover:border-app-accent/50 hover:bg-app-ring/10'
@@ -385,11 +434,14 @@ export const PracticePage = () => {
               {/* Final Button */}
               <div className="flex justify-center pt-8">
                 <button
+                  type="button"
                   onClick={() => setShowResults(true)}
                   className={cn(
                     'rounded-xl bg-linear-to-r from-green-500 to-emerald-500 px-12 py-4 text-lg font-bold',
                     'text-white transition-all duration-300 hover:from-green-600 hover:to-emerald-600',
-                    'cursor-pointer hover:shadow-lg hover:shadow-green-500/50'
+                    'cursor-pointer hover:shadow-lg hover:shadow-green-500/50',
+                    'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white',
+                    'focus-visible:ring-offset-2 focus-visible:ring-offset-gray-900'
                   )}
                 >
                   Finalizar Examen
@@ -418,8 +470,14 @@ export const PracticePage = () => {
             <div className="sticky top-0 flex items-center justify-between border-b border-white/10 bg-gray-900 p-4">
               <h3 className="font-bold text-white">Hoja de Respuestas</h3>
               <button
+                type="button"
                 onClick={() => setShowAnswerSheetMobile(false)}
-                className="text-gray-400 transition-colors hover:text-white"
+                aria-label="Cerrar hoja de respuestas"
+                className={cn(
+                  'rounded-lg px-3 py-2 text-gray-400 transition-colors hover:bg-white/10 hover:text-white',
+                  'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-app-accent',
+                  'focus-visible:ring-offset-2 focus-visible:ring-offset-gray-900'
+                )}
               >
                 ✕
               </button>

@@ -39,15 +39,17 @@ export const AnswerSheet = ({
 
           return (
             <button
+              type="button"
               key={questionNum}
               onClick={() => onQuestionClick(idx)}
               className={cn(
                 'flex aspect-square items-center justify-center rounded-lg text-xs font-bold transition-all duration-300',
+                'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-gray-950',
                 isCurrent
-                  ? 'scale-110 bg-app-ring/30 text-app-accent-muted ring-2 ring-app-accent'
+                  ? 'scale-110 bg-app-ring/30 text-app-accent-muted ring-2 ring-app-accent focus-visible:ring-app-accent-bright'
                   : isAnswered
-                    ? 'bg-linear-to-r from-green-500 to-emerald-500 text-white hover:shadow-lg hover:shadow-green-500/50'
-                    : 'border border-white/20 bg-white/10 text-gray-400 hover:bg-white/20'
+                    ? 'bg-linear-to-r from-green-500 to-emerald-500 text-white hover:shadow-lg hover:shadow-green-500/50 focus-visible:ring-white'
+                    : 'border border-white/20 bg-white/10 text-gray-400 hover:bg-white/20 focus-visible:ring-app-accent'
               )}
             >
               {isAnswered ? <span className="text-xs">{answer}</span> : <span>{questionNum}</span>}

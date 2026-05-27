@@ -2,11 +2,11 @@
 
 ## Hook `useQuizLogic`
 
-Ejemplo con `MATHEMATICS_QUESTIONS` (definidas en `src/shared/data/questions.ts`):
+Ejemplo con `MATHEMATICS_QUESTIONS` (definidas en `src/features/exam/data/`):
 
 ```typescript
 import { useQuizLogic } from '@/features/exam/hooks/useQuizLogic';
-import { MATHEMATICS_QUESTIONS } from '@/shared/data/questions';
+import { MATHEMATICS_QUESTIONS } from '@/features/exam/data';
 
 export function QuizExample() {
   const quiz = useQuizLogic(MATHEMATICS_QUESTIONS);
@@ -141,7 +141,7 @@ Usa `src/features/exam/hooks/useQuizLogic.ts` y tipos en `src/features/exam/type
 ## Componentes (convención del repo)
 
 UI compartida: **`Icon`**, **`Footer`**, **`MascotaCircle`**, **`ConstructionAlert`**. Navegación del dashboard:
-**`src/components/DashboardHeader.tsx`**. Dominio examen: `AnswerOption` en `features/exam/components/`. Features en
+**`src/components/DashboardHeader/`**. Dominio examen: `AnswerOption` en `features/exam/components/`. Features en
 `src/features/*`; rutas en `src/app/`.
 
 ---

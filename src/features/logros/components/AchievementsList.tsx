@@ -57,9 +57,12 @@ export const AchievementsList = ({ achievements = [] }: AchievementsListProps) =
           {Object.entries(ACHIEVEMENT_CATEGORIES).map(([key, { label, icon }]) => (
             <button
               key={key}
+              type="button"
               onClick={() => setActiveCategory(key)}
               className={cn(
                 'flex cursor-pointer items-center gap-2 rounded-full border px-4 py-2 text-sm font-semibold whitespace-nowrap transition-all duration-300',
+                'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-app-accent focus-visible:ring-offset-2',
+                'focus-visible:ring-offset-slate-950',
                 activeCategory === key
                   ? 'border-app-ring bg-app-ring/20 text-app-accent shadow-lg shadow-app-ring/20'
                   : 'border-slate-700 bg-slate-800/50 text-slate-400 hover:border-slate-600 hover:bg-slate-800'

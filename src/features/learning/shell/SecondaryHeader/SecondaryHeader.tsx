@@ -3,7 +3,7 @@
 import { cn } from '@/utils/cn';
 import { useState, useMemo } from 'react';
 import { Icon } from '@/shared/components/Icon';
-import { AREA_INFO } from '@/shared/constants';
+import { getAreaInfo } from '@/shared/constants';
 import { useAuth } from '@/context/AuthContext';
 import { useGamification } from '@/features/logros/hooks/useGamification';
 import { AreasModal } from './AreasModal';
@@ -49,9 +49,7 @@ export const SecondaryHeader = ({ currentArea = 'lectura-critica', onAreaChange 
   }, [currentStreak]);
 
   // Current subject metadata
-  const currentAreaInfo =
-    (AREA_INFO as Record<string, { name?: string; color?: string; icon?: string }>)[currentArea] ||
-    (AREA_INFO as Record<string, { name?: string; color?: string; icon?: string }>)['lectura-critica'];
+  const currentAreaInfo = getAreaInfo(currentArea);
 
   // Streak modal payload
   const streakData = {
@@ -95,9 +93,16 @@ export const SecondaryHeader = ({ currentArea = 'lectura-critica', onAreaChange 
       >
         {/* Current subject */}
         <button
+          type="button"
           onClick={() => setActiveModal(activeModal === 'areas' ? null : 'areas')}
-          className="flex cursor-pointer items-center gap-3 rounded-xl p-2 transition-colors hover:bg-slate-800/50"
+          className={cn(
+            'flex cursor-pointer items-center gap-3 rounded-xl p-2 transition-colors hover:bg-slate-800/50',
+            'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-app-accent focus-visible:ring-offset-2',
+            'focus-visible:ring-offset-slate-950'
+          )}
           title="Cambiar área"
+          aria-expanded={activeModal === 'areas'}
+          aria-haspopup="dialog"
         >
           {/* Subject icon */}
           <div
@@ -122,12 +127,16 @@ export const SecondaryHeader = ({ currentArea = 'lectura-critica', onAreaChange 
         <div className="flex items-center gap-3">
           {/* Streak */}
           <button
+            type="button"
             onClick={() => setActiveModal(activeModal === 'streak' ? null : 'streak')}
             className={cn(
               'group flex cursor-pointer items-center gap-2 rounded-full border border-slate-800',
-              'bg-slate-900 px-3 py-1.5 transition-colors hover:border-orange-500/50'
+              'bg-slate-900 px-3 py-1.5 transition-colors hover:border-orange-500/50',
+              'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-app-accent focus-visible:ring-offset-2',
+              'focus-visible:ring-offset-slate-950'
             )}
             title="Ver información de racha"
+            aria-expanded={activeModal === 'streak'}
           >
             <Icon
               name="fire"
@@ -148,12 +157,16 @@ export const SecondaryHeader = ({ currentArea = 'lectura-critica', onAreaChange 
 
           {/* Coins / store */}
           <button
+            type="button"
             onClick={() => setActiveModal(activeModal === 'store' ? null : 'store')}
             className={cn(
               'group flex cursor-pointer items-center gap-2 rounded-full border border-slate-800',
-              'bg-slate-900 px-3 py-1.5 transition-colors hover:border-yellow-500/50'
+              'bg-slate-900 px-3 py-1.5 transition-colors hover:border-yellow-500/50',
+              'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-app-accent focus-visible:ring-offset-2',
+              'focus-visible:ring-offset-slate-950'
             )}
             title="Abrir tienda"
+            aria-expanded={activeModal === 'store'}
           >
             <Icon name="coins" className="text-sm text-yellow-500" />
             <span className="text-sm font-bold text-yellow-500">{coins}</span>

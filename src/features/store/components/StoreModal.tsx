@@ -52,8 +52,14 @@ export const StoreModal = ({ isOpen, onClose }: StoreModalProps) => {
             </div>
           </div>
           <button
+            type="button"
             onClick={onClose}
-            className="-mr-2 cursor-pointer rounded-full p-2 text-slate-400 transition-colors hover:bg-slate-800 hover:text-white"
+            aria-label="Cerrar tienda"
+            className={cn(
+              '-mr-2 cursor-pointer rounded-full p-2 text-slate-400 transition-colors hover:bg-slate-800 hover:text-white',
+              'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-app-accent focus-visible:ring-offset-2',
+              'focus-visible:ring-offset-slate-950'
+            )}
           >
             <Icon name="times" size="xl" className="text-lg lg:text-xl" />
           </button>
@@ -81,9 +87,12 @@ export const StoreModal = ({ isOpen, onClose }: StoreModalProps) => {
                 ].map((f) => (
                   <button
                     key={f.id}
+                    type="button"
                     onClick={() => setFilter(f.id)}
                     className={cn(
                       'cursor-pointer rounded-full border px-4 py-2 font-medium whitespace-nowrap transition-all',
+                      'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-app-accent focus-visible:ring-offset-2',
+                      'focus-visible:ring-offset-slate-950',
                       filter === f.id
                         ? 'border-purple-500 bg-purple-600 text-white shadow-lg shadow-purple-500/25'
                         : 'border-slate-700 bg-slate-800 text-slate-400 hover:bg-slate-700 hover:text-white'

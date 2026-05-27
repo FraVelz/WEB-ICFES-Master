@@ -51,10 +51,14 @@ export const ShopItemModal = ({
       >
         {/* Close Button */}
         <button
+          type="button"
           onClick={onClose}
+          aria-label="Cerrar"
           className={cn(
             'absolute top-4 right-4 z-10 flex h-8 w-8 items-center justify-center rounded-full',
-            'bg-slate-800 text-slate-400 transition-colors hover:bg-slate-700 hover:text-white'
+            'bg-slate-800 text-slate-400 transition-colors hover:bg-slate-700 hover:text-white',
+            'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-app-accent focus-visible:ring-offset-2',
+            'focus-visible:ring-offset-slate-900'
           )}
         >
           <Icon name="times" />
@@ -96,10 +100,13 @@ export const ShopItemModal = ({
             </div>
           ) : (
             <button
+              type="button"
               onClick={() => onBuy(item)}
               disabled={!canAfford || processing}
               className={cn(
                 'flex w-full items-center justify-center gap-3 rounded-xl py-4 text-lg font-bold transition-all',
+                'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2',
+                'focus-visible:ring-offset-slate-950',
                 processing
                   ? 'cursor-wait bg-slate-700 text-slate-400'
                   : canAfford

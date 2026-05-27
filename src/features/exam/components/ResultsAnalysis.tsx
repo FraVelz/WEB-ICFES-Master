@@ -62,11 +62,13 @@ export const ResultsAnalysis = ({
 
         <div className="flex flex-wrap justify-center gap-4">
           <button
+            type="button"
             onClick={onRetry}
             className={cn(
               'cursor-pointer rounded-xl bg-linear-to-r from-blue-600 to-blue-700 px-8 py-3 font-semibold',
               'text-white transition-all duration-300 hover:scale-105 hover:from-blue-700',
-              'hover:to-blue-800 hover:shadow-lg'
+              'hover:to-blue-800 hover:shadow-lg focus-visible:outline-none focus-visible:ring-2',
+              'focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-gray-900'
             )}
           >
             Intentar de Nuevo
@@ -76,7 +78,8 @@ export const ResultsAnalysis = ({
             className={cn(
               'cursor-pointer rounded-xl bg-linear-to-r from-purple-600 to-purple-700 px-8 py-3',
               'font-semibold text-white transition-all duration-300 hover:scale-105 hover:from-purple-700',
-              'hover:to-purple-800 hover:shadow-lg'
+              'hover:to-purple-800 hover:shadow-lg focus-visible:outline-none focus-visible:ring-2',
+              'focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-gray-900'
             )}
           >
             {backLabel}

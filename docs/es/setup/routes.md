@@ -60,4 +60,4 @@ Estas son las **URLs** del proyecto. La ruta pública `/aprendizaje` redirige de
 
 ---
 
-_Archivo generado por IA. Última actualización: lunes, 18 de mayo de 2026._
+_Última actualización: mayo 2026._

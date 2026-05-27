@@ -109,7 +109,9 @@ export function LessonRenderer({ lessonId, steps }: LessonRendererProps) {
           className={cn(
             'min-h-[52px] rounded-xl border border-slate-600 px-6 text-lg font-medium text-slate-200',
             'transition enabled:hover:border-slate-500 enabled:hover:bg-slate-800/50',
-            'disabled:cursor-not-allowed disabled:opacity-40'
+            'disabled:cursor-not-allowed disabled:opacity-40',
+            'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-app-accent focus-visible:ring-offset-2',
+            'focus-visible:ring-offset-slate-950'
           )}
         >
           Anterior
@@ -121,7 +123,9 @@ export function LessonRenderer({ lessonId, steps }: LessonRendererProps) {
             disabled={!canProceed}
             className={cn(
               'min-h-[52px] rounded-xl bg-app-accent-strong px-8 text-lg font-semibold text-white transition',
-              'enabled:hover:bg-app-ring disabled:cursor-not-allowed disabled:opacity-40'
+              'enabled:hover:bg-app-ring disabled:cursor-not-allowed disabled:opacity-40',
+              'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2',
+              'focus-visible:ring-offset-slate-950'
             )}
           >
             Siguiente

@@ -47,7 +47,8 @@ export default function SignInRequiredBlock({
             className={cn(
               'flex w-full items-center justify-center gap-2 rounded-lg bg-linear-to-r from-cta-from',
               'to-cta-to px-6 py-3 font-semibold text-white transition-all duration-300 hover:shadow-lg',
-              'hover:shadow-app-ring/30',
+              'hover:shadow-app-ring/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white',
+              'focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900',
               isLeaving && 'pointer-events-none opacity-50'
             )}
           >
@@ -60,6 +61,8 @@ export default function SignInRequiredBlock({
               'flex w-full items-center justify-center gap-2 rounded-lg border-2 border-app-ring/40',
               'bg-app-ring/10 px-6 py-3 font-semibold text-app-accent transition-all duration-300',
               'hover:border-app-ring/60 hover:bg-app-ring/20',
+              'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-app-accent focus-visible:ring-offset-2',
+              'focus-visible:ring-offset-slate-900',
               isLeaving && 'pointer-events-none opacity-50'
             )}
           >
@@ -73,7 +76,9 @@ export default function SignInRequiredBlock({
             className={cn(
               'flex w-full cursor-pointer items-center justify-center gap-2 rounded-lg border-2',
               'border-slate-600 bg-transparent px-6 py-3 font-semibold text-slate-400 transition-all',
-              'duration-300 hover:border-slate-500 hover:text-white disabled:cursor-wait disabled:opacity-60'
+              'duration-300 hover:border-slate-500 hover:text-white disabled:cursor-wait disabled:opacity-60',
+              'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-app-accent focus-visible:ring-offset-2',
+              'focus-visible:ring-offset-slate-950'
             )}
           >
             {isLeaving ? (

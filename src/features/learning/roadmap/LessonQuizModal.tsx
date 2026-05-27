@@ -380,10 +380,13 @@ export const LessonQuizModal = ({
               {currentQuestion.options.map((option, index) => (
                 <button
                   key={option.id}
+                  type="button"
                   onClick={() => !isSubmitted && setSelectedOption(option.id)}
                   disabled={isSubmitted}
                   className={cn(
                     'relative min-h-[52px] w-full cursor-pointer rounded-xl border-2 p-3.5 text-left text-sm transition-all',
+                    'focus-visible:z-10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-app-accent',
+                    'focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900 disabled:focus-visible:ring-0',
                     'lg:min-h-[48px] lg:rounded-xl lg:p-4 lg:text-base',
                     isSubmitted
                       ? option.id === currentQuestion.correctAnswer
@@ -504,11 +507,14 @@ export const LessonQuizModal = ({
             {/* Previous */}
             {currentQuestionIndex > 0 && (
               <button
+                type="button"
                 onClick={handlePreviousQuestion}
                 className={cn(
                   'min-h-[48px] cursor-pointer rounded-xl bg-slate-800/80 px-3.5 py-3 font-bold',
                   'text-slate-300 shadow-md transition-all hover:bg-slate-700 active:scale-95',
-                  'active:bg-slate-600 lg:min-h-[44px] lg:rounded-xl lg:px-4'
+                  'active:bg-slate-600 lg:min-h-[44px] lg:rounded-xl lg:px-4',
+                  'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-app-accent focus-visible:ring-offset-2',
+                  'focus-visible:ring-offset-slate-950'
                 )}
                 aria-label="Pregunta anterior"
               >
@@ -518,6 +524,7 @@ export const LessonQuizModal = ({
 
             {/* Close / cancel */}
             <button
+              type="button"
               onClick={() => {
                 // Successful completion: also notify parent (closes lesson modal)
                 if (isLastQuestion && (isCorrect || allQuestionsAnswered) && onComplete) {
@@ -534,7 +541,9 @@ export const LessonQuizModal = ({
               className={cn(
                 'min-h-[48px] flex-1 cursor-pointer rounded-xl bg-slate-800/80 px-3 py-3 text-sm',
                 'font-semibold text-slate-300 shadow-md transition-all hover:bg-slate-700 active:scale-95',
-                'active:bg-slate-600 lg:min-h-[44px] lg:rounded-xl lg:px-4 lg:text-base'
+                'active:bg-slate-600 lg:min-h-[44px] lg:rounded-xl lg:px-4 lg:text-base',
+                'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-app-accent focus-visible:ring-offset-2',
+                'focus-visible:ring-offset-slate-950'
               )}
             >
               {isLastQuestion && (isCorrect || allQuestionsAnswered) ? 'Cerrar' : 'Cancelar'}
@@ -542,6 +551,7 @@ export const LessonQuizModal = ({
 
             {!isSubmitted ? (
               <button
+                type="button"
                 onClick={handleSubmit}
                 disabled={!selectedOption || loading}
                 className={cn(
@@ -549,7 +559,9 @@ export const LessonQuizModal = ({
                   'px-3 py-3 text-sm font-bold text-white shadow-lg shadow-blue-500/20 transition-all',
                   'hover:from-blue-500 hover:to-blue-400 active:scale-95 active:from-blue-700',
                   'active:to-blue-600 disabled:cursor-not-allowed disabled:opacity-50',
-                  'disabled:active:scale-100 lg:min-h-[44px] lg:rounded-xl lg:px-4 lg:text-base'
+                  'disabled:active:scale-100 lg:min-h-[44px] lg:rounded-xl lg:px-4 lg:text-base',
+                  'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white',
+                  'focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950'
                 )}
               >
                 {loading ? (
@@ -566,6 +578,7 @@ export const LessonQuizModal = ({
               <>
                 {!isCorrect && (
                   <button
+                    type="button"
                     onClick={() => {
                       setIsSubmitted(false);
                       setSelectedOption(null);
@@ -573,7 +586,9 @@ export const LessonQuizModal = ({
                     className={cn(
                       'min-h-[48px] flex-1 cursor-pointer rounded-xl bg-slate-700 px-3 py-3 text-sm font-bold',
                       'text-white shadow-md transition-all hover:bg-slate-600 active:scale-95 active:bg-slate-500',
-                      'lg:min-h-[44px] lg:rounded-xl lg:px-4 lg:text-base'
+                      'lg:min-h-[44px] lg:rounded-xl lg:px-4 lg:text-base',
+                      'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-app-accent',
+                      'focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950'
                     )}
                   >
                     Reintentar
@@ -581,12 +596,15 @@ export const LessonQuizModal = ({
                 )}
                 {isCorrect && !isLastQuestion && (
                   <button
+                    type="button"
                     onClick={handleNextQuestion}
                     className={cn(
                       'min-h-[48px] flex-1 cursor-pointer rounded-xl bg-linear-to-r from-green-600 to-green-500',
                       'px-3 py-3 text-sm font-bold text-white shadow-lg shadow-green-500/20 transition-all',
                       'hover:from-green-500 hover:to-green-400 active:scale-95 active:from-green-700',
-                      'active:to-green-600 lg:min-h-[44px] lg:rounded-xl lg:px-4 lg:text-base'
+                      'active:to-green-600 lg:min-h-[44px] lg:rounded-xl lg:px-4 lg:text-base',
+                      'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white',
+                      'focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950'
                     )}
                   >
                     <span className="hidden lg:inline">Siguiente </span>

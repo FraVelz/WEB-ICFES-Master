@@ -1,7 +1,6 @@
 'use client';
 import { cn } from '@/utils/cn';
 import { useState } from 'react';
-import Link from 'next/link';
 import type { ExamConfig } from '@/features/exam/types';
 
 interface ExamConfigModalProps {
@@ -48,7 +47,11 @@ export const ExamConfigModal = ({
                 max={maxQuestions}
                 value={numQuestions}
                 onChange={(e) => setNumQuestions(Number(e.target.value))}
-                className="h-2 flex-1 cursor-pointer appearance-none rounded-lg bg-white/10 accent-app-accent"
+                className={cn(
+                  'h-2 flex-1 cursor-pointer appearance-none rounded-lg bg-white/10 accent-app-accent',
+                  'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-app-accent',
+                  'focus-visible:ring-offset-2 focus-visible:ring-offset-gray-900'
+                )}
               />
               <span className="rounded-lg bg-app-ring/20 px-4 py-1 text-lg font-semibold text-app-accent-muted">
                 {numQuestions}
@@ -64,7 +67,11 @@ export const ExamConfigModal = ({
                 type="checkbox"
                 checked={useTimer}
                 onChange={(e) => setUseTimer(e.target.checked)}
-                className="h-5 w-5 rounded border-2 border-app-accent accent-app-ring"
+                className={cn(
+                  'h-5 w-5 rounded border-2 border-app-accent accent-app-ring focus-visible:outline-none',
+                  'focus-visible:ring-2 focus-visible:ring-app-accent focus-visible:ring-offset-2',
+                  'focus-visible:ring-offset-gray-900'
+                )}
               />
               <span className="font-semibold text-white">Usar temporizador</span>
             </label>
@@ -79,10 +86,14 @@ export const ExamConfigModal = ({
                   type="range"
                   min="1"
                   max="10"
-                  value={timePerQuestion}
-                  onChange={(e) => setTimePerQuestion(Number(e.target.value))}
-                  className="h-2 flex-1 cursor-pointer appearance-none rounded-lg bg-white/10 accent-app-accent"
-                />
+                value={timePerQuestion}
+                onChange={(e) => setTimePerQuestion(Number(e.target.value))}
+                className={cn(
+                  'h-2 flex-1 cursor-pointer appearance-none rounded-lg bg-white/10 accent-app-accent',
+                  'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-app-accent',
+                  'focus-visible:ring-offset-2 focus-visible:ring-offset-gray-900'
+                )}
+              />
                 <span className="rounded-lg bg-app-ring/20 px-4 py-1 font-semibold text-app-accent-muted">
                   {timePerQuestion}m
                 </span>
@@ -97,7 +108,11 @@ export const ExamConfigModal = ({
                 type="checkbox"
                 checked={showExplanations}
                 onChange={(e) => setShowExplanations(e.target.checked)}
-                className="h-5 w-5 rounded border-2 border-app-accent accent-app-ring"
+                className={cn(
+                  'h-5 w-5 rounded border-2 border-app-accent accent-app-ring focus-visible:outline-none',
+                  'focus-visible:ring-2 focus-visible:ring-app-accent focus-visible:ring-offset-2',
+                  'focus-visible:ring-offset-gray-900'
+                )}
               />
               <span className="font-semibold text-white">Mostrar explicaciones</span>
             </label>
@@ -116,20 +131,26 @@ export const ExamConfigModal = ({
           {/* Actions */}
           <div className="flex gap-3 pt-6">
             <button
+              type="button"
               onClick={() => window.history.back()}
               className={cn(
                 'flex-1 rounded-lg border border-white/20 bg-white/10 px-6 py-3 text-center font-semibold',
-                'cursor-pointer text-white transition-all duration-300 hover:bg-white/20'
+                'cursor-pointer text-white transition-all duration-300 hover:bg-white/20',
+                'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-app-accent',
+                'focus-visible:ring-offset-2 focus-visible:ring-offset-gray-900'
               )}
             >
               Cancelar
             </button>
             <button
+              type="button"
               onClick={handleStart}
               className={cn(
                 'flex-1 rounded-lg bg-linear-to-r from-cta-from to-cta-progress-end px-6 py-3 font-semibold',
                 'text-white transition-all duration-300 hover:from-app-accent-strong hover:to-blue-600',
-                'cursor-pointer hover:shadow-lg hover:shadow-app-ring/50'
+                'cursor-pointer hover:shadow-lg hover:shadow-app-ring/50',
+                'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white',
+                'focus-visible:ring-offset-2 focus-visible:ring-offset-gray-900'
               )}
             >
               Comenzar

@@ -3,7 +3,7 @@
 [Spanish version](README.md)
 
 An interactive platform to practice questions and learn topics from the ICFES state exam (Saber 11) in Colombia. Built
-with **Feature-Based** and **Atomic Design** architecture using Next.js 15, React 19, Tailwind CSS 4, and Supabase.
+with **feature-based** architecture using Next.js 15, React 19, Tailwind CSS 4, and Supabase.
 
 > [!NOTE] The goal was to reach many more countries beyond Colombia, but each country handles education differently:
 > questions, topics, and subjects change. There are even countries where the exam is not mandatory or does not exist.
@@ -35,9 +35,14 @@ For Spanish, Social Studies, English, Mathematics, and Natural Sciences:
 
 ## Technical Documentation
 
-Folder: `docs/en/`
+Folder: [`docs/en/`](docs/en/)
 
-- [**overview/overview.md**](docs/en/overview/overview.md) — Documentation index.
+- [**overview.md**](docs/en/overview/overview.md) — Documentation index
+- [**project-structure.md**](docs/en/overview/project-structure.md) — Code structure
+- [**components-guide.md**](docs/en/frontend/components-guide.md) — Components guide
+- [**styles-guide.md**](docs/en/frontend/styles-guide.md) — Tailwind tokens and styles
+- [**services-api.md**](docs/en/backend/services-api.md) — Services and persistence
+- [**routes.md**](docs/en/setup/routes.md) — Application URLs
 
 ---
 

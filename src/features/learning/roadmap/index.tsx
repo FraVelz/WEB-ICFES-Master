@@ -9,7 +9,7 @@ import { LessonPreview } from './LessonPreview';
 import { LessonContentModal } from './LessonContentModal';
 import { SecondaryHeader } from '../shell/SecondaryHeader';
 
-import { AREA_INFO } from '@/shared/constants';
+import { getAreaInfo } from '@/shared/constants';
 import { useLearningPath } from '../hooks/useLearningPath';
 import { AnimatedOnMount } from '@/features/learning/AnimatedOnMount';
 
@@ -23,9 +23,7 @@ export const LearningRoadmap = ({ initialArea = 'lectura-critica' }: { initialAr
   const [selectedLesson, setSelectedLesson] = useState<PathNodeData | null>(null);
   const [viewingLesson, setViewingLesson] = useState<PathNodeData | null>(null);
 
-  const currentAreaData =
-    (AREA_INFO as Record<string, { name?: string; color?: string }>)[currentArea] ||
-    (AREA_INFO as Record<string, { name?: string; color?: string }>)['lectura-critica'];
+  const currentAreaData = getAreaInfo(currentArea);
 
   // Roadmap sections + loading state
   const { sections, loading, error } = useLearningPath(currentArea);

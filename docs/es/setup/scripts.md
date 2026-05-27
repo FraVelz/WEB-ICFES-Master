@@ -71,6 +71,30 @@ pnpm build
 
 ---
 
+### `test`
+
+```bash
+pnpm test
+```
+
+**Comando:** `vitest run`
+
+**Descripción:** Ejecuta la suite de tests unitarios (utilidades, constantes de áreas, gamificación).
+
+---
+
+### `test:watch`
+
+```bash
+pnpm test:watch
+```
+
+**Comando:** `vitest`
+
+**Descripción:** Ejecuta tests en modo watch durante el desarrollo.
+
+---
+
 ## Calidad de código
 
 ### `lint`
@@ -131,6 +155,7 @@ pnpm react:doctor
 | Vista previa local         | `pnpm start` o `pnpm preview`    |
 | Despliegue                 | Vercel / Netlify / host con Node |
 | Revisar código             | `pnpm lint`                      |
+| Tests unitarios            | `pnpm test`                      |
 | Comprobar formato          | `pnpm format:check`              |
 | Formatear código           | `pnpm format`                    |
 | Auditoría React            | `pnpm react:doctor`              |

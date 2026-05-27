@@ -40,7 +40,16 @@ export const AreasModal = ({ isOpen, onClose, onSelectArea, currentArea }: Areas
         <div className="p-4">
           <div className="mb-3 flex items-center justify-between border-b border-slate-800 pb-2">
             <h3 className="text-sm font-bold tracking-wider text-slate-400 uppercase">Mis Cursos</h3>
-            <button onClick={onClose} className="cursor-pointer text-slate-500 hover:text-white">
+            <button
+              type="button"
+              onClick={onClose}
+              aria-label="Cerrar"
+              className={cn(
+                'cursor-pointer rounded-lg p-1 text-slate-500 transition-colors hover:text-white',
+                'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-app-accent focus-visible:ring-offset-2',
+                'focus-visible:ring-offset-slate-900'
+              )}
+            >
               <Icon name="times" />
             </button>
           </div>
@@ -48,6 +57,7 @@ export const AreasModal = ({ isOpen, onClose, onSelectArea, currentArea }: Areas
           <div className="max-h-[60vh] space-y-2 overflow-y-auto">
             {areas.map(([areaKey, areaData]: [string, { name?: string; color?: string; icon?: string }]) => (
               <button
+                type="button"
                 key={areaKey}
                 onClick={() => {
                   onSelectArea(areaKey);
@@ -55,6 +65,8 @@ export const AreasModal = ({ isOpen, onClose, onSelectArea, currentArea }: Areas
                 }}
                 className={cn(
                   'flex w-full cursor-pointer items-center gap-3 rounded-xl px-4 py-3 transition-all',
+                  'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-app-accent focus-visible:ring-offset-2',
+                  'focus-visible:ring-offset-slate-950',
                   currentArea === areaKey
                     ? ['bg-linear-to-r text-white shadow-lg', areaData.color]
                     : 'bg-slate-800/50 text-slate-300 hover:bg-slate-800'

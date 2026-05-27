@@ -13,10 +13,13 @@ export interface ShopItemCardProps {
 
 export const ShopItemCard = ({ item, isPurchased, canAfford, onClick }: ShopItemCardProps) => {
   return (
-    <div
+    <button
+      type="button"
       onClick={onClick}
       className={cn(
-        'group relative cursor-pointer overflow-hidden rounded-2xl border-2 p-6 transition-all duration-300',
+        'group relative w-full cursor-pointer overflow-hidden rounded-2xl border-2 p-6 text-left transition-all duration-300',
+        'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-app-accent focus-visible:ring-offset-2',
+        'focus-visible:ring-offset-slate-950',
         isPurchased
           ? 'border-green-500/30 bg-slate-900/50 hover:border-green-500/50'
           : canAfford
@@ -98,6 +101,6 @@ export const ShopItemCard = ({ item, isPurchased, canAfford, onClick }: ShopItem
           )}
         </div>
       </div>
-    </div>
+    </button>
   );
 };

@@ -25,7 +25,7 @@ src/
 ├── hooks/                # Facade de hooks + utilidades GSAP
 ├── lib/                  # GSAP (ScrollTrigger)
 ├── store/                # Redux: uiSession (demo, plan UI)
-├── styles/               # Estilos globales (Tailwind)
+├── styles/               # (legacy) preferir src/app/globals.css
 ├── types/                # Tipos TypeScript globales
 └── utils/                # Utilidades puras (cn, errores auth)
 ```
@@ -65,7 +65,7 @@ Componentes y tipos usados en varias features:
 - **Icon**, **Footer**, **MascotaCircle**, **ConstructionAlert**
 - Reexportaciones `@deprecated` hacia `features/exam` y `@/services/persistence`
 
-La navegación del dashboard vive en **`src/components/DashboardHeader.tsx`** (no en `shared/`).
+La navegación del dashboard vive en **`src/components/DashboardHeader/`** (no en `shared/`).
 
 ## Persistencia
 
