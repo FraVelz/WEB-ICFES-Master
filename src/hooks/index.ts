@@ -5,7 +5,6 @@
  *   import { useProgress } from '@/features/user/hooks/useProgress';
  */
 
-export { useQuizLogic } from '@/features/exam/hooks/useQuizLogic';
 export { useUser } from '@/features/user/hooks/useUser';
 export { useUserData } from '@/features/user/hooks/useUserData';
 export { useProgress } from '@/features/user/hooks/useProgress';

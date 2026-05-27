@@ -6,9 +6,3 @@ export interface ExamConfig {
   useTimer?: boolean;
   showExplanations?: boolean;
 }
-
-export interface AreaInfo {
-  name: string;
-  color: string;
-  icon?: string;
-}
