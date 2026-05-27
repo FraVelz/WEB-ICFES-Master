@@ -13,20 +13,21 @@ src/
 │   ├── perfil/public/    # Public profile (no auth layout)
 │   └── api/              # API routes (e.g. chat)
 ├── features/             # Main business modules
-├── shared/               # Cross-feature UI (Icon, Footer, ModalOverlay…)
+├── shared/               # Cross-feature UI (Icon, ModalOverlay…) + ICFES constants
 ├── storage/              # localStorage implementation (internal)
 ├── services/             # Supabase/local persistence + store + gamification
 │   ├── persistence/      # Public API for features
+│   ├── api.config.ts     # Supabase vs local mode
 │   ├── supabase/
 │   ├── store/            # Plan services (not features/store or Redux)
 │   └── gamification/
-├── config/               # Configuration (Supabase, constants)
+├── config/               # Supabase client, email messages
 ├── components/           # App shell (Providers, guards, DashboardHeader)
-├── hooks/                # GSAP utilities + optional hook re-exports
+├── hooks/                # GSAP + cross-feature hooks (`hooks/gamification/`)
 ├── lib/                  # GSAP (ScrollTrigger)
-├── store/                # Redux: uiSession (demo, plan UI)
+├── store/                # Redux: uiSession (demo, plan UI) + `demoMode.ts`
 ├── types/                # Global TypeScript types
-└── utils/                # Pure utilities (cn, auth errors)
+└── utils/                # Pure utilities (`cn`; optional legacy re-exports)
 ```
 
 Global styles live in **`src/app/globals.css`** (Tailwind 4 + tokens).
@@ -55,10 +56,10 @@ features/feature-name/
 | ------------- | -------------------------------------------------------------------------- |
 | **auth/**     | Login, signup, OAuth, onboarding, `AuthContext`                            |
 | **home/**     | Landing, marketing sections, donations                                     |
-| **learning/** | Roadmap, lessons (`roadmap/`, `lesson-flow/`, `lessons-legacy/`, `shell/`) |
+| **learning/** | Roadmap, lessons (`roadmap/`, `lesson-flow/`, `lessons-legacy/`, `shell/`, `server/`, `context/`) |
 | **exam/**     | Practice, full exam, ranking; data in `exam/data/`                         |
 | **user/**     | Profile, settings, hooks `useProgress`, `useUserData`                      |
-| **logros/**   | Badges, challenges, gamification UI                                        |
+| **logros/**   | Badges, daily challenges, achievements UI (domain hooks in `hooks/gamification/`) |
 | **store/**    | Virtual shop (UI), purchase modals                                         |
 
 ### Three different “store” names
@@ -73,8 +74,10 @@ features/feature-name/
 
 Components used across features:
 
-- **Icon**, **Footer**, **MascotaCircle**, **ConstructionAlert**, **ModalOverlay**
-- ICFES area constants in `shared/constants/areaInfo.ts`
+- **Icon**, **MascotaCircle**, **ConstructionAlert**, **ModalOverlay**
+- ICFES constants in `shared/constants/` (`areaInfo`, `ranks`, `practiceAreas`)
+
+Single-feature components live in that feature (e.g. landing `Footer` in `features/home/components/`).
 
 Dashboard navigation lives in **`src/components/DashboardHeader/`** (not in `shared/`).
 

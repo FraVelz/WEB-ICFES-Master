@@ -7,13 +7,15 @@ This project does **not** use Atomic Design as a folder layer. Organization is *
 
 ## Decision tree
 
-1. **Single App Router route only?** → `src/app/.../_components/`.
+1. **Single App Router route only?** → `src/app/.../_components/` (or co-located next to `page.tsx` for small route-only pieces).
 2. **Single feature** (`auth`, `exam`, `learning`, `logros`, `store`, `user`, `home`)? →
-   `src/features/<feature>/components/` (or `hooks/`, `utils/`, `data/` inside that feature).
+   `src/features/<feature>/components/` (or `hooks/`, `context/`, `utils/`, `data/` inside that feature).
 3. **App-wide shell** (providers, guards, dashboard header)? → `src/components/`.
-4. **UI reused in 2+ features** (Icon, Footer, alerts)? → `src/shared/components/`.
-5. **Persistence or backend integrations?** → `src/services/` (`@/services/persistence`, etc.).
-6. **Unsure?** → Start in the smallest scope. Promote to `shared/` only when a **second consumer** exists outside
+4. **UI reused in 2+ features** (Icon, alerts)? → `src/shared/components/`.
+5. **Domain hooks used in 2+ features** (gamification)? → `src/hooks/gamification/`.
+6. **Persistence or backend integrations?** → `src/services/` (`@/services/persistence`, etc.).
+7. **Global UI state** (demo mode)? → `src/store/` (`demoMode.ts`, Redux `uiSession`).
+8. **Unsure?** → Start in the smallest scope. Promote to `shared/` only when a **second consumer** exists outside
    that feature.
 
 ---
@@ -29,6 +31,13 @@ import { useAuth } from '@/features/auth/context/AuthContext';
 
 // ✅ Persistence
 import { getProgress } from '@/services/persistence';
+
+// ✅ Cross-feature gamification
+import { useGamification } from '@/hooks/gamification';
+
+// ✅ Practice slugs / ranks
+import { PRACTICA_AREA_SLUGS } from '@/shared/constants/practiceAreas';
+import { RANKS } from '@/shared/constants/ranks';
 
 // ✅ Cross-feature UI
 import { Icon } from '@/shared/components/Icon';
