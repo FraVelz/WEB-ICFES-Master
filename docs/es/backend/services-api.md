@@ -24,7 +24,7 @@ La aplicación ICFES utiliza una **arquitectura desacoplada** que permite cambia
 
 ```txt
          React Components
-     (UserProfilePage, ExamPage, LearningRoadmap, etc)
+     (PerfilNormal, PracticePage, LearningRoadmapPage, etc)
 
               ↓
 

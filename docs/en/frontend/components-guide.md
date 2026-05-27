@@ -1,46 +1,22 @@
 # Components guide
 
-## `useQuizLogic` hook
+## `useExam` hook
 
-Example with `MATHEMATICS_QUESTIONS` (defined in `src/features/exam/data/`):
+Live quiz UI logic lives in **`PracticePage`** and **`FullExamPage`**. For persistence and attempt state use
+**`useExam`** (`src/features/exam/hooks/useExam.ts`):
 
 ```typescript
-import { useQuizLogic } from '@/features/exam/hooks/useQuizLogic';
-import { MATHEMATICS_QUESTIONS } from '@/features/exam/data';
+import { useExam } from '@/features/exam/hooks/useExam';
 
-export function QuizExample() {
-  const quiz = useQuizLogic(MATHEMATICS_QUESTIONS);
+export function ExamStatsExample() {
+  const { attempts, loading, saveAttempt } = useExam();
 
-  // Available properties:
-  // - currentQuestion: Current question
-  // - currentQuestionIndex: Question index
-  // - answered: Whether the question has been answered
-  // - showExplanation: Whether to show the explanation
-  // - isFinished: Whether the quiz has finished
-  // - progress: Current progress (question number)
-  // - totalQuestions: Total questions
-  // - handleAnswer(selectedAnswer): Register answer
-  // - handleNextQuestion(): Go to next
-  // - handlePreviousQuestion(): Go to previous
-  // - getResults(): Get results
-  // - reset(): Reset quiz
-
-  return (
-    <div>
-      <p>
-        {quiz.progress} / {quiz.totalQuestions}
-      </p>
-      <h2>{quiz.currentQuestion.text}</h2>
-      <button type="button" onClick={() => quiz.handleAnswer('A')}>
-        Answer A
-      </button>
-      <button type="button" onClick={quiz.handleNextQuestion} disabled={!quiz.answered}>
-        Next
-      </button>
-    </div>
-  );
+  // attempts: local or Supabase history depending on API_CONFIG
+  // saveAttempt(payload): stores a practice or full-exam attempt
 }
 ```
+
+Question types: `src/features/exam/types/question.ts`.
 
 ## Create a feature component (area card)
 
@@ -107,29 +83,19 @@ export const NEW_AREA_QUESTIONS = [
       { letter: 'D', text: 'Option 4' },
     ],
     correctAnswer: 'A',
-    explanation: 'Explanation of why A is correct',
+    explanation: 'Why A is correct',
   },
 ];
 
-// Then include the block in the exported aggregate (e.g. ALL_QUESTIONS)
+// Then merge the block into the exported aggregate (e.g. ALL_QUESTIONS)
 ```
-
-## Quiz logic
-
-Use `src/features/exam/hooks/useQuizLogic.ts` and types in `src/features/exam/types/question.ts`.
-
-- `calculateScore(results)` — percentage
-- `getAreaResults(results)` — per-area results
-- `shuffleArray(array)` — shuffle questions
-- `getQuestionsByArea(questions, area)` — filter by area
-- `getDifficultyStats(questions)` — difficulty stats
 
 ## Question shape (reference)
 
 ```typescript
 {
   id: 1,
-  text: 'Question here',
+  text: 'Question text',
   area: 'mathematics',
   areaLabel: 'Mathematics',
   difficulty: 'easy',
@@ -144,12 +110,27 @@ Use `src/features/exam/hooks/useQuizLogic.ts` and types in `src/features/exam/ty
 }
 ```
 
+## Avatars and images
+
+- Profile / leaderboard: `AvatarImage` in `src/features/user/components/AvatarImage.tsx` (`next/image` wrapper).
+- Mascot / shop: `next/image` with `fill` or fixed dimensions.
+- Lesson markdown: `<img>` allowed only in the `LessonContentModal` renderer (dynamic URLs).
+
 ## Components (repo convention)
 
-Shared UI: **`Icon`**, **`Footer`**, **`MascotaCircle`**, **`ConstructionAlert`**. Dashboard nav:
-**`src/components/DashboardHeader/`**. Exam domain: `AnswerOption` in `features/exam/components/`. Features under
-`src/features/*`; routes in `src/app/`.
+| Scope | Components |
+| ----- | ---------- |
+| **shared/** | `Icon`, `MascotaCircle`, `ModalOverlay` |
+| **home/** | `Footer` (landing) |
+| **achievements/** | `ConstructionAlert`, `AchievementsList`, `ChallengeCard` |
+| **user/** | `AvatarImage`, `ProfileComponents` |
+| **Global shell** | `src/components/DashboardHeader/` |
+
+Cross-feature hooks: `src/hooks/gamification/` (`useGamification`, `useLeaderboard`). Achievement catalog:
+`src/shared/constants/achievementsData.ts`.
+
+Prefer direct feature imports (`@/features/user/hooks/useProgress`) over the removed global `@/hooks` barrel.
 
 ---
 
-_AI-generated file. Last updated: Monday, May 18, 2026._
+_AI-generated file. Last updated: Wednesday, May 27, 2026._

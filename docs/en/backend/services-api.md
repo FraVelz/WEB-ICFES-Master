@@ -23,7 +23,7 @@ The ICFES application uses a **decoupled architecture** that allows switching be
 
 ```txt
          React Components
-     (UserProfilePage, ExamPage, LearningRoadmap, etc)
+     (PerfilNormal, PracticePage, LearningRoadmapPage, etc)
 
               ↓
 

@@ -74,8 +74,8 @@ features/feature-name/
 
 Components used across features:
 
-- **Icon**, **MascotaCircle**, **ConstructionAlert**, **ModalOverlay**
-- ICFES constants in `shared/constants/` (`areaInfo`, `ranks`, `practiceAreas`)
+- **Icon**, **MascotaCircle**, **ModalOverlay**
+- ICFES constants in `shared/constants/` (`areaInfo`, `ranks`, `practiceAreas`, `achievementsData`)
 
 Single-feature components live in that feature (e.g. landing `Footer` in `features/home/components/`).
 

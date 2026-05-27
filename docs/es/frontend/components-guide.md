@@ -1,46 +1,22 @@
 # Guía de componentes
 
-## Hook `useQuizLogic`
+## Hook `useExam`
 
-Ejemplo con `MATHEMATICS_QUESTIONS` (definidas en `src/features/exam/data/`):
+La lógica de quiz en pantalla vive en **`PracticePage`** y **`FullExamPage`**. Para persistencia y estado de
+intentos usa **`useExam`** (`src/features/exam/hooks/useExam.ts`):
 
 ```typescript
-import { useQuizLogic } from '@/features/exam/hooks/useQuizLogic';
-import { MATHEMATICS_QUESTIONS } from '@/features/exam/data';
+import { useExam } from '@/features/exam/hooks/useExam';
 
-export function QuizExample() {
-  const quiz = useQuizLogic(MATHEMATICS_QUESTIONS);
+export function ExamStatsExample() {
+  const { attempts, loading, saveAttempt } = useExam();
 
-  // Propiedades disponibles:
-  // - currentQuestion: Pregunta actual
-  // - currentQuestionIndex: Índice de la pregunta
-  // - answered: Si la pregunta ha sido respondida
-  // - showExplanation: Si mostrar la explicación
-  // - isFinished: Si el quiz ha finalizado
-  // - progress: Progreso actual (número de pregunta)
-  // - totalQuestions: Total de preguntas
-  // - handleAnswer(selectedAnswer): Registrar respuesta
-  // - handleNextQuestion(): Ir a la siguiente
-  // - handlePreviousQuestion(): Ir a la anterior
-  // - getResults(): Obtener resultados
-  // - reset(): Reiniciar el quiz
-
-  return (
-    <div>
-      <p>
-        {quiz.progress} / {quiz.totalQuestions}
-      </p>
-      <h2>{quiz.currentQuestion.text}</h2>
-      <button type="button" onClick={() => quiz.handleAnswer('A')}>
-        Responder A
-      </button>
-      <button type="button" onClick={quiz.handleNextQuestion} disabled={!quiz.answered}>
-        Siguiente
-      </button>
-    </div>
-  );
+  // attempts: historial local o Supabase según API_CONFIG
+  // saveAttempt(payload): guarda un intento de práctica o simulacro
 }
 ```
+
+Tipos de pregunta: `src/features/exam/types/question.ts`.
 
 ## Crear un componente de feature (tarjeta de área)
 
@@ -114,10 +90,6 @@ export const NEW_AREA_QUESTIONS = [
 // Luego incorporar el bloque en el agregado exportado (p. ej. ALL_QUESTIONS)
 ```
 
-## Lógica de quiz
-
-Usa `src/features/exam/hooks/useQuizLogic.ts` y tipos en `src/features/exam/types/question.ts`.
-
 ## Estructura de una pregunta (referencia)
 
 ```typescript
@@ -138,13 +110,28 @@ Usa `src/features/exam/hooks/useQuizLogic.ts` y tipos en `src/features/exam/type
 }
 ```
 
+## Avatares e imágenes
+
+- Perfil / ranking: `AvatarImage` en `src/features/user/components/AvatarImage.tsx` (wrapper de `next/image`).
+- Mascota / tienda: `next/image` con `fill` o dimensiones fijas.
+- Markdown de lecciones: `<img>` permitido solo en el renderer de `LessonContentModal` (URLs dinámicas).
+
 ## Componentes (convención del repo)
 
-UI compartida: **`Icon`**, **`Footer`**, **`MascotaCircle`**, **`ConstructionAlert`**, **`ModalOverlay`**.
-Navegación del dashboard: **`src/components/DashboardHeader/`**. Dominio examen: `AnswerOption` en
-**`src/components/DashboardHeader/`**. Dominio examen: `AnswerOption` en `features/exam/components/`. Features en
-`src/features/*`; rutas en `src/app/`.
+| Alcance | Componentes |
+| ------- | ----------- |
+| **shared/** | `Icon`, `MascotaCircle`, `ModalOverlay` |
+| **home/** | `Footer` (landing) |
+| **achievements/** | `ConstructionAlert`, `AchievementsList`, `ChallengeCard` |
+| **user/** | `AvatarImage`, `ProfileComponents` |
+| **Shell global** | `src/components/DashboardHeader/` |
+
+Hooks transversales: `src/hooks/gamification/` (`useGamification`, `useLeaderboard`). Catálogo de logros:
+`src/shared/constants/achievementsData.ts`.
+
+Preferir imports directos desde la feature (`@/features/user/hooks/useProgress`) en lugar del barrel global
+`@/hooks` (eliminado).
 
 ---
 
-_Archivo generado por IA. Última actualización: lunes, 18 de mayo de 2026._
+_Archivo generado por IA. Última actualización: miércoles, 27 de mayo de 2026._
