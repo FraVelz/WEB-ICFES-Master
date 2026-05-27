@@ -1,2 +1,3 @@
 export { UnifiedAchievementsPage } from './UnifiedAchievementsPage';
-export { DailyChallengesWidget, DailyChallengesPage } from '../components/DailyChallengesWidget';
+export { DailyChallengesPage } from './DailyChallengesPage';
+export { DailyChallengesWidget } from '../components/DailyChallengesWidget';
