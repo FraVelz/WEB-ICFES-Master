@@ -1,2 +1,2 @@
-export { UnifiedAchievementsHub } from './UnifiedAchievementsHub';
-export { DailyChallengesWidget } from './DailyChallengesWidget';
+export { AchievementsList } from './AchievementsList';
+export { ChallengeCard } from './ChallengeCard';
