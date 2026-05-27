@@ -41,15 +41,7 @@ const GLOW_EFFECTS = [
   },
 ];
 
-const HomePageDesktopComponent = ({
-  expandedFaq,
-  setExpandedFaq,
-  onDemoAccess,
-}: {
-  expandedFaq: number | null;
-  setExpandedFaq: React.Dispatch<React.SetStateAction<number | null>>;
-  onDemoAccess: () => void;
-}) => {
+const HomePageDesktopComponent = ({ onDemoAccess }: { onDemoAccess: () => void }) => {
   const scrollLayerRef = useRef<HTMLDivElement>(null);
 
   useGSAP(
@@ -85,7 +77,7 @@ const HomePageDesktopComponent = ({
         );
       });
     },
-    { scope: scrollLayerRef, dependencies: [expandedFaq] }
+    { scope: scrollLayerRef }
   );
 
   const scrollToTopAndFocusHero = () => {
@@ -144,7 +136,7 @@ const HomePageDesktopComponent = ({
 
         <section className="relative overflow-hidden py-12 md:py-16">
           <div data-home-reveal className={homeStyles.revealScroll}>
-            <FAQSection expandedFaq={expandedFaq} setExpandedFaq={setExpandedFaq} />
+            <FAQSection />
           </div>
         </section>
 

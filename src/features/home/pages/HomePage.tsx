@@ -1,7 +1,5 @@
 'use client';
 
-import { useState } from 'react';
-
 import { useAppDispatch } from '@/store/hooks';
 import { enterDemoMode } from '@/features/home/utils/enterDemoMode';
 
@@ -14,7 +12,6 @@ import { HomePageMobile } from './HomePageMobile';
  * Resize en PC actualiza la vista sin listeners.
  */
 export const HomePage = () => {
-  const [expandedFaq, setExpandedFaq] = useState<number | null>(null);
   const dispatch = useAppDispatch();
 
   const handleDemoAccess = () => {
@@ -35,7 +32,7 @@ export const HomePage = () => {
         <HomePageMobile />
       </div>
       <div className="hidden md:block">
-        <HomePageDesktop onDemoAccess={handleDemoAccess} expandedFaq={expandedFaq} setExpandedFaq={setExpandedFaq} />
+        <HomePageDesktop onDemoAccess={handleDemoAccess} />
       </div>
     </>
   );

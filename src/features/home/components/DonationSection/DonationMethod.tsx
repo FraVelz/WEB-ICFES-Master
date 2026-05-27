@@ -1,27 +1,21 @@
 import { cn } from '@/utils/cn';
 import { Icon } from '@/shared/components/Icon';
+import { paymentMethods } from './paymentMethods';
+import { useDonationContext } from './DonationContext';
+import type { selectedAmountType } from './types';
 
-import { paymentMethods } from '../paymentMethods';
-import type { selectedAmountType } from '../types';
+export const DonationMethod = () => {
+  const {
+    selectedAmount,
+    customAmount,
+    selectedMethod,
+    setSelectedMethod,
+    handleAmountSelect,
+    handleCustomAmountChange,
+  } = useDonationContext();
 
-export const DonationMethod = ({
-  selectedAmount,
-  customAmount,
-  selectedMethod,
-  setSelectedMethod,
-  handleAmountSelect,
-  handleCustomAmountChange,
-}: {
-  selectedAmount: string;
-  customAmount: string;
-  selectedMethod: string;
-  setSelectedMethod: React.Dispatch<React.SetStateAction<string>>;
-  handleAmountSelect: (amount: selectedAmountType) => void;
-  handleCustomAmountChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-}) => {
   return (
     <div className="space-y-8 md:col-span-7">
-      {/* Amount selector */}
       <div>
         <label className="mb-3 block text-sm font-medium tracking-wider text-gray-400 uppercase">
           1. Elige un monto de apoyo
@@ -75,7 +69,6 @@ export const DonationMethod = ({
         )}
       </div>
 
-      {/* Payment method selector */}
       <div>
         <label className="mb-3 block text-sm font-medium tracking-wider text-gray-400 uppercase">
           2. Elige el medio de donación

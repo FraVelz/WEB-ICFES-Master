@@ -1,37 +1,23 @@
 import { cn } from '@/utils/cn';
 import { Icon } from '@/shared/components/Icon';
+import { useDonationContext } from './DonationContext';
 
-export const DonationForm = ({
-  copied,
-  cardData,
-  setCardData,
-  isProcessing,
-  paymentSuccess,
-  copyToClipboard,
-  handleCardNumberChange,
-  handleExpiryChange,
-  handleCVVChange,
-  currentMethod,
-  currentAmount,
-  handlePayment,
-}: {
-  selectedAmount: string;
-  customAmount: string;
-  selectedMethod: string;
-  setSelectedMethod: React.Dispatch<React.SetStateAction<string>>;
-  copied: string | null;
-  cardData: any;
-  setCardData: React.Dispatch<React.SetStateAction<any>>;
-  isProcessing: boolean;
-  paymentSuccess: boolean;
-  copyToClipboard: (text: string, id: string) => void;
-  handleCardNumberChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  handleExpiryChange: (type: string, value: string) => void;
-  handleCVVChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  currentMethod: any;
-  currentAmount: string;
-  handlePayment: (e: React.FormEvent<HTMLFormElement>) => void;
-}) => {
+export const DonationForm = () => {
+  const {
+    copied,
+    cardData,
+    setCardData,
+    isProcessing,
+    paymentSuccess,
+    copyToClipboard,
+    handleCardNumberChange,
+    handleExpiryChange,
+    handleCVVChange,
+    currentMethod,
+    currentAmount,
+    handlePayment,
+  } = useDonationContext();
+
   return (
     <div className="md:col-span-5">
       <div className="relative flex h-full flex-col justify-between overflow-hidden rounded-2xl border border-white/5 bg-black/20 p-6">
@@ -40,7 +26,7 @@ export const DonationForm = ({
 
         <div>
           <h4 className="mb-1 flex items-center gap-2 text-lg font-bold text-white">
-            <Icon name={currentMethod?.icon} className="text-purple-400" />
+            {currentMethod?.icon && <Icon name={currentMethod.icon} className="text-purple-400" />}
             {currentMethod?.name}
           </h4>
           <p className="mb-6 border-b border-white/10 pb-4 text-sm text-gray-400">
@@ -197,7 +183,7 @@ export const DonationForm = ({
                     {currentMethod.detail}
                   </code>
                   <button
-                    onClick={() => copyToClipboard(currentMethod.detail, currentMethod.id)}
+                    onClick={() => currentMethod.detail && copyToClipboard(currentMethod.detail, currentMethod.id)}
                     className="rounded-lg bg-purple-600 p-3 text-white transition-colors hover:bg-purple-700"
                     title="Copiar"
                   >

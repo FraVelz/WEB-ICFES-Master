@@ -1,14 +1,18 @@
+'use client';
+
+import { useEffect, useState } from 'react';
 import { cn } from '@/utils/cn';
 import { Icon } from '@/shared/components/Icon';
 import { FAQS } from '@/features/home/data';
+import { ScrollTrigger } from '@/lib/gsap';
 
-export const FAQSection = ({
-  expandedFaq,
-  setExpandedFaq,
-}: {
-  expandedFaq: number | null;
-  setExpandedFaq: React.Dispatch<React.SetStateAction<number | null>>;
-}) => {
+export const FAQSection = () => {
+  const [expandedFaq, setExpandedFaq] = useState<number | null>(null);
+
+  useEffect(() => {
+    ScrollTrigger.refresh();
+  }, [expandedFaq]);
+
   return (
     <section className="mx-auto max-w-4xl px-6 py-20 md:px-8">
       <div className="mb-16 text-center">
