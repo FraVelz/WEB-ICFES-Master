@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { Icon } from '@/shared/components/Icon';
 import { cn } from '@/utils/cn';
-import type { UserProfile, UserRank } from '@/storage/userProfile';
+import type { UserProfile, UserRank } from '@/services/persistence';
 import { FOCUS_RING, mainNavOptions, secondaryNavOptions } from './constants';
 import { ExpandableSidebarText } from './ExpandableSidebarText';
 import { SidebarNavLink } from './SidebarNavLink';
