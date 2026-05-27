@@ -1,50 +1,16 @@
-export const SUBJECTS = [
-  {
-    id: 'matematicas',
-    name: 'Matemáticas',
-    icon: 'chart-line',
-    color: 'text-subject-math',
-    bgColor: 'bg-subject-math-bold/20',
-    borderColor: 'border-subject-math-bold',
-    shortColor: 'from-subject-math-grad-from to-subject-math-grad-to',
-  },
-  {
-    id: 'lectura-critica',
-    name: 'Lectura Crítica',
-    icon: 'book',
-    color: 'text-subject-lc',
-    bgColor: 'bg-subject-lc-bold/20',
-    borderColor: 'border-subject-lc-bold',
-    shortColor: 'from-subject-lc-grad-from to-subject-lc-grad-to',
-  },
-  {
-    id: 'ciencias-naturales',
-    name: 'Ciencias Naturales',
-    icon: 'bolt',
-    color: 'text-subject-sci',
-    bgColor: 'bg-subject-sci-bold/20',
-    borderColor: 'border-subject-sci-bold',
-    shortColor: 'from-subject-sci-grad-from to-subject-sci-grad-to',
-  },
-  {
-    id: 'sociales',
-    name: 'Sociales y Ciudadanas',
-    icon: 'bullseye',
-    color: 'text-subject-soc',
-    bgColor: 'bg-subject-soc-bold/20',
-    borderColor: 'border-subject-soc-bold',
-    shortColor: 'from-subject-soc-grad-from to-subject-soc-grad-to',
-  },
-  {
-    id: 'ingles',
-    name: 'Inglés',
-    icon: 'book',
-    color: 'text-subject-eng',
-    bgColor: 'bg-subject-eng-bold/20',
-    borderColor: 'border-subject-eng-bold',
-    shortColor: 'from-subject-eng-to to-subject-eng-from',
-  },
-];
+import { getHomeAreas } from '@/shared/constants/areaInfo';
+import { getStaticRoadmapDataKey } from '@/shared/constants/lessonRoutes';
+
+/** @deprecated Prefer `getHomeAreas()` from `@/shared/constants/areaInfo`. Kept for compat. */
+export const SUBJECTS = getHomeAreas().map((area) => ({
+  id: getStaticRoadmapDataKey(area.id),
+  name: area.name,
+  icon: area.icon,
+  color: area.textColor ?? 'text-slate-300',
+  bgColor: area.bgColor ? `${area.bgColor}/20` : 'bg-slate-800/20',
+  borderColor: area.bgColor ?? 'border-slate-600',
+  shortColor: area.gradient ?? area.color,
+}));
 
 export const BASICO_TOPICS = {
   matematicas: [

@@ -1,9 +1,8 @@
 import { BASICO_TOPICS, INTERMEDIO_TOPICS } from '../data/roadmapData';
+import { getStaticRoadmapDataKey } from '@/shared/constants/lessonRoutes';
 import { getCompletedLessons } from '@/services/persistence';
 import API_CONFIG from '@/services/api.config';
 import LearningSupabaseService from '@/services/supabase/LearningSupabaseService';
-
-const AREA_MAP: Record<string, string> = { 'sociales-ciudadanas': 'sociales' };
 
 interface TopicItem {
   title?: string;
@@ -49,7 +48,7 @@ export const LearningService = {
       }
     }
 
-    const key = AREA_MAP[areaId] ?? areaId;
+    const key = getStaticRoadmapDataKey(areaId);
     const basics = (BASICO_TOPICS as Record<string, TopicItem[]>)[key] ?? [];
     const intermedio = (INTERMEDIO_TOPICS as Record<string, IntermedioTopic>)[key];
     return [
