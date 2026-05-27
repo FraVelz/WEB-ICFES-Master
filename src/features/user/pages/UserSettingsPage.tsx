@@ -6,7 +6,10 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { Icon } from '@/shared/components/Icon';
 import { useAuth } from '@/features/auth/context/AuthContext';
-import { useUser, useUserData, useProgress, useExam } from '@/hooks';
+import { useUser } from '@/features/user/hooks/useUser';
+import { useUserData } from '@/features/user/hooks/useUserData';
+import { useProgress } from '@/features/user/hooks/useProgress';
+import { useExam } from '@/features/exam/hooks/useExam';
 import { updateUsername, updateUserBio, updateProfileImage } from '@/services/persistence';
 // import { DonationSection } from '@/features/home';
 

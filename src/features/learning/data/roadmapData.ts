@@ -1,16 +1,4 @@
-import { getHomeAreas } from '@/shared/constants/areaInfo';
 import { getStaticRoadmapDataKey } from '@/features/learning/constants/lessonRoutes';
-
-/** @deprecated Prefer `getHomeAreas()` from `@/shared/constants/areaInfo`. Kept for compat. */
-export const SUBJECTS = getHomeAreas().map((area) => ({
-  id: getStaticRoadmapDataKey(area.id),
-  name: area.name,
-  icon: area.icon,
-  color: area.textColor ?? 'text-slate-300',
-  bgColor: area.bgColor ? `${area.bgColor}/20` : 'bg-slate-800/20',
-  borderColor: area.bgColor ?? 'border-slate-600',
-  shortColor: area.gradient ?? area.color,
-}));
 
 export const BASICO_TOPICS = {
   matematicas: [

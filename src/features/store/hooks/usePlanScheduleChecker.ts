@@ -2,7 +2,7 @@
 
 import { useEffect } from 'react';
 import { useAuth } from '@/features/auth/context/AuthContext';
-import { PlanScheduleService } from '@/services';
+import { PlanScheduleService } from '@/services/store';
 
 /** Poll scheduled plan activations on session start (local no-op until backend) */
 export const usePlanScheduleChecker = () => {

@@ -68,12 +68,3 @@ export const getRankInfo = (rankId: string) => {
   return Object.values(RANKS).find((r) => r.id === rankId) || RANKS.NOVATO;
 };
 
-export const getNextRank = (currentRankId: string) => {
-  const current = getRankInfo(currentRankId);
-  return Object.values(RANKS).find((r) => r.order === current.order + 1);
-};
-
-export const getPrevRank = (currentRankId: string) => {
-  const current = getRankInfo(currentRankId);
-  return Object.values(RANKS).find((r) => r.order === current.order - 1);
-};
