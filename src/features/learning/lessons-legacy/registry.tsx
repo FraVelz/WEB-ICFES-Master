@@ -1,6 +1,6 @@
 import type { ComponentType } from 'react';
 
-import { groupLessonRoutePairsByArea } from '@/shared/constants/lessonRoutes';
+import { groupLessonRoutePairsByArea } from '@/features/learning/constants/lessonRoutes';
 
 import { LegacyLessonLayout } from './LegacyLessonLayout';
 import { LEGACY_LESSON_CONTENT } from './lessonContents';

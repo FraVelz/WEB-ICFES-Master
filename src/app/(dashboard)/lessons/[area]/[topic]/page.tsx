@@ -1,5 +1,5 @@
 import { LessonFlowClient } from '@/features/learning/lesson-flow/LessonFlowClient';
-import { LESSON_ROUTE_PAIRS } from '@/features/learning/constants/lessonDynamicRoutes';
+import { LESSON_ROUTE_PAIRS } from '@/features/learning/constants/lessonRoutes';
 import { getLessonWithSteps } from '@/features/learning/server/getLessonWithSteps';
 
 import { LessonPageClient } from './_components/LessonPageClient';

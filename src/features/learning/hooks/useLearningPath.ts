@@ -5,7 +5,7 @@ import { useAuth } from '@/features/auth/context/AuthContext';
 /**
  * Learning-path state: maps Supabase/local lessons into UI "sections".
  */
-import { buildLessonHrefFromNode } from '@/features/learning/constants/lessonDynamicRoutes';
+import { buildLessonHrefFromNode } from '@/features/learning/constants/lessonRoutes';
 import type { PathSection, PathNodeData } from '@/features/learning/roadmap/AreaPath';
 
 export type { PathSection, PathNodeData };

@@ -1,5 +1,5 @@
 import { BASICO_TOPICS, INTERMEDIO_TOPICS } from '../data/roadmapData';
-import { getStaticRoadmapDataKey } from '@/shared/constants/lessonRoutes';
+import { getStaticRoadmapDataKey } from '@/features/learning/constants/lessonRoutes';
 import { getCompletedLessons } from '@/services/persistence';
 import API_CONFIG from '@/services/api.config';
 import LearningSupabaseService from '@/services/supabase/LearningSupabaseService';

@@ -1,5 +1,5 @@
 import { getHomeAreas } from '@/shared/constants/areaInfo';
-import { getStaticRoadmapDataKey } from '@/shared/constants/lessonRoutes';
+import { getStaticRoadmapDataKey } from '@/features/learning/constants/lessonRoutes';
 
 /** @deprecated Prefer `getHomeAreas()` from `@/shared/constants/areaInfo`. Kept for compat. */
 export const SUBJECTS = getHomeAreas().map((area) => ({
