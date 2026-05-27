@@ -1,4 +1,10 @@
-import type { NavOption } from './types';
+export type NavOption = {
+  path: string;
+  label: string;
+  icon: string;
+  accent?: 'default' | 'orange';
+  showActiveIndicator?: boolean;
+};
 
 export const FOCUS_RING =
   'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:outline-none focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950';

@@ -1,19 +1,25 @@
+'use client';
+
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { Icon } from '@/shared/components/Icon';
 import { ModalOverlay } from '@/shared/components/ModalOverlay';
+import { isAccountOnlyPath } from '@/features/auth/constants/accountOnlyRoutes';
+import { useAppSelector } from '@/store/hooks';
 import { cn } from '@/utils/cn';
-import { mainNavOptions, mobileMenuOptions } from './constants';
-import { MobileBottomNavLink } from './MobileBottomNavLink';
-import { MobileMenuLink } from './MobileMenuLink';
+import { FOCUS_RING, mainNavOptions, mobileMenuOptions, type NavOption } from './constants';
 
 type MobileNavProps = {
-  pathname: string;
   menuOpen: boolean;
   onToggleMenu: () => void;
   onCloseMenu: () => void;
-  isLockedInDemo: (path: string) => boolean;
 };
 
-export function MobileNav({ pathname, menuOpen, onToggleMenu, onCloseMenu, isLockedInDemo }: MobileNavProps) {
+export function MobileNav({ menuOpen, onToggleMenu, onCloseMenu }: MobileNavProps) {
+  const pathname = usePathname();
+  const demoMode = useAppSelector((s) => s.uiSession.demoMode);
+  const isLockedInDemo = (path: string) => demoMode && isAccountOnlyPath(path);
+
   return (
     <>
       <nav
@@ -23,9 +29,22 @@ export function MobileNav({ pathname, menuOpen, onToggleMenu, onCloseMenu, isLoc
         )}
       >
         <div className="flex h-20 items-center justify-around">
-          {mainNavOptions.map((option) => (
-            <MobileBottomNavLink key={option.path} option={option} pathname={pathname} />
-          ))}
+          {mainNavOptions.map((option) => {
+            const isActive = pathname === option.path;
+            return (
+              <Link
+                key={option.path}
+                href={option.path}
+                className={cn(
+                  'flex h-20 w-16 flex-col items-center justify-center rounded-lg transition-all duration-300',
+                  FOCUS_RING,
+                  isActive ? 'border-app-ring text-app-accent border-t-2' : 'text-slate-400 hover:text-white'
+                )}
+              >
+                <Icon name={option.icon} size="xl" className="mb-1" />
+              </Link>
+            );
+          })}
           <button
             type="button"
             onClick={onToggleMenu}
@@ -52,14 +71,27 @@ export function MobileNav({ pathname, menuOpen, onToggleMenu, onCloseMenu, isLoc
             )}
           >
             <div className="flex flex-col divide-y divide-slate-700/50">
-              {mobileMenuOptions.map((option) => (
-                <MobileMenuLink
-                  key={option.path}
-                  option={option}
-                  isLocked={isLockedInDemo(option.path)}
-                  onNavigate={onCloseMenu}
-                />
-              ))}
+              {mobileMenuOptions.map((option: NavOption) => {
+                const isLocked = isLockedInDemo(option.path);
+                return (
+                  <Link
+                    key={option.path}
+                    href={option.path}
+                    className={cn(
+                      'hover:bg-app-ring/10 active:bg-app-ring/20 flex items-center gap-4 px-6 py-4 text-slate-300 transition-colors',
+                      'focus-visible:ring-app-accent rounded-lg focus-visible:ring-2 focus-visible:outline-none focus-visible:ring-inset',
+                      isLocked && 'opacity-70'
+                    )}
+                    onClick={onCloseMenu}
+                  >
+                    <Icon name={option.icon} size="xl" className="text-app-accent" />
+                    <span className="flex flex-1 items-center justify-between text-lg font-semibold">
+                      {option.label}
+                      {isLocked && <Icon name="lock" className="text-slate-500" />}
+                    </span>
+                  </Link>
+                );
+              })}
             </div>
           </div>
         </>

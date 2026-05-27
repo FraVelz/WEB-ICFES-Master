@@ -1,33 +1,74 @@
+'use client';
+
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { Icon } from '@/shared/components/Icon';
 import { AvatarImage } from '@/features/user/components/AvatarImage';
+import { isAccountOnlyPath } from '@/features/auth/constants/accountOnlyRoutes';
+import { useUser } from '@/features/user/hooks/useUser';
+import { useAppSelector } from '@/store/hooks';
 import { cn } from '@/utils/cn';
-import type { UserProfile, UserRank } from '@/services/persistence';
-import { FOCUS_RING, mainNavOptions, secondaryNavOptions } from './constants';
-import { ExpandableSidebarText } from './ExpandableSidebarText';
-import { SidebarNavLink } from './SidebarNavLink';
+import { FOCUS_RING, mainNavOptions, secondaryNavOptions, type NavOption } from './constants';
 
 type DesktopSidebarProps = {
   className?: string;
   sidebarExpanded: boolean;
   onToggleSidebar: () => void;
-  pathname: string;
-  isLockedInDemo: (path: string) => boolean;
-  user: UserProfile | null;
-  rank: UserRank | null;
-  virtualMoney: number;
 };
 
-export function DesktopSidebar({
-  className,
-  sidebarExpanded,
-  onToggleSidebar,
+function SidebarNavLink({
+  option,
   pathname,
-  isLockedInDemo,
-  user,
-  rank,
-  virtualMoney,
-}: DesktopSidebarProps) {
+  sidebarExpanded,
+  isLocked,
+}: {
+  option: NavOption;
+  pathname: string;
+  sidebarExpanded: boolean;
+  isLocked: boolean;
+}) {
+  const isActive = pathname === option.path;
+  const accent = option.accent ?? 'default';
+
+  return (
+    <Link
+      href={option.path}
+      className={cn(
+        'group/item relative flex h-12 items-center rounded-xl px-3 transition-all duration-300 focus-visible:z-10',
+        FOCUS_RING,
+        isActive
+          ? accent === 'orange'
+            ? 'bg-orange-500/10 text-orange-400'
+            : 'bg-app-ring/10 text-app-accent shadow-app-ring/5 shadow-lg'
+          : 'text-slate-400 hover:bg-white/5 hover:text-white',
+        isLocked && 'opacity-70'
+      )}
+    >
+      <div className="flex w-6 shrink-0 justify-center">
+        <Icon name={option.icon} size="lg" />
+      </div>
+      <span
+        className={cn(
+          'absolute left-14 font-medium whitespace-nowrap transition-opacity duration-300',
+          sidebarExpanded ? 'opacity-100' : 'opacity-0'
+        )}
+      >
+        {option.label}
+        {isLocked && <Icon name="lock" size="sm" className="ml-1.5 inline text-slate-500" />}
+      </span>
+      {isActive && option.showActiveIndicator !== false && (
+        <div className="bg-app-ring absolute top-1/2 right-0 h-6 w-1 -translate-y-1/2 rounded-l-full" />
+      )}
+    </Link>
+  );
+}
+
+export function DesktopSidebar({ className, sidebarExpanded, onToggleSidebar }: DesktopSidebarProps) {
+  const pathname = usePathname();
+  const { user, rank, virtualMoney } = useUser();
+  const demoMode = useAppSelector((s) => s.uiSession.demoMode);
+  const isLockedInDemo = (path: string) => demoMode && isAccountOnlyPath(path);
+
   return (
     <header className={cn('min-w-fit', className, sidebarExpanded ? 'w-72' : 'w-20')}>
       <div
@@ -111,13 +152,15 @@ export function DesktopSidebar({
           >
             <Icon name="coins" className="text-amber-400" />
           </div>
-          <ExpandableSidebarText
-            expanded={sidebarExpanded}
-            className="flex w-full items-center gap-3 px-3 font-bold text-amber-400"
+          <span
+            className={cn(
+              'flex w-full items-center gap-3 px-3 font-bold text-amber-400 whitespace-nowrap transition-opacity duration-300',
+              sidebarExpanded ? 'opacity-100' : 'opacity-0'
+            )}
           >
             <Icon name="coins" className="text-amber-400" />
             {virtualMoney}
-          </ExpandableSidebarText>
+          </span>
         </div>
 
         <Link
@@ -146,10 +189,15 @@ export function DesktopSidebar({
               </div>
             )}
           </div>
-          <ExpandableSidebarText expanded={sidebarExpanded} className="absolute left-16 overflow-hidden">
+          <span
+            className={cn(
+              'absolute left-16 overflow-hidden whitespace-nowrap transition-opacity duration-300',
+              sidebarExpanded ? 'opacity-100' : 'opacity-0'
+            )}
+          >
             <p className="max-w-[140px] truncate text-sm font-bold text-white">{user?.username || 'Usuario'}</p>
             <p className="text-app-accent text-xs">{rank?.name || 'Novato'}</p>
-          </ExpandableSidebarText>
+          </span>
         </Link>
 
         <Link
