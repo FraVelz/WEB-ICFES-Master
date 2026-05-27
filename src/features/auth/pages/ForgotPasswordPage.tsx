@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { Icon } from '@/shared/components/Icon';
 import { EMAIL_MESSAGES } from '@/config/emailMessages';
 import { useAuth } from '@/features/auth/context/AuthContext';
-import { mapSupabaseAuthError } from '@/utils/mapSupabaseAuthError';
+import { mapSupabaseAuthError } from '@/features/auth/utils/mapSupabaseAuthError';
 
 export const ForgotPasswordPage = () => {
   const { resetPassword } = useAuth();

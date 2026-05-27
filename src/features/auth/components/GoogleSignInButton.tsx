@@ -5,7 +5,7 @@ import { useState } from 'react';
 import { Icon } from '@/shared/components/Icon';
 import { useAuth } from '@/features/auth/context/AuthContext';
 import { useRouter } from 'next/navigation';
-import { mapSupabaseAuthError } from '@/utils/mapSupabaseAuthError';
+import { mapSupabaseAuthError } from '@/features/auth/utils/mapSupabaseAuthError';
 import { AUTH_NOT_CONFIGURED_ALERT } from '@/features/auth/constants/authMessages';
 import { AUTH_DEFAULT_REDIRECT } from '@/features/auth/constants/authRoutes';
 import { isSupabaseAuthConfigured } from '@/features/auth/utils/isSupabaseAuthConfigured';

@@ -8,7 +8,7 @@ import { Icon } from '@/shared/components/Icon';
 import { GoogleSignInButton } from '@/features/auth/components/GoogleSignInButton';
 import { useAuth } from '@/features/auth/context/AuthContext';
 import { AUTH_DEFAULT_REDIRECT } from '@/features/auth/constants/authRoutes';
-import { mapSupabaseAuthError } from '@/utils/mapSupabaseAuthError';
+import { mapSupabaseAuthError } from '@/features/auth/utils/mapSupabaseAuthError';
 
 export const LoginPage = () => {
   const router = useRouter();
