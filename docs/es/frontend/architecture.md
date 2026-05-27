@@ -8,7 +8,7 @@ Este proyecto **no** usa Atomic Design como capa de carpetas. La organización e
 ## Árbol de decisión
 
 1. **¿Solo una ruta de App Router?** → `src/app/.../_components/` (o co-localizado junto a `page.tsx` si el componente es pequeño).
-2. **¿Solo una feature** (`auth`, `exam`, `learning`, `logros`, `store`, `user`, `home`)? →
+2. **¿Solo una feature** (`auth`, `exam`, `learning`, `achievements`, `store`, `user`, `home`)? →
    `src/features/<feature>/components/` (o `hooks/`, `context/`, `utils/`, `data/` dentro de esa feature).
 3. **¿Shell de toda la app** (providers, guards, header del dashboard)? → `src/components/`.
 4. **¿UI reutilizada en 2+ features** (Icon, alertas)? → `src/shared/components/`.

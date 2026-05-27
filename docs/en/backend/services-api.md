@@ -95,7 +95,7 @@ Services that connect directly to PostgreSQL tables in Supabase:
 | **user**     | `src/services/persistence/userPersistence.ts`                                      | `useUserData` uses `loadUserProfile`, `patchUserProfile`, etc.          |
 | **progress** | `src/services/persistence/progressPersistence.ts`                                  | `useProgress` uses `loadProgressViewState`, etc.                        |
 | **exam**     | `src/services/persistence/examPersistence.ts`                                      | `useExam` uses `getExamById`, `resetUserExams`, …                       |
-| **logros**   | `GamificationSupabaseService` + localStorage; `gamificationPersistence` in lessons | `useGamification`; `LessonQuizModal` uses **`gamificationPersistence`** |
+| **achievements**   | `GamificationSupabaseService` + localStorage; `gamificationPersistence` in lessons | `useGamification`; `LessonQuizModal` uses **`gamificationPersistence`** |
 | **learning** | `src/features/learning/services/LearningService.ts`                                | Supabase (`learning_content`) or static roadmap data                    |
 | **store**    | `src/services/store/` (`SubscriptionPlanService`, `PlanScheduleService`)           | Plans and scheduling                                                    |
 | **auth**     | `src/context/AuthContext.tsx`, pages under `features/auth/`                        | Supabase/OAuth session; no `AuthService` stub                           |
@@ -405,7 +405,7 @@ NEXT_PUBLIC_API_MODE=localStorage
 ```typescript
 import { SubscriptionPlanService, PlanScheduleService } from '@/services';
 import { LEVELS, getLevelInfo } from '@/services/gamification';
-import { ACHIEVEMENTS_DATA } from '@/features/logros/constants/achievements';
+import { ACHIEVEMENTS_DATA } from '@/features/achievements/constants/achievements';
 
 import { gamificationPersistence, loadUserProfile, loadProgressViewState } from '@/services/persistence';
 ```

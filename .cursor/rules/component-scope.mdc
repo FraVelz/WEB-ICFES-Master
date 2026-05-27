@@ -10,7 +10,7 @@ Coloca cada archivo donde **realmente se usa**. No crear piezas globales si solo
 ## Árbol de decisión
 
 1. **¿Solo una ruta de App Router?** → `src/app/.../_components/`.
-2. **¿Solo una feature** (`auth`, `exam`, `learning`, `logros`, `store`, `user`, `home`)? → `src/features/<feature>/components/` (o `hooks/`, `utils/`, `data/` dentro de esa feature).
+2. **¿Solo una feature** (`auth`, `exam`, `learning`, `achievements`, `store`, `user`, `home`)? → `src/features/<feature>/components/` (o `hooks/`, `utils/`, `data/` dentro de esa feature).
 3. **¿Shell de toda la app** (providers, guards, header del dashboard)? → `src/components/`.
 4. **¿UI reutilizada en 2+ features** (Icon, Footer, alertas)? → `src/shared/components/`.
 5. **¿Persistencia o integraciones backend?** → `src/services/` (API pública en `@/services/persistence`, `@/services/gamification`, etc.).
@@ -59,7 +59,7 @@ src/shared/data/questions.ts  // eliminado — usar @/features/exam/data
 // ✅
 src/features/exam/data/
 
-// ✅ Icon usado en exam, learning, home, logros
+// ✅ Icon usado en exam, learning, home, achievements
 src/shared/components/Icon/
 
 // ✅ Header del dashboard (layout global)

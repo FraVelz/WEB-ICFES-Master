@@ -22,7 +22,7 @@ src/
 │   ├── supabase/
 │   ├── store/            # Servicios de planes (no confundir con features/store ni Redux)
 │   └── gamification/
-├── config/               # Supabase client, mensajes de email
+├── config/               # Supabase client, mensajes de email (`supabase.ts`, `supabaseClient.ts`)
 ├── components/           # Shell global (Providers, guards, DashboardHeader)
 ├── hooks/                # GSAP + hooks transversales (`hooks/gamification/`)
 ├── lib/                  # GSAP (ScrollTrigger)
@@ -60,7 +60,7 @@ features/nombre-feature/
 | **learning/** | Roadmap, lecciones (`roadmap/`, `lesson-flow/`, `lessons-legacy/`, `shell/`, `server/`, `context/`) |
 | **exam/**     | Práctica, examen completo, clasificatoria; datos en `exam/data/`             |
 | **user/**     | Perfil, configuración, hooks `useProgress`, `useUserData`                    |
-| **logros/**   | Badges, desafíos diarios, UI de logros (hooks de dominio en `hooks/gamification/`) |
+| **achievements/** | Badges, desafíos diarios, UI de logros (hooks de dominio en `hooks/gamification/`) |
 | **store/**    | Tienda virtual (UI), modales de compra                                       |
 
 ### Tres nombres “store”

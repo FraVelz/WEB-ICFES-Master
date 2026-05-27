@@ -8,7 +8,7 @@ This project does **not** use Atomic Design as a folder layer. Organization is *
 ## Decision tree
 
 1. **Single App Router route only?** → `src/app/.../_components/` (or co-located next to `page.tsx` for small route-only pieces).
-2. **Single feature** (`auth`, `exam`, `learning`, `logros`, `store`, `user`, `home`)? →
+2. **Single feature** (`auth`, `exam`, `learning`, `achievements`, `store`, `user`, `home`)? →
    `src/features/<feature>/components/` (or `hooks/`, `context/`, `utils/`, `data/` inside that feature).
 3. **App-wide shell** (providers, guards, dashboard header)? → `src/components/`.
 4. **UI reused in 2+ features** (Icon, alerts)? → `src/shared/components/`.

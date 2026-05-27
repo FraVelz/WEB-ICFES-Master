@@ -41,7 +41,7 @@ const { progress, areaStats, resetProgress, refresh } = useProgress();
 **useGamification:**
 
 ```javascript
-import { useGamification } from '@/features/logros/hooks/useGamification';
+import { useGamification } from '@/hooks/gamification';
 
 const { achievements, totalXP, level, coins, refreshData } = useGamification(userId);
 ```

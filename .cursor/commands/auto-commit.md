@@ -18,7 +18,7 @@ Usar cuando el usuario pida **hacer commit** del trabajo actual. Mensajes **Conv
 
 ## Ámbitos (`scope`) habituales en este repo
 
-`home`, `demo`, `learning`, `exam`, `auth`, `logros`, `store`, `user`, `theme`, `dashboard`, `services`, `persistence`,
+`home`, `demo`, `learning`, `exam`, `auth`, `achievements`, `store`, `user`, `theme`, `dashboard`, `services`, `persistence`,
 `readme`, `docs`, `cursor`, `ci`, `deps`.
 
 Rutas de referencia: `src/app/(dashboard)/`, `src/features/`, `src/services/`, `src/storage/`, `docs/es|en/`,
