@@ -5,7 +5,7 @@ import { cn } from '@/utils/cn';
 import { Icon } from '@/shared/components/Icon';
 import { useDailyChallenges } from '../hooks/useDailyChallenges';
 import { ChallengeCard } from '../components/ChallengeCard';
-import { ConstructionAlert } from '@/shared/components';
+import { ConstructionAlert } from '../components/ConstructionAlert';
 
 export const DailyChallengesPage = () => {
   const [selectedDate, setSelectedDate] = useState(new Date());
