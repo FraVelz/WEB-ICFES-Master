@@ -1,9 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createServerSupabaseClient } from '@/config/supabaseClient';
+import { CHAT_ANON_COOKIE, CHAT_ANON_LIMIT } from '@/features/learning/constants/chatAnonQuota';
 import OpenAI from 'openai';
 
-const CHAT_ANON_COOKIE = 'icfes_chat_anon_used';
-const CHAT_ANON_LIMIT = 3;
 const MAX_MESSAGES = 30;
 const MAX_MESSAGE_LENGTH = 8000;
 
@@ -39,6 +38,29 @@ function parseAnonCookie(request: NextRequest): number {
   return Number.isFinite(n) && n >= 0 ? n : 0;
 }
 
+function hasSupabaseAuthConfigured(): boolean {
+  return !!process.env.NEXT_PUBLIC_SUPABASE_URL && !!process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+}
+
+async function resolveChatAccess(request: NextRequest) {
+  const authUser = await getAuthUserFromRequest(request);
+  /** Sin Supabase en el proyecto no hay JWT: no aplicar cuota (alineado con usuario mock en cliente). */
+  const isLoggedIn = !!authUser || !hasSupabaseAuthConfigured();
+  const anonUsed = parseAnonCookie(request);
+
+  return { isLoggedIn, anonUsed };
+}
+
+export async function GET(request: NextRequest) {
+  const { isLoggedIn, anonUsed } = await resolveChatAccess(request);
+
+  return NextResponse.json({
+    anonUsed: isLoggedIn ? 0 : anonUsed,
+    limit: CHAT_ANON_LIMIT,
+    unlimited: isLoggedIn,
+  });
+}
+
 export async function POST(request: NextRequest) {
   try {
     const apiKey = process.env.OPENAI_API_KEY;
@@ -70,13 +92,7 @@ export async function POST(request: NextRequest) {
       }
     }
 
-    const hasSupabaseAuth = !!process.env.NEXT_PUBLIC_SUPABASE_URL && !!process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-
-    const authUser = await getAuthUserFromRequest(request);
-    /** Sin Supabase en el proyecto no hay JWT: no aplicar cuota (alineado con usuario mock en cliente). */
-    const isLoggedIn = !!authUser || !hasSupabaseAuth;
-
-    let anonUsed = parseAnonCookie(request);
+    const { isLoggedIn, anonUsed } = await resolveChatAccess(request);
     if (!isLoggedIn && anonUsed >= CHAT_ANON_LIMIT) {
       return NextResponse.json(
         {
@@ -114,10 +130,10 @@ export async function POST(request: NextRequest) {
       isLoggedIn
         ? { content: assistantMessage }
         : {
-          content: assistantMessage,
-          anonUsed: anonUsed + 1,
-          limit: CHAT_ANON_LIMIT,
-        }
+            content: assistantMessage,
+            anonUsed: anonUsed + 1,
+            limit: CHAT_ANON_LIMIT,
+          }
     );
 
     if (!isLoggedIn) {

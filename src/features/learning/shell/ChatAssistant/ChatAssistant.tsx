@@ -8,12 +8,7 @@ import { supabase } from '@/config/supabase';
 import { useAuth } from '@/features/auth/context/AuthContext';
 import { Icon } from '@/shared/components/Icon';
 import { useGSAPModalEntrance } from '@/hooks/useGSAPModalEntrance';
-import {
-  CHAT_ANON_LIMIT,
-  CHAT_ANON_STORAGE_KEY,
-  getAnonUsedFromStorage,
-  setAnonUsedInStorage,
-} from '@/features/learning/utils/chatAnonQuota';
+import { CHAT_ANON_LIMIT } from '@/features/learning/constants/chatAnonQuota';
 
 interface Message {
   id: string;
@@ -41,23 +36,29 @@ export const ChatAssistant = () => {
   const anonRemaining = Math.max(0, CHAT_ANON_LIMIT - anonUsed);
   const anonQuotaReached = isAnonymous && anonUsed >= CHAT_ANON_LIMIT;
 
-  const syncAnonFromStorage = useCallback(() => {
-    if (typeof window === 'undefined') return;
-    setAnonUsed(getAnonUsedFromStorage());
-  }, []);
+  const syncAnonQuota = useCallback(async () => {
+    if (user) {
+      setAnonUsed(0);
+      return;
+    }
+
+    try {
+      const token = supabase && (await supabase.auth.getSession()).data.session?.access_token;
+      const headers: HeadersInit = token ? { Authorization: `Bearer ${token}` } : {};
+      const res = await fetch('/api/chat', { credentials: 'same-origin', headers });
+      if (!res.ok) return;
+      const data = await res.json();
+      if (typeof data.anonUsed === 'number') {
+        setAnonUsed(data.anonUsed);
+      }
+    } catch {
+      // Quota display falls back to 0; POST still enforces the server limit.
+    }
+  }, [user]);
 
   useEffect(() => {
-    syncAnonFromStorage();
-  }, [syncAnonFromStorage]);
-
-  useEffect(() => {
-    if (user) return;
-    const onStorage = (e: StorageEvent) => {
-      if (e.key === null || e.key === CHAT_ANON_STORAGE_KEY) syncAnonFromStorage();
-    };
-    window.addEventListener('storage', onStorage);
-    return () => window.removeEventListener('storage', onStorage);
-  }, [user, syncAnonFromStorage]);
+    syncAnonQuota();
+  }, [syncAnonQuota]);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -77,8 +78,7 @@ export const ChatAssistant = () => {
     const trimmed = inputValue.trim();
     if (!trimmed) return;
 
-    if (isAnonymous && getAnonUsedFromStorage() >= CHAT_ANON_LIMIT) {
-      setAnonUsed(CHAT_ANON_LIMIT);
+    if (anonQuotaReached) {
       return;
     }
 
@@ -115,14 +115,12 @@ export const ChatAssistant = () => {
 
       if (!res.ok) {
         if (res.status === 429 && typeof data.anonUsed === 'number') {
-          setAnonUsedInStorage(data.anonUsed);
           setAnonUsed(data.anonUsed);
         }
         throw new Error(data.error || 'Error al obtener respuesta');
       }
 
       if (isAnonymous && typeof data.anonUsed === 'number') {
-        setAnonUsedInStorage(data.anonUsed);
         setAnonUsed(data.anonUsed);
       }
 
