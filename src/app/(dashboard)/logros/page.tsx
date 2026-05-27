@@ -1,5 +1,5 @@
 import ProtectedPage from '@/components/ProtectedPage';
-import LogrosPage from '@/features/logros';
+import LogrosPage from '@/features/achievements';
 
 export default function Page() {
   return (

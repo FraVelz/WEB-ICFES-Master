@@ -4,7 +4,7 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
-import { ACHIEVEMENTS_DATA } from '@/features/logros/constants/achievements';
+import { ACHIEVEMENTS_DATA } from '@/features/achievements/constants/achievements';
 import { getVirtualMoney } from '@/services/persistence';
 import API_CONFIG from '@/services/api.config';
 import GamificationSupabaseService from '@/services/supabase/GamificationSupabaseService';

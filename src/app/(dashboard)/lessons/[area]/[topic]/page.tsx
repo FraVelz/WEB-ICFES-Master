@@ -2,7 +2,7 @@ import { LessonFlowClient } from '@/features/learning/lesson-flow/LessonFlowClie
 import { LESSON_ROUTE_PAIRS } from '@/features/learning/constants/lessonDynamicRoutes';
 import { getLessonWithSteps } from '@/features/learning/server/getLessonWithSteps';
 
-import { LessonPageClient } from './LessonPageClient';
+import { LessonPageClient } from './_components/LessonPageClient';
 
 /** Steps load from Supabase — avoid stale static HTML. */
 export const dynamic = 'force-dynamic';
