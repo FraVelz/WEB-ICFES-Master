@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { createClient } from '@supabase/supabase-js';
+import { createServerSupabaseClient } from '@/config/supabaseClient';
 import OpenAI from 'openai';
 
 const CHAT_ANON_COOKIE = 'icfes_chat_anon_used';
@@ -17,15 +17,12 @@ const SYSTEM_PROMPT = `Eres un asistente educativo especializado en el examen IC
 Responde de forma clara, concisa y didáctica. Usa ejemplos cuando sea útil. Si no estás seguro de algo, indícalo. Mantén un tono amigable y motivador.`;
 
 async function getAuthUserFromRequest(request: NextRequest) {
-  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-
-  if (!url || !key) return null;
   const authHeader = request.headers.get('Authorization');
   const jwt = authHeader?.startsWith('Bearer ') ? authHeader.slice(7) : null;
 
   if (!jwt) return null;
-  const supabase = createClient(url, key);
+  const supabase = createServerSupabaseClient(jwt);
+  if (!supabase) return null;
 
   const {
     data: { user },

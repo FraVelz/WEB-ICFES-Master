@@ -1,13 +1,6 @@
-import { createClient, type SupabaseClient } from '@supabase/supabase-js';
+import { createServerSupabaseClient } from '@/config/supabaseClient';
 
 import type { LessonStepRow, LessonSummary, StepType } from '@/features/learning/types/lessonFlow';
-
-function getServerSupabase(): SupabaseClient | null {
-  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-  if (!url || !key) return null;
-  return createClient(url, key);
-}
 
 /**
  * Resuelve la lección por slug `area/topic` (coincide con la ruta dinámica).
@@ -17,7 +10,7 @@ export async function getLessonWithSteps(
   topic: string
 ): Promise<{ lesson: LessonSummary; steps: LessonStepRow[] } | null> {
   const slug = `${area}/${topic}`;
-  const sb = getServerSupabase();
+  const sb = createServerSupabaseClient();
   if (!sb) return null;
 
   const { data: lesson, error: le } = await sb.from('lessons').select('id, title').eq('slug', slug).maybeSingle();
