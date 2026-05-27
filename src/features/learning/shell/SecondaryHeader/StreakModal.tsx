@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { cn } from '@/utils/cn';
 import { Icon } from '@/shared/components/Icon';
+import { ModalOverlay } from '@/shared/components/ModalOverlay';
 import { useGSAPModalEntrance } from '@/hooks/useGSAPModalEntrance';
 
 export interface StreakData {
@@ -91,7 +92,7 @@ export const StreakModal = ({ isOpen, onClose, streakData }: StreakModalProps) =
 
   return (
     <>
-      <div className="fixed inset-0 z-40" onClick={onClose} />
+      <ModalOverlay onClose={onClose} />
 
       <div
         ref={dropdownRef}

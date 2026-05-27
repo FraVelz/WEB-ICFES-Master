@@ -1,63 +1,6 @@
 /**
- * Utilidades de gamificación (niveles, badges, XP)
+ * Utilidades de gamificación (niveles y XP)
  */
-
-export const BADGES = {
-  FIRST_QUESTION: {
-    id: 'first_question',
-    name: 'Primera Pregunta',
-    description: 'Responde tu primera pregunta',
-    icon: '🚀',
-  },
-  STREAK_7: {
-    id: 'streak_7',
-    name: 'En Racha',
-    description: 'Mantén una racha de 7 días',
-    icon: '🔥',
-  },
-  HUNDRED_QUESTIONS: {
-    id: 'hundred_questions',
-    name: 'Centenario',
-    description: 'Responde 100 preguntas',
-    icon: '💯',
-  },
-  NINETY_PERCENT: {
-    id: 'ninety_percent',
-    name: 'Genio',
-    description: 'Alcanza 90% de precisión',
-    icon: '🧠',
-  },
-  PERFECT_EXAM: {
-    id: 'perfect_exam',
-    name: 'Perfecto',
-    description: 'Completa un examen con 100%',
-    icon: '⭐',
-  },
-  AREA_MASTER_MATH: {
-    id: 'area_master_math',
-    name: 'Maestro de Matemáticas',
-    description: '80% en Matemáticas',
-    icon: '📐',
-  },
-  AREA_MASTER_LANGUAGE: {
-    id: 'area_master_language',
-    name: 'Maestro de Lenguaje',
-    description: '80% en Lectura Crítica',
-    icon: '📚',
-  },
-  AREA_MASTER_SCIENCE: {
-    id: 'area_master_science',
-    name: 'Maestro de Ciencias',
-    description: '80% en Ciencias Naturales',
-    icon: '🔬',
-  },
-  NIGHT_OWL: {
-    id: 'night_owl',
-    name: 'Búho Nocturno',
-    description: 'Estudia después de las 11 PM',
-    icon: '🦉',
-  },
-};
 
 export const LEVELS = [
   {
@@ -100,7 +43,7 @@ export const LEVELS = [
     maxXP: null,
     color: 'from-yellow-400 to-yellow-600',
   },
-];
+] as const;
 
 export const calculateLevel = (totalXP: number) => {
   let level = 1;

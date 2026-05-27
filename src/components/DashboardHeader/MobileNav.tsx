@@ -1,4 +1,5 @@
 import { Icon } from '@/shared/components/Icon';
+import { ModalOverlay } from '@/shared/components/ModalOverlay';
 import { cn } from '@/utils/cn';
 import { mainNavOptions, mobileMenuOptions } from './constants';
 import { MobileBottomNavLink } from './MobileBottomNavLink';
@@ -43,7 +44,7 @@ export function MobileNav({ pathname, menuOpen, onToggleMenu, onCloseMenu, isLoc
 
       {menuOpen && (
         <>
-          <div className="fixed inset-0 z-40 lg:hidden" onClick={onCloseMenu} />
+          <ModalOverlay onClose={onCloseMenu} className="lg:hidden" />
           <div
             className={cn(
               'border-app-ring/30 fixed right-0 bottom-20 left-0 z-50 h-fit w-screen border-t',

@@ -1,3 +1,2 @@
 export { default as GamificationLocalService } from './GamificationLocalService';
-export { BADGES, LEVELS } from './gamificationConstants';
-export { calculateLevel, getLevelInfo } from './gamificationUtils';
+export { calculateLevel, getLevelInfo, LEVELS } from './gamificationUtils';

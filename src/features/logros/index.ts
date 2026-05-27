@@ -5,5 +5,6 @@ export { UnifiedAchievementsPage as default, UnifiedAchievementsPage, DailyChall
 export { UnifiedAchievementsHub } from './components';
 export { useGamification } from './hooks/useGamification';
 export { useDailyChallenges, type DailyChallenge } from './hooks/useDailyChallenges';
-export { BADGES, LEVELS } from '@/services/gamification/gamificationConstants';
+export { ACHIEVEMENTS_DATA, ACHIEVEMENT_CATEGORIES } from './constants/achievements';
+export { RANKS, getRankInfo } from './constants/ranks';
 export { default as GamificationLocalService } from '@/services/gamification/GamificationLocalService';

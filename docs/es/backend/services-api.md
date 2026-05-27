@@ -404,7 +404,9 @@ NEXT_PUBLIC_API_MODE=localStorage
 ## Exportaciones desde `@/services`
 
 ```typescript
-import { SubscriptionPlanService, PlanScheduleService, BADGES, LEVELS } from '@/services';
+import { SubscriptionPlanService, PlanScheduleService } from '@/services';
+import { LEVELS, getLevelInfo } from '@/services/gamification';
+import { ACHIEVEMENTS_DATA } from '@/features/logros/constants/achievements';
 
 import { gamificationPersistence, loadUserProfile, loadProgressViewState } from '@/services/persistence';
 ```

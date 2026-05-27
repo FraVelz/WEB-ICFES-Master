@@ -2,6 +2,7 @@
 
 import { cn } from '@/utils/cn';
 import { Icon } from '@/shared/components/Icon';
+import { ModalOverlay } from '@/shared/components/ModalOverlay';
 import { AREA_INFO } from '@/shared/constants';
 import { useGSAPModalEntrance } from '@/hooks/useGSAPModalEntrance';
 
@@ -29,8 +30,7 @@ export const AreasModal = ({ isOpen, onClose, onSelectArea, currentArea }: Areas
 
   return (
     <>
-      {/* Transparent backdrop — click outside to close */}
-      <div className="fixed inset-0 z-40" onClick={onClose} />
+      <ModalOverlay onClose={onClose} />
 
       {/* Dropdown Container */}
       <div
