@@ -14,7 +14,8 @@ Coloca cada archivo donde **realmente se usa**. No crear piezas globales si solo
 3. **¿Shell de toda la app** (providers, guards, header del dashboard)? → `src/components/`.
 4. **¿UI reutilizada en 2+ features** (Icon, Footer, alertas)? → `src/shared/components/`.
 5. **¿Persistencia o integraciones backend?** → `src/services/` (API pública en `@/services/persistence`, `@/services/gamification`, etc.).
-6. **¿Duda?** → Empezar en el scope más pequeño (feature o ruta). Subir a `shared/` o `components/` solo cuando haya **segundo consumidor** fuera de esa feature.
+6. **¿Auth / sesión Supabase?** → `src/features/auth/context/AuthContext.tsx`.
+7. **¿Duda?** → Empezar en el scope más pequeño (feature o ruta). Subir a `shared/` o `components/` solo cuando haya **segundo consumidor** fuera de esa feature.
 
 ## Mapa de carpetas
 
@@ -22,6 +23,7 @@ Coloca cada archivo donde **realmente se usa**. No crear piezas globales si solo
 |--------|-----------|
 | Una página / ruta | `src/app/.../_components/` |
 | Un dominio de negocio | `src/features/<nombre>/` |
+| Auth (contexto de sesión) | `src/features/auth/context/` |
 | Shell global (Providers, ProtectedPage, DashboardHeader) | `src/components/` |
 | UI transversal (Icon, Footer, MascotaCircle) | `src/shared/components/` |
 | Constantes de dominio compartidas (áreas ICFES) | `src/shared/constants/` |
@@ -51,8 +53,8 @@ src/shared/components/ShopItemModal.tsx
 // ✅
 src/features/store/components/ShopItemModal.tsx
 
-// ❌ Datos de preguntas del examen en shared
-src/shared/data/questions.ts
+// ❌ Datos de preguntas del examen fuera de exam/
+src/shared/data/questions.ts  // eliminado — usar @/features/exam/data
 
 // ✅
 src/features/exam/data/

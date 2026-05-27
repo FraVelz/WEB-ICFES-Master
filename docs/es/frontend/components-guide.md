@@ -140,7 +140,8 @@ Usa `src/features/exam/hooks/useQuizLogic.ts` y tipos en `src/features/exam/type
 
 ## Componentes (convención del repo)
 
-UI compartida: **`Icon`**, **`Footer`**, **`MascotaCircle`**, **`ConstructionAlert`**. Navegación del dashboard:
+UI compartida: **`Icon`**, **`Footer`**, **`MascotaCircle`**, **`ConstructionAlert`**, **`ModalOverlay`**.
+Navegación del dashboard: **`src/components/DashboardHeader/`**. Dominio examen: `AnswerOption` en
 **`src/components/DashboardHeader/`**. Dominio examen: `AnswerOption` en `features/exam/components/`. Features en
 `src/features/*`; rutas en `src/app/`.
 

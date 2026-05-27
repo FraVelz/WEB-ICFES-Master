@@ -1,4 +1,4 @@
-# Documentación del proyecto WEB-ICFES
+# Documentación del proyecto WEB-ICFES Master
 
 Bienvenido a la documentación técnica del proyecto. Esta documentación está organizada para facilitar la incorporación
 de nuevos desarrolladores y servir como referencia técnica.
@@ -12,8 +12,8 @@ de nuevos desarrolladores y servir como referencia técnica.
 
 ### 2. Configuración (`/setup`)
 
-- **[Instalación](../setup/installation.md)**: Guía paso a paso para configurar el entorno local (incluye variables de
-  entorno).
+- **[Instalación](../setup/installation.md)**: Guía paso a paso para configurar el entorno local.
+- **[Configuración](../setup/configuration.md)**: Variables de entorno, modos y opciones de Next.js.
 - **[Tecnologías](../setup/technologies.md)**: Stack completo del proyecto.
 - **[Rutas](../setup/routes.md)**: URLs y rutas de la aplicación.
 - **[Scripts](../setup/scripts.md)**: Comandos de `package.json`.
@@ -21,6 +21,7 @@ de nuevos desarrolladores y servir como referencia técnica.
 
 ### 3. Frontend (`/frontend`)
 
+- **[Arquitectura](../frontend/architecture.md)**: Reglas feature-based, imports y convenciones.
 - **[Guía de componentes](../frontend/components-guide.md)**: Uso de hooks y creación de componentes.
 - **[Guía de estilos](../frontend/styles-guide.md)**: Sistema de diseño y Tailwind.
 
@@ -30,13 +31,13 @@ de nuevos desarrolladores y servir como referencia técnica.
 
 ### 5. Datos (`/data`)
 
-- **[Estructura de aprendizaje](../data/learning-structure-guide.md)**: Tabla `learning_content` en Supabase.
-- **[Progreso solo en cliente](../data/progreso-cliente-local.md)**: Progreso en `localStorage` que no se sincroniza
-  automáticamente con el backend.
+- **[Estructura de aprendizaje](../data/learning-structure-guide.md)**: Tabla `learning_content` (roadmap).
+- **[Lecciones por pasos](../data/lessons-steps-guide.md)**: Tablas `lessons` + `steps` (lesson flow).
+- **[Progreso solo en cliente](../data/progreso-cliente-local.md)**: Progreso en `localStorage` sin sync automática.
 
 ### 6. Integraciones (`/integrations`)
 
-- **[Pagos](../integrations/payments.md)**: Integración con la pasarela de pagos y persistencia en Supabase.
+- **[Pagos](../integrations/payments.md)**: Donaciones y tienda (en desarrollo).
 
 ---
 
@@ -44,8 +45,8 @@ de nuevos desarrolladores y servir como referencia técnica.
 
 1. Lee el **[resumen ejecutivo](executive-summary.md)** para entender el contexto.
 2. Sigue la **[guía de instalación](../setup/installation.md)**.
-3. Consulta la **[estructura del proyecto](project-structure.md)** para navegar el código.
+3. Consulta **[arquitectura](../frontend/architecture.md)** y **[estructura del proyecto](project-structure.md)**.
 
 ---
 
-_Archivo generado por IA. Última actualización: lunes, 18 de mayo de 2026._
+_Archivo generado por IA. Última actualización: miércoles, 27 de mayo de 2026._

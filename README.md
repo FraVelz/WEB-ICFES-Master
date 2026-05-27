@@ -7,6 +7,8 @@ Diseñada con arquitectura **feature-based** usando Next.js 15, React 19, Tailwi
 
 > [!NOTE] Se buscaba abarcar muchos más países además de Colombia, pero cada país maneja la educación de forma distinta:
 > las preguntas, los temas y las materias cambian. Incluso hay países donde el examen no es obligatorio o no existe.
+>
+> [!IMPORTANT] Donaciones y tienda/planes están **en desarrollo**. Ver [integrations/payments.md](docs/es/integrations/payments.md).
 
 ![Hero section de la plataforma ICFES - Domina el ICFES desde Cero](public/images/screenshot.png)
 
@@ -25,7 +27,7 @@ Diseñada con arquitectura **feature-based** usando Next.js 15, React 19, Tailwi
 
 ## Características Principales
 
-Para las áreas de Español, Sociales, Inglés, Matemáticas y Ciencias:
+Para las áreas de Lectura Crítica, Sociales, Inglés, Matemáticas y Ciencias:
 
 - Conceptos por área, lecciones interactivas y preguntas asociadas a cada lección.
 - Práctica con preguntas agrupadas por materia.
@@ -35,14 +37,23 @@ Para las áreas de Español, Sociales, Inglés, Matemáticas y Ciencias:
 
 ## Documentación técnica
 
-Carpeta: [`docs/es/`](docs/es/)
+Carpeta: [`docs/es/`](docs/es/) — Índice: [overview.md](docs/es/overview/overview.md)
 
-- [**overview.md**](docs/es/overview/overview.md) — Índice de la documentación
-- [**project-structure.md**](docs/es/overview/project-structure.md) — Estructura del código
-- [**components-guide.md**](docs/es/frontend/components-guide.md) — Guía de componentes
-- [**styles-guide.md**](docs/es/frontend/styles-guide.md) — Estilos y tokens Tailwind
-- [**services-api.md**](docs/es/backend/services-api.md) — Servicios y persistencia
-- [**routes.md**](docs/es/setup/routes.md) — URLs de la aplicación
+| Documento                                                               | Descripción                  |
+| ----------------------------------------------------------------------- | ---------------------------- |
+| [installation.md](docs/es/setup/installation.md)                        | Instalación local            |
+| [configuration.md](docs/es/setup/configuration.md)                      | Variables de entorno y modos |
+| [technologies.md](docs/es/setup/technologies.md)                        | Stack completo               |
+| [routes.md](docs/es/setup/routes.md)                                    | URLs de la app               |
+| [architecture.md](docs/es/frontend/architecture.md)                     | Reglas feature-based         |
+| [project-structure.md](docs/es/overview/project-structure.md)           | Árbol de carpetas            |
+| [components-guide.md](docs/es/frontend/components-guide.md)             | Componentes y hooks          |
+| [services-api.md](docs/es/backend/services-api.md)                      | Persistencia y Supabase      |
+| [learning-structure-guide.md](docs/es/data/learning-structure-guide.md) | Roadmap (`learning_content`) |
+| [lessons-steps-guide.md](docs/es/data/lessons-steps-guide.md)           | Lecciones por pasos          |
+| [cheatsheet.md](docs/es/setup/cheatsheet.md)                            | Referencia rápida            |
+
+Versión en inglés: [`docs/en/`](docs/en/)
 
 ---
 
@@ -68,4 +79,4 @@ Para sugerencias o para reportar errores, crea un issue en el repositorio de Git
 
 ---
 
-_Archivo generado por IA. Última actualización: sábado, 16 de mayo de 2026._
+_Archivo generado por IA. Última actualización: miércoles, 27 de mayo de 2026._

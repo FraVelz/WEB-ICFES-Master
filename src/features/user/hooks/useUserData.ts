@@ -1,6 +1,6 @@
 /** User profile + wallet — Supabase or local persistence */
 import { useState, useEffect, useCallback } from 'react';
-import { useAuth } from '@/context/AuthContext';
+import { useAuth } from '@/features/auth/context/AuthContext';
 import type { MappedUser } from '@/services/supabase/UserSupabaseService';
 import type { UserProfile } from '@/services/persistence';
 import {

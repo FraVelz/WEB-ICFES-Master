@@ -130,8 +130,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
             const meta = session.user.user_metadata;
             await UserSupabaseService.createUser(session.user.id, {
               email: session.user.email,
-              displayName:
-                meta?.display_name || meta?.full_name || session.user.email?.split('@')[0] || 'Usuario',
+              displayName: meta?.display_name || meta?.full_name || session.user.email?.split('@')[0] || 'Usuario',
             });
           }
         } catch (profileErr) {

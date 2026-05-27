@@ -9,6 +9,7 @@
 | Start local server  | `pnpm dev`       |
 | Clear `.next` & run | `pnpm dev:clean` |
 | Build project       | `pnpm build`     |
+| Tests               | `pnpm test`      |
 | Production preview  | `pnpm start`     |
 
 ### Web deployment
@@ -64,4 +65,4 @@ console.log(API_CONFIG.MODE);
 
 ---
 
-_AI-generated file. Last updated: Monday, May 18, 2026._
+_AI-generated file. Last updated: Wednesday, May 27, 2026._

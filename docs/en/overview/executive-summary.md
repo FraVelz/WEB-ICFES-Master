@@ -24,8 +24,8 @@
 
 ### Requirements
 
-- Node.js 18+
-- pnpm
+- Node.js 20+ (CI uses Node 20; local minimum: 18+)
+- pnpm 9+ (CI uses pnpm 9)
 
 ### Initial setup
 
@@ -73,4 +73,4 @@ pnpm start                 # Production server (after build)
 
 ---
 
-_AI-generated file. Last updated: Monday, May 18, 2026._
+_AI-generated file. Last updated: Wednesday, May 27, 2026._

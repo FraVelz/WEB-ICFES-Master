@@ -8,7 +8,7 @@ import {
   type UserProfile,
   type UserRank,
 } from '@/services/persistence';
-import { useAuth } from '@/context/AuthContext';
+import { useAuth } from '@/features/auth/context/AuthContext';
 
 /**
  * Hook personalizado para manejar datos del usuario (localStorage)

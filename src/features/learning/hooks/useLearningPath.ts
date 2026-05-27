@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { LearningService } from '../services/LearningService';
-import { useAuth } from '@/context/AuthContext';
+import { useAuth } from '@/features/auth/context/AuthContext';
 
 /**
  * Learning-path state: maps Supabase/local lessons into UI "sections".

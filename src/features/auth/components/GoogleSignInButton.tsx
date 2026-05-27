@@ -3,7 +3,7 @@
 import { cn } from '@/utils/cn';
 import { useState } from 'react';
 import { Icon } from '@/shared/components/Icon';
-import { useAuth } from '@/context/AuthContext';
+import { useAuth } from '@/features/auth/context/AuthContext';
 import { useRouter } from 'next/navigation';
 import { mapSupabaseAuthError } from '@/utils/mapSupabaseAuthError';
 import { AUTH_NOT_CONFIGURED_ALERT } from '@/features/auth/constants/authMessages';

@@ -6,7 +6,7 @@ import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { Icon } from '@/shared/components/Icon';
 import { useUserProfile } from '../hooks/useUserProfile';
-import { useAuth } from '@/context/AuthContext';
+import { useAuth } from '@/features/auth/context/AuthContext';
 
 export const PerfilNormal = () => {
   const router = useRouter();

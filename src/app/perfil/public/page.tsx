@@ -6,7 +6,7 @@ export default function Page() {
     <Suspense
       fallback={
         <div className="flex min-h-dvh items-center justify-center bg-slate-950">
-          <div className="animate-spin text-4xl text-app-accent">...</div>
+          <div className="text-app-accent animate-spin text-4xl">...</div>
         </div>
       }
     >

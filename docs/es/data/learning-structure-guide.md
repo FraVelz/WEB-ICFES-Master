@@ -10,8 +10,11 @@ para que cualquier desarrollador o administrador de contenido pueda agregar, edi
 
 ## 1. Introducción
 
-El sistema de aprendizaje funciona leyendo datos de la tabla **`learning_content`** en Supabase. El frontend consulta
-esta tabla para generar dinámicamente la "Ruta de Aprendizaje" (Learning Path) de cada materia.
+El sistema de aprendizaje del **roadmap** funciona leyendo datos de la tabla **`learning_content`** en Supabase. El
+frontend consulta esta tabla para generar dinámicamente la "Ruta de Aprendizaje" (Learning Path) de cada materia.
+
+Para lecciones por **pasos** en `/lessons/...`, ver [lessons-steps-guide.md](./lessons-steps-guide.md)
+(tablas `lessons` + `steps`).
 
 **Flujo de datos:**
 

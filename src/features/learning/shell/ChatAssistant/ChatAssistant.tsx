@@ -5,7 +5,7 @@ import { useState, useRef, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import ReactMarkdown from 'react-markdown';
 import { supabase } from '@/config/supabase';
-import { useAuth } from '@/context/AuthContext';
+import { useAuth } from '@/features/auth/context/AuthContext';
 import { Icon } from '@/shared/components/Icon';
 import { useGSAPModalEntrance } from '@/hooks/useGSAPModalEntrance';
 import {

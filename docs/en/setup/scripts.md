@@ -54,7 +54,7 @@ pnpm preview
 
 ---
 
-## Build
+## Build and tests
 
 ### `build`
 
@@ -66,6 +66,30 @@ pnpm build
 
 **Description:** Production build (output in `.next/`). This repo does **not** enable `output: 'export'` by default;
 `out/` is not generated unless you add that option in `next.config`.
+
+---
+
+### `test`
+
+```bash
+pnpm test
+```
+
+**Command:** `vitest run`
+
+**Description:** Runs the unit test suite (utilities, area constants, gamification).
+
+---
+
+### `test:watch`
+
+```bash
+pnpm test:watch
+```
+
+**Command:** `vitest`
+
+**Description:** Runs tests in watch mode during development.
 
 ---
 
@@ -119,6 +143,30 @@ pnpm react:doctor
 
 ---
 
+### `lint:md`
+
+```bash
+pnpm lint:md
+```
+
+**Command:** `markdownlint-cli2`
+
+**Description:** Lints Markdown files (documentation under `docs/`).
+
+---
+
+### `lint:md:fix`
+
+```bash
+pnpm lint:md:fix
+```
+
+**Command:** `markdownlint-cli2 --fix`
+
+**Description:** Auto-fixes Markdown formatting issues when possible.
+
+---
+
 ## Recommended workflow
 
 | Task                | Script(s)                      |
@@ -129,10 +177,12 @@ pnpm react:doctor
 | Local preview       | `pnpm start` or `pnpm preview` |
 | Deploy              | Vercel / Netlify / Node host   |
 | Lint                | `pnpm lint`                    |
+| Unit tests          | `pnpm test`                    |
 | Format check        | `pnpm format:check`            |
 | Format code         | `pnpm format`                  |
+| Docs lint           | `pnpm lint:md`                 |
 | React audit         | `pnpm react:doctor`            |
 
 ---
 
-_AI-generated file. Last updated: Monday, May 18, 2026._
+_AI-generated file. Last updated: Wednesday, May 27, 2026._

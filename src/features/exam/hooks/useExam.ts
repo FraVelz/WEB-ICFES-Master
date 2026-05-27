@@ -1,6 +1,6 @@
 /** Load/save exam attempts — persistence layer */
 import { useState, useEffect, useCallback } from 'react';
-import { useAuth } from '@/context/AuthContext';
+import { useAuth } from '@/features/auth/context/AuthContext';
 import { getExamById, resetUserExams as resetUserExamsPersistence, getUserExamsList } from '@/services/persistence';
 
 export function useExam(examId: string | undefined) {

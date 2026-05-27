@@ -11,8 +11,8 @@ Reference for styling and animation conventions in the project.
 
 ## Main files
 
-| File                    | Purpose                                                                            |
-| ----------------------- | ---------------------------------------------------------------------------------- |
+| File                  | Purpose                                                                            |
+| --------------------- | ---------------------------------------------------------------------------------- |
 | `src/app/globals.css` | Tailwind, `tailwind-animations`, `--color-*` tokens in `@theme`, `.hide-scrollbar` |
 | `src/lib/gsap.ts`     | GSAP and ScrollTrigger setup                                                       |
 

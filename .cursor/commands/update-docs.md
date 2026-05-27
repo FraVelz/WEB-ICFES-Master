@@ -30,7 +30,6 @@ corregir ortografía del adjunto y **avisar** que no hay espejo bilingüe en el 
 
 | Español (`docs/es/`)             | Inglés (`docs/en/`)             |
 | -------------------------------- | ------------------------------- |
-| `setup/rutes.md`                 | `setup/routes.md`               |
 | `data/progreso-cliente-local.md` | `data/client-local-progress.md` |
 
 ## Documentación generada por IA

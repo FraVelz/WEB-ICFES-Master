@@ -5,7 +5,7 @@ import { readUiSessionFromStorage } from '@/store/readUiSessionFromStorage';
 import { uiSessionSlice } from '@/store/slices/uiSessionSlice';
 
 /**
- * User authentication and profile from Supabase (or mock) remain in AuthContext — not duplicated here.
+ * User authentication and profile from Supabase (or mock) remain in features/auth/context/AuthContext — not duplicated here.
  *
  * Redux holds the `uiSession` slice only: demo mode, pricing checkout resume, and related UI flags.
  * Server-backed data and Supabase subscriptions should stay outside Redux unless you add RTK Query later.
@@ -31,8 +31,7 @@ export const makeStore = () => {
           },
         }
       : undefined,
-    middleware: (getDefaultMiddleware) =>
-      getDefaultMiddleware().prepend(uiSessionSyncMiddleware.middleware),
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware().prepend(uiSessionSyncMiddleware.middleware),
   });
 };
 

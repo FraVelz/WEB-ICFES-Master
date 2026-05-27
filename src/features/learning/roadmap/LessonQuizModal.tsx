@@ -3,7 +3,7 @@
 import { cn } from '@/utils/cn';
 import React, { useState, useEffect } from 'react';
 import { Icon } from '@/shared/components/Icon';
-import { useAuth } from '@/context/AuthContext';
+import { useAuth } from '@/features/auth/context/AuthContext';
 import { useGSAPModalEntrance } from '@/hooks/useGSAPModalEntrance';
 import { gamificationPersistence } from '@/services/persistence';
 import { getCompletedLessons, markLessonAsCompleted } from '@/services/persistence';

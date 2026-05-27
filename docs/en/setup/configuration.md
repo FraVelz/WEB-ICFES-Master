@@ -1,0 +1,58 @@
+# Environment configuration
+
+Environment variables and runtime modes. For first-time setup, see [installation.md](./installation.md).
+
+---
+
+## Environment variables
+
+Copy [`.env.example`](../../../.env.example) to `.env.local` at the project root.
+
+| Variable                        | Required            | Description                                   |
+| ------------------------------- | ------------------- | --------------------------------------------- |
+| `NEXT_PUBLIC_SUPABASE_URL`      | Yes (supabase mode) | Supabase project URL                          |
+| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Yes (supabase mode) | Supabase public anon key                      |
+| `NEXT_PUBLIC_API_MODE`          | No                  | `supabase` (default) or `localStorage`        |
+| `OPENAI_API_KEY`                | No                  | OpenAI API key for `/api/chat` (AI assistant) |
+
+### Persistence mode (`NEXT_PUBLIC_API_MODE`)
+
+| Value          | Use                                                  |
+| -------------- | ---------------------------------------------------- |
+| `supabase`     | Production: real auth, PostgreSQL, Supabase services |
+| `localStorage` | Local dev without backend: mock data in the browser  |
+
+With `localStorage`, login/signup use a mock user in `localStorage`. For OAuth and real data, use `supabase`.
+
+### Supabase Auth (OAuth and password reset)
+
+In **Supabase Dashboard → Authentication → URL Configuration**:
+
+- **Site URL:** `http://localhost:3000` (or your domain)
+- **Redirect URLs:**
+  - `http://localhost:3000/auth/callback`
+  - `http://localhost:3000/auth/callback?next=/ruta-aprendizaje`
+  - `http://localhost:3000/reset-password`
+  - `https://your-domain.com/auth/callback`
+
+---
+
+## Next.js
+
+| Option               | Value  | Effect                                    |
+| -------------------- | ------ | ----------------------------------------- |
+| `trailingSlash`      | `true` | Public URLs end with `/` (e.g. `/login/`) |
+| `images.unoptimized` | `true` | Images without Next Image optimization    |
+
+Permanent redirect: `/aprendizaje` → `/ruta-aprendizaje` (see `next.config.ts`).
+
+---
+
+## Demo mode
+
+From the landing page, users can enter **demo mode** without an account. State lives in Redux (`uiSession.demoMode`).
+See [services-api.md](../backend/services-api.md) and `src/features/home/utils/enterDemoMode.ts`.
+
+---
+
+_AI-generated file. Last updated: Wednesday, May 27, 2026._

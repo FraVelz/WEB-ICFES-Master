@@ -67,6 +67,8 @@ Abre [http://localhost:3000](http://localhost:3000).
 - Con `NEXT_PUBLIC_API_MODE=localStorage` la app funciona sin Supabase
 - Con `NEXT_PUBLIC_API_MODE=supabase` necesitas un proyecto Supabase configurado
 
+Para detalle de variables, ver [configuration.md](./configuration.md).
+
 ---
 
-_Archivo generado por IA. Última actualización: lunes, 18 de mayo de 2026._
+_Archivo generado por IA. Última actualización: miércoles, 27 de mayo de 2026._

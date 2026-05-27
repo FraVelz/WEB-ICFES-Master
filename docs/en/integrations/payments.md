@@ -13,12 +13,12 @@ architecture refactor.
 
 ### Active flows
 
-| Area                | Location                                              | Notes                                            |
-| ------------------- | ----------------------------------------------------- | ------------------------------------------------ |
-| Donations           | `src/features/home/components/DonationSection/`       | Simulated form on the landing page               |
-| Plans / shop        | `src/features/store/` + `src/services/store/`         | `SubscriptionPlanService`, `PlanScheduleService` |
-| Session and plan UI | `src/context/AuthContext.tsx`, Redux `uiSession`      | Selected plan and demo mode                      |
-| Persistence         | `@/services/persistence`, Supabase `user_plans` table | Per `API_CONFIG.MODE`                            |
+| Area                | Location                                                       | Notes                                            |
+| ------------------- | -------------------------------------------------------------- | ------------------------------------------------ |
+| Donations           | `src/features/home/components/DonationSection/`                | Simulated form on the landing page               |
+| Plans / shop        | `src/features/store/` + `src/services/store/`                  | `SubscriptionPlanService`, `PlanScheduleService` |
+| Session and plan UI | `src/features/auth/context/AuthContext.tsx`, Redux `uiSession` | Selected plan and demo mode                      |
+| Persistence         | `@/services/persistence`, Supabase `user_plans` table          | Per `API_CONFIG.MODE`                            |
 
 ### Plan identifiers
 

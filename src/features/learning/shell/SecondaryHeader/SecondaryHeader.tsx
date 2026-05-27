@@ -4,7 +4,7 @@ import { cn } from '@/utils/cn';
 import { useState, useMemo } from 'react';
 import { Icon } from '@/shared/components/Icon';
 import { getAreaInfo } from '@/shared/constants';
-import { useAuth } from '@/context/AuthContext';
+import { useAuth } from '@/features/auth/context/AuthContext';
 import { useGamification } from '@/features/logros/hooks/useGamification';
 import { AreasModal } from './AreasModal';
 import { StreakModal } from './StreakModal';

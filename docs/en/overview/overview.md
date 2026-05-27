@@ -1,4 +1,4 @@
-# WEB-ICFES project documentation
+# WEB-ICFES Master project documentation
 
 Welcome to the technical documentation of the project. This documentation is organized to facilitate onboarding for new
 developers and serve as a technical reference.
@@ -12,8 +12,8 @@ developers and serve as a technical reference.
 
 ### 2. Setup (`/setup`)
 
-- **[Installation](../setup/installation.md)**: Step-by-step guide to configure the local environment (includes
-  environment variables).
+- **[Installation](../setup/installation.md)**: Step-by-step guide to configure the local environment.
+- **[Configuration](../setup/configuration.md)**: Environment variables, modes, and Next.js options.
 - **[Technologies](../setup/technologies.md)**: Complete project stack.
 - **[Routes](../setup/routes.md)**: Application URLs and routes.
 - **[Scripts](../setup/scripts.md)**: `package.json` commands.
@@ -21,7 +21,7 @@ developers and serve as a technical reference.
 
 ### 3. Frontend (`/frontend`)
 
-- **[Architecture](../frontend/architecture.md)**: Feature-based architecture details with Next.js.
+- **[Architecture](../frontend/architecture.md)**: Feature-based rules, imports, and conventions.
 - **[Components guide](../frontend/components-guide.md)**: Hooks usage and component creation.
 - **[Styles guide](../frontend/styles-guide.md)**: Design system and Tailwind.
 
@@ -31,13 +31,13 @@ developers and serve as a technical reference.
 
 ### 5. Data (`/data`)
 
-- **[Learning structure guide](../data/learning-structure-guide.md)**: `learning_content` table in Supabase.
-- **[Client-only progress](../data/client-local-progress.md)**: Progress in `localStorage` that is not automatically
-  synced with the backend.
+- **[Learning structure guide](../data/learning-structure-guide.md)**: `learning_content` table (roadmap).
+- **[Lessons steps guide](../data/lessons-steps-guide.md)**: `lessons` + `steps` tables (lesson flow).
+- **[Client-only progress](../data/client-local-progress.md)**: Progress in `localStorage` without auto-sync.
 
 ### 6. Integrations (`/integrations`)
 
-- **[Payments](../integrations/payments.md)**: Payment gateway integration and persistence in Supabase.
+- **[Payments](../integrations/payments.md)**: Donations and shop (in development).
 
 ---
 
@@ -45,8 +45,8 @@ developers and serve as a technical reference.
 
 1. Read the **[executive summary](executive-summary.md)** to understand the context.
 2. Follow the **[installation guide](../setup/installation.md)**.
-3. Consult **[project structure](project-structure.md)** to navigate the codebase.
+3. Consult **[architecture](../frontend/architecture.md)** and **[project structure](project-structure.md)**.
 
 ---
 
-_AI-generated file. Last updated: Monday, May 18, 2026._
+_AI-generated file. Last updated: Wednesday, May 27, 2026._

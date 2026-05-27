@@ -1,8 +1,8 @@
 /**
- * App-wide custom hooks barrel
+ * App-wide custom hooks barrel (GSAP utilities + optional re-exports).
  *
- * USO:
- * import { useUserData, useProgress, useGamification, useExam } from '@/hooks';
+ * Prefer direct imports from the owning feature when possible:
+ *   import { useProgress } from '@/features/user/hooks/useProgress';
  */
 
 export { useQuizLogic } from '@/features/exam/hooks/useQuizLogic';

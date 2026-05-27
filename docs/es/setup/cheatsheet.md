@@ -9,6 +9,7 @@
 | Iniciar servidor local     | `pnpm dev`       |
 | Limpiar `.next` y arrancar | `pnpm dev:clean` |
 | Compilar proyecto          | `pnpm build`     |
+| Tests                      | `pnpm test`      |
 | Vista previa de producción | `pnpm start`     |
 
 ### Despliegue web
@@ -29,7 +30,7 @@ import { useUserData } from '@/features/user/hooks/useUserData';
 const { user, loading, updateProfile, refresh } = useUserData();
 ```
 
-**useProgress:**
+**useProgress** (preferir import directo):
 
 ```javascript
 import { useProgress } from '@/features/user/hooks/useProgress';
@@ -64,4 +65,4 @@ console.log(API_CONFIG.MODE);
 
 ---
 
-_Archivo generado por IA. Última actualización: lunes, 18 de mayo de 2026._
+_Archivo generado por IA. Última actualización: miércoles, 27 de mayo de 2026._

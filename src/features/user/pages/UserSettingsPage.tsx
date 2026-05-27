@@ -5,7 +5,7 @@ import { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { Icon } from '@/shared/components/Icon';
-import { useAuth } from '@/context/AuthContext';
+import { useAuth } from '@/features/auth/context/AuthContext';
 import { useUser, useUserData, useProgress, useExam } from '@/hooks';
 import { updateUsername, updateUserBio, updateProfileImage } from '@/services/persistence';
 // import { DonationSection } from '@/features/home';

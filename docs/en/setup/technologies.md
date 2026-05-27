@@ -1,6 +1,6 @@
 # Project technologies
 
-This document describes the technologies used in **Pruebas ICFES**, for both development and production.
+This document describes the technologies used in **WEB-ICFES Master**, for both development and production.
 
 ---
 
@@ -8,32 +8,47 @@ This document describes the technologies used in **Pruebas ICFES**, for both dev
 
 ### Framework and UI
 
-| Technology     | Version | Description                                                 |
-| -------------- | ------- | ----------------------------------------------------------- |
-| **Next.js**    | 15.1    | React framework with App Router, SSR, and server rendering  |
-| **React**      | 19.2    | Library for building user interfaces                        |
-| **TypeScript** | 5.9     | Static typing (new code and most of the repo is TypeScript) |
+| Technology        | Version | Description                                             |
+| ----------------- | ------- | ------------------------------------------------------- |
+| **Next.js**       | 15.1    | React framework with App Router, SSR, and server render |
+| **React**         | 19.2    | UI library                                              |
+| **TypeScript**    | 5.9     | Static typing (new code and most of the repo in TS)     |
+| **Redux Toolkit** | 2.5     | Global UI state (`uiSession`: demo, plan)               |
+| **react-redux**   | 9.2     | Redux bindings for React                                |
 
-### Styling
+### Styles and animation
 
-| Technology       | Version | Description                                       |
-| ---------------- | ------- | ------------------------------------------------- |
-| **Tailwind CSS** | 4.2     | Utility-first CSS framework for responsive design |
-| **PostCSS**      | 8.4     | CSS processor with Tailwind plugin                |
+| Technology              | Version | Description                           |
+| ----------------------- | ------- | ------------------------------------- |
+| **Tailwind CSS**        | 4.2     | Utility-first CSS framework           |
+| **tailwind-animations** | 1.0     | Extra `animate-*` utilities           |
+| **PostCSS**             | 8.4     | CSS processor with Tailwind plugin    |
+| **GSAP**                | 3.14    | Animations (modals, reveals, landing) |
+| **@gsap/react**         | 2.1     | GSAP hooks for React                  |
+
+### Content and math
+
+| Technology         | Version | Description               |
+| ------------------ | ------- | ------------------------- |
+| **react-markdown** | 10.1    | Markdown rendering        |
+| **KaTeX**          | 0.16    | Math formulas             |
+| **react-katex**    | 3.1     | KaTeX components in React |
 
 ### Code quality
 
-| Technology   | Version | Description                                            |
-| ------------ | ------- | ------------------------------------------------------ |
-| **ESLint**   | 9.39    | Linter for error detection and standards               |
-| **Prettier** | 3.8     | Automatic code formatter                               |
-| **globals**  | 16.5    | Global variable definitions for ESLint (browser, node) |
+| Technology            | Version | Description         |
+| --------------------- | ------- | ------------------- |
+| **ESLint**            | 9.39    | Linter              |
+| **Prettier**          | 3.8     | Formatter           |
+| **Vitest**            | 4.1     | Unit tests          |
+| **react-doctor**      | 0.1     | React pattern audit |
+| **markdownlint-cli2** | 0.17    | Markdown lint       |
 
 ### Tools
 
 | Technology | Description                               |
 | ---------- | ----------------------------------------- |
-| **pnpm**   | Package manager (alternative to npm/yarn) |
+| **pnpm**   | Package manager (CI uses pnpm 9, Node 20) |
 
 ---
 
@@ -41,37 +56,36 @@ This document describes the technologies used in **Pruebas ICFES**, for both dev
 
 ### Frontend
 
-| Technology       | Description                                                             |
-| ---------------- | ----------------------------------------------------------------------- |
-| **Next.js**      | Production build (output in `.next/`); typical deploy with `next start` |
-| **React**        | Client and server rendering depending on the route                      |
-| **Tailwind CSS** | Compiled and optimized styles                                           |
+| Technology       | Description                                                     |
+| ---------------- | --------------------------------------------------------------- |
+| **Next.js**      | Production build (output in `.next/`); deploy with `next start` |
+| **React**        | Client and server rendering per route                           |
+| **Tailwind CSS** | Compiled and optimized styles                                   |
 
 ### Backend and services
 
-| Technology         | Version | Description                                       |
-| ------------------ | ------- | ------------------------------------------------- |
-| **Supabase**       | 2.49    | Database, authentication and backend-as-a-service |
-| **OpenAI**         | 6.32    | AI model integration                              |
-| **react-markdown** | 10.1    | Markdown content rendering                        |
+| Technology   | Version | Description                          |
+| ------------ | ------- | ------------------------------------ |
+| **Supabase** | 2.49    | Database, auth, backend-as-a-service |
+| **OpenAI**   | 6.32    | AI models integration (`/api/chat`)  |
 
 ### Deployment
 
-| Environment      | Description                                                                                  |
-| ---------------- | -------------------------------------------------------------------------------------------- |
-| **Vercel**       | Hosting for Next.js (recommended)                                                            |
-| **Netlify**      | Serverless or static hosting depending on setup                                              |
-| **GitHub Pages** | Only if `output: 'export'` is enabled in `next.config` (not enabled by default in this repo) |
+| Environment      | Description                                                          |
+| ---------------- | -------------------------------------------------------------------- |
+| **Vercel**       | Next.js hosting (recommended)                                        |
+| **Netlify**      | Serverless or static hosting depending on config                     |
+| **GitHub Pages** | Only if `output: 'export'` is enabled in `next.config` (not default) |
 
 ---
 
 ## Summary by category
 
 ```text
-Development:  Next.js, React, TypeScript, Tailwind, PostCSS, ESLint, Prettier, globals, pnpm
-Production:   Next.js, React, Supabase, OpenAI, Tailwind, react-markdown
+Development: Next.js, React, TypeScript, Redux, Tailwind, GSAP, Vitest, ESLint, Prettier, pnpm
+Production:  Next.js, React, Supabase, OpenAI, Tailwind, react-markdown, KaTeX
 ```
 
 ---
 
-_AI-generated file. Last updated: Monday, May 18, 2026._
+_AI-generated file. Last updated: Wednesday, May 27, 2026._

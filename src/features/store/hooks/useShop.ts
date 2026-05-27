@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useAuth } from '@/context/AuthContext';
+import { useAuth } from '@/features/auth/context/AuthContext';
 import { SHOP_ITEMS } from '../data/shopItems';
 import { getVirtualMoney, removeVirtualMoney } from '@/services/persistence';
 import type { ShopItem } from '../data/shopItems';

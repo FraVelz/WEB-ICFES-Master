@@ -145,6 +145,30 @@ pnpm react:doctor
 
 ---
 
+### `lint:md`
+
+```bash
+pnpm lint:md
+```
+
+**Comando:** `markdownlint-cli2`
+
+**Descripción:** Lint de archivos Markdown (documentación en `docs/`).
+
+---
+
+### `lint:md:fix`
+
+```bash
+pnpm lint:md:fix
+```
+
+**Comando:** `markdownlint-cli2 --fix`
+
+**Descripción:** Corrige automáticamente problemas de formato Markdown cuando es posible.
+
+---
+
 ## Flujo de trabajo recomendado
 
 | Tarea                      | Script(s)                        |
@@ -158,8 +182,9 @@ pnpm react:doctor
 | Tests unitarios            | `pnpm test`                      |
 | Comprobar formato          | `pnpm format:check`              |
 | Formatear código           | `pnpm format`                    |
+| Lint documentación         | `pnpm lint:md`                   |
 | Auditoría React            | `pnpm react:doctor`              |
 
 ---
 
-_Archivo generado por IA. Última actualización: lunes, 18 de mayo de 2026._
+_Archivo generado por IA. Última actualización: miércoles, 27 de mayo de 2026._

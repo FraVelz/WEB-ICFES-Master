@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { Icon } from '@/shared/components/Icon';
 import { EMAIL_MESSAGES } from '@/config/emailMessages';
-import { useAuth } from '@/context/AuthContext';
+import { useAuth } from '@/features/auth/context/AuthContext';
 import { supabase } from '@/config/supabase';
 import { mapSupabaseAuthError } from '@/utils/mapSupabaseAuthError';
 

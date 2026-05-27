@@ -9,8 +9,11 @@ developer or content administrator can add, edit, or delete lessons correctly.
 
 ## 1. Introduction
 
-The learning system works by reading data from the **`learning_content`** table in Supabase. The frontend queries this
+The **roadmap** learning system reads from the **`learning_content`** table in Supabase. The frontend queries this
 table to dynamically generate the "Learning Path" for each subject.
+
+For **step-based** lessons at `/lessons/...`, see [lessons-steps-guide.md](./lessons-steps-guide.md)
+(`lessons` + `steps` tables).
 
 **Data flow:**
 

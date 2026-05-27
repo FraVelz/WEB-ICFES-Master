@@ -1,63 +1,90 @@
 # URLs
 
-These are the project **URLs**. The public path `/aprendizaje` permanently redirects to **`/ruta-aprendizaje`** (see
-`next.config.ts`).
+These are the application **URLs**.
+
+## Conventions
+
+- **`trailingSlash: true`** — All routes end with `/` (e.g. `/login/`, `/ruta-aprendizaje/`).
+- **`/aprendizaje`** permanently redirects to **`/ruta-aprendizaje/`** (see `next.config.ts`).
 
 ## Main pages
 
-| URL                | Description          |
-| ------------------ | -------------------- |
-| `/`                | Home                 |
-| `/login`           | Sign in              |
-| `/signup`          | Registration         |
-| `/onboarding`      | Initial onboarding   |
-| `/forgot-password` | Password recovery    |
-| `/reset-password`  | Reset password       |
-| `/privacidad`      | Privacy policy       |
-| `/terminos`        | Terms and conditions |
+| URL                 | Description             |
+| ------------------- | ----------------------- |
+| `/`                 | Home                    |
+| `/login/`           | Sign in                 |
+| `/signup/`          | Sign up                 |
+| `/onboarding/`      | Initial onboarding      |
+| `/forgot-password/` | Password recovery       |
+| `/reset-password/`  | Reset password          |
+| `/auth/callback/`   | OAuth callback (Google) |
+| `/privacidad/`      | Privacy policy          |
+| `/terminos/`        | Terms and conditions    |
 
 ## Dashboard (requires session or demo)
 
-| URL                 | Description                   |
-| ------------------- | ----------------------------- |
-| `/ruta-aprendizaje` | Learning path (with AI chat)  |
-| `/logros`           | Achievements and gamification |
-| `/perfil`           | User profile                  |
-| `/perfil/public`    | Public profile                |
-| `/clasificatoria`   | Ranking / leaderboard         |
-| `/desafios-diarios` | Daily challenges              |
-| `/configuracion`    | Settings                      |
-| `/examen-completo`  | Full simulation               |
+| URL                  | Description                   |
+| -------------------- | ----------------------------- |
+| `/ruta-aprendizaje/` | Learning path (with AI chat)  |
+| `/logros/`           | Achievements and gamification |
+| `/perfil/`           | User profile                  |
+| `/clasificatoria/`   | Ranking                       |
+| `/desafios-diarios/` | Daily challenges              |
+| `/configuracion/`    | Settings                      |
+| `/examen-completo/`  | Full mock exam                |
+
+## Public profile (no auth layout)
+
+| URL               | Description                                     |
+| ----------------- | ----------------------------------------------- |
+| `/perfil/public/` | Public profile (`?userId=`). Outside `(auth)/`. |
 
 ## Practice (by area)
 
-| URL                             | Description               |
-| ------------------------------- | ------------------------- |
-| `/practica/lectura-critica`     | Reading practice          |
-| `/practica/matematicas`         | Math practice             |
-| `/practica/ciencias-naturales`  | Natural sciences practice |
-| `/practica/sociales-ciudadanas` | Social studies practice   |
-| `/practica/ingles`              | English practice          |
+Slugs aligned with `AREA_INFO` in `src/shared/constants/areaInfo.ts`:
+
+| URL                              | Description               |
+| -------------------------------- | ------------------------- |
+| `/practica/lectura-critica/`     | Critical Reading practice |
+| `/practica/matematicas/`         | Mathematics practice      |
+| `/practica/ciencias-naturales/`  | Natural Sciences practice |
+| `/practica/sociales-ciudadanas/` | Social Studies practice   |
+| `/practica/ingles/`              | English practice          |
 
 ## Lessons (by area and topic)
 
-| URL                       | Example                                                             |
-| ------------------------- | ------------------------------------------------------------------- |
-| `/lessons/[area]/[topic]` | `/lessons/matematicas/algebra`, `/lessons/lenguaje/gramatica`, etc. |
+| URL                        | Example                                                         |
+| -------------------------- | --------------------------------------------------------------- |
+| `/lessons/[area]/[topic]/` | `/lessons/matematicas/algebra/`, `/lessons/lenguaje/gramatica/` |
 
-**Areas and topics (examples):**
+### Slug mapping (practice/roadmap → lesson URL)
+
+| App ID (practice, roadmap) | `/lessons/` segment |
+| -------------------------- | ------------------- |
+| `lectura-critica`          | `lenguaje`          |
+| `matematicas`              | `matematicas`       |
+| `ciencias-naturales`       | `ciencias`          |
+| `sociales-ciudadanas`      | `sociales`          |
+| `ingles`                   | `ingles`            |
+
+**Topics (examples):**
 
 - **Mathematics:** algebra, geometria, calculo, trigonometria, numeros-complejos
 - **Language:** gramatica, comprension, literatura, ortografia, semantica
-- **Science:** biologia, fisica, quimica, ecologia, termodinamica
-- **Social studies:** historia, geografia, economia, ciudadania, filosofia
+- **Sciences:** biologia, fisica, quimica, ecologia, termodinamica
+- **Social:** historia, geografia, economia, ciudadania, filosofia
+- **English:** gramatica, vocabulario, lectura, tiempos-verbales, conectores
+
+See [lessons-steps-guide.md](../data/lessons-steps-guide.md) for the Supabase schema.
 
 ## API
 
-| URL         | Method | Description                            |
-| ----------- | ------ | -------------------------------------- |
-| `/api/chat` | POST   | AI model integration for the assistant |
+| URL         | Method | Description       |
+| ----------- | ------ | ----------------- |
+| `/api/chat` | POST   | AI assistant chat |
+
+Requires `OPENAI_API_KEY` on the server. Anonymous users have a limited quota (`src/utils/chatAnonQuota.ts`).
 
 ---
 
-_AI-generated file. Last updated: Monday, May 18, 2026._
+_Last updated: Wednesday, May 27, 2026._
