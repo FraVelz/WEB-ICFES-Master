@@ -1,7 +1,6 @@
 /**
- * Public exports for the shop and subscription plans.
+ * Public exports for the shop and subscription plans UI.
  */
-export { StoreModal, ShopItemCard, ShopItemModal } from './components';
+export { StoreModal, ShopItemCard, ShopItemModal, ClientChecker } from './components';
 export { useShop } from './hooks/useShop';
 export { usePlanScheduleChecker } from './hooks/usePlanScheduleChecker';
-export { SubscriptionPlanService, PlanScheduleService } from '@/services/store';

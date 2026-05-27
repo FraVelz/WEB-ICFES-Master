@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { DashboardHeader } from '@/components/DashboardHeader';
-import { ClientChecker } from '@/features/store/hooks/ClientChecker';
+import { ClientChecker } from '@/features/store/components/ClientChecker';
 
 import { cn } from '@/utils/cn';
 

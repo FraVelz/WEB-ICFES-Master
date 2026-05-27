@@ -6,7 +6,7 @@ import { cn } from '@/utils/cn';
 
 import { gsap } from '@/lib/gsap';
 
-import { Footer } from '@/shared/components';
+import { Footer } from '@/features/home/components/Footer';
 import { GSAPGlowBlob } from '@/features/home/components/GSAPGlowBlob';
 
 import {

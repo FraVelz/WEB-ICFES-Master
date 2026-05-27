@@ -3,7 +3,7 @@
 import { LearningRoadmap } from '@/features/learning/components';
 import { ChatAssistant } from '@/features/learning/shell/ChatAssistant/ChatAssistant';
 
-import { RoadmapUiProvider, useRoadmapUi } from '@/features/learning/hooks/RoadmapUiContext';
+import { RoadmapUiProvider, useRoadmapUi } from '@/features/learning/context/RoadmapUiContext';
 import { cn } from '@/utils/cn';
 
 const Component = () => {

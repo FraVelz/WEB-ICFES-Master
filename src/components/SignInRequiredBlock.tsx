@@ -5,7 +5,7 @@ import { cn } from '@/utils/cn';
 import Link from 'next/link';
 import { Icon } from '@/shared/components/Icon';
 
-import { exitDemoModeToHome } from '@/features/home/utils/enterDemoMode';
+import { exitDemoModeToHome } from '@/store/demoMode';
 
 interface SignInRequiredBlockProps {
   title?: string;

@@ -13,7 +13,7 @@ import {
   CHAT_ANON_STORAGE_KEY,
   getAnonUsedFromStorage,
   setAnonUsedInStorage,
-} from '@/utils/chatAnonQuota';
+} from '@/features/learning/utils/chatAnonQuota';
 
 interface Message {
   id: string;

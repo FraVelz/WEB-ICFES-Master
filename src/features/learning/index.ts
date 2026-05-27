@@ -1,17 +1,4 @@
 /**
- * Public exports for learning (roadmap, lessons, assistant).
+ * Public exports for learning (roadmap page entry).
  */
 export { LearningRoadmapPage } from './pages/LearningRoadmapPage';
-
-export {
-  ContentStep,
-  LessonFlowClient,
-  LessonRenderer,
-  LearningRoadmap,
-  MathBlock,
-  MathInputStep,
-  QuizStep,
-  ResourceStep,
-  SecondaryHeader,
-  renderLessonStep,
-} from './components';
