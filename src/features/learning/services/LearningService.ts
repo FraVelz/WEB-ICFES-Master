@@ -78,7 +78,7 @@ export const LearningService = {
     ];
   },
 
-  getUserProgress: async (userId: string, areaId: string) => {
+  getUserProgress: async (_userId: string, _areaId: string) => {
     const completed = getCompletedLessons();
     return { completedLessons: completed, currentLevel: 0, totalXP: 0 };
   },

@@ -1,16 +1,14 @@
 'use client';
 
 import { cn } from '@/utils/cn';
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
 import { useRouter } from 'next/navigation';
 import { Icon } from '@/shared/components/Icon';
 import { useUserProfile } from '../hooks/useUserProfile';
-import { useAuth } from '@/features/auth/context/AuthContext';
 
 export const PerfilNormal = () => {
   const router = useRouter();
-  const { user } = useAuth();
   const {
     uid,
     photoUrl,

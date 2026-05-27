@@ -1,7 +1,7 @@
 'use client';
 
 import { cn } from '@/utils/cn';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Icon } from '@/shared/components/Icon';
 import { useAuth } from '@/features/auth/context/AuthContext';
 import { useGSAPModalEntrance } from '@/hooks/useGSAPModalEntrance';
@@ -197,6 +197,17 @@ export const LessonQuizModal = ({
   const isLastQuestion = currentQuestionIndex === totalQuestions - 1;
   const allQuestionsAnswered = completedQuestions.size === totalQuestions;
 
+  const checkCompletionStatus = useCallback(async () => {
+    try {
+      const completedLessons = getCompletedLessons();
+      const wasCompleted = lessonId ? completedLessons.includes(lessonId) : false;
+      setAlreadyCompleted(wasCompleted);
+    } catch (error) {
+      console.error('Error checking completion status:', error);
+      setAlreadyCompleted(false);
+    }
+  }, [lessonId]);
+
   useEffect(() => {
     if (isOpen && user && lessonId) {
       checkCompletionStatus();
@@ -211,7 +222,7 @@ export const LessonQuizModal = ({
       setAnswers({});
       setCompletedQuestions(new Set());
     }
-  }, [isOpen, user, lessonId]);
+  }, [isOpen, user, lessonId, checkCompletionStatus]);
 
   // Sync local UI when navigating between questions
   useEffect(() => {
@@ -224,18 +235,6 @@ export const LessonQuizModal = ({
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentQuestionIndex, currentQuestion?.id]);
-
-  const checkCompletionStatus = async () => {
-    try {
-      const completedLessons = getCompletedLessons();
-      const wasCompleted = lessonId ? completedLessons.includes(lessonId) : false;
-      setAlreadyCompleted(wasCompleted);
-    } catch (error) {
-      console.error('Error checking completion status:', error);
-      // On error, allow retry (treat as not completed)
-      setAlreadyCompleted(false);
-    }
-  };
 
   const handleSubmit = async () => {
     if (!selectedOption || loading || !currentQuestion) return;
@@ -260,8 +259,8 @@ export const LessonQuizModal = ({
       return answer === q.correctAnswer;
     });
 
-    // Award on last question when fully answered and not already rewarded
-    if (isLastQuestion && allQuestionsAnswered && !alreadyCompleted && user?.uid) {
+    // Award on last question when fully answered, all correct, and not already rewarded
+    if (isLastQuestion && allQuestionsAnswered && allCorrect && !alreadyCompleted && user?.uid) {
       setLoading(true);
       try {
         // Rewards: lesson props > quiz.rewards > defaults (500/250)

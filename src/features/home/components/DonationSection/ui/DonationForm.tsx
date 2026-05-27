@@ -1,8 +1,6 @@
 import { cn } from '@/utils/cn';
 import { Icon } from '@/shared/components/Icon';
 
-import { useDonation } from '../useDonation';
-
 export const DonationForm = ({
   copied,
   cardData,

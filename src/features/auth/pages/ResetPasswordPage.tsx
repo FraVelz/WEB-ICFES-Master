@@ -184,6 +184,7 @@ export const ResetPasswordPage = () => {
             )}
 
             {/* Form */}
+            {hasRecoverySession && (
             <form onSubmit={handleSubmit} className="space-y-6">
               {/* Password Field */}
               <div>
@@ -277,6 +278,7 @@ export const ResetPasswordPage = () => {
                   : EMAIL_MESSAGES.resetPasswordPage.buttonText}
               </button>
             </form>
+            )}
           </>
         )}
       </div>

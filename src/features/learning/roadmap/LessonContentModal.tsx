@@ -230,38 +230,38 @@ export const LessonContentModal = ({
             <div className="rounded-2xl border border-slate-700/60 bg-slate-900/30 p-4 sm:p-6 md:p-8">
               <ReactMarkdown
                 components={{
-                  h1: ({ node, ...props }) => (
+                  h1: ({ ...props }) => (
                     <h1 className="mt-0 mb-3 text-xl font-bold text-white sm:text-2xl md:text-3xl" {...props} />
                   ),
-                  h2: ({ node, ...props }) => (
+                  h2: ({ ...props }) => (
                     <h2
                       className="mt-4 mb-2 border-b border-slate-700/60 pb-2 text-lg font-bold text-slate-100 sm:mt-6 sm:text-xl md:text-2xl"
                       {...props}
                     />
                   ),
-                  h3: ({ node, ...props }) => (
+                  h3: ({ ...props }) => (
                     <h3 className="mt-3 mb-2 text-base font-bold text-slate-200 sm:mt-4 sm:text-lg" {...props} />
                   ),
-                  p: ({ node, ...props }) => (
+                  p: ({ ...props }) => (
                     <p
                       className="mb-3 text-sm leading-relaxed text-slate-300 sm:mb-4 sm:text-base md:text-lg"
                       {...props}
                     />
                   ),
-                  ul: ({ node, ...props }) => (
+                  ul: ({ ...props }) => (
                     <ul
                       className="mb-3 list-inside list-disc space-y-1.5 text-slate-300 sm:mb-4 sm:space-y-2"
                       {...props}
                     />
                   ),
-                  ol: ({ node, ...props }) => (
+                  ol: ({ ...props }) => (
                     <ol
                       className="mb-3 list-inside list-decimal space-y-1.5 text-slate-300 sm:mb-4 sm:space-y-2"
                       {...props}
                     />
                   ),
-                  li: ({ node, ...props }) => <li className="ml-3 sm:ml-4" {...props} />,
-                  blockquote: ({ node, ...props }) => (
+                  li: ({ ...props }) => <li className="ml-3 sm:ml-4" {...props} />,
+                  blockquote: ({ ...props }) => (
                     <blockquote
                       className={cn(
                         'my-3 rounded-r-lg border-l-4 border-blue-500/80 bg-slate-800/50 py-2 pr-3 pl-3',
@@ -270,7 +270,7 @@ export const LessonContentModal = ({
                       {...props}
                     />
                   ),
-                  code: ({ node, className, children, ...props }) => {
+                  code: ({ className, children, ...props }) => {
                     const isInline = !className?.includes('language-');
                     const content: React.ReactNode = Array.isArray(children)
                       ? children.join('')
@@ -290,13 +290,13 @@ export const LessonContentModal = ({
                       </div>
                     );
                   },
-                  a: ({ node, ...props }) => (
+                  a: ({ ...props }) => (
                     <a
                       className="rounded-sm text-blue-400 underline decoration-blue-400/30 hover:text-blue-300 hover:decoration-blue-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-app-accent focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
                       {...props}
                     />
                   ),
-                  img: ({ node, alt, ...rest }) => (
+                  img: ({ alt, ...rest }) => (
                     <img
                       alt={typeof alt === 'string' ? alt : ''}
                       className="my-3 h-auto max-w-full rounded-xl border border-slate-700 shadow-lg sm:my-4"

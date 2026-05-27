@@ -120,7 +120,7 @@ export const UserSettingsPage = () => {
   useEffect(() => {
     setUsername(user?.username ?? userData?.displayName ?? userData?.username ?? '');
     setSupportEmail((user?.email ?? userData?.email ?? '') as string);
-  }, [user?.username, user?.email, userData?.displayName, userData?.email]);
+  }, [user?.username, user?.email, userData?.displayName, userData?.username, userData?.email]);
 
   useEffect(() => {
     setBio(user?.bio || userData?.bio || '');

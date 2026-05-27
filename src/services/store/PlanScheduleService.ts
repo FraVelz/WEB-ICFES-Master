@@ -2,7 +2,6 @@
  * Scheduled plan changes — local no-op stub
  * Replace with real scheduling when backend exists
  */
-import SubscriptionPlanService from './SubscriptionPlanService';
 
 class PlanScheduleService {
   async getScheduledPlans(_uid: string) {

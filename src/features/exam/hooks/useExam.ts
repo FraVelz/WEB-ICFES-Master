@@ -11,12 +11,15 @@ export function useExam(examId: string | undefined) {
 
   const loadExam = useCallback(async () => {
     if (!examId) return;
+    setLoading(true);
     try {
       const found = await getExamById(examId, user?.uid);
       setExam(found || null);
       setError(null);
     } catch (e) {
       setError(e instanceof Error ? e.message : 'Error');
+    } finally {
+      setLoading(false);
     }
   }, [examId, user?.uid]);
 
