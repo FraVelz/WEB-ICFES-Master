@@ -4,10 +4,9 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
-import { ACHIEVEMENTS_DATA } from '@/features/achievements/constants/achievements';
-import { getVirtualMoney } from '@/services/persistence';
-import API_CONFIG from '@/services/api.config';
-import GamificationSupabaseService from '@/services/supabase/GamificationSupabaseService';
+import { ACHIEVEMENTS_DATA } from '@/shared/constants/achievementsData';
+import { getVirtualMoney, gamificationPersistence } from '@/services/persistence';
+import { isSupabaseMode } from '@/services/persistence/apiMode';
 
 const GAMIFICATION_KEY = 'icfes_gamification';
 const STREAK_KEY = 'icfes_streak_dates';
@@ -69,6 +68,21 @@ export const useGamification = (userId: string | undefined) => {
     return count;
   };
 
+  const mergeAchievements = (
+    achProgress: Record<string, { current?: number; unlocked?: boolean; unlockedAt?: string | null }>
+  ) =>
+    ACHIEVEMENTS_DATA.map((a) => {
+      const p = achProgress[a.id] ?? {};
+      const current = p.current ?? 0;
+      const unlocked = p.unlocked ?? false;
+      return {
+        ...a,
+        progress: current,
+        unlockedAt: p.unlockedAt || null,
+        status: unlocked ? 'completed' : current > 0 ? 'in_progress' : 'incomplete',
+      };
+    });
+
   const loadData = useCallback(async () => {
     if (!userId) {
       setLoading(false);
@@ -77,60 +91,29 @@ export const useGamification = (userId: string | undefined) => {
 
     setLoading(true);
     try {
-      if (API_CONFIG.MODE === 'supabase') {
-        const profile = await GamificationSupabaseService.getOrCreate(userId);
-        setTotalXP(profile?.totalXP ?? profile?.xp ?? 0);
-        setLevel(profile?.level ?? 1);
-        setCoins((profile?.totalCoins ?? 0) - (profile?.spentCoins ?? 0));
+      const profile = await gamificationPersistence.getProfile(userId);
+      setTotalXP(profile?.totalXP ?? profile?.xp ?? 0);
+      setLevel(profile?.level ?? 1);
+      setCoins((profile?.totalCoins ?? 0) - (profile?.spentCoins ?? 0));
 
-        const achProgress = (profile?.achievements ?? {}) as unknown as Record<
-          string,
-          { current?: number; unlocked?: boolean; unlockedAt?: string | null }
-        >;
-        const merged = ACHIEVEMENTS_DATA.map((a) => {
-          const p = achProgress[a.id] ?? {};
-          const current = p.current ?? 0;
-          const unlocked = p.unlocked ?? false;
-          return {
-            ...a,
-            progress: current,
-            unlockedAt: p.unlockedAt || null,
-            status: unlocked ? 'completed' : current > 0 ? 'in_progress' : 'incomplete',
-          };
-        });
-        setAchievements(merged);
-        setCompletedCount(merged.filter((m) => m.status === 'completed').length);
-      } else {
-        const gam = JSON.parse(localStorage.getItem(GAMIFICATION_KEY) || '{}');
-        const g = { ...getDefaultGamification(), ...gam };
-        const achProgress = (g.achievements || {}) as Record<
-          string,
-          { current?: number; unlocked?: boolean; unlockedAt?: string | null }
-        >;
-        const merged = ACHIEVEMENTS_DATA.map((a) => {
-          const p = achProgress[a.id] ?? {};
-          const current = p.current ?? 0;
-          const unlocked = p.unlocked ?? false;
-          return {
-            ...a,
-            progress: current,
-            unlockedAt: p.unlockedAt || null,
-            status: unlocked ? 'completed' : current > 0 ? 'in_progress' : 'incomplete',
-          };
-        });
-        setAchievements(merged);
-        setTotalXP(g.totalXP ?? 0);
-        setLevel(g.level ?? 1);
-        setCompletedCount(merged.filter((m) => m.status === 'completed').length);
-        setCoins(getVirtualMoney());
-      }
+      const achProgress = (profile?.achievements ?? {}) as Record<
+        string,
+        { current?: number; unlocked?: boolean; unlockedAt?: string | null }
+      >;
+      const merged = mergeAchievements(achProgress);
+      setAchievements(merged);
+      setCompletedCount(merged.filter((m) => m.status === 'completed').length);
 
       const streakDates = JSON.parse(localStorage.getItem(STREAK_KEY) || '[]');
       setStreak(streakDates);
       const cs = calculateStreakFromDates(streakDates);
       setCurrentStreak(cs);
-      const gam = API_CONFIG.MODE === 'supabase' ? {} : JSON.parse(localStorage.getItem(GAMIFICATION_KEY) || '{}');
+      const gam = isSupabaseMode() ? {} : JSON.parse(localStorage.getItem(GAMIFICATION_KEY) || '{}');
       setLongestStreak(Math.max(gam.longestStreak || 0, cs));
+
+      if (!isSupabaseMode()) {
+        setCoins(getVirtualMoney());
+      }
     } catch (err) {
       console.error('Error loading gamification:', err);
     } finally {
@@ -147,52 +130,33 @@ export const useGamification = (userId: string | undefined) => {
     const ach = ACHIEVEMENTS_DATA.find((a) => a.id === achievementId);
     if (!ach) return;
 
-    if (API_CONFIG.MODE === 'supabase') {
-      const profile = await GamificationSupabaseService.getOrCreate(userId);
-      const raw = profile?.achievements;
-      const achProgress = (typeof raw === 'object' && raw !== null && !Array.isArray(raw) ? raw : {}) as Record<
-        string,
-        { current?: number; unlocked?: boolean }
-      >;
-      const current = achProgress[achievementId] ?? {};
-      if (current.unlocked) return;
-
-      const newCurrent = (current.current || 0) + amount;
-      const unlocked = newCurrent >= ach.target;
-      (achProgress as Record<string, { current: number; unlocked: boolean; unlockedAt: string | null }>)[
-        achievementId
-      ] = {
-        current: newCurrent,
-        unlocked,
-        unlockedAt: unlocked ? new Date().toISOString() : null,
-      };
-
-      if (unlocked) {
-        await GamificationSupabaseService.addCoins(userId, ach.coinsReward || 0, 'achievement');
-      }
-      await GamificationSupabaseService.addXP(userId, unlocked ? ach.xpReward || 0 : 0, 'achievement');
-      loadData();
-      return;
-    }
-
-    const gam = JSON.parse(localStorage.getItem(GAMIFICATION_KEY) || '{}');
-    const rawAchievements = gam.achievements ?? {};
-    const achProgress = (typeof rawAchievements === 'object' && !Array.isArray(rawAchievements)
-      ? rawAchievements
-      : {}) as unknown as Record<string, { current?: number; unlocked?: boolean; unlockedAt?: string | null }>;
+    const profile = await gamificationPersistence.getProfile(userId);
+    const raw = profile?.achievements;
+    const achProgress = (typeof raw === 'object' && raw !== null && !Array.isArray(raw) ? raw : {}) as Record<
+      string,
+      { current?: number; unlocked?: boolean; unlockedAt?: string | null }
+    >;
     const current = achProgress[achievementId] ?? {};
     if (current.unlocked) return;
 
     const newCurrent = (current.current || 0) + amount;
     const unlocked = newCurrent >= ach.target;
-    (achProgress as Record<string, { current: number; unlocked: boolean; unlockedAt: string | null }>)[achievementId] =
-      {
-        current: newCurrent,
-        unlocked,
-        unlockedAt: unlocked ? new Date().toISOString() : null,
-      };
+    achProgress[achievementId] = {
+      current: newCurrent,
+      unlocked,
+      unlockedAt: unlocked ? new Date().toISOString() : null,
+    };
 
-    let newTotalXP = gam.totalXP || 0;
+    if (isSupabaseMode()) {
+      if (unlocked) {
+        await gamificationPersistence.addCoins(userId, ach.coinsReward || 0, 'achievement');
+      }
+      await gamificationPersistence.addXP(userId, unlocked ? ach.xpReward || 0 : 0, 'achievement');
+      loadData();
+      return;
+    }
+
+    let newTotalXP = profile?.totalXP || 0;
     if (unlocked) {
       newTotalXP += ach.xpReward || 0;
       const { addVirtualMoney } = await import('@/services/persistence');
@@ -203,11 +167,11 @@ export const useGamification = (userId: string | undefined) => {
     localStorage.setItem(
       GAMIFICATION_KEY,
       JSON.stringify({
-        ...gam,
+        ...profile,
         achievements: achProgress,
         totalXP: newTotalXP,
         level: newLevel,
-        longestStreak: gam.longestStreak || 0,
+        longestStreak: (profile as { longestStreak?: number })?.longestStreak || 0,
       })
     );
 
