@@ -19,12 +19,12 @@ export const ShopItemCard = ({ item, isPurchased, canAfford, onClick }: ShopItem
       onClick={onClick}
       className={cn(
         'group relative w-full cursor-pointer overflow-hidden rounded-2xl border-2 p-6 text-left transition-all duration-300',
-        'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-app-accent focus-visible:ring-offset-2',
+        'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none',
         'focus-visible:ring-offset-slate-950',
         isPurchased
           ? 'border-green-500/30 bg-slate-900/50 hover:border-green-500/50'
           : canAfford
-            ? 'border-slate-700 bg-slate-800/40 hover:-translate-y-1 hover:border-app-ring hover:bg-slate-800/60 hover:shadow-xl hover:shadow-app-ring/10'
+            ? 'hover:border-app-ring hover:shadow-app-ring/10 border-slate-700 bg-slate-800/40 hover:-translate-y-1 hover:bg-slate-800/60 hover:shadow-xl'
             : 'border-slate-800 bg-slate-900/30 opacity-70 hover:opacity-100'
       )}
     >
@@ -41,7 +41,7 @@ export const ShopItemCard = ({ item, isPurchased, canAfford, onClick }: ShopItem
         {isPurchased ? (
           <span
             className={cn(
-              'flex items-center gap-1 rounded-full border border-green-500/30 bg-lesson-sci-glow-a/20 px-2 py-1',
+              'bg-lesson-sci-glow-a/20 flex items-center gap-1 rounded-full border border-green-500/30 px-2 py-1',
               'text-xs font-bold text-green-400'
             )}
           >
@@ -68,7 +68,7 @@ export const ShopItemCard = ({ item, isPurchased, canAfford, onClick }: ShopItem
         >
           <div className="relative flex h-full w-full items-center justify-center overflow-hidden rounded-xl bg-slate-900">
             {item.image ? (
-              <Image src={item.image} alt={item.name} fill className="object-cover" />
+              <Image src={item.image} alt={item.name} fill sizes="80px" className="object-cover" />
             ) : (
               <Icon name={item.icon} className="text-4xl text-white" />
             )}
@@ -78,7 +78,7 @@ export const ShopItemCard = ({ item, isPurchased, canAfford, onClick }: ShopItem
 
       {/* Info */}
       <div className="text-center">
-        <h3 className="mb-1 text-lg font-bold text-white transition-colors group-hover:text-app-accent">{item.name}</h3>
+        <h3 className="group-hover:text-app-accent mb-1 text-lg font-bold text-white transition-colors">{item.name}</h3>
         <p className="mb-4 line-clamp-2 h-10 text-sm text-slate-400">{item.description}</p>
 
         {/* Price Button */}

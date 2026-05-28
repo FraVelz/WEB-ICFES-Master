@@ -58,7 +58,7 @@ export const ShopItemModal = ({
           className={cn(
             'absolute top-4 right-4 z-10 flex h-8 w-8 items-center justify-center rounded-full',
             'bg-slate-800 text-slate-400 transition-colors hover:bg-slate-700 hover:text-white',
-            'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-app-accent focus-visible:ring-offset-2',
+            'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none',
             'focus-visible:ring-offset-slate-900'
           )}
         >
@@ -71,7 +71,7 @@ export const ShopItemModal = ({
           <div className="relative z-10 h-24 w-24 translate-y-8 rounded-2xl bg-slate-900 p-1 shadow-2xl">
             <div className="relative flex h-full w-full items-center justify-center overflow-hidden rounded-xl bg-slate-800">
               {item.image ? (
-                <Image src={item.image} alt={item.name} fill className="object-cover" />
+                <Image src={item.image} alt={item.name} fill sizes="96px" className="object-cover" />
               ) : (
                 <Icon name={item.icon} className="text-4xl text-white" />
               )}
@@ -106,7 +106,7 @@ export const ShopItemModal = ({
               disabled={!canAfford || processing}
               className={cn(
                 'flex w-full items-center justify-center gap-3 rounded-xl py-4 text-lg font-bold transition-all',
-                'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2',
+                'focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:outline-none',
                 'focus-visible:ring-offset-slate-950',
                 processing
                   ? 'cursor-wait bg-slate-700 text-slate-400'
