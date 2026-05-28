@@ -1,0 +1,46 @@
+---
+description: Barriles (index.ts): exportaciones nombradas explícitas, sin export *
+globs: "**/index.ts"
+alwaysApply: true
+---
+
+# Barriles — exportaciones explícitas
+
+## Prohibido
+
+```ts
+export * from './module';
+```
+
+## Obligatorio
+
+Listar **cada** símbolo exportado (función, hook, tipo, componente):
+
+```ts
+export { useUser } from './useUser';
+export { useUserData } from './useUserData';
+export type { UserProfile } from './types';
+```
+
+## Alcance del barril
+
+- Exportar **solo** lo que consumen otros módulos del proyecto (grep antes de añadir).
+- Si nadie importa el barril, preferir imports directos al archivo (`./useUser`) o eliminar el `index.ts` vacío/redundante.
+- `export { default as X }` solo cuando el módulo origen es default export legítimo (p. ej. servicios).
+
+## Imports en consumidores
+
+Preferir ruta explícita al símbolo cuando el barril no aporta valor:
+
+```ts
+// ✅
+import { useUser } from '@/features/user/hooks/useUser';
+
+// ✅ si el barril documenta la API pública de la carpeta
+import { useUser, useUserData } from '@/features/user/hooks';
+```
+
+## Checklist
+
+- [ ] Sin `export *` en ningún `index.ts`
+- [ ] Cada export nombrado en el barril tiene al menos un importador (o es API pública documentada de la feature)

@@ -73,7 +73,7 @@ Preguntarse: **¿quién lo importa?** Si la respuesta es una sola carpeta (`feat
 
 ## Refactor de componentes
 
-Ver también **`component-refactor.mdc`**: tamaño de archivo (~200 líneas), cuándo inline vs extraer, prop drilling y Context local.
+Ver también **`component-refactor.mdc`** (tamaño, prop drilling) y **`barrel-exports.mdc`** (sin `export *` en `index.ts`).
 
 ## Convención URL vs código
 

@@ -77,6 +77,8 @@ Header → Sidebar → NavLink → ExpandableSidebarText
 2. ¿El padre solo reenvía props? → colocation o Context local
 3. ¿El archivo nuevo tendría &lt; 40 líneas? → inline
 
+Ver también **`barrel-exports.mdc`**: sin `export *`; solo símbolos nombrados que el proyecto usa.
+
 ## Checklist post-refactor
 
 - [ ] Sin archivos huérfanos
