@@ -1,13 +1,20 @@
 'use client';
 
 import { cn } from '@/utils/cn';
+import dynamic from 'next/dynamic';
 import React, { useState } from 'react';
 
 import { AreaPath } from './AreaPath';
 import { LessonAreaLinks } from './LessonAreaLinks';
-import { LessonPreview } from './LessonPreview';
-import { LessonContentModal } from './LessonContentModal';
 import { SecondaryHeader } from '../shell/SecondaryHeader';
+
+const LessonPreview = dynamic(() => import('./LessonPreview').then((m) => ({ default: m.LessonPreview })), {
+  ssr: false,
+});
+const LessonContentModal = dynamic(
+  () => import('./LessonContentModal').then((m) => ({ default: m.LessonContentModal })),
+  { ssr: false }
+);
 
 import { getAreaInfo } from '@/shared/constants';
 import { useLearningPath } from '../hooks/useLearningPath';

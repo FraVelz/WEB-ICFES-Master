@@ -5,7 +5,12 @@ import React, { useState, useMemo } from 'react';
 import ReactMarkdown from 'react-markdown';
 import { Icon } from '@/shared/components/Icon';
 import { MascotaCircle } from '@/shared/components/MascotaCircle';
-import { LessonQuizModal } from './LessonQuizModal';
+import dynamic from 'next/dynamic';
+import type { LessonQuizModalProps } from './lessonQuiz/quizTypes';
+
+const LessonQuizModal = dynamic(() => import('./LessonQuizModal').then((m) => ({ default: m.LessonQuizModal })), {
+  ssr: false,
+});
 import { useGSAPModalEntrance } from '@/hooks/useGSAPModalEntrance';
 import { splitLessonContent, extractSectionTitle, stripFirstHeadingIfDuplicate } from '../utils/splitLessonContent';
 import { getAreaInfo } from '@/shared/constants';
@@ -381,9 +386,7 @@ export const LessonContentModal = ({
           onClose();
         }}
         questions={
-          Array.isArray(lesson?.questions)
-            ? (lesson.questions as import('./LessonQuizModal').LessonQuizModalProps['questions'])
-            : undefined
+          Array.isArray(lesson?.questions) ? (lesson.questions as LessonQuizModalProps['questions']) : undefined
         }
         quiz={
           lesson?.quiz && typeof lesson.quiz === 'object'
@@ -391,7 +394,7 @@ export const LessonContentModal = ({
                 ...(lesson.quiz as object),
                 questions: lesson.questions,
                 rewards: lesson.rewards,
-              } as import('./LessonQuizModal').LessonQuizModalProps['quiz'])
+              } as LessonQuizModalProps['quiz'])
             : undefined
         }
         lessonId={lesson?.id}
