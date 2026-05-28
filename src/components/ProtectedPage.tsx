@@ -10,7 +10,7 @@ import SignInRequiredBlock from './SignInRequiredBlock';
 
 type ProtectedPageProps = {
   children: React.ReactNode;
-  /** Si true, en modo demo se muestra pantalla de cuenta; sin sesión redirige a login */
+  /** Si true, modo demo ve pantalla de cuenta requerida en lugar del contenido */
   blockDemoContent?: boolean;
   authGateTitle?: string;
   authGateMessage?: string;
@@ -27,29 +27,31 @@ export default function ProtectedPage({
   const demoMode = useAppSelector((s) => s.uiSession.demoMode);
   const hydrated = useAppSelector((s) => s.uiSession.hydrated);
 
+  const hasAccess = demoMode || isAccountAuth;
+
   useEffect(() => {
-    if (!loading && hydrated && blockDemoContent && !demoMode && !isAccountAuth) {
+    if (!loading && hydrated && !hasAccess) {
       router.replace('/login');
     }
-  }, [loading, hydrated, blockDemoContent, isAccountAuth, demoMode, router]);
+  }, [loading, hydrated, hasAccess, router]);
 
   if (loading || !hydrated) {
     return (
       <div className="flex min-h-dvh flex-col items-center justify-center bg-linear-to-b from-black via-slate-950 to-black text-white">
         <div className="text-center">
-          <div className="mx-auto mb-4 h-16 w-16 animate-spin rounded-full border-4 border-app-ring/30 border-t-app-ring" />
-          <p className="text-lg font-semibold text-app-accent">Verificando sesión...</p>
+          <div className="border-app-ring/30 border-t-app-ring mx-auto mb-4 h-16 w-16 animate-spin rounded-full border-4" />
+          <p className="text-app-accent text-lg font-semibold">Verificando sesión...</p>
         </div>
       </div>
     );
   }
 
-  if (blockDemoContent && demoMode) {
-    return <SignInRequiredBlock title={authGateTitle} message={authGateMessage} />;
+  if (!hasAccess) {
+    return null;
   }
 
-  if (blockDemoContent && !isAccountAuth) {
-    return null;
+  if (blockDemoContent && demoMode) {
+    return <SignInRequiredBlock title={authGateTitle} message={authGateMessage} />;
   }
 
   return <>{children}</>;

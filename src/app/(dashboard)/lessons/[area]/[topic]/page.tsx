@@ -1,3 +1,4 @@
+import ProtectedPage from '@/components/ProtectedPage';
 import { LessonFlowClient } from '@/features/learning/lesson-flow/LessonFlowClient';
 import { LESSON_ROUTE_PAIRS } from '@/features/learning/constants/lessonRoutes';
 import { getLessonWithSteps } from '@/features/learning/server/getLessonWithSteps';
@@ -15,9 +16,12 @@ export default async function LessonPage({ params }: { params: Promise<{ area: s
   const { area, topic } = await params;
   const flow = await getLessonWithSteps(area, topic);
 
-  if (flow && flow.steps.length > 0) {
-    return <LessonFlowClient lessonId={flow.lesson.id} lessonTitle={flow.lesson.title} steps={flow.steps} />;
-  }
+  const content =
+    flow && flow.steps.length > 0 ? (
+      <LessonFlowClient lessonId={flow.lesson.id} lessonTitle={flow.lesson.title} steps={flow.steps} />
+    ) : (
+      <LessonPageClient />
+    );
 
-  return <LessonPageClient />;
+  return <ProtectedPage blockDemoContent={false}>{content}</ProtectedPage>;
 }
