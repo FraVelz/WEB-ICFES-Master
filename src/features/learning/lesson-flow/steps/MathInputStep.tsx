@@ -45,7 +45,7 @@ export function MathInputStep({ data, onStepReady }: MathInputStepProps) {
           }}
           className={cn(
             'min-h-[52px] w-full rounded-xl border border-slate-600 bg-slate-900/80 px-4 text-center',
-            'focus:border-app-ring focus:outline-none focus-visible:ring-2 focus-visible:ring-app-ring/35',
+            'focus:border-app-ring focus-visible:ring-app-ring/35 focus:outline-none focus-visible:ring-2',
             'sm:max-w-md'
           )}
           placeholder="Tu respuesta"
@@ -55,8 +55,8 @@ export function MathInputStep({ data, onStepReady }: MathInputStepProps) {
           type="button"
           onClick={verify}
           className={cn(
-            'min-h-[52px] rounded-xl bg-app-accent-strong px-6 text-lg font-semibold text-white transition',
-            'hover:bg-app-ring focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white',
+            'bg-app-accent-strong min-h-[52px] rounded-xl px-6 text-lg font-semibold text-white transition',
+            'hover:bg-app-ring focus-visible:ring-2 focus-visible:ring-white focus-visible:outline-none',
             'focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950'
           )}
         >

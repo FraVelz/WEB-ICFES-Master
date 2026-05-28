@@ -1,10 +1,5 @@
 /** Rutas disponibles solo con cuenta (no en modo demo). */
-export const ACCOUNT_ONLY_PATHS = [
-  '/clasificatoria',
-  '/desafios-diarios',
-  '/perfil',
-  '/configuracion',
-] as const;
+export const ACCOUNT_ONLY_PATHS = ['/clasificatoria', '/desafios-diarios', '/perfil', '/configuracion'] as const;
 
 export type AccountOnlyPath = (typeof ACCOUNT_ONLY_PATHS)[number];
 

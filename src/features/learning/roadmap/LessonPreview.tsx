@@ -52,7 +52,7 @@ export const LessonPreview = ({ isOpen, onClose, lesson, onStart }: LessonPrevie
           aria-label="Cerrar vista previa"
           className={cn(
             'absolute top-4 right-4 cursor-pointer rounded-lg p-2 text-slate-400 transition-colors',
-            'hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-app-accent',
+            'focus-visible:ring-app-accent hover:text-white focus-visible:ring-2 focus-visible:outline-none',
             'focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900'
           )}
         >
@@ -87,7 +87,7 @@ export const LessonPreview = ({ isOpen, onClose, lesson, onStart }: LessonPrevie
           className={cn(
             'flex w-full cursor-pointer items-center justify-center gap-2 rounded-xl bg-green-500 py-4',
             'font-bold text-slate-900 shadow-lg shadow-green-500/20 transition-all hover:bg-green-400',
-            'active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white',
+            'focus-visible:ring-2 focus-visible:ring-white focus-visible:outline-none active:scale-95',
             'focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900'
           )}
         >
@@ -100,9 +100,9 @@ export const LessonPreview = ({ isOpen, onClose, lesson, onStart }: LessonPrevie
             href={lesson.lessonHref}
             onClick={onClose}
             className={cn(
-              'mt-3 flex w-full items-center justify-center gap-2 rounded-xl border border-app-ring/40 bg-slate-800/50',
-              'py-3 text-sm font-semibold text-app-accent-muted transition-colors hover:bg-slate-800 hover:text-app-accent-bright',
-              'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-app-accent focus-visible:ring-offset-2',
+              'border-app-ring/40 mt-3 flex w-full items-center justify-center gap-2 rounded-xl border bg-slate-800/50',
+              'text-app-accent-muted hover:text-app-accent-bright py-3 text-sm font-semibold transition-colors hover:bg-slate-800',
+              'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none',
               'focus-visible:ring-offset-slate-900'
             )}
           >

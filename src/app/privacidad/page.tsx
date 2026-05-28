@@ -10,12 +10,12 @@ export default function PrivacidadPage() {
   return (
     <div className="relative min-h-dvh bg-linear-to-b from-black via-slate-950 to-black px-4 py-12 sm:px-6 lg:px-8">
       <div className="pointer-events-none fixed inset-0 z-0">
-        <div className="absolute top-1/3 left-1/4 h-96 w-96 animate-pulse rounded-full bg-lesson-lc-glow-a/20 blur-3xl" />
+        <div className="bg-lesson-lc-glow-a/20 absolute top-1/3 left-1/4 h-96 w-96 animate-pulse rounded-full blur-3xl" />
         <div className="absolute right-1/4 bottom-1/3 h-96 w-96 animate-pulse rounded-full bg-purple-500/20 blur-3xl" />
       </div>
 
       <div className="relative z-10 mx-auto max-w-4xl rounded-2xl border border-white/10 bg-white/5 p-4 shadow-2xl backdrop-blur-xl sm:p-8">
-        <h1 className="mb-4 flex items-center gap-3 bg-linear-to-r from-cta-text-start to-blue-500 bg-clip-text text-4xl font-bold text-transparent">
+        <h1 className="from-cta-text-start mb-4 flex items-center gap-3 bg-linear-to-r to-blue-500 bg-clip-text text-4xl font-bold text-transparent">
           <span className="text-app-accent">📄</span> Política de Privacidad
         </h1>
         <p className="mb-8 text-gray-300">
@@ -25,13 +25,13 @@ export default function PrivacidadPage() {
 
         <div className="space-y-6">
           <p className="leading-relaxed text-gray-200">
-            En <strong className="text-app-accent">ICFES Master</strong>, valoramos y respetamos la privacidad de nuestros
-            usuarios. Esta Política de Privacidad explica cómo recopilamos, usamos y protegemos la información cuando
-            utilizas nuestra aplicación y sitio web, enfocados en la preparación académica para el examen ICFES.
+            En <strong className="text-app-accent">ICFES Master</strong>, valoramos y respetamos la privacidad de
+            nuestros usuarios. Esta Política de Privacidad explica cómo recopilamos, usamos y protegemos la información
+            cuando utilizas nuestra aplicación y sitio web, enfocados en la preparación académica para el examen ICFES.
           </p>
 
           <div>
-            <h2 className="mt-8 mb-4 text-2xl font-bold text-app-accent">1. Información que recopilamos</h2>
+            <h2 className="text-app-accent mt-8 mb-4 text-2xl font-bold">1. Información que recopilamos</h2>
             <p className="mb-4 text-gray-300">Podemos recopilar los siguientes datos:</p>
             <h3 className="mt-6 mb-3 text-xl font-semibold text-blue-400">
               a) Información proporcionada por el usuario
@@ -42,7 +42,7 @@ export default function PrivacidadPage() {
               <li>Apodo o nombre de usuario</li>
               <li>Información de autenticación (modo local en dispositivo)</li>
             </ul>
-            <div className="mb-6 rounded-lg border border-blue-500/50 bg-lesson-lc-glow-a/20 p-4">
+            <div className="bg-lesson-lc-glow-a/20 mb-6 rounded-lg border border-blue-500/50 p-4">
               <p className="text-gray-200">
                 <strong className="text-blue-300">ICFES Master almacena datos localmente en tu dispositivo.</strong> En
                 futuras versiones se implementará sincronización en la nube.
@@ -64,7 +64,7 @@ export default function PrivacidadPage() {
           </div>
 
           <div>
-            <h2 className="mt-8 mb-4 text-2xl font-bold text-app-accent">2. Uso de la información</h2>
+            <h2 className="text-app-accent mt-8 mb-4 text-2xl font-bold">2. Uso de la información</h2>
             <ul className="mb-6 list-inside list-disc space-y-2 text-gray-300">
               <li>Brindar y mejorar la experiencia educativa</li>
               <li>Guardar el progreso del usuario</li>
@@ -74,7 +74,7 @@ export default function PrivacidadPage() {
           </div>
 
           <div>
-            <h2 className="mt-8 mb-4 text-2xl font-bold text-app-accent">3. Servicios de terceros</h2>
+            <h2 className="text-app-accent mt-8 mb-4 text-2xl font-bold">3. Servicios de terceros</h2>
             <ul className="mb-6 list-inside list-disc space-y-2 text-gray-300">
               <li>
                 <strong>LocalStorage del navegador</strong>: datos del usuario, progreso y preferencias
@@ -86,7 +86,7 @@ export default function PrivacidadPage() {
           </div>
 
           <div>
-            <h2 className="mt-8 mb-4 text-2xl font-bold text-app-accent">4. Menores de edad</h2>
+            <h2 className="text-app-accent mt-8 mb-4 text-2xl font-bold">4. Menores de edad</h2>
             <p className="mb-6 text-gray-300">
               ICFES Master es una plataforma educativa dirigida tanto a menores como a mayores de edad. No recopilamos
               intencionalmente información sensible.
@@ -94,7 +94,7 @@ export default function PrivacidadPage() {
           </div>
 
           <div>
-            <h2 className="mt-8 mb-4 text-2xl font-bold text-app-accent">5. Monetización</h2>
+            <h2 className="text-app-accent mt-8 mb-4 text-2xl font-bold">5. Monetización</h2>
             <p className="mb-6 text-gray-300">
               La plataforma es <strong>gratuita</strong>. Los datos personales{' '}
               <strong>no se venden ni se comparten con fines comerciales</strong>.
@@ -102,24 +102,24 @@ export default function PrivacidadPage() {
           </div>
 
           <div>
-            <h2 className="mt-8 mb-4 text-2xl font-bold text-app-accent">6. Seguridad de la información</h2>
+            <h2 className="text-app-accent mt-8 mb-4 text-2xl font-bold">6. Seguridad de la información</h2>
             <p className="mb-6 text-gray-300">
               Aplicamos medidas técnicas y organizativas razonables para proteger la información del usuario.
             </p>
           </div>
 
           <div>
-            <h2 className="mt-8 mb-4 text-2xl font-bold text-app-accent">7. Derechos del usuario</h2>
+            <h2 className="text-app-accent mt-8 mb-4 text-2xl font-bold">7. Derechos del usuario</h2>
             <p className="mb-4 text-gray-300">
               El usuario puede solicitar eliminación de su cuenta, consultar o actualizar su información. Contacto:{' '}
-              <a href="mailto:fravelz@proton.me" className="text-app-accent underline hover:text-app-accent-muted">
+              <a href="mailto:fravelz@proton.me" className="text-app-accent hover:text-app-accent-muted underline">
                 fravelz@proton.me
               </a>
             </p>
           </div>
 
           <div>
-            <h2 className="mt-8 mb-4 text-2xl font-bold text-app-accent">8. Cambios en esta política</h2>
+            <h2 className="text-app-accent mt-8 mb-4 text-2xl font-bold">8. Cambios en esta política</h2>
             <p className="mb-6 text-gray-300">Nos reservamos el derecho de actualizar esta Política de Privacidad.</p>
           </div>
 
@@ -127,9 +127,9 @@ export default function PrivacidadPage() {
             <Link
               href="/"
               className={cn(
-                'flex items-center gap-2 rounded-lg bg-linear-to-r from-cta-from to-cta-to px-8 py-3',
-                'font-semibold text-white transition-all duration-300 hover:from-app-accent-strong hover:to-blue-700',
-                'hover:shadow-lg hover:shadow-app-ring/50'
+                'from-cta-from to-cta-to flex items-center gap-2 rounded-lg bg-linear-to-r px-8 py-3',
+                'hover:from-app-accent-strong font-semibold text-white transition-all duration-300 hover:to-blue-700',
+                'hover:shadow-app-ring/50 hover:shadow-lg'
               )}
             >
               ← Volver al Inicio

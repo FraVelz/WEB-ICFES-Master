@@ -97,7 +97,7 @@ export const SecondaryHeader = ({ currentArea = 'lectura-critica', onAreaChange 
           onClick={() => setActiveModal(activeModal === 'areas' ? null : 'areas')}
           className={cn(
             'flex cursor-pointer items-center gap-3 rounded-xl p-2 transition-colors hover:bg-slate-800/50',
-            'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-app-accent focus-visible:ring-offset-2',
+            'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none',
             'focus-visible:ring-offset-slate-950'
           )}
           title="Cambiar área"
@@ -132,7 +132,7 @@ export const SecondaryHeader = ({ currentArea = 'lectura-critica', onAreaChange 
             className={cn(
               'group flex cursor-pointer items-center gap-2 rounded-full border border-slate-800',
               'bg-slate-900 px-3 py-1.5 transition-colors hover:border-orange-500/50',
-              'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-app-accent focus-visible:ring-offset-2',
+              'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none',
               'focus-visible:ring-offset-slate-950'
             )}
             title="Ver información de racha"
@@ -162,7 +162,7 @@ export const SecondaryHeader = ({ currentArea = 'lectura-critica', onAreaChange 
             className={cn(
               'group flex cursor-pointer items-center gap-2 rounded-full border border-slate-800',
               'bg-slate-900 px-3 py-1.5 transition-colors hover:border-yellow-500/50',
-              'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-app-accent focus-visible:ring-offset-2',
+              'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none',
               'focus-visible:ring-offset-slate-950'
             )}
             title="Abrir tienda"

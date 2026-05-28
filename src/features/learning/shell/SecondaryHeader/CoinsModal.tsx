@@ -43,7 +43,7 @@ export const CoinsModal = ({ isOpen, onClose, coins = 0 }: CoinsModalProps) => {
               aria-label="Cerrar"
               className={cn(
                 'cursor-pointer rounded-lg p-1 text-slate-500 transition-colors hover:text-white',
-                'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-app-accent focus-visible:ring-offset-2',
+                'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none',
                 'focus-visible:ring-offset-slate-900'
               )}
             >

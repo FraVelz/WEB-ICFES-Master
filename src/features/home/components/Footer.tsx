@@ -6,7 +6,7 @@ export const Footer = () => {
           <span>Contacto:</span>
           <a
             href="mailto:fravelz@proton.me"
-            className="text-blue-400 transition-colors hover:text-blue-300 focus-visible:rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-app-accent focus-visible:ring-offset-2 focus-visible:ring-offset-black/80"
+            className="focus-visible:ring-app-accent text-blue-400 transition-colors hover:text-blue-300 focus-visible:rounded focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-black/80 focus-visible:outline-none"
           >
             fravelz@proton.me
           </a>
@@ -15,13 +15,13 @@ export const Footer = () => {
         <div className="flex items-center gap-6">
           <a
             href="/privacidad"
-            className="rounded transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-app-accent focus-visible:ring-offset-2 focus-visible:ring-offset-black/80"
+            className="focus-visible:ring-app-accent rounded transition-colors hover:text-white focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-black/80 focus-visible:outline-none"
           >
             Política de Privacidad
           </a>
           <a
             href="/terminos"
-            className="rounded transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-app-accent focus-visible:ring-offset-2 focus-visible:ring-offset-black/80"
+            className="focus-visible:ring-app-accent rounded transition-colors hover:text-white focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-black/80 focus-visible:outline-none"
           >
             Términos y Condiciones
           </a>

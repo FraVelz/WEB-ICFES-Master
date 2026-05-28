@@ -22,7 +22,7 @@ export const AreasSection = () => {
               href={`/practica/${area.id}`}
               className={cn(
                 'group relative block rounded-xl',
-                'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-app-accent',
+                'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:outline-none',
                 'focus-visible:ring-offset-2 focus-visible:ring-offset-black'
               )}
             >
@@ -84,7 +84,7 @@ export const AreasSection = () => {
               'inline-flex items-center gap-2 rounded-lg bg-linear-to-r from-red-600 to-pink-600 px-8',
               'py-4 font-bold text-white transition-all duration-300 hover:scale-105 hover:shadow-lg',
               'hover:shadow-red-500/50',
-              'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-300',
+              'focus-visible:ring-2 focus-visible:ring-red-300 focus-visible:outline-none',
               'focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950'
             )}
           >

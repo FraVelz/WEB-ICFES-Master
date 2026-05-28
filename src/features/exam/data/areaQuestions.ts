@@ -22,13 +22,7 @@ export const MATHEMATICS_QUESTIONS = [
     0,
     'Teorema de Pitágoras: √(6² + 8²) = √100 = 10.'
   ),
-  makeQuestion(
-    'mat-4',
-    'Si f(x) = 2x + 3, ¿cuál es f(4)?',
-    ['9', '11', '8', '14'],
-    1,
-    'f(4) = 2(4) + 3 = 11.'
-  ),
+  makeQuestion('mat-4', 'Si f(x) = 2x + 3, ¿cuál es f(4)?', ['9', '11', '8', '14'], 1, 'f(4) = 2(4) + 3 = 11.'),
   makeQuestion(
     'mat-5',
     '¿Cuál es la probabilidad de obtener cara al lanzar una moneda justa?',
@@ -52,20 +46,19 @@ export const MATHEMATICS_QUESTIONS = [
     'A = πr² = 3,14 × 25 = 78,5.',
     'intermedio'
   ),
-  makeQuestion(
-    'mat-8',
-    'Resuelve: 2x - 5 = 11',
-    ['x = 3', 'x = 8', 'x = 6', 'x = 16'],
-    1,
-    '2x = 16 → x = 8.'
-  ),
+  makeQuestion('mat-8', 'Resuelve: 2x - 5 = 11', ['x = 3', 'x = 8', 'x = 6', 'x = 16'], 1, '2x = 16 → x = 8.'),
 ];
 
 export const LANGUAGE_QUESTIONS = [
   makeQuestion(
     'len-1',
     '¿Cuál es la función predominante del texto narrativo?',
-    ['Informar datos científicos', 'Contar una historia o suceso', 'Convencer al lector de comprar', 'Describir un proceso técnico'],
+    [
+      'Informar datos científicos',
+      'Contar una historia o suceso',
+      'Convencer al lector de comprar',
+      'Describir un proceso técnico',
+    ],
     1,
     'El texto narrativo relata hechos reales o ficticios en secuencia temporal.'
   ),
@@ -152,7 +145,12 @@ export const SCIENCE_QUESTIONS = [
   makeQuestion(
     'cie-4',
     'La ley de conservación de la energía establece que la energía:',
-    ['Se crea en las plantas', 'No se crea ni se destruye, solo se transforma', 'Desaparece al calentar', 'Solo existe en movimiento'],
+    [
+      'Se crea en las plantas',
+      'No se crea ni se destruye, solo se transforma',
+      'Desaparece al calentar',
+      'Solo existe en movimiento',
+    ],
     1,
     'Principio fundamental de la termodinámica.'
   ),
@@ -166,7 +164,12 @@ export const SCIENCE_QUESTIONS = [
   makeQuestion(
     'cie-6',
     'Un ecosistema incluye:',
-    ['Solo los animales', 'Componentes bióticos y abióticos en interacción', 'Únicamente el suelo', 'Solo factores climáticos'],
+    [
+      'Solo los animales',
+      'Componentes bióticos y abióticos en interacción',
+      'Únicamente el suelo',
+      'Solo factores climáticos',
+    ],
     1,
     'Ecosistema = comunidad biológica + medio físico.',
     'intermedio'
@@ -206,7 +209,12 @@ export const SOCIAL_QUESTIONS = [
   makeQuestion(
     'soc-3',
     'La democracia participativa implica que los ciudadanos:',
-    ['Solo votan cada 20 años', 'Pueden incidir en decisiones públicas', 'No tienen derechos', 'Delegan todo al ejecutivo'],
+    [
+      'Solo votan cada 20 años',
+      'Pueden incidir en decisiones públicas',
+      'No tienen derechos',
+      'Delegan todo al ejecutivo',
+    ],
     1,
     'Mecanismos como referendo, plebiscito y cabildo abierto.'
   ),
@@ -220,7 +228,12 @@ export const SOCIAL_QUESTIONS = [
   makeQuestion(
     'soc-5',
     'La globalización se caracteriza por:',
-    ['Aislamiento total de países', 'Mayor interconexión económica y cultural', 'Prohibición del comercio', 'Fin de las tecnologías'],
+    [
+      'Aislamiento total de países',
+      'Mayor interconexión económica y cultural',
+      'Prohibición del comercio',
+      'Fin de las tecnologías',
+    ],
     1,
     'Intercambio de bienes, ideas y capital a escala mundial.'
   ),
@@ -235,14 +248,24 @@ export const SOCIAL_QUESTIONS = [
   makeQuestion(
     'soc-7',
     'Un mapa temático muestra principalmente:',
-    ['Fotografías satelitales en color', 'Distribución de un fenómeno (población, clima, etc.)', 'Solo fronteras políticas', 'Coordenadas astronómicas'],
+    [
+      'Fotografías satelitales en color',
+      'Distribución de un fenómeno (población, clima, etc.)',
+      'Solo fronteras políticas',
+      'Coordenadas astronómicas',
+    ],
     1,
     'Representa información específica sobre el territorio.'
   ),
   makeQuestion(
     'soc-8',
     'La separación de poderes busca:',
-    ['Concentrar autoridad en una persona', 'Evitar abusos mediante equilibrio entre ramas', 'Eliminar el Congreso', 'Suprimir la justicia'],
+    [
+      'Concentrar autoridad en una persona',
+      'Evitar abusos mediante equilibrio entre ramas',
+      'Eliminar el Congreso',
+      'Suprimir la justicia',
+    ],
     1,
     'Montesquieu: ejecutivo, legislativo y judicial se controlan mutuamente.',
     'intermedio'

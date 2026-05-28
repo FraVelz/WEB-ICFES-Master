@@ -141,9 +141,9 @@ export const PathNode = ({
         <Link
           href={lessonHref}
           className={cn(
-            'mt-2 ml-px inline-flex w-fit max-w-full items-center gap-1 rounded-md px-1 py-1 text-xs font-medium text-app-accent',
-            'underline-offset-2 hover:text-app-accent-muted hover:underline focus-visible:outline-none',
-            'focus-visible:ring-2 focus-visible:ring-app-accent focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950'
+            'text-app-accent mt-2 ml-px inline-flex w-fit max-w-full items-center gap-1 rounded-md px-1 py-1 text-xs font-medium',
+            'hover:text-app-accent-muted underline-offset-2 hover:underline focus-visible:outline-none',
+            'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950'
           )}
         >
           Lección interactiva

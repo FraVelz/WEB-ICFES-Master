@@ -119,7 +119,7 @@ export const FullExamPage = () => {
     return (
       <div className="min-h-dvh bg-linear-to-br from-gray-900 via-slate-900 to-gray-900 text-white">
         <div className="pointer-events-none fixed inset-0 overflow-hidden">
-          <div className="absolute top-0 left-1/4 h-96 w-96 animate-pulse rounded-full bg-lesson-lc-glow-a/20 blur-3xl"></div>
+          <div className="bg-lesson-lc-glow-a/20 absolute top-0 left-1/4 h-96 w-96 animate-pulse rounded-full blur-3xl"></div>
           <div className="absolute right-1/4 bottom-0 h-96 w-96 animate-pulse rounded-full bg-purple-500/20 blur-3xl"></div>
         </div>
 
@@ -149,7 +149,7 @@ export const FullExamPage = () => {
                 onClick={() => window.history.back()}
                 className={cn(
                   'rounded-lg bg-white/10 px-4 py-2 text-sm text-white transition-all duration-300',
-                  'hover:bg-white/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-app-accent',
+                  'focus-visible:ring-app-accent hover:bg-white/20 focus-visible:ring-2 focus-visible:outline-none',
                   'focus-visible:ring-offset-2 focus-visible:ring-offset-gray-900'
                 )}
               >
@@ -205,7 +205,7 @@ export const FullExamPage = () => {
   return (
     <div className="min-h-dvh bg-linear-to-br from-gray-900 via-slate-900 to-gray-900 text-white">
       <div className="pointer-events-none fixed inset-0 overflow-hidden">
-        <div className="absolute top-0 left-1/4 h-96 w-96 animate-pulse rounded-full bg-lesson-lc-glow-a/20 blur-3xl"></div>
+        <div className="bg-lesson-lc-glow-a/20 absolute top-0 left-1/4 h-96 w-96 animate-pulse rounded-full blur-3xl"></div>
         <div className="absolute right-1/4 bottom-0 h-96 w-96 animate-pulse rounded-full bg-purple-500/20 blur-3xl"></div>
       </div>
 
@@ -238,7 +238,7 @@ export const FullExamPage = () => {
               href="/"
               className={cn(
                 'rounded-lg bg-white/10 px-4 py-2 text-sm text-white transition-all duration-300',
-                'hover:bg-white/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-app-accent',
+                'focus-visible:ring-app-accent hover:bg-white/20 focus-visible:ring-2 focus-visible:outline-none',
                 'focus-visible:ring-offset-2 focus-visible:ring-offset-gray-900'
               )}
             >
@@ -291,16 +291,14 @@ export const FullExamPage = () => {
                         <button
                           type="button"
                           key={option.letter}
-                          onClick={() =>
-                            handleAnswer(question.id, option.letter ?? option.id ?? String(option.text))
-                          }
+                          onClick={() => handleAnswer(question.id, option.letter ?? option.id ?? String(option.text))}
                           className={cn(
                             'w-full rounded-lg border-2 p-4 text-left transition-all duration-300',
-                            'focus-visible:z-10 focus-visible:outline-none focus-visible:ring-2',
+                            'focus-visible:z-10 focus-visible:ring-2 focus-visible:outline-none',
                             'focus-visible:ring-app-accent focus-visible:ring-offset-2 focus-visible:ring-offset-gray-950',
                             isSelected
                               ? 'border-app-accent bg-app-ring/20 text-app-on-accent'
-                              : 'border-white/20 bg-white/5 text-white hover:border-app-accent/50 hover:bg-app-ring/10'
+                              : 'hover:border-app-accent/50 hover:bg-app-ring/10 border-white/20 bg-white/5 text-white'
                           )}
                         >
                           <div className="flex items-center gap-3">
@@ -338,7 +336,7 @@ export const FullExamPage = () => {
                     'rounded-xl bg-linear-to-r from-green-500 to-emerald-500 px-12 py-4 text-lg font-bold',
                     'text-white transition-all duration-300 hover:from-green-600 hover:to-emerald-600',
                     'cursor-pointer hover:shadow-lg hover:shadow-green-500/50',
-                    'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white',
+                    'focus-visible:ring-2 focus-visible:ring-white focus-visible:outline-none',
                     'focus-visible:ring-offset-2 focus-visible:ring-offset-gray-900'
                   )}
                 >

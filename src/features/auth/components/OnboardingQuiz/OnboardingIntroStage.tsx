@@ -21,7 +21,7 @@ export function OnboardingIntroStage({ message, description, avatarSrc, onBack, 
           className="cursor-pointer rounded-lg p-2 transition-all duration-200 hover:bg-slate-800"
           title="Volver atrás"
         >
-          <Icon name="chevron-left" className="text-xl text-app-accent" />
+          <Icon name="chevron-left" className="text-app-accent text-xl" />
         </button>
       </div>
 
@@ -30,7 +30,7 @@ export function OnboardingIntroStage({ message, description, avatarSrc, onBack, 
         <div className="w-full max-w-2xl rounded-lg border border-slate-700 bg-slate-800/50 p-8 text-center backdrop-blur-sm">
           <h2
             className={cn(
-              'mb-2 bg-linear-to-r from-cta-text-start via-cta-text-via to-cta-text-end bg-clip-text text-2xl',
+              'from-cta-text-start via-cta-text-via to-cta-text-end mb-2 bg-linear-to-r bg-clip-text text-2xl',
               'font-bold text-transparent md:text-3xl'
             )}
           >
@@ -47,7 +47,7 @@ export function OnboardingIntroStage({ message, description, avatarSrc, onBack, 
           className={cn(
             'flex w-full cursor-pointer items-center justify-center gap-2 rounded-lg bg-linear-to-r',
             'from-cta-from to-cta-to px-6 py-4 text-lg font-bold text-white transition-all',
-            'duration-300 hover:shadow-lg hover:shadow-app-ring/50'
+            'hover:shadow-app-ring/50 duration-300 hover:shadow-lg'
           )}
         >
           <span>Continuar</span>

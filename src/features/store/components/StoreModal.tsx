@@ -57,7 +57,7 @@ export const StoreModal = ({ isOpen, onClose }: StoreModalProps) => {
             aria-label="Cerrar tienda"
             className={cn(
               '-mr-2 cursor-pointer rounded-full p-2 text-slate-400 transition-colors hover:bg-slate-800 hover:text-white',
-              'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-app-accent focus-visible:ring-offset-2',
+              'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none',
               'focus-visible:ring-offset-slate-950'
             )}
           >
@@ -70,7 +70,7 @@ export const StoreModal = ({ isOpen, onClose }: StoreModalProps) => {
           {loading ? (
             <div className="flex items-center justify-center py-20">
               <div className="space-y-4 text-center">
-                <Icon name="spinner" size="2xl" className="animate-spin text-4xl text-app-accent" />
+                <Icon name="spinner" size="2xl" className="text-app-accent animate-spin text-4xl" />
                 <p className="text-slate-300">Cargando tienda...</p>
               </div>
             </div>
@@ -91,7 +91,7 @@ export const StoreModal = ({ isOpen, onClose }: StoreModalProps) => {
                     onClick={() => setFilter(f.id)}
                     className={cn(
                       'cursor-pointer rounded-full border px-4 py-2 font-medium whitespace-nowrap transition-all',
-                      'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-app-accent focus-visible:ring-offset-2',
+                      'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none',
                       'focus-visible:ring-offset-slate-950',
                       filter === f.id
                         ? 'border-purple-500 bg-purple-600 text-white shadow-lg shadow-purple-500/25'

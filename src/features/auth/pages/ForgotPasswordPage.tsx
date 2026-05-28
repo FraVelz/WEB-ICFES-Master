@@ -38,8 +38,8 @@ export const ForgotPasswordPage = () => {
     >
       {/* Background glow effects */}
       <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
-        <div className="absolute top-1/3 left-1/4 h-96 w-96 animate-pulse rounded-full bg-ambient-a/30 blur-3xl"></div>
-        <div className="absolute right-1/4 bottom-1/3 h-96 w-96 animate-pulse rounded-full bg-ambient-b/30 blur-3xl"></div>
+        <div className="bg-ambient-a/30 absolute top-1/3 left-1/4 h-96 w-96 animate-pulse rounded-full blur-3xl"></div>
+        <div className="bg-ambient-b/30 absolute right-1/4 bottom-1/3 h-96 w-96 animate-pulse rounded-full blur-3xl"></div>
       </div>
 
       {/* Card */}
@@ -57,7 +57,7 @@ export const ForgotPasswordPage = () => {
         <div className="mb-8 text-center">
           <h1
             className={cn(
-              'mb-4 bg-linear-to-r from-cta-text-start via-cta-text-via to-cta-text-end bg-clip-text text-3xl',
+              'from-cta-text-start via-cta-text-via to-cta-text-end mb-4 bg-linear-to-r bg-clip-text text-3xl',
               'font-black text-transparent md:text-4xl'
             )}
           >
@@ -81,7 +81,7 @@ export const ForgotPasswordPage = () => {
                 placeholder={EMAIL_MESSAGES.forgotPasswordPage.emailPlaceholder}
                 className={cn(
                   'w-full rounded-lg border border-slate-700 bg-slate-800/50 py-3 pr-4 pl-10 transition-all',
-                  'focus:border-app-ring focus:ring-2 focus:ring-app-ring/30 focus:outline-none'
+                  'focus:border-app-ring focus:ring-app-ring/30 focus:ring-2 focus:outline-none'
                 )}
                 required
               />
@@ -108,8 +108,8 @@ export const ForgotPasswordPage = () => {
             type="submit"
             disabled={isSubmitting || success}
             className={cn(
-              'w-full cursor-pointer rounded-lg bg-linear-to-r from-cta-from to-cta-to px-4 py-3',
-              'font-bold text-white transition-all duration-300 hover:shadow-lg hover:shadow-app-ring/50',
+              'from-cta-from to-cta-to w-full cursor-pointer rounded-lg bg-linear-to-r px-4 py-3',
+              'hover:shadow-app-ring/50 font-bold text-white transition-all duration-300 hover:shadow-lg',
               'disabled:cursor-not-allowed disabled:opacity-60'
             )}
           >

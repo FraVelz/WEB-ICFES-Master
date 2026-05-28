@@ -27,7 +27,7 @@ export const FAQSection = () => {
               onClick={() => setExpandedFaq(expandedFaq === idx ? null : idx)}
               className={cn(
                 'flex w-full cursor-pointer items-center justify-between gap-3 p-6 transition-colors hover:bg-slate-700/50',
-                'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-app-accent'
+                'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:outline-none focus-visible:ring-inset'
               )}
             >
               <p className="text-left text-lg font-bold text-white">{faq.q}</p>

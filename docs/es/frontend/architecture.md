@@ -53,17 +53,17 @@ propietaria (p. ej. `@/features/auth/utils/mapSupabaseAuthError`, no shims en `@
 
 ## Supabase (`src/config/`)
 
-| Import | Cuándo usarlo |
-| ------ | ------------- |
-| `@/config/supabase` | Cliente browser (`supabase` singleton) y servicios del cliente |
+| Import                    | Cuándo usarlo                                                             |
+| ------------------------- | ------------------------------------------------------------------------- |
+| `@/config/supabase`       | Cliente browser (`supabase` singleton) y servicios del cliente            |
 | `@/config/supabaseClient` | Route Handlers, Server Components, scripts (`createServerSupabaseClient`) |
 
 ---
 
 ## Convención URL vs código
 
-| URL pública | Feature en código |
-| ----------- | ----------------- |
+| URL pública | Feature en código            |
+| ----------- | ---------------------------- |
 | `/logros/`  | `src/features/achievements/` |
 
 ---

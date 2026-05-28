@@ -53,15 +53,15 @@ features/nombre-feature/
 
 ### Features actuales
 
-| Feature       | Responsabilidad                                                              |
-| ------------- | ---------------------------------------------------------------------------- |
-| **auth/**     | Login, registro, OAuth, onboarding, `AuthContext`                            |
-| **home/**     | Landing, secciones marketing, donaciones                                     |
-| **learning/** | Roadmap, lecciones (`roadmap/`, `lesson-flow/`, `lessons-legacy/`, `shell/`, `server/`, `context/`) |
-| **exam/**     | Práctica, examen completo, clasificatoria; datos en `exam/data/`             |
-| **user/**     | Perfil, configuración, hooks `useProgress`, `useUserData`                    |
+| Feature           | Responsabilidad                                                                                        |
+| ----------------- | ------------------------------------------------------------------------------------------------------ |
+| **auth/**         | Login, registro, OAuth, onboarding, `AuthContext`                                                      |
+| **home/**         | Landing, secciones marketing, donaciones                                                               |
+| **learning/**     | Roadmap, lecciones (`roadmap/`, `lesson-flow/`, `lessons-legacy/`, `shell/`, `server/`, `context/`)    |
+| **exam/**         | Práctica, examen completo, clasificatoria; datos en `exam/data/`                                       |
+| **user/**         | Perfil, configuración, hooks `useProgress`, `useUserData`                                              |
 | **achievements/** | Badges, desafíos diarios, UI de logros (ruta `/logros/`; hooks transversales en `hooks/gamification/`) |
-| **store/**    | Tienda virtual (UI), modales de compra                                       |
+| **store/**        | Tienda virtual (UI), modales de compra                                                                 |
 
 ### Tres nombres “store”
 
@@ -109,21 +109,21 @@ Ver [documentación de servicios](../backend/services-api.md).
 
 Las URLs llevan **`/` final** (`trailingSlash: true`). Lista completa en [routes.md](../setup/routes.md).
 
-| Ruta                                  | Descripción                 |
-| ------------------------------------- | --------------------------- |
-| `/`                                   | Página de inicio            |
-| `/login`, `/signup`, `/auth/callback` | Autenticación               |
-| `/onboarding`                         | Onboarding                  |
-| `/ruta-aprendizaje`                   | Roadmap de aprendizaje      |
-| `/lessons/[area]/[topic]`             | Lección (Supabase o legacy) |
-| `/practica/[area]`                    | Práctica por área           |
-| `/examen-completo`                    | Examen completo             |
-| `/clasificatoria`                     | Clasificatoria / ranking    |
-| `/desafios-diarios`                   | Desafíos diarios            |
-| `/logros/`                             | Centro de logros (`features/achievements/`) |
-| `/perfil`, `/perfil/public`           | Perfil privado y público    |
-| `/configuracion`                      | Ajustes                     |
-| `/terminos`, `/privacidad`            | Legal                       |
+| Ruta                                  | Descripción                                 |
+| ------------------------------------- | ------------------------------------------- |
+| `/`                                   | Página de inicio                            |
+| `/login`, `/signup`, `/auth/callback` | Autenticación                               |
+| `/onboarding`                         | Onboarding                                  |
+| `/ruta-aprendizaje`                   | Roadmap de aprendizaje                      |
+| `/lessons/[area]/[topic]`             | Lección (Supabase o legacy)                 |
+| `/practica/[area]`                    | Práctica por área                           |
+| `/examen-completo`                    | Examen completo                             |
+| `/clasificatoria`                     | Clasificatoria / ranking                    |
+| `/desafios-diarios`                   | Desafíos diarios                            |
+| `/logros/`                            | Centro de logros (`features/achievements/`) |
+| `/perfil`, `/perfil/public`           | Perfil privado y público                    |
+| `/configuracion`                      | Ajustes                                     |
+| `/terminos`, `/privacidad`            | Legal                                       |
 
 ---
 

@@ -23,9 +23,9 @@ export const HomePage = () => {
     <>
       {/* Background glow effects - Fixed to viewport */}
       <div className="pointer-events-none fixed inset-0 z-0">
-        <div className="absolute top-1/3 left-1/4 h-96 w-96 animate-pulse rounded-full bg-ambient-a-strong/30 blur-3xl"></div>
-        <div className="absolute right-1/4 bottom-1/3 h-96 w-96 animate-pulse rounded-full bg-ambient-b-strong/30 blur-3xl"></div>
-        <div className="absolute top-2/3 left-3/4 h-72 w-72 animate-pulse rounded-full bg-ambient-c-muted/20 blur-3xl"></div>
+        <div className="bg-ambient-a-strong/30 absolute top-1/3 left-1/4 h-96 w-96 animate-pulse rounded-full blur-3xl"></div>
+        <div className="bg-ambient-b-strong/30 absolute right-1/4 bottom-1/3 h-96 w-96 animate-pulse rounded-full blur-3xl"></div>
+        <div className="bg-ambient-c-muted/20 absolute top-2/3 left-3/4 h-72 w-72 animate-pulse rounded-full blur-3xl"></div>
       </div>
 
       <div className="md:hidden">

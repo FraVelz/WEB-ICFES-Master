@@ -126,7 +126,7 @@ export const DailyChallengesPage = () => {
         <div className="space-y-4">
           {loading ? (
             <div className="py-12 text-center">
-              <Icon name="spinner" className="mb-4 animate-spin text-4xl text-app-accent" />
+              <Icon name="spinner" className="text-app-accent mb-4 animate-spin text-4xl" />
               <p className="text-slate-400">Cargando desafíos...</p>
             </div>
           ) : challenges.length > 0 ? (

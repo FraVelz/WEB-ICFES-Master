@@ -154,7 +154,7 @@ export function DesktopSidebar({ className, sidebarExpanded, onToggleSidebar }: 
           </div>
           <span
             className={cn(
-              'flex w-full items-center gap-3 px-3 font-bold text-amber-400 whitespace-nowrap transition-opacity duration-300',
+              'flex w-full items-center gap-3 px-3 font-bold whitespace-nowrap text-amber-400 transition-opacity duration-300',
               sidebarExpanded ? 'opacity-100' : 'opacity-0'
             )}
           >

@@ -45,8 +45,8 @@ export function ResourceStep({ data, onStepReady }: ResourceStepProps) {
             target="_blank"
             rel="noopener noreferrer"
             className={cn(
-              'inline-flex min-h-[52px] items-center justify-center rounded-xl bg-app-accent-strong px-8 text-lg',
-              'font-semibold text-white transition hover:bg-app-ring'
+              'bg-app-accent-strong inline-flex min-h-[52px] items-center justify-center rounded-xl px-8 text-lg',
+              'hover:bg-app-ring font-semibold text-white transition'
             )}
           >
             Abrir recurso

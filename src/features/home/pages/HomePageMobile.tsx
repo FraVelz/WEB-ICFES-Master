@@ -12,9 +12,9 @@ export const HomePageMobile = () => {
     <div className="flex h-dvh w-screen flex-col bg-linear-to-b from-black via-slate-950 to-black text-white">
       {/* Background glow — mobile layout */}
       <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
-        <div className="absolute top-1/3 left-1/4 h-48 w-48 animate-pulse rounded-full bg-ambient-a/30 blur-2xl"></div>
-        <div className="absolute right-1/4 bottom-1/3 h-48 w-48 animate-pulse rounded-full bg-ambient-b/30 blur-2xl"></div>
-        <div className="absolute top-2/3 left-3/4 h-32 w-32 animate-pulse rounded-full bg-ambient-c/20 blur-2xl"></div>
+        <div className="bg-ambient-a/30 absolute top-1/3 left-1/4 h-48 w-48 animate-pulse rounded-full blur-2xl"></div>
+        <div className="bg-ambient-b/30 absolute right-1/4 bottom-1/3 h-48 w-48 animate-pulse rounded-full blur-2xl"></div>
+        <div className="bg-ambient-c/20 absolute top-2/3 left-3/4 h-32 w-32 animate-pulse rounded-full blur-2xl"></div>
       </div>
 
       {/* Main Content - Centro */}

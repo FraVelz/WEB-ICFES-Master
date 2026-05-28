@@ -111,7 +111,7 @@ export const StreakModal = ({ isOpen, onClose, streakData }: StreakModalProps) =
               aria-label="Cerrar"
               className={cn(
                 'cursor-pointer rounded-lg p-1 text-slate-500 transition-colors hover:text-white',
-                'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-app-accent focus-visible:ring-offset-2',
+                'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none',
                 'focus-visible:ring-offset-slate-900'
               )}
             >
@@ -141,7 +141,7 @@ export const StreakModal = ({ isOpen, onClose, streakData }: StreakModalProps) =
                 aria-label="Mes anterior"
                 className={cn(
                   'cursor-pointer rounded-lg p-1 text-slate-500 transition-colors hover:text-white',
-                  'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-app-accent focus-visible:ring-offset-2',
+                  'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none',
                   'focus-visible:ring-offset-slate-950'
                 )}
               >
@@ -156,7 +156,7 @@ export const StreakModal = ({ isOpen, onClose, streakData }: StreakModalProps) =
                 aria-label="Mes siguiente"
                 className={cn(
                   'cursor-pointer rounded-lg p-1 text-slate-500 transition-colors hover:text-white',
-                  'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-app-accent focus-visible:ring-offset-2',
+                  'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none',
                   'focus-visible:ring-offset-slate-950'
                 )}
               >

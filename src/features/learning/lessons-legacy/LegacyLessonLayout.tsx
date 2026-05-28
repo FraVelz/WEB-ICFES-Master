@@ -115,11 +115,11 @@ export function LegacyLessonLayout({ entry, theme }: LegacyLessonLayoutProps) {
         </div>
 
         <section className="mb-16">
-          <h2 className="mb-8 text-3xl font-bold text-app-accent">{keySectionTitle}</h2>
+          <h2 className="text-app-accent mb-8 text-3xl font-bold">{keySectionTitle}</h2>
           <div className="grid gap-4 md:grid-cols-2">
             {content.keyFormulas.map((formula, idx) => (
-              <div key={idx} className="rounded-xl border border-app-ring/30 bg-app-ring/10 p-6">
-                <code className="block text-center text-lg text-app-accent-muted">{formula}</code>
+              <div key={idx} className="border-app-ring/30 bg-app-ring/10 rounded-xl border p-6">
+                <code className="text-app-accent-muted block text-center text-lg">{formula}</code>
               </div>
             ))}
           </div>

@@ -48,12 +48,12 @@ export const ExamConfigModal = ({
                 value={numQuestions}
                 onChange={(e) => setNumQuestions(Number(e.target.value))}
                 className={cn(
-                  'h-2 flex-1 cursor-pointer appearance-none rounded-lg bg-white/10 accent-app-accent',
-                  'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-app-accent',
+                  'accent-app-accent h-2 flex-1 cursor-pointer appearance-none rounded-lg bg-white/10',
+                  'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:outline-none',
                   'focus-visible:ring-offset-2 focus-visible:ring-offset-gray-900'
                 )}
               />
-              <span className="rounded-lg bg-app-ring/20 px-4 py-1 text-lg font-semibold text-app-accent-muted">
+              <span className="bg-app-ring/20 text-app-accent-muted rounded-lg px-4 py-1 text-lg font-semibold">
                 {numQuestions}
               </span>
             </div>
@@ -68,8 +68,8 @@ export const ExamConfigModal = ({
                 checked={useTimer}
                 onChange={(e) => setUseTimer(e.target.checked)}
                 className={cn(
-                  'h-5 w-5 rounded border-2 border-app-accent accent-app-ring focus-visible:outline-none',
-                  'focus-visible:ring-2 focus-visible:ring-app-accent focus-visible:ring-offset-2',
+                  'border-app-accent accent-app-ring h-5 w-5 rounded border-2 focus-visible:outline-none',
+                  'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:ring-offset-2',
                   'focus-visible:ring-offset-gray-900'
                 )}
               />
@@ -86,15 +86,15 @@ export const ExamConfigModal = ({
                   type="range"
                   min="1"
                   max="10"
-                value={timePerQuestion}
-                onChange={(e) => setTimePerQuestion(Number(e.target.value))}
-                className={cn(
-                  'h-2 flex-1 cursor-pointer appearance-none rounded-lg bg-white/10 accent-app-accent',
-                  'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-app-accent',
-                  'focus-visible:ring-offset-2 focus-visible:ring-offset-gray-900'
-                )}
-              />
-                <span className="rounded-lg bg-app-ring/20 px-4 py-1 font-semibold text-app-accent-muted">
+                  value={timePerQuestion}
+                  onChange={(e) => setTimePerQuestion(Number(e.target.value))}
+                  className={cn(
+                    'accent-app-accent h-2 flex-1 cursor-pointer appearance-none rounded-lg bg-white/10',
+                    'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:outline-none',
+                    'focus-visible:ring-offset-2 focus-visible:ring-offset-gray-900'
+                  )}
+                />
+                <span className="bg-app-ring/20 text-app-accent-muted rounded-lg px-4 py-1 font-semibold">
                   {timePerQuestion}m
                 </span>
               </div>
@@ -109,8 +109,8 @@ export const ExamConfigModal = ({
                 checked={showExplanations}
                 onChange={(e) => setShowExplanations(e.target.checked)}
                 className={cn(
-                  'h-5 w-5 rounded border-2 border-app-accent accent-app-ring focus-visible:outline-none',
-                  'focus-visible:ring-2 focus-visible:ring-app-accent focus-visible:ring-offset-2',
+                  'border-app-accent accent-app-ring h-5 w-5 rounded border-2 focus-visible:outline-none',
+                  'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:ring-offset-2',
                   'focus-visible:ring-offset-gray-900'
                 )}
               />
@@ -122,7 +122,7 @@ export const ExamConfigModal = ({
           <div className="mt-8 rounded-lg border border-white/10 bg-white/5 p-4">
             <p className="text-sm text-gray-400">
               Tiempo total estimado:{' '}
-              <span className="font-semibold text-app-accent-muted">
+              <span className="text-app-accent-muted font-semibold">
                 {useTimer ? `${numQuestions * timePerQuestion}` : 'Sin límite'} minutos
               </span>
             </p>
@@ -136,7 +136,7 @@ export const ExamConfigModal = ({
               className={cn(
                 'flex-1 rounded-lg border border-white/20 bg-white/10 px-6 py-3 text-center font-semibold',
                 'cursor-pointer text-white transition-all duration-300 hover:bg-white/20',
-                'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-app-accent',
+                'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:outline-none',
                 'focus-visible:ring-offset-2 focus-visible:ring-offset-gray-900'
               )}
             >
@@ -146,10 +146,10 @@ export const ExamConfigModal = ({
               type="button"
               onClick={handleStart}
               className={cn(
-                'flex-1 rounded-lg bg-linear-to-r from-cta-from to-cta-progress-end px-6 py-3 font-semibold',
-                'text-white transition-all duration-300 hover:from-app-accent-strong hover:to-blue-600',
-                'cursor-pointer hover:shadow-lg hover:shadow-app-ring/50',
-                'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white',
+                'from-cta-from to-cta-progress-end flex-1 rounded-lg bg-linear-to-r px-6 py-3 font-semibold',
+                'hover:from-app-accent-strong text-white transition-all duration-300 hover:to-blue-600',
+                'hover:shadow-app-ring/50 cursor-pointer hover:shadow-lg',
+                'focus-visible:ring-2 focus-visible:ring-white focus-visible:outline-none',
                 'focus-visible:ring-offset-2 focus-visible:ring-offset-gray-900'
               )}
             >

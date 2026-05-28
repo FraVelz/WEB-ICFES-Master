@@ -54,7 +54,7 @@ export function PracticeExamHeader({
           href="/"
           className={cn(
             'hidden rounded-lg bg-white/10 px-4 py-2 text-sm text-white transition-all duration-300',
-            'hover:bg-white/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-app-accent',
+            'focus-visible:ring-app-accent hover:bg-white/20 focus-visible:ring-2 focus-visible:outline-none',
             'focus-visible:ring-offset-2 focus-visible:ring-offset-gray-900 md:block'
           )}
         >
@@ -69,7 +69,7 @@ export function PracticeExamHeader({
             aria-label={mobileMenuOpen ? 'Cerrar menú' : 'Menú de examen'}
             className={cn(
               'rounded-lg p-2 text-white transition-colors hover:bg-white/10',
-              'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-app-accent',
+              'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:outline-none',
               'focus-visible:ring-offset-2 focus-visible:ring-offset-gray-900'
             )}
           >
@@ -84,7 +84,7 @@ export function PracticeExamHeader({
                   onClick={onShowAnswerSheet}
                   className={cn(
                     'flex w-full items-center gap-3 border-b border-white/10 px-4 py-3 text-white',
-                    'transition-colors hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2',
+                    'transition-colors hover:bg-white/10 focus-visible:ring-2 focus-visible:outline-none',
                     'focus-visible:ring-app-accent focus-visible:ring-inset'
                   )}
                 >
@@ -96,7 +96,7 @@ export function PracticeExamHeader({
                 href="/"
                 className={cn(
                   'flex items-center gap-3 px-4 py-3 text-white transition-colors hover:bg-white/10',
-                  'rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-app-accent',
+                  'focus-visible:ring-app-accent rounded-lg focus-visible:ring-2 focus-visible:outline-none',
                   'focus-visible:ring-offset-2 focus-visible:ring-offset-gray-900'
                 )}
               >

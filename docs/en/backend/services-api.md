@@ -90,15 +90,15 @@ Services that connect directly to PostgreSQL tables in Supabase:
 
 ### 5. **Feature modules and `persistence` layer**
 
-| Feature      | Main code                                                                          | Description                                                             |
-| ------------ | ---------------------------------------------------------------------------------- | ----------------------------------------------------------------------- |
-| **user**     | `src/services/persistence/userPersistence.ts`                                      | `useUserData` uses `loadUserProfile`, `patchUserProfile`, etc.          |
-| **progress** | `src/services/persistence/progressPersistence.ts`                                  | `useProgress` uses `loadProgressViewState`, etc.                        |
-| **exam**     | `src/services/persistence/examPersistence.ts`                                      | `useExam` uses `getExamById`, `resetUserExams`, …                       |
-| **achievements**   | `GamificationSupabaseService` + localStorage; `gamificationPersistence` in lessons | `useGamification`; `LessonQuizModal` uses **`gamificationPersistence`** |
-| **learning** | `src/features/learning/services/LearningService.ts`                                | Supabase (`learning_content`) or static roadmap data                    |
-| **store**    | `src/services/store/` (`SubscriptionPlanService`, `PlanScheduleService`)           | Plans and scheduling                                                    |
-| **auth**     | `src/context/AuthContext.tsx`, pages under `features/auth/`                        | Supabase/OAuth session; no `AuthService` stub                           |
+| Feature          | Main code                                                                          | Description                                                             |
+| ---------------- | ---------------------------------------------------------------------------------- | ----------------------------------------------------------------------- |
+| **user**         | `src/services/persistence/userPersistence.ts`                                      | `useUserData` uses `loadUserProfile`, `patchUserProfile`, etc.          |
+| **progress**     | `src/services/persistence/progressPersistence.ts`                                  | `useProgress` uses `loadProgressViewState`, etc.                        |
+| **exam**         | `src/services/persistence/examPersistence.ts`                                      | `useExam` uses `getExamById`, `resetUserExams`, …                       |
+| **achievements** | `GamificationSupabaseService` + localStorage; `gamificationPersistence` in lessons | `useGamification`; `LessonQuizModal` uses **`gamificationPersistence`** |
+| **learning**     | `src/features/learning/services/LearningService.ts`                                | Supabase (`learning_content`) or static roadmap data                    |
+| **store**        | `src/services/store/` (`SubscriptionPlanService`, `PlanScheduleService`)           | Plans and scheduling                                                    |
+| **auth**         | `src/context/AuthContext.tsx`, pages under `features/auth/`                        | Supabase/OAuth session; no `AuthService` stub                           |
 
 ---
 

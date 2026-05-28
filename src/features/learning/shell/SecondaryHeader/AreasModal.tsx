@@ -46,7 +46,7 @@ export const AreasModal = ({ isOpen, onClose, onSelectArea, currentArea }: Areas
               aria-label="Cerrar"
               className={cn(
                 'cursor-pointer rounded-lg p-1 text-slate-500 transition-colors hover:text-white',
-                'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-app-accent focus-visible:ring-offset-2',
+                'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none',
                 'focus-visible:ring-offset-slate-900'
               )}
             >
@@ -65,7 +65,7 @@ export const AreasModal = ({ isOpen, onClose, onSelectArea, currentArea }: Areas
                 }}
                 className={cn(
                   'flex w-full cursor-pointer items-center gap-3 rounded-xl px-4 py-3 transition-all',
-                  'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-app-accent focus-visible:ring-offset-2',
+                  'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none',
                   'focus-visible:ring-offset-slate-950',
                   currentArea === areaKey
                     ? ['bg-linear-to-r text-white shadow-lg', areaData.color]

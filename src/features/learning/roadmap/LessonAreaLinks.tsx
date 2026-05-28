@@ -31,9 +31,7 @@ export const LessonAreaLinks = ({ roadmapAreaId, className }: LessonAreaLinksPro
     <div className={cn('mx-auto mb-10 max-w-2xl space-y-8 px-4', className)}>
       {showFullExamLink && (
         <div>
-          <p className="mb-3 text-center text-xs font-semibold tracking-wider text-slate-500 uppercase">
-            Simulacro
-          </p>
+          <p className="mb-3 text-center text-xs font-semibold tracking-wider text-slate-500 uppercase">Simulacro</p>
           <div className="flex flex-wrap justify-center gap-2">
             <Link
               href="/examen-completo"
@@ -58,7 +56,7 @@ export const LessonAreaLinks = ({ roadmapAreaId, className }: LessonAreaLinksPro
               href={practicaHref}
               className={cn(
                 'rounded-full border border-amber-500/40 bg-amber-500/10 px-4 py-2 text-sm font-semibold text-amber-200',
-                'transition-colors hover:border-amber-400/60 hover:bg-lesson-soc-glow-b/20 hover:text-white'
+                'hover:bg-lesson-soc-glow-b/20 transition-colors hover:border-amber-400/60 hover:text-white'
               )}
             >
               Modo práctica ICFES
@@ -79,7 +77,7 @@ export const LessonAreaLinks = ({ roadmapAreaId, className }: LessonAreaLinksPro
                 href={href}
                 className={cn(
                   'rounded-full border border-slate-600/80 bg-slate-800/60 px-3 py-1.5 text-xs font-medium text-slate-200',
-                  'transition-colors hover:border-app-ring/50 hover:bg-slate-700/80 hover:text-white'
+                  'hover:border-app-ring/50 transition-colors hover:bg-slate-700/80 hover:text-white'
                 )}
               >
                 {formatTopicLabel(topic)}

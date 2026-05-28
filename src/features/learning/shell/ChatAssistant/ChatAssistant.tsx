@@ -164,9 +164,9 @@ export const ChatAssistant = () => {
         className={cn(
           'fixed bottom-28 left-6 z-10 flex h-14 w-14 cursor-pointer items-center justify-center',
           'lg:right-6 lg:bottom-6 lg:left-auto',
-          'rounded-full border-2 border-app-accent/50 bg-linear-to-r from-cta-from to-cta-to',
-          'text-white shadow-lg shadow-app-ring/30 transition-all duration-300 hover:scale-110',
-          'hover:shadow-app-ring/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-app-accent',
+          'border-app-accent/50 from-cta-from to-cta-to rounded-full border-2 bg-linear-to-r',
+          'shadow-app-ring/30 text-white shadow-lg transition-all duration-300 hover:scale-110',
+          'hover:shadow-app-ring/50 focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:outline-none',
           'focus-visible:ring-offset-4 focus-visible:ring-offset-slate-950'
         )}
         aria-label="Abrir asistente de chat"
@@ -180,19 +180,19 @@ export const ChatAssistant = () => {
           ref={chatPanelRef}
           className={cn(
             'fixed right-6 bottom-24 z-50 flex h-[min(500px,70vh)] w-[min(400px,calc(100vw-3rem))]',
-            'flex-col overflow-hidden rounded-2xl border border-app-ring/30 bg-slate-900/98 shadow-2xl',
+            'border-app-ring/30 flex-col overflow-hidden rounded-2xl border bg-slate-900/98 shadow-2xl',
             'shadow-app-ring/20 backdrop-blur-xl'
           )}
         >
           {/* Header */}
-          <div className="flex items-center justify-between border-b border-app-ring/20 bg-linear-to-r from-app-accent-strong/30 to-blue-600/30 px-4 py-3">
+          <div className="border-app-ring/20 from-app-accent-strong/30 flex items-center justify-between border-b bg-linear-to-r to-blue-600/30 px-4 py-3">
             <div className="flex items-center gap-3">
-              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-linear-to-r from-cta-from to-cta-to">
+              <div className="from-cta-from to-cta-to flex h-10 w-10 items-center justify-center rounded-full bg-linear-to-r">
                 <Icon name="robot" className="text-white" />
               </div>
               <div>
                 <h3 className="font-bold text-white">Asistente ICFES</h3>
-                <p className="text-xs text-app-accent-muted/80">
+                <p className="text-app-accent-muted/80 text-xs">
                   {isAnonymous
                     ? anonQuotaReached
                       ? 'Límite de invitado alcanzado'
@@ -206,7 +206,7 @@ export const ChatAssistant = () => {
               onClick={() => setIsOpen(false)}
               className={cn(
                 'cursor-pointer rounded-lg p-2 text-slate-400 transition-colors hover:bg-white/10 hover:text-white',
-                'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-app-accent focus-visible:ring-offset-2',
+                'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none',
                 'focus-visible:ring-offset-slate-900'
               )}
               aria-label="Cerrar chat"
@@ -219,7 +219,7 @@ export const ChatAssistant = () => {
           <div className="custom-scrollbar flex-1 space-y-4 overflow-y-auto p-4">
             {messages.length === 0 && (
               <div className="flex h-full flex-col items-center justify-center px-4 text-center">
-                <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-app-ring/20">
+                <div className="bg-app-ring/20 mb-4 flex h-16 w-16 items-center justify-center rounded-full">
                   <Icon name="message" size="xl" className="text-app-accent" />
                 </div>
                 <p className="mb-2 text-sm text-slate-400">¿Tienes preguntas sobre el ICFES?</p>
@@ -248,7 +248,7 @@ export const ChatAssistant = () => {
                   className={cn(
                     'max-w-[85%] rounded-2xl px-4 py-2.5',
                     msg.role === 'user'
-                      ? 'rounded-br-md border border-blue-500/30 bg-ambient-a/30'
+                      ? 'bg-ambient-a/30 rounded-br-md border border-blue-500/30'
                       : 'rounded-bl-md border border-slate-700/50 bg-slate-800/80'
                   )}
                 >
@@ -270,21 +270,21 @@ export const ChatAssistant = () => {
 
             {isTyping && (
               <div className="flex gap-3">
-                <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-app-ring/30">
+                <div className="bg-app-ring/30 flex h-8 w-8 shrink-0 items-center justify-center rounded-full">
                   <Icon name="robot" className="text-app-accent" />
                 </div>
                 <div className="rounded-2xl rounded-bl-md border border-slate-700/50 bg-slate-800/80 px-4 py-3">
                   <div className="flex gap-1.5">
                     <span
-                      className="h-2 w-2 animate-bounce rounded-full bg-hub-orb"
+                      className="bg-hub-orb h-2 w-2 animate-bounce rounded-full"
                       style={{ animationDelay: '0ms' }}
                     />
                     <span
-                      className="h-2 w-2 animate-bounce rounded-full bg-hub-orb"
+                      className="bg-hub-orb h-2 w-2 animate-bounce rounded-full"
                       style={{ animationDelay: '150ms' }}
                     />
                     <span
-                      className="h-2 w-2 animate-bounce rounded-full bg-hub-orb"
+                      className="bg-hub-orb h-2 w-2 animate-bounce rounded-full"
                       style={{ animationDelay: '300ms' }}
                     />
                   </div>
@@ -302,8 +302,8 @@ export const ChatAssistant = () => {
                 <Link
                   href="/login"
                   className={cn(
-                    'rounded font-semibold text-app-accent underline hover:text-app-accent-muted',
-                    'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-app-accent focus-visible:ring-offset-2',
+                    'text-app-accent hover:text-app-accent-muted rounded font-semibold underline',
+                    'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none',
                     'focus-visible:ring-offset-slate-900'
                   )}
                 >
@@ -323,7 +323,7 @@ export const ChatAssistant = () => {
                   disabled={isTyping}
                   className={cn(
                     'flex-1 rounded-xl border border-slate-600 bg-slate-800 px-4 py-3 text-white',
-                    'placeholder-slate-500 transition-all focus:border-app-ring focus:ring-2',
+                    'focus:border-app-ring placeholder-slate-500 transition-all focus:ring-2',
                     'focus:ring-app-ring/30 focus:outline-none disabled:opacity-60'
                   )}
                 />
@@ -332,9 +332,9 @@ export const ChatAssistant = () => {
                   onClick={handleSend}
                   disabled={!inputValue.trim() || isTyping}
                   className={cn(
-                    'cursor-pointer rounded-xl bg-linear-to-r from-cta-from to-cta-to px-4 py-3 text-white',
-                    'transition-all hover:from-app-accent-strong hover:to-blue-700 disabled:cursor-not-allowed',
-                    'disabled:opacity-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white',
+                    'from-cta-from to-cta-to cursor-pointer rounded-xl bg-linear-to-r px-4 py-3 text-white',
+                    'hover:from-app-accent-strong transition-all hover:to-blue-700 disabled:cursor-not-allowed',
+                    'focus-visible:ring-2 focus-visible:ring-white focus-visible:outline-none disabled:opacity-50',
                     'focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900'
                   )}
                 >

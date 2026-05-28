@@ -2,12 +2,7 @@
 // Questions grouped by area
 
 import type { ExamQuestion } from '@/features/exam/types/question';
-import {
-  LANGUAGE_QUESTIONS,
-  MATHEMATICS_QUESTIONS,
-  SCIENCE_QUESTIONS,
-  SOCIAL_QUESTIONS,
-} from './areaQuestions';
+import { LANGUAGE_QUESTIONS, MATHEMATICS_QUESTIONS, SCIENCE_QUESTIONS, SOCIAL_QUESTIONS } from './areaQuestions';
 
 export { LANGUAGE_QUESTIONS, MATHEMATICS_QUESTIONS, SCIENCE_QUESTIONS, SOCIAL_QUESTIONS };
 

@@ -67,4 +67,3 @@ export const RANKS = {
 export const getRankInfo = (rankId: string) => {
   return Object.values(RANKS).find((r) => r.id === rankId) || RANKS.NOVATO;
 };
-

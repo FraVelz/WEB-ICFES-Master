@@ -53,17 +53,17 @@ The `@/hooks` barrel re-exports feature hooks for convenience, but **prefer dire
 
 ## Supabase (`src/config/`)
 
-| Import | When to use |
-| ------ | ----------- |
-| `@/config/supabase` | Browser client (`supabase` singleton) and client-side services |
+| Import                    | When to use                                                               |
+| ------------------------- | ------------------------------------------------------------------------- |
+| `@/config/supabase`       | Browser client (`supabase` singleton) and client-side services            |
 | `@/config/supabaseClient` | Route Handlers, Server Components, scripts (`createServerSupabaseClient`) |
 
 ---
 
 ## URL vs code convention
 
-| Public URL | Feature in code |
-| ---------- | --------------- |
+| Public URL | Feature in code              |
+| ---------- | ---------------------------- |
 | `/logros/` | `src/features/achievements/` |
 
 ---

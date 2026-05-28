@@ -45,7 +45,7 @@ export const DonationForm = () => {
             {currentMethod?.type === 'card' && (
               <form onSubmit={handlePayment} className="animate-fade-in-up space-y-4">
                 {paymentSuccess ? (
-                  <div className="rounded-xl border border-green-500/50 bg-lesson-sci-glow-a/20 p-6 text-center">
+                  <div className="bg-lesson-sci-glow-a/20 rounded-xl border border-green-500/50 p-6 text-center">
                     <Icon name="check" className="mb-3 text-4xl text-green-400" />
                     <h5 className="text-lg font-bold text-white">¡Gracias por tu Sprite!</h5>
                     <p className="text-sm text-gray-300">Tu apoyo ha sido recibido.</p>

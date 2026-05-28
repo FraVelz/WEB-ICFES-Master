@@ -64,7 +64,7 @@ export const ClasificatoriaPage = () => {
       {/* Background Effects */}
       <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
         <div className="absolute top-0 left-0 h-96 w-full bg-linear-to-b from-purple-900/20 to-transparent"></div>
-        <div className="absolute right-0 bottom-0 h-96 w-96 rounded-full bg-app-ring/10 blur-3xl"></div>
+        <div className="bg-app-ring/10 absolute right-0 bottom-0 h-96 w-96 rounded-full blur-3xl"></div>
       </div>
 
       <div className="relative z-10 container mx-auto max-w-5xl px-4 py-8">
@@ -134,7 +134,7 @@ export const ClasificatoriaPage = () => {
         <div className="space-y-3">
           {loading ? (
             <div className="py-12 text-center">
-              <Icon name="spinner" className="mb-4 animate-spin text-4xl text-app-accent" />
+              <Icon name="spinner" className="text-app-accent mb-4 animate-spin text-4xl" />
               <p className="text-slate-400">Cargando clasificación...</p>
             </div>
           ) : error ? (
@@ -159,7 +159,7 @@ export const ClasificatoriaPage = () => {
                   className={cn(
                     'group relative flex cursor-pointer items-center gap-4 rounded-xl border p-4 transition-all',
                     isCurrentUser
-                      ? 'border-app-ring/50 bg-app-ring/10 shadow-lg shadow-app-ring/10'
+                      ? 'border-app-ring/50 bg-app-ring/10 shadow-app-ring/10 shadow-lg'
                       : cn(style.bg, 'hover:bg-slate-800')
                   )}
                 >
@@ -192,7 +192,7 @@ export const ClasificatoriaPage = () => {
                         {player.name || player.username || 'Usuario'}
                       </h3>
                       {isCurrentUser && (
-                        <span className="rounded-full border border-app-ring/30 bg-app-ring/20 px-2 py-0.5 text-[10px] text-app-accent-muted">
+                        <span className="border-app-ring/30 bg-app-ring/20 text-app-accent-muted rounded-full border px-2 py-0.5 text-[10px]">
                           Tú
                         </span>
                       )}

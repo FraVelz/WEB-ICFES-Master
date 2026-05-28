@@ -46,7 +46,7 @@ export function QuizStep({ data, onStepReady }: QuizStepProps) {
                 onClick={() => handleSelect(index)}
                 className={cn(
                   'w-full rounded-xl border px-4 py-4 text-left text-lg transition-colors md:py-5 md:text-xl',
-                  'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-app-accent focus-visible:ring-offset-2',
+                  'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none',
                   'focus-visible:ring-offset-slate-950',
                   showCorrect
                     ? 'border-emerald-500/80 bg-emerald-950/50 text-white'

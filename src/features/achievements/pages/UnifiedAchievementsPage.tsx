@@ -14,7 +14,7 @@ export const UnifiedAchievementsPage = () => {
     return (
       <div className="flex min-h-dvh items-center justify-center bg-slate-950">
         <div className="space-y-4 text-center">
-          <div className="animate-spin text-4xl text-app-accent">
+          <div className="text-app-accent animate-spin text-4xl">
             <Icon name="spinner" />
           </div>
           <p className="text-lg text-slate-300">Cargando logros...</p>
@@ -29,7 +29,7 @@ export const UnifiedAchievementsPage = () => {
         {/* Stats Header */}
         <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
           <div className="flex items-center gap-4 rounded-2xl border border-slate-800 bg-slate-900/50 p-6">
-            <div className="flex h-12 w-12 items-center justify-center rounded-full bg-lesson-math-glow-a/20 text-xl text-yellow-400">
+            <div className="bg-lesson-math-glow-a/20 flex h-12 w-12 items-center justify-center rounded-full text-xl text-yellow-400">
               <Icon name="trophy" />
             </div>
             <div>
@@ -39,7 +39,7 @@ export const UnifiedAchievementsPage = () => {
           </div>
 
           <div className="flex items-center gap-4 rounded-2xl border border-slate-800 bg-slate-900/50 p-6">
-            <div className="flex h-12 w-12 items-center justify-center rounded-full bg-app-ring/20 text-xl text-app-accent">
+            <div className="bg-app-ring/20 text-app-accent flex h-12 w-12 items-center justify-center rounded-full text-xl">
               <Icon name="star" />
             </div>
             <div>

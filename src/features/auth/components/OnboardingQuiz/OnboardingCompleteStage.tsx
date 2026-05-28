@@ -20,7 +20,7 @@ export function OnboardingCompleteStage({ onContinue }: OnboardingCompleteStageP
         </div>
 
         <div className="space-y-4">
-          <h2 className="bg-linear-to-r from-cta-text-start via-cta-text-via to-cta-text-end bg-clip-text text-3xl font-black text-transparent md:text-4xl">
+          <h2 className="from-cta-text-start via-cta-text-via to-cta-text-end bg-linear-to-r bg-clip-text text-3xl font-black text-transparent md:text-4xl">
             ¡Perfecto!
           </h2>
           <p className="text-lg text-slate-300">
@@ -34,7 +34,7 @@ export function OnboardingCompleteStage({ onContinue }: OnboardingCompleteStageP
           className={cn(
             'flex w-full cursor-pointer items-center justify-center gap-2 rounded-lg bg-linear-to-r',
             'from-cta-from to-cta-to px-6 py-4 text-lg font-bold text-white transition-all',
-            'duration-300 hover:shadow-lg hover:shadow-app-ring/50'
+            'hover:shadow-app-ring/50 duration-300 hover:shadow-lg'
           )}
         >
           <Icon name="arrow-right" />

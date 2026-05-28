@@ -14,8 +14,8 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         {/* Header - Sidebar */}
         <DashboardHeader
           className={cn(
-            'hidden h-screen w-fit flex-col border-r border-app-ring/20 bg-slate-950/95',
-            'shadow-2xl shadow-app-ring/10 backdrop-blur-xl transition-all duration-300 lg:flex'
+            'border-app-ring/20 hidden h-screen w-fit flex-col border-r bg-slate-950/95',
+            'shadow-app-ring/10 shadow-2xl backdrop-blur-xl transition-all duration-300 lg:flex'
           )}
         />
 

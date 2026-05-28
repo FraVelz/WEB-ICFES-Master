@@ -48,7 +48,7 @@ export const AchievementsList = ({ achievements = [] }: AchievementsListProps) =
     <div className="animate-fade-in w-full space-y-6">
       {/* Header & Filters */}
       <div className="space-y-4">
-        <h2 className="bg-linear-to-r from-hub-title-from to-blue-400 bg-clip-text px-1 text-2xl font-bold text-transparent">
+        <h2 className="from-hub-title-from bg-linear-to-r to-blue-400 bg-clip-text px-1 text-2xl font-bold text-transparent">
           Logros y Metas
         </h2>
 
@@ -61,10 +61,10 @@ export const AchievementsList = ({ achievements = [] }: AchievementsListProps) =
               onClick={() => setActiveCategory(key)}
               className={cn(
                 'flex cursor-pointer items-center gap-2 rounded-full border px-4 py-2 text-sm font-semibold whitespace-nowrap transition-all duration-300',
-                'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-app-accent focus-visible:ring-offset-2',
+                'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none',
                 'focus-visible:ring-offset-slate-950',
                 activeCategory === key
-                  ? 'border-app-ring bg-app-ring/20 text-app-accent shadow-lg shadow-app-ring/20'
+                  ? 'border-app-ring bg-app-ring/20 text-app-accent shadow-app-ring/20 shadow-lg'
                   : 'border-slate-700 bg-slate-800/50 text-slate-400 hover:border-slate-600 hover:bg-slate-800'
               )}
             >
@@ -91,7 +91,7 @@ export const AchievementsList = ({ achievements = [] }: AchievementsListProps) =
                   ? 'border-yellow-500/30 bg-linear-to-br from-yellow-500/10 to-orange-500/5 hover:border-yellow-500/50'
                   : isIncomplete
                     ? 'border-slate-800 bg-slate-900/50 opacity-75'
-                    : 'border-slate-700 bg-slate-800/30 hover:border-app-ring/30 hover:bg-slate-800/50'
+                    : 'hover:border-app-ring/30 border-slate-700 bg-slate-800/30 hover:bg-slate-800/50'
               )}
             >
               <div className="flex items-start gap-4">

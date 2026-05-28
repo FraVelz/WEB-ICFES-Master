@@ -121,7 +121,7 @@ export const LessonContentModal = ({
           className={cn(
             '-ml-1 flex min-w-[44px] cursor-pointer items-center gap-2 rounded-xl p-2 text-slate-400',
             'transition-colors hover:bg-slate-800 hover:text-white focus-visible:outline-none',
-            'focus-visible:ring-2 focus-visible:ring-app-accent focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900'
+            'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900'
           )}
         >
           <Icon name="arrow-left" className="text-lg" />
@@ -218,7 +218,7 @@ export const LessonContentModal = ({
                 onClick={() => setIsQuizOpen(true)}
                 className={cn(
                   'w-full transform cursor-pointer rounded-xl bg-linear-to-r px-6 py-3.5 font-bold text-white shadow-lg transition-all hover:scale-[1.02] active:scale-[0.98] sm:w-auto sm:min-w-[200px] sm:px-8 sm:py-4',
-                  'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2',
+                  'focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:outline-none',
                   'focus-visible:ring-offset-slate-900',
                   gradientClass
                 )}
@@ -292,7 +292,7 @@ export const LessonContentModal = ({
                   },
                   a: ({ ...props }) => (
                     <a
-                      className="rounded-sm text-blue-400 underline decoration-blue-400/30 hover:text-blue-300 hover:decoration-blue-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-app-accent focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
+                      className="focus-visible:ring-app-accent rounded-sm text-blue-400 underline decoration-blue-400/30 hover:text-blue-300 hover:decoration-blue-300 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950 focus-visible:outline-none"
                       {...props}
                     />
                   ),
@@ -318,7 +318,7 @@ export const LessonContentModal = ({
                   onClick={() => setIsQuizOpen(true)}
                   className={cn(
                     'mt-4 rounded-xl bg-blue-600 px-5 py-2.5 font-bold text-white hover:bg-blue-500 sm:px-6 sm:py-3',
-                    'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-app-accent focus-visible:ring-offset-2',
+                    'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none',
                     'focus-visible:ring-offset-slate-900'
                   )}
                 >
@@ -346,7 +346,7 @@ export const LessonContentModal = ({
             'border-slate-700 bg-slate-800/80 px-3 py-2.5 font-medium text-slate-300 transition-all',
             'hover:bg-slate-700/80 hover:text-white disabled:cursor-not-allowed disabled:opacity-40',
             'disabled:hover:bg-slate-800/80 disabled:hover:text-slate-300 sm:gap-2 sm:px-4 sm:py-3',
-            'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-app-accent focus-visible:ring-offset-2',
+            'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none',
             'focus-visible:ring-offset-slate-950'
           )}
         >
@@ -362,7 +362,7 @@ export const LessonContentModal = ({
           disabled={currentSection >= totalSteps - 1}
           className={cn(
             'flex min-w-[44px] cursor-pointer items-center justify-center gap-1.5 rounded-xl bg-linear-to-r px-3 py-2.5 font-medium text-white shadow-lg transition-all hover:opacity-95 disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:opacity-40 sm:gap-2 sm:px-4 sm:py-3',
-            'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2',
+            'focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:outline-none',
             'focus-visible:ring-offset-slate-950',
             gradientClass
           )}

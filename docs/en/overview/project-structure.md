@@ -52,15 +52,15 @@ features/feature-name/
 
 ### Current features
 
-| Feature       | Responsibility                                                             |
-| ------------- | -------------------------------------------------------------------------- |
-| **auth/**     | Login, signup, OAuth, onboarding, `AuthContext`                            |
-| **home/**     | Landing, marketing sections, donations                                     |
-| **learning/** | Roadmap, lessons (`roadmap/`, `lesson-flow/`, `lessons-legacy/`, `shell/`, `server/`, `context/`) |
-| **exam/**     | Practice, full exam, ranking; data in `exam/data/`                         |
-| **user/**     | Profile, settings, hooks `useProgress`, `useUserData`                      |
+| Feature           | Responsibility                                                                                             |
+| ----------------- | ---------------------------------------------------------------------------------------------------------- |
+| **auth/**         | Login, signup, OAuth, onboarding, `AuthContext`                                                            |
+| **home/**         | Landing, marketing sections, donations                                                                     |
+| **learning/**     | Roadmap, lessons (`roadmap/`, `lesson-flow/`, `lessons-legacy/`, `shell/`, `server/`, `context/`)          |
+| **exam/**         | Practice, full exam, ranking; data in `exam/data/`                                                         |
+| **user/**         | Profile, settings, hooks `useProgress`, `useUserData`                                                      |
 | **achievements/** | Badges, daily challenges, achievements UI (route `/logros/`; cross-feature hooks in `hooks/gamification/`) |
-| **store/**    | Virtual shop (UI), purchase modals                                         |
+| **store/**        | Virtual shop (UI), purchase modals                                                                         |
 
 ### Three different “store” names
 
@@ -108,21 +108,21 @@ See [services documentation](../backend/services-api.md).
 
 URLs end with a **trailing slash** (`trailingSlash: true`). Full list in [routes.md](../setup/routes.md).
 
-| Route                                 | Description                 |
-| ------------------------------------- | --------------------------- |
-| `/`                                   | Home                        |
-| `/login`, `/signup`, `/auth/callback` | Authentication              |
-| `/onboarding`                         | Onboarding                  |
-| `/ruta-aprendizaje`                   | Learning roadmap            |
-| `/lessons/[area]/[topic]`             | Lesson (Supabase or legacy) |
-| `/practica/[area]`                    | Practice by area            |
-| `/examen-completo`                    | Full exam                   |
-| `/clasificatoria`                     | Ranking                     |
-| `/desafios-diarios`                   | Daily challenges            |
-| `/logros/`                             | Achievements hub (`features/achievements/`) |
-| `/perfil`, `/perfil/public`           | Private and public profile  |
-| `/configuracion`                      | Settings                    |
-| `/terminos`, `/privacidad`            | Legal                       |
+| Route                                 | Description                                 |
+| ------------------------------------- | ------------------------------------------- |
+| `/`                                   | Home                                        |
+| `/login`, `/signup`, `/auth/callback` | Authentication                              |
+| `/onboarding`                         | Onboarding                                  |
+| `/ruta-aprendizaje`                   | Learning roadmap                            |
+| `/lessons/[area]/[topic]`             | Lesson (Supabase or legacy)                 |
+| `/practica/[area]`                    | Practice by area                            |
+| `/examen-completo`                    | Full exam                                   |
+| `/clasificatoria`                     | Ranking                                     |
+| `/desafios-diarios`                   | Daily challenges                            |
+| `/logros/`                            | Achievements hub (`features/achievements/`) |
+| `/perfil`, `/perfil/public`           | Private and public profile                  |
+| `/configuracion`                      | Settings                                    |
+| `/terminos`, `/privacidad`            | Legal                                       |
 
 ---
 

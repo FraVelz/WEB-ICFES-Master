@@ -268,11 +268,7 @@ export const LessonQuizModal = ({
         const coinsAmount = lessonCoins ?? quiz?.rewards?.coins ?? 250;
 
         await gamificationPersistence.addXP(user.uid, xpAmount, `lesson_quiz_${lessonId}`);
-        await gamificationPersistence.addCoins(
-          user.uid,
-          coinsAmount,
-          `lesson_quiz_${lessonId ?? 'unknown'}`
-        );
+        await gamificationPersistence.addCoins(user.uid, coinsAmount, `lesson_quiz_${lessonId ?? 'unknown'}`);
 
         if (user?.uid && lessonId) markLessonAsCompleted(user.uid, lessonId);
 
@@ -292,11 +288,7 @@ export const LessonQuizModal = ({
         const coinsAmount = lessonCoins ?? quiz?.rewards?.coins ?? 250;
 
         await gamificationPersistence.addXP(user.uid, xpAmount, `lesson_quiz_${lessonId}`);
-        await gamificationPersistence.addCoins(
-          user.uid,
-          coinsAmount,
-          `lesson_quiz_${lessonId ?? 'unknown'}`
-        );
+        await gamificationPersistence.addCoins(user.uid, coinsAmount, `lesson_quiz_${lessonId ?? 'unknown'}`);
 
         if (user?.uid && lessonId) markLessonAsCompleted(user.uid, lessonId);
 
@@ -384,7 +376,7 @@ export const LessonQuizModal = ({
                   disabled={isSubmitted}
                   className={cn(
                     'relative min-h-[52px] w-full cursor-pointer rounded-xl border-2 p-3.5 text-left text-sm transition-all',
-                    'focus-visible:z-10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-app-accent',
+                    'focus-visible:ring-app-accent focus-visible:z-10 focus-visible:ring-2 focus-visible:outline-none',
                     'focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900 disabled:focus-visible:ring-0',
                     'lg:min-h-[48px] lg:rounded-xl lg:p-4 lg:text-base',
                     isSubmitted
@@ -405,12 +397,12 @@ export const LessonQuizModal = ({
                         'mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-xs font-bold lg:h-7 lg:w-7 lg:text-sm',
                         isSubmitted
                           ? option.id === currentQuestion.correctAnswer
-                            ? 'border border-green-500/30 bg-lesson-sci-glow-a/20 text-green-400'
+                            ? 'bg-lesson-sci-glow-a/20 border border-green-500/30 text-green-400'
                             : option.id === selectedOption
                               ? 'border border-red-500/30 bg-red-500/20 text-red-400'
                               : 'border border-slate-600/50 bg-slate-700/50 text-slate-500'
                           : selectedOption === option.id
-                            ? 'border border-blue-500/30 bg-lesson-lc-glow-a/20 text-blue-400'
+                            ? 'bg-lesson-lc-glow-a/20 border border-blue-500/30 text-blue-400'
                             : 'border border-slate-600/50 bg-slate-700/50 text-slate-400'
                       )}
                     >
@@ -512,7 +504,7 @@ export const LessonQuizModal = ({
                   'min-h-[48px] cursor-pointer rounded-xl bg-slate-800/80 px-3.5 py-3 font-bold',
                   'text-slate-300 shadow-md transition-all hover:bg-slate-700 active:scale-95',
                   'active:bg-slate-600 lg:min-h-[44px] lg:rounded-xl lg:px-4',
-                  'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-app-accent focus-visible:ring-offset-2',
+                  'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none',
                   'focus-visible:ring-offset-slate-950'
                 )}
                 aria-label="Pregunta anterior"
@@ -541,7 +533,7 @@ export const LessonQuizModal = ({
                 'min-h-[48px] flex-1 cursor-pointer rounded-xl bg-slate-800/80 px-3 py-3 text-sm',
                 'font-semibold text-slate-300 shadow-md transition-all hover:bg-slate-700 active:scale-95',
                 'active:bg-slate-600 lg:min-h-[44px] lg:rounded-xl lg:px-4 lg:text-base',
-                'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-app-accent focus-visible:ring-offset-2',
+                'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none',
                 'focus-visible:ring-offset-slate-950'
               )}
             >
@@ -559,7 +551,7 @@ export const LessonQuizModal = ({
                   'hover:from-blue-500 hover:to-blue-400 active:scale-95 active:from-blue-700',
                   'active:to-blue-600 disabled:cursor-not-allowed disabled:opacity-50',
                   'disabled:active:scale-100 lg:min-h-[44px] lg:rounded-xl lg:px-4 lg:text-base',
-                  'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white',
+                  'focus-visible:ring-2 focus-visible:ring-white focus-visible:outline-none',
                   'focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950'
                 )}
               >
@@ -586,7 +578,7 @@ export const LessonQuizModal = ({
                       'min-h-[48px] flex-1 cursor-pointer rounded-xl bg-slate-700 px-3 py-3 text-sm font-bold',
                       'text-white shadow-md transition-all hover:bg-slate-600 active:scale-95 active:bg-slate-500',
                       'lg:min-h-[44px] lg:rounded-xl lg:px-4 lg:text-base',
-                      'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-app-accent',
+                      'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:outline-none',
                       'focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950'
                     )}
                   >
@@ -602,7 +594,7 @@ export const LessonQuizModal = ({
                       'px-3 py-3 text-sm font-bold text-white shadow-lg shadow-green-500/20 transition-all',
                       'hover:from-green-500 hover:to-green-400 active:scale-95 active:from-green-700',
                       'active:to-green-600 lg:min-h-[44px] lg:rounded-xl lg:px-4 lg:text-base',
-                      'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white',
+                      'focus-visible:ring-2 focus-visible:ring-white focus-visible:outline-none',
                       'focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950'
                     )}
                   >
