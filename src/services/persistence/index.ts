@@ -2,14 +2,21 @@
  * Unified persistence: Supabase or localStorage via API_CONFIG.
  * Prefer this module in features/UI instead of `@/storage` directly.
  */
-export * from './apiMode';
-export * from './gamificationPersistence';
-export * from './progressPersistence';
-export * from './examPersistence';
-export * from './userPersistence';
+export { API_CONFIG, isSupabaseMode, isLocalStorageMode } from './apiMode';
+export { gamificationPersistence } from './gamificationPersistence';
+export { loadProgressViewState, resetProgressData, type ProgressViewState } from './progressPersistence';
+export { getExamById, resetUserExams, getUserExamsList } from './examPersistence';
+export {
+  loadUserProfile,
+  patchUserProfile,
+  setUsername,
+  setUserBio,
+  setUserProfileImage,
+  addUserMoney,
+  spendUserMoney,
+} from './userPersistence';
 export { getAggregatedUserData } from './userDataBundle';
 
-// Client storage helpers (local mode / legacy direct access)
 export {
   getProgress,
   getStoredExams,

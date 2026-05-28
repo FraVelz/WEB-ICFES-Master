@@ -1,8 +1,7 @@
 /**
- * Application services barrel
- *
- * Dual persistence (Supabase / localStorage): use `@/services/persistence`.
+ * Application services barrel.
+ * Dual persistence: import from `@/services/persistence`.
  */
-export * from './store';
-export * from './gamification';
-export * from './persistence';
+export { default as SubscriptionPlanService } from './store/SubscriptionPlanService';
+export { default as PlanScheduleService } from './store/PlanScheduleService';
+export { calculateLevel, getLevelInfo, LEVELS } from './gamification/gamificationUtils';
