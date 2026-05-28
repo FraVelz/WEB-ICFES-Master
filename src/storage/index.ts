@@ -14,6 +14,8 @@ export {
   type AttemptWithQuestions,
 } from './progressStorage';
 
+export { clearLocalUserData } from './userProfile';
+
 export {
   getUserProfile,
   getUserRank,

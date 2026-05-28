@@ -13,19 +13,21 @@ export function SettingsSupportPanel() {
     setSupportMessage,
     supportEmail,
     setSupportEmail,
-    sendingSupport,
     handleSupportSubmit,
   } = useUserSettingsContext();
 
   return (
     <SettingsSection title="Ayuda y Soporte" icon="headset">
+      <p className="mb-4 text-sm text-slate-400">
+        Completa el formulario y se abrirá tu cliente de correo con el mensaje preparado.
+      </p>
       <div className="mb-6 flex rounded-xl border border-slate-800 bg-slate-950/50 p-1">
         <button
           type="button"
           onClick={() => setSupportMode('response')}
           className={cn(
             'flex-1 cursor-pointer rounded-lg px-4 py-2 text-sm font-medium transition-all',
-            'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-app-accent focus-visible:ring-inset',
+            'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:outline-none focus-visible:ring-inset',
             supportMode === 'response' ? 'bg-slate-800 text-white shadow-sm' : 'text-slate-400 hover:text-white'
           )}
         >
@@ -37,7 +39,7 @@ export function SettingsSupportPanel() {
           onClick={() => setSupportMode('report')}
           className={cn(
             'flex-1 cursor-pointer rounded-lg px-4 py-2 text-sm font-medium transition-all',
-            'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-app-accent focus-visible:ring-inset',
+            'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:outline-none focus-visible:ring-inset',
             supportMode === 'report' ? 'bg-slate-800 text-white shadow-sm' : 'text-slate-400 hover:text-white'
           )}
         >
@@ -53,7 +55,7 @@ export function SettingsSupportPanel() {
             <select
               value={supportCategory}
               onChange={(e) => setSupportCategory(e.target.value)}
-              className="w-full rounded-lg border border-slate-800 bg-slate-950 px-3 py-2.5 text-sm text-white outline-none focus:border-app-ring"
+              className="focus:border-app-ring w-full rounded-lg border border-slate-800 bg-slate-950 px-3 py-2.5 text-sm text-white outline-none"
             >
               <option value="technical">Error técnico</option>
               <option value="content">Contenido</option>
@@ -69,7 +71,7 @@ export function SettingsSupportPanel() {
                 value={supportEmail}
                 onChange={(e) => setSupportEmail(e.target.value)}
                 required
-                className="w-full rounded-lg border border-slate-800 bg-slate-950 px-3 py-2.5 text-sm text-white outline-none focus:border-app-ring"
+                className="focus:border-app-ring w-full rounded-lg border border-slate-800 bg-slate-950 px-3 py-2.5 text-sm text-white outline-none"
                 placeholder="tu@email.com"
               />
             </div>
@@ -84,26 +86,23 @@ export function SettingsSupportPanel() {
             required
             className={cn(
               'h-32 w-full resize-none rounded-lg border border-slate-800 bg-slate-950 px-3 py-3 text-sm',
-              'text-white outline-none focus:border-app-ring'
+              'focus:border-app-ring text-white outline-none'
             )}
-            placeholder={
-              supportMode === 'response' ? '¿En qué podemos ayudarte?' : 'Describe el error encontrado...'
-            }
+            placeholder={supportMode === 'response' ? '¿En qué podemos ayudarte?' : 'Describe el error encontrado...'}
           />
         </div>
 
         <button
           type="submit"
-          disabled={sendingSupport}
           className={cn(
-            'w-full cursor-pointer rounded-xl bg-linear-to-r from-app-accent-strong to-blue-600 py-3 font-bold',
-            'text-white shadow-lg shadow-app-ring/20 transition-all hover:from-cta-from',
+            'from-app-accent-strong w-full cursor-pointer rounded-xl bg-linear-to-r to-blue-600 py-3 font-bold',
+            'shadow-app-ring/20 hover:from-cta-from text-white shadow-lg transition-all',
             'hover:to-blue-500 disabled:cursor-not-allowed disabled:opacity-50',
-            'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white',
+            'focus-visible:ring-2 focus-visible:ring-white focus-visible:outline-none',
             'focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950'
           )}
         >
-          {sendingSupport ? 'Enviando...' : 'Enviar Mensaje'}
+          Abrir correo para enviar
         </button>
       </form>
     </SettingsSection>

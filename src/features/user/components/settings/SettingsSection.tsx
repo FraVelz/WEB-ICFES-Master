@@ -19,7 +19,7 @@ export function SettingsSection({
     >
       {title && (
         <h2 className="mb-6 flex items-center gap-3 border-b border-slate-800 pb-4 text-lg font-bold text-white sm:text-xl">
-          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-slate-800 text-app-accent shadow-inner">
+          <div className="text-app-accent flex h-8 w-8 items-center justify-center rounded-lg bg-slate-800 shadow-inner">
             <Icon name={icon ?? 'settings'} />
           </div>
           {title}
@@ -65,8 +65,7 @@ export function SettingOption({
         danger
           ? 'cursor-pointer border-red-500/20 bg-red-500/5 hover:border-red-500/30 hover:bg-red-500/10'
           : 'border-slate-700/50 bg-slate-800/30 hover:border-slate-600 hover:bg-slate-800/60',
-        onClick &&
-          'outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950',
+        onClick && 'outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950',
         onClick && (danger ? 'focus-visible:ring-red-400' : 'focus-visible:ring-app-accent')
       )}
     >
@@ -77,7 +76,7 @@ export function SettingOption({
               'flex h-10 w-10 shrink-0 items-center justify-center rounded-full transition-colors',
               danger
                 ? 'bg-red-500/10 text-red-400 group-hover:bg-red-500/20'
-                : 'bg-slate-700/50 text-slate-400 group-hover:bg-slate-700 group-hover:text-app-accent'
+                : 'group-hover:text-app-accent bg-slate-700/50 text-slate-400 group-hover:bg-slate-700'
             )}
           >
             <Icon name={icon ?? 'settings'} />

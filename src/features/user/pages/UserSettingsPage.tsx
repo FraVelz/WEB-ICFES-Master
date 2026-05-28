@@ -16,7 +16,7 @@ function UserSettingsContent() {
   return (
     <div className="min-h-dvh bg-slate-950 pb-24 text-white md:pb-0">
       <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
-        <div className="absolute top-0 left-0 h-96 w-full bg-linear-to-b from-hub-sheet-from/10 to-transparent" />
+        <div className="from-hub-sheet-from/10 absolute top-0 left-0 h-96 w-full bg-linear-to-b to-transparent" />
         <div className="absolute right-0 bottom-0 h-96 w-96 rounded-full bg-blue-500/5 blur-3xl" />
       </div>
 
@@ -63,20 +63,6 @@ function UserSettingsContent() {
         </div>
 
         <SettingsDeleteModal />
-
-        <button
-          type="button"
-          onClick={() => document.getElementById('donation-section')?.scrollIntoView({ behavior: 'smooth' })}
-          aria-label="Ir a donaciones"
-          className={cn(
-            'fixed right-6 bottom-6 z-40 cursor-pointer rounded-full bg-linear-to-r from-pink-500',
-            'to-rose-500 p-4 text-white shadow-lg shadow-pink-500/30 transition-transform duration-300',
-            'hover:scale-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white',
-            'focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950 lg:hidden'
-          )}
-        >
-          <Icon name="heart" className="text-xl" />
-        </button>
       </div>
     </div>
   );

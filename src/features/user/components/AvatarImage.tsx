@@ -9,9 +9,10 @@ type AvatarImageProps = {
   alt: string;
   className?: string;
   fallback?: React.ReactNode;
+  sizes?: string;
 };
 
-export function AvatarImage({ src, alt, className, fallback = null }: AvatarImageProps) {
+export function AvatarImage({ src, alt, className, fallback = null, sizes = '96px' }: AvatarImageProps) {
   const [failed, setFailed] = useState(false);
 
   if (!src || failed) {
@@ -23,6 +24,7 @@ export function AvatarImage({ src, alt, className, fallback = null }: AvatarImag
       src={src}
       alt={alt}
       fill
+      sizes={sizes}
       unoptimized
       className={cn('object-cover', className)}
       onError={() => setFailed(true)}

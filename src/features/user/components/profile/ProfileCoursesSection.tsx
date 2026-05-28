@@ -7,11 +7,7 @@ type ProfileCoursesSectionProps = {
   onStartLearning?: () => void;
 };
 
-export function ProfileCoursesSection({
-  coursesProgress,
-  emptyMessage,
-  onStartLearning,
-}: ProfileCoursesSectionProps) {
+export function ProfileCoursesSection({ coursesProgress, emptyMessage, onStartLearning }: ProfileCoursesSectionProps) {
   const entries = Object.entries(coursesProgress);
 
   return (

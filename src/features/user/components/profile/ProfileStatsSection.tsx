@@ -15,7 +15,7 @@ export function ProfileStatsSection({
   level,
   totalXP,
   title = 'Estadísticas Rápidas',
-  showRanking = true,
+  showRanking = false,
 }: ProfileStatsSectionProps) {
   const completed = achievements.filter((a) => a.status === 'completed').length;
   const cols = showRanking ? 'grid-cols-2 sm:grid-cols-4' : 'grid-cols-3';

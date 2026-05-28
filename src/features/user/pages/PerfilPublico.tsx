@@ -11,15 +11,7 @@ import { ProfileCoursesSection } from '../components/profile/ProfileCoursesSecti
 import { ProfileStatsSection } from '../components/profile/ProfileStatsSection';
 import { ProfileAchievementsSection } from '../components/profile/ProfileAchievementsSection';
 
-function ProfileErrorState({
-  title,
-  message,
-  onBack,
-}: {
-  title: string;
-  message: string;
-  onBack: () => void;
-}) {
+function ProfileErrorState({ title, message, onBack }: { title: string; message: string; onBack: () => void }) {
   return (
     <div className="flex min-h-dvh items-center justify-center bg-slate-950 text-white">
       <div className="max-w-md space-y-6 px-4 text-center">
@@ -31,7 +23,7 @@ function ProfileErrorState({
         <button
           type="button"
           onClick={onBack}
-          className="cursor-pointer rounded-lg bg-app-accent-strong px-6 py-2 font-medium transition-colors hover:bg-app-ring"
+          className="bg-app-accent-strong hover:bg-app-ring cursor-pointer rounded-lg px-6 py-2 font-medium transition-colors"
         >
           Volver al inicio
         </button>
@@ -75,7 +67,7 @@ export const PerfilPublico = () => {
     return (
       <div className="flex min-h-dvh items-center justify-center bg-slate-950">
         <div className="space-y-4 text-center">
-          <div className="animate-spin text-4xl text-app-accent">
+          <div className="text-app-accent animate-spin text-4xl">
             <Icon name="spinner" />
           </div>
           <p className="text-lg text-slate-300">Cargando perfil público...</p>

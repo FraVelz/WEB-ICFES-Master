@@ -31,6 +31,7 @@ export {
 } from '@/storage/progressStorage';
 
 export {
+  clearLocalUserData,
   getUserProfile,
   getUserRank,
   updateUserProfile,

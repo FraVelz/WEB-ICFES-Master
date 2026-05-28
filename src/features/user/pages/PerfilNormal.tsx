@@ -41,7 +41,7 @@ export const PerfilNormal = () => {
     return (
       <div className="flex min-h-dvh items-center justify-center bg-slate-950">
         <div className="space-y-4 text-center">
-          <div className="animate-spin text-4xl text-app-accent">
+          <div className="text-app-accent animate-spin text-4xl">
             <Icon name="spinner" />
           </div>
           <p className="text-lg text-slate-300">Cargando tu perfil...</p>

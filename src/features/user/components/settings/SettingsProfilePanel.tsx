@@ -22,7 +22,7 @@ export function SettingsProfilePanel() {
   return (
     <div className="lg:sticky lg:top-24">
       <SettingsSection className="relative overflow-hidden text-center">
-        <div className="absolute top-0 left-0 h-24 w-full bg-linear-to-b from-app-ring/10 to-transparent" />
+        <div className="from-app-ring/10 absolute top-0 left-0 h-24 w-full bg-linear-to-b to-transparent" />
 
         <div className="group relative mb-4 inline-block">
           <div className="relative h-32 w-32 overflow-hidden rounded-full border-4 border-slate-800 bg-slate-800 shadow-2xl">
@@ -48,9 +48,9 @@ export function SettingsProfilePanel() {
             aria-label="Cambiar foto de perfil"
             className={cn(
               'absolute right-0 bottom-0 flex h-10 w-10 cursor-pointer items-center justify-center',
-              'rounded-full border-4 border-slate-900 bg-app-ring text-white shadow-lg',
-              'transition-transform hover:scale-110 hover:bg-hub-orb',
-              'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-app-accent',
+              'bg-app-ring rounded-full border-4 border-slate-900 text-white shadow-lg',
+              'hover:bg-hub-orb transition-transform hover:scale-110',
+              'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:outline-none',
               'focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950'
             )}
           >
@@ -71,7 +71,7 @@ export function SettingsProfilePanel() {
                 onChange={(e) => setUsername(e.target.value.slice(0, 30))}
                 className={cn(
                   'flex-1 rounded-lg border border-slate-800 bg-slate-950 px-3 py-2 text-sm text-white',
-                  'transition-all outline-none focus:border-app-ring focus:ring-1 focus:ring-app-ring'
+                  'focus:border-app-ring focus:ring-app-ring transition-all outline-none focus:ring-1'
                 )}
                 placeholder="Tu nombre"
               />
@@ -83,7 +83,7 @@ export function SettingsProfilePanel() {
                 className={cn(
                   'cursor-pointer rounded-lg bg-slate-800 px-3 py-2 text-slate-400 transition-colors',
                   'hover:bg-app-ring/20 hover:text-app-accent',
-                  'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-app-accent',
+                  'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:outline-none',
                   'focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950'
                 )}
               >
@@ -100,7 +100,7 @@ export function SettingsProfilePanel() {
                 onChange={(e) => setBio(e.target.value.slice(0, 150))}
                 className={cn(
                   'h-24 w-full resize-none rounded-lg border border-slate-800 bg-slate-950 px-3 py-2 text-sm',
-                  'text-white transition-all outline-none focus:border-app-ring focus:ring-1 focus:ring-app-ring'
+                  'focus:border-app-ring focus:ring-app-ring text-white transition-all outline-none focus:ring-1'
                 )}
                 placeholder="Cuéntanos sobre ti..."
               />
@@ -111,8 +111,8 @@ export function SettingsProfilePanel() {
                 aria-label="Guardar biografía"
                 className={cn(
                   'absolute right-2 bottom-2 flex h-8 w-8 cursor-pointer items-center justify-center',
-                  'rounded-md bg-slate-800 text-xs text-slate-400 transition-colors hover:bg-app-ring/20',
-                  'hover:text-app-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-app-accent',
+                  'hover:bg-app-ring/20 rounded-md bg-slate-800 text-xs text-slate-400 transition-colors',
+                  'hover:text-app-accent focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:outline-none',
                   'focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950'
                 )}
               >
@@ -126,7 +126,7 @@ export function SettingsProfilePanel() {
             <button
               type="button"
               onClick={handleRemoveProfileImage}
-              className="cursor-pointer text-xs text-red-400 underline-offset-2 hover:text-red-300 hover:underline focus-visible:rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
+              className="cursor-pointer text-xs text-red-400 underline-offset-2 hover:text-red-300 hover:underline focus-visible:rounded focus-visible:ring-2 focus-visible:ring-red-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950 focus-visible:outline-none"
             >
               Eliminar foto de perfil
             </button>

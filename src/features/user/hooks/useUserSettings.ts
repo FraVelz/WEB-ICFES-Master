@@ -7,7 +7,8 @@ import { useUser } from '@/features/user/hooks/useUser';
 import { useUserData } from '@/features/user/hooks/useUserData';
 import { useProgress } from '@/features/user/hooks/useProgress';
 import { useExam } from '@/features/exam/hooks/useExam';
-import { updateUsername, updateUserBio, updateProfileImage } from '@/services/persistence';
+import { clearLocalUserData, updateUsername, updateUserBio, updateProfileImage } from '@/services/persistence';
+import { isSupabaseMode } from '@/services/persistence/apiMode';
 
 export function useUserSettings() {
   const router = useRouter();
@@ -29,8 +30,6 @@ export function useUserSettings() {
   const [supportCategory, setSupportCategory] = useState('technical');
   const [supportMessage, setSupportMessage] = useState('');
   const [supportEmail, setSupportEmail] = useState('');
-  const [sendingSupport, setSendingSupport] = useState(false);
-
   useEffect(() => {
     setUsername(user?.username ?? userData?.displayName ?? userData?.username ?? '');
     setSupportEmail((user?.email ?? userData?.email ?? '') as string);
@@ -102,7 +101,7 @@ export function useUserSettings() {
     }
   };
 
-  const handleSupportSubmit = async (e: React.FormEvent) => {
+  const handleSupportSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!supportMessage.trim()) {
       showMessage('Por favor describe tu problema o pregunta', 'error');
@@ -112,18 +111,14 @@ export function useUserSettings() {
       showMessage('Por favor ingresa un email para responderte', 'error');
       return;
     }
-    try {
-      setSendingSupport(true);
-      showMessage('Gracias 🙌 Tu mensaje se ha registrado. Te responderemos pronto.', 'success');
-      setSupportMessage('');
-      setSupportCategory('technical');
-      if (!user?.email && !userData?.email) setSupportEmail('');
-    } catch (err) {
-      console.error('Error sending support message:', err);
-      showMessage('Error al enviar el mensaje. Intenta nuevamente.', 'error');
-    } finally {
-      setSendingSupport(false);
-    }
+
+    const subject = encodeURIComponent(
+      `[ICFES Master] ${supportMode === 'report' ? 'Reporte' : 'Soporte'} — ${supportCategory}`
+    );
+    const body = encodeURIComponent(
+      `${supportMessage.trim()}\n\n---\nEmail: ${supportEmail || user?.email || userData?.email || 'no indicado'}`
+    );
+    window.location.href = `mailto:fravelz@proton.me?subject=${subject}&body=${body}`;
   };
 
   const handleLogout = async () => {
@@ -148,7 +143,7 @@ export function useUserSettings() {
       setLoading(true);
       await resetProgress();
       await resetUserExams();
-      localStorage.clear();
+      clearLocalUserData();
       sessionStorage.clear();
       showMessage('Todos tus datos han sido eliminados', 'success');
       setShowDeleteModal(false);
@@ -170,10 +165,13 @@ export function useUserSettings() {
       setLoading(true);
       await resetProgress();
       await resetUserExams();
-      localStorage.clear();
+      clearLocalUserData();
       sessionStorage.clear();
       await logout();
-      showMessage('Cuenta eliminada exitosamente', 'success');
+      const suffix = isSupabaseMode()
+        ? ' Datos locales borrados. Para eliminar la cuenta en la nube, contacta soporte.'
+        : '';
+      showMessage(`Sesión cerrada y datos locales eliminados.${suffix}`, 'success');
       setTimeout(() => router.push('/'), 1500);
     } catch (err) {
       showMessage(`Error al eliminar cuenta: ${err instanceof Error ? err.message : 'Error desconocido'}`, 'error');
@@ -204,7 +202,6 @@ export function useUserSettings() {
     setSupportMessage,
     supportEmail,
     setSupportEmail,
-    sendingSupport,
     handleUsernameUpdate,
     handleBioUpdate,
     handleImageUpload,

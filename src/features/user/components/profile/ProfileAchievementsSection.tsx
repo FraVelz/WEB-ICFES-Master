@@ -14,11 +14,7 @@ type ProfileAchievementsSectionProps = {
   onViewAll?: () => void;
 };
 
-export function ProfileAchievementsSection({
-  achievements,
-  showViewAll,
-  onViewAll,
-}: ProfileAchievementsSectionProps) {
+export function ProfileAchievementsSection({ achievements, showViewAll, onViewAll }: ProfileAchievementsSectionProps) {
   return (
     <div className="sticky top-24 rounded-2xl border border-slate-800 bg-slate-900/50 p-6">
       <div className="mb-6 flex items-center justify-between">
@@ -30,7 +26,7 @@ export function ProfileAchievementsSection({
           <button
             type="button"
             onClick={onViewAll}
-            className="cursor-pointer text-xs font-bold tracking-wider text-app-accent uppercase hover:text-app-accent-muted"
+            className="text-app-accent hover:text-app-accent-muted cursor-pointer text-xs font-bold tracking-wider uppercase"
           >
             Ver todos
           </button>
@@ -51,10 +47,7 @@ export function ProfileAchievementsSection({
               )}
               title={achievement.title}
             >
-              <Icon
-                name={typeof achievement.icon === 'string' ? achievement.icon : 'star'}
-                className="mb-1 text-2xl"
-              />
+              <Icon name={typeof achievement.icon === 'string' ? achievement.icon : 'star'} className="mb-1 text-2xl" />
               {isUnlocked && (
                 <Icon name="star" size="sm" className="absolute top-2 right-2 text-[8px] text-yellow-200" />
               )}

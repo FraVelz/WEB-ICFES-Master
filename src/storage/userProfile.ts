@@ -197,6 +197,15 @@ export const updateProfileImage = async (file: File | null): Promise<UserProfile
   });
 };
 
+/** Borra perfil, ajustes y claves de progreso/examen en localStorage (sin diálogos). */
+export const clearLocalUserData = (): void => {
+  localStorage.removeItem(STORAGE_KEYS.USER_PROFILE);
+  localStorage.removeItem(STORAGE_KEYS.USER_SETTINGS);
+  localStorage.removeItem('icfes_exams');
+  localStorage.removeItem('icfes_practice');
+  localStorage.removeItem('icfes_progress');
+};
+
 /**
  * Delete all user data and progress (interactive confirmations)
  */
@@ -221,12 +230,7 @@ export const deleteUserAccount = (): boolean => {
     return false;
   }
 
-  localStorage.removeItem(STORAGE_KEYS.USER_PROFILE);
-  localStorage.removeItem(STORAGE_KEYS.USER_SETTINGS);
-  localStorage.removeItem('icfes_exams');
-  localStorage.removeItem('icfes_practice');
-  localStorage.removeItem('icfes_progress');
-
+  clearLocalUserData();
   return true;
 };
 

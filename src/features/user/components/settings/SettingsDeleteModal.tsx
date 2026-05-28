@@ -52,7 +52,7 @@ export function SettingsDeleteModal() {
               }}
               className={cn(
                 'flex-1 cursor-pointer rounded-lg bg-slate-800 py-2.5 font-medium text-white transition-colors',
-                'hover:bg-slate-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-app-accent',
+                'focus-visible:ring-app-accent hover:bg-slate-700 focus-visible:ring-2 focus-visible:outline-none',
                 'focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900'
               )}
             >
@@ -61,13 +61,11 @@ export function SettingsDeleteModal() {
             <button
               type="button"
               onClick={deleteConfirmation === 'BORRAR TODO' ? handleClearAllData : handleDeleteAccount}
-              disabled={
-                loading || (deleteConfirmation !== 'BORRAR TODO' && deleteConfirmation !== 'BORRAR MI CUENTA')
-              }
+              disabled={loading || (deleteConfirmation !== 'BORRAR TODO' && deleteConfirmation !== 'BORRAR MI CUENTA')}
               className={cn(
                 'flex-1 cursor-pointer rounded-lg bg-red-600 py-2.5 font-medium text-white',
                 'transition-colors hover:bg-red-500 disabled:cursor-not-allowed disabled:opacity-50',
-                'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2',
+                'focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:outline-none',
                 'focus-visible:ring-offset-slate-900'
               )}
             >

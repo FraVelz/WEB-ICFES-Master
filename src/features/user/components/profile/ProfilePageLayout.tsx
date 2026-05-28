@@ -13,11 +13,11 @@ export function ProfilePageLayout({
         {glowVariant === 'public' ? (
           <>
             <div className="absolute top-0 left-0 h-96 w-full bg-linear-to-b from-purple-900/20 to-transparent" />
-            <div className="absolute top-1/4 left-0 h-96 w-96 rounded-full bg-app-ring/10 blur-3xl" />
+            <div className="bg-app-ring/10 absolute top-1/4 left-0 h-96 w-96 rounded-full blur-3xl" />
           </>
         ) : (
           <>
-            <div className="absolute top-0 left-0 h-96 w-full bg-linear-to-b from-hub-sheet-from/20 to-transparent" />
+            <div className="from-hub-sheet-from/20 absolute top-0 left-0 h-96 w-full bg-linear-to-b to-transparent" />
             <div className="absolute top-1/4 right-0 h-96 w-96 rounded-full bg-purple-500/10 blur-3xl" />
           </>
         )}

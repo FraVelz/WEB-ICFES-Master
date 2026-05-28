@@ -63,7 +63,9 @@ export function ProfileHeroCard({
           <div
             className={cn(
               'h-32 w-32 rounded-full border-4 bg-slate-950 p-1 shadow-lg md:h-40 md:w-40',
-              accent === 'purple' ? 'border-purple-500/30 shadow-purple-500/20' : 'border-app-ring/30 shadow-app-ring/20'
+              accent === 'purple'
+                ? 'border-purple-500/30 shadow-purple-500/20'
+                : 'border-app-ring/30 shadow-app-ring/20'
             )}
           >
             <div className="relative h-full w-full overflow-hidden rounded-full bg-slate-800">
