@@ -38,14 +38,9 @@ function parseAnonCookie(request: NextRequest): number {
   return Number.isFinite(n) && n >= 0 ? n : 0;
 }
 
-function hasSupabaseAuthConfigured(): boolean {
-  return !!process.env.NEXT_PUBLIC_SUPABASE_URL && !!process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-}
-
 async function resolveChatAccess(request: NextRequest) {
   const authUser = await getAuthUserFromRequest(request);
-  /** Sin Supabase en el proyecto no hay JWT: no aplicar cuota (alineado con usuario mock en cliente). */
-  const isLoggedIn = !!authUser || !hasSupabaseAuthConfigured();
+  const isLoggedIn = !!authUser;
   const anonUsed = parseAnonCookie(request);
 
   return { isLoggedIn, anonUsed };

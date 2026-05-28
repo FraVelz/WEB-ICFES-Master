@@ -37,7 +37,7 @@ describe('GET /api/chat', () => {
     expect(data.unlimited).toBe(false);
   });
 
-  it('treats chat as unlimited when Supabase auth is not configured', async () => {
+  it('applies anonymous quota when Supabase env is missing and there is no JWT', async () => {
     delete process.env.NEXT_PUBLIC_SUPABASE_URL;
     delete process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
@@ -45,7 +45,8 @@ describe('GET /api/chat', () => {
     const response = await GET(request);
     const data = await response.json();
 
-    expect(data.unlimited).toBe(true);
+    expect(data.unlimited).toBe(false);
     expect(data.anonUsed).toBe(0);
+    expect(data.limit).toBe(CHAT_ANON_LIMIT);
   });
 });
