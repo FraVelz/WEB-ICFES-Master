@@ -73,7 +73,7 @@ This document describes the technologies used in **WEB-ICFES Master**, for both 
 
 | Environment      | Description                                                          |
 | ---------------- | -------------------------------------------------------------------- |
-| **Vercel**       | Next.js hosting (recommended)                                        |
+| **Vercel**       | Next.js hosting (recommended). Enable **Web Analytics** and **Speed Insights** in the project dashboard after deploy (`@vercel/analytics`, `@vercel/speed-insights` in the root layout) |
 | **Netlify**      | Serverless or static hosting depending on config                     |
 | **GitHub Pages** | Only if `output: 'export'` is enabled in `next.config` (not default) |
 

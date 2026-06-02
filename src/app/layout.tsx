@@ -3,6 +3,7 @@ import type { Metadata } from 'next';
 import './globals.css';
 
 import Providers from '@/components/Providers';
+import { VercelMetrics } from '@/components/VercelMetrics';
 
 export const metadata: Metadata = {
   title: {
@@ -77,6 +78,7 @@ export default function RootLayout({
 
       <body className="m-0 box-border min-h-dvh bg-black p-0 font-sans text-white antialiased">
         <Providers>{children}</Providers>
+        <VercelMetrics />
       </body>
     </html>
   );

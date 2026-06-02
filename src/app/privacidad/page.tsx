@@ -58,7 +58,12 @@ export default function PrivacidadPage() {
             <h3 className="mt-6 mb-3 text-xl font-semibold text-blue-400">c) Información automática</h3>
             <ul className="mb-4 list-inside list-disc space-y-2 text-gray-300">
               <li>
-                Datos anónimos de uso mediante <strong>Google Analytics</strong>
+                Datos agregados y anónimos de navegación mediante <strong>Vercel Web Analytics</strong> (páginas
+                visitadas, origen del tráfico, dispositivo)
+              </li>
+              <li>
+                Métricas de rendimiento (Web Vitals) mediante <strong>Vercel Speed Insights</strong>, sin identificar al
+                usuario por nombre
               </li>
             </ul>
           </div>
@@ -80,7 +85,10 @@ export default function PrivacidadPage() {
                 <strong>LocalStorage del navegador</strong>: datos del usuario, progreso y preferencias
               </li>
               <li>
-                <strong>Google Analytics</strong>: análisis del uso de la plataforma
+                <strong>Vercel Web Analytics</strong>: análisis agregado del uso de la plataforma
+              </li>
+              <li>
+                <strong>Vercel Speed Insights</strong>: medición de rendimiento y experiencia de carga
               </li>
             </ul>
           </div>
