@@ -68,8 +68,10 @@ EOF
 
 - Mensaje en **inglés**; respuesta al chat en **español**.
 - Cumplir `.cursor/rules/git-commits.mdc` (sin coautoría IA).
+- **Prohibido** terminar `/auto-commit` con `Co-authored-by: Cursor` o cualquier mención de Cursor como coautor en el cuerpo del commit.
+- Tras commitear, comprobar siempre: `git log -1 --format=%B` — si aparece el trailer, reescribir el mensaje **antes** de push (p. ej. `git commit-tree` + `git reset --hard`, ver regla `git-commits.mdc`).
 - Hook rechazado → nuevo commit; sin `--no-verify` salvo petición explícita.
-- Enmendar si aparece `Co-authored-by: Cursor` (commit no publicado).
+- **No** hacer `git push --force` salvo petición explícita del usuario (p. ej. limpieza de historial acordada).
 
 ## Comandos relacionados
 
