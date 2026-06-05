@@ -8,12 +8,11 @@ import {
   updateUsername,
   updateUserBio,
   updateProfileImage as updateProfileImageUtil,
-  addVirtualMoney,
-  removeVirtualMoney,
 } from '@/storage/userProfile';
 import type { MappedUser } from '@/services/supabase/UserSupabaseService';
 import type { UserProfile } from '@/storage/userProfile';
 import { isSupabaseMode } from './apiMode';
+import { addCoinsBalance, getCoinsBalance, spendCoinsBalance } from './coinsPersistence';
 
 export async function loadUserProfile(
   uid: string,
@@ -85,24 +84,23 @@ export async function setUserProfileImage(uid: string, file: File | null): Promi
 }
 
 export async function addUserMoney(uid: string, amount: number): Promise<MappedUser | UserProfile | null> {
+  await addCoinsBalance(uid, amount, 'user_wallet');
   if (isSupabaseMode()) {
-    await UserSupabaseService.updateVirtualMoney(uid, amount);
-    return UserSupabaseService.getByUserId(uid);
+    const profile = await UserSupabaseService.getByUserId(uid);
+    if (!profile) return null;
+    const balance = await getCoinsBalance(uid);
+    return { ...profile, virtualMoney: balance };
   }
-  addVirtualMoney(amount);
   return getUserProfile();
 }
 
 export async function spendUserMoney(uid: string, amount: number): Promise<MappedUser | UserProfile | null> {
+  await spendCoinsBalance(uid, amount, 'user_wallet');
   if (isSupabaseMode()) {
     const profile = await UserSupabaseService.getByUserId(uid);
-    const current = profile?.virtualMoney ?? 0;
-    if (current < amount) throw new Error('Monedas insuficientes');
-    await UserSupabaseService.updateProfile(uid, {
-      virtualMoney: current - amount,
-    });
-    return UserSupabaseService.getByUserId(uid);
+    if (!profile) return null;
+    const balance = await getCoinsBalance(uid);
+    return { ...profile, virtualMoney: balance };
   }
-  removeVirtualMoney(amount);
   return getUserProfile();
 }

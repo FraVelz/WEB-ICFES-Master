@@ -32,7 +32,6 @@ de nuevos desarrolladores y servir como referencia técnica.
 ### 5. Datos (`/data`)
 
 - **[Estructura de aprendizaje](../data/learning-structure-guide.md)**: Tabla `learning_content` (roadmap).
-- **[Lecciones por pasos](../data/lessons-steps-guide.md)**: Tablas `lessons` + `steps` (lesson flow).
 - **[Progreso solo en cliente](../data/progreso-cliente-local.md)**: Progreso en `localStorage` sin sync automática.
 
 ### 6. Integraciones (`/integrations`)

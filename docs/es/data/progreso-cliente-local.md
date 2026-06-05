@@ -16,6 +16,17 @@ Este documento describe dónde vive el progreso que **no** se sincroniza automá
 | `icfes_practice`          | Intentos de práctica por área (`savePractice`)                                  |
 | `icfes_progress`          | Agregado derivado (porcentajes, áreas, racha, etc.)                             |
 | `icfes_completed_lessons` | IDs de lecciones marcadas como completadas (`LearningService` / progreso local) |
+| `icfes_streak_dates`      | Racha demo/anónimo: JSON `{ dates, longestStreak }` o array legacy de fechas    |
+| `icfes_streak_dates_{uid}` | Racha del usuario autenticado (mismo formato)                                  |
+| `icfes_active_streak_user` | UID activo para registrar racha fuera de React (exámenes/práctica)            |
+
+## Racha diaria
+
+- **Servicio:** [`src/services/streak/`](../../../src/services/streak/)
+- **Demo:** scope `'demo'` → clave `icfes_streak_dates`
+- **Usuario:** scope `userId` → clave `icfes_streak_dates_{userId}` + columnas Supabase `streak_dates` / `longest_streak` en `user_gamification` (ver [`supabase-streak-migration.sql`](./supabase-streak-migration.sql))
+- **Registro:** visita a `/ruta-aprendizaje` (1×/día), práctica o examen completo
+- **Migración demo → cuenta:** al registrarse o iniciar sesión, `mergeDemoStreakIntoUser` fusiona fechas demo con las del usuario y vacía la clave demo
 
 ## Relación con otros datos
 

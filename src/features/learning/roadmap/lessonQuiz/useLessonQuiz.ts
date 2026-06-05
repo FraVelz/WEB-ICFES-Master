@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback, useMemo } from 'react';
 import { useAuth } from '@/features/auth/context/AuthContext';
-import { gamificationPersistence, getCompletedLessons, markLessonAsCompleted } from '@/services/persistence';
+import { addCoinsBalance, gamificationPersistence, getCompletedLessons, markLessonAsCompleted } from '@/services/persistence';
 import { normalizeQuizQuestions } from './normalizeQuizQuestions';
 import type { LessonQuizModalProps } from './quizTypes';
 
@@ -68,7 +68,7 @@ export function useLessonQuiz({
     const xpAmount = lessonXp ?? quiz?.rewards?.xp ?? 500;
     const coinsAmount = lessonCoins ?? quiz?.rewards?.coins ?? 250;
     await gamificationPersistence.addXP(user.uid, xpAmount, `lesson_quiz_${lessonId}`);
-    await gamificationPersistence.addCoins(user.uid, coinsAmount, `lesson_quiz_${lessonId ?? 'unknown'}`);
+    await addCoinsBalance(user.uid, coinsAmount, `lesson_quiz_${lessonId ?? 'unknown'}`);
     if (lessonId) markLessonAsCompleted(user.uid, lessonId);
     setRewards({ xp: xpAmount, coins: coinsAmount });
     setAlreadyCompleted(true);

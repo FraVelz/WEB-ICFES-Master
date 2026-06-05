@@ -50,7 +50,6 @@ Folder: [`docs/en/`](docs/en/) — Index: [overview.md](docs/en/overview/overvie
 | [components-guide.md](docs/en/frontend/components-guide.md)             | Components and hooks            |
 | [services-api.md](docs/en/backend/services-api.md)                      | Persistence and Supabase        |
 | [learning-structure-guide.md](docs/en/data/learning-structure-guide.md) | Roadmap (`learning_content`)    |
-| [lessons-steps-guide.md](docs/en/data/lessons-steps-guide.md)           | Step-based lessons              |
 | [cheatsheet.md](docs/en/setup/cheatsheet.md)                            | Quick reference                 |
 
 Spanish version: [`docs/es/`](docs/es/)

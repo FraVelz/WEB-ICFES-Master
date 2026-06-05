@@ -78,16 +78,13 @@ The `@/hooks` barrel re-exports feature hooks for convenience, but **prefer dire
 
 ---
 
-## Three lesson pipelines
+## Learning pipeline
 
-| Pipeline    | Data                                         | Screen                              |
-| ----------- | -------------------------------------------- | ----------------------------------- |
-| Roadmap     | `learning_content` table + `LearningService` | `/ruta-aprendizaje`                 |
-| Lesson flow | `lessons` + `steps` tables                   | `/lessons/[area]/[topic]`           |
-| Legacy      | static `lessons-legacy/`                     | Fallback when Supabase has no steps |
+| Pipeline | Data                                         | Screen              |
+| -------- | -------------------------------------------- | ------------------- |
+| Roadmap  | `learning_content` table + `LearningService` | `/ruta-aprendizaje` |
 
-See [learning-structure-guide.md](../data/learning-structure-guide.md) and
-[lessons-steps-guide.md](../data/lessons-steps-guide.md).
+See [learning-structure-guide.md](../data/learning-structure-guide.md).
 
 ---
 
@@ -96,7 +93,6 @@ See [learning-structure-guide.md](../data/learning-structure-guide.md) and
 | Context                        | Example slug                                                |
 | ------------------------------ | ----------------------------------------------------------- |
 | Practice / roadmap / constants | `lectura-critica`, `matematicas`, `ciencias-naturales`      |
-| `/lessons/...` URL             | `lenguaje`, `matematicas`, `ciencias`, `sociales`, `ingles` |
 | `learning_content.area` column | `lectura_critica`, `matematicas`, `ciencias_naturales`      |
 
 Mapping in code: `ROADMAP_AREA_TO_LESSON_AREA` in

@@ -51,32 +51,6 @@ Slugs alineados con `AREA_INFO` en `src/shared/constants/areaInfo.ts`:
 | `/practica/sociales-ciudadanas/` | Práctica Sociales y Ciudadanas |
 | `/practica/ingles/`              | Práctica Inglés                |
 
-## Lecciones (por área y tema)
-
-| URL                        | Ejemplo                                                         |
-| -------------------------- | --------------------------------------------------------------- |
-| `/lessons/[area]/[topic]/` | `/lessons/matematicas/algebra/`, `/lessons/lenguaje/gramatica/` |
-
-### Mapeo de slugs (práctica/roadmap → URL de lección)
-
-| ID en app (práctica, roadmap) | Segmento en `/lessons/` |
-| ----------------------------- | ----------------------- |
-| `lectura-critica`             | `lenguaje`              |
-| `matematicas`                 | `matematicas`           |
-| `ciencias-naturales`          | `ciencias`              |
-| `sociales-ciudadanas`         | `sociales`              |
-| `ingles`                      | `ingles`                |
-
-**Temas (ejemplos):**
-
-- **Matemáticas:** algebra, geometria, calculo, trigonometria, numeros-complejos
-- **Lenguaje:** gramatica, comprension, literatura, ortografia, semantica
-- **Ciencias:** biologia, fisica, quimica, ecologia, termodinamica
-- **Sociales:** historia, geografia, economia, ciudadania, filosofia
-- **Inglés:** gramatica, vocabulario, lectura, tiempos-verbales, conectores
-
-Ver [lessons-steps-guide.md](../data/lessons-steps-guide.md) para el esquema Supabase.
-
 ## API
 
 | URL         | Método   | Descripción                             |

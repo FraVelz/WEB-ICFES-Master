@@ -32,7 +32,6 @@ developers and serve as a technical reference.
 ### 5. Data (`/data`)
 
 - **[Learning structure guide](../data/learning-structure-guide.md)**: `learning_content` table (roadmap).
-- **[Lessons steps guide](../data/lessons-steps-guide.md)**: `lessons` + `steps` tables (lesson flow).
 - **[Client-only progress](../data/client-local-progress.md)**: Progress in `localStorage` without auto-sync.
 
 ### 6. Integrations (`/integrations`)

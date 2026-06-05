@@ -17,6 +17,8 @@ export interface GamificationProfile {
   achievements: unknown[];
   xpHistory: unknown[];
   coinsHistory: unknown[];
+  streakDates: string[];
+  longestStreak: number;
   updatedAt: unknown;
 }
 
@@ -34,6 +36,8 @@ const mapFromDb = (row: Record<string, unknown> | null): GamificationProfile | n
     achievements: (row.achievements as unknown[]) || [],
     xpHistory: (row.xp_history as unknown[]) || [],
     coinsHistory: (row.coins_history as unknown[]) || [],
+    streakDates: Array.isArray(row.streak_dates) ? (row.streak_dates as string[]) : [],
+    longestStreak: Number(row.longest_streak ?? 0),
     updatedAt: row.updated_at,
   };
 };
@@ -64,6 +68,8 @@ const GamificationSupabaseService = {
         current_xp: 0,
         badges: [],
         achievements: [],
+        streak_dates: [],
+        longest_streak: 0,
         updated_at: new Date().toISOString(),
       };
       const sb = ensureSupabase();
@@ -150,6 +156,47 @@ const GamificationSupabaseService = {
       if (totalXP >= l.xp) level = l.level;
     }
     return level;
+  },
+
+  async getStreak(userId: string): Promise<{ dates: string[]; longestStreak: number }> {
+    const profile = await this.getOrCreate(userId);
+    return {
+      dates: profile.streakDates ?? [],
+      longestStreak: profile.longestStreak ?? 0,
+    };
+  },
+
+  async updateStreak(
+    userId: string,
+    state: { dates: string[]; longestStreak: number }
+  ): Promise<GamificationProfile> {
+    await this.getOrCreate(userId);
+    const sb = ensureSupabase();
+    const payload = {
+      user_id: userId,
+      streak_dates: state.dates,
+      longest_streak: state.longestStreak,
+      updated_at: new Date().toISOString(),
+    };
+    const { data, error } = await sb.from(TABLE).upsert(payload, { onConflict: 'user_id' }).select().single();
+    if (error) throw new Error(`Error guardando racha: ${error.message}`);
+    return mapFromDb(data as Record<string, unknown>)!;
+  },
+
+  async updateAchievements(
+    userId: string,
+    achievements: Record<string, unknown>
+  ): Promise<GamificationProfile> {
+    await this.getOrCreate(userId);
+    const sb = ensureSupabase();
+    const { data, error } = await sb
+      .from(TABLE)
+      .update({ achievements, updated_at: new Date().toISOString() })
+      .eq('user_id', userId)
+      .select()
+      .single();
+    if (error) throw new Error(`Error actualizando logros: ${error.message}`);
+    return mapFromDb(data as Record<string, unknown>)!;
   },
 };
 

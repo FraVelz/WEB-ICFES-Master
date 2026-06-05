@@ -3,7 +3,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useAuth } from '@/features/auth/context/AuthContext';
 import { generateDailyChallenges } from '../utils/challengeGenerator';
-import { addVirtualMoney } from '@/services/persistence';
+import { addCoinsBalance } from '@/services/persistence';
 
 const CHALLENGES_KEY = 'icfes_daily_challenges';
 
@@ -71,14 +71,14 @@ export const useDailyChallenges = (dateString?: string) => {
       completedAt: new Date().toISOString(),
     };
 
-    addVirtualMoney((updated[idx]?.coinsReward as number) ?? 0);
+    await addCoinsBalance(user.uid, (updated[idx]?.coinsReward as number) ?? 0, `daily_challenge_${challengeId}`);
 
     const all = JSON.parse(localStorage.getItem(CHALLENGES_KEY) || '{}');
     all[targetDate] = { date: targetDate, challenges: updated };
     localStorage.setItem(CHALLENGES_KEY, JSON.stringify(all));
 
     const allCompleted = updated.every((c: DailyChallenge) => c.status === 'completed');
-    if (allCompleted) addVirtualMoney(50);
+    if (allCompleted) await addCoinsBalance(user.uid, 50, 'daily_challenges_bonus');
 
     loadChallenges();
   };

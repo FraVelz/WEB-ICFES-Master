@@ -11,6 +11,7 @@ import {
   setUserProfileImage,
   addUserMoney,
   spendUserMoney,
+  getCoinsBalance,
 } from '@/services/persistence';
 
 export function useUserData() {
@@ -29,7 +30,12 @@ export function useUserData() {
     setLoading(true);
     try {
       const data = await loadUserProfile(user.uid, user.email, user.displayName);
-      setUserData(data);
+      if (data) {
+        const balance = await getCoinsBalance(user.uid);
+        setUserData({ ...data, virtualMoney: balance });
+      } else {
+        setUserData(null);
+      }
       setError(null);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Error cargando datos');
@@ -86,21 +92,25 @@ export function useUserData() {
   const addMoney = useCallback(
     async (amount: number) => {
       if (!user?.uid) return 0;
-      const updated = await addUserMoney(user.uid, amount);
-      setUserData(updated);
-      return updated?.virtualMoney ?? 0;
+      await addUserMoney(user.uid, amount);
+      const balance = await getCoinsBalance(user.uid);
+      const updated = await loadUserProfile(user.uid, user.email, user.displayName);
+      setUserData(updated ? { ...updated, virtualMoney: balance } : updated);
+      return balance;
     },
-    [user?.uid]
+    [user?.uid, user?.email, user?.displayName]
   );
 
   const spendMoney = useCallback(
     async (amount: number) => {
       if (!user?.uid) return 0;
-      const updated = await spendUserMoney(user.uid, amount);
-      setUserData(updated);
-      return updated?.virtualMoney ?? 0;
+      await spendUserMoney(user.uid, amount);
+      const balance = await getCoinsBalance(user.uid);
+      const updated = await loadUserProfile(user.uid, user.email, user.displayName);
+      setUserData(updated ? { ...updated, virtualMoney: balance } : updated);
+      return balance;
     },
-    [user?.uid]
+    [user?.uid, user?.email, user?.displayName]
   );
 
   const addBadge = useCallback(() => [], []);

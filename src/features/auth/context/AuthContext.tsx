@@ -8,6 +8,11 @@ import { setDemoMode } from '@/store/slices/uiSessionSlice';
 import API_CONFIG from '@/services/api.config';
 import UserSupabaseService from '@/services/supabase/UserSupabaseService';
 import { getAggregatedUserData } from '@/services/persistence';
+import {
+  mergeDemoStreakIntoUser,
+  setActiveStreakUserId,
+  STREAK_UPDATED_EVENT,
+} from '@/services/streak';
 import { mapSupabaseAuthError, REQUIRES_EMAIL_CONFIRMATION } from '@/features/auth/utils/mapSupabaseAuthError';
 import type { AuthContextType, AuthUser, PlanData } from './authTypes';
 import { clearMockUser, createMockUser, loadMockUserFromStorage, persistMockUser } from './authMock';
@@ -35,6 +40,18 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     dispatch(setDemoMode(false));
   }, [dispatch]);
 
+  const migrateStreakOnAuth = useCallback(async (userId: string) => {
+    try {
+      await mergeDemoStreakIntoUser(userId);
+      setActiveStreakUserId(userId);
+      if (typeof window !== 'undefined') {
+        window.dispatchEvent(new CustomEvent(STREAK_UPDATED_EVENT));
+      }
+    } catch (err) {
+      console.warn('No se pudo migrar la racha del demo:', err);
+    }
+  }, []);
+
   useEffect(() => {
     if (API_CONFIG.MODE !== 'supabase' || !process.env.NEXT_PUBLIC_SUPABASE_URL || !supabase) {
       setUser(loadMockUserFromStorage());
@@ -49,6 +66,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       setLoading(false);
 
       if (event === 'SIGNED_IN' && session?.user) {
+        await migrateStreakOnAuth(session.user.id);
         clearDemoMode();
         try {
           const existing = await UserSupabaseService.getByUserId(session.user.id);
@@ -67,11 +85,14 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
     supabase.auth.getSession().then(({ data: { session } }) => {
       setUser(session?.user ? mapSupabaseUser(session.user) : null);
+      if (session?.user) {
+        setActiveStreakUserId(session.user.id);
+      }
       setLoading(false);
     });
 
     return () => subscription?.unsubscribe();
-  }, [clearDemoMode]);
+  }, [clearDemoMode, migrateStreakOnAuth]);
 
   const signup = async (email: string, password: string, displayName?: string): Promise<AuthUser | null> => {
     setError(null);
@@ -79,6 +100,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       const newUser = createMockUser({ email, displayName });
       persistMockUser(newUser);
       setUser(newUser);
+      await migrateStreakOnAuth(newUser.uid);
       clearDemoMode();
       return newUser;
     }
@@ -114,6 +136,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     } catch (profileErr) {
       console.warn('Perfil tras registro (puede existir por trigger):', profileErr);
     }
+    await migrateStreakOnAuth(data.user.id);
     clearDemoMode();
     return mapSupabaseUser(data.user);
   };
@@ -126,12 +149,14 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         const updated = { ...existing, email: email || existing.email };
         persistMockUser(updated);
         setUser(updated);
+        await migrateStreakOnAuth(updated.uid);
         clearDemoMode();
         return updated;
       }
       const newUser = createMockUser({ email });
       persistMockUser(newUser);
       setUser(newUser);
+      await migrateStreakOnAuth(newUser.uid);
       clearDemoMode();
       return newUser;
     }
@@ -142,6 +167,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       setError(msg);
       throw new Error(msg);
     }
+    await migrateStreakOnAuth(data.user.id);
+    setActiveStreakUserId(data.user.id);
     clearDemoMode();
     return mapSupabaseUser(data.user);
   };
@@ -152,6 +179,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       const newUser = createMockUser({ displayName: 'Usuario Google', email: 'google@icfes.local' });
       persistMockUser(newUser);
       setUser(newUser);
+      await migrateStreakOnAuth(newUser.uid);
       clearDemoMode();
       return newUser;
     }
@@ -182,6 +210,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     } else {
       clearMockUser();
     }
+    setActiveStreakUserId(null);
     setUser(null);
   };
 

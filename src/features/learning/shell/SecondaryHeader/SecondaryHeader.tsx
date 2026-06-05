@@ -6,6 +6,8 @@ import { Icon } from '@/shared/components/Icon';
 import { getAreaInfo } from '@/shared/constants';
 import { useAuth } from '@/features/auth/context/AuthContext';
 import { useGamification } from '@/hooks/gamification';
+import { useAppSelector } from '@/store/hooks';
+import { getStreakScope } from '@/services/streak';
 import { AreasModal } from './AreasModal';
 import { StreakModal } from './StreakModal';
 import { CoinsModal } from './CoinsModal';
@@ -26,6 +28,8 @@ export interface SecondaryHeaderProps {
 export const SecondaryHeader = ({ currentArea = 'lectura-critica', onAreaChange }: SecondaryHeaderProps) => {
   const [activeModal, setActiveModal] = useState<'areas' | 'streak' | 'store' | 'coins' | null>(null);
   const { user } = useAuth();
+  const demoMode = useAppSelector((state) => state.uiSession.demoMode);
+  const streakScope = getStreakScope(user?.uid, demoMode) ?? undefined;
 
   const container_main = document.getElementById('container-main');
 
@@ -34,9 +38,9 @@ export const SecondaryHeader = ({ currentArea = 'lectura-critica', onAreaChange 
     currentStreak = 0,
     longestStreak = 0,
     coins = 0,
-    streak = [], // Array de fechas
+    streak = [],
     loading,
-  } = useGamification(user?.uid);
+  } = useGamification(streakScope);
 
   // Streak badge unlocked?
   const isBadgeUnlocked = useMemo(() => {

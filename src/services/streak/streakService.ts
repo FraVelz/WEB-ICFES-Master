@@ -1,0 +1,167 @@
+import ProgressSupabaseService from '@/services/supabase/ProgressSupabaseService';
+import GamificationSupabaseService from '@/services/supabase/GamificationSupabaseService';
+import { isSupabaseMode } from '@/services/persistence/apiMode';
+import { getStoredExams, getStoredPractices } from '@/storage/progressStorage';
+
+import {
+  clearDemoStreakLocal,
+  loadLocalStreakState,
+  saveLocalStreakState,
+} from './streakLocalStorage';
+import type { StreakScope, StreakState } from './streakTypes';
+import { getStreakScope, STREAK_UPDATED_EVENT } from './streakTypes';
+import {
+  calculateCurrentStreak,
+  datesFromAttemptIsoStrings,
+  getLocalDateString,
+  mergeStreakStates,
+  withUpdatedLongest,
+} from './streakUtils';
+
+function notifyStreakUpdated(): void {
+  if (typeof window === 'undefined') return;
+  window.dispatchEvent(new CustomEvent(STREAK_UPDATED_EVENT));
+}
+
+async function loadRemoteStreak(userId: string): Promise<StreakState | null> {
+  if (!isSupabaseMode()) return null;
+  try {
+    return await GamificationSupabaseService.getStreak(userId);
+  } catch {
+    return null;
+  }
+}
+
+async function syncProgressStreakDays(userId: string, currentStreak: number): Promise<void> {
+  if (!isSupabaseMode()) return;
+  try {
+    await ProgressSupabaseService.update(userId, { streakDays: currentStreak });
+  } catch (err) {
+    console.warn('No se pudo sincronizar streak_days en user_progress:', err);
+  }
+}
+
+async function persistStreak(scope: StreakScope, state: StreakState): Promise<StreakState> {
+  const normalized = withUpdatedLongest(state);
+  saveLocalStreakState(scope, normalized);
+
+  if (scope !== 'demo' && isSupabaseMode()) {
+    try {
+      await GamificationSupabaseService.updateStreak(scope, normalized);
+      await syncProgressStreakDays(scope, calculateCurrentStreak(normalized.dates));
+    } catch (err) {
+      console.warn('No se pudo persistir racha en Supabase:', err);
+    }
+  }
+
+  notifyStreakUpdated();
+  return normalized;
+}
+
+/** Load streak: merge local + remote for authenticated users in Supabase mode. */
+export async function loadStreakState(scope: StreakScope): Promise<StreakState> {
+  const local = loadLocalStreakState(scope);
+
+  if (scope === 'demo') {
+    return local;
+  }
+
+  const remote = await loadRemoteStreak(scope);
+  if (remote) {
+    const merged = mergeStreakStates(local, remote);
+    saveLocalStreakState(scope, merged);
+    return merged;
+  }
+
+  return local;
+}
+
+export async function saveStreakState(scope: StreakScope, state: StreakState): Promise<StreakState> {
+  return persistStreak(scope, state);
+}
+
+export function getActiveStreakUserId(): string | null {
+  if (typeof window === 'undefined') return null;
+  return localStorage.getItem('icfes_active_streak_user');
+}
+
+export function setActiveStreakUserId(userId: string | null): void {
+  if (typeof window === 'undefined') return;
+  if (userId) localStorage.setItem('icfes_active_streak_user', userId);
+  else localStorage.removeItem('icfes_active_streak_user');
+}
+
+/** Resolve scope for streak writes outside React (exam save, etc.). */
+export function resolveStreakScopeFromStorage(options?: {
+  userId?: string | null;
+  isDemo?: boolean;
+}): StreakScope {
+  const scoped = getStreakScope(options?.userId, options?.isDemo);
+  if (scoped) return scoped;
+
+  const active = getActiveStreakUserId();
+  if (active) return active;
+
+  if (typeof window !== 'undefined') {
+    try {
+      const mock = localStorage.getItem('icfes_mock_user');
+      if (mock) {
+        const parsed = JSON.parse(mock) as { uid?: string };
+        if (parsed?.uid) return parsed.uid;
+      }
+    } catch {
+      /* ignore */
+    }
+  }
+
+  return 'demo';
+}
+
+export async function recordStreakForScope(scope: StreakScope): Promise<StreakState> {
+  return recordStreakToday(scope);
+}
+
+/** Idempotent: mark today as an active streak day. */
+export async function recordStreakToday(scope: StreakScope): Promise<StreakState> {
+  const current = await loadStreakState(scope);
+  const today = getLocalDateString();
+  if (current.dates.includes(today)) {
+    return current;
+  }
+  return persistStreak(scope, { ...current, dates: [...current.dates, today] });
+}
+
+/** Merge demo streak into authenticated user (call on signup/login). */
+export async function mergeDemoStreakIntoUser(userId: string): Promise<StreakState> {
+  const demoState = loadLocalStreakState('demo');
+  const userLocal = loadLocalStreakState(userId);
+  const remote = (await loadRemoteStreak(userId)) ?? { dates: [], longestStreak: 0 };
+
+  const merged = mergeStreakStates(demoState, userLocal, remote);
+  const saved = await persistStreak(userId, merged);
+  clearDemoStreakLocal();
+  return saved;
+}
+
+/** One-time backfill from exam/practice attempts when dates are empty. */
+export async function backfillStreakFromAttempts(scope: StreakScope): Promise<StreakState | null> {
+  const current = loadLocalStreakState(scope);
+  if (current.dates.length > 0) return null;
+
+  const attempts = [...getStoredExams(), ...getStoredPractices()];
+  const derivedDates = datesFromAttemptIsoStrings(attempts.map((a) => a.date));
+  if (derivedDates.length === 0) return null;
+
+  return persistStreak(scope, mergeStreakStates(current, { dates: derivedDates, longestStreak: 0 }));
+}
+
+export function getStreakMetrics(state: StreakState): {
+  currentStreak: number;
+  longestStreak: number;
+  dates: string[];
+} {
+  const dates = state.dates;
+  const currentStreak = calculateCurrentStreak(dates);
+  const longestStreak = Math.max(state.longestStreak, currentStreak);
+  return { currentStreak, longestStreak, dates };
+}

@@ -4,6 +4,14 @@
  * `docs/es/data/progreso-cliente-local.md` (EN: `docs/en/data/client-local-progress.md`).
  */
 
+import {
+  calculateCurrentStreak,
+  datesFromAttemptIsoStrings,
+  mergeStreakStates,
+} from '@/services/streak/streakUtils';
+import { loadLocalStreakState } from '@/services/streak/streakLocalStorage';
+import { resolveStreakScopeFromStorage, recordStreakToday } from '@/services/streak/streakService';
+
 export interface AreaStatItem {
   name: string;
   correct: number;
@@ -79,7 +87,7 @@ export const saveFullExam = (
   };
   exams.push(newExam);
   localStorage.setItem(STORAGE_KEYS.EXAMS, JSON.stringify(exams));
-  updateProgress();
+  void recordStreakToday(resolveStreakScopeFromStorage()).then(() => updateProgress());
   return newExam;
 };
 
@@ -106,7 +114,7 @@ export const savePractice = (
   };
   practices.push(newPractice);
   localStorage.setItem(STORAGE_KEYS.PRACTICE, JSON.stringify(practices));
-  updateProgress();
+  void recordStreakToday(resolveStreakScopeFromStorage()).then(() => updateProgress());
   return newPractice;
 };
 
@@ -154,8 +162,15 @@ export const updateProgress = (): ProgressData => {
     });
   });
 
-  // Study streak (calendar days)
-  const streakDays = calculateStreak(allAttempts);
+  // Study streak (calendar days) — aligned with streakService
+  const scope = resolveStreakScopeFromStorage();
+  const attemptDates = datesFromAttemptIsoStrings(allAttempts.map((a) => a.date));
+  const streakState = mergeStreakStates(
+    loadLocalStreakState('demo'),
+    scope !== 'demo' ? loadLocalStreakState(scope) : { dates: [], longestStreak: 0 },
+    { dates: attemptDates, longestStreak: 0 }
+  );
+  const streakDays = calculateCurrentStreak(streakState.dates);
 
   const progress: ProgressData = {
     totalAttempts: allAttempts.length,
@@ -285,52 +300,6 @@ export const getDefaultProgress = (): ProgressData => {
       },
     },
   };
-};
-
-/**
- * Consecutive study days from attempt dates
- */
-const calculateStreak = (attempts: AttemptWithQuestions[]): number => {
-  if (attempts.length === 0) return 0;
-
-  // Sort by date descending
-  const sorted = attempts
-    .map((a) => new Date(a.date ?? 0).toDateString())
-    .sort((a, b) => new Date(b).getTime() - new Date(a).getTime());
-
-  const uniqueDates = [...new Set(sorted)];
-
-  if (uniqueDates.length === 0) return 0;
-
-  let streak = 1;
-  const today = new Date();
-  const firstDate = uniqueDates[0];
-  let currentDate = new Date(firstDate ?? today.toDateString());
-  const todayString = today.toDateString();
-
-  // If last activity was not today (or yesterday), streak is broken
-  if (currentDate.toDateString() !== todayString) {
-    const yesterday = new Date(today);
-    yesterday.setDate(yesterday.getDate() - 1);
-    if (currentDate.toDateString() !== yesterday.toDateString()) {
-      return 0;
-    }
-  }
-
-  for (let i = 1; i < uniqueDates.length; i++) {
-    const prevDate = new Date(uniqueDates[i]);
-    const expectedDate = new Date(currentDate);
-    expectedDate.setDate(expectedDate.getDate() - 1);
-
-    if (prevDate.toDateString() === expectedDate.toDateString()) {
-      streak++;
-      currentDate = prevDate;
-    } else {
-      break;
-    }
-  }
-
-  return streak;
 };
 
 /**

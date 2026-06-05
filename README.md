@@ -50,7 +50,6 @@ Carpeta: [`docs/es/`](docs/es/) — Índice: [overview.md](docs/es/overview/over
 | [components-guide.md](docs/es/frontend/components-guide.md)             | Componentes y hooks          |
 | [services-api.md](docs/es/backend/services-api.md)                      | Persistencia y Supabase      |
 | [learning-structure-guide.md](docs/es/data/learning-structure-guide.md) | Roadmap (`learning_content`) |
-| [lessons-steps-guide.md](docs/es/data/lessons-steps-guide.md)           | Lecciones por pasos          |
 | [cheatsheet.md](docs/es/setup/cheatsheet.md)                            | Referencia rápida            |
 
 Versión en inglés: [`docs/en/`](docs/en/)

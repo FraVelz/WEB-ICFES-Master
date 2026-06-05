@@ -1,17 +1,16 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import {
   getUserProfile,
   getUserRank,
-  getVirtualMoney,
-  addVirtualMoney,
-  removeVirtualMoney,
   type UserProfile,
   type UserRank,
 } from '@/services/persistence';
+import { getCoinsBalance, addCoinsBalance, spendCoinsBalance, COINS_CHANGE_EVENT } from '@/services/persistence';
 import { useAuth } from '@/features/auth/context/AuthContext';
 
 /**
- * Hook personalizado para manejar datos del usuario (localStorage)
+ * Hook personalizado para manejar datos del usuario.
+ * El saldo de monedas usa la capa unificada (gamificación / nube).
  */
 export const useUser = () => {
   const [user, setUser] = useState<UserProfile | null>(null);
@@ -20,8 +19,21 @@ export const useUser = () => {
   const [isLoading, setIsLoading] = useState(true);
   const { user: authUser } = useAuth();
 
+  const loadCoins = useCallback(async () => {
+    if (!authUser?.uid) {
+      setVirtualMoney(0);
+      return;
+    }
+    try {
+      const balance = await getCoinsBalance(authUser.uid);
+      setVirtualMoney(balance);
+    } catch (err) {
+      console.error('Error cargando monedas:', err);
+    }
+  }, [authUser?.uid]);
+
   useEffect(() => {
-    const loadUserData = () => {
+    const loadUserData = async () => {
       try {
         let profile = getUserProfile();
         if (authUser?.displayName) {
@@ -32,31 +44,42 @@ export const useUser = () => {
           } as UserProfile;
         }
         const userRank = getUserRank();
-        const money = getVirtualMoney();
         setUser(profile);
         setRank(userRank);
-        setVirtualMoney(money);
+        await loadCoins();
       } catch (err) {
         console.error('Error cargando datos del usuario:', err);
       }
       setIsLoading(false);
     };
     loadUserData();
-  }, [authUser?.uid, authUser?.displayName]);
+  }, [authUser?.uid, authUser?.displayName, loadCoins]);
 
-  const refreshUser = () => {
+  useEffect(() => {
+    const onCoinsChanged = (event: Event) => {
+      const detail = (event as CustomEvent<{ balance?: number }>).detail;
+      if (detail?.balance != null) {
+        setVirtualMoney(detail.balance);
+        return;
+      }
+      loadCoins();
+    };
+    window.addEventListener(COINS_CHANGE_EVENT, onCoinsChanged);
+    return () => window.removeEventListener(COINS_CHANGE_EVENT, onCoinsChanged);
+  }, [loadCoins]);
+
+  const refreshUser = async () => {
     const profile = getUserProfile();
     const userRank = getUserRank();
-    const money = getVirtualMoney();
     setUser(profile);
     setRank(userRank);
-    setVirtualMoney(money);
+    await loadCoins();
   };
 
-  const addMoney = (amount: number) => {
+  const addMoney = async (amount: number) => {
+    if (!authUser?.uid) return false;
     try {
-      addVirtualMoney(amount);
-      setVirtualMoney(getVirtualMoney());
+      await addCoinsBalance(authUser.uid, amount, 'use_user');
       return true;
     } catch (_error) {
       console.error('Error al añadir dinero:', _error);
@@ -64,10 +87,10 @@ export const useUser = () => {
     }
   };
 
-  const removeMoney = (amount: number) => {
+  const removeMoney = async (amount: number) => {
+    if (!authUser?.uid) return false;
     try {
-      removeVirtualMoney(amount);
-      setVirtualMoney(getVirtualMoney());
+      await spendCoinsBalance(authUser.uid, amount, 'use_user');
       return true;
     } catch (_error) {
       console.error('Error al restar dinero:', _error);

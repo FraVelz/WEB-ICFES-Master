@@ -78,16 +78,13 @@ propietaria (p. ej. `@/features/auth/utils/mapSupabaseAuthError`, no shims en `@
 
 ---
 
-## Tres pipelines de lecciones
+## Pipeline de aprendizaje
 
-| Pipeline    | Datos                                        | Pantalla                             |
-| ----------- | -------------------------------------------- | ------------------------------------ |
-| Roadmap     | Tabla `learning_content` + `LearningService` | `/ruta-aprendizaje`                  |
-| Lesson flow | Tablas `lessons` + `steps`                   | `/lessons/[area]/[topic]`            |
-| Legacy      | `lessons-legacy/` estático                   | Fallback si no hay steps en Supabase |
+| Pipeline | Datos                                        | Pantalla            |
+| -------- | -------------------------------------------- | ------------------- |
+| Roadmap  | Tabla `learning_content` + `LearningService` | `/ruta-aprendizaje` |
 
-Ver [learning-structure-guide.md](../data/learning-structure-guide.md) y
-[lessons-steps-guide.md](../data/lessons-steps-guide.md).
+Ver [learning-structure-guide.md](../data/learning-structure-guide.md).
 
 ---
 
@@ -96,7 +93,6 @@ Ver [learning-structure-guide.md](../data/learning-structure-guide.md) y
 | Contexto                             | Ejemplo slug                                                |
 | ------------------------------------ | ----------------------------------------------------------- |
 | Práctica / roadmap / constantes      | `lectura-critica`, `matematicas`, `ciencias-naturales`      |
-| URL `/lessons/...`                   | `lenguaje`, `matematicas`, `ciencias`, `sociales`, `ingles` |
 | Columna `area` en `learning_content` | `lectura_critica`, `matematicas`, `ciencias_naturales`      |
 
 Mapeo en código: `ROADMAP_AREA_TO_LESSON_AREA` en

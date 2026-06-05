@@ -56,7 +56,7 @@ features/feature-name/
 | ----------------- | ---------------------------------------------------------------------------------------------------------- |
 | **auth/**         | Login, signup, OAuth, onboarding, `AuthContext`                                                            |
 | **home/**         | Landing, marketing sections, donations                                                                     |
-| **learning/**     | Roadmap, lessons (`roadmap/`, `lesson-flow/`, `lessons-legacy/`, `shell/`, `server/`, `context/`)          |
+| **learning/**     | Roadmap and AI chat (`roadmap/`, `shell/`, `context/`)                                                      |
 | **exam/**         | Practice, full exam, ranking; data in `exam/data/`                                                         |
 | **user/**         | Profile, settings, hooks `useProgress`, `useUserData`                                                      |
 | **achievements/** | Badges, daily challenges, achievements UI (route `/logros/`; cross-feature hooks in `hooks/gamification/`) |
@@ -89,16 +89,13 @@ Dashboard navigation lives in **`src/components/DashboardHeader/`** (not in `sha
 
 See also [client-local-progress.md](../data/client-local-progress.md) for data not auto-synced to the backend.
 
-## Learning module (three pipelines)
+## Learning module
 
-| Pipeline    | Data source         | Screen                     |
-| ----------- | ------------------- | -------------------------- |
-| Roadmap     | `learning_content`  | `/ruta-aprendizaje`        |
-| Lesson flow | `lessons` + `steps` | `/lessons/[area]/[topic]`  |
-| Legacy      | `lessons-legacy/`   | Fallback on the same route |
+| Pipeline | Data source        | Screen              |
+| -------- | ------------------ | ------------------- |
+| Roadmap  | `learning_content` | `/ruta-aprendizaje` |
 
-Guides: [learning-structure-guide.md](../data/learning-structure-guide.md),
-[lessons-steps-guide.md](../data/lessons-steps-guide.md).
+Guide: [learning-structure-guide.md](../data/learning-structure-guide.md).
 
 ## Cross-cutting services (`src/services/`)
 
@@ -114,7 +111,6 @@ URLs end with a **trailing slash** (`trailingSlash: true`). Full list in [routes
 | `/login`, `/signup`, `/auth/callback` | Authentication                              |
 | `/onboarding`                         | Onboarding                                  |
 | `/ruta-aprendizaje`                   | Learning roadmap                            |
-| `/lessons/[area]/[topic]`             | Lesson (Supabase or legacy)                 |
 | `/practica/[area]`                    | Practice by area                            |
 | `/examen-completo`                    | Full exam                                   |
 | `/clasificatoria`                     | Ranking                                     |

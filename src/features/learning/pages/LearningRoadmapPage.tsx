@@ -2,12 +2,14 @@
 
 import { LearningRoadmap } from '@/features/learning/components';
 import { ChatAssistant } from '@/features/learning/shell/ChatAssistant/ChatAssistant';
+import { useDailyStreakOnLearningRoute } from '@/features/learning/hooks/useDailyStreakOnLearningRoute';
 
 import { RoadmapUiProvider, useRoadmapUi } from '@/features/learning/context/RoadmapUiContext';
 import { cn } from '@/utils/cn';
 
 const Component = () => {
   const { isActive } = useRoadmapUi();
+  useDailyStreakOnLearningRoute();
 
   return (
     <div
