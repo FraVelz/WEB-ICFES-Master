@@ -147,18 +147,12 @@ export function DesktopSidebar({ className, sidebarExpanded, onToggleSidebar }: 
       </nav>
 
       <div className={cn('border-app-ring/10 border-t bg-slate-900/50', sidebarExpanded ? 'p-4' : 'px-2 py-4')}>
-        <div
-          className={cn(
-            'mb-4 flex h-10 items-center rounded-lg border border-amber-500/20 bg-slate-800/50',
-            sidebarExpanded ? 'gap-3 px-3' : 'justify-center'
-          )}
-          title={!sidebarExpanded ? `${virtualMoney} monedas` : undefined}
-        >
-          <Icon name="coins" className="shrink-0 text-amber-400" />
-          {sidebarExpanded && (
+        {sidebarExpanded && (
+          <div className="mb-4 flex h-10 items-center gap-3 rounded-lg border border-amber-500/20 bg-slate-800/50 px-3">
+            <Icon name="coins" className="shrink-0 text-amber-400" />
             <span className="font-bold whitespace-nowrap text-amber-400">{virtualMoney}</span>
-          )}
-        </div>
+          </div>
+        )}
 
         <Link
           href="/perfil"

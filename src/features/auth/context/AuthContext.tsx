@@ -13,6 +13,7 @@ import {
   setActiveStreakUserId,
   STREAK_UPDATED_EVENT,
 } from '@/services/streak';
+import { normalizePlanFeatures } from '@/shared/constants/planFeatures';
 import { mapSupabaseAuthError, REQUIRES_EMAIL_CONFIRMATION } from '@/features/auth/utils/mapSupabaseAuthError';
 import type { AuthContextType, AuthUser, PlanData } from './authTypes';
 import { clearMockUser, createMockUser, loadMockUserFromStorage, persistMockUser } from './authMock';
@@ -270,7 +271,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         planType: data.plan_type || 'free',
         planName: data.plan_name || 'Plan Gratuito',
         status: data.status || 'active',
-        features: data.features || {},
+        features: normalizePlanFeatures(data.features, data.plan_type),
       };
     }
     return defaultPlan;
@@ -291,7 +292,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         plan_type: planData.planType || planData.plan_type,
         plan_name: planData.planName || planData.plan_name,
         status: planData.status || 'active',
-        features: planData.features || {},
+        features: normalizePlanFeatures(planData.features, planData.planType ?? planData.plan_type),
         updated_at: new Date().toISOString(),
       },
       { onConflict: 'user_id' }

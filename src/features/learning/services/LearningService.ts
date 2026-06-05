@@ -18,32 +18,54 @@ interface IntermedioTopic {
   [key: string]: unknown;
 }
 
+export interface LearningPathLesson {
+  id: string;
+  title?: unknown;
+  order: number;
+  difficulty: string;
+  rewards: { xp?: number; coins?: number };
+  duration?: unknown;
+  content?: string;
+  description?: unknown;
+  questions?: unknown;
+  quiz?: unknown;
+  xp?: number;
+  coins?: number;
+}
+
 /**
  * Learning data: Supabase when configured, otherwise static roadmap JSON
  */
 export const LearningService = {
-  getLearningPath: async (areaId: string) => {
+  getLearningPath: async (areaId: string): Promise<LearningPathLesson[]> => {
     if (API_CONFIG.MODE === 'supabase') {
       const lessons = await LearningSupabaseService.getLessonsByArea(areaId);
       if (lessons?.length > 0) {
-        return lessons.map((l, i) => {
-          // Normalize body to string (body, markdown, content, or content.body)
+        return lessons.map((lesson, i) => {
+          const l = lesson as Record<string, unknown>;
+          const quiz = (l.quiz ?? {}) as Record<string, unknown>;
+          const nestedContent = l.content;
           const rawContent =
             l.body ??
             l.markdown ??
-            (typeof l.content === 'string' ? l.content : (l.content?.body ?? l.content?.markdown));
+            (typeof nestedContent === 'string'
+              ? nestedContent
+              : nestedContent && typeof nestedContent === 'object'
+                ? (nestedContent as Record<string, unknown>).body ??
+                  (nestedContent as Record<string, unknown>).markdown
+                : undefined);
           const contentStr = typeof rawContent === 'string' ? rawContent : '';
           return {
-            id: l.id,
+            id: String(l.id ?? `${areaId}_${i}`),
             title: l.title,
             order: i,
-            difficulty: l.difficulty || 'facil',
-            rewards: l.quiz?.rewards || { xp: 50, coins: 25 },
+            difficulty: String(l.difficulty || 'facil'),
+            rewards: (quiz.rewards as { xp?: number; coins?: number }) || { xp: 50, coins: 25 },
             duration: l.duration,
             content: contentStr,
             questions: l.questions,
             quiz: l.quiz,
-          };
+          } satisfies LearningPathLesson;
         });
       }
     }
@@ -60,7 +82,7 @@ export const LearningService = {
         rewards: { xp: 50, coins: 25 },
         duration: t.duration,
         content: t.content,
-      })),
+      } satisfies LearningPathLesson)),
       ...(intermedio
         ? [
             {
@@ -71,7 +93,7 @@ export const LearningService = {
               rewards: { xp: 100, coins: 50 },
               description: intermedio.description,
               questions: intermedio.questions,
-            },
+            } satisfies LearningPathLesson,
           ]
         : []),
     ];

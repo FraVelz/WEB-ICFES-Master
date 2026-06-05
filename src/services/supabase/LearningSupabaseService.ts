@@ -26,7 +26,7 @@ const LearningSupabaseService = {
   /**
    * Obtener lecciones por área desde learning_content
    */
-  async getLessonsByArea(area: string) {
+  async getLessonsByArea(area: string): Promise<Record<string, unknown>[]> {
     const sb = getSupabase();
     if (!sb) return [];
     const normalizedArea = (AREA_MAP as Record<string, string>)[area] ?? area.replace(/-/g, '_');
@@ -42,17 +42,25 @@ const LearningSupabaseService = {
     if (!data || data.length === 0) return [];
 
     return data.map((row) => {
-      const content = row.content || {};
+      const content = (row.content || {}) as Record<string, unknown>;
+      const lessonBody =
+        typeof content.body === 'string'
+          ? content.body
+          : typeof content.content === 'string'
+            ? content.content
+            : undefined;
+
       return {
+        ...content,
         id: row.id,
         area: row.area,
-        title: content.title || row.id,
+        title: (content.title as string) || row.id,
         summary: content.summary,
+        body: lessonBody,
         questions: content.questions || [],
         quiz: content.quiz,
         type: content.type || 'lesson',
         order: row.order_index ?? 0,
-        ...content,
       };
     });
   },

@@ -7,28 +7,50 @@ import { AnswerSheet } from '@/features/exam/components';
 import { ResultsAnalysis } from '@/features/exam/components';
 import { formatTimeExtended } from '@/services/persistence';
 import { saveFullExam } from '@/services/persistence';
-import { MATHEMATICS_QUESTIONS, LANGUAGE_QUESTIONS, SCIENCE_QUESTIONS, SOCIAL_QUESTIONS } from '@/features/exam/data';
+import { fetchQuestionsForFullExam } from '@/features/exam/services/QuestionService';
 import type { ExamQuestion } from '@/features/exam/types/question';
 import type { ExamConfig } from '@/features/exam/types';
+import { LoadingState } from '@/shared/components/LoadingState';
 
 import { AREA_INFO } from '@/shared/constants';
 
 export const FullExamPage = () => {
-  const allQuestions: ExamQuestion[] = [
-    ...MATHEMATICS_QUESTIONS,
-    ...LANGUAGE_QUESTIONS,
-    ...SCIENCE_QUESTIONS,
-    ...SOCIAL_QUESTIONS,
-  ];
-
   const areaInfo = AREA_INFO['examen-completo'];
 
+  const [allQuestions, setAllQuestions] = useState<ExamQuestion[]>([]);
+  const [loadingQuestions, setLoadingQuestions] = useState(true);
+  const [questionsError, setQuestionsError] = useState<string | null>(null);
   const [examConfig, setExamConfig] = useState<ExamConfig | null>(null);
   const [questions, setQuestions] = useState<ExamQuestion[]>([]);
   const [answers, setAnswers] = useState<Record<string, string>>({});
   const [showResults, setShowResults] = useState(false);
   const [timeRemaining, setTimeRemaining] = useState<number | null>(null);
   const [isFinished, setIsFinished] = useState(false);
+
+  useEffect(() => {
+    let active = true;
+
+    setLoadingQuestions(true);
+    setQuestionsError(null);
+
+    void fetchQuestionsForFullExam()
+      .then((loaded) => {
+        if (!active) return;
+        setAllQuestions(loaded);
+      })
+      .catch((error: unknown) => {
+        if (!active) return;
+        setQuestionsError(error instanceof Error ? error.message : 'No se pudieron cargar las preguntas.');
+        setAllQuestions([]);
+      })
+      .finally(() => {
+        if (active) setLoadingQuestions(false);
+      });
+
+    return () => {
+      active = false;
+    };
+  }, []);
 
   const handleExamStart = (config: ExamConfig) => {
     const selectedQuestions = allQuestions.slice(0, config.numQuestions);
@@ -94,6 +116,18 @@ export const FullExamPage = () => {
       }
     }
   }, [isFinished, showResults, questions, answers, examConfig]);
+
+  if (loadingQuestions) {
+    return <LoadingState label="Cargando preguntas…" layout="section" />;
+  }
+
+  if (questionsError) {
+    return (
+      <div className="mx-auto max-w-lg rounded-xl border border-red-500/30 bg-red-950/30 px-4 py-6 text-center text-sm text-red-200">
+        {questionsError}
+      </div>
+    );
+  }
 
   if (!examConfig) {
     return (

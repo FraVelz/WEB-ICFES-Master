@@ -80,8 +80,8 @@ const UserSupabaseService = {
       display_name: ud.displayName ?? ud.display_name ?? 'Usuario ICFES',
       username: ud.username ?? null,
       bio: ud.bio ?? null,
-      profile_image: ud.profileImage ?? ud.profile_image ?? null,
-      photo_url: ud.photoURL ?? ud.photo_url ?? null,
+      profile_image: ud.profileImage ?? ud.profile_image ?? ud.photoURL ?? ud.photo_url ?? null,
+      photo_url: ud.photoURL ?? ud.photo_url ?? ud.profileImage ?? ud.profile_image ?? null,
       virtual_money: ud.virtualMoney ?? ud.virtual_money ?? 0,
       created_at: new Date().toISOString(),
       updated_at: new Date().toISOString(),
@@ -108,6 +108,7 @@ const UserSupabaseService = {
       username: pd.username,
       bio: pd.bio,
       profile_image: pd.profileImage ?? pd.profile_image,
+      photo_url: pd.profileImage ?? pd.profile_image,
       virtual_money: pd.virtualMoney ?? pd.virtual_money,
       updated_at: new Date().toISOString(),
     };

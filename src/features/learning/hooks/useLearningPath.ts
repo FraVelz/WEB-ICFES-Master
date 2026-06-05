@@ -51,14 +51,7 @@ export const useLearningPath = (areaId: string | undefined) => {
 
         // 3. Place lessons into buckets
         const completedIds = (progress as { completedLessons?: string[] } | null)?.completedLessons ?? [];
-        lessons.forEach(
-          (lesson: {
-            id?: string;
-            difficulty?: string;
-            rewards?: { xp?: number; coins?: number };
-            xp?: number;
-            coins?: number;
-          }) => {
+        lessons.forEach((lesson) => {
             // Normalize difficulty (lowercase)
             const difficulty = lesson.difficulty?.toLowerCase() || 'facil';
             const sectionIndex = groupedSections.findIndex((s) => s.id === difficulty);
@@ -90,8 +83,7 @@ export const useLearningPath = (areaId: string | undefined) => {
                 status,
               } as PathNodeData);
             }
-          }
-        );
+        });
 
         // Drop empty difficulty buckets
         const activeSections = groupedSections.filter((s) => s.nodes.length > 0);

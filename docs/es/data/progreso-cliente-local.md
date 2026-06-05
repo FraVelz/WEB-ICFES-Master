@@ -24,7 +24,7 @@ Este documento describe dónde vive el progreso que **no** se sincroniza automá
 
 - **Servicio:** [`src/services/streak/`](../../../src/services/streak/)
 - **Demo:** scope `'demo'` → clave `icfes_streak_dates`
-- **Usuario:** scope `userId` → clave `icfes_streak_dates_{userId}` + columnas Supabase `streak_dates` / `longest_streak` en `user_gamification` (ver [`supabase-streak-migration.sql`](./supabase-streak-migration.sql))
+- **Usuario:** scope `userId` → clave `icfes_streak_dates_{userId}` + columnas Supabase `streak_dates` / `longest_streak` en `user_gamification` (ver [`supabase/migrations/001_schema_align.sql`](../../../../supabase/migrations/001_schema_align.sql))
 - **Registro:** visita a `/ruta-aprendizaje` (1×/día), práctica o examen completo
 - **Migración demo → cuenta:** al registrarse o iniciar sesión, `mergeDemoStreakIntoUser` fusiona fechas demo con las del usuario y vacía la clave demo
 

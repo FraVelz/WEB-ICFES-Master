@@ -32,7 +32,7 @@ frontend consulta esta tabla para generar dinámicamente la "Ruta de Aprendizaje
 | area        | text  | Sí          | Área: `matematicas`, `lectura_critica`, `sociales`, `ciencias_naturales`, `ingles` |
 | order_index | int   | Sí          | Posición en la lista (1, 2, 3...)                                                  |
 | published   | bool  | Sí          | `true` para mostrar, `false` para ocultar                                          |
-| content     | jsonb | Sí          | Contenido (title, summary, questions, quiz)                                        |
+| content     | jsonb | Sí          | Payload pedagógico (`title`, `summary`, `body`, `quiz`). No duplicar `id`, `area`, `published` ni `order`. |
 
 ### Mapeo de Áreas
 
@@ -101,6 +101,8 @@ frontend consulta esta tabla para generar dinámicamente la "Ruta de Aprendizaje
 
 1. **La lección no aparece:** ¿Está `published: true`? ¿El `area` es correcto?
 2. **Lecciones desordenadas:** Asegúrate de que `order_index` sea tipo `int`, no texto.
+
+Para migraciones SQL versionadas y RLS, ver [`supabase/README.md`](../../../../supabase/README.md) en la raíz del monorepo.
 
 ---
 

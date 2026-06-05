@@ -3,6 +3,7 @@ import { cn } from '@/utils/cn';
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { Icon } from '@/shared/components/Icon';
+import { LoadingState } from '@/shared/components/LoadingState';
 import { useAuth } from '@/features/auth/context/AuthContext';
 import { useLeaderboard, type LeaderboardPlayer } from '@/hooks/gamification';
 import { RANKS, getRankInfo } from '@/shared/constants/ranks';
@@ -133,10 +134,7 @@ export const ClasificatoriaPage = () => {
         {/* Leaderboard List */}
         <div className="space-y-3">
           {loading ? (
-            <div className="py-12 text-center">
-              <Icon name="spinner" className="text-app-accent mb-4 animate-spin text-4xl" />
-              <p className="text-slate-400">Cargando clasificación...</p>
-            </div>
+            <LoadingState label="Cargando clasificación..." layout="section" />
           ) : error ? (
             <div className="rounded-2xl border border-red-500/20 bg-red-500/10 py-12 text-center">
               <div className="mb-4 text-4xl text-red-400">⚠️</div>

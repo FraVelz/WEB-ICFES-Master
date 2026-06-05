@@ -2,7 +2,7 @@
 
 import { cn } from '@/utils/cn';
 import React, { useState } from 'react';
-import { Icon } from '@/shared/components/Icon';
+import { Icon, LoadingState } from '@/shared/components';
 import { useShop } from '../hooks/useShop';
 import { ShopItemCard } from './ShopItemCard';
 import { ShopItemModal } from './ShopItemModal';
@@ -66,14 +66,9 @@ export const StoreModal = ({ isOpen, onClose }: StoreModalProps) => {
         </div>
 
         {/* Content - Scrollable */}
-        <div className="min-h-fit flex-1 overflow-x-hidden overflow-y-auto scroll-smooth p-4 lg:p-6">
+        <div className="flex min-h-0 flex-1 flex-col overflow-x-hidden overflow-y-auto scroll-smooth p-4 lg:p-6">
           {loading ? (
-            <div className="flex items-center justify-center py-20">
-              <div className="space-y-4 text-center">
-                <Icon name="spinner" size="2xl" className="text-app-accent animate-spin text-4xl" />
-                <p className="text-slate-300">Cargando tienda...</p>
-              </div>
-            </div>
+            <LoadingState label="Cargando tienda..." layout="fill" />
           ) : (
             <>
               {/* Filters */}

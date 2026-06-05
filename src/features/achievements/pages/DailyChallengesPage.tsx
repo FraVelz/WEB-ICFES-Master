@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { cn } from '@/utils/cn';
 import { Icon } from '@/shared/components/Icon';
+import { LoadingState } from '@/shared/components/LoadingState';
 import { useDailyChallenges } from '../hooks/useDailyChallenges';
 import { ChallengeCard } from '../components/ChallengeCard';
 import { ConstructionAlert } from '../components/ConstructionAlert';
@@ -125,10 +126,7 @@ export const DailyChallengesPage = () => {
         {/* Challenges List */}
         <div className="space-y-4">
           {loading ? (
-            <div className="py-12 text-center">
-              <Icon name="spinner" className="text-app-accent mb-4 animate-spin text-4xl" />
-              <p className="text-slate-400">Cargando desafíos...</p>
-            </div>
+            <LoadingState label="Cargando desafíos..." layout="section" />
           ) : challenges.length > 0 ? (
             challenges.map((challenge) => (
               <ChallengeCard key={challenge.id} challenge={challenge} onComplete={completeChallenge} />

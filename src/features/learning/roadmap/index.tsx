@@ -17,6 +17,7 @@ const LessonContentModal = dynamic(
 );
 
 import { getAreaInfo } from '@/shared/constants';
+import { LoadingState } from '@/shared/components/LoadingState';
 import { useLearningPath } from '../hooks/useLearningPath';
 import { AnimatedOnMount } from '@/features/learning/AnimatedOnMount';
 
@@ -75,11 +76,7 @@ export const LearningRoadmap = ({ initialArea = 'lectura-critica' }: { initialAr
         <LessonAreaLinks roadmapAreaId={currentArea} />
 
         {/* Loading / error */}
-        {loading && (
-          <div className="flex items-center justify-center py-20">
-            <div className="h-12 w-12 animate-spin rounded-full border-b-2 border-white"></div>
-          </div>
-        )}
+        {loading && <LoadingState label="Cargando ruta..." layout="section" />}
 
         {error && <div className="py-10 text-center text-red-400">{error}</div>}
 

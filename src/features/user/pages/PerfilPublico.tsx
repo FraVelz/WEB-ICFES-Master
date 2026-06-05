@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { cn } from '@/utils/cn';
 import { Icon } from '@/shared/components/Icon';
+import { LoadingState } from '@/shared/components/LoadingState';
 import { useUserProfile } from '../hooks/useUserProfile';
 import { ProfilePageLayout } from '../components/profile/ProfilePageLayout';
 import { ProfileHeroCard } from '../components/profile/ProfileHeroCard';
@@ -64,16 +65,7 @@ export const PerfilPublico = () => {
   }
 
   if (loading) {
-    return (
-      <div className="flex min-h-dvh items-center justify-center bg-slate-950">
-        <div className="space-y-4 text-center">
-          <div className="text-app-accent animate-spin text-4xl">
-            <Icon name="spinner" />
-          </div>
-          <p className="text-lg text-slate-300">Cargando perfil público...</p>
-        </div>
-      </div>
-    );
+    return <LoadingState label="Cargando perfil público..." layout="page" />;
   }
 
   if (!exists) {

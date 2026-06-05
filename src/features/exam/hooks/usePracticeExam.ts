@@ -3,34 +3,22 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'next/navigation';
 import { savePractice } from '@/services/persistence';
-import {
-  MATHEMATICS_QUESTIONS,
-  LANGUAGE_QUESTIONS,
-  SCIENCE_QUESTIONS,
-  SOCIAL_QUESTIONS,
-  ENGLISH_QUESTIONS,
-} from '@/features/exam/data';
+import { fetchQuestionsByRouteArea } from '@/features/exam/services/QuestionService';
 import type { ExamQuestion } from '@/features/exam/types/question';
 import type { ExamConfig } from '@/features/exam/types';
 import { AREA_INFO as SHARED_AREA_INFO } from '@/shared/constants/areaInfo';
 
-const AREA_QUESTIONS: Record<string, ExamQuestion[]> = {
-  'lectura-critica': LANGUAGE_QUESTIONS,
-  matematicas: MATHEMATICS_QUESTIONS,
-  'ciencias-naturales': SCIENCE_QUESTIONS,
-  'sociales-ciudadanas': SOCIAL_QUESTIONS,
-  ingles: ENGLISH_QUESTIONS,
-};
-
 export function usePracticeExam() {
   const { area } = useParams<{ area: string }>();
   const areaStr = Array.isArray(area) ? area[0] : (area ?? '');
-  const allQuestions = AREA_QUESTIONS[areaStr] ?? [];
   const shared = SHARED_AREA_INFO[areaStr as keyof typeof SHARED_AREA_INFO];
   const areaInfo = shared
     ? { name: shared.name, color: shared.color }
     : { name: SHARED_AREA_INFO['examen-completo'].name, color: SHARED_AREA_INFO['examen-completo'].color };
 
+  const [allQuestions, setAllQuestions] = useState<ExamQuestion[]>([]);
+  const [loadingQuestions, setLoadingQuestions] = useState(true);
+  const [questionsError, setQuestionsError] = useState<string | null>(null);
   const [examConfig, setExamConfig] = useState<ExamConfig | null>(null);
   const [questions, setQuestions] = useState<ExamQuestion[]>([]);
   const [answers, setAnswers] = useState<Record<string, string>>({});
@@ -39,6 +27,31 @@ export function usePracticeExam() {
   const [isFinished, setIsFinished] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [showAnswerSheetMobile, setShowAnswerSheetMobile] = useState(false);
+
+  useEffect(() => {
+    let active = true;
+
+    setLoadingQuestions(true);
+    setQuestionsError(null);
+
+    void fetchQuestionsByRouteArea(areaStr)
+      .then((loaded) => {
+        if (!active) return;
+        setAllQuestions(loaded);
+      })
+      .catch((error: unknown) => {
+        if (!active) return;
+        setQuestionsError(error instanceof Error ? error.message : 'No se pudieron cargar las preguntas.');
+        setAllQuestions([]);
+      })
+      .finally(() => {
+        if (active) setLoadingQuestions(false);
+      });
+
+    return () => {
+      active = false;
+    };
+  }, [areaStr]);
 
   const handleExamStart = (config: ExamConfig) => {
     const selectedQuestions = allQuestions.slice(0, config.numQuestions);
@@ -126,6 +139,8 @@ export function usePracticeExam() {
   return {
     areaInfo,
     allQuestions,
+    loadingQuestions,
+    questionsError,
     examConfig,
     questions,
     answers,

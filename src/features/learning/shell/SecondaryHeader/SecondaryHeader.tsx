@@ -73,19 +73,6 @@ export const SecondaryHeader = ({ currentArea = 'lectura-critica', onAreaChange 
 
   if (!container_main) return null;
 
-  if (loading) {
-    return (
-      <div
-        className={cn(
-          'sticky top-0 z-50 flex h-16 items-center justify-center border-b border-slate-700',
-          'bg-linear-to-b from-slate-950 to-slate-900'
-        )}
-      >
-        <div className="animate-pulse text-slate-400">Cargando...</div>
-      </div>
-    );
-  }
-
   return (
     <div className="relative z-50">
       {/* Sticky secondary header */}
@@ -152,7 +139,8 @@ export const SecondaryHeader = ({ currentArea = 'lectura-critica', onAreaChange 
             <span
               className={cn(
                 'text-sm font-bold',
-                currentStreak > 0 ? 'text-orange-500' : 'text-slate-400 group-hover:text-orange-500/50'
+                currentStreak > 0 ? 'text-orange-500' : 'text-slate-400 group-hover:text-orange-500/50',
+                loading && 'animate-pulse opacity-60'
               )}
             >
               {currentStreak}
@@ -173,7 +161,9 @@ export const SecondaryHeader = ({ currentArea = 'lectura-critica', onAreaChange 
             aria-expanded={activeModal === 'store'}
           >
             <Icon name="coins" className="text-sm text-yellow-500" />
-            <span className="text-sm font-bold text-yellow-500">{coins}</span>
+            <span className={cn('text-sm font-bold text-yellow-500', loading && 'animate-pulse opacity-60')}>
+              {coins}
+            </span>
           </button>
         </div>
       </div>
