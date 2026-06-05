@@ -1,5 +1,5 @@
 ---
-description: Git commits by the agent — no AI co-author trailers
+description: Git commits by the agent — no AI co-author trailers; strip Cursor from messages
 alwaysApply: true
 ---
 
@@ -10,8 +10,49 @@ When creating or amending commits on behalf of the user:
 - **Never** add `Co-authored-by:`, `Signed-off-by:` for Cursor, or any AI/IDE co-author line unless the user explicitly asks for it.
 - **Never** finish `/auto-commit` (or any agent commit) if the message or trailers mention Cursor as co-author.
 - The commit message must contain only what the user requested (Conventional Commits subject/body, etc.).
-- Prefer **`git commit-tree`** (or `git commit --amend -F msg.txt` verified with `git log -1 --format=%B`) when the IDE keeps injecting `Co-authored-by: Cursor` after `git commit`.
+- Scope `chore(cursor)` in the subject is allowed (project tooling); that is not co-authorship.
+
+## Cursor trailers injected by the IDE or hooks
+
+Cursor (or a git hook) may append lines the agent did **not** write, for example:
+
+```text
+Co-authored-by: Cursor <cursoragent@cursor.com>
+```
+
+**Treat that as a failed commit** until the message is clean.
+
+### Mandatory check after every commit
+
+```bash
+git log -1 --format=%B
+```
+
+If the output contains `Co-authored-by: Cursor`, `cursoragent@cursor.com`, or any Cursor co-author trailer → **rewrite before push**.
+
+### How to rewrite (unpushed commits only)
+
+Prefer **`git commit-tree`** when `git commit` / `--amend` keeps re-injecting the trailer:
+
+```bash
+MSG="$(git log -1 --format=%B | sed '/^Co-authored-by: Cursor/d')"
+TREE=$(git rev-parse HEAD^{tree})
+PARENT=$(git rev-parse HEAD^)
+NEW=$(printf '%s\n' "$MSG" | git commit-tree "$TREE" -p "$PARENT")
+git reset --hard "$NEW"
+git log -1 --format=%B   # must NOT show Cursor
+```
+
+Alternative if amend works without re-injection:
+
+```bash
+git commit --amend -F msg.txt
+git log -1 --format=%B
+```
+
+### Push policy
+
 - If `Co-authored-by: Cursor` appears on **unpushed** commits, rewrite the message before push; do not leave it on `main`.
 - **Do not** `git push --force` to rewrite history unless the user explicitly requests it.
 
-Scope `chore(cursor)` in the subject is allowed (project tooling); that is not co-authorship.
+See also `.cursor/commands/auto-commit.md` (section «eliminar menciones de Cursor»).

@@ -33,8 +33,10 @@ function SidebarNavLink({
   return (
     <Link
       href={option.path}
+      title={!sidebarExpanded ? option.label : undefined}
       className={cn(
-        'group/item relative flex h-12 items-center rounded-xl px-3 transition-all duration-300 focus-visible:z-10',
+        'group/item relative flex h-12 items-center rounded-xl transition-all duration-300 focus-visible:z-10',
+        sidebarExpanded ? 'gap-3 px-3' : 'justify-center px-0',
         FOCUS_RING,
         isActive
           ? accent === 'orange'
@@ -44,18 +46,13 @@ function SidebarNavLink({
         isLocked && 'opacity-70'
       )}
     >
-      <div className="flex w-6 shrink-0 justify-center">
-        <Icon name={option.icon} size="lg" />
-      </div>
-      <span
-        className={cn(
-          'absolute left-14 font-medium whitespace-nowrap transition-opacity duration-300',
-          sidebarExpanded ? 'opacity-100' : 'opacity-0'
-        )}
-      >
-        {option.label}
-        {isLocked && <Icon name="lock" size="sm" className="ml-1.5 inline text-slate-500" />}
-      </span>
+      <Icon name={option.icon} size="lg" className="shrink-0" />
+      {sidebarExpanded && (
+        <span className="font-medium whitespace-nowrap">
+          {option.label}
+          {isLocked && <Icon name="lock" size="sm" className="ml-1.5 inline text-slate-500" />}
+        </span>
+      )}
       {isActive && option.showActiveIndicator !== false && (
         <div className="bg-app-ring absolute top-1/2 right-0 h-6 w-1 -translate-y-1/2 rounded-l-full" />
       )}
@@ -79,10 +76,11 @@ export function DesktopSidebar({ className, sidebarExpanded, onToggleSidebar }: 
       >
         <Link
           href="/"
+          title={!sidebarExpanded ? 'ICFES Master' : undefined}
           className={cn(
-            'flex shrink-0 items-center gap-3 rounded-xl transition-all duration-300',
+            'flex shrink-0 items-center rounded-xl transition-all duration-300',
             FOCUS_RING,
-            sidebarExpanded ? 'absolute left-[18px]' : 'justify-center'
+            sidebarExpanded ? 'absolute left-[18px] gap-3' : 'justify-center'
           )}
         >
           <div
@@ -93,15 +91,16 @@ export function DesktopSidebar({ className, sidebarExpanded, onToggleSidebar }: 
           >
             <Icon name="rocket" size="lg" className="text-white" />
           </div>
-          <span
-            className={cn(
-              'from-cta-text-start via-cta-text-via to-cta-text-end bg-linear-to-r bg-clip-text text-xl font-bold',
-              'whitespace-nowrap text-transparent transition-opacity duration-300',
-              sidebarExpanded ? 'pl-2 opacity-100' : 'w-0 overflow-hidden opacity-0'
-            )}
-          >
-            ICFES Master
-          </span>
+          {sidebarExpanded && (
+            <span
+              className={cn(
+                'from-cta-text-start via-cta-text-via to-cta-text-end bg-linear-to-r bg-clip-text pl-2',
+                'text-xl font-bold whitespace-nowrap text-transparent'
+              )}
+            >
+              ICFES Master
+            </span>
+          )}
         </Link>
         <button
           type="button"
@@ -118,7 +117,12 @@ export function DesktopSidebar({ className, sidebarExpanded, onToggleSidebar }: 
         </button>
       </div>
 
-      <nav className="custom-scrollbar flex flex-1 flex-col gap-2 overflow-x-hidden overflow-y-auto px-3 py-6">
+      <nav
+        className={cn(
+          'custom-scrollbar flex flex-1 flex-col gap-2 overflow-x-hidden overflow-y-auto py-6',
+          sidebarExpanded ? 'px-3' : 'px-2'
+        )}
+      >
         {mainNavOptions.map((option) => (
           <SidebarNavLink
             key={option.path}
@@ -129,7 +133,7 @@ export function DesktopSidebar({ className, sidebarExpanded, onToggleSidebar }: 
           />
         ))}
 
-        <div className="mx-2 my-2 border-t border-slate-800/50" />
+        <div className={cn('my-2 border-t border-slate-800/50', sidebarExpanded ? 'mx-2' : 'mx-0')} />
 
         {secondaryNavOptions.map((option) => (
           <SidebarNavLink
@@ -142,37 +146,31 @@ export function DesktopSidebar({ className, sidebarExpanded, onToggleSidebar }: 
         ))}
       </nav>
 
-      <div className="border-app-ring/10 border-t bg-slate-900/50 p-4">
-        <div className="relative mb-4 flex h-10 items-center overflow-hidden rounded-lg border border-amber-500/20 bg-slate-800/50">
-          <div
-            className={cn(
-              'absolute left-0 flex w-full shrink-0 justify-center transition-all duration-300',
-              sidebarExpanded && '-left-full'
-            )}
-          >
-            <Icon name="coins" className="text-amber-400" />
-          </div>
-          <span
-            className={cn(
-              'flex w-full items-center gap-3 px-3 font-bold whitespace-nowrap text-amber-400 transition-opacity duration-300',
-              sidebarExpanded ? 'opacity-100' : 'opacity-0'
-            )}
-          >
-            <Icon name="coins" className="text-amber-400" />
-            {virtualMoney}
-          </span>
+      <div className={cn('border-app-ring/10 border-t bg-slate-900/50', sidebarExpanded ? 'p-4' : 'px-2 py-4')}>
+        <div
+          className={cn(
+            'mb-4 flex h-10 items-center rounded-lg border border-amber-500/20 bg-slate-800/50',
+            sidebarExpanded ? 'gap-3 px-3' : 'justify-center'
+          )}
+          title={!sidebarExpanded ? `${virtualMoney} monedas` : undefined}
+        >
+          <Icon name="coins" className="shrink-0 text-amber-400" />
+          {sidebarExpanded && (
+            <span className="font-bold whitespace-nowrap text-amber-400">{virtualMoney}</span>
+          )}
         </div>
 
         <Link
           href="/perfil"
+          title={!sidebarExpanded ? user?.username || 'Perfil' : undefined}
           className={cn(
-            'group/profile relative flex items-center gap-3 overflow-hidden rounded-xl p-2 transition-colors hover:bg-white/5',
-            'min-w-fit',
+            'group/profile flex items-center overflow-hidden rounded-xl p-2 transition-colors hover:bg-white/5',
+            sidebarExpanded ? 'gap-3' : 'justify-center',
             FOCUS_RING,
             isLockedInDemo('/perfil') && 'opacity-70'
           )}
         >
-          <div className="border-app-ring/30 relative z-10 h-10 w-10 min-w-fit shrink-0 overflow-hidden rounded-full border-2 bg-slate-800">
+          <div className="border-app-ring/30 h-10 w-10 shrink-0 overflow-hidden rounded-full border-2 bg-slate-800">
             {user?.profileImage ? (
               <AvatarImage
                 src={user.profileImage}
@@ -189,29 +187,26 @@ export function DesktopSidebar({ className, sidebarExpanded, onToggleSidebar }: 
               </div>
             )}
           </div>
-          <span
-            className={cn(
-              'absolute left-16 overflow-hidden whitespace-nowrap transition-opacity duration-300',
-              sidebarExpanded ? 'opacity-100' : 'opacity-0'
-            )}
-          >
-            <p className="max-w-[140px] truncate text-sm font-bold text-white">{user?.username || 'Usuario'}</p>
-            <p className="text-app-accent text-xs">{rank?.name || 'Novato'}</p>
-          </span>
+          {sidebarExpanded && (
+            <span className="min-w-0 overflow-hidden whitespace-nowrap">
+              <p className="max-w-[140px] truncate text-sm font-bold text-white">{user?.username || 'Usuario'}</p>
+              <p className="text-app-accent text-xs">{rank?.name || 'Novato'}</p>
+            </span>
+          )}
         </Link>
 
         <Link
           href="/configuracion"
           className={cn(
-            'mt-2 flex h-10 items-center justify-center gap-1 rounded-xl p-2 text-slate-500 transition-colors',
-            'hover:text-app-accent',
+            'mt-2 flex h-10 items-center rounded-xl p-2 text-slate-500 transition-colors hover:text-app-accent',
+            sidebarExpanded ? 'gap-1 px-2' : 'justify-center',
             FOCUS_RING,
             isLockedInDemo('/configuracion') && 'opacity-70'
           )}
           title={isLockedInDemo('/configuracion') ? 'Requiere cuenta' : 'Configuración'}
         >
           <Icon name="cog" size="lg" />
-          {isLockedInDemo('/configuracion') && <Icon name="lock" size="sm" />}
+          {sidebarExpanded && isLockedInDemo('/configuracion') && <Icon name="lock" size="sm" />}
         </Link>
       </div>
     </header>

@@ -1,7 +1,10 @@
-# Autocommit — WEB-ICFES-Master (Next.js + Supabase)
+# Autocommit — monorepo ICFES (Master, Admin, …)
 
 Usar cuando el usuario pida **hacer commit** del trabajo actual. Mensajes **Conventional Commits**, coherentes con
-`git log` de este repo. **No** hacer `git push` salvo petición explícita.
+`git log` del repo en el que se trabaja. **No** hacer `git push` salvo petición explícita.
+
+Identificar el repo correcto con **`monorepo-projects.mdc`** (web del cliente → `WEB-ICFES-Master/`; admin →
+`WEB-ICFES-Admin/`).
 
 ## Cuándo ejecutar
 
@@ -16,13 +19,10 @@ Usar cuando el usuario pida **hacer commit** del trabajo actual. Mensajes **Conv
 
 **No** incluir `.env`, credenciales Supabase ni `.next/` salvo petición explícita.
 
-## Ámbitos (`scope`) habituales en este repo
+## Ámbitos (`scope`) habituales
 
 `home`, `demo`, `learning`, `exam`, `auth`, `achievements`, `store`, `user`, `theme`, `dashboard`, `services`, `persistence`,
 `readme`, `docs`, `cursor`, `ci`, `deps`.
-
-Rutas de referencia: `src/app/(dashboard)/`, `src/features/`, `src/services/`, `src/storage/`, `docs/es|en/`,
-`README.md` / `README.en.md`, `.cursor/`.
 
 ## Formas de mensaje
 
@@ -64,14 +64,52 @@ EOF
 )"
 ```
 
+## Después de commitear — eliminar menciones de Cursor (obligatorio)
+
+Cursor o un hook de git pueden inyectar trailers que **no** forman parte del mensaje pedido, por ejemplo:
+
+```text
+Co-authored-by: Cursor <cursoragent@cursor.com>
+```
+
+**No dar por terminado `/auto-commit`** si el commit los incluye.
+
+### 1. Verificar siempre
+
+```bash
+git log -1 --format=%B
+```
+
+Buscar `Co-authored-by: Cursor`, `cursoragent@cursor.com` o cualquier coautoría de Cursor/IA.
+
+### 2. Si aparece, reescribir el mensaje (commit aún sin push)
+
+Usar `git commit-tree` si `git commit --amend` vuelve a inyectar el trailer:
+
+```bash
+MSG="$(git log -1 --format=%B | sed '/^Co-authored-by: Cursor/d')"
+TREE=$(git rev-parse HEAD^{tree})
+PARENT=$(git rev-parse HEAD^)
+NEW=$(printf '%s\n' "$MSG" | git commit-tree "$TREE" -p "$PARENT")
+git reset --hard "$NEW"
+git log -1 --format=%B
+```
+
+La segunda comprobación debe mostrar **solo** el subject/body acordado (Conventional Commits), sin trailers de Cursor.
+
+### 3. Antes de push
+
+- Commit local limpio → OK para push si el usuario lo pidió.
+- Commit con trailer de Cursor → **reescribir primero**; no subir a `main`.
+
+Detalle completo: **`.cursor/rules/git-commits.mdc`**.
+
 ## Reglas
 
 - Mensaje en **inglés**; respuesta al chat en **español**.
 - Cumplir `.cursor/rules/git-commits.mdc` (sin coautoría IA).
-- **Prohibido** terminar `/auto-commit` con `Co-authored-by: Cursor` o cualquier mención de Cursor como coautor en el cuerpo del commit.
-- Tras commitear, comprobar siempre: `git log -1 --format=%B` — si aparece el trailer, reescribir el mensaje **antes** de push (p. ej. `git commit-tree` + `git reset --hard`, ver regla `git-commits.mdc`).
 - Hook rechazado → nuevo commit; sin `--no-verify` salvo petición explícita.
-- **No** hacer `git push --force` salvo petición explícita del usuario (p. ej. limpieza de historial acordada).
+- **No** hacer `git push --force` salvo petición explícita del usuario.
 
 ## Comandos relacionados
 
