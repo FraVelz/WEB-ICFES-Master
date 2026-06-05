@@ -2,7 +2,6 @@
 
 import { cn } from '@/utils/cn';
 import React from 'react';
-import Link from 'next/link';
 import { Icon } from '@/shared/components/Icon';
 import { useGSAPModalEntrance } from '@/hooks/useGSAPModalEntrance';
 
@@ -16,7 +15,6 @@ export interface LessonPreviewProps {
     description?: string;
     xp?: number;
     coins?: number;
-    lessonHref?: string;
   } | null;
   onStart: (lesson?: { id?: string }) => void;
 }
@@ -94,22 +92,6 @@ export const LessonPreview = ({ isOpen, onClose, lesson, onStart }: LessonPrevie
           <Icon name="play" />
           COMENZAR LECCIÓN
         </button>
-
-        {lesson.lessonHref && (
-          <Link
-            href={lesson.lessonHref}
-            onClick={onClose}
-            className={cn(
-              'border-app-ring/40 mt-3 flex w-full items-center justify-center gap-2 rounded-xl border bg-slate-800/50',
-              'text-app-accent-muted hover:text-app-accent-bright py-3 text-sm font-semibold transition-colors hover:bg-slate-800',
-              'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none',
-              'focus-visible:ring-offset-slate-900'
-            )}
-          >
-            <Icon name="arrow-right" size="sm" />
-            Ir a lección interactiva (paso a paso)
-          </Link>
-        )}
       </div>
     </div>
   );

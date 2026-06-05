@@ -1,5 +1,4 @@
 import React from 'react';
-import Link from 'next/link';
 import { Icon } from '@/shared/components/Icon';
 import { cn } from '@/utils/cn';
 
@@ -32,7 +31,6 @@ export interface PathNodeProps {
   icon?: string;
   onClick?: () => void;
   colorClass?: string;
-  lessonHref?: string;
 }
 
 export const PathNode = ({
@@ -43,7 +41,6 @@ export const PathNode = ({
   icon,
   onClick,
   colorClass = 'bg-blue-500',
-  lessonHref,
 }: PathNodeProps) => {
   const isCheckpoint = type === 'checkpoint';
   const isAvailable = status === 'available';
@@ -132,24 +129,8 @@ export const PathNode = ({
   );
 
   return (
-    <div className="w-full">
-      <button type="button" onClick={onClick} className={cardClass}>
-        {body}
-      </button>
-
-      {lessonHref && type !== 'checkpoint' && (
-        <Link
-          href={lessonHref}
-          className={cn(
-            'text-app-accent mt-2 ml-px inline-flex w-fit max-w-full items-center gap-1 rounded-md px-1 py-1 text-xs font-medium',
-            'hover:text-app-accent-muted underline-offset-2 hover:underline focus-visible:outline-none',
-            'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950'
-          )}
-        >
-          Lección interactiva
-          <Icon name="arrow-right" size="sm" className="inline" />
-        </Link>
-      )}
-    </div>
+    <button type="button" onClick={onClick} className={cardClass}>
+      {body}
+    </button>
   );
 };

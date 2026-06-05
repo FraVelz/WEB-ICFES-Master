@@ -5,7 +5,6 @@ import { useAuth } from '@/features/auth/context/AuthContext';
 /**
  * Learning-path state: maps Supabase/local lessons into UI "sections".
  */
-import { buildLessonHrefFromNode } from '@/features/learning/constants/lessonRoutes';
 import type { PathSection, PathNodeData } from '@/features/learning/roadmap/AreaPath';
 
 export type { PathSection, PathNodeData };
@@ -80,9 +79,6 @@ export const useLearningPath = (areaId: string | undefined) => {
               const xp = lesson.rewards?.xp || lesson.xp || 0;
               const coins = lesson.rewards?.coins || lesson.coins || 0;
 
-              const nodePayload = lesson as PathNodeData & { topic_slug?: string; topic?: string };
-              const lessonHref = buildLessonHrefFromNode(areaId, nodePayload);
-
               groupedSections[sectionIndex].nodes.push({
                 ...lesson,
                 id: lesson.id ?? '',
@@ -92,7 +88,6 @@ export const useLearningPath = (areaId: string | undefined) => {
                 coins,
                 type: 'lesson',
                 status,
-                lessonHref: lessonHref ?? undefined,
               } as PathNodeData);
             }
           }
