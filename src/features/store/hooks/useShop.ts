@@ -1,5 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useAuth } from '@/features/auth/context/AuthContext';
+import { useAppSelector } from '@/store/hooks';
+import { resolveCoinsUserId } from '@/services/demo/demoCoins';
 import { SHOP_ITEMS } from '../data/shopItems';
 import { getCoinsBalance, spendCoinsBalance, COINS_CHANGE_EVENT } from '@/services/persistence';
 import type { ShopItem } from '../data/shopItems';
@@ -11,19 +13,21 @@ const PURCHASES_KEY = 'icfes_shop_purchases';
  */
 export const useShop = () => {
   const { user } = useAuth();
+  const demoMode = useAppSelector((state) => state.uiSession.demoMode);
+  const coinsUserId = resolveCoinsUserId(user?.uid, demoMode);
   const [coins, setCoins] = useState(0);
   const [purchases, setPurchases] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
   const [processing, setProcessing] = useState(false);
 
   const loadCoins = useCallback(async () => {
-    if (!user?.uid) {
+    if (!coinsUserId) {
       setCoins(0);
       return;
     }
-    const balance = await getCoinsBalance(user.uid);
+    const balance = await getCoinsBalance(coinsUserId);
     setCoins(balance);
-  }, [user?.uid]);
+  }, [coinsUserId]);
 
   useEffect(() => {
     const load = async () => {
@@ -34,7 +38,7 @@ export const useShop = () => {
       setLoading(false);
     };
     load();
-  }, [user?.uid, loadCoins]);
+  }, [coinsUserId, loadCoins]);
 
   useEffect(() => {
     const onCoinsChanged = (event: Event) => {
@@ -56,7 +60,7 @@ export const useShop = () => {
   };
 
   const buyItem = async (item: ShopItem) => {
-    if (!user?.uid) throw new Error('Debes iniciar sesión');
+    if (!coinsUserId) throw new Error('Debes iniciar sesión o usar el modo demo');
     if (item.category !== 'powerup' && hasItem(item.id)) {
       throw new Error('Ya tienes este artículo');
     }
@@ -66,7 +70,7 @@ export const useShop = () => {
 
     setProcessing(true);
     try {
-      await spendCoinsBalance(user.uid, item.price, `shop_${item.id}`);
+      await spendCoinsBalance(coinsUserId, item.price, `shop_${item.id}`);
       const newPurchases =
         item.category === 'powerup' ? [...purchases, `${item.id}_${Date.now()}`] : [...purchases, item.id];
       localStorage.setItem(PURCHASES_KEY, JSON.stringify(newPurchases));

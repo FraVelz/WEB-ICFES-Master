@@ -5,7 +5,8 @@
 
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { ACHIEVEMENTS_DATA } from '@/shared/constants/achievementsData';
-import { getVirtualMoney, gamificationPersistence } from '@/services/persistence';
+import { getVirtualMoney, gamificationPersistence, getCoinsBalance } from '@/services/persistence';
+import { DEMO_USER_ID } from '@/services/demo/demoCoins';
 import { isSupabaseMode } from '@/services/persistence/apiMode';
 import GamificationSupabaseService from '@/services/supabase/GamificationSupabaseService';
 import {
@@ -146,10 +147,11 @@ export const useGamification = (scope: StreakScope | undefined) => {
         if (!isSupabaseMode()) {
           setCoins(getVirtualMoney());
         }
-      } else {
+      } else if (isDemoScope) {
+        const balance = await getCoinsBalance(DEMO_USER_ID);
         setTotalXP(0);
         setLevel(1);
-        setCoins(0);
+        setCoins(balance);
         setAchievements(mergeAchievements({}));
         setCompletedCount(0);
       }
@@ -169,7 +171,7 @@ export const useGamification = (scope: StreakScope | undefined) => {
     } finally {
       setLoading(false);
     }
-  }, [scope, accountUserId, syncStreakAchievement]);
+  }, [scope, accountUserId, isDemoScope, syncStreakAchievement]);
 
   useEffect(() => {
     loadData();

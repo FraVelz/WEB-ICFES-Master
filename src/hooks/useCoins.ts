@@ -2,6 +2,8 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import { useAuth } from '@/features/auth/context/AuthContext';
+import { useAppSelector } from '@/store/hooks';
+import { resolveCoinsUserId } from '@/services/demo/demoCoins';
 import {
   getCoinsBalance,
   addCoinsBalance,
@@ -14,25 +16,27 @@ import {
  */
 export function useCoins() {
   const { user } = useAuth();
+  const demoMode = useAppSelector((state) => state.uiSession.demoMode);
+  const coinsUserId = resolveCoinsUserId(user?.uid, demoMode);
   const [coins, setCoins] = useState(0);
   const [loading, setLoading] = useState(true);
 
   const refresh = useCallback(async () => {
-    if (!user?.uid) {
+    if (!coinsUserId) {
       setCoins(0);
       setLoading(false);
       return;
     }
     setLoading(true);
     try {
-      const balance = await getCoinsBalance(user.uid);
+      const balance = await getCoinsBalance(coinsUserId);
       setCoins(balance);
     } catch (err) {
       console.error('Error cargando monedas:', err);
     } finally {
       setLoading(false);
     }
-  }, [user?.uid]);
+  }, [coinsUserId]);
 
   useEffect(() => {
     refresh();
@@ -53,18 +57,18 @@ export function useCoins() {
 
   const addCoins = useCallback(
     async (amount: number, reason?: string) => {
-      if (!user?.uid) return 0;
-      return addCoinsBalance(user.uid, amount, reason);
+      if (!coinsUserId) return 0;
+      return addCoinsBalance(coinsUserId, amount, reason);
     },
-    [user?.uid]
+    [coinsUserId]
   );
 
   const spendCoins = useCallback(
     async (amount: number, reason?: string) => {
-      if (!user?.uid) return 0;
-      return spendCoinsBalance(user.uid, amount, reason);
+      if (!coinsUserId) return 0;
+      return spendCoinsBalance(coinsUserId, amount, reason);
     },
-    [user?.uid]
+    [coinsUserId]
   );
 
   return { coins, loading, refresh, addCoins, spendCoins };

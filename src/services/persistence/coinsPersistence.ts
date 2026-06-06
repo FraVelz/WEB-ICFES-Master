@@ -7,6 +7,12 @@ import { gamificationPersistence } from './gamificationPersistence';
 import { isSupabaseMode } from './apiMode';
 import { getVirtualMoney, updateUserProfile } from '@/storage/userProfile';
 import UserSupabaseService from '@/services/supabase/UserSupabaseService';
+import {
+  addDemoCoins,
+  getDemoCoins,
+  isDemoUserId,
+  spendDemoCoins,
+} from '@/services/demo/demoCoins';
 
 export const COINS_CHANGE_EVENT = 'icfes:coins-changed';
 
@@ -48,12 +54,23 @@ async function migrateLegacyBalance(userId: string, currentBalance: number): Pro
 }
 
 export async function getCoinsBalance(userId: string): Promise<number> {
+  if (isDemoUserId(userId)) {
+    return getDemoCoins();
+  }
+
   let balance = await readGamificationBalance(userId);
   balance = await migrateLegacyBalance(userId, balance);
   return balance;
 }
 
 export async function addCoinsBalance(userId: string, amount: number, reason = 'reward'): Promise<number> {
+  if (isDemoUserId(userId)) {
+    if (amount <= 0) return getDemoCoins();
+    const balance = addDemoCoins(amount);
+    emitCoinsChanged(balance);
+    return balance;
+  }
+
   if (amount <= 0) return getCoinsBalance(userId);
   await gamificationPersistence.addCoins(userId, amount, reason);
   const balance = await readGamificationBalance(userId);
@@ -62,6 +79,13 @@ export async function addCoinsBalance(userId: string, amount: number, reason = '
 }
 
 export async function spendCoinsBalance(userId: string, amount: number, item = 'purchase'): Promise<number> {
+  if (isDemoUserId(userId)) {
+    if (amount <= 0) return getDemoCoins();
+    const balance = spendDemoCoins(amount);
+    emitCoinsChanged(balance);
+    return balance;
+  }
+
   if (amount <= 0) return getCoinsBalance(userId);
   await gamificationPersistence.spendCoins(userId, amount, item);
   const balance = await readGamificationBalance(userId);

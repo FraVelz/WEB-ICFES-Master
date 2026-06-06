@@ -7,6 +7,8 @@ import {
 } from '@/services/persistence';
 import { getCoinsBalance, addCoinsBalance, spendCoinsBalance, COINS_CHANGE_EVENT } from '@/services/persistence';
 import { useAuth } from '@/features/auth/context/AuthContext';
+import { useAppSelector } from '@/store/hooks';
+import { resolveCoinsUserId } from '@/services/demo/demoCoins';
 
 /**
  * Hook personalizado para manejar datos del usuario.
@@ -18,19 +20,21 @@ export const useUser = () => {
   const [virtualMoney, setVirtualMoney] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const { user: authUser } = useAuth();
+  const demoMode = useAppSelector((state) => state.uiSession.demoMode);
+  const coinsUserId = resolveCoinsUserId(authUser?.uid, demoMode);
 
   const loadCoins = useCallback(async () => {
-    if (!authUser?.uid) {
+    if (!coinsUserId) {
       setVirtualMoney(0);
       return;
     }
     try {
-      const balance = await getCoinsBalance(authUser.uid);
+      const balance = await getCoinsBalance(coinsUserId);
       setVirtualMoney(balance);
     } catch (err) {
       console.error('Error cargando monedas:', err);
     }
-  }, [authUser?.uid]);
+  }, [coinsUserId]);
 
   useEffect(() => {
     const loadUserData = async () => {
@@ -53,7 +57,7 @@ export const useUser = () => {
       setIsLoading(false);
     };
     loadUserData();
-  }, [authUser?.uid, authUser?.displayName, loadCoins]);
+  }, [authUser?.uid, authUser?.displayName, loadCoins, demoMode]);
 
   useEffect(() => {
     const onCoinsChanged = (event: Event) => {
@@ -77,9 +81,9 @@ export const useUser = () => {
   };
 
   const addMoney = async (amount: number) => {
-    if (!authUser?.uid) return false;
+    if (!coinsUserId) return false;
     try {
-      await addCoinsBalance(authUser.uid, amount, 'use_user');
+      await addCoinsBalance(coinsUserId, amount, 'use_user');
       return true;
     } catch (_error) {
       console.error('Error al añadir dinero:', _error);
@@ -88,9 +92,9 @@ export const useUser = () => {
   };
 
   const removeMoney = async (amount: number) => {
-    if (!authUser?.uid) return false;
+    if (!coinsUserId) return false;
     try {
-      await spendCoinsBalance(authUser.uid, amount, 'use_user');
+      await spendCoinsBalance(coinsUserId, amount, 'use_user');
       return true;
     } catch (_error) {
       console.error('Error al restar dinero:', _error);
