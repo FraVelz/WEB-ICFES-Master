@@ -6,7 +6,14 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { ACHIEVEMENTS_DATA } from '@/shared/constants/achievementsData';
 import { getVirtualMoney, gamificationPersistence, getCoinsBalance } from '@/services/persistence';
-import { DEMO_USER_ID } from '@/services/demo/demoCoins';
+import { addCoinsBalance } from '@/services/persistence/coinsPersistence';
+import { DEMO_USER_ID, isDemoUserId } from '@/services/demo/demoCoins';
+import { addDemoXP, getDemoTotalXP } from '@/services/demo/demoGamification';
+import { calculateLevel } from '@/services/gamification/gamificationUtils';
+import {
+  normalizeAchievementsRecord,
+  syncAchievementsFromGameplay,
+} from '@/services/achievements/achievementProgressService';
 import { isSupabaseMode } from '@/services/persistence/apiMode';
 import GamificationSupabaseService from '@/services/supabase/GamificationSupabaseService';
 import {
@@ -130,16 +137,23 @@ export const useGamification = (scope: StreakScope | undefined) => {
 
     setLoading(true);
     try {
+      const achievementUserId = accountUserId ?? (isDemoScope ? DEMO_USER_ID : null);
+      let achProgress: Record<string, { current?: number; unlocked?: boolean; unlockedAt?: string | null }> = {};
+
+      if (achievementUserId) {
+        achProgress = await syncAchievementsFromGameplay(achievementUserId);
+      }
+
       if (accountUserId) {
         const profile = await gamificationPersistence.getProfile(accountUserId);
         setTotalXP(profile?.totalXP ?? profile?.xp ?? 0);
         setLevel(profile?.level ?? 1);
         setCoins((profile?.totalCoins ?? 0) - (profile?.spentCoins ?? 0));
 
-        const achProgress = (profile?.achievements ?? {}) as Record<
-          string,
-          { current?: number; unlocked?: boolean; unlockedAt?: string | null }
-        >;
+        if (!achProgress || Object.keys(achProgress).length === 0) {
+          achProgress = normalizeAchievementsRecord(profile?.achievements);
+        }
+
         const merged = mergeAchievements(achProgress);
         setAchievements(merged);
         setCompletedCount(merged.filter((m) => m.status === 'completed').length);
@@ -149,11 +163,13 @@ export const useGamification = (scope: StreakScope | undefined) => {
         }
       } else if (isDemoScope) {
         const balance = await getCoinsBalance(DEMO_USER_ID);
-        setTotalXP(0);
-        setLevel(1);
+        const demoXP = getDemoTotalXP();
+        setTotalXP(demoXP);
+        setLevel(calculateLevel(demoXP));
         setCoins(balance);
-        setAchievements(mergeAchievements({}));
-        setCompletedCount(0);
+        const merged = mergeAchievements(achProgress);
+        setAchievements(merged);
+        setCompletedCount(merged.filter((m) => m.status === 'completed').length);
       }
 
       await backfillStreakFromAttempts(scope);
@@ -187,11 +203,12 @@ export const useGamification = (scope: StreakScope | undefined) => {
   }, [loadData]);
 
   const updateAchievementProgress = async (achievementId: string, amount = 1) => {
-    if (!accountUserId) return;
+    const userId = accountUserId ?? (isDemoScope ? DEMO_USER_ID : undefined);
+    if (!userId) return;
     const ach = ACHIEVEMENTS_DATA.find((a) => a.id === achievementId);
     if (!ach) return;
 
-    const profile = await gamificationPersistence.getProfile(accountUserId);
+    const profile = await gamificationPersistence.getProfile(userId);
     const raw = profile?.achievements;
     const achProgress = (typeof raw === 'object' && raw !== null && !Array.isArray(raw) ? raw : {}) as Record<
       string,
@@ -208,11 +225,30 @@ export const useGamification = (scope: StreakScope | undefined) => {
       unlockedAt: unlocked ? new Date().toISOString() : null,
     };
 
-    if (isSupabaseMode()) {
+    if (isSupabaseMode() && accountUserId) {
       if (unlocked) {
-        await gamificationPersistence.addCoins(accountUserId, ach.coinsReward || 0, 'achievement');
+        await gamificationPersistence.addCoins(userId, ach.coinsReward || 0, 'achievement');
       }
-      await gamificationPersistence.addXP(accountUserId, unlocked ? ach.xpReward || 0 : 0, 'achievement');
+      await gamificationPersistence.addXP(userId, unlocked ? ach.xpReward || 0 : 0, 'achievement');
+      loadData();
+      return;
+    }
+
+    if (isDemoUserId(userId)) {
+      const { readAchievementProgress, writeAchievementProgress } = await import(
+        '@/services/achievements/achievementProgressService'
+      );
+      const progress = readAchievementProgress(userId);
+      progress[achievementId] = {
+        current: newCurrent,
+        unlocked,
+        unlockedAt: unlocked ? new Date().toISOString() : null,
+      };
+      writeAchievementProgress(userId, progress);
+      if (unlocked) {
+        await addCoinsBalance(userId, ach.coinsReward || 0, 'achievement');
+        addDemoXP(ach.xpReward || 0);
+      }
       loadData();
       return;
     }

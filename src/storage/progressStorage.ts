@@ -11,6 +11,9 @@ import {
 } from '@/services/streak/streakUtils';
 import { loadLocalStreakState } from '@/services/streak/streakLocalStorage';
 import { resolveStreakScopeFromStorage, recordStreakToday } from '@/services/streak/streakService';
+import { STREAK_UPDATED_EVENT } from '@/services/streak';
+import { DEMO_USER_ID } from '@/services/demo/demoCoins';
+import { syncAchievementsFromGameplay } from '@/services/achievements/achievementProgressService';
 
 export interface AreaStatItem {
   name: string;
@@ -62,7 +65,19 @@ export const markLessonAsCompleted = (_userId: string, lessonId: string): void =
   const completed = getCompletedLessons();
   if (!completed.includes(lessonId)) completed.push(lessonId);
   localStorage.setItem(STORAGE_KEYS.COMPLETED_LESSONS, JSON.stringify(completed));
+  void syncAchievementsAfterGameplay();
 };
+
+function syncAchievementsAfterGameplay(): void {
+  const scope = resolveStreakScopeFromStorage();
+  if (!scope) return;
+  const userId = scope === 'demo' ? DEMO_USER_ID : scope;
+  void syncAchievementsFromGameplay(userId).then(() => {
+    if (typeof window !== 'undefined') {
+      window.dispatchEvent(new Event(STREAK_UPDATED_EVENT));
+    }
+  });
+}
 
 /**
  * Load stored full exams
@@ -87,7 +102,10 @@ export const saveFullExam = (
   };
   exams.push(newExam);
   localStorage.setItem(STORAGE_KEYS.EXAMS, JSON.stringify(exams));
-  void recordStreakToday(resolveStreakScopeFromStorage()).then(() => updateProgress());
+  void recordStreakToday(resolveStreakScopeFromStorage()).then(() => {
+    updateProgress();
+    syncAchievementsAfterGameplay();
+  });
   return newExam;
 };
 
@@ -114,7 +132,10 @@ export const savePractice = (
   };
   practices.push(newPractice);
   localStorage.setItem(STORAGE_KEYS.PRACTICE, JSON.stringify(practices));
-  void recordStreakToday(resolveStreakScopeFromStorage()).then(() => updateProgress());
+  void recordStreakToday(resolveStreakScopeFromStorage()).then(() => {
+    updateProgress();
+    syncAchievementsAfterGameplay();
+  });
   return newPractice;
 };
 
