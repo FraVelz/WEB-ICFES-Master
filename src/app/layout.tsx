@@ -4,6 +4,10 @@ import './globals.css';
 
 import Providers from '@/components/Providers';
 import { VercelMetrics } from '@/components/VercelMetrics';
+import { BRAND_IMAGES } from '@/assets';
+import { THEME_STORAGE_KEY } from '@/features/theme/themeStorage';
+
+const themeInitScript = `(function(){try{var t=localStorage.getItem('${THEME_STORAGE_KEY}');var d=t!=='light';document.documentElement.classList.toggle('dark',d);document.documentElement.style.colorScheme=d?'dark':'light';}catch(e){}})();`;
 
 export const metadata: Metadata = {
   title: {
@@ -49,9 +53,9 @@ export const metadata: Metadata = {
     url: '/',
     images: [
       {
-        url: 'https://github.com/FraVelz/WEB-ICFES-Master/blob/main/public/images/screenshot.png?raw=true',
-        width: 1280,
-        height: 720,
+        url: BRAND_IMAGES.screenshot.src,
+        width: BRAND_IMAGES.screenshot.width,
+        height: BRAND_IMAGES.screenshot.height,
         alt: 'ICFES Master - Domina el ICFES desde Cero',
       },
     ],
@@ -60,7 +64,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Domina el ICFES desde Cero | ICFES Master',
     description: 'Preparate con simulacros y preguntas reales para lograr un gran puntaje en el ICFES.',
-    images: ['https://github.com/FraVelz/WEB-ICFES-Master/blob/main/public/images/screenshot.png?raw=true'],
+    images: [BRAND_IMAGES.screenshot.src],
   },
 };
 
@@ -70,13 +74,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="es">
+    <html lang="es" className="dark" suppressHydrationWarning>
       <head>
-        <link rel="icon" type="image/x-icon" href="/logo.ico" />
-        <meta name="color-scheme" content="dark" />
+        <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
       </head>
 
-      <body className="m-0 box-border min-h-dvh bg-black p-0 font-sans text-white antialiased">
+      <body className="m-0 box-border min-h-dvh bg-surface p-0 font-sans text-on-surface antialiased">
         <Providers>{children}</Providers>
         <VercelMetrics />
       </body>

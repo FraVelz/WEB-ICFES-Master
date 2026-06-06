@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { Icon } from '@/shared/components/Icon';
+import { ThemeToggle } from '@/shared/components/ThemeToggle';
 import { GoogleSignInButton } from '@/features/auth/components/GoogleSignInButton';
 import { useAuth } from '@/features/auth/context/AuthContext';
 import { AUTH_DEFAULT_REDIRECT } from '@/features/auth/constants/authRoutes';
@@ -40,7 +41,7 @@ export const LoginPage = () => {
   };
 
   return (
-    <div className="flex min-h-dvh flex-col overflow-hidden bg-linear-to-b from-black via-slate-950 to-black px-6 text-white">
+    <div className="flex min-h-dvh flex-col overflow-hidden bg-linear-to-b from-surface via-surface-via to-surface px-6 text-on-surface">
       {/* Background glow effects */}
       <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
         <div className="bg-ambient-a/30 absolute top-1/3 left-1/4 h-96 w-96 animate-pulse rounded-full blur-3xl"></div>
@@ -52,14 +53,14 @@ export const LoginPage = () => {
         <div className="flex items-center justify-between py-4">
           <button
             onClick={() => window.history.back()}
-            className="cursor-pointer text-slate-400 transition-colors hover:text-slate-300"
+            className="cursor-pointer text-on-surface-muted transition-colors hover:text-on-surface"
           >
             <Icon name="times" size="2xl" className="text-2xl" />
           </button>
           <h2 className="text-lg font-semibold">Ingresa tus datos</h2>
-          <div className="w-6"></div>
+          <ThemeToggle compact />
         </div>
-        <div className="h-px bg-linear-to-r from-transparent via-slate-700 to-transparent"></div>
+        <div className="h-px bg-linear-to-r from-transparent via-surface-border to-transparent"></div>
       </div>
 
       {/* Login Card */}
@@ -78,7 +79,7 @@ export const LoginPage = () => {
             >
               ICFES Master
             </h1>
-            <p className="text-slate-400">Prepárate para dominar el ICFES</p>
+            <p className="text-on-surface-muted">Prepárate para dominar el ICFES</p>
           </div>
 
           {/* Form */}
@@ -89,7 +90,7 @@ export const LoginPage = () => {
                 Email
               </label>
               <div className="relative">
-                <Icon name="envelope" className="absolute top-1/2 left-4 -translate-y-1/2 text-slate-400" />
+                <Icon name="envelope" className="absolute top-1/2 left-4 -translate-y-1/2 text-on-surface-muted" />
                 <input
                   id="email"
                   type="email"
@@ -97,7 +98,7 @@ export const LoginPage = () => {
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="tu@email.com"
                   className={cn(
-                    'w-full rounded-lg border border-slate-700 bg-slate-800/50 py-3 pr-4 pl-10 transition-all',
+                    'w-full rounded-lg border border-surface-border bg-surface-elevated/50 py-3 pr-4 pl-10 text-on-surface transition-all',
                     'focus:border-app-ring focus:ring-app-ring/30 focus:ring-2 focus:outline-none'
                   )}
                   required
@@ -111,7 +112,7 @@ export const LoginPage = () => {
                 Contraseña
               </label>
               <div className="relative">
-                <Icon name="lock" className="absolute top-1/2 left-4 -translate-y-1/2 text-slate-400" />
+                <Icon name="lock" className="absolute top-1/2 left-4 -translate-y-1/2 text-on-surface-muted" />
                 <input
                   id="password"
                   type={showPassword ? 'text' : 'password'}
@@ -119,7 +120,7 @@ export const LoginPage = () => {
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="••••••••"
                   className={cn(
-                    'w-full rounded-lg border border-slate-700 bg-slate-800/50 py-3 pr-12 pl-10 transition-all',
+                    'w-full rounded-lg border border-surface-border bg-surface-elevated/50 py-3 pr-12 pl-10 text-on-surface transition-all',
                     'focus:border-app-ring focus:ring-app-ring/30 focus:ring-2 focus:outline-none'
                   )}
                   required
@@ -127,7 +128,7 @@ export const LoginPage = () => {
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute top-1/2 right-4 -translate-y-1/2 text-slate-400 hover:text-slate-300"
+                  className="absolute top-1/2 right-4 -translate-y-1/2 text-on-surface-muted hover:text-on-surface"
                 >
                   <Icon name={showPassword ? 'eye-slash' : 'eye'} />
                 </button>
@@ -169,7 +170,7 @@ export const LoginPage = () => {
 
           {/* Links */}
           <div className="mt-6 space-y-4">
-            <p className="text-center text-sm text-slate-400">
+            <p className="text-center text-sm text-on-surface-muted">
               ¿No tienes cuenta?{' '}
               <Link
                 href="/signup"
@@ -179,7 +180,7 @@ export const LoginPage = () => {
               </Link>
             </p>
             <p className="text-center">
-              <Link href="/forgot-password" className="text-sm text-slate-400 transition-colors hover:text-slate-300">
+              <Link href="/forgot-password" className="text-sm text-on-surface-muted transition-colors hover:text-on-surface">
                 ¿Olvidaste tu contraseña?
               </Link>
             </p>
@@ -188,17 +189,17 @@ export const LoginPage = () => {
       </div>
 
       {/* Legal links footer — pinned to bottom */}
-      <div className="relative z-10 mt-auto w-full border-t border-slate-700/50 py-4">
+      <div className="relative z-10 mt-auto w-full border-t border-surface-border/50 py-4">
         <div className="mx-auto max-w-md">
-          <p className="mb-3 text-center text-xs text-slate-500">
+          <p className="mb-3 text-center text-xs text-on-surface-muted">
             Al registrarte, aceptas nuestros términos de servicio
           </p>
           <div className="flex items-center justify-center gap-4 text-xs">
-            <a href="/privacidad" className="text-slate-400 transition-colors hover:text-slate-300">
+            <a href="/privacidad" className="text-on-surface-muted transition-colors hover:text-on-surface">
               Política de Privacidad
             </a>
-            <span className="text-slate-600">|</span>
-            <a href="/terminos" className="text-slate-400 transition-colors hover:text-slate-300">
+            <span className="text-surface-border">|</span>
+            <a href="/terminos" className="text-on-surface-muted transition-colors hover:text-on-surface">
               Términos y Condiciones
             </a>
           </div>

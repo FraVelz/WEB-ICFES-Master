@@ -1,11 +1,126 @@
 @import 'tailwindcss';
 @import 'tailwind-animations';
 
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  color-scheme: dark;
+  --icfes-surface: #000000;
+  --icfes-surface-via: #020617;
+  --icfes-surface-elevated: #0f172a;
+  --icfes-surface-border: #334155;
+  --icfes-on-surface: #ffffff;
+  --icfes-on-surface-muted: #cbd5e1;
+}
+
+html {
+  background-color: var(--icfes-surface);
+  color: var(--icfes-on-surface);
+}
+
+html:not(.dark) {
+  color-scheme: light;
+  --icfes-surface: #eef2f7;
+  --icfes-surface-via: #f8fafc;
+  --icfes-surface-elevated: #ffffff;
+  --icfes-surface-border: #dbe3ee;
+  --icfes-on-surface: #0f172a;
+  --icfes-on-surface-muted: #64748b;
+
+  /* Legacy slate utilities → paleta clara coherente */
+  --color-slate-950: var(--icfes-surface);
+  --color-slate-900: var(--icfes-surface-elevated);
+  --color-slate-800: #f1f5f9;
+  --color-slate-700: var(--icfes-surface-border);
+  --color-slate-600: #94a3b8;
+  --color-slate-500: #64748b;
+  --color-slate-400: #475569;
+  --color-slate-300: #334155;
+  --color-slate-200: #1e293b;
+
+  /* Acentos con más contraste sobre fondo claro */
+  --color-app-accent: var(--color-cyan-600);
+  --color-app-accent-muted: var(--color-cyan-700);
+  --color-app-ring: var(--color-cyan-600);
+  --color-app-accent-strong: var(--color-cyan-700);
+  --color-app-accent-bright: var(--color-cyan-800);
+  --color-app-on-accent: var(--color-cyan-50);
+  --color-app-accent-darker: var(--color-cyan-800);
+
+  /* Decoración más suave */
+  --color-hub-sheet-from: var(--color-cyan-100);
+  --color-ambient-a-strong: color-mix(in oklab, var(--color-blue-400) 28%, transparent);
+  --color-ambient-b-strong: color-mix(in oklab, var(--color-purple-400) 24%, transparent);
+  --color-ambient-c-muted: color-mix(in oklab, var(--color-indigo-400) 20%, transparent);
+}
+
+/* Texto blanco legacy → legible en superficies claras */
+html:not(.dark) .text-white {
+  color: var(--icfes-on-surface);
+}
+
+/* Conservar texto blanco en botones, badges y gradientes de marca */
+html:not(.dark) :is(
+  [class*='from-cta-'],
+  [class*='from-orange-5'],
+  [class*='from-orange-6'],
+  [class*='from-green-5'],
+  [class*='from-green-6'],
+  [class*='from-red-5'],
+  [class*='from-red-6'],
+  [class*='from-blue-5'],
+  [class*='from-blue-6'],
+  [class*='from-purple-5'],
+  [class*='from-purple-6'],
+  [class*='from-pink-5'],
+  [class*='from-pink-6'],
+  [class*='from-cyan-5'],
+  [class*='from-cyan-6'],
+  [class*='from-indigo-5'],
+  [class*='from-indigo-6'],
+  [class*='from-amber-5'],
+  [class*='from-yellow-5'],
+  [class*='bg-orange-5'],
+  [class*='bg-green-5'],
+  [class*='bg-red-5'],
+  [class*='bg-blue-5'],
+  [class*='bg-purple-5'],
+  [class*='bg-app-accent-strong'],
+  [class*='bg-linear-to-br'],
+  [class*='bg-linear-to-r']
+).text-white,
+html:not(.dark) :is([class*='from-cta-'], [class*='bg-linear-to-br'], [class*='bg-linear-to-r']) .text-white {
+  color: #ffffff;
+}
+
+/* Hover pensado para UI oscura */
+html:not(.dark) .hover\:bg-white\/5:hover,
+html:not(.dark) .hover\:bg-white\/10:hover {
+  background-color: color-mix(in oklab, var(--icfes-on-surface) 6%, transparent);
+}
+
+html:not(.dark) .hover\:text-white:hover {
+  color: var(--icfes-on-surface);
+}
+
+/* Tarjetas/paneles con sombra sutil en claro */
+html:not(.dark) :where(.rounded-2xl, .rounded-xl).border.border-slate-800,
+html:not(.dark) :where(.rounded-2xl, .rounded-xl).border.border-surface-border {
+  box-shadow: 0 1px 2px rgb(15 23 42 / 0.06);
+}
+
 /**
  * Paleta semántica (alias sobre colores Tailwind por defecto).
  * Usar estas utilidades en componentes y datos en lugar de tonos sueltos.
  */
 @theme {
+  --color-surface: var(--icfes-surface);
+  --color-surface-via: var(--icfes-surface-via);
+  --color-surface-elevated: var(--icfes-surface-elevated);
+  --color-surface-border: var(--icfes-surface-border);
+  --color-on-surface: var(--icfes-on-surface);
+  --color-on-surface-muted: var(--icfes-on-surface-muted);
+
   /* Marca / acento principal (antes cyan-*) */
   --color-app-accent: var(--color-cyan-400);
   --color-app-accent-muted: var(--color-cyan-300);

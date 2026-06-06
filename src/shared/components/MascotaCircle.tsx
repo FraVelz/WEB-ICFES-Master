@@ -1,10 +1,10 @@
 import { cn } from '@/utils/cn';
-import Image from 'next/image';
+import Image, { type StaticImageData } from 'next/image';
 
 export type MascotaCircleSize = 'sm' | 'md' | 'lg' | 'xl' | 'medium' | 'large';
 
 export type MascotaCircleProps = {
-  src: string;
+  src: string | StaticImageData;
   alt?: string;
   size?: MascotaCircleSize;
   imgSize?: string;

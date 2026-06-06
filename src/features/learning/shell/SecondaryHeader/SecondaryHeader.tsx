@@ -3,6 +3,7 @@
 import { cn } from '@/utils/cn';
 import { useState, useMemo } from 'react';
 import { Icon } from '@/shared/components/Icon';
+import { ThemeToggle } from '@/shared/components/ThemeToggle';
 import { getAreaInfo } from '@/shared/constants';
 import { useAuth } from '@/features/auth/context/AuthContext';
 import { useGamification } from '@/hooks/gamification';
@@ -78,8 +79,8 @@ export const SecondaryHeader = ({ currentArea = 'lectura-critica', onAreaChange 
       {/* Sticky secondary header */}
       <div
         className={cn(
-          'sticky top-0 z-50 flex h-16 items-center justify-between border-b border-slate-800',
-          'bg-slate-950/90 px-4 shadow-lg backdrop-blur-md'
+          'sticky top-0 z-50 flex h-16 items-center justify-between border-b border-surface-border',
+          'bg-surface-elevated/90 px-4 shadow-sm backdrop-blur-md'
         )}
       >
         {/* Current subject */}
@@ -87,9 +88,9 @@ export const SecondaryHeader = ({ currentArea = 'lectura-critica', onAreaChange 
           type="button"
           onClick={() => setActiveModal(activeModal === 'areas' ? null : 'areas')}
           className={cn(
-            'flex cursor-pointer items-center gap-3 rounded-xl p-2 transition-colors hover:bg-slate-800/50',
+            'flex cursor-pointer items-center gap-3 rounded-xl p-2 transition-colors hover:bg-surface-elevated/80',
             'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none',
-            'focus-visible:ring-offset-slate-950'
+            'focus-visible:ring-offset-surface'
           )}
           title="Cambiar área"
           aria-expanded={activeModal === 'areas'}
@@ -104,14 +105,13 @@ export const SecondaryHeader = ({ currentArea = 'lectura-critica', onAreaChange 
           >
             <Icon name={currentAreaInfo.icon ?? 'book'} className="text-xs text-white" />
           </div>
-          {/* Subject label — hidden on very small screens */}
           <div className="hidden flex-col items-start sm:flex">
-            <span className="text-xs font-bold tracking-wider text-slate-400 uppercase">Área actual</span>
-            <span className="text-sm font-bold text-slate-200">{currentAreaInfo.name}</span>
+            <span className="text-xs font-bold tracking-wider text-on-surface-muted uppercase">Área actual</span>
+            <span className="text-sm font-bold text-on-surface">{currentAreaInfo.name}</span>
           </div>
           <Icon
             name="chevron-down"
-            className={cn('ml-1 text-xs text-slate-500 transition-transform', activeModal === 'areas' && 'rotate-180')}
+            className={cn('ml-1 text-xs text-on-surface-muted transition-transform', activeModal === 'areas' && 'rotate-180')}
           />
         </button>
 
@@ -121,10 +121,10 @@ export const SecondaryHeader = ({ currentArea = 'lectura-critica', onAreaChange 
             type="button"
             onClick={() => setActiveModal(activeModal === 'streak' ? null : 'streak')}
             className={cn(
-              'group flex cursor-pointer items-center gap-2 rounded-full border border-slate-800',
-              'bg-slate-900 px-3 py-1.5 transition-colors hover:border-orange-500/50',
+              'group flex cursor-pointer items-center gap-2 rounded-full border border-surface-border',
+              'bg-surface-elevated px-3 py-1.5 transition-colors hover:border-orange-500/50',
               'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none',
-              'focus-visible:ring-offset-slate-950'
+              'focus-visible:ring-offset-surface'
             )}
             title="Ver información de racha"
             aria-expanded={activeModal === 'streak'}
@@ -133,13 +133,13 @@ export const SecondaryHeader = ({ currentArea = 'lectura-critica', onAreaChange 
               name="fire"
               className={cn(
                 'text-sm transition-colors',
-                currentStreak > 0 ? 'text-orange-500' : 'text-slate-600 group-hover:text-orange-500/50'
+                currentStreak > 0 ? 'text-orange-500' : 'text-on-surface-muted group-hover:text-orange-500/50'
               )}
             />
             <span
               className={cn(
                 'text-sm font-bold',
-                currentStreak > 0 ? 'text-orange-500' : 'text-slate-400 group-hover:text-orange-500/50',
+                currentStreak > 0 ? 'text-orange-500' : 'text-on-surface-muted group-hover:text-orange-500/50',
                 loading && 'animate-pulse opacity-60'
               )}
             >
@@ -152,10 +152,10 @@ export const SecondaryHeader = ({ currentArea = 'lectura-critica', onAreaChange 
             type="button"
             onClick={() => setActiveModal(activeModal === 'store' ? null : 'store')}
             className={cn(
-              'group flex cursor-pointer items-center gap-2 rounded-full border border-slate-800',
-              'bg-slate-900 px-3 py-1.5 transition-colors hover:border-yellow-500/50',
+              'group flex cursor-pointer items-center gap-2 rounded-full border border-surface-border',
+              'bg-surface-elevated px-3 py-1.5 transition-colors hover:border-yellow-500/50',
               'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none',
-              'focus-visible:ring-offset-slate-950'
+              'focus-visible:ring-offset-surface'
             )}
             title="Abrir tienda"
             aria-expanded={activeModal === 'store'}
@@ -165,6 +165,8 @@ export const SecondaryHeader = ({ currentArea = 'lectura-critica', onAreaChange 
               {coins}
             </span>
           </button>
+
+          <ThemeToggle compact className="border-surface-border bg-surface-elevated hover:border-app-ring/40" />
         </div>
       </div>
 

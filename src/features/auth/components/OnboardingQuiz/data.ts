@@ -1,15 +1,17 @@
+import { MASCOT_IMAGES } from '@/assets';
+
 // Intro screens (onboarding)
 export const INTRODUCTION_SECTIONS = [
   {
     id: 1,
     message: '¡Hola!, Yo soy Zeus.',
-    avatar: '/avatars/logo.webp', // Hero image
+    avatar: MASCOT_IMAGES.logo,
     description: 'Tu asistente de estudio',
   },
   {
     id: 2,
     message: '¡Responde 5 preguntas cortas antes de comenzar!',
-    avatar: '/avatars/logo.webp', // Second intro image
+    avatar: MASCOT_IMAGES.logo,
     description: 'Personalizaremos tu experiencia.',
   },
 ];

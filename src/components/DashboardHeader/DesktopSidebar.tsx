@@ -42,7 +42,7 @@ function SidebarNavLink({
           ? accent === 'orange'
             ? 'bg-orange-500/10 text-orange-400'
             : 'bg-app-ring/10 text-app-accent shadow-app-ring/5 shadow-lg'
-          : 'text-slate-400 hover:bg-white/5 hover:text-white',
+          : 'text-on-surface-muted hover:bg-surface-elevated/60 hover:text-on-surface',
         isLocked && 'opacity-70'
       )}
     >
@@ -119,7 +119,7 @@ export function DesktopSidebar({ className, sidebarExpanded, onToggleSidebar }: 
 
       <nav
         className={cn(
-          'custom-scrollbar flex flex-1 flex-col gap-2 overflow-x-hidden overflow-y-auto py-6',
+          'custom-scrollbar flex min-h-0 flex-1 flex-col gap-2 overflow-x-hidden overflow-y-auto py-6',
           sidebarExpanded ? 'px-3' : 'px-2'
         )}
       >
@@ -146,9 +146,9 @@ export function DesktopSidebar({ className, sidebarExpanded, onToggleSidebar }: 
         ))}
       </nav>
 
-      <div className={cn('border-app-ring/10 border-t bg-slate-900/50', sidebarExpanded ? 'p-4' : 'px-2 py-4')}>
+      <div className={cn('shrink-0 border-app-ring/10 border-t bg-surface-elevated/50', sidebarExpanded ? 'p-4' : 'px-2 py-4')}>
         {sidebarExpanded && (
-          <div className="mb-4 flex h-10 items-center gap-3 rounded-lg border border-amber-500/20 bg-slate-800/50 px-3">
+          <div className="mb-4 flex h-10 items-center gap-3 rounded-lg border border-amber-500/20 bg-surface-elevated/80 px-3">
             <Icon name="coins" className="shrink-0 text-amber-400" />
             <span className="font-bold whitespace-nowrap text-amber-400">{virtualMoney}</span>
           </div>
@@ -158,7 +158,7 @@ export function DesktopSidebar({ className, sidebarExpanded, onToggleSidebar }: 
           href="/perfil"
           title={!sidebarExpanded ? user?.username || 'Perfil' : undefined}
           className={cn(
-            'group/profile flex items-center overflow-hidden rounded-xl p-2 transition-colors hover:bg-white/5',
+            'group/profile flex items-center overflow-hidden rounded-xl p-2 transition-colors hover:bg-on-surface/5',
             sidebarExpanded ? 'gap-3' : 'justify-center',
             FOCUS_RING,
             isLockedInDemo('/perfil') && 'opacity-70'
@@ -183,7 +183,7 @@ export function DesktopSidebar({ className, sidebarExpanded, onToggleSidebar }: 
           </div>
           {sidebarExpanded && (
             <span className="min-w-0 overflow-hidden whitespace-nowrap">
-              <p className="max-w-[140px] truncate text-sm font-bold text-white">{user?.username || 'Usuario'}</p>
+              <p className="max-w-[140px] truncate text-sm font-bold text-on-surface">{user?.username || 'Usuario'}</p>
               <p className="text-app-accent text-xs">{rank?.name || 'Novato'}</p>
             </span>
           )}

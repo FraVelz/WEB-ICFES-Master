@@ -1,26 +1,28 @@
 import React from 'react';
 
 import { DashboardHeader } from '@/components/DashboardHeader';
+import { DashboardThemeControl } from '@/components/DashboardThemeControl';
 import { ClientChecker } from '@/features/store/components/ClientChecker';
 
 import { cn } from '@/utils/cn';
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="relative flex min-h-screen overflow-hidden bg-linear-to-b from-black via-slate-950 to-black">
+    <div className="relative flex min-h-screen overflow-hidden bg-linear-to-b from-surface via-surface-via to-surface text-on-surface">
       <ClientChecker />
 
       <div className="flex h-screen w-screen flex-col-reverse lg:flex-row">
         {/* Header - Sidebar */}
         <DashboardHeader
           className={cn(
-            'border-app-ring/20 hidden h-screen w-fit flex-col border-r bg-slate-950/95',
+            'border-app-ring/20 hidden h-screen min-h-0 w-fit flex flex-col border-r bg-surface-elevated/95',
             'shadow-app-ring/10 shadow-2xl backdrop-blur-xl transition-all duration-300 lg:flex'
           )}
         />
 
         {/* Main Content Area */}
-        <main className="h-screen w-full flex-1 overflow-y-scroll transition-all duration-300 lg:w-auto lg:pt-0">
+        <main className="relative h-screen w-full flex-1 overflow-y-scroll transition-all duration-300 lg:w-auto lg:pt-0">
+          <DashboardThemeControl />
           {children}
         </main>
       </div>

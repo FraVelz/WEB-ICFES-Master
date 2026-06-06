@@ -2,6 +2,7 @@
 
 import { useAppDispatch } from '@/store/hooks';
 import { enterDemoMode } from '@/features/home/utils/enterDemoMode';
+import { ThemeToggle } from '@/shared/components/ThemeToggle';
 
 import { HomePageDesktop } from './HomePageDesktop';
 import { HomePageMobile } from './HomePageMobile';
@@ -21,6 +22,12 @@ export const HomePage = () => {
 
   return (
     <>
+      <div className="pointer-events-none fixed top-4 right-4 z-50 hidden md:block">
+        <div className="pointer-events-auto">
+          <ThemeToggle compact />
+        </div>
+      </div>
+
       {/* Background glow effects - Fixed to viewport */}
       <div className="pointer-events-none fixed inset-0 z-0">
         <div className="bg-ambient-a-strong/30 absolute top-1/3 left-1/4 h-96 w-96 animate-pulse rounded-full blur-3xl"></div>

@@ -6,12 +6,13 @@ This document describes the file organization and feature-based architecture of 
 
 ```txt
 src/
-├── app/                   # Next.js App Router (routes, layouts)
+├── app/                   # Next.js App Router (routes, layouts, favicon.ico)
 │   ├── (auth)/           # Authentication (login, signup, onboarding)
 │   ├── (dashboard)/      # Dashboard (exam, lessons, achievements, progress, etc.)
 │   ├── auth/callback/    # OAuth callback (outside auth group)
 │   ├── perfil/public/    # Public profile (no auth layout)
 │   └── api/              # API routes (e.g. chat)
+├── assets/               # Global images (mascot, brand) — import from @/assets
 ├── features/             # Main business modules
 ├── shared/               # Cross-feature UI (Icon, ModalOverlay…) + ICFES constants
 ├── storage/              # localStorage implementation (internal)
@@ -31,6 +32,18 @@ src/
 ```
 
 Global styles live in **`src/app/globals.css`** (Tailwind 4 + tokens).
+
+## Static assets (`src/assets/`)
+
+Shared images imported in code (not `/public/...` URL paths):
+
+| Path | Purpose |
+| ---- | ------- |
+| `assets/avatars/` | Zeus mascot (logo, pensativo, celebrando, etc.) |
+| `assets/images/` | Brand screenshots (README, Open Graph) |
+| `assets/index.ts` | Public API: `MASCOT_IMAGES`, `mascotSrc()`, `BRAND_IMAGES` |
+
+Favicon: **`src/app/favicon.ico`** (App Router convention). OG metadata in `src/app/layout.tsx` uses `BRAND_IMAGES.screenshot`.
 
 ## Feature-based architecture (`src/features/`)
 

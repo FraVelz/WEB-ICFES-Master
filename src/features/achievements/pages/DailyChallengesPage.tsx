@@ -8,6 +8,8 @@ import { useDailyChallenges } from '../hooks/useDailyChallenges';
 import { ChallengeCard } from '../components/ChallengeCard';
 import { ConstructionAlert } from '../components/ConstructionAlert';
 
+import { PAGE_SHELL_CLASS } from '@/shared/constants/pageShell';
+
 export const DailyChallengesPage = () => {
   const [selectedDate, setSelectedDate] = useState(new Date());
 
@@ -35,7 +37,7 @@ export const DailyChallengesPage = () => {
   const isToday = dateString === new Date().toISOString().split('T')[0];
 
   return (
-    <div className="min-h-dvh bg-slate-950 pb-24 text-white md:pb-0">
+    <div className={PAGE_SHELL_CLASS}>
       {/* Background Effects */}
       <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
         <div className="absolute top-0 left-0 h-96 w-full bg-linear-to-b from-orange-900/20 to-transparent"></div>

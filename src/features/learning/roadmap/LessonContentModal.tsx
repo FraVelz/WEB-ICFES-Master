@@ -4,6 +4,7 @@ import { cn } from '@/utils/cn';
 import React, { useState, useMemo } from 'react';
 import ReactMarkdown from 'react-markdown';
 import { Icon } from '@/shared/components/Icon';
+import { MASCOT_IMAGES } from '@/assets';
 import { MascotaCircle } from '@/shared/components/MascotaCircle';
 import dynamic from 'next/dynamic';
 import type { LessonQuizModalProps } from './lessonQuiz/quizTypes';
@@ -102,7 +103,7 @@ export const LessonContentModal = ({
 
   if (!isOpen || !lesson) return null;
 
-  const mascotSrc = isExamStep ? '/avatars/celebrando-2.webp' : '/avatars/logo.webp';
+  const mascotSrc = isExamStep ? MASCOT_IMAGES.celebrando2 : MASCOT_IMAGES.logo;
   const gradientClass = getAreaColor(areaId);
   const bubbleBorder = getBubbleBorderColor(areaId);
 

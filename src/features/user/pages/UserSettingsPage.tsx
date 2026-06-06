@@ -6,30 +6,32 @@ import { Icon } from '@/shared/components/Icon';
 import { UserSettingsProvider, useUserSettingsContext } from '@/features/user/context/UserSettingsContext';
 import { SettingsProfilePanel } from '@/features/user/components/settings/SettingsProfilePanel';
 import { SettingsAccountPanel } from '@/features/user/components/settings/SettingsAccountPanel';
+import { SettingsAppearancePanel } from '@/features/user/components/settings/SettingsAppearancePanel';
 import { SettingsSupportPanel } from '@/features/user/components/settings/SettingsSupportPanel';
 import { SettingsInfoPanel } from '@/features/user/components/settings/SettingsInfoPanel';
 import { SettingsDeleteModal } from '@/features/user/components/settings/SettingsDeleteModal';
+import { PAGE_SHELL_CLASS } from '@/shared/constants/pageShell';
 
 function UserSettingsContent() {
   const { message, messageType } = useUserSettingsContext();
 
   return (
-    <div className="min-h-dvh bg-slate-950 pb-24 text-white md:pb-0">
+    <div className={PAGE_SHELL_CLASS}>
       <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
         <div className="from-hub-sheet-from/10 absolute top-0 left-0 h-96 w-full bg-linear-to-b to-transparent" />
         <div className="absolute right-0 bottom-0 h-96 w-96 rounded-full bg-blue-500/5 blur-3xl" />
       </div>
 
       <div className="relative z-10">
-        <div className="sticky top-0 z-50 border-b border-slate-800/60 bg-slate-950/80 backdrop-blur-xl">
+        <div className="sticky top-0 z-50 border-b border-surface-border/80 bg-surface-elevated/90 backdrop-blur-xl">
           <div className="mx-auto flex max-w-6xl items-center gap-4 px-4 py-4">
             <Link
               href="/perfil"
-              className="rounded-full p-2 text-slate-400 transition-colors hover:bg-slate-800 hover:text-white"
+              className="rounded-full p-2 text-on-surface-muted transition-colors hover:bg-surface-elevated hover:text-on-surface"
             >
               <Icon name="arrow-left" className="text-lg" />
             </Link>
-            <h1 className="text-xl font-bold text-white">Configuración</h1>
+            <h1 className="text-xl font-bold text-on-surface">Configuración</h1>
           </div>
         </div>
 
@@ -55,6 +57,7 @@ function UserSettingsContent() {
               <SettingsProfilePanel />
             </div>
             <div className="space-y-6 lg:col-span-8">
+              <SettingsAppearancePanel />
               <SettingsAccountPanel />
               <SettingsSupportPanel />
               <SettingsInfoPanel />

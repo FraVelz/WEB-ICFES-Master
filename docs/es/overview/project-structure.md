@@ -7,12 +7,13 @@ proyecto.
 
 ```txt
 src/
-├── app/                   # Next.js App Router (rutas, layouts)
+├── app/                   # Next.js App Router (rutas, layouts, favicon.ico)
 │   ├── (auth)/           # Autenticación (login, registro, onboarding)
 │   ├── (dashboard)/      # Dashboard (examen, lecciones, logros, progreso, etc.)
 │   ├── auth/callback/    # OAuth callback (fuera del grupo auth)
 │   ├── perfil/public/    # Perfil público (sin layout de auth)
 │   └── api/              # API Routes (p. ej. chat)
+├── assets/               # Imágenes globales (mascota, marca) — importar desde @/assets
 ├── features/             # Módulos principales de negocio
 ├── shared/               # UI transversal (Icon, ModalOverlay…) + constantes ICFES
 ├── storage/              # Implementación localStorage (uso interno)
@@ -32,6 +33,18 @@ src/
 ```
 
 Estilos globales en **`src/app/globals.css`** (Tailwind 4 + tokens).
+
+## Assets estáticos (`src/assets/`)
+
+Imágenes compartidas importadas en código (no rutas `/public/...`):
+
+| Ruta | Uso |
+| ---- | --- |
+| `assets/avatars/` | Mascota Zeus (estados: logo, pensativo, celebrando, etc.) |
+| `assets/images/` | Capturas de marca (README, Open Graph) |
+| `assets/index.ts` | API pública: `MASCOT_IMAGES`, `mascotSrc()`, `BRAND_IMAGES` |
+
+Favicon: **`src/app/favicon.ico`** (convención App Router). Metadata OG en `src/app/layout.tsx` usa `BRAND_IMAGES.screenshot`.
 
 ## Arquitectura por características (`src/features/`)
 

@@ -2,6 +2,8 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import type { StaticImageData } from 'next/image';
+import { MASCOT_IMAGES } from '@/assets';
 import { INTRODUCTION_SECTIONS, ONBOARDING_QUESTIONS } from './data';
 import { OnboardingIntroStage } from './OnboardingIntroStage';
 import { OnboardingQuizStage } from './OnboardingQuizStage';
@@ -16,7 +18,7 @@ interface OnboardingQuestion {
 
 interface OnboardingQuizProps {
   onComplete: (answers: Record<string, unknown>) => void;
-  avatarConfig?: { intro1?: string; intro2?: string };
+  avatarConfig?: { intro1?: StaticImageData; intro2?: StaticImageData };
 }
 
 export const OnboardingQuiz = ({ onComplete, avatarConfig = {} }: OnboardingQuizProps) => {
@@ -27,8 +29,8 @@ export const OnboardingQuiz = ({ onComplete, avatarConfig = {} }: OnboardingQuiz
   const [answers, setAnswers] = useState<Record<string, unknown>>({});
 
   const avatarSettings = {
-    intro1: avatarConfig.intro1 ?? '/avatars/logo.webp',
-    intro2: avatarConfig.intro2 ?? '/avatars/logo.webp',
+    intro1: avatarConfig.intro1 ?? MASCOT_IMAGES.logo,
+    intro2: avatarConfig.intro2 ?? MASCOT_IMAGES.logo,
   };
 
   const currentQuestion = (ONBOARDING_QUESTIONS as OnboardingQuestion[])[currentQuestionIndex];

@@ -1,7 +1,9 @@
 'use client';
 
 import { cn } from '@/utils/cn';
+import { MASCOT_IMAGES } from '@/assets';
 import { MascotaCircle } from '@/shared/components/MascotaCircle';
+import { ThemeToggle } from '@/shared/components/ThemeToggle';
 
 import { useAppDispatch } from '@/store/hooks';
 import { enterDemoMode } from '@/features/home/utils/enterDemoMode';
@@ -9,7 +11,7 @@ import { enterDemoMode } from '@/features/home/utils/enterDemoMode';
 export const HomePageMobile = () => {
   const dispatch = useAppDispatch();
   return (
-    <div className="flex h-dvh w-screen flex-col bg-linear-to-b from-black via-slate-950 to-black text-white">
+    <div className="flex h-dvh w-screen flex-col bg-linear-to-b from-surface via-surface-via to-surface text-on-surface">
       {/* Background glow — mobile layout */}
       <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
         <div className="bg-ambient-a/30 absolute top-1/3 left-1/4 h-48 w-48 animate-pulse rounded-full blur-2xl"></div>
@@ -17,18 +19,22 @@ export const HomePageMobile = () => {
         <div className="bg-ambient-c/20 absolute top-2/3 left-3/4 h-32 w-32 animate-pulse rounded-full blur-2xl"></div>
       </div>
 
+      <div className="relative z-10 flex justify-end px-4 pt-4">
+        <ThemeToggle compact />
+      </div>
+
       {/* Main Content - Centro */}
       <div className="relative z-10 flex flex-1 items-center justify-center">
         <div className="flex flex-col items-center justify-center gap-4 px-6">
           {/* Logo */}
-          <MascotaCircle src="/avatars/logo.webp" size="md" />
+          <MascotaCircle src={MASCOT_IMAGES.logo} size="md" />
 
           {/* App Name */}
-          <h1 className="text-3xl font-bold text-white">ICFES Master</h1>
+          <h1 className="text-3xl font-bold text-on-surface">ICFES Master</h1>
 
           {/* Tagline */}
-          <p className="max-w-xs text-center text-sm text-gray-300">
-            Domina el examen ICFES con nuestras plataforma, y diviertete mientras aprendes.
+          <p className="max-w-xs text-center text-sm text-on-surface-muted">
+            Domina el examen ICFES con nuestra plataforma, y diviértete mientras aprendes.
           </p>
         </div>
       </div>
@@ -43,9 +49,9 @@ export const HomePageMobile = () => {
             }
           }}
           className={cn(
-            'block w-full transform rounded-lg bg-linear-to-r from-blue-500 to-blue-600 py-3',
+            'block w-full transform rounded-lg bg-linear-to-r from-cta-from to-cta-to py-3',
             'text-center font-semibold text-white transition-all duration-200 hover:scale-105',
-            'hover:from-blue-600 hover:to-blue-700'
+            'hover:from-cta-from hover:to-cta-to hover:shadow-app-ring/40 hover:shadow-lg'
           )}
         >
           Probar Demo
@@ -54,8 +60,8 @@ export const HomePageMobile = () => {
         <a
           href="/login"
           className={cn(
-            'block w-full rounded-lg border-2 border-blue-500 bg-transparent py-3 text-center',
-            'font-semibold text-blue-400 transition-all duration-200 hover:bg-blue-500/10'
+            'block w-full rounded-lg border-2 border-app-ring bg-transparent py-3 text-center',
+            'font-semibold text-app-accent transition-all duration-200 hover:bg-app-ring/10'
           )}
         >
           Iniciar Sesión

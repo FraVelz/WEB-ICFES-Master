@@ -58,7 +58,7 @@ export const LearningRoadmap = ({ initialArea = 'lectura-critica' }: { initialAr
   };
 
   return (
-    <div className={cn('relative flex flex-col bg-slate-950', viewingLesson ? 'h-dvh overflow-hidden' : 'min-h-dvh')}>
+    <div className={cn('relative flex flex-col bg-surface', viewingLesson ? 'h-dvh overflow-hidden' : 'min-h-dvh')}>
       {/* Sticky secondary header */}
       <div className="sticky top-0 z-50">
         <SecondaryHeader currentArea={currentArea} onAreaChange={setCurrentArea} />
@@ -70,7 +70,7 @@ export const LearningRoadmap = ({ initialArea = 'lectura-critica' }: { initialAr
           <h2 className={cn('bg-linear-to-r bg-clip-text text-3xl font-bold text-transparent', currentAreaData.color)}>
             {currentAreaData.name}
           </h2>
-          <p className="mt-2 text-sm font-medium tracking-wide text-slate-400 uppercase">Ruta de Aprendizaje</p>
+          <p className="mt-2 text-sm font-medium tracking-wide text-on-surface-muted uppercase">Ruta de Aprendizaje</p>
         </AnimatedOnMount>
 
         <LessonAreaLinks roadmapAreaId={currentArea} />

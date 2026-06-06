@@ -1,3 +1,4 @@
+import { MASCOT_IMAGES } from '@/assets';
 import { cn } from '@/utils/cn';
 import { Icon } from '@/shared/components/Icon';
 import { MascotaCircle } from '@/shared/components/MascotaCircle';
@@ -64,7 +65,7 @@ export function OnboardingQuizStage({
       <div className="mx-auto flex w-full max-w-4xl flex-1 flex-col gap-8 px-4 py-8">
         <div className="flex flex-col items-center gap-6 sm:flex-row sm:items-start">
           <div className="shrink-0">
-            <MascotaCircle src="/avatars/pensativo.webp" size="medium" alt="Zeus - Tu asistente" centered={false} />
+            <MascotaCircle src={MASCOT_IMAGES.pensativo} size="medium" alt="Zeus - Tu asistente" centered={false} />
           </div>
           <div className="flex-1 pt-2 text-center sm:text-left">
             <h2 className="text-xl leading-tight font-bold text-white sm:text-2xl md:text-3xl">{question}</h2>

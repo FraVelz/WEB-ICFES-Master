@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react';
+import { PAGE_SHELL_CLASS } from '@/shared/constants/pageShell';
 
 export function ProfilePageLayout({
   children,
@@ -8,7 +9,7 @@ export function ProfilePageLayout({
   glowVariant?: 'default' | 'public';
 }) {
   return (
-    <div className="min-h-dvh bg-slate-950 pb-24 text-white md:pb-0">
+    <div className={PAGE_SHELL_CLASS}>
       <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
         {glowVariant === 'public' ? (
           <>

@@ -9,6 +9,7 @@ import { useLeaderboard, type LeaderboardPlayer } from '@/hooks/gamification';
 import { RANKS, getRankInfo } from '@/shared/constants/ranks';
 import { useUserProfile } from '@/features/user/hooks/useUserProfile';
 import { AvatarImage } from '@/features/user/components/AvatarImage';
+import { PAGE_SHELL_CLASS } from '@/shared/constants/pageShell';
 
 export const ClasificatoriaPage = () => {
   const router = useRouter();
@@ -61,7 +62,7 @@ export const ClasificatoriaPage = () => {
   };
 
   return (
-    <div className="min-h-dvh bg-slate-950 pb-24 text-white md:pb-0">
+    <div className={PAGE_SHELL_CLASS}>
       {/* Background Effects */}
       <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
         <div className="absolute top-0 left-0 h-96 w-full bg-linear-to-b from-purple-900/20 to-transparent"></div>

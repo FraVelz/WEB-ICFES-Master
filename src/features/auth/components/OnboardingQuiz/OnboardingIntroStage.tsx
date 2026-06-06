@@ -1,3 +1,4 @@
+import type { StaticImageData } from 'next/image';
 import { cn } from '@/utils/cn';
 import { Icon } from '@/shared/components/Icon';
 import { MascotaCircle } from '@/shared/components/MascotaCircle';
@@ -6,7 +7,7 @@ import { OnboardingLayout } from './OnboardingLayout';
 type OnboardingIntroStageProps = {
   message: string;
   description: string;
-  avatarSrc: string;
+  avatarSrc: string | StaticImageData;
   onBack: () => void;
   onNext: () => void;
 };
