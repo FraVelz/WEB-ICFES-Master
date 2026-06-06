@@ -52,8 +52,8 @@ export const HeroSection = ({ onDemoAccess }: { onDemoAccess: () => void }) => {
         {/* Subtitle */}
         <AnimatedReveal isVisible delay={0.3}>
           <p className="mx-auto max-w-3xl text-lg leading-relaxed text-slate-300 md:text-xl">
-            La plataforma #1 con <span className="text-app-accent font-bold">+500 preguntas</span>, simulacros reales,
-            gamificación adictiva y eficiente, y una comunidad de estudiantes preparándose contigo.
+            Prepárate para Saber 11° y la validación del bachillerato en Colombia. Plataforma 100% gratuita con
+            acceso web y app móvil en App Store: practica por áreas, retos diarios y simulacros tipo ICFES.
           </p>
         </AnimatedReveal>
 
