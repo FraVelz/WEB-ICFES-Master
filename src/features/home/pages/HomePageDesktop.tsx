@@ -18,25 +18,27 @@ import {
   FinalCTASection,
 } from '@/features/home/components';
 
+import { PAGE_SHELL_CLASS } from '@/shared/constants/pageShell';
+
 import homeStyles from './HomePageDesktop.module.css';
 
 const GLOW_EFFECTS = [
   {
     position: 'top-1/3 left-1/4',
     size: 'w-96 h-96',
-    color: 'bg-ambient-a/30',
+    color: 'bg-ambient-a/15 dark:bg-ambient-a/30',
     delay: 0,
   },
   {
     position: 'bottom-1/3 right-1/4',
     size: 'w-96 h-96',
-    color: 'bg-ambient-b/30',
+    color: 'bg-ambient-b/12 dark:bg-ambient-b/30',
     delay: 1,
   },
   {
     position: 'top-2/3 left-3/4',
     size: 'w-72 h-72',
-    color: 'bg-ambient-c/20',
+    color: 'bg-ambient-c/8 dark:bg-ambient-c/20',
     delay: 0.5,
   },
 ];
@@ -94,9 +96,9 @@ const HomePageDesktopComponent = ({ onDemoAccess }: { onDemoAccess: () => void }
   };
 
   return (
-    <div className="min-h-dvh overflow-x-hidden bg-linear-to-b from-black via-slate-950 to-black text-white">
+    <div className={cn('overflow-x-hidden', PAGE_SHELL_CLASS)}>
       <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden lg:px-20" role="presentation">
-        <div className="absolute inset-0 bg-linear-to-b from-transparent via-transparent to-black/50" />
+        <div className="absolute inset-0 bg-linear-to-b from-transparent via-transparent to-surface/40" />
         {GLOW_EFFECTS.map((effect, index) => (
           <GSAPGlowBlob
             key={`glow-${index}`}

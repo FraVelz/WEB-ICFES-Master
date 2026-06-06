@@ -13,10 +13,10 @@ export const HomePageMobile = () => {
   return (
     <div className="flex h-dvh w-screen flex-col bg-linear-to-b from-surface via-surface-via to-surface text-on-surface">
       {/* Background glow — mobile layout */}
-      <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
-        <div className="bg-ambient-a/30 absolute top-1/3 left-1/4 h-48 w-48 animate-pulse rounded-full blur-2xl"></div>
-        <div className="bg-ambient-b/30 absolute right-1/4 bottom-1/3 h-48 w-48 animate-pulse rounded-full blur-2xl"></div>
-        <div className="bg-ambient-c/20 absolute top-2/3 left-3/4 h-32 w-32 animate-pulse rounded-full blur-2xl"></div>
+      <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden opacity-60 dark:opacity-100">
+        <div className="bg-ambient-a/15 absolute top-1/3 left-1/4 h-48 w-48 animate-pulse rounded-full blur-2xl dark:bg-ambient-a/30"></div>
+        <div className="bg-ambient-b/12 absolute right-1/4 bottom-1/3 h-48 w-48 animate-pulse rounded-full blur-2xl dark:bg-ambient-b/30"></div>
+        <div className="bg-ambient-c/8 absolute top-2/3 left-3/4 h-32 w-32 animate-pulse rounded-full blur-2xl dark:bg-ambient-c/20"></div>
       </div>
 
       <div className="relative z-10 flex justify-end px-4 pt-4">

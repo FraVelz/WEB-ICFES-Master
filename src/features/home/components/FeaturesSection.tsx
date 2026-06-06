@@ -7,7 +7,7 @@ export const FeaturesSection = () => {
     <section className="mx-auto max-w-7xl px-6 py-20 md:px-8">
       <div className="mb-16 text-center">
         <h2 className="mb-4 text-4xl font-bold md:text-5xl">¿Por Qué Somos la Mejor Opción?</h2>
-        <p className="text-lg text-slate-400">Características que te harán decir "esto es lo mejor que existe"</p>
+        <p className="text-lg text-on-surface-muted">Características que te harán decir "esto es lo mejor que existe"</p>
       </div>
 
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">

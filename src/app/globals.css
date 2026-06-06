@@ -20,17 +20,17 @@ html {
 
 html:not(.dark) {
   color-scheme: light;
-  --icfes-surface: #eef2f7;
-  --icfes-surface-via: #f8fafc;
-  --icfes-surface-elevated: #ffffff;
-  --icfes-surface-border: #dbe3ee;
-  --icfes-on-surface: #0f172a;
-  --icfes-on-surface-muted: #64748b;
+  --icfes-surface: #dce3ec;
+  --icfes-surface-via: #e6ecf3;
+  --icfes-surface-elevated: #eef2f7;
+  --icfes-surface-border: #b8c5d6;
+  --icfes-on-surface: #0a101f;
+  --icfes-on-surface-muted: #475569;
 
   /* Legacy slate utilities → paleta clara coherente */
   --color-slate-950: var(--icfes-surface);
   --color-slate-900: var(--icfes-surface-elevated);
-  --color-slate-800: #f1f5f9;
+  --color-slate-800: #e2e8f0;
   --color-slate-700: var(--icfes-surface-border);
   --color-slate-600: #94a3b8;
   --color-slate-500: #64748b;
@@ -39,19 +39,28 @@ html:not(.dark) {
   --color-slate-200: #1e293b;
 
   /* Acentos con más contraste sobre fondo claro */
-  --color-app-accent: var(--color-cyan-600);
-  --color-app-accent-muted: var(--color-cyan-700);
-  --color-app-ring: var(--color-cyan-600);
-  --color-app-accent-strong: var(--color-cyan-700);
-  --color-app-accent-bright: var(--color-cyan-800);
+  --color-app-accent: var(--color-cyan-700);
+  --color-app-accent-muted: var(--color-cyan-800);
+  --color-app-ring: var(--color-cyan-700);
+  --color-app-accent-strong: var(--color-cyan-800);
+  --color-app-accent-bright: var(--color-cyan-900);
   --color-app-on-accent: var(--color-cyan-50);
-  --color-app-accent-darker: var(--color-cyan-800);
+  --color-app-accent-darker: var(--color-cyan-900);
 
-  /* Decoración más suave */
-  --color-hub-sheet-from: var(--color-cyan-100);
-  --color-ambient-a-strong: color-mix(in oklab, var(--color-blue-400) 28%, transparent);
-  --color-ambient-b-strong: color-mix(in oklab, var(--color-purple-400) 24%, transparent);
-  --color-ambient-c-muted: color-mix(in oklab, var(--color-indigo-400) 20%, transparent);
+  /* Titular hero / auth — gradiente oscuro legible */
+  --color-cta-text-start: var(--color-cyan-800);
+  --color-cta-text-via: var(--color-blue-800);
+  --color-cta-text-end: var(--color-indigo-900);
+
+  /* Glows fríos y discretos (sin lavanda/púrpura pastel) */
+  --color-ambient-a: var(--color-blue-600);
+  --color-ambient-b: var(--color-cyan-700);
+  --color-ambient-c: var(--color-slate-500);
+  --color-ambient-a-strong: color-mix(in oklab, var(--color-blue-600) 16%, transparent);
+  --color-ambient-b-strong: color-mix(in oklab, var(--color-cyan-700) 14%, transparent);
+  --color-ambient-c-muted: color-mix(in oklab, var(--color-slate-500) 10%, transparent);
+
+  --color-hub-sheet-from: var(--color-cyan-200);
 }
 
 /* Texto blanco legacy → legible en superficies claras */
@@ -104,9 +113,9 @@ html:not(.dark) .hover\:text-white:hover {
 }
 
 /* Tarjetas/paneles con sombra sutil en claro */
-html:not(.dark) :where(.rounded-2xl, .rounded-xl).border.border-slate-800,
-html:not(.dark) :where(.rounded-2xl, .rounded-xl).border.border-surface-border {
-  box-shadow: 0 1px 2px rgb(15 23 42 / 0.06);
+html:not(.dark) :where(.rounded-2xl, .rounded-xl, .rounded-lg).border.border-slate-800,
+html:not(.dark) :where(.rounded-2xl, .rounded-xl, .rounded-lg).border.border-surface-border {
+  box-shadow: 0 1px 3px rgb(15 23 42 / 0.1);
 }
 
 /**

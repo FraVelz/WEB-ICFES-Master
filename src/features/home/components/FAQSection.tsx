@@ -21,23 +21,23 @@ export const FAQSection = () => {
 
       <div className="space-y-4">
         {FAQS.map((faq, idx) => (
-          <div key={idx} className="overflow-hidden rounded-lg border border-slate-700 bg-slate-800">
+          <div key={idx} className="overflow-hidden rounded-lg border border-surface-border bg-surface-elevated">
             <button
               type="button"
               onClick={() => setExpandedFaq(expandedFaq === idx ? null : idx)}
               className={cn(
-                'flex w-full cursor-pointer items-center justify-between gap-3 p-6 transition-colors hover:bg-slate-700/50',
+                'flex w-full cursor-pointer items-center justify-between gap-3 p-6 transition-colors hover:bg-surface-border/30',
                 'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:outline-none focus-visible:ring-inset'
               )}
             >
-              <p className="text-left text-lg font-bold text-white">{faq.q}</p>
+              <p className="text-left text-lg font-bold text-on-surface">{faq.q}</p>
               <Icon
                 name="chevron-right"
-                className={cn('text-slate-400 transition-transform', expandedFaq === idx && 'rotate-90')}
+                className={cn('text-on-surface-muted transition-transform', expandedFaq === idx && 'rotate-90')}
               />
             </button>
             {expandedFaq === idx && (
-              <div className="border-t border-slate-700 bg-slate-700/20 px-6 pt-3 pb-6 text-slate-300">{faq.a}</div>
+              <div className="border-t border-surface-border bg-surface-border/20 px-6 pt-3 pb-6 text-on-surface-muted">{faq.a}</div>
             )}
           </div>
         ))}

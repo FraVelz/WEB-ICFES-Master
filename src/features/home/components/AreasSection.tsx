@@ -9,7 +9,7 @@ export const AreasSection = () => {
       <div className="mb-16 text-center">
         <h2 className="mb-4 text-4xl font-bold md:text-5xl">Domina Cada Área</h2>
 
-        <p className="mx-auto max-w-2xl text-lg text-slate-400">
+        <p className="mx-auto max-w-2xl text-lg text-on-surface-muted">
           Contenido especializado, preguntas ICFES de simulacro y cursos para temas básicos, para las 5 áreas
           principales del ICFES
         </p>
@@ -23,7 +23,7 @@ export const AreasSection = () => {
               className={cn(
                 'group relative block rounded-xl',
                 'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:outline-none',
-                'focus-visible:ring-offset-2 focus-visible:ring-offset-black'
+                'focus-visible:ring-offset-2 focus-visible:ring-offset-surface'
               )}
             >
               <div
@@ -73,7 +73,7 @@ export const AreasSection = () => {
             ¿Listo para el Desafío Real?
           </h3>
 
-          <p className="mx-auto mb-6 max-w-2xl text-slate-300">
+          <p className="mx-auto mb-6 max-w-2xl text-on-surface-muted">
             Realiza un simulacro completo bajo condiciones reales. 150 preguntas, tiempo limitado 4 horas y 30 minutos,
             puntuación exacta.
           </p>
@@ -85,7 +85,7 @@ export const AreasSection = () => {
               'py-4 font-bold text-white transition-all duration-300 hover:scale-105 hover:shadow-lg',
               'hover:shadow-red-500/50',
               'focus-visible:ring-2 focus-visible:ring-red-300 focus-visible:outline-none',
-              'focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950'
+              'focus-visible:ring-offset-2 focus-visible:ring-offset-surface'
             )}
           >
             <Icon name="bullseye" />
