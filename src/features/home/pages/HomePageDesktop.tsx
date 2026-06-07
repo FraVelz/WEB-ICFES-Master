@@ -98,7 +98,7 @@ const HomePageDesktopComponent = ({ onDemoAccess }: { onDemoAccess: () => void }
   return (
     <div className={cn('overflow-x-hidden', PAGE_SHELL_CLASS)}>
       <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden lg:px-20" role="presentation">
-        <div className="absolute inset-0 bg-linear-to-b from-transparent via-transparent to-surface/40" />
+        <div className="to-surface/40 absolute inset-0 bg-linear-to-b from-transparent via-transparent" />
         {GLOW_EFFECTS.map((effect, index) => (
           <GSAPGlowBlob
             key={`glow-${index}`}

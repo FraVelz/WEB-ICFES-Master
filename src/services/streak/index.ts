@@ -6,12 +6,7 @@ export {
   getUserStreakKey,
   resolveStorageKey,
 } from './streakTypes';
-export {
-  calculateCurrentStreak,
-  calculateLongestStreak,
-  getLocalDateString,
-  mergeStreakStates,
-} from './streakUtils';
+export { calculateCurrentStreak, calculateLongestStreak, getLocalDateString, mergeStreakStates } from './streakUtils';
 export {
   loadStreakState,
   saveStreakState,

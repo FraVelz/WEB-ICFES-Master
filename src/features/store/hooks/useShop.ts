@@ -8,6 +8,10 @@ import type { ShopItem } from '../data/shopItems';
 
 const PURCHASES_KEY = 'icfes_shop_purchases';
 
+function nextPurchaseId(item: ShopItem): string {
+  return item.category === 'powerup' ? `${item.id}_${Date.now()}` : item.id;
+}
+
 /**
  * Hook de tienda — saldo unificado vía gamificationPersistence.
  */
@@ -71,8 +75,7 @@ export const useShop = () => {
     setProcessing(true);
     try {
       await spendCoinsBalance(coinsUserId, item.price, `shop_${item.id}`);
-      const newPurchases =
-        item.category === 'powerup' ? [...purchases, `${item.id}_${Date.now()}`] : [...purchases, item.id];
+      const newPurchases = [...purchases, nextPurchaseId(item)];
       localStorage.setItem(PURCHASES_KEY, JSON.stringify(newPurchases));
       setPurchases(newPurchases);
       return true;

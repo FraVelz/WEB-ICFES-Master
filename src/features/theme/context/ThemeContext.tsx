@@ -2,12 +2,7 @@
 
 import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from 'react';
 
-import {
-  applyThemeToDocument,
-  persistTheme,
-  readStoredTheme,
-  type AppTheme,
-} from '@/features/theme/themeStorage';
+import { applyThemeToDocument, persistTheme, readStoredTheme, type AppTheme } from '@/features/theme/themeStorage';
 
 type ThemeContextValue = {
   theme: AppTheme;

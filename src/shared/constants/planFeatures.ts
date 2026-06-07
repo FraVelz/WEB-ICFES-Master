@@ -32,15 +32,9 @@ export const PREMIUM_PLAN_FEATURES = {
   prioritySupport: true,
 } as const;
 
-export function normalizePlanFeatures(
-  features: unknown,
-  planType: string | null | undefined
-): Record<string, unknown> {
+export function normalizePlanFeatures(features: unknown, planType: string | null | undefined): Record<string, unknown> {
   const type = planType ?? 'free';
-  const base =
-    type === 'premium' || type === 'basic'
-      ? { ...PREMIUM_PLAN_FEATURES }
-      : { ...FREE_PLAN_FEATURES };
+  const base = type === 'premium' || type === 'basic' ? { ...PREMIUM_PLAN_FEATURES } : { ...FREE_PLAN_FEATURES };
 
   if (features && typeof features === 'object' && !Array.isArray(features)) {
     return { ...base, ...(features as Record<string, unknown>) };

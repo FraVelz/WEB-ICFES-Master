@@ -37,10 +37,10 @@ Global styles live in **`src/app/globals.css`** (Tailwind 4 + tokens).
 
 Shared images imported in code (not `/public/...` URL paths):
 
-| Path | Purpose |
-| ---- | ------- |
-| `assets/avatars/` | Zeus mascot (logo, pensativo, celebrando, etc.) |
-| `assets/images/` | Brand screenshots (README, Open Graph) |
+| Path              | Purpose                                                    |
+| ----------------- | ---------------------------------------------------------- |
+| `assets/avatars/` | Zeus mascot (logo, pensativo, celebrando, etc.)            |
+| `assets/images/`  | Brand screenshots (README, Open Graph)                     |
 | `assets/index.ts` | Public API: `MASCOT_IMAGES`, `mascotSrc()`, `BRAND_IMAGES` |
 
 Favicon: **`src/app/favicon.ico`** (App Router convention). OG metadata in `src/app/layout.tsx` uses `BRAND_IMAGES.screenshot`.
@@ -69,7 +69,7 @@ features/feature-name/
 | ----------------- | ---------------------------------------------------------------------------------------------------------- |
 | **auth/**         | Login, signup, OAuth, onboarding, `AuthContext`                                                            |
 | **home/**         | Landing, marketing sections, donations                                                                     |
-| **learning/**     | Roadmap and AI chat (`roadmap/`, `shell/`, `context/`)                                                      |
+| **learning/**     | Roadmap and AI chat (`roadmap/`, `shell/`, `context/`)                                                     |
 | **exam/**         | Practice, full exam, ranking; data in `exam/data/`                                                         |
 | **user/**         | Profile, settings, hooks `useProgress`, `useUserData`                                                      |
 | **achievements/** | Badges, daily challenges, achievements UI (route `/logros/`; cross-feature hooks in `hooks/gamification/`) |

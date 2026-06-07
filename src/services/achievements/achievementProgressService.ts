@@ -7,11 +7,7 @@ import { isSupabaseMode } from '@/services/persistence/apiMode';
 import { calculateLevel } from '@/services/gamification/gamificationUtils';
 import GamificationSupabaseService from '@/services/supabase/GamificationSupabaseService';
 import { getStreakMetrics, loadStreakState, type StreakScope } from '@/services/streak';
-import {
-  getCompletedLessons,
-  getStoredExams,
-  getStoredPractices,
-} from '@/storage/progressStorage';
+import { getCompletedLessons, getStoredExams, getStoredPractices } from '@/storage/progressStorage';
 
 export type AchievementProgressEntry = {
   current: number;

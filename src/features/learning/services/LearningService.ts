@@ -51,8 +51,8 @@ export const LearningService = {
             (typeof nestedContent === 'string'
               ? nestedContent
               : nestedContent && typeof nestedContent === 'object'
-                ? (nestedContent as Record<string, unknown>).body ??
-                  (nestedContent as Record<string, unknown>).markdown
+                ? ((nestedContent as Record<string, unknown>).body ??
+                  (nestedContent as Record<string, unknown>).markdown)
                 : undefined);
           const contentStr = typeof rawContent === 'string' ? rawContent : '';
           return {
@@ -74,15 +74,18 @@ export const LearningService = {
     const basics = (BASICO_TOPICS as Record<string, TopicItem[]>)[key] ?? [];
     const intermedio = (INTERMEDIO_TOPICS as Record<string, IntermedioTopic>)[key];
     return [
-      ...basics.map((t: TopicItem, i: number) => ({
-        id: `${key}_basico_${i}`,
-        title: t.title,
-        order: i,
-        difficulty: 'facil',
-        rewards: { xp: 50, coins: 25 },
-        duration: t.duration,
-        content: t.content,
-      } satisfies LearningPathLesson)),
+      ...basics.map(
+        (t: TopicItem, i: number) =>
+          ({
+            id: `${key}_basico_${i}`,
+            title: t.title,
+            order: i,
+            difficulty: 'facil',
+            rewards: { xp: 50, coins: 25 },
+            duration: t.duration,
+            content: t.content,
+          }) satisfies LearningPathLesson
+      ),
       ...(intermedio
         ? [
             {

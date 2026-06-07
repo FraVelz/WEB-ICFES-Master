@@ -10,15 +10,15 @@ Where progress lives that is **not** automatically synced with Supabase or anoth
 
 ## Storage keys
 
-| Key                       | Short description                                         |
-| ------------------------- | --------------------------------------------------------- |
-| `icfes_exams`             | Full exam attempts (`saveFullExam`)                       |
-| `icfes_practice`          | Area practice attempts (`savePractice`)                   |
-| `icfes_progress`          | Derived aggregate (percentages, areas, streak, etc.)      |
-| `icfes_completed_lessons` | Completed lesson IDs (`LearningService` / local progress) |
-| `icfes_streak_dates`      | Demo/anonymous streak: JSON `{ dates, longestStreak }` or legacy date array |
-| `icfes_streak_dates_{uid}` | Authenticated user streak (same format)                  |
-| `icfes_active_streak_user` | Active UID for streak writes outside React (exams/practice) |
+| Key                        | Short description                                                           |
+| -------------------------- | --------------------------------------------------------------------------- |
+| `icfes_exams`              | Full exam attempts (`saveFullExam`)                                         |
+| `icfes_practice`           | Area practice attempts (`savePractice`)                                     |
+| `icfes_progress`           | Derived aggregate (percentages, areas, streak, etc.)                        |
+| `icfes_completed_lessons`  | Completed lesson IDs (`LearningService` / local progress)                   |
+| `icfes_streak_dates`       | Demo/anonymous streak: JSON `{ dates, longestStreak }` or legacy date array |
+| `icfes_streak_dates_{uid}` | Authenticated user streak (same format)                                     |
+| `icfes_active_streak_user` | Active UID for streak writes outside React (exams/practice)                 |
 
 ## Daily streak
 

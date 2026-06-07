@@ -1,12 +1,6 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
-import {
-  DEMO_COINS_MIN,
-  addDemoCoins,
-  ensureDemoCoinsMinimum,
-  getDemoCoins,
-  spendDemoCoins,
-} from './demoCoins';
+import { DEMO_COINS_MIN, addDemoCoins, ensureDemoCoinsMinimum, getDemoCoins, spendDemoCoins } from './demoCoins';
 
 describe('demoCoins', () => {
   const storage = new Map<string, string>();

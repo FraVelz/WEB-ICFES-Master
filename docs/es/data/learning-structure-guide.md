@@ -26,12 +26,12 @@ frontend consulta esta tabla para generar dinámicamente la "Ruta de Aprendizaje
 
 ### Tabla `learning_content`
 
-| Columna     | Tipo  | Obligatorio | Descripción                                                                        |
-| ----------- | ----- | ----------- | ---------------------------------------------------------------------------------- |
-| id          | uuid  | Sí          | ID único (auto-generado)                                                           |
-| area        | text  | Sí          | Área: `matematicas`, `lectura_critica`, `sociales`, `ciencias_naturales`, `ingles` |
-| order_index | int   | Sí          | Posición en la lista (1, 2, 3...)                                                  |
-| published   | bool  | Sí          | `true` para mostrar, `false` para ocultar                                          |
+| Columna     | Tipo  | Obligatorio | Descripción                                                                                                |
+| ----------- | ----- | ----------- | ---------------------------------------------------------------------------------------------------------- |
+| id          | uuid  | Sí          | ID único (auto-generado)                                                                                   |
+| area        | text  | Sí          | Área: `matematicas`, `lectura_critica`, `sociales`, `ciencias_naturales`, `ingles`                         |
+| order_index | int   | Sí          | Posición en la lista (1, 2, 3...)                                                                          |
+| published   | bool  | Sí          | `true` para mostrar, `false` para ocultar                                                                  |
 | content     | jsonb | Sí          | Payload pedagógico (`title`, `summary`, `body`, `quiz`). No duplicar `id`, `area`, `published` ni `order`. |
 
 ### Mapeo de Áreas

@@ -23,15 +23,15 @@ function UserSettingsContent() {
       </div>
 
       <div className="relative z-10">
-        <div className="sticky top-0 z-50 border-b border-surface-border/80 bg-surface-elevated/90 backdrop-blur-xl">
+        <div className="border-surface-border/80 bg-surface-elevated/90 sticky top-0 z-50 border-b backdrop-blur-xl">
           <div className="mx-auto flex max-w-6xl items-center gap-4 px-4 py-4">
             <Link
               href="/perfil"
-              className="rounded-full p-2 text-on-surface-muted transition-colors hover:bg-surface-elevated hover:text-on-surface"
+              className="text-on-surface-muted hover:bg-surface-elevated hover:text-on-surface rounded-full p-2 transition-colors"
             >
               <Icon name="arrow-left" className="text-lg" />
             </Link>
-            <h1 className="text-xl font-bold text-on-surface">Configuración</h1>
+            <h1 className="text-on-surface text-xl font-bold">Configuración</h1>
           </div>
         </div>
 

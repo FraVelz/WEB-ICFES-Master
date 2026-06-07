@@ -23,13 +23,13 @@ export const HeroSection = ({ onDemoAccess }: { onDemoAccess: () => void }) => {
   };
 
   return (
-    <section className="focus:ring-app-accent flex min-h-dvh scroll-mt-4 items-center justify-center px-6 pt-5 outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-surface sm:scroll-mt-6 sm:pt-20 md:px-8">
+    <section className="focus:ring-app-accent focus:ring-offset-surface flex min-h-dvh scroll-mt-4 items-center justify-center px-6 pt-5 outline-none focus:ring-2 focus:ring-offset-2 sm:scroll-mt-6 sm:pt-20 md:px-8">
       <div className="mx-auto max-w-6xl space-y-8 text-center">
         {/* Badge */}
         <AnimatedReveal
           isVisible
           delay={0}
-          className="inline-flex items-center gap-2 rounded-full border border-app-ring/70 bg-surface-elevated px-4 py-2 shadow-sm dark:border-app-ring/50 dark:bg-app-ring/20 dark:shadow-none"
+          className="border-app-ring/70 bg-surface-elevated dark:border-app-ring/50 dark:bg-app-ring/20 inline-flex items-center gap-2 rounded-full border px-4 py-2 shadow-sm dark:shadow-none"
         >
           <Icon name="star" className="text-app-accent" />
           <span className="text-app-accent text-sm font-semibold">
@@ -51,9 +51,9 @@ export const HeroSection = ({ onDemoAccess }: { onDemoAccess: () => void }) => {
 
         {/* Subtitle */}
         <AnimatedReveal isVisible delay={0.3}>
-          <p className="mx-auto max-w-3xl text-lg leading-relaxed font-medium text-on-surface-muted md:text-xl">
-            Prepárate para Saber 11° y la validación del bachillerato en Colombia. Plataforma 100% gratuita con
-            acceso web y app móvil en App Store: practica por áreas, retos diarios y simulacros tipo ICFES.
+          <p className="text-on-surface-muted mx-auto max-w-3xl text-lg leading-relaxed font-medium md:text-xl">
+            Prepárate para Saber 11° y la validación del bachillerato en Colombia. Plataforma 100% gratuita con acceso
+            web y app móvil en App Store: practica por áreas, retos diarios y simulacros tipo ICFES.
           </p>
         </AnimatedReveal>
 
@@ -67,7 +67,7 @@ export const HeroSection = ({ onDemoAccess }: { onDemoAccess: () => void }) => {
               'from-cta-from to-cta-to px-8 py-4 text-lg font-bold text-white transition-all',
               'hover:shadow-app-ring/50 duration-300 hover:scale-105 hover:shadow-lg',
               'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:outline-none',
-              'focus-visible:ring-offset-2 focus-visible:ring-offset-surface'
+              'focus-visible:ring-offset-surface focus-visible:ring-offset-2'
             )}
           >
             <Icon name="play" />
@@ -76,11 +76,11 @@ export const HeroSection = ({ onDemoAccess }: { onDemoAccess: () => void }) => {
           <Link
             href="/login"
             className={cn(
-              'border-app-ring flex items-center justify-center gap-2 rounded-lg border-2 bg-surface-elevated px-8 py-4',
-              'hover:border-app-accent text-lg font-bold text-app-accent transition-all duration-300',
+              'border-app-ring bg-surface-elevated flex items-center justify-center gap-2 rounded-lg border-2 px-8 py-4',
+              'hover:border-app-accent text-app-accent text-lg font-bold transition-all duration-300',
               'hover:bg-surface-border/30 hover:shadow-app-ring/30 hover:shadow-lg',
               'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:outline-none',
-              'focus-visible:ring-offset-2 focus-visible:ring-offset-surface'
+              'focus-visible:ring-offset-surface focus-visible:ring-offset-2'
             )}
           >
             <Icon name="rocket" />
@@ -90,17 +90,17 @@ export const HeroSection = ({ onDemoAccess }: { onDemoAccess: () => void }) => {
 
         {/* Stats */}
         <AnimatedReveal isVisible delay={0.6} className="mx-auto grid max-w-2xl grid-cols-3 gap-4 pt-8">
-          <div className="rounded-lg border border-surface-border bg-surface-elevated p-2 shadow-sm sm:p-4 dark:bg-surface-elevated/80 dark:shadow-none">
+          <div className="border-surface-border bg-surface-elevated dark:bg-surface-elevated/80 rounded-lg border p-2 shadow-sm sm:p-4 dark:shadow-none">
             <p className="text-app-accent text-3xl font-bold">+500</p>
-            <p className="mt-1 text-xs font-medium text-on-surface-muted">Preguntas</p>
+            <p className="text-on-surface-muted mt-1 text-xs font-medium">Preguntas</p>
           </div>
-          <div className="rounded-lg border border-surface-border bg-surface-elevated p-2 shadow-sm sm:p-4 dark:bg-surface-elevated/80 dark:shadow-none">
+          <div className="border-surface-border bg-surface-elevated dark:bg-surface-elevated/80 rounded-lg border p-2 shadow-sm sm:p-4 dark:shadow-none">
             <p className="text-3xl font-bold text-indigo-700 dark:text-purple-400">+1</p>
-            <p className="mt-1 text-xs font-medium text-on-surface-muted">Estudiantes</p>
+            <p className="text-on-surface-muted mt-1 text-xs font-medium">Estudiantes</p>
           </div>
-          <div className="rounded-lg border border-surface-border bg-surface-elevated p-2 shadow-sm sm:p-4 dark:bg-surface-elevated/80 dark:shadow-none">
+          <div className="border-surface-border bg-surface-elevated dark:bg-surface-elevated/80 rounded-lg border p-2 shadow-sm sm:p-4 dark:shadow-none">
             <p className="text-3xl font-bold text-blue-800 dark:text-pink-400">?400</p>
-            <p className="mt-1 text-xs font-medium text-on-surface-muted">Puntaje promedio</p>
+            <p className="text-on-surface-muted mt-1 text-xs font-medium">Puntaje promedio</p>
           </div>
         </AnimatedReveal>
       </div>

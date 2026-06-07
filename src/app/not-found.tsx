@@ -7,8 +7,8 @@ export default function NotFound() {
     <div className={cn('flex flex-col items-center justify-center p-4', FULL_PAGE_SHELL_CLASS)}>
       <div className="max-w-md text-center">
         <h1 className="text-app-accent/80 mb-4 text-8xl leading-none font-bold">404</h1>
-        <h2 className="mb-2 text-2xl font-semibold text-on-surface">Página no encontrada</h2>
-        <p className="mb-8 text-on-surface-muted">La página que buscas no existe o ha sido movida.</p>
+        <h2 className="text-on-surface mb-2 text-2xl font-semibold">Página no encontrada</h2>
+        <p className="text-on-surface-muted mb-8">La página que buscas no existe o ha sido movida.</p>
         <Link
           href="/"
           className={cn(

@@ -21,32 +21,32 @@ export const UnifiedAchievementsPage = () => {
       <div className="container mx-auto space-y-8 px-4 py-8">
         {/* Stats Header */}
         <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
-          <div className="flex items-center gap-4 rounded-2xl border border-surface-border bg-surface-elevated/90 p-6 shadow-sm">
+          <div className="border-surface-border bg-surface-elevated/90 flex items-center gap-4 rounded-2xl border p-6 shadow-sm">
             <div className="bg-lesson-math-glow-a/20 flex h-12 w-12 items-center justify-center rounded-full text-xl text-yellow-400">
               <Icon name="trophy" />
             </div>
             <div>
-              <p className="text-sm text-on-surface-muted">Nivel Actual</p>
+              <p className="text-on-surface-muted text-sm">Nivel Actual</p>
               <p className="text-2xl font-bold">{level}</p>
             </div>
           </div>
 
-          <div className="flex items-center gap-4 rounded-2xl border border-surface-border bg-surface-elevated/90 p-6 shadow-sm">
+          <div className="border-surface-border bg-surface-elevated/90 flex items-center gap-4 rounded-2xl border p-6 shadow-sm">
             <div className="bg-app-ring/20 text-app-accent flex h-12 w-12 items-center justify-center rounded-full text-xl">
               <Icon name="star" />
             </div>
             <div>
-              <p className="text-sm text-on-surface-muted">Experiencia Total</p>
+              <p className="text-on-surface-muted text-sm">Experiencia Total</p>
               <p className="text-2xl font-bold">{totalXP} XP</p>
             </div>
           </div>
 
-          <div className="flex items-center gap-4 rounded-2xl border border-surface-border bg-surface-elevated/90 p-6 shadow-sm">
+          <div className="border-surface-border bg-surface-elevated/90 flex items-center gap-4 rounded-2xl border p-6 shadow-sm">
             <div className="flex h-12 w-12 items-center justify-center rounded-full bg-purple-500/20 text-xl text-purple-400">
               <Icon name="medal" />
             </div>
             <div>
-              <p className="text-sm text-on-surface-muted">Logros Completados</p>
+              <p className="text-on-surface-muted text-sm">Logros Completados</p>
               <p className="text-2xl font-bold">
                 {completedCount} / {achievements.length}
               </p>

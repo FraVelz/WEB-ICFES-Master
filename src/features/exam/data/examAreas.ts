@@ -1,10 +1,5 @@
 /** Área en Supabase (`exam_questions.area`) */
-export type ExamQuestionDbArea =
-  | 'matematicas'
-  | 'lectura_critica'
-  | 'ciencias_naturales'
-  | 'sociales'
-  | 'ingles';
+export type ExamQuestionDbArea = 'matematicas' | 'lectura_critica' | 'ciencias_naturales' | 'sociales' | 'ingles';
 
 /** Slug de ruta en la app (`/practica/[area]`) */
 export type ExamQuestionRouteArea =

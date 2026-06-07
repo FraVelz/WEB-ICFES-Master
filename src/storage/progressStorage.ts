@@ -4,11 +4,7 @@
  * `docs/es/data/progreso-cliente-local.md` (EN: `docs/en/data/client-local-progress.md`).
  */
 
-import {
-  calculateCurrentStreak,
-  datesFromAttemptIsoStrings,
-  mergeStreakStates,
-} from '@/services/streak/streakUtils';
+import { calculateCurrentStreak, datesFromAttemptIsoStrings, mergeStreakStates } from '@/services/streak/streakUtils';
 import { loadLocalStreakState } from '@/services/streak/streakLocalStorage';
 import { resolveStreakScopeFromStorage, recordStreakToday } from '@/services/streak/streakService';
 import { STREAK_UPDATED_EVENT } from '@/services/streak';

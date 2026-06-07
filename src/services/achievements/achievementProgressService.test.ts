@@ -1,7 +1,10 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { DEMO_USER_ID } from '@/services/demo/demoCoins';
-import { readAchievementProgress, syncAchievementsFromGameplay } from '@/services/achievements/achievementProgressService';
+import {
+  readAchievementProgress,
+  syncAchievementsFromGameplay,
+} from '@/services/achievements/achievementProgressService';
 
 vi.mock('@/storage/progressStorage', () => ({
   getCompletedLessons: vi.fn(() => ['l1', 'l2']),

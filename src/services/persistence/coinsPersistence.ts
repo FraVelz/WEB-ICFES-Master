@@ -7,12 +7,7 @@ import { gamificationPersistence } from './gamificationPersistence';
 import { isSupabaseMode } from './apiMode';
 import { getVirtualMoney, updateUserProfile } from '@/storage/userProfile';
 import UserSupabaseService from '@/services/supabase/UserSupabaseService';
-import {
-  addDemoCoins,
-  getDemoCoins,
-  isDemoUserId,
-  spendDemoCoins,
-} from '@/services/demo/demoCoins';
+import { addDemoCoins, getDemoCoins, isDemoUserId, spendDemoCoins } from '@/services/demo/demoCoins';
 
 export const COINS_CHANGE_EVENT = 'icfes:coins-changed';
 

@@ -79,7 +79,7 @@ export default function RootLayout({
         <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
       </head>
 
-      <body className="m-0 box-border min-h-dvh bg-surface p-0 font-sans text-on-surface antialiased">
+      <body className="bg-surface text-on-surface m-0 box-border min-h-dvh p-0 font-sans antialiased">
         <Providers>{children}</Providers>
         <VercelMetrics />
       </body>

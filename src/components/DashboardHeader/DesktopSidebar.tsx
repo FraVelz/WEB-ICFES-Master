@@ -146,9 +146,14 @@ export function DesktopSidebar({ className, sidebarExpanded, onToggleSidebar }: 
         ))}
       </nav>
 
-      <div className={cn('shrink-0 border-app-ring/10 border-t bg-surface-elevated/50', sidebarExpanded ? 'p-4' : 'px-2 py-4')}>
+      <div
+        className={cn(
+          'border-app-ring/10 bg-surface-elevated/50 shrink-0 border-t',
+          sidebarExpanded ? 'p-4' : 'px-2 py-4'
+        )}
+      >
         {sidebarExpanded && (
-          <div className="mb-4 flex h-10 items-center gap-3 rounded-lg border border-amber-500/20 bg-surface-elevated/80 px-3">
+          <div className="bg-surface-elevated/80 mb-4 flex h-10 items-center gap-3 rounded-lg border border-amber-500/20 px-3">
             <Icon name="coins" className="shrink-0 text-amber-400" />
             <span className="font-bold whitespace-nowrap text-amber-400">{virtualMoney}</span>
           </div>
@@ -158,7 +163,7 @@ export function DesktopSidebar({ className, sidebarExpanded, onToggleSidebar }: 
           href="/perfil"
           title={!sidebarExpanded ? user?.username || 'Perfil' : undefined}
           className={cn(
-            'group/profile flex items-center overflow-hidden rounded-xl p-2 transition-colors hover:bg-on-surface/5',
+            'group/profile hover:bg-on-surface/5 flex items-center overflow-hidden rounded-xl p-2 transition-colors',
             sidebarExpanded ? 'gap-3' : 'justify-center',
             FOCUS_RING,
             isLockedInDemo('/perfil') && 'opacity-70'
@@ -183,7 +188,7 @@ export function DesktopSidebar({ className, sidebarExpanded, onToggleSidebar }: 
           </div>
           {sidebarExpanded && (
             <span className="min-w-0 overflow-hidden whitespace-nowrap">
-              <p className="max-w-[140px] truncate text-sm font-bold text-on-surface">{user?.username || 'Usuario'}</p>
+              <p className="text-on-surface max-w-[140px] truncate text-sm font-bold">{user?.username || 'Usuario'}</p>
               <p className="text-app-accent text-xs">{rank?.name || 'Novato'}</p>
             </span>
           )}
@@ -192,7 +197,7 @@ export function DesktopSidebar({ className, sidebarExpanded, onToggleSidebar }: 
         <Link
           href="/configuracion"
           className={cn(
-            'mt-2 flex h-10 items-center rounded-xl p-2 text-slate-500 transition-colors hover:text-app-accent',
+            'hover:text-app-accent mt-2 flex h-10 items-center rounded-xl p-2 text-slate-500 transition-colors',
             sidebarExpanded ? 'gap-1 px-2' : 'justify-center',
             FOCUS_RING,
             isLockedInDemo('/configuracion') && 'opacity-70'

@@ -41,7 +41,7 @@ export const LoginPage = () => {
   };
 
   return (
-    <div className="flex min-h-dvh flex-col overflow-hidden bg-linear-to-b from-surface via-surface-via to-surface px-6 text-on-surface">
+    <div className="from-surface via-surface-via to-surface text-on-surface flex min-h-dvh flex-col overflow-hidden bg-linear-to-b px-6">
       {/* Background glow effects */}
       <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
         <div className="bg-ambient-a/30 absolute top-1/3 left-1/4 h-96 w-96 animate-pulse rounded-full blur-3xl"></div>
@@ -53,14 +53,14 @@ export const LoginPage = () => {
         <div className="flex items-center justify-between py-4">
           <button
             onClick={() => window.history.back()}
-            className="cursor-pointer text-on-surface-muted transition-colors hover:text-on-surface"
+            className="text-on-surface-muted hover:text-on-surface cursor-pointer transition-colors"
           >
             <Icon name="times" size="2xl" className="text-2xl" />
           </button>
           <h2 className="text-lg font-semibold">Ingresa tus datos</h2>
           <ThemeToggle compact />
         </div>
-        <div className="h-px bg-linear-to-r from-transparent via-surface-border to-transparent"></div>
+        <div className="via-surface-border h-px bg-linear-to-r from-transparent to-transparent"></div>
       </div>
 
       {/* Login Card */}
@@ -90,7 +90,7 @@ export const LoginPage = () => {
                 Email
               </label>
               <div className="relative">
-                <Icon name="envelope" className="absolute top-1/2 left-4 -translate-y-1/2 text-on-surface-muted" />
+                <Icon name="envelope" className="text-on-surface-muted absolute top-1/2 left-4 -translate-y-1/2" />
                 <input
                   id="email"
                   type="email"
@@ -98,7 +98,7 @@ export const LoginPage = () => {
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="tu@email.com"
                   className={cn(
-                    'w-full rounded-lg border border-surface-border bg-surface-elevated/50 py-3 pr-4 pl-10 text-on-surface transition-all',
+                    'border-surface-border bg-surface-elevated/50 text-on-surface w-full rounded-lg border py-3 pr-4 pl-10 transition-all',
                     'focus:border-app-ring focus:ring-app-ring/30 focus:ring-2 focus:outline-none'
                   )}
                   required
@@ -112,7 +112,7 @@ export const LoginPage = () => {
                 Contraseña
               </label>
               <div className="relative">
-                <Icon name="lock" className="absolute top-1/2 left-4 -translate-y-1/2 text-on-surface-muted" />
+                <Icon name="lock" className="text-on-surface-muted absolute top-1/2 left-4 -translate-y-1/2" />
                 <input
                   id="password"
                   type={showPassword ? 'text' : 'password'}
@@ -120,7 +120,7 @@ export const LoginPage = () => {
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="••••••••"
                   className={cn(
-                    'w-full rounded-lg border border-surface-border bg-surface-elevated/50 py-3 pr-12 pl-10 text-on-surface transition-all',
+                    'border-surface-border bg-surface-elevated/50 text-on-surface w-full rounded-lg border py-3 pr-12 pl-10 transition-all',
                     'focus:border-app-ring focus:ring-app-ring/30 focus:ring-2 focus:outline-none'
                   )}
                   required
@@ -128,7 +128,7 @@ export const LoginPage = () => {
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute top-1/2 right-4 -translate-y-1/2 text-on-surface-muted hover:text-on-surface"
+                  className="text-on-surface-muted hover:text-on-surface absolute top-1/2 right-4 -translate-y-1/2"
                 >
                   <Icon name={showPassword ? 'eye-slash' : 'eye'} />
                 </button>
@@ -170,7 +170,7 @@ export const LoginPage = () => {
 
           {/* Links */}
           <div className="mt-6 space-y-4">
-            <p className="text-center text-sm text-on-surface-muted">
+            <p className="text-on-surface-muted text-center text-sm">
               ¿No tienes cuenta?{' '}
               <Link
                 href="/signup"
@@ -180,7 +180,10 @@ export const LoginPage = () => {
               </Link>
             </p>
             <p className="text-center">
-              <Link href="/forgot-password" className="text-sm text-on-surface-muted transition-colors hover:text-on-surface">
+              <Link
+                href="/forgot-password"
+                className="text-on-surface-muted hover:text-on-surface text-sm transition-colors"
+              >
                 ¿Olvidaste tu contraseña?
               </Link>
             </p>
@@ -189,17 +192,17 @@ export const LoginPage = () => {
       </div>
 
       {/* Legal links footer — pinned to bottom */}
-      <div className="relative z-10 mt-auto w-full border-t border-surface-border/50 py-4">
+      <div className="border-surface-border/50 relative z-10 mt-auto w-full border-t py-4">
         <div className="mx-auto max-w-md">
-          <p className="mb-3 text-center text-xs text-on-surface-muted">
+          <p className="text-on-surface-muted mb-3 text-center text-xs">
             Al registrarte, aceptas nuestros términos de servicio
           </p>
           <div className="flex items-center justify-center gap-4 text-xs">
-            <a href="/privacidad" className="text-on-surface-muted transition-colors hover:text-on-surface">
+            <a href="/privacidad" className="text-on-surface-muted hover:text-on-surface transition-colors">
               Política de Privacidad
             </a>
             <span className="text-surface-border">|</span>
-            <a href="/terminos" className="text-on-surface-muted transition-colors hover:text-on-surface">
+            <a href="/terminos" className="text-on-surface-muted hover:text-on-surface transition-colors">
               Términos y Condiciones
             </a>
           </div>

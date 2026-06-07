@@ -8,11 +8,7 @@ import { setDemoMode } from '@/store/slices/uiSessionSlice';
 import API_CONFIG from '@/services/api.config';
 import UserSupabaseService from '@/services/supabase/UserSupabaseService';
 import { getAggregatedUserData } from '@/services/persistence';
-import {
-  mergeDemoStreakIntoUser,
-  setActiveStreakUserId,
-  STREAK_UPDATED_EVENT,
-} from '@/services/streak';
+import { mergeDemoStreakIntoUser, setActiveStreakUserId, STREAK_UPDATED_EVENT } from '@/services/streak';
 import { normalizePlanFeatures } from '@/shared/constants/planFeatures';
 import { mapSupabaseAuthError, REQUIRES_EMAIL_CONFIRMATION } from '@/features/auth/utils/mapSupabaseAuthError';
 import type { AuthContextType, AuthUser, PlanData } from './authTypes';

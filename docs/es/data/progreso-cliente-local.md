@@ -10,15 +10,15 @@ Este documento describe dónde vive el progreso que **no** se sincroniza automá
 
 ## Claves almacenadas
 
-| Clave                     | Contenido breve                                                                 |
-| ------------------------- | ------------------------------------------------------------------------------- |
-| `icfes_exams`             | Intentos de examen completo (`saveFullExam`)                                    |
-| `icfes_practice`          | Intentos de práctica por área (`savePractice`)                                  |
-| `icfes_progress`          | Agregado derivado (porcentajes, áreas, racha, etc.)                             |
-| `icfes_completed_lessons` | IDs de lecciones marcadas como completadas (`LearningService` / progreso local) |
-| `icfes_streak_dates`      | Racha demo/anónimo: JSON `{ dates, longestStreak }` o array legacy de fechas    |
-| `icfes_streak_dates_{uid}` | Racha del usuario autenticado (mismo formato)                                  |
-| `icfes_active_streak_user` | UID activo para registrar racha fuera de React (exámenes/práctica)            |
+| Clave                      | Contenido breve                                                                 |
+| -------------------------- | ------------------------------------------------------------------------------- |
+| `icfes_exams`              | Intentos de examen completo (`saveFullExam`)                                    |
+| `icfes_practice`           | Intentos de práctica por área (`savePractice`)                                  |
+| `icfes_progress`           | Agregado derivado (porcentajes, áreas, racha, etc.)                             |
+| `icfes_completed_lessons`  | IDs de lecciones marcadas como completadas (`LearningService` / progreso local) |
+| `icfes_streak_dates`       | Racha demo/anónimo: JSON `{ dates, longestStreak }` o array legacy de fechas    |
+| `icfes_streak_dates_{uid}` | Racha del usuario autenticado (mismo formato)                                   |
+| `icfes_active_streak_user` | UID activo para registrar racha fuera de React (exámenes/práctica)              |
 
 ## Racha diaria
 

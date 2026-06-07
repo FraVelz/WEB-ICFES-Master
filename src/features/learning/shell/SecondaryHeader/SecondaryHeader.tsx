@@ -35,13 +35,7 @@ export const SecondaryHeader = ({ currentArea = 'lectura-critica', onAreaChange 
   const container_main = document.getElementById('container-main');
 
   // Gamification snapshot (XP, coins, streak)
-  const {
-    currentStreak = 0,
-    longestStreak = 0,
-    coins = 0,
-    streak = [],
-    loading,
-  } = useGamification(streakScope);
+  const { currentStreak = 0, longestStreak = 0, coins = 0, streak = [], loading } = useGamification(streakScope);
 
   // Streak badge unlocked?
   const isBadgeUnlocked = useMemo(() => {
@@ -79,7 +73,7 @@ export const SecondaryHeader = ({ currentArea = 'lectura-critica', onAreaChange 
       {/* Sticky secondary header */}
       <div
         className={cn(
-          'sticky top-0 z-50 flex h-16 items-center justify-between border-b border-surface-border',
+          'border-surface-border sticky top-0 z-50 flex h-16 items-center justify-between border-b',
           'bg-surface-elevated/90 px-4 shadow-sm backdrop-blur-md'
         )}
       >
@@ -88,7 +82,7 @@ export const SecondaryHeader = ({ currentArea = 'lectura-critica', onAreaChange 
           type="button"
           onClick={() => setActiveModal(activeModal === 'areas' ? null : 'areas')}
           className={cn(
-            'flex cursor-pointer items-center gap-3 rounded-xl p-2 transition-colors hover:bg-surface-elevated/80',
+            'hover:bg-surface-elevated/80 flex cursor-pointer items-center gap-3 rounded-xl p-2 transition-colors',
             'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none',
             'focus-visible:ring-offset-surface'
           )}
@@ -106,12 +100,15 @@ export const SecondaryHeader = ({ currentArea = 'lectura-critica', onAreaChange 
             <Icon name={currentAreaInfo.icon ?? 'book'} className="text-xs text-white" />
           </div>
           <div className="hidden flex-col items-start sm:flex">
-            <span className="text-xs font-bold tracking-wider text-on-surface-muted uppercase">Área actual</span>
-            <span className="text-sm font-bold text-on-surface">{currentAreaInfo.name}</span>
+            <span className="text-on-surface-muted text-xs font-bold tracking-wider uppercase">Área actual</span>
+            <span className="text-on-surface text-sm font-bold">{currentAreaInfo.name}</span>
           </div>
           <Icon
             name="chevron-down"
-            className={cn('ml-1 text-xs text-on-surface-muted transition-transform', activeModal === 'areas' && 'rotate-180')}
+            className={cn(
+              'text-on-surface-muted ml-1 text-xs transition-transform',
+              activeModal === 'areas' && 'rotate-180'
+            )}
           />
         </button>
 
@@ -121,7 +118,7 @@ export const SecondaryHeader = ({ currentArea = 'lectura-critica', onAreaChange 
             type="button"
             onClick={() => setActiveModal(activeModal === 'streak' ? null : 'streak')}
             className={cn(
-              'group flex cursor-pointer items-center gap-2 rounded-full border border-surface-border',
+              'group border-surface-border flex cursor-pointer items-center gap-2 rounded-full border',
               'bg-surface-elevated px-3 py-1.5 transition-colors hover:border-orange-500/50',
               'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none',
               'focus-visible:ring-offset-surface'
@@ -152,7 +149,7 @@ export const SecondaryHeader = ({ currentArea = 'lectura-critica', onAreaChange 
             type="button"
             onClick={() => setActiveModal(activeModal === 'store' ? null : 'store')}
             className={cn(
-              'group flex cursor-pointer items-center gap-2 rounded-full border border-surface-border',
+              'group border-surface-border flex cursor-pointer items-center gap-2 rounded-full border',
               'bg-surface-elevated px-3 py-1.5 transition-colors hover:border-yellow-500/50',
               'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none',
               'focus-visible:ring-offset-surface'

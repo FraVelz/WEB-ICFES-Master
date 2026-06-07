@@ -73,61 +73,58 @@ export const useGamification = (scope: StreakScope | undefined) => {
       };
     });
 
-  const syncStreakAchievement = useCallback(
-    async (userId: string, streakValue: number) => {
-      if (streakValue <= lastSyncedStreak.current) return;
-      const ach = ACHIEVEMENTS_DATA.find((a) => a.id === STREAK_ACHIEVEMENT_ID);
-      if (!ach) return;
+  const syncStreakAchievement = useCallback(async (userId: string, streakValue: number) => {
+    if (streakValue <= lastSyncedStreak.current) return;
+    const ach = ACHIEVEMENTS_DATA.find((a) => a.id === STREAK_ACHIEVEMENT_ID);
+    if (!ach) return;
 
-      const profile = await gamificationPersistence.getProfile(userId);
-      const raw = profile?.achievements;
-      const achProgress = (typeof raw === 'object' && raw !== null && !Array.isArray(raw) ? raw : {}) as Record<
-        string,
-        { current?: number; unlocked?: boolean; unlockedAt?: string | null }
-      >;
-      const current = achProgress[STREAK_ACHIEVEMENT_ID]?.current ?? 0;
-      if (streakValue <= current) {
-        lastSyncedStreak.current = streakValue;
-        return;
-      }
-
-      const delta = streakValue - current;
-      achProgress[STREAK_ACHIEVEMENT_ID] = {
-        current: streakValue,
-        unlocked: streakValue >= ach.target,
-        unlockedAt: streakValue >= ach.target ? new Date().toISOString() : null,
-      };
-
-      if (isSupabaseMode()) {
-        await GamificationSupabaseService.updateAchievements(userId, achProgress);
-        if (streakValue >= ach.target) {
-          await gamificationPersistence.addCoins(userId, ach.coinsReward || 0, 'achievement');
-          await gamificationPersistence.addXP(userId, ach.xpReward || 0, 'achievement');
-        }
-      } else {
-        let newTotalXP = profile?.totalXP || 0;
-        if (streakValue >= ach.target) {
-          newTotalXP += ach.xpReward || 0;
-          const { addVirtualMoney } = await import('@/services/persistence');
-          addVirtualMoney(ach.coinsReward || 0);
-        }
-        const newLevel = Math.min(5, Math.floor(newTotalXP / 2000) + 1);
-        localStorage.setItem(
-          GAMIFICATION_KEY,
-          JSON.stringify({
-            ...profile,
-            achievements: achProgress,
-            totalXP: newTotalXP,
-            level: newLevel,
-          })
-        );
-      }
-
+    const profile = await gamificationPersistence.getProfile(userId);
+    const raw = profile?.achievements;
+    const achProgress = (typeof raw === 'object' && raw !== null && !Array.isArray(raw) ? raw : {}) as Record<
+      string,
+      { current?: number; unlocked?: boolean; unlockedAt?: string | null }
+    >;
+    const current = achProgress[STREAK_ACHIEVEMENT_ID]?.current ?? 0;
+    if (streakValue <= current) {
       lastSyncedStreak.current = streakValue;
-      void delta;
-    },
-    []
-  );
+      return;
+    }
+
+    const delta = streakValue - current;
+    achProgress[STREAK_ACHIEVEMENT_ID] = {
+      current: streakValue,
+      unlocked: streakValue >= ach.target,
+      unlockedAt: streakValue >= ach.target ? new Date().toISOString() : null,
+    };
+
+    if (isSupabaseMode()) {
+      await GamificationSupabaseService.updateAchievements(userId, achProgress);
+      if (streakValue >= ach.target) {
+        await gamificationPersistence.addCoins(userId, ach.coinsReward || 0, 'achievement');
+        await gamificationPersistence.addXP(userId, ach.xpReward || 0, 'achievement');
+      }
+    } else {
+      let newTotalXP = profile?.totalXP || 0;
+      if (streakValue >= ach.target) {
+        newTotalXP += ach.xpReward || 0;
+        const { addVirtualMoney } = await import('@/services/persistence');
+        addVirtualMoney(ach.coinsReward || 0);
+      }
+      const newLevel = Math.min(5, Math.floor(newTotalXP / 2000) + 1);
+      localStorage.setItem(
+        GAMIFICATION_KEY,
+        JSON.stringify({
+          ...profile,
+          achievements: achProgress,
+          totalXP: newTotalXP,
+          level: newLevel,
+        })
+      );
+    }
+
+    lastSyncedStreak.current = streakValue;
+    void delta;
+  }, []);
 
   const loadData = useCallback(async () => {
     if (!scope) {
@@ -235,9 +232,8 @@ export const useGamification = (scope: StreakScope | undefined) => {
     }
 
     if (isDemoUserId(userId)) {
-      const { readAchievementProgress, writeAchievementProgress } = await import(
-        '@/services/achievements/achievementProgressService'
-      );
+      const { readAchievementProgress, writeAchievementProgress } =
+        await import('@/services/achievements/achievementProgressService');
       const progress = readAchievementProgress(userId);
       progress[achievementId] = {
         current: newCurrent,

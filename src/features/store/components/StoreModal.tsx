@@ -40,12 +40,12 @@ export const StoreModal = ({ isOpen, onClose }: StoreModalProps) => {
   if (!isOpen) return null;
 
   return (
-    <div ref={modalRef} className="absolute inset-0 z-60 flex w-full flex-col bg-surface">
-      <div className="flex h-full w-full flex-col overflow-hidden bg-surface-elevated">
+    <div ref={modalRef} className="bg-surface absolute inset-0 z-60 flex w-full flex-col">
+      <div className="bg-surface-elevated flex h-full w-full flex-col overflow-hidden">
         {/* Header */}
-        <div className="flex shrink-0 items-center justify-between border-b border-surface-border bg-surface-elevated p-4 lg:p-6">
+        <div className="border-surface-border bg-surface-elevated flex shrink-0 items-center justify-between border-b p-4 lg:p-6">
           <div className="flex flex-1 items-center justify-center gap-3">
-            <h2 className="text-xl font-bold text-on-surface lg:text-2xl">Tienda</h2>
+            <h2 className="text-on-surface text-xl font-bold lg:text-2xl">Tienda</h2>
             <div className="flex items-center gap-2 rounded-full border border-yellow-500/30 bg-yellow-500/10 px-3 py-1.5">
               <Icon name="coins" size="md" className="text-sm text-yellow-400 lg:text-base" />
               <span className="text-sm font-bold text-yellow-400 lg:text-base">{coins}</span>
@@ -56,7 +56,7 @@ export const StoreModal = ({ isOpen, onClose }: StoreModalProps) => {
             onClick={onClose}
             aria-label="Cerrar tienda"
             className={cn(
-              '-mr-2 cursor-pointer rounded-full p-2 text-on-surface-muted transition-colors hover:bg-surface-elevated hover:text-on-surface',
+              'text-on-surface-muted hover:bg-surface-elevated hover:text-on-surface -mr-2 cursor-pointer rounded-full p-2 transition-colors',
               'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none',
               'focus-visible:ring-offset-surface-elevated'
             )}

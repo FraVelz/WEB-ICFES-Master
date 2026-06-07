@@ -90,10 +90,10 @@ Ver [learning-structure-guide.md](../data/learning-structure-guide.md).
 
 ## Convención de slugs de área
 
-| Contexto                             | Ejemplo slug                                                |
-| ------------------------------------ | ----------------------------------------------------------- |
-| Práctica / roadmap / constantes      | `lectura-critica`, `matematicas`, `ciencias-naturales`      |
-| Columna `area` en `learning_content` | `lectura_critica`, `matematicas`, `ciencias_naturales`      |
+| Contexto                             | Ejemplo slug                                           |
+| ------------------------------------ | ------------------------------------------------------ |
+| Práctica / roadmap / constantes      | `lectura-critica`, `matematicas`, `ciencias-naturales` |
+| Columna `area` en `learning_content` | `lectura_critica`, `matematicas`, `ciencias_naturales` |
 
 Mapeo en código: `ROADMAP_AREA_TO_LESSON_AREA` en
 `src/features/learning/constants/lessonRoutes.ts`.

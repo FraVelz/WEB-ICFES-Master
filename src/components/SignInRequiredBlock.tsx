@@ -27,29 +27,29 @@ export default function SignInRequiredBlock({
   return (
     <div className={cn('relative flex items-center justify-center p-6', FULL_PAGE_SHELL_CLASS)}>
       {isLeaving && (
-        <div className="absolute inset-0 z-10 flex items-center justify-center bg-surface/80 backdrop-blur-sm dark:bg-black/60">
+        <div className="bg-surface/80 absolute inset-0 z-10 flex items-center justify-center backdrop-blur-sm dark:bg-black/60">
           <div className="border-app-ring/30 border-t-app-ring h-12 w-12 animate-spin rounded-full border-4" />
         </div>
       )}
       <div
         className={cn(
-          'w-full max-w-md rounded-2xl border border-surface-border bg-surface-elevated p-8 text-center shadow-md transition-opacity dark:bg-surface-elevated/80 dark:shadow-none',
+          'border-surface-border bg-surface-elevated dark:bg-surface-elevated/80 w-full max-w-md rounded-2xl border p-8 text-center shadow-md transition-opacity dark:shadow-none',
           isLeaving && 'pointer-events-none opacity-40'
         )}
       >
-        <div className="border-app-ring/70 bg-surface-elevated mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full border-2 shadow-sm dark:border-app-ring/50 dark:bg-app-ring/20 dark:shadow-none">
+        <div className="border-app-ring/70 bg-surface-elevated dark:border-app-ring/50 dark:bg-app-ring/20 mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full border-2 shadow-sm dark:shadow-none">
           <Icon name="lock" size="xl" className="text-app-accent" />
         </div>
-        <h2 className="mb-3 text-2xl font-bold text-on-surface">{title}</h2>
-        <p className="mb-8 text-on-surface-muted">{message}</p>
+        <h2 className="text-on-surface mb-3 text-2xl font-bold">{title}</h2>
+        <p className="text-on-surface-muted mb-8">{message}</p>
         <div className="flex flex-col gap-3">
           <Link
             href="/login"
             className={cn(
               'from-cta-from flex w-full items-center justify-center gap-2 rounded-lg bg-linear-to-r',
               'to-cta-to px-6 py-3 font-semibold text-white transition-all duration-300 hover:shadow-lg',
-              'hover:shadow-app-ring/30 focus-visible:ring-2 focus-visible:ring-app-accent focus-visible:outline-none',
-              'focus-visible:ring-offset-2 focus-visible:ring-offset-surface',
+              'hover:shadow-app-ring/30 focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:outline-none',
+              'focus-visible:ring-offset-surface focus-visible:ring-offset-2',
               isLeaving && 'pointer-events-none opacity-50'
             )}
           >
@@ -63,7 +63,7 @@ export default function SignInRequiredBlock({
               'bg-app-ring/10 text-app-accent px-6 py-3 font-semibold transition-all duration-300',
               'hover:border-app-ring/60 hover:bg-app-ring/20',
               'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none',
-              'focus-visible:ring-offset-2 focus-visible:ring-offset-surface',
+              'focus-visible:ring-offset-surface focus-visible:ring-offset-2',
               isLeaving && 'pointer-events-none opacity-50'
             )}
           >
@@ -77,7 +77,7 @@ export default function SignInRequiredBlock({
             className={cn(
               'flex w-full cursor-pointer items-center justify-center gap-2 rounded-lg border-2',
               'border-surface-border bg-surface-elevated text-on-surface-muted px-6 py-3 font-semibold transition-all',
-              'duration-300 hover:border-app-ring/50 hover:text-on-surface disabled:cursor-wait disabled:opacity-60',
+              'hover:border-app-ring/50 hover:text-on-surface duration-300 disabled:cursor-wait disabled:opacity-60',
               'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none',
               'focus-visible:ring-offset-surface'
             )}

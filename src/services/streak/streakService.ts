@@ -3,11 +3,7 @@ import GamificationSupabaseService from '@/services/supabase/GamificationSupabas
 import { isSupabaseMode } from '@/services/persistence/apiMode';
 import { getStoredExams, getStoredPractices } from '@/storage/progressStorage';
 
-import {
-  clearDemoStreakLocal,
-  loadLocalStreakState,
-  saveLocalStreakState,
-} from './streakLocalStorage';
+import { clearDemoStreakLocal, loadLocalStreakState, saveLocalStreakState } from './streakLocalStorage';
 import type { StreakScope, StreakState } from './streakTypes';
 import { getStreakScope, STREAK_UPDATED_EVENT } from './streakTypes';
 import {
@@ -92,10 +88,7 @@ export function setActiveStreakUserId(userId: string | null): void {
 }
 
 /** Resolve scope for streak writes outside React (exam save, etc.). */
-export function resolveStreakScopeFromStorage(options?: {
-  userId?: string | null;
-  isDemo?: boolean;
-}): StreakScope {
+export function resolveStreakScopeFromStorage(options?: { userId?: string | null; isDemo?: boolean }): StreakScope {
   const scoped = getStreakScope(options?.userId, options?.isDemo);
   if (scoped) return scoped;
 

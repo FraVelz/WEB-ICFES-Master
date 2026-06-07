@@ -8,14 +8,14 @@ import { cn } from '@/utils/cn';
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="relative flex min-h-screen overflow-hidden bg-linear-to-b from-surface via-surface-via to-surface text-on-surface">
+    <div className="from-surface via-surface-via to-surface text-on-surface relative flex min-h-screen overflow-hidden bg-linear-to-b">
       <ClientChecker />
 
       <div className="flex h-screen w-screen flex-col-reverse lg:flex-row">
         {/* Header - Sidebar */}
         <DashboardHeader
           className={cn(
-            'border-app-ring/20 hidden h-screen min-h-0 w-fit flex flex-col border-r bg-surface-elevated/95',
+            'border-app-ring/20 bg-surface-elevated/95 flex hidden h-screen min-h-0 w-fit flex-col border-r',
             'shadow-app-ring/10 shadow-2xl backdrop-blur-xl transition-all duration-300 lg:flex'
           )}
         />

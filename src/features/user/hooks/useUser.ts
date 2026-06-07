@@ -1,10 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import {
-  getUserProfile,
-  getUserRank,
-  type UserProfile,
-  type UserRank,
-} from '@/services/persistence';
+import { getUserProfile, getUserRank, type UserProfile, type UserRank } from '@/services/persistence';
 import { getCoinsBalance, addCoinsBalance, spendCoinsBalance, COINS_CHANGE_EVENT } from '@/services/persistence';
 import { useAuth } from '@/features/auth/context/AuthContext';
 import { useAppSelector } from '@/store/hooks';

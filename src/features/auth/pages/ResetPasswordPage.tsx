@@ -99,7 +99,7 @@ export const ResetPasswordPage = () => {
         </div>
 
         <div className="relative z-10 text-center">
-          <p className="text-xl text-on-surface">Verificando tu enlace de recuperación...</p>
+          <p className="text-on-surface text-xl">Verificando tu enlace de recuperación...</p>
         </div>
       </div>
     );

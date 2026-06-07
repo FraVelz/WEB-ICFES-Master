@@ -15,11 +15,14 @@ export function SettingsSection({
 }) {
   return (
     <div
-      className={cn('mb-6 rounded-2xl border border-surface-border bg-surface-elevated/80 p-5 backdrop-blur-md sm:p-6', className)}
+      className={cn(
+        'border-surface-border bg-surface-elevated/80 mb-6 rounded-2xl border p-5 backdrop-blur-md sm:p-6',
+        className
+      )}
     >
       {title && (
-        <h2 className="mb-6 flex items-center gap-3 border-b border-surface-border pb-4 text-lg font-bold text-on-surface sm:text-xl">
-          <div className="text-app-accent flex h-8 w-8 items-center justify-center rounded-lg bg-surface-elevated shadow-inner">
+        <h2 className="border-surface-border text-on-surface mb-6 flex items-center gap-3 border-b pb-4 text-lg font-bold sm:text-xl">
+          <div className="text-app-accent bg-surface-elevated flex h-8 w-8 items-center justify-center rounded-lg shadow-inner">
             <Icon name={icon ?? 'settings'} />
           </div>
           {title}
@@ -65,7 +68,7 @@ export function SettingOption({
         danger
           ? 'cursor-pointer border-red-500/20 bg-red-500/5 hover:border-red-500/30 hover:bg-red-500/10'
           : 'border-surface-border bg-surface-elevated/70 hover:border-surface-border hover:bg-surface-elevated',
-        onClick && 'outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-surface',
+        onClick && 'focus-visible:ring-offset-surface outline-none focus-visible:ring-2 focus-visible:ring-offset-2',
         onClick && (danger ? 'focus-visible:ring-red-400' : 'focus-visible:ring-app-accent')
       )}
     >
@@ -84,7 +87,7 @@ export function SettingOption({
         )}
         <div>
           <h3 className={cn('text-base font-medium', danger ? 'text-red-400' : 'text-on-surface')}>{label}</h3>
-          {description && <p className="mt-0.5 text-sm leading-relaxed text-on-surface-muted">{description}</p>}
+          {description && <p className="text-on-surface-muted mt-0.5 text-sm leading-relaxed">{description}</p>}
         </div>
       </div>
       <div className="flex w-full items-center justify-end pl-14 sm:w-auto sm:pl-0">{action}</div>

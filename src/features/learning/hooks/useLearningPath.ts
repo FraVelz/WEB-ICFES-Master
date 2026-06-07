@@ -52,37 +52,37 @@ export const useLearningPath = (areaId: string | undefined) => {
         // 3. Place lessons into buckets
         const completedIds = (progress as { completedLessons?: string[] } | null)?.completedLessons ?? [];
         lessons.forEach((lesson) => {
-            // Normalize difficulty (lowercase)
-            const difficulty = lesson.difficulty?.toLowerCase() || 'facil';
-            const sectionIndex = groupedSections.findIndex((s) => s.id === difficulty);
+          // Normalize difficulty (lowercase)
+          const difficulty = lesson.difficulty?.toLowerCase() || 'facil';
+          const sectionIndex = groupedSections.findIndex((s) => s.id === difficulty);
 
-            if (sectionIndex !== -1) {
-              // Node status from completion list
-              let status = 'locked';
-              const isCompleted = completedIds.includes(lesson.id ?? '');
+          if (sectionIndex !== -1) {
+            // Node status from completion list
+            let status = 'locked';
+            const isCompleted = completedIds.includes(lesson.id ?? '');
 
-              if (isCompleted) {
-                status = 'completed';
-              } else {
-                // Simple rule: incomplete lessons stay available (not strict prerequisite chain)
-                status = 'available';
-              }
-
-              // Flatten rewards for the roadmap UI
-              const xp = lesson.rewards?.xp || lesson.xp || 0;
-              const coins = lesson.rewards?.coins || lesson.coins || 0;
-
-              groupedSections[sectionIndex].nodes.push({
-                ...lesson,
-                id: lesson.id ?? '',
-                title: (lesson as { title?: string }).title,
-                description: (lesson as { description?: string }).description,
-                xp,
-                coins,
-                type: 'lesson',
-                status,
-              } as PathNodeData);
+            if (isCompleted) {
+              status = 'completed';
+            } else {
+              // Simple rule: incomplete lessons stay available (not strict prerequisite chain)
+              status = 'available';
             }
+
+            // Flatten rewards for the roadmap UI
+            const xp = lesson.rewards?.xp || lesson.xp || 0;
+            const coins = lesson.rewards?.coins || lesson.coins || 0;
+
+            groupedSections[sectionIndex].nodes.push({
+              ...lesson,
+              id: lesson.id ?? '',
+              title: (lesson as { title?: string }).title,
+              description: (lesson as { description?: string }).description,
+              xp,
+              coins,
+              type: 'lesson',
+              status,
+            } as PathNodeData);
+          }
         });
 
         // Drop empty difficulty buckets

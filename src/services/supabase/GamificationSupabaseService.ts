@@ -168,10 +168,7 @@ const GamificationSupabaseService = {
     };
   },
 
-  async updateStreak(
-    userId: string,
-    state: { dates: string[]; longestStreak: number }
-  ): Promise<GamificationProfile> {
+  async updateStreak(userId: string, state: { dates: string[]; longestStreak: number }): Promise<GamificationProfile> {
     await this.getOrCreate(userId);
     const sb = ensureSupabase();
     const payload = {
@@ -185,10 +182,7 @@ const GamificationSupabaseService = {
     return mapFromDb(data as Record<string, unknown>)!;
   },
 
-  async updateAchievements(
-    userId: string,
-    achievements: Record<string, unknown>
-  ): Promise<GamificationProfile> {
+  async updateAchievements(userId: string, achievements: Record<string, unknown>): Promise<GamificationProfile> {
     await this.getOrCreate(userId);
     const sb = ensureSupabase();
     const { data, error } = await sb

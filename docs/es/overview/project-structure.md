@@ -38,10 +38,10 @@ Estilos globales en **`src/app/globals.css`** (Tailwind 4 + tokens).
 
 Imágenes compartidas importadas en código (no rutas `/public/...`):
 
-| Ruta | Uso |
-| ---- | --- |
-| `assets/avatars/` | Mascota Zeus (estados: logo, pensativo, celebrando, etc.) |
-| `assets/images/` | Capturas de marca (README, Open Graph) |
+| Ruta              | Uso                                                         |
+| ----------------- | ----------------------------------------------------------- |
+| `assets/avatars/` | Mascota Zeus (estados: logo, pensativo, celebrando, etc.)   |
+| `assets/images/`  | Capturas de marca (README, Open Graph)                      |
 | `assets/index.ts` | API pública: `MASCOT_IMAGES`, `mascotSrc()`, `BRAND_IMAGES` |
 
 Favicon: **`src/app/favicon.ico`** (convención App Router). Metadata OG en `src/app/layout.tsx` usa `BRAND_IMAGES.screenshot`.

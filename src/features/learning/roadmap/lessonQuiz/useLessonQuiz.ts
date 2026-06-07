@@ -2,7 +2,12 @@
 
 import { useState, useEffect, useCallback, useMemo } from 'react';
 import { useAuth } from '@/features/auth/context/AuthContext';
-import { addCoinsBalance, gamificationPersistence, getCompletedLessons, markLessonAsCompleted } from '@/services/persistence';
+import {
+  addCoinsBalance,
+  gamificationPersistence,
+  getCompletedLessons,
+  markLessonAsCompleted,
+} from '@/services/persistence';
 import { normalizeQuizQuestions } from './normalizeQuizQuestions';
 import type { LessonQuizModalProps } from './quizTypes';
 

@@ -39,7 +39,9 @@ export function MobileNav({ menuOpen, onToggleMenu, onCloseMenu }: MobileNavProp
                 className={cn(
                   'flex h-20 w-16 flex-col items-center justify-center rounded-lg transition-all duration-300',
                   FOCUS_RING,
-                  isActive ? 'border-app-ring text-app-accent border-t-2' : 'text-on-surface-muted hover:text-on-surface'
+                  isActive
+                    ? 'border-app-ring text-app-accent border-t-2'
+                    : 'text-on-surface-muted hover:text-on-surface'
                 )}
               >
                 <Icon name={option.icon} size="xl" className="mb-1" />
@@ -53,9 +55,9 @@ export function MobileNav({ menuOpen, onToggleMenu, onCloseMenu }: MobileNavProp
             aria-label={menuOpen ? 'Cerrar menú' : 'Más opciones'}
             aria-expanded={menuOpen}
             className={cn(
-              'relative flex h-20 w-16 flex-col items-center justify-center rounded-lg text-on-surface-muted transition-all duration-300',
+              'text-on-surface-muted relative flex h-20 w-16 flex-col items-center justify-center rounded-lg transition-all duration-300',
               'focus-visible:ring-app-accent hover:text-on-surface focus-visible:ring-2 focus-visible:outline-none',
-              'focus-visible:ring-offset-2 focus-visible:ring-offset-surface'
+              'focus-visible:ring-offset-surface focus-visible:ring-offset-2'
             )}
           >
             <Icon name="ellipsis-vertical" size="xl" className="mb-1" />
@@ -80,7 +82,7 @@ export function MobileNav({ menuOpen, onToggleMenu, onCloseMenu }: MobileNavProp
                     key={option.path}
                     href={option.path}
                     className={cn(
-                      'hover:bg-app-ring/10 active:bg-app-ring/20 flex items-center gap-4 px-6 py-4 text-on-surface transition-colors',
+                      'hover:bg-app-ring/10 active:bg-app-ring/20 text-on-surface flex items-center gap-4 px-6 py-4 transition-colors',
                       'focus-visible:ring-app-accent rounded-lg focus-visible:ring-2 focus-visible:outline-none focus-visible:ring-inset',
                       isLocked && 'opacity-70'
                     )}

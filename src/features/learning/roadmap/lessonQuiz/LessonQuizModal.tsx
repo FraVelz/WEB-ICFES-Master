@@ -90,7 +90,7 @@ export function LessonQuizModal({
 
         <div
           className={cn(
-            'scrollbar-thin scrollbar-thumb-slate-700 scrollbar-track-transparent min-h-0 flex-1',
+            'min-h-0 flex-1 scrollbar-thin scrollbar-thumb-slate-700 scrollbar-track-transparent',
             'overflow-x-hidden overflow-y-auto p-3.5 lg:p-6'
           )}
         >

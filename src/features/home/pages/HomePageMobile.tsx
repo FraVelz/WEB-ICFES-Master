@@ -11,12 +11,12 @@ import { enterDemoMode } from '@/features/home/utils/enterDemoMode';
 export const HomePageMobile = () => {
   const dispatch = useAppDispatch();
   return (
-    <div className="flex h-dvh w-screen flex-col bg-linear-to-b from-surface via-surface-via to-surface text-on-surface">
+    <div className="from-surface via-surface-via to-surface text-on-surface flex h-dvh w-screen flex-col bg-linear-to-b">
       {/* Background glow — mobile layout */}
       <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden opacity-60 dark:opacity-100">
-        <div className="bg-ambient-a/15 absolute top-1/3 left-1/4 h-48 w-48 animate-pulse rounded-full blur-2xl dark:bg-ambient-a/30"></div>
-        <div className="bg-ambient-b/12 absolute right-1/4 bottom-1/3 h-48 w-48 animate-pulse rounded-full blur-2xl dark:bg-ambient-b/30"></div>
-        <div className="bg-ambient-c/8 absolute top-2/3 left-3/4 h-32 w-32 animate-pulse rounded-full blur-2xl dark:bg-ambient-c/20"></div>
+        <div className="bg-ambient-a/15 dark:bg-ambient-a/30 absolute top-1/3 left-1/4 h-48 w-48 animate-pulse rounded-full blur-2xl"></div>
+        <div className="bg-ambient-b/12 dark:bg-ambient-b/30 absolute right-1/4 bottom-1/3 h-48 w-48 animate-pulse rounded-full blur-2xl"></div>
+        <div className="bg-ambient-c/8 dark:bg-ambient-c/20 absolute top-2/3 left-3/4 h-32 w-32 animate-pulse rounded-full blur-2xl"></div>
       </div>
 
       <div className="relative z-10 flex justify-end px-4 pt-4">
@@ -30,10 +30,10 @@ export const HomePageMobile = () => {
           <MascotaCircle src={MASCOT_IMAGES.logo} size="md" />
 
           {/* App Name */}
-          <h1 className="text-3xl font-bold text-on-surface">ICFES Master</h1>
+          <h1 className="text-on-surface text-3xl font-bold">ICFES Master</h1>
 
           {/* Tagline */}
-          <p className="max-w-xs text-center text-sm text-on-surface-muted">
+          <p className="text-on-surface-muted max-w-xs text-center text-sm">
             Domina el examen ICFES con nuestra plataforma, y diviértete mientras aprendes.
           </p>
         </div>
@@ -49,7 +49,7 @@ export const HomePageMobile = () => {
             }
           }}
           className={cn(
-            'block w-full transform rounded-lg bg-linear-to-r from-cta-from to-cta-to py-3',
+            'from-cta-from to-cta-to block w-full transform rounded-lg bg-linear-to-r py-3',
             'text-center font-semibold text-white transition-all duration-200 hover:scale-105',
             'hover:from-cta-from hover:to-cta-to hover:shadow-app-ring/40 hover:shadow-lg'
           )}
@@ -60,8 +60,8 @@ export const HomePageMobile = () => {
         <a
           href="/login"
           className={cn(
-            'block w-full rounded-lg border-2 border-app-ring bg-transparent py-3 text-center',
-            'font-semibold text-app-accent transition-all duration-200 hover:bg-app-ring/10'
+            'border-app-ring block w-full rounded-lg border-2 bg-transparent py-3 text-center',
+            'text-app-accent hover:bg-app-ring/10 font-semibold transition-all duration-200'
           )}
         >
           Iniciar Sesión

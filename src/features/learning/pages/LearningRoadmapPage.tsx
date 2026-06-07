@@ -15,7 +15,7 @@ const Component = () => {
     <div
       id="container-main"
       className={cn(
-        'min-h-dvh bg-linear-to-b from-surface via-surface-via to-surface p-0 text-on-surface lg:relative',
+        'from-surface via-surface-via to-surface text-on-surface min-h-dvh bg-linear-to-b p-0 lg:relative',
         isActive && 'h-screen overflow-hidden'
       )}
     >
