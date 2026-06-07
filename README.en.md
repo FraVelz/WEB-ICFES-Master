@@ -23,6 +23,7 @@ Static assets (mascot, brand screenshots) live in **`src/assets/`** and are impo
   - [Main Features](#main-features)
   - [Technical Documentation](#technical-documentation)
   - [Steps to Contribute](#steps-to-contribute)
+    - [Contributors](#contributors)
   - [Contact](#contact)
 
 ---
@@ -65,6 +66,19 @@ Spanish version: [`docs/es/`](docs/es/)
 3. Commit your changes (`git commit -m 'Add some AmazingFeature'`).
 4. Push to the branch (`git push origin feature/AmazingFeature`).
 5. Open a Pull Request.
+
+### Contributors
+
+Thanks to everyone who has contributed to this project!
+
+<p align="center">
+  <a href="https://github.com/FraVelz/WEB-ICFES-Master/graphs/contributors">
+    <img
+      src="https://contrib.rocks/image?repo=FraVelz/WEB-ICFES-Master&max=500&columns=20"
+      alt="WEB-ICFES-Master contributors"
+    />
+  </a>
+</p>
 
 ---
 

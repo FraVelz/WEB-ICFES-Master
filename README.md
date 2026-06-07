@@ -23,6 +23,7 @@ Los recursos estáticos (mascota, capturas de marca) viven en **`src/assets/`** 
   - [Características Principales](#características-principales)
   - [Documentación técnica](#documentación-técnica)
   - [Pasos para Contribuir](#pasos-para-contribuir)
+    - [Colaboradores](#colaboradores)
   - [Contacto](#contacto)
 
 ---
@@ -65,6 +66,19 @@ Versión en inglés: [`docs/en/`](docs/en/)
 3. Haz commit de tus cambios (`git commit -m 'Add some AmazingFeature'`).
 4. Sube la rama (`git push origin feature/AmazingFeature`).
 5. Abre un Pull Request.
+
+### Colaboradores
+
+¡Gracias a todos los que han aportado a este proyecto!
+
+<p align="center">
+  <a href="https://github.com/FraVelz/WEB-ICFES-Master/graphs/contributors">
+    <img
+      src="https://contrib.rocks/image?repo=FraVelz/WEB-ICFES-Master&max=500&columns=20"
+      alt="Contribuidores de WEB-ICFES-Master"
+    />
+  </a>
+</p>
 
 ---
 
