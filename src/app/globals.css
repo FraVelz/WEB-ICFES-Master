@@ -63,6 +63,14 @@ html:not(.dark) {
   --color-hub-sheet-from: var(--color-cyan-200);
 }
 
+/* Evita gradiente negro→claro→negro si queda algún from-black legacy en claro */
+html:not(.dark) [class*='from-black'][class*='via-slate-'] {
+  --tw-gradient-from: var(--icfes-surface);
+  --tw-gradient-via: var(--icfes-surface-via);
+  --tw-gradient-to: var(--icfes-surface);
+  color: var(--icfes-on-surface);
+}
+
 /* Texto blanco legacy → legible en superficies claras */
 html:not(.dark) .text-white {
   color: var(--icfes-on-surface);

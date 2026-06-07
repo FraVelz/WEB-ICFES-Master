@@ -3,8 +3,10 @@
 import { useAuth } from '@/features/auth/context/AuthContext';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
+import { cn } from '@/utils/cn';
 
 import { useAppSelector } from '@/store/hooks';
+import { FULL_PAGE_SHELL_CLASS } from '@/shared/constants/pageShell';
 
 import SignInRequiredBlock from './SignInRequiredBlock';
 
@@ -37,7 +39,7 @@ export default function ProtectedPage({
 
   if (loading || !hydrated) {
     return (
-      <div className="flex min-h-dvh flex-col items-center justify-center bg-linear-to-b from-black via-slate-950 to-black text-white">
+      <div className={cn('flex flex-col items-center justify-center', FULL_PAGE_SHELL_CLASS)}>
         <div className="text-center">
           <div className="border-app-ring/30 border-t-app-ring mx-auto mb-4 h-16 w-16 animate-spin rounded-full border-4" />
           <p className="text-app-accent text-lg font-semibold">Verificando sesión...</p>

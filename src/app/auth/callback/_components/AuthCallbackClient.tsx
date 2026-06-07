@@ -5,6 +5,8 @@ import { useRouter, useSearchParams } from 'next/navigation';
 
 import { supabase } from '@/config/supabase';
 import { AUTH_DEFAULT_REDIRECT } from '@/features/auth/constants/authRoutes';
+import { FULL_PAGE_SHELL_CLASS } from '@/shared/constants/pageShell';
+import { cn } from '@/utils/cn';
 
 export function AuthCallbackClient() {
   const router = useRouter();
@@ -68,9 +70,9 @@ export function AuthCallbackClient() {
   }, [router, searchParams]);
 
   return (
-    <div className="flex min-h-dvh flex-col items-center justify-center bg-linear-to-b from-black via-slate-950 to-black px-6 text-white">
+    <div className={cn('flex flex-col items-center justify-center px-6', FULL_PAGE_SHELL_CLASS)}>
       <div className="border-app-ring/30 border-t-app-ring mx-auto mb-4 h-12 w-12 animate-spin rounded-full border-4" />
-      <p className="text-center text-slate-300">{message}</p>
+      <p className="text-center text-on-surface-muted">{message}</p>
     </div>
   );
 }

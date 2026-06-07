@@ -8,6 +8,7 @@ import { GoogleSignInButton } from '@/features/auth/components/GoogleSignInButto
 import { useAuth } from '@/features/auth/context/AuthContext';
 import { AUTH_DEFAULT_REDIRECT } from '@/features/auth/constants/authRoutes';
 import { mapSupabaseAuthError, REQUIRES_EMAIL_CONFIRMATION } from '@/features/auth/utils/mapSupabaseAuthError';
+import { FULL_PAGE_SHELL_CLASS } from '@/shared/constants/pageShell';
 
 export const SignupPage = () => {
   const { signup } = useAuth();
@@ -107,12 +108,7 @@ export const SignupPage = () => {
   };
 
   return (
-    <div
-      className={cn(
-        'flex min-h-dvh items-center justify-center overflow-hidden bg-linear-to-b from-black',
-        'via-slate-950 to-black px-6 py-12 text-white'
-      )}
-    >
+    <div className={cn('flex items-center justify-center overflow-hidden px-6 py-12', FULL_PAGE_SHELL_CLASS)}>
       {/* Background glow effects */}
       <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
         <div className="bg-ambient-a/30 absolute top-1/3 left-1/4 h-96 w-96 animate-pulse rounded-full blur-3xl"></div>

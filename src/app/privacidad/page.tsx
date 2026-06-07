@@ -1,5 +1,6 @@
 import { cn } from '@/utils/cn';
 import Link from 'next/link';
+import { FULL_PAGE_SHELL_CLASS } from '@/shared/constants/pageShell';
 
 export const metadata = {
   title: 'Política de Privacidad - ICFES Master',
@@ -8,7 +9,7 @@ export const metadata = {
 
 export default function PrivacidadPage() {
   return (
-    <div className="relative min-h-dvh bg-linear-to-b from-black via-slate-950 to-black px-4 py-12 sm:px-6 lg:px-8">
+    <div className={cn('relative px-4 py-12 sm:px-6 lg:px-8', FULL_PAGE_SHELL_CLASS)}>
       <div className="pointer-events-none fixed inset-0 z-0">
         <div className="bg-lesson-lc-glow-a/20 absolute top-1/3 left-1/4 h-96 w-96 animate-pulse rounded-full blur-3xl" />
         <div className="absolute right-1/4 bottom-1/3 h-96 w-96 animate-pulse rounded-full bg-purple-500/20 blur-3xl" />

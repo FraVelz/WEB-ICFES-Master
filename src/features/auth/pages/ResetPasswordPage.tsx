@@ -8,6 +8,7 @@ import { EMAIL_MESSAGES } from '@/config/emailMessages';
 import { useAuth } from '@/features/auth/context/AuthContext';
 import { supabase } from '@/config/supabase';
 import { mapSupabaseAuthError } from '@/features/auth/utils/mapSupabaseAuthError';
+import { FULL_PAGE_SHELL_CLASS } from '@/shared/constants/pageShell';
 
 export const ResetPasswordPage = () => {
   const router = useRouter();
@@ -91,31 +92,21 @@ export const ResetPasswordPage = () => {
 
   if (verifying) {
     return (
-      <div
-        className={cn(
-          'flex min-h-dvh items-center justify-center overflow-hidden bg-linear-to-b from-black',
-          'via-slate-950 to-black px-6 text-white'
-        )}
-      >
+      <div className={cn('flex items-center justify-center overflow-hidden px-6', FULL_PAGE_SHELL_CLASS)}>
         <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
           <div className="bg-ambient-a/30 absolute top-1/3 left-1/4 h-96 w-96 animate-pulse rounded-full blur-3xl"></div>
           <div className="bg-ambient-b/30 absolute right-1/4 bottom-1/3 h-96 w-96 animate-pulse rounded-full blur-3xl"></div>
         </div>
 
         <div className="relative z-10 text-center">
-          <p className="text-xl">Verificando tu enlace de recuperación...</p>
+          <p className="text-xl text-on-surface">Verificando tu enlace de recuperación...</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div
-      className={cn(
-        'flex min-h-dvh items-center justify-center overflow-hidden bg-linear-to-b from-black',
-        'via-slate-950 to-black px-6 text-white'
-      )}
-    >
+    <div className={cn('flex items-center justify-center overflow-hidden px-6', FULL_PAGE_SHELL_CLASS)}>
       {/* Background glow effects */}
       <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
         <div className="bg-ambient-a/30 absolute top-1/3 left-1/4 h-96 w-96 animate-pulse rounded-full blur-3xl"></div>
