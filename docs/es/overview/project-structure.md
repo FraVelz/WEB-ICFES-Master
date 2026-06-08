@@ -19,7 +19,7 @@ src/
 ├── storage/              # Implementación localStorage (uso interno)
 ├── services/             # Persistencia Supabase/local + store + gamificación
 │   ├── persistence/      # API pública para features
-│   ├── api.config.ts     # Modo Supabase vs local
+│   ├── persistence/      # Capa unificada (Supabase + demo local)
 │   ├── supabase/
 │   ├── store/            # Servicios de planes (no confundir con features/store ni Zustand)
 │   └── gamification/

@@ -1,12 +1,7 @@
 import { supabase } from '@/config/supabase';
-import { isSupabaseMode } from '@/services/persistence/apiMode';
+import { isSupabaseConfigured } from '@/services/persistence/supabaseConfigured';
 
-/** True when Supabase Auth can run (env vars + client + supabase API mode). */
+/** True when Supabase Auth can run (env vars + client). */
 export function isSupabaseAuthConfigured(): boolean {
-  return (
-    isSupabaseMode() &&
-    Boolean(process.env.NEXT_PUBLIC_SUPABASE_URL) &&
-    Boolean(process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) &&
-    supabase !== null
-  );
+  return isSupabaseConfigured() && supabase !== null;
 }

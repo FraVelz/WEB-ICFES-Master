@@ -4,14 +4,13 @@ import type { ReactNode } from 'react';
 import { createContext, useContext, useEffect, useState, useCallback } from 'react';
 import { supabase } from '@/config/supabase';
 import { useUiSessionStore } from '@/store/uiSessionStore';
-import API_CONFIG from '@/services/api.config';
 import UserSupabaseService from '@/services/supabase/UserSupabaseService';
 import { getAggregatedUserData } from '@/services/persistence';
 import { mergeDemoStreakIntoUser, setActiveStreakUserId, STREAK_UPDATED_EVENT } from '@/services/streak';
 import { normalizePlanFeatures } from '@/shared/constants/planFeatures';
 import { mapSupabaseAuthError, REQUIRES_EMAIL_CONFIRMATION } from '@/features/auth/utils/mapSupabaseAuthError';
+import { isSupabaseAuthConfigured } from '@/features/auth/utils/isSupabaseAuthConfigured';
 import type { AuthContextType, AuthUser, PlanData } from './authTypes';
-import { clearMockUser, createMockUser, loadMockUserFromStorage, persistMockUser } from './authMock';
 import { mapSupabaseUser } from './authSupabase';
 
 export type { AuthUser, PlanData } from './authTypes';
@@ -48,8 +47,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   }, []);
 
   useEffect(() => {
-    if (API_CONFIG.MODE !== 'supabase' || !process.env.NEXT_PUBLIC_SUPABASE_URL || !supabase) {
-      setUser(loadMockUserFromStorage());
+    if (!isSupabaseAuthConfigured() || !supabase) {
+      setUser(null);
       setLoading(false);
       return;
     }
@@ -91,14 +90,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const signup = async (email: string, password: string, displayName?: string): Promise<AuthUser | null> => {
     setError(null);
-    if (API_CONFIG.MODE !== 'supabase') {
-      const newUser = createMockUser({ email, displayName });
-      persistMockUser(newUser);
-      setUser(newUser);
-      await migrateStreakOnAuth(newUser.uid);
-      clearDemoMode();
-      return newUser;
-    }
     if (!supabase) throw new Error('Supabase no configurado');
     const { data, error: err } = await supabase.auth.signUp({
       email,
@@ -138,23 +129,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const login = async (email: string, password: string): Promise<AuthUser | null> => {
     setError(null);
-    if (API_CONFIG.MODE !== 'supabase') {
-      const existing = loadMockUserFromStorage();
-      if (existing) {
-        const updated = { ...existing, email: email || existing.email };
-        persistMockUser(updated);
-        setUser(updated);
-        await migrateStreakOnAuth(updated.uid);
-        clearDemoMode();
-        return updated;
-      }
-      const newUser = createMockUser({ email });
-      persistMockUser(newUser);
-      setUser(newUser);
-      await migrateStreakOnAuth(newUser.uid);
-      clearDemoMode();
-      return newUser;
-    }
     if (!supabase) throw new Error('Supabase no configurado');
     const { data, error: err } = await supabase.auth.signInWithPassword({ email, password });
     if (err) {
@@ -170,14 +144,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const loginWithGoogle = async () => {
     setError(null);
-    if (API_CONFIG.MODE !== 'supabase') {
-      const newUser = createMockUser({ displayName: 'Usuario Google', email: 'google@icfes.local' });
-      persistMockUser(newUser);
-      setUser(newUser);
-      await migrateStreakOnAuth(newUser.uid);
-      clearDemoMode();
-      return newUser;
-    }
     if (!supabase) throw new Error('Supabase no configurado');
     const origin = typeof window !== 'undefined' ? window.location.origin : '';
     const { data, error: err } = await supabase.auth.signInWithOAuth({
@@ -200,10 +166,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const logout = async (): Promise<void> => {
     setError(null);
-    if (API_CONFIG.MODE === 'supabase' && supabase) {
+    if (supabase) {
       await supabase.auth.signOut();
-    } else {
-      clearMockUser();
     }
     setActiveStreakUserId(null);
     setUser(null);
@@ -213,7 +177,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const resetPassword = async (email: string): Promise<boolean> => {
     setError(null);
-    if (API_CONFIG.MODE !== 'supabase') return true;
     if (!supabase) throw new Error('Supabase no configurado');
     const origin = typeof window !== 'undefined' ? window.location.origin : '';
     const { error: err } = await supabase.auth.resetPasswordForEmail(email, {
@@ -229,7 +192,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const updatePassword = async (newPassword: string): Promise<boolean> => {
     setError(null);
-    if (API_CONFIG.MODE !== 'supabase') return true;
     if (!supabase) throw new Error('Supabase no configurado');
     const { error: err } = await supabase.auth.updateUser({ password: newPassword });
     if (err) {
@@ -249,17 +211,12 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       status: 'active',
       features: { questionsPerDay: 5, simulationTests: false, advancedAnalytics: false },
     };
-    if (API_CONFIG.MODE !== 'supabase') {
-      const plan = typeof window !== 'undefined' ? JSON.parse(localStorage.getItem('icfes_user_plan') || 'null') : null;
-      return plan || defaultPlan;
-    }
-    const { supabase: sb } = await import('@/config/supabase');
-    if (!sb) return defaultPlan;
+    if (!supabase) return defaultPlan;
     const {
       data: { user: authUser },
-    } = await sb.auth.getUser();
-    if (!authUser) return { planType: 'free', planName: 'Plan Gratuito', status: 'active', features: {} };
-    const { data } = await sb.from('user_plans').select('*').eq('user_id', authUser.id).maybeSingle();
+    } = await supabase.auth.getUser();
+    if (!authUser) return defaultPlan;
+    const { data } = await supabase.from('user_plans').select('*').eq('user_id', authUser.id).maybeSingle();
     if (data) {
       return {
         planType: data.plan_type || 'free',
@@ -272,15 +229,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const updateUserPlan = async (uid: string, planData: PlanData): Promise<void> => {
-    if (API_CONFIG.MODE !== 'supabase') {
-      const current = typeof window !== 'undefined' ? JSON.parse(localStorage.getItem('icfes_user_plan') || '{}') : {};
-      const updated = { ...current, ...planData, updatedAt: new Date().toISOString() };
-      if (typeof window !== 'undefined') localStorage.setItem('icfes_user_plan', JSON.stringify(updated));
-      return;
-    }
-    const { supabase: sb } = await import('@/config/supabase');
-    if (!sb) return;
-    await sb.from('user_plans').upsert(
+    if (!supabase) return;
+    await supabase.from('user_plans').upsert(
       {
         user_id: uid,
         plan_type: planData.planType || planData.plan_type,

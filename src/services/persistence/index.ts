@@ -1,8 +1,8 @@
 /**
- * Unified persistence: Supabase or localStorage via API_CONFIG.
+ * Unified persistence layer (Supabase + client progress cache).
  * Prefer this module in features/UI instead of `@/storage` directly.
  */
-export { API_CONFIG, isSupabaseMode, isLocalStorageMode } from './apiMode';
+export { isSupabaseConfigured } from './supabaseConfigured';
 export { gamificationPersistence } from './gamificationPersistence';
 export {
   loadStreakState,

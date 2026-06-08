@@ -10,16 +10,16 @@ Unified document describing the services architecture, data layer, and lesson/qu
 - [Supabase Table Structure](#supabase-table-structure)
 - [Learning Module and Quizzes](#learning-module-and-quizzes)
 - [Data Flow](#data-flow)
-- [Migration Between Modes](#migration-between-modes)
+- [Demo vs authenticated account](#demo-vs-authenticated-account)
 - [Exports from `@/services`](#exports-from-services)
 
 ---
 
 ## Overview
 
-The ICFES application uses a **decoupled architecture** that allows switching between **Supabase** (production) and
-**localStorage** (development without backend) without modifying components. The mode is controlled via
-`NEXT_PUBLIC_API_MODE`.
+The ICFES application uses a **decoupled architecture**: authenticated accounts persist in **Supabase** (PostgreSQL +
+Auth). **Demo mode** stores progress in the browser without a backend. The `@/services/persistence` layer unifies access
+from hooks and components.
 
 ```txt
          React Components
@@ -36,32 +36,21 @@ The ICFES application uses a **decoupled architecture** that allows switching be
   (userPersistence, progressPersistence, examPersistence, gamificationPersistence, *SupabaseService, LearningService, …)
 
               ↓
-
-   api.config.ts (MODE: supabase | localStorage)
-              ↓
    ┌──────────┴──────────┐
    ↓                     ↓
-Supabase              localStorage / roadmapData
-(PostgreSQL)            (utils, static data)
+Supabase              Demo / local cache
+(PostgreSQL)            (localStorage per demo scope or attempt history)
 ```
 
 ---
 
 ## Main Components
 
-### 1. **api.config.ts** (Central Configuration)
+### 1. **`isSupabaseConfigured()`**
 
-- **Location**: `src/services/api.config.ts`
-- **Purpose**: Centralizes data persistence mode
-- **Supported modes**:
-  - `supabase` (default): PostgreSQL + Supabase Auth
-  - `localStorage`: Local development without backend
-
-**Environment Variables** (Next.js uses `NEXT_PUBLIC_` prefix):
-
-```txt
-NEXT_PUBLIC_API_MODE=supabase     # 'supabase' | 'localStorage'
-```
+- **Location**: `src/services/persistence/supabaseConfigured.ts`
+- **Purpose**: Whether `NEXT_PUBLIC_SUPABASE_*` env vars are set and the Supabase client is available
+- **Use**: Real auth, account persistence, and legacy migrations; demo mode does not depend on it
 
 ### 2. **Removed legacy layer**
 
@@ -83,10 +72,9 @@ Services that connect directly to PostgreSQL tables in Supabase:
 ### 4. **`gamificationPersistence`**
 
 - **Location**: `src/services/persistence/gamificationPersistence.ts`
-- **Purpose**: Single entry for gamification on Supabase or `GamificationLocalService` (`src/services/gamification/`)
-  depending on `API_CONFIG.MODE`
-- **API**: `addXP()`, `addCoins()`, `spendCoins()`, `getProfile()` (delegate to `GamificationSupabaseService` or
-  `GamificationLocalService`)
+- **Purpose**: Gamification on Supabase (`GamificationSupabaseService`) for accounts; demo uses helpers in
+  `src/services/demo/`
+- **API**: `addXP()`, `addCoins()`, `spendCoins()`, `getProfile()` (delegate to `GamificationSupabaseService`)
 
 ### 5. **Feature modules and `persistence` layer**
 
@@ -104,7 +92,7 @@ Services that connect directly to PostgreSQL tables in Supabase:
 
 ## Custom Hooks
 
-Hooks abstract the logic and select the service based on `API_CONFIG.MODE`:
+Hooks abstract the logic and delegate to `@/services/persistence` (Supabase for accounts, local demo when applicable):
 
 ### **useUserData()**
 
@@ -228,7 +216,7 @@ const { exam, getUserExams, resetUserExams, refresh } = useExam(examId);
 
 ### Learning data flow
 
-1. **LearningService.getLearningPath(areaId)** fetches lessons by `API_CONFIG.MODE`:
+1. **LearningService.getLearningPath(areaId)** fetches lessons from Supabase or static roadmap data:
    - **Supabase**: `LearningSupabaseService.getLessonsByArea(area)` → `learning_content` table
    - **localStorage**: Static `roadmapData` (`BASICO_TOPICS`, `INTERMEDIO_TOPICS`)
 
@@ -381,21 +369,18 @@ await gamificationPersistence.addXP(userId, 50, 'lesson_quiz_lessonId');
 
 ---
 
-## Migration Between Modes
+## Demo vs authenticated account
 
-### Switch to Supabase (production)
+| Context | Auth | Main persistence |
+| ------- | ---- | ---------------- |
+| Demo (landing) | No account | localStorage (`icfes_*_demo`) |
+| Account | Supabase Auth | PostgreSQL via `*SupabaseService` |
+
+Env vars in `.env.local`:
 
 ```bash
-# .env.local
-NEXT_PUBLIC_API_MODE=supabase
 NEXT_PUBLIC_SUPABASE_URL=https://xxx.supabase.co
 NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJ...
-```
-
-### Switch to localStorage (development)
-
-```bash
-NEXT_PUBLIC_API_MODE=localStorage
 ```
 
 ---

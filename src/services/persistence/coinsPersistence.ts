@@ -1,13 +1,11 @@
 /**
- * Monedas virtuales — única fuente de verdad.
- * Supabase: user_gamification (total_coins - spent_coins).
- * localStorage: icfes_user_profile.virtualMoney vía gamificationPersistence.
+ * Monedas virtuales — Supabase `user_gamification` o demo local.
  */
 import { gamificationPersistence } from './gamificationPersistence';
-import { isSupabaseMode } from './apiMode';
 import { getVirtualMoney, updateUserProfile } from '@/storage/userProfile';
 import UserSupabaseService from '@/services/supabase/UserSupabaseService';
 import { addDemoCoins, getDemoCoins, isDemoUserId, spendDemoCoins } from '@/services/demo/demoCoins';
+import { isSupabaseConfigured } from './supabaseConfigured';
 
 export const COINS_CHANGE_EVENT = 'icfes:coins-changed';
 
@@ -19,14 +17,11 @@ function emitCoinsChanged(balance: number) {
 
 async function readGamificationBalance(userId: string): Promise<number> {
   const profile = await gamificationPersistence.getProfile(userId);
-  if (isSupabaseMode()) {
-    return (profile?.totalCoins ?? 0) - (profile?.spentCoins ?? 0);
-  }
-  return getVirtualMoney();
+  return (profile?.totalCoins ?? 0) - (profile?.spentCoins ?? 0);
 }
 
 async function migrateLegacyBalance(userId: string, currentBalance: number): Promise<number> {
-  if (!isSupabaseMode() || currentBalance > 0) return currentBalance;
+  if (!isSupabaseConfigured() || currentBalance > 0) return currentBalance;
 
   const localBalance = getVirtualMoney();
   let legacyBalance = localBalance;
@@ -38,7 +33,7 @@ async function migrateLegacyBalance(userId: string, currentBalance: number): Pro
       await UserSupabaseService.updateProfile(userId, { virtualMoney: 0 });
     }
   } catch {
-    // Sin Supabase configurado o usuario inexistente — solo migrar localStorage
+    // Usuario inexistente o Supabase no disponible
   }
 
   if (legacyBalance <= 0) return currentBalance;

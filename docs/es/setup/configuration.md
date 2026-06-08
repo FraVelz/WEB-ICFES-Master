@@ -9,21 +9,13 @@ Referencia de variables de entorno y modos de ejecución. Para la instalación i
 
 Copia [`.env.example`](../../../.env.example) a `.env.local` en la raíz del proyecto.
 
-| Variable                        | Obligatoria        | Descripción                                       |
-| ------------------------------- | ------------------ | ------------------------------------------------- |
-| `NEXT_PUBLIC_SUPABASE_URL`      | Sí (modo supabase) | URL del proyecto Supabase                         |
-| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Sí (modo supabase) | Clave anónima pública de Supabase                 |
-| `NEXT_PUBLIC_API_MODE`          | No                 | `supabase` (por defecto) o `localStorage`         |
-| `OPENAI_API_KEY`                | No                 | API key de OpenAI para `/api/chat` (asistente IA) |
+| Variable                        | Obligatoria | Descripción                                       |
+| ------------------------------- | ----------- | ------------------------------------------------- |
+| `NEXT_PUBLIC_SUPABASE_URL`      | Sí          | URL del proyecto Supabase                         |
+| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Sí          | Clave anónima pública de Supabase                 |
+| `OPENAI_API_KEY`                | No          | API key de OpenAI para `/api/chat` (asistente IA) |
 
-### Modo de persistencia (`NEXT_PUBLIC_API_MODE`)
-
-| Valor          | Uso                                                   |
-| -------------- | ----------------------------------------------------- |
-| `supabase`     | Producción: auth real, PostgreSQL, servicios Supabase |
-| `localStorage` | Desarrollo sin backend: datos mock en el navegador    |
-
-Con `localStorage`, login/registro usan un usuario mock en `localStorage`. Para OAuth y datos reales, usa `supabase`.
+Sin las variables de Supabase, login/registro y persistencia de cuentas no funcionan. El **modo demo** (landing) sigue usando almacenamiento local en el navegador sin cuenta.
 
 ### Supabase Auth (OAuth y recuperación)
 

@@ -1,7 +1,6 @@
 import { BASICO_TOPICS, INTERMEDIO_TOPICS } from '../data/roadmapData';
 import { getStaticRoadmapDataKey } from '@/features/learning/constants/roadmapAreaKeys';
 import { getCompletedLessons } from '@/services/persistence';
-import API_CONFIG from '@/services/api.config';
 import LearningSupabaseService from '@/services/supabase/LearningSupabaseService';
 
 interface TopicItem {
@@ -38,10 +37,9 @@ export interface LearningPathLesson {
  */
 export const LearningService = {
   getLearningPath: async (areaId: string): Promise<LearningPathLesson[]> => {
-    if (API_CONFIG.MODE === 'supabase') {
-      const lessons = await LearningSupabaseService.getLessonsByArea(areaId);
-      if (lessons?.length > 0) {
-        return lessons.map((lesson, i) => {
+    const lessons = await LearningSupabaseService.getLessonsByArea(areaId);
+    if (lessons?.length > 0) {
+      return lessons.map((lesson, i) => {
           const l = lesson as Record<string, unknown>;
           const quiz = (l.quiz ?? {}) as Record<string, unknown>;
           const nestedContent = l.content;
@@ -67,7 +65,6 @@ export const LearningService = {
             quiz: l.quiz,
           } satisfies LearningPathLesson;
         });
-      }
     }
 
     const key = getStaticRoadmapDataKey(areaId);

@@ -1,29 +1,19 @@
 /**
- * Gamificación: una sola entrada para Supabase o localStorage.
+ * Gamificación — Supabase (`user_gamification`).
  */
 import GamificationSupabaseService from '@/services/supabase/GamificationSupabaseService';
-import GamificationLocalService from '@/services/gamification/GamificationLocalService';
-import { isSupabaseMode } from './apiMode';
-
-const impl = () => (isSupabaseMode() ? GamificationSupabaseService : GamificationLocalService);
 
 export const gamificationPersistence = {
-  addXP: (userId: string, points: number, reason?: string) => impl().addXP(userId, points, reason),
+  addXP: (userId: string, points: number, reason?: string) =>
+    GamificationSupabaseService.addXP(userId, points, reason),
 
-  addCoins: (userId: string, amount: number, reason?: string) => impl().addCoins(userId, amount, reason),
+  addCoins: (userId: string, amount: number, reason?: string) =>
+    GamificationSupabaseService.addCoins(userId, amount, reason),
 
-  spendCoins: (userId: string, amount: number, item?: string) => impl().spendCoins(userId, amount, item),
+  spendCoins: (userId: string, amount: number, item?: string) =>
+    GamificationSupabaseService.spendCoins(userId, amount, item),
 
-  getProfile: async (userId: string) => {
-    const s = impl();
-    if ('getProfile' in s && typeof s.getProfile === 'function') {
-      return s.getProfile(userId);
-    }
-    if ('getOrCreate' in s && typeof s.getOrCreate === 'function') {
-      return s.getOrCreate(userId);
-    }
-    throw new Error('Servicio de gamificación sin getProfile ni getOrCreate');
-  },
+  getProfile: (userId: string) => GamificationSupabaseService.getOrCreate(userId),
 };
 
 export default gamificationPersistence;

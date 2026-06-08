@@ -8,7 +8,7 @@ import { useUserData } from '@/features/user/hooks/useUserData';
 import { useProgress } from '@/features/user/hooks/useProgress';
 import { useExam } from '@/features/exam/hooks/useExam';
 import { clearLocalUserData, updateUsername, updateUserBio, updateProfileImage } from '@/services/persistence';
-import { isSupabaseMode } from '@/services/persistence/apiMode';
+import { isSupabaseConfigured } from '@/services/persistence/supabaseConfigured';
 
 export function useUserSettings() {
   const router = useRouter();
@@ -168,7 +168,7 @@ export function useUserSettings() {
       clearLocalUserData();
       sessionStorage.clear();
       await logout();
-      const suffix = isSupabaseMode()
+      const suffix = isSupabaseConfigured()
         ? ' Datos locales borrados. Para eliminar la cuenta en la nube, contacta soporte.'
         : '';
       showMessage(`Sesión cerrada y datos locales eliminados.${suffix}`, 'success');

@@ -18,7 +18,7 @@ src/
 ├── storage/              # localStorage implementation (internal)
 ├── services/             # Supabase/local persistence + store + gamification
 │   ├── persistence/      # Public API for features
-│   ├── api.config.ts     # Supabase vs local mode
+│   ├── persistence/      # Unified layer (Supabase + local demo)
 │   ├── supabase/
 │   ├── store/            # Plan services (not features/store or Zustand)
 │   └── gamification/

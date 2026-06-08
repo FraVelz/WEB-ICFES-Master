@@ -38,18 +38,15 @@ pnpm install
 Crea `.env.local` en la raíz del proyecto:
 
 ```bash
-# Supabase (necesario si usas NEXT_PUBLIC_API_MODE=supabase)
+# Supabase (obligatorio para login y datos de cuenta)
 NEXT_PUBLIC_SUPABASE_URL=https://tu-proyecto.supabase.co
 NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJ...
-
-# Modo de datos: 'supabase' | 'localStorage'
-NEXT_PUBLIC_API_MODE=supabase
 
 # OpenAI (opcional, para el asistente de chat)
 OPENAI_API_KEY=sk-...
 ```
 
-Para desarrollo sin backend, usa `NEXT_PUBLIC_API_MODE=localStorage`.
+Para probar la app sin cuenta, usa el **modo demo** desde la landing (no requiere Supabase para la sesión demo).
 
 ### 4. Iniciar servidor de desarrollo
 
@@ -64,8 +61,8 @@ Abre [http://localhost:3000](http://localhost:3000).
 ## Verificación
 
 - `pnpm build` debe completar sin errores
-- Con `NEXT_PUBLIC_API_MODE=localStorage` la app funciona sin Supabase
-- Con `NEXT_PUBLIC_API_MODE=supabase` necesitas un proyecto Supabase configurado
+- Con Supabase configurado, login/registro y datos de cuenta persisten en PostgreSQL
+- El modo demo funciona sin cuenta (progreso local en el navegador)
 
 Para detalle de variables, ver [configuration.md](./configuration.md).
 

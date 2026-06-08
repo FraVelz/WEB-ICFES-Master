@@ -1,6 +1,6 @@
 import ProgressSupabaseService from '@/services/supabase/ProgressSupabaseService';
 import GamificationSupabaseService from '@/services/supabase/GamificationSupabaseService';
-import { isSupabaseMode } from '@/services/persistence/apiMode';
+import { isSupabaseConfigured } from '@/services/persistence/supabaseConfigured';
 import { getStoredExams, getStoredPractices } from '@/storage/progressStorage';
 
 import { clearDemoStreakLocal, loadLocalStreakState, saveLocalStreakState } from './streakLocalStorage';
@@ -20,7 +20,7 @@ function notifyStreakUpdated(): void {
 }
 
 async function loadRemoteStreak(userId: string): Promise<StreakState | null> {
-  if (!isSupabaseMode()) return null;
+  if (!isSupabaseConfigured()) return null;
   try {
     return await GamificationSupabaseService.getStreak(userId);
   } catch {
@@ -29,7 +29,7 @@ async function loadRemoteStreak(userId: string): Promise<StreakState | null> {
 }
 
 async function syncProgressStreakDays(userId: string, currentStreak: number): Promise<void> {
-  if (!isSupabaseMode()) return;
+  if (!isSupabaseConfigured()) return;
   try {
     await ProgressSupabaseService.update(userId, { streakDays: currentStreak });
   } catch (err) {
@@ -41,7 +41,7 @@ async function persistStreak(scope: StreakScope, state: StreakState): Promise<St
   const normalized = withUpdatedLongest(state);
   saveLocalStreakState(scope, normalized);
 
-  if (scope !== 'demo' && isSupabaseMode()) {
+  if (scope !== 'demo' && isSupabaseConfigured()) {
     try {
       await GamificationSupabaseService.updateStreak(scope, normalized);
       await syncProgressStreakDays(scope, calculateCurrentStreak(normalized.dates));

@@ -9,7 +9,7 @@ import {
   resolveAssessmentScope,
 } from '@/features/auth/utils/skillLevelStorage';
 import UserSupabaseService from '@/services/supabase/UserSupabaseService';
-import { isSupabaseMode } from './apiMode';
+import { isSupabaseConfigured } from './supabaseConfigured';
 
 export type LevelAssessmentScopeOptions = {
   demoMode: boolean;
@@ -24,7 +24,7 @@ export function isDemoScope(scope: string): boolean {
   return scope === 'demo';
 }
 
-/** Guarda el nivel elegido: demo → solo local; cuenta + Supabase → BD + caché local. */
+/** Guarda el nivel elegido: demo → solo local; cuenta → Supabase + caché local. */
 export async function persistLevelAssessment(
   scope: string,
   result: LevelAssessmentResult,
@@ -32,11 +32,9 @@ export async function persistLevelAssessment(
 ): Promise<void> {
   markLevelAssessmentDone(scope, result);
 
-  if (isDemoScope(scope) || !userId) return;
+  if (isDemoScope(scope) || !userId || !isSupabaseConfigured()) return;
 
-  if (isSupabaseMode()) {
-    await UserSupabaseService.updateSkillLevel(userId, result.level);
-  }
+  await UserSupabaseService.updateSkillLevel(userId, result.level);
 }
 
 /** ¿Completó la evaluación? Demo: local. Cuenta: local o columna en users. */
@@ -46,7 +44,7 @@ export async function hasCompletedLevelAssessment(
 ): Promise<boolean> {
   if (isLevelAssessmentDone(scope)) return true;
 
-  if (isDemoScope(scope) || !userId || !isSupabaseMode()) return false;
+  if (isDemoScope(scope) || !userId || !isSupabaseConfigured()) return false;
 
   try {
     const profile = await UserSupabaseService.getByUserId(userId);
@@ -71,7 +69,7 @@ export async function loadPersistedSkillLevel(
   const local = getStoredSkillLevel(scope);
   if (local) return local;
 
-  if (isDemoScope(scope) || !userId || !isSupabaseMode()) return null;
+  if (isDemoScope(scope) || !userId || !isSupabaseConfigured()) return null;
 
   try {
     const profile = await UserSupabaseService.getByUserId(userId);

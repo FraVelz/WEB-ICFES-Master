@@ -1,17 +1,9 @@
 /**
- * Usuario (perfil, monedas): una sola entrada para Supabase o localStorage.
+ * Usuario (perfil, monedas) — Supabase `users`.
  */
 import UserSupabaseService from '@/services/supabase/UserSupabaseService';
-import {
-  getUserProfile,
-  updateUserProfile,
-  updateUsername,
-  updateUserBio,
-  updateProfileImage as updateProfileImageUtil,
-} from '@/storage/userProfile';
 import type { MappedUser } from '@/services/supabase/UserSupabaseService';
 import type { UserProfile } from '@/storage/userProfile';
-import { isSupabaseMode } from './apiMode';
 import { addCoinsBalance, getCoinsBalance, spendCoinsBalance } from './coinsPersistence';
 
 export async function loadUserProfile(
@@ -19,88 +11,64 @@ export async function loadUserProfile(
   email: string | null,
   displayName: string | null
 ): Promise<MappedUser | UserProfile | null> {
-  if (isSupabaseMode()) {
-    const profile = await UserSupabaseService.getByUserId(uid);
-    if (!profile) {
-      await UserSupabaseService.createUser(uid, {
-        email,
-        displayName,
-        username: displayName,
-      });
-      return UserSupabaseService.getByUserId(uid);
-    }
-    return profile;
+  const profile = await UserSupabaseService.getByUserId(uid);
+  if (!profile) {
+    await UserSupabaseService.createUser(uid, {
+      email,
+      displayName,
+      username: displayName,
+    });
+    return UserSupabaseService.getByUserId(uid);
   }
-  return getUserProfile();
+  return profile;
 }
 
 export async function patchUserProfile(
   uid: string,
   updates: Partial<UserProfile> | Record<string, unknown>
 ): Promise<MappedUser | UserProfile | null> {
-  if (isSupabaseMode()) {
-    return UserSupabaseService.updateProfile(uid, updates);
-  }
-  return updateUserProfile(updates);
+  return UserSupabaseService.updateProfile(uid, updates);
 }
 
 export async function setUsername(uid: string, username: string): Promise<MappedUser | UserProfile | null> {
-  if (isSupabaseMode()) {
-    return UserSupabaseService.updateProfile(uid, { username });
-  }
-  await updateUsername(username);
-  return getUserProfile();
+  return UserSupabaseService.updateProfile(uid, { username });
 }
 
 export async function setUserBio(uid: string, bio: string): Promise<MappedUser | UserProfile | null> {
-  if (isSupabaseMode()) {
-    return UserSupabaseService.updateProfile(uid, { bio });
-  }
-  return updateUserBio(bio);
+  return UserSupabaseService.updateProfile(uid, { bio });
 }
 
 export async function setUserProfileImage(uid: string, file: File | null): Promise<MappedUser | UserProfile | null> {
-  if (isSupabaseMode()) {
-    const reader = new FileReader();
-    return new Promise((resolve, reject) => {
-      reader.onload = async () => {
-        if (!file) {
-          const updated = await UserSupabaseService.updateProfile(uid, {
-            profileImage: null,
-          });
-          resolve(updated);
-          return;
-        }
-        const updated = await UserSupabaseService.updateProfile(uid, {
+  const reader = new FileReader();
+  return new Promise((resolve, reject) => {
+    reader.onload = async () => {
+      if (!file) {
+        resolve(await UserSupabaseService.updateProfile(uid, { profileImage: null }));
+        return;
+      }
+      resolve(
+        await UserSupabaseService.updateProfile(uid, {
           profileImage: reader.result,
-        });
-        resolve(updated);
-      };
-      reader.onerror = () => reject(new Error('Error al leer la imagen'));
-      reader.readAsDataURL(file || new Blob());
-    });
-  }
-  return updateProfileImageUtil(file);
+        })
+      );
+    };
+    reader.onerror = () => reject(new Error('Error al leer la imagen'));
+    reader.readAsDataURL(file || new Blob());
+  });
 }
 
 export async function addUserMoney(uid: string, amount: number): Promise<MappedUser | UserProfile | null> {
   await addCoinsBalance(uid, amount, 'user_wallet');
-  if (isSupabaseMode()) {
-    const profile = await UserSupabaseService.getByUserId(uid);
-    if (!profile) return null;
-    const balance = await getCoinsBalance(uid);
-    return { ...profile, virtualMoney: balance };
-  }
-  return getUserProfile();
+  const profile = await UserSupabaseService.getByUserId(uid);
+  if (!profile) return null;
+  const balance = await getCoinsBalance(uid);
+  return { ...profile, virtualMoney: balance };
 }
 
 export async function spendUserMoney(uid: string, amount: number): Promise<MappedUser | UserProfile | null> {
   await spendCoinsBalance(uid, amount, 'user_wallet');
-  if (isSupabaseMode()) {
-    const profile = await UserSupabaseService.getByUserId(uid);
-    if (!profile) return null;
-    const balance = await getCoinsBalance(uid);
-    return { ...profile, virtualMoney: balance };
-  }
-  return getUserProfile();
+  const profile = await UserSupabaseService.getByUserId(uid);
+  if (!profile) return null;
+  const balance = await getCoinsBalance(uid);
+  return { ...profile, virtualMoney: balance };
 }

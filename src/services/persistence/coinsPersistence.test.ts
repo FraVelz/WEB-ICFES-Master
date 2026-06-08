@@ -1,9 +1,5 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest';
 
-vi.mock('./apiMode', () => ({
-  isSupabaseMode: () => false,
-}));
-
 vi.mock('./gamificationPersistence', () => ({
   gamificationPersistence: {
     getProfile: vi.fn(async () => ({ totalCoins: 0, spentCoins: 0 })),
@@ -21,13 +17,17 @@ import { gamificationPersistence } from './gamificationPersistence';
 import { getVirtualMoney, updateUserProfile } from '@/storage/userProfile';
 import { getCoinsBalance, addCoinsBalance, spendCoinsBalance, COINS_CHANGE_EVENT } from './coinsPersistence';
 
-describe('coinsPersistence (localStorage mode)', () => {
+describe('coinsPersistence', () => {
   beforeEach(() => {
     vi.clearAllMocks();
+    vi.mocked(gamificationPersistence.getProfile).mockResolvedValue({
+      totalCoins: 200,
+      spentCoins: 0,
+    } as Awaited<ReturnType<typeof gamificationPersistence.getProfile>>);
     vi.mocked(getVirtualMoney).mockReturnValue(200);
   });
 
-  it('getCoinsBalance lee el saldo del perfil local', async () => {
+  it('getCoinsBalance lee el saldo del perfil Supabase', async () => {
     await expect(getCoinsBalance('user-1')).resolves.toBe(200);
   });
 
@@ -48,7 +48,7 @@ describe('coinsPersistence (localStorage mode)', () => {
     expect(gamificationPersistence.spendCoins).toHaveBeenCalledWith('user-1', 30, 'shop_item');
   });
 
-  it('no migra en modo localStorage', async () => {
+  it('migra saldo legacy solo cuando el balance Supabase es cero', async () => {
     await getCoinsBalance('user-1');
     expect(updateUserProfile).not.toHaveBeenCalled();
   });

@@ -8,21 +8,13 @@ Environment variables and runtime modes. For first-time setup, see [installation
 
 Copy [`.env.example`](../../../.env.example) to `.env.local` at the project root.
 
-| Variable                        | Required            | Description                                   |
-| ------------------------------- | ------------------- | --------------------------------------------- |
-| `NEXT_PUBLIC_SUPABASE_URL`      | Yes (supabase mode) | Supabase project URL                          |
-| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Yes (supabase mode) | Supabase public anon key                      |
-| `NEXT_PUBLIC_API_MODE`          | No                  | `supabase` (default) or `localStorage`        |
-| `OPENAI_API_KEY`                | No                  | OpenAI API key for `/api/chat` (AI assistant) |
+| Variable                        | Required | Description                                   |
+| ------------------------------- | -------- | --------------------------------------------- |
+| `NEXT_PUBLIC_SUPABASE_URL`      | Yes      | Supabase project URL                          |
+| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Yes      | Supabase public anon key                      |
+| `OPENAI_API_KEY`                | No       | OpenAI API key for `/api/chat` (AI assistant) |
 
-### Persistence mode (`NEXT_PUBLIC_API_MODE`)
-
-| Value          | Use                                                  |
-| -------------- | ---------------------------------------------------- |
-| `supabase`     | Production: real auth, PostgreSQL, Supabase services |
-| `localStorage` | Local dev without backend: mock data in the browser  |
-
-With `localStorage`, login/signup use a mock user in `localStorage`. For OAuth and real data, use `supabase`.
+Without Supabase env vars, login/signup and account persistence will not work. **Demo mode** (from the landing page) still uses local browser storage without an account.
 
 ### Supabase Auth (OAuth and password reset)
 

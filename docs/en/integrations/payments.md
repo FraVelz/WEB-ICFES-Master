@@ -18,7 +18,7 @@ architecture refactor.
 | Donations           | `src/features/home/components/DonationSection/`                | Simulated form on the landing page               |
 | Plans / shop        | `src/features/store/` + `src/services/store/`                  | `SubscriptionPlanService`, `PlanScheduleService` |
 | Session and plan UI | `src/features/auth/context/AuthContext.tsx`, Zustand `uiSession` | Selected plan and demo mode                      |
-| Persistence         | `@/services/persistence`, Supabase `user_plans` table          | Per `API_CONFIG.MODE`                            |
+| Persistence         | `@/services/persistence`, Supabase `user_plans` table          | Supabase + local cache per feature               |
 
 ### Plan identifiers
 

@@ -1,12 +1,17 @@
 /**
- * Exámenes / intentos: una sola entrada para Supabase o localStorage.
+ * Exámenes / intentos — lectura Supabase + fallback local.
  */
 import ExamSupabaseService from '@/services/supabase/ExamSupabaseService';
+import { isDemoUserId } from '@/services/demo/demoCoins';
 import { getStoredExams, clearExamsOnly, type AttemptWithQuestions } from '@/storage/progressStorage';
-import { isSupabaseMode } from './apiMode';
+import { isSupabaseConfigured } from './supabaseConfigured';
+
+function useRemoteExams(userId: string | undefined): userId is string {
+  return Boolean(userId && isSupabaseConfigured() && !isDemoUserId(userId));
+}
 
 export async function getExamById(examId: string, userId: string | undefined): Promise<unknown> {
-  if (isSupabaseMode() && userId) {
+  if (useRemoteExams(userId)) {
     return ExamSupabaseService.getById(examId);
   }
   const exams = getStoredExams();
@@ -14,15 +19,14 @@ export async function getExamById(examId: string, userId: string | undefined): P
 }
 
 export async function resetUserExams(userId: string | undefined): Promise<void> {
-  if (isSupabaseMode() && userId) {
+  if (useRemoteExams(userId)) {
     await ExamSupabaseService.resetUserExams(userId);
-    return;
   }
   clearExamsOnly();
 }
 
 export async function getUserExamsList(userId: string | undefined): Promise<unknown> {
-  if (isSupabaseMode() && userId) {
+  if (useRemoteExams(userId)) {
     return ExamSupabaseService.getByUserId(userId);
   }
   return getStoredExams();

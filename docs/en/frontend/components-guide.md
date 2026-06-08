@@ -11,7 +11,7 @@ import { useExam } from '@/features/exam/hooks/useExam';
 export function ExamStatsExample() {
   const { attempts, loading, saveAttempt } = useExam();
 
-  // attempts: local or Supabase history depending on API_CONFIG
+  // attempts: local or Supabase history depending on account vs demo
   // saveAttempt(payload): stores a practice or full-exam attempt
 }
 ```

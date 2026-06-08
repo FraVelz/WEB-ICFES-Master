@@ -8,7 +8,6 @@ import {
 import { FULL_EXAM_ROUTE_AREAS } from '@/features/exam/data/examAreas';
 import type { ExamQuestion } from '@/features/exam/types/question';
 import ExamQuestionsSupabaseService from '@/services/supabase/ExamQuestionsSupabaseService';
-import { isSupabaseMode } from '@/services/persistence/apiMode';
 
 const STATIC_BY_ROUTE: Record<string, ExamQuestion[]> = {
   'lectura-critica': LANGUAGE_QUESTIONS,
@@ -29,10 +28,6 @@ function getStaticForFullExam(): ExamQuestion[] {
 export async function fetchQuestionsByRouteArea(routeArea: string): Promise<ExamQuestion[]> {
   const fallback = getStaticByRouteArea(routeArea);
 
-  if (!isSupabaseMode()) {
-    return fallback;
-  }
-
   try {
     const fromDb = await ExamQuestionsSupabaseService.getByRouteArea(routeArea);
     if (fromDb.length > 0) return fromDb;
@@ -45,10 +40,6 @@ export async function fetchQuestionsByRouteArea(routeArea: string): Promise<Exam
 
 export async function fetchQuestionsForFullExam(): Promise<ExamQuestion[]> {
   const fallback = getStaticForFullExam();
-
-  if (!isSupabaseMode()) {
-    return fallback;
-  }
 
   try {
     const fromDb = await ExamQuestionsSupabaseService.getByRouteAreas([...FULL_EXAM_ROUTE_AREAS]);

@@ -41,15 +41,14 @@ Usar esta escala en el informe:
 
 - **Build y CI**: `.github/workflows/ci.yml`, scripts en `package.json`, lockfile.
 - **Config Next**: `next.config.ts`, rutas bajo `src/app/`, `not-found`, layouts por grupo `(auth)`, `(dashboard)`.
-- **Secretos y env**: `.env` en git, `.env.example` vs uso real (`NEXT_PUBLIC_SUPABASE_*`, `NEXT_PUBLIC_API_MODE`,
-  claves OpenAI si aplica).
+- **Secretos y env**: `.env` en git, `.env.example` vs uso real (`NEXT_PUBLIC_SUPABASE_*`, claves OpenAI si aplica).
 - **Dependencias**: versiones obsoletas con CVE conocidos (mencionar solo si hay evidencia razonable).
 
 ### 2. Auth, Supabase y rutas protegidas (P0–P1)
 
 - Flujos en `(auth)/`: login, signup, reset-password, onboarding, OAuth callback (`auth/callback`).
 - Protección del dashboard: `(dashboard)/layout.tsx`, redirecciones si no hay sesión.
-- Coherencia entre `NEXT_PUBLIC_API_MODE=supabase` y persistencia local (`localStorage`).
+- Coherencia entre Supabase configurado y persistencia local de demo (`localStorage` por scope demo).
 - Callback URLs documentadas en `.env.example` vs configuración real de Supabase.
 
 ### 3. Rutas, App Router y datos (P0–P1)

@@ -54,13 +54,12 @@ import { useExam } from '@/features/exam/hooks/useExam';
 const { exam, getUserExams, resetUserExams, refresh } = useExam(examId);
 ```
 
-### API configuration
+### Supabase configured
 
 ```typescript
-import API_CONFIG from '@/services/api.config';
+import { isSupabaseConfigured } from '@/services/persistence';
 
-// Current mode: supabase | localStorage (see `NEXT_PUBLIC_API_MODE`)
-console.log(API_CONFIG.MODE);
+console.log(isSupabaseConfigured());
 ```
 
 ---

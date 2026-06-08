@@ -12,12 +12,12 @@ vi.mock('@/services/supabase/UserSupabaseService', () => ({
   },
 }));
 
-vi.mock('@/services/persistence/apiMode', () => ({
-  isSupabaseMode: vi.fn(() => true),
+vi.mock('@/services/persistence/supabaseConfigured', () => ({
+  isSupabaseConfigured: vi.fn(() => true),
 }));
 
 import UserSupabaseService from '@/services/supabase/UserSupabaseService';
-import { isSupabaseMode } from '@/services/persistence/apiMode';
+import { isSupabaseConfigured } from '@/services/persistence/supabaseConfigured';
 
 describe('skillLevelPersistence', () => {
   const storage = new Map<string, string>();
@@ -25,6 +25,7 @@ describe('skillLevelPersistence', () => {
   beforeEach(() => {
     storage.clear();
     vi.clearAllMocks();
+    vi.mocked(isSupabaseConfigured).mockReturnValue(true);
     vi.stubGlobal('localStorage', {
       getItem: (key: string) => storage.get(key) ?? null,
       setItem: (key: string, value: string) => {
@@ -50,7 +51,6 @@ describe('skillLevelPersistence', () => {
   });
 
   it('persiste en Supabase y caché local para cuenta', async () => {
-    vi.mocked(isSupabaseMode).mockReturnValue(true);
     vi.mocked(UserSupabaseService.updateSkillLevel).mockResolvedValue({
       id: 'user-1',
       email: null,
@@ -76,7 +76,6 @@ describe('skillLevelPersistence', () => {
   });
 
   it('lee nivel completado desde Supabase si no hay caché local', async () => {
-    vi.mocked(isSupabaseMode).mockReturnValue(true);
     vi.mocked(UserSupabaseService.getByUserId).mockResolvedValue({
       id: 'user-2',
       email: null,

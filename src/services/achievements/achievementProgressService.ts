@@ -3,7 +3,7 @@ import { DEMO_USER_ID, isDemoUserId } from '@/services/demo/demoCoins';
 import { addDemoXP, getDemoTotalXP } from '@/services/demo/demoGamification';
 import { gamificationPersistence } from '@/services/persistence/gamificationPersistence';
 import { addCoinsBalance } from '@/services/persistence/coinsPersistence';
-import { isSupabaseMode } from '@/services/persistence/apiMode';
+import { isSupabaseConfigured } from '@/services/persistence/supabaseConfigured';
 import { calculateLevel } from '@/services/gamification/gamificationUtils';
 import GamificationSupabaseService from '@/services/supabase/GamificationSupabaseService';
 import { getStreakMetrics, loadStreakState, type StreakScope } from '@/services/streak';
@@ -169,7 +169,7 @@ export async function syncAchievementsFromGameplay(userId: string): Promise<Achi
   await awardNewUnlocks(userId, previous, next);
   writeAchievementProgress(userId, next);
 
-  if (!isDemoUserId(userId) && isSupabaseMode()) {
+  if (!isDemoUserId(userId) && isSupabaseConfigured()) {
     await GamificationSupabaseService.updateAchievements(userId, next as Record<string, unknown>);
   }
 

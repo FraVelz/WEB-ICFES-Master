@@ -1,7 +1,8 @@
 /**
- * Progreso: una sola entrada para Supabase o localStorage.
+ * Progreso agregado — Supabase `user_progress` + historial local de intentos.
  */
 import ProgressSupabaseService from '@/services/supabase/ProgressSupabaseService';
+import { isDemoUserId } from '@/services/demo/demoCoins';
 import {
   getProgress,
   getStoredExams,
@@ -12,7 +13,7 @@ import {
   type ProgressData,
   type AttemptWithQuestions,
 } from '@/storage/progressStorage';
-import { isSupabaseMode } from './apiMode';
+import { isSupabaseConfigured } from './supabaseConfigured';
 
 export type ProgressViewState = {
   progress: ProgressData | null;
@@ -21,28 +22,7 @@ export type ProgressViewState = {
   attemptHistory: AttemptWithQuestions[];
 };
 
-export async function loadProgressViewState(userId: string): Promise<ProgressViewState> {
-  if (isSupabaseMode()) {
-    const prog = await ProgressSupabaseService.getByUserId(userId);
-    const mapped: ProgressData | null = prog
-      ? {
-          totalAttempts: prog.totalAttempts,
-          totalQuestions: prog.totalCorrect * 2,
-          totalCorrect: prog.totalCorrect,
-          percentage: prog.percentage,
-          streakDays: prog.streakDays,
-          lastAttemptDate: (prog as { lastAttemptDate?: string | null }).lastAttemptDate ?? null,
-          areaStats: (prog.areaStats || {}) as ProgressData['areaStats'],
-        }
-      : null;
-    return {
-      progress: mapped,
-      areaStats: mapped?.areaStats || null,
-      recommendations: getRecommendations(mapped ?? getDefaultProgress()),
-      attemptHistory: [],
-    };
-  }
-
+function loadLocalProgressViewState(): ProgressViewState {
   const prog = getProgress();
   const exams = getStoredExams();
   const practices = getStoredPractices();
@@ -56,8 +36,36 @@ export async function loadProgressViewState(userId: string): Promise<ProgressVie
   };
 }
 
+export async function loadProgressViewState(userId: string): Promise<ProgressViewState> {
+  if (!isSupabaseConfigured() || isDemoUserId(userId)) {
+    return loadLocalProgressViewState();
+  }
+
+  const prog = await ProgressSupabaseService.getByUserId(userId);
+  const mapped: ProgressData | null = prog
+    ? {
+        totalAttempts: prog.totalAttempts,
+        totalQuestions: prog.totalCorrect * 2,
+        totalCorrect: prog.totalCorrect,
+        percentage: prog.percentage,
+        streakDays: prog.streakDays,
+        lastAttemptDate: (prog as { lastAttemptDate?: string | null }).lastAttemptDate ?? null,
+        areaStats: (prog.areaStats || {}) as ProgressData['areaStats'],
+      }
+    : null;
+
+  const local = loadLocalProgressViewState();
+
+  return {
+    progress: mapped ?? local.progress,
+    areaStats: mapped?.areaStats ?? local.areaStats,
+    recommendations: getRecommendations(mapped ?? local.progress ?? getDefaultProgress()),
+    attemptHistory: local.attemptHistory,
+  };
+}
+
 export async function resetProgressData(userId: string): Promise<void> {
-  if (isSupabaseMode()) {
+  if (isSupabaseConfigured() && !isDemoUserId(userId)) {
     await ProgressSupabaseService.upsert(userId, {
       totalAttempts: 0,
       totalCorrect: 0,
@@ -65,7 +73,6 @@ export async function resetProgressData(userId: string): Promise<void> {
       streakDays: 0,
       areaStats: {},
     });
-    return;
   }
   clearAllData();
 }
