@@ -6,7 +6,7 @@ import { Icon } from '@/shared/components/Icon';
 import { AvatarImage } from '@/features/user/components/AvatarImage';
 import { isAccountOnlyPath } from '@/features/auth/constants/accountOnlyRoutes';
 import { useUser } from '@/features/user/hooks/useUser';
-import { useAppSelector } from '@/store/hooks';
+import { useUiSessionStore } from '@/store/uiSessionStore';
 import { cn } from '@/utils/cn';
 import { FOCUS_RING, mainNavOptions, secondaryNavOptions, type NavOption } from './constants';
 
@@ -63,7 +63,7 @@ function SidebarNavLink({
 export function DesktopSidebar({ className, sidebarExpanded, onToggleSidebar }: DesktopSidebarProps) {
   const pathname = usePathname();
   const { user, rank, virtualMoney } = useUser();
-  const demoMode = useAppSelector((s) => s.uiSession.demoMode);
+  const demoMode = useUiSessionStore((s) => s.demoMode);
   const isLockedInDemo = (path: string) => demoMode && isAccountOnlyPath(path);
 
   return (

@@ -20,13 +20,13 @@ src/
 │   ├── persistence/      # Public API for features
 │   ├── api.config.ts     # Supabase vs local mode
 │   ├── supabase/
-│   ├── store/            # Plan services (not features/store or Redux)
+│   ├── store/            # Plan services (not features/store or Zustand)
 │   └── gamification/
 ├── config/               # Supabase (`supabase.ts`, `supabaseClient.ts`) and `emailMessages.ts`
 ├── components/           # App shell (Providers, guards, DashboardHeader)
 ├── hooks/                # GSAP + cross-feature hooks (`hooks/gamification/`)
 ├── lib/                  # GSAP (ScrollTrigger)
-├── store/                # Redux: uiSession (demo, plan UI) + `demoMode.ts`
+├── store/                # Zustand: uiSession (demo, plan UI) + `demoMode.ts`
 ├── types/                # Global TypeScript types
 └── utils/                # Pure utilities (`cn`)
 ```
@@ -81,7 +81,7 @@ features/feature-name/
 | ----------------- | ------------------------------------------------------------- |
 | `features/store/` | Shop components and hooks                                     |
 | `services/store/` | Plan logic (`SubscriptionPlanService`, `PlanScheduleService`) |
-| `store/` (Redux)  | UI state: demo mode, selected plan                            |
+| `store/` (Zustand) | UI state: demo mode, selected plan                                |
 
 ## Shared layer (`src/shared/`)
 

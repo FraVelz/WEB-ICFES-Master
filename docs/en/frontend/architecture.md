@@ -14,7 +14,7 @@ This project does **not** use Atomic Design as a folder layer. Organization is *
 4. **UI reused in 2+ features** (Icon, alerts)? → `src/shared/components/`.
 5. **Domain hooks used in 2+ features** (gamification)? → `src/hooks/gamification/`.
 6. **Persistence or backend integrations?** → `src/services/` (`@/services/persistence`, etc.).
-7. **Global UI state** (demo mode)? → `src/store/` (`demoMode.ts`, Redux `uiSession`).
+7. **Global UI state** (demo mode)? → `src/store/` (`uiSessionStore.ts`, `demoMode.ts`).
 8. **Unsure?** → Start in the smallest scope. Promote to `shared/` only when a **second consumer** exists outside
    that feature.
 
@@ -74,7 +74,7 @@ The `@/hooks` barrel re-exports feature hooks for convenience, but **prefer dire
 | --------------------- | ---------------------------------------------------------- |
 | `src/features/store/` | Shop UI (modals, item cards)                               |
 | `src/services/store/` | Plan and subscription services (`SubscriptionPlanService`) |
-| `src/store/`          | Redux: UI session (`uiSession`: demo, selected plan)       |
+| `src/store/`          | Zustand: UI session (`uiSession`: demo, selected plan)        |
 
 ---
 

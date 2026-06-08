@@ -35,7 +35,7 @@ Excepción: datos puros (mapas de iconos, preguntas, constantes) pueden superar 
 ## Prop drilling
 
 1. **Colocation**: estado que solo usa un hijo → `useState` / hook en ese hijo.
-2. **Hook en la hoja**: `useUser()`, Redux `demoMode`, `useShop()` donde se necesitan; no relay desde el padre si el padre no los usa.
+2. **Hook en la hoja**: `useUser()`, Zustand `demoMode`, `useShop()` donde se necesitan; no relay desde el padre si el padre no los usa.
 3. **Context local** (feature): hermanos comparten &gt; 8 campos o el hook ya existe → `XProvider` en el contenedor de la sección, **no** Context global.
 4. **Context global** solo para auth, demo/sesión UI ya existentes.
 

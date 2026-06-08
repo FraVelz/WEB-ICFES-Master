@@ -1,0 +1,90 @@
+/**
+ * Persistencia del nivel autodeclarado: localStorage (demo) o Supabase users (cuenta).
+ */
+import type { LevelAssessmentResult, SkillLevel } from '@/features/auth/types/skillLevel';
+import {
+  getStoredSkillLevel,
+  isLevelAssessmentDone,
+  markLevelAssessmentDone,
+  resolveAssessmentScope,
+} from '@/features/auth/utils/skillLevelStorage';
+import UserSupabaseService from '@/services/supabase/UserSupabaseService';
+import { isSupabaseMode } from './apiMode';
+
+export type LevelAssessmentScopeOptions = {
+  demoMode: boolean;
+  userId?: string | null;
+};
+
+export function getAssessmentScope(options: LevelAssessmentScopeOptions): string {
+  return resolveAssessmentScope(options);
+}
+
+export function isDemoScope(scope: string): boolean {
+  return scope === 'demo';
+}
+
+/** Guarda el nivel elegido: demo → solo local; cuenta + Supabase → BD + caché local. */
+export async function persistLevelAssessment(
+  scope: string,
+  result: LevelAssessmentResult,
+  userId?: string | null
+): Promise<void> {
+  markLevelAssessmentDone(scope, result);
+
+  if (isDemoScope(scope) || !userId) return;
+
+  if (isSupabaseMode()) {
+    await UserSupabaseService.updateSkillLevel(userId, result.level);
+  }
+}
+
+/** ¿Completó la evaluación? Demo: local. Cuenta: local o columna en users. */
+export async function hasCompletedLevelAssessment(
+  scope: string,
+  userId?: string | null
+): Promise<boolean> {
+  if (isLevelAssessmentDone(scope)) return true;
+
+  if (isDemoScope(scope) || !userId || !isSupabaseMode()) return false;
+
+  try {
+    const profile = await UserSupabaseService.getByUserId(userId);
+    if (!profile?.skillLevel) return false;
+
+    markLevelAssessmentDone(scope, {
+      level: profile.skillLevel,
+      completedAt: profile.levelAssessmentCompletedAt ?? new Date().toISOString(),
+    });
+    return true;
+  } catch (err) {
+    console.warn('No se pudo leer skill_level desde Supabase:', err);
+    return false;
+  }
+}
+
+/** Nivel guardado: local primero; cuenta en Supabase si hace falta. */
+export async function loadPersistedSkillLevel(
+  scope: string,
+  userId?: string | null
+): Promise<SkillLevel | null> {
+  const local = getStoredSkillLevel(scope);
+  if (local) return local;
+
+  if (isDemoScope(scope) || !userId || !isSupabaseMode()) return null;
+
+  try {
+    const profile = await UserSupabaseService.getByUserId(userId);
+    const level = profile?.skillLevel ?? null;
+    if (level) {
+      markLevelAssessmentDone(scope, {
+        level,
+        completedAt: profile?.levelAssessmentCompletedAt ?? new Date().toISOString(),
+      });
+    }
+    return level;
+  } catch (err) {
+    console.warn('No se pudo cargar skill_level desde Supabase:', err);
+    return null;
+  }
+}

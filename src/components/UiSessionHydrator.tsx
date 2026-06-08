@@ -2,28 +2,25 @@
 
 import { useEffect } from 'react';
 
-import { hydrateUiSession } from '@/store/slices/uiSessionSlice';
 import { readUiSessionFromStorage } from '@/store/readUiSessionFromStorage';
-import { useAppDispatch } from '@/store/hooks';
+import { useUiSessionStore } from '@/store/uiSessionStore';
 import { ensureDemoCoinsMinimum } from '@/services/demo/demoCoins';
 
-/** One-time sync from legacy localStorage keys into Redux after mount (client-only). */
+/** One-time sync from legacy localStorage keys into Zustand after mount (client-only). */
 export function UiSessionHydrator() {
-  const dispatch = useAppDispatch();
+  const hydrateUiSession = useUiSessionStore((s) => s.hydrateUiSession);
 
   useEffect(() => {
     const { demoMode, selectedPlan, fromPricingScrollPending } = readUiSessionFromStorage();
     if (demoMode) {
       ensureDemoCoinsMinimum();
     }
-    dispatch(
-      hydrateUiSession({
-        demoMode,
-        selectedPlan,
-        fromPricingScrollPending,
-      })
-    );
-  }, [dispatch]);
+    hydrateUiSession({
+      demoMode,
+      selectedPlan,
+      fromPricingScrollPending,
+    });
+  }, [hydrateUiSession]);
 
   return null;
 }

@@ -7,7 +7,7 @@ import { ThemeToggle } from '@/shared/components/ThemeToggle';
 import { getAreaInfo } from '@/shared/constants';
 import { useAuth } from '@/features/auth/context/AuthContext';
 import { useGamification } from '@/hooks/gamification';
-import { useAppSelector } from '@/store/hooks';
+import { useUiSessionStore } from '@/store/uiSessionStore';
 import { getStreakScope } from '@/services/streak';
 import { AreasModal } from './AreasModal';
 import { StreakModal } from './StreakModal';
@@ -29,7 +29,7 @@ export interface SecondaryHeaderProps {
 export const SecondaryHeader = ({ currentArea = 'lectura-critica', onAreaChange }: SecondaryHeaderProps) => {
   const [activeModal, setActiveModal] = useState<'areas' | 'streak' | 'store' | 'coins' | null>(null);
   const { user } = useAuth();
-  const demoMode = useAppSelector((state) => state.uiSession.demoMode);
+  const demoMode = useUiSessionStore((state) => state.demoMode);
   const streakScope = getStreakScope(user?.uid, demoMode) ?? undefined;
 
   const container_main = document.getElementById('container-main');

@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import { useAuth } from '@/features/auth/context/AuthContext';
-import { useAppSelector } from '@/store/hooks';
+import { useUiSessionStore } from '@/store/uiSessionStore';
 import { resolveCoinsUserId } from '@/services/demo/demoCoins';
 import {
   getCoinsBalance,
@@ -16,7 +16,7 @@ import {
  */
 export function useCoins() {
   const { user } = useAuth();
-  const demoMode = useAppSelector((state) => state.uiSession.demoMode);
+  const demoMode = useUiSessionStore((state) => state.demoMode);
   const coinsUserId = resolveCoinsUserId(user?.uid, demoMode);
   const [coins, setCoins] = useState(0);
   const [loading, setLoading] = useState(true);

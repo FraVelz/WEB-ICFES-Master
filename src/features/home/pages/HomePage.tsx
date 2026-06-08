@@ -1,7 +1,6 @@
 'use client';
 
-import { useAppDispatch } from '@/store/hooks';
-import { enterDemoMode } from '@/features/home/utils/enterDemoMode';
+import { enterDemoModeWithAssessment } from '@/features/home/utils/enterDemoMode';
 import { ThemeToggle } from '@/shared/components/ThemeToggle';
 
 import { HomePageDesktop } from './HomePageDesktop';
@@ -13,11 +12,8 @@ import { HomePageMobile } from './HomePageMobile';
  * Resize en PC actualiza la vista sin listeners.
  */
 export const HomePage = () => {
-  const dispatch = useAppDispatch();
-
   const handleDemoAccess = () => {
-    enterDemoMode(dispatch);
-    window.location.href = '/ruta-aprendizaje';
+    enterDemoModeWithAssessment();
   };
 
   return (

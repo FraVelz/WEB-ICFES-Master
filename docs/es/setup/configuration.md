@@ -51,7 +51,7 @@ Redirect permanente: `/aprendizaje` → `/ruta-aprendizaje` (ver `next.config.ts
 
 ## Modo demo
 
-Desde la landing, el usuario puede entrar en **modo demo** sin cuenta. El estado vive en Redux (`uiSession.demoMode`).
+Desde la landing, el usuario puede entrar en **modo demo** sin cuenta. El estado vive en Zustand (`uiSession.demoMode`).
 Ver [services-api.md](../backend/services-api.md) y `src/features/home/utils/enterDemoMode.ts`.
 
 ---

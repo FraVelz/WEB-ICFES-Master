@@ -13,8 +13,7 @@ Este documento describe las tecnologías utilizadas en **WEB-ICFES Master**, tan
 | **Next.js**       | 15.1    | Framework React con App Router, SSR y render en servidor |
 | **React**         | 19.2    | Biblioteca para construcción de interfaces               |
 | **TypeScript**    | 5.9     | Tipado estático (código nuevo y mayoría del repo en TS)  |
-| **Redux Toolkit** | 2.5     | Estado UI global (`uiSession`: demo, plan)               |
-| **react-redux**   | 9.2     | Bindings de Redux para React                             |
+| **Zustand**       | 5.0     | Estado UI global (`uiSession`: demo, plan)               |
 
 ### Estilos y animación
 
@@ -82,7 +81,7 @@ Este documento describe las tecnologías utilizadas en **WEB-ICFES Master**, tan
 ## Resumen por categoría
 
 ```text
-Desarrollo:  Next.js, React, TypeScript, Redux, Tailwind, GSAP, Vitest, ESLint, Prettier, pnpm
+Desarrollo:  Next.js, React, TypeScript, Zustand, Tailwind, GSAP, Vitest, ESLint, Prettier, pnpm
 Producción:  Next.js, React, Supabase, OpenAI, Tailwind, react-markdown, KaTeX
 ```
 

@@ -1,4 +1,4 @@
-import type { UiSessionState } from '@/store/slices/uiSessionSlice';
+import type { UiSessionState } from '@/store/uiSessionStore';
 import type { UiPlan } from '@/store/types/uiPlan';
 
 /** Lee flags de sesión UI desde localStorage (solo cliente). */

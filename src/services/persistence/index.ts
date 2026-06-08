@@ -25,6 +25,12 @@ export {
   spendUserMoney,
 } from './userPersistence';
 export { getAggregatedUserData } from './userDataBundle';
+export {
+  getAssessmentScope,
+  persistLevelAssessment,
+  hasCompletedLevelAssessment,
+  loadPersistedSkillLevel,
+} from './skillLevelPersistence';
 
 export {
   getProgress,

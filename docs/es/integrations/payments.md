@@ -17,7 +17,7 @@ refactorización de arquitectura.
 | ---------------- | -------------------------------------------------------------- | ------------------------------------------------ |
 | Donaciones       | `src/features/home/components/DonationSection/`                | Formulario simulado en landing                   |
 | Planes / tienda  | `src/features/store/` + `src/services/store/`                  | `SubscriptionPlanService`, `PlanScheduleService` |
-| Sesión y plan UI | `src/features/auth/context/AuthContext.tsx`, Redux `uiSession` | Plan seleccionado y modo demo                    |
+| Sesión y plan UI | `src/features/auth/context/AuthContext.tsx`, Zustand `uiSession` | Plan seleccionado y modo demo                    |
 | Persistencia     | `@/services/persistence`, tabla `user_plans` en Supabase       | Según `API_CONFIG.MODE`                          |
 
 ### Identificadores de plan

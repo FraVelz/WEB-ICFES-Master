@@ -28,7 +28,7 @@ Coloca cada archivo donde **realmente se usa**. No crear piezas globales si solo
 | UI transversal (Icon, Footer, MascotaCircle) | `src/shared/components/` |
 | Constantes de dominio compartidas (áreas ICFES) | `src/shared/constants/` |
 | Persistencia / Supabase / gamificación | `src/services/` |
-| Redux (uiSession) | `src/store/` |
+| Zustand (uiSession) | `src/store/` |
 | Hooks GSAP usados en varias features | `src/hooks/` |
 | Hooks de una sola feature | `src/features/<feature>/hooks/` |
 | Utilidades puras (`cn`) | `src/utils/` |

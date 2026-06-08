@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { getUserProfile, getUserRank, type UserProfile, type UserRank } from '@/services/persistence';
 import { getCoinsBalance, addCoinsBalance, spendCoinsBalance, COINS_CHANGE_EVENT } from '@/services/persistence';
 import { useAuth } from '@/features/auth/context/AuthContext';
-import { useAppSelector } from '@/store/hooks';
+import { useUiSessionStore } from '@/store/uiSessionStore';
 import { resolveCoinsUserId } from '@/services/demo/demoCoins';
 
 /**
@@ -15,7 +15,7 @@ export const useUser = () => {
   const [virtualMoney, setVirtualMoney] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const { user: authUser } = useAuth();
-  const demoMode = useAppSelector((state) => state.uiSession.demoMode);
+  const demoMode = useUiSessionStore((state) => state.demoMode);
   const coinsUserId = resolveCoinsUserId(authUser?.uid, demoMode);
 
   const loadCoins = useCallback(async () => {

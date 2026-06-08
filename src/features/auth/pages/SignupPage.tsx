@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation';
 import { Icon } from '@/shared/components/Icon';
 import { GoogleSignInButton } from '@/features/auth/components/GoogleSignInButton';
 import { useAuth } from '@/features/auth/context/AuthContext';
-import { AUTH_DEFAULT_REDIRECT } from '@/features/auth/constants/authRoutes';
+import { buildLevelAssessmentUrl } from '@/features/auth/constants/skillLevelRoutes';
 import { mapSupabaseAuthError, REQUIRES_EMAIL_CONFIRMATION } from '@/features/auth/utils/mapSupabaseAuthError';
 import { FULL_PAGE_SHELL_CLASS } from '@/shared/constants/pageShell';
 
@@ -94,7 +94,7 @@ export const SignupPage = () => {
     try {
       await signup(formData.email.trim(), formData.password, formData.displayName.trim());
       sessionStorage.removeItem('onboardingAnswers');
-      router.push(AUTH_DEFAULT_REDIRECT);
+      router.push(buildLevelAssessmentUrl('account'));
     } catch (err) {
       const message = err instanceof Error ? err.message : String(err);
       if (message === REQUIRES_EMAIL_CONFIRMATION) {

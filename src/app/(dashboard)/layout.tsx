@@ -2,6 +2,7 @@ import React from 'react';
 
 import { DashboardHeader } from '@/components/DashboardHeader';
 import { DashboardThemeControl } from '@/components/DashboardThemeControl';
+import { LevelAssessmentGate } from '@/components/LevelAssessmentGate';
 import { ClientChecker } from '@/features/store/components/ClientChecker';
 
 import { cn } from '@/utils/cn';
@@ -9,6 +10,7 @@ import { cn } from '@/utils/cn';
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   return (
     <div className="from-surface via-surface-via to-surface text-on-surface relative flex min-h-screen overflow-hidden bg-linear-to-b">
+      <LevelAssessmentGate />
       <ClientChecker />
 
       <div className="flex h-screen w-screen flex-col-reverse lg:flex-row">

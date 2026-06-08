@@ -1,1 +1,1 @@
-export { enterDemoMode, exitDemoModeToHome } from '@/store/demoMode';
+export { enterDemoMode, enterDemoModeWithAssessment, exitDemoModeToHome } from '@/store/demoMode';

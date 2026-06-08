@@ -1,6 +1,7 @@
 import { describe, expect, it, vi, beforeEach } from 'vitest';
 
 import { enterDemoMode, exitDemoModeToHome } from '@/store/demoMode';
+import { useUiSessionStore } from '@/store/uiSessionStore';
 import { DEMO_COINS_MIN } from '@/services/demo/demoCoins';
 
 describe('demoMode', () => {
@@ -8,6 +9,12 @@ describe('demoMode', () => {
 
   beforeEach(() => {
     storage.clear();
+    useUiSessionStore.setState({
+      hydrated: false,
+      demoMode: false,
+      selectedPlan: null,
+      fromPricingScrollPending: false,
+    });
     vi.restoreAllMocks();
     vi.stubGlobal('localStorage', {
       getItem: (key: string) => storage.get(key) ?? null,
@@ -21,12 +28,11 @@ describe('demoMode', () => {
     });
   });
 
-  it('persiste demoMode y despacha setDemoMode', () => {
-    const dispatch = vi.fn();
-    enterDemoMode(dispatch);
+  it('persiste demoMode y actualiza el store', () => {
+    enterDemoMode();
     expect(storage.get('demoMode')).toBe('true');
     expect(storage.get('icfes_demo_coins')).toBe(String(DEMO_COINS_MIN));
-    expect(dispatch).toHaveBeenCalledWith(expect.objectContaining({ type: expect.stringContaining('setDemoMode') }));
+    expect(useUiSessionStore.getState().demoMode).toBe(true);
   });
 
   it('sale del demo y redirige al home', () => {

@@ -3,8 +3,7 @@
 import type { ReactNode } from 'react';
 import { createContext, useContext, useEffect, useState, useCallback } from 'react';
 import { supabase } from '@/config/supabase';
-import { useAppDispatch } from '@/store/hooks';
-import { setDemoMode } from '@/store/slices/uiSessionSlice';
+import { useUiSessionStore } from '@/store/uiSessionStore';
 import API_CONFIG from '@/services/api.config';
 import UserSupabaseService from '@/services/supabase/UserSupabaseService';
 import { getAggregatedUserData } from '@/services/persistence';
@@ -28,14 +27,13 @@ export const useAuth = () => {
 };
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const dispatch = useAppDispatch();
   const [user, setUser] = useState<AuthUser | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   const clearDemoMode = useCallback(() => {
-    dispatch(setDemoMode(false));
-  }, [dispatch]);
+    useUiSessionStore.getState().setDemoMode(false);
+  }, []);
 
   const migrateStreakOnAuth = useCallback(async (userId: string) => {
     try {

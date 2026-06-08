@@ -3,7 +3,7 @@
 import { useEffect } from 'react';
 
 import { useAuth } from '@/features/auth/context/AuthContext';
-import { useAppSelector } from '@/store/hooks';
+import { useUiSessionStore } from '@/store/uiSessionStore';
 import {
   backfillStreakFromAttempts,
   getLocalDateString,
@@ -33,7 +33,7 @@ function markRecordedToday(scope: StreakScope): void {
  */
 export function useDailyStreakOnLearningRoute(): void {
   const { user } = useAuth();
-  const demoMode = useAppSelector((state) => state.uiSession.demoMode);
+  const demoMode = useUiSessionStore((state) => state.demoMode);
   const scope = getStreakScope(user?.uid, demoMode);
 
   useEffect(() => {

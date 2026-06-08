@@ -9,11 +9,31 @@ import { ThemeToggle } from '@/shared/components/ThemeToggle';
 import { GoogleSignInButton } from '@/features/auth/components/GoogleSignInButton';
 import { useAuth } from '@/features/auth/context/AuthContext';
 import { AUTH_DEFAULT_REDIRECT } from '@/features/auth/constants/authRoutes';
+import { buildLevelAssessmentUrl, getPathForSkillLevel } from '@/features/auth/constants/skillLevelRoutes';
 import { mapSupabaseAuthError } from '@/features/auth/utils/mapSupabaseAuthError';
+import {
+  getAssessmentScope,
+  hasCompletedLevelAssessment,
+  loadPersistedSkillLevel,
+} from '@/services/persistence/skillLevelPersistence';
+
+async function redirectAfterAuth(
+  userId: string,
+  navigate: (path: string) => void
+): Promise<void> {
+  const scope = getAssessmentScope({ demoMode: false, userId });
+  const done = await hasCompletedLevelAssessment(scope, userId);
+  if (!done) {
+    navigate(buildLevelAssessmentUrl('account'));
+    return;
+  }
+  const level = await loadPersistedSkillLevel(scope, userId);
+  navigate(level ? getPathForSkillLevel(level) : AUTH_DEFAULT_REDIRECT);
+}
 
 export const LoginPage = () => {
   const router = useRouter();
-  const { login, isAuthenticated, loading: authLoading } = useAuth();
+  const { login, isAuthenticated, loading: authLoading, user } = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -21,17 +41,21 @@ export const LoginPage = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
-    if (!authLoading && isAuthenticated) {
-      router.replace(AUTH_DEFAULT_REDIRECT);
+    if (!authLoading && isAuthenticated && user?.uid) {
+      void redirectAfterAuth(user.uid, (path) => router.replace(path));
     }
-  }, [authLoading, isAuthenticated, router]);
+  }, [authLoading, isAuthenticated, router, user?.uid]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
     setIsSubmitting(true);
     try {
-      await login(email.trim(), password);
+      const loggedIn = await login(email.trim(), password);
+      if (loggedIn?.uid) {
+        await redirectAfterAuth(loggedIn.uid, (path) => router.push(path));
+        return;
+      }
       router.push(AUTH_DEFAULT_REDIRECT);
     } catch (err) {
       setError(mapSupabaseAuthError(err, 'No se pudo iniciar sesión. Intenta de nuevo.'));

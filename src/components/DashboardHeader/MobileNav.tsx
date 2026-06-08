@@ -6,7 +6,7 @@ import { Icon } from '@/shared/components/Icon';
 import { ModalOverlay } from '@/shared/components/ModalOverlay';
 import { ThemeToggle } from '@/shared/components/ThemeToggle';
 import { isAccountOnlyPath } from '@/features/auth/constants/accountOnlyRoutes';
-import { useAppSelector } from '@/store/hooks';
+import { useUiSessionStore } from '@/store/uiSessionStore';
 import { cn } from '@/utils/cn';
 import { FOCUS_RING, mainNavOptions, mobileMenuOptions, type NavOption } from './constants';
 
@@ -18,7 +18,7 @@ type MobileNavProps = {
 
 export function MobileNav({ menuOpen, onToggleMenu, onCloseMenu }: MobileNavProps) {
   const pathname = usePathname();
-  const demoMode = useAppSelector((s) => s.uiSession.demoMode);
+  const demoMode = useUiSessionStore((s) => s.demoMode);
   const isLockedInDemo = (path: string) => demoMode && isAccountOnlyPath(path);
 
   return (

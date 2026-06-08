@@ -1,4 +1,4 @@
-/** Plan card shape used by pricing / payment (serializable for Redux + localStorage). */
+/** Plan card shape used by pricing / payment (serializable for localStorage). */
 export interface UiPlan {
   popular?: boolean;
   name: string;

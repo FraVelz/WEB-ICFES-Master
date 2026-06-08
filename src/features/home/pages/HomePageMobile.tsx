@@ -5,11 +5,9 @@ import { MASCOT_IMAGES } from '@/assets';
 import { MascotaCircle } from '@/shared/components/MascotaCircle';
 import { ThemeToggle } from '@/shared/components/ThemeToggle';
 
-import { useAppDispatch } from '@/store/hooks';
-import { enterDemoMode } from '@/features/home/utils/enterDemoMode';
+import { enterDemoModeWithAssessment } from '@/features/home/utils/enterDemoMode';
 
 export const HomePageMobile = () => {
-  const dispatch = useAppDispatch();
   return (
     <div className="from-surface via-surface-via to-surface text-on-surface flex h-dvh w-screen flex-col bg-linear-to-b">
       {/* Background glow — mobile layout */}
@@ -43,10 +41,7 @@ export const HomePageMobile = () => {
       <div className="relative z-10 flex w-full flex-col gap-3 px-6 py-6">
         <button
           onClick={() => {
-            enterDemoMode(dispatch);
-            if (typeof window !== 'undefined') {
-              window.location.href = '/ruta-aprendizaje';
-            }
+            enterDemoModeWithAssessment();
           }}
           className={cn(
             'from-cta-from to-cta-to block w-full transform rounded-lg bg-linear-to-r py-3',

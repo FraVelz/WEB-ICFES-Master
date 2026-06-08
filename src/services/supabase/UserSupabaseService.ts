@@ -3,7 +3,16 @@
  */
 import { supabase } from '@/config/supabase';
 
+import type { SkillLevel } from '@/features/auth/types/skillLevel';
+
 const TABLE = 'users';
+
+const VALID_SKILL_LEVELS: SkillLevel[] = ['basics', 'intermediate', 'advanced'];
+
+function parseSkillLevel(value: unknown): SkillLevel | null {
+  if (typeof value !== 'string') return null;
+  return VALID_SKILL_LEVELS.includes(value as SkillLevel) ? (value as SkillLevel) : null;
+}
 
 export interface DbUserRow {
   id: string;
@@ -14,6 +23,8 @@ export interface DbUserRow {
   profile_image?: string | null;
   photo_url?: string | null;
   virtual_money?: number | null;
+  skill_level?: string | null;
+  level_assessment_completed_at?: string | null;
   created_at?: string | null;
   updated_at?: string | null;
 }
@@ -26,6 +37,8 @@ export interface MappedUser {
   bio: string | null;
   profileImage: string | null;
   virtualMoney: number;
+  skillLevel: SkillLevel | null;
+  levelAssessmentCompletedAt: string | null;
   createdAt: string | null;
   updatedAt: string | null;
 }
@@ -41,6 +54,8 @@ const mapFromDb = (row: DbUserRow | Record<string, unknown> | null): MappedUser 
     bio: (r.bio as string | null) ?? null,
     profileImage: ((r.profile_image ?? r.photo_url) as string | null) ?? null,
     virtualMoney: Number(r.virtual_money) || 0,
+    skillLevel: parseSkillLevel(r.skill_level),
+    levelAssessmentCompletedAt: (r.level_assessment_completed_at as string | null) ?? null,
     createdAt: (r.created_at as string | null) ?? null,
     updatedAt: (r.updated_at as string | null) ?? null,
   };
@@ -122,6 +137,23 @@ const UserSupabaseService = {
     const user = await this.getByUserId(userId);
     const current = (user?.virtualMoney ?? 0) + amount;
     return this.updateProfile(userId, { virtualMoney: current });
+  },
+
+  async updateSkillLevel(userId: string, skillLevel: SkillLevel): Promise<MappedUser> {
+    const sb = ensureSupabase();
+    const completedAt = new Date().toISOString();
+    const { data, error } = await sb
+      .from(TABLE)
+      .update({
+        skill_level: skillLevel,
+        level_assessment_completed_at: completedAt,
+        updated_at: completedAt,
+      })
+      .eq('id', userId)
+      .select()
+      .single();
+    if (error) throw new Error(`Error guardando nivel de preparación: ${error.message}`);
+    return mapFromDb(data as DbUserRow)!;
   },
 };
 

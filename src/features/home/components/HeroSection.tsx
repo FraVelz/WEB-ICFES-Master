@@ -5,20 +5,14 @@ import Link from 'next/link';
 import { Icon } from '@/shared/components/Icon';
 import { AnimatedReveal } from '@/features/home/components/AnimatedReveal';
 
-import { useAppDispatch } from '@/store/hooks';
-import { enterDemoMode } from '@/features/home/utils/enterDemoMode';
+import { enterDemoModeWithAssessment } from '@/features/home/utils/enterDemoMode';
 
 export const HeroSection = ({ onDemoAccess }: { onDemoAccess: () => void }) => {
-  const dispatch = useAppDispatch();
-
   const handleDemoClick = () => {
     if (onDemoAccess) {
       onDemoAccess();
     } else {
-      enterDemoMode(dispatch);
-      if (typeof window !== 'undefined') {
-        window.location.href = '/ruta-aprendizaje';
-      }
+      enterDemoModeWithAssessment();
     }
   };
 

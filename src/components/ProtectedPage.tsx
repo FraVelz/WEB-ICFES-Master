@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import { cn } from '@/utils/cn';
 
-import { useAppSelector } from '@/store/hooks';
+import { useUiSessionStore } from '@/store/uiSessionStore';
 import { FULL_PAGE_SHELL_CLASS } from '@/shared/constants/pageShell';
 
 import SignInRequiredBlock from './SignInRequiredBlock';
@@ -26,8 +26,8 @@ export default function ProtectedPage({
 }: ProtectedPageProps) {
   const { isAccountAuth, loading } = useAuth();
   const router = useRouter();
-  const demoMode = useAppSelector((s) => s.uiSession.demoMode);
-  const hydrated = useAppSelector((s) => s.uiSession.hydrated);
+  const demoMode = useUiSessionStore((s) => s.demoMode);
+  const hydrated = useUiSessionStore((s) => s.hydrated);
 
   const hasAccess = demoMode || isAccountAuth;
 
