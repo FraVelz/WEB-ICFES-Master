@@ -1,15 +1,10 @@
 import { Suspense } from 'react';
+import { LoadingState } from '@/shared/components/LoadingState';
 import { PerfilPublico } from '@/features/user/pages';
 
 export default function Page() {
   return (
-    <Suspense
-      fallback={
-        <div className="flex min-h-dvh items-center justify-center bg-slate-950">
-          <div className="text-app-accent animate-spin text-4xl">...</div>
-        </div>
-      }
-    >
+    <Suspense fallback={<LoadingState label="Cargando perfil público..." layout="page" />}>
       <PerfilPublico />
     </Suspense>
   );

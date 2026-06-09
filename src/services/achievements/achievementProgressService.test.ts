@@ -2,6 +2,7 @@ import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { DEMO_USER_ID } from '@/services/demo/demoCoins';
 import { addCoinsBalance } from '@/services/persistence/coinsPersistence';
+import { loadLecturaReadSections } from '@/features/lectura/services/lecturaReadPersistence';
 import {
   mergeAchievementProgressMaps,
   readAchievementProgress,
@@ -48,6 +49,19 @@ vi.mock('@/services/persistence/supabaseConfigured', () => ({
 vi.mock('@/services/demo/demoGamification', () => ({
   getDemoTotalXP: vi.fn(() => 0),
   addDemoXP: vi.fn(() => 100),
+}));
+
+vi.mock('@/features/lectura/services/lecturaReadPersistence', () => ({
+  loadLecturaReadSections: vi.fn(() => []),
+}));
+
+vi.mock('@/services/studyTime/studyTimeService', () => ({
+  getStudyTimeStats: vi.fn(() => ({
+    totalMinutes: 0,
+    longestSessionMinutes: 0,
+    currentSessionMinutes: 0,
+  })),
+  STUDY_TIME_META_KEY: '_studyTime',
 }));
 
 describe('achievementProgressService', () => {
@@ -114,5 +128,17 @@ describe('achievementProgressService', () => {
     const saved = readAchievementProgress('user-abc');
     expect(saved.exam_1?.unlocked).toBe(true);
     expect(saved.practice_1?.unlocked).toBe(true);
+  });
+
+  it('desbloquea logros de lectura al marcar secciones como leídas', async () => {
+    vi.mocked(loadLecturaReadSections).mockReturnValue(['importancia', 'consejos']);
+
+    await syncAchievementsFromGameplay(DEMO_USER_ID);
+
+    const saved = readAchievementProgress(DEMO_USER_ID);
+    expect(saved.read_importancia?.unlocked).toBe(true);
+    expect(saved.read_consejos?.unlocked).toBe(true);
+    expect(saved.read_informacion?.unlocked).toBe(false);
+    expect(vi.mocked(addCoinsBalance)).toHaveBeenCalled();
   });
 });

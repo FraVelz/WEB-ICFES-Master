@@ -5,33 +5,14 @@ import { useSearchParams, useRouter } from 'next/navigation';
 import { cn } from '@/utils/cn';
 import { Icon } from '@/shared/components/Icon';
 import { LoadingState } from '@/shared/components/LoadingState';
-import { useUserProfile } from '../hooks/useUserProfile';
+import { usePublicUserProfile } from '../hooks/usePublicUserProfile';
 import { ProfilePageLayout } from '../components/profile/ProfilePageLayout';
 import { ProfileHeroCard } from '../components/profile/ProfileHeroCard';
 import { ProfileCoursesSection } from '../components/profile/ProfileCoursesSection';
 import { ProfileStatsSection } from '../components/profile/ProfileStatsSection';
 import { ProfileAchievementsSection } from '../components/profile/ProfileAchievementsSection';
-
-function ProfileErrorState({ title, message, onBack }: { title: string; message: string; onBack: () => void }) {
-  return (
-    <div className="flex min-h-dvh items-center justify-center bg-slate-950 text-white">
-      <div className="max-w-md space-y-6 px-4 text-center">
-        <div className="text-6xl text-slate-700">
-          <Icon name="user-slash" />
-        </div>
-        <h2 className="text-2xl font-bold">{title}</h2>
-        <p className="text-slate-400">{message}</p>
-        <button
-          type="button"
-          onClick={onBack}
-          className="bg-app-accent-strong hover:bg-app-ring cursor-pointer rounded-lg px-6 py-2 font-medium transition-colors"
-        >
-          Volver al inicio
-        </button>
-      </div>
-    </div>
-  );
-}
+import { PublicProfileErrorState } from '../components/profile/PublicProfileErrorState';
+import { PublicProfileChrome } from '../components/profile/PublicProfileChrome';
 
 export const PerfilPublico = () => {
   const searchParams = useSearchParams();
@@ -49,18 +30,21 @@ export const PerfilPublico = () => {
     coursesProgress,
     loading,
     exists,
-  } = useUserProfile(userId || undefined);
+    errorCode,
+    isOwnProfile,
+  } = usePublicUserProfile(userId);
 
   const [copied, setCopied] = useState(false);
   const [reported, setReported] = useState(false);
 
-  if (!userId) {
+  if (!userId || errorCode === 'invalid_id') {
     return (
-      <ProfileErrorState
-        title="Enlace inválido"
-        message="Debes proporcionar un ID de usuario en la URL."
-        onBack={() => router.push('/')}
-      />
+      <div className="min-h-dvh bg-linear-to-b from-surface via-surface-via to-surface px-4 py-6">
+        <div className="container mx-auto max-w-6xl">
+          <PublicProfileChrome />
+          <PublicProfileErrorState errorCode="invalid_id" userId={userId} isOwnProfile={isOwnProfile} />
+        </div>
+      </div>
     );
   }
 
@@ -70,11 +54,16 @@ export const PerfilPublico = () => {
 
   if (!exists) {
     return (
-      <ProfileErrorState
-        title="Usuario no encontrado"
-        message="El perfil que buscas no existe o ha sido eliminado."
-        onBack={() => router.push('/')}
-      />
+      <div className="min-h-dvh bg-linear-to-b from-surface via-surface-via to-surface px-4 py-6">
+        <div className="container mx-auto max-w-6xl">
+          <PublicProfileChrome />
+          <PublicProfileErrorState
+            errorCode={errorCode ?? 'not_found'}
+            userId={userId}
+            isOwnProfile={isOwnProfile}
+          />
+        </div>
+      </div>
     );
   }
 
@@ -94,6 +83,24 @@ export const PerfilPublico = () => {
 
   return (
     <ProfilePageLayout glowVariant="public">
+      <PublicProfileChrome />
+      {isOwnProfile && (
+        <div className="mb-6 flex justify-end">
+          <button
+            type="button"
+            onClick={() => router.push('/perfil')}
+            className={cn(
+              'text-app-accent hover:text-app-accent-muted inline-flex cursor-pointer items-center gap-2 text-sm font-semibold transition-colors',
+              'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none',
+              'focus-visible:ring-offset-surface'
+            )}
+          >
+            <Icon name="circle-user" />
+            Ver mi perfil privado
+          </button>
+        </div>
+      )}
+
       <ProfileHeroCard
         profileImage={profileImage}
         name={name}

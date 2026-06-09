@@ -1,4 +1,5 @@
 import { Icon } from '@/shared/components/Icon';
+import { formatStudyTime } from '@/services/studyTime';
 
 type Achievement = { id: string; status: string };
 
@@ -6,6 +7,7 @@ type ProfileStatsSectionProps = {
   achievements: Achievement[];
   level: number;
   totalXP: number;
+  studyTimeMinutes?: number;
   title?: string;
   showRanking?: boolean;
 };
@@ -14,11 +16,12 @@ export function ProfileStatsSection({
   achievements,
   level,
   totalXP,
+  studyTimeMinutes = 0,
   title = 'Estadísticas Rápidas',
   showRanking = false,
 }: ProfileStatsSectionProps) {
   const completed = achievements.filter((a) => a.status === 'completed').length;
-  const cols = showRanking ? 'grid-cols-2 sm:grid-cols-4' : 'grid-cols-3';
+  const cols = showRanking ? 'grid-cols-2 sm:grid-cols-4' : 'grid-cols-2 sm:grid-cols-4';
 
   return (
     <div className="rounded-2xl border border-slate-800 bg-slate-900/50 p-6">
@@ -38,6 +41,10 @@ export function ProfileStatsSection({
         <div className="rounded-xl bg-slate-800/50 p-4 text-center">
           <div className="text-2xl font-bold text-white">{typeof totalXP === 'number' ? totalXP : 0}</div>
           <div className="mt-1 text-xs text-slate-400 uppercase">XP Total</div>
+        </div>
+        <div className="rounded-xl bg-slate-800/50 p-4 text-center">
+          <div className="text-2xl font-bold text-white">{formatStudyTime(studyTimeMinutes)}</div>
+          <div className="mt-1 text-xs text-slate-400 uppercase">Tiempo de estudio</div>
         </div>
         {showRanking && (
           <div className="rounded-xl bg-slate-800/50 p-4 text-center">

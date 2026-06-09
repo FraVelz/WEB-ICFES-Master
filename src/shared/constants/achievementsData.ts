@@ -89,6 +89,36 @@ export const ACHIEVEMENTS_DATA = [
     xpReward: 150,
     coinsReward: 75,
   },
+  {
+    id: 'read_importancia',
+    category: 'lectura',
+    title: 'Importancia leída',
+    description: 'Marca como leída la sección Importancia en Lectura',
+    icon: 'info-circle',
+    target: 1,
+    xpReward: 50,
+    coinsReward: 25,
+  },
+  {
+    id: 'read_informacion',
+    category: 'lectura',
+    title: 'Información leída',
+    description: 'Marca como leída la sección Información en Lectura',
+    icon: 'clipboard-list',
+    target: 1,
+    xpReward: 50,
+    coinsReward: 25,
+  },
+  {
+    id: 'read_consejos',
+    category: 'lectura',
+    title: 'Consejos leídos',
+    description: 'Marca como leída la sección Consejos en Lectura',
+    icon: 'lightbulb',
+    target: 1,
+    xpReward: 50,
+    coinsReward: 25,
+  },
 ] as const;
 
 export const ACHIEVEMENT_CATEGORIES = {
@@ -97,6 +127,7 @@ export const ACHIEVEMENT_CATEGORIES = {
   rendimiento: { label: 'Rendimiento', icon: 'bolt' },
   constancia: { label: 'Constancia', icon: 'fire' },
   metas: { label: 'Metas', icon: 'trophy' },
+  lectura: { label: 'Lectura', icon: 'book-open' },
 } as const;
 
 export type AchievementCategoryKey = keyof typeof ACHIEVEMENT_CATEGORIES;

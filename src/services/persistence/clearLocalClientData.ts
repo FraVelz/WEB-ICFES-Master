@@ -30,6 +30,7 @@ export function clearLocalClientData(userId?: string | null): void {
     localStorage.removeItem(`icfes_level_assessment_done_${userId}`);
     localStorage.removeItem(`icfes_level_assessment_meta_${userId}`);
     localStorage.removeItem(`icfes_lectura_read_${userId}`);
+    localStorage.removeItem(`icfes_study_time_${userId}`);
   }
 
   localStorage.removeItem('icfes_achievement_progress_demo');
@@ -37,11 +38,16 @@ export function clearLocalClientData(userId?: string | null): void {
   localStorage.removeItem('icfes_level_assessment_done_demo');
   localStorage.removeItem('icfes_level_assessment_meta_demo');
   localStorage.removeItem('icfes_lectura_read_demo');
+  localStorage.removeItem('icfes_study_time_demo');
 
   for (let i = localStorage.length - 1; i >= 0; i--) {
     const key = localStorage.key(i);
     if (!key) continue;
-    if (key.startsWith('icfes_achievement_progress_') || key.startsWith('icfes_streak_dates_')) {
+    if (
+      key.startsWith('icfes_achievement_progress_') ||
+      key.startsWith('icfes_streak_dates_') ||
+      key.startsWith('icfes_study_time_')
+    ) {
       localStorage.removeItem(key);
     }
   }

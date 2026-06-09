@@ -14,14 +14,37 @@ type ProfileAchievementsSectionProps = {
   onViewAll?: () => void;
 };
 
+const STATUS_ORDER: Record<string, number> = {
+  completed: 0,
+  in_progress: 1,
+  incomplete: 2,
+};
+
+function sortAchievementsForProfile(achievements: Achievement[]): Achievement[] {
+  return [...achievements].sort(
+    (a, b) => (STATUS_ORDER[a.status] ?? 3) - (STATUS_ORDER[b.status] ?? 3)
+  );
+}
+
 export function ProfileAchievementsSection({ achievements, showViewAll, onViewAll }: ProfileAchievementsSectionProps) {
+  const sortedAchievements = sortAchievementsForProfile(achievements);
+  const visibleAchievements = sortedAchievements.slice(0, 9);
+  const completedCount = achievements.filter((achievement) => achievement.status === 'completed').length;
+
   return (
     <div className="sticky top-24 rounded-2xl border border-slate-800 bg-slate-900/50 p-6">
       <div className="mb-6 flex items-center justify-between">
-        <h2 className="flex items-center gap-3 text-xl font-bold">
-          <Icon name="trophy" className="text-yellow-400" />
-          Logros
-        </h2>
+        <div>
+          <h2 className="flex items-center gap-3 text-xl font-bold">
+            <Icon name="trophy" className="text-yellow-400" />
+            Logros
+          </h2>
+          {achievements.length > 0 && (
+            <p className="mt-1 text-xs text-slate-400">
+              {completedCount} de {achievements.length} desbloqueados
+            </p>
+          )}
+        </div>
         {showViewAll && onViewAll && (
           <button
             type="button"
@@ -34,8 +57,9 @@ export function ProfileAchievementsSection({ achievements, showViewAll, onViewAl
       </div>
 
       <div className="grid grid-cols-3 gap-3">
-        {achievements.slice(0, 9).map((achievement) => {
+        {visibleAchievements.map((achievement) => {
           const isUnlocked = achievement.status === 'completed';
+          const inProgress = achievement.status === 'in_progress';
           return (
             <div
               key={achievement.id}
@@ -43,7 +67,9 @@ export function ProfileAchievementsSection({ achievements, showViewAll, onViewAl
                 'relative flex aspect-square flex-col items-center justify-center rounded-xl border p-2 transition-all',
                 isUnlocked
                   ? 'border-yellow-500/30 bg-yellow-500/10 text-yellow-400'
-                  : 'border-slate-700 bg-slate-800/50 text-slate-600 opacity-50 grayscale'
+                  : inProgress
+                    ? 'border-app-ring/40 bg-app-ring/10 text-app-accent'
+                    : 'border-slate-700 bg-slate-800/50 text-slate-600 opacity-50 grayscale'
               )}
               title={achievement.title}
             >

@@ -8,6 +8,8 @@ import { calculateLevel } from '@/services/gamification/gamificationUtils';
 import GamificationSupabaseService from '@/services/supabase/GamificationSupabaseService';
 import { getStreakMetrics, loadStreakState, type StreakScope } from '@/services/streak';
 import { getCompletedLessons, getStoredExams, getStoredPractices } from '@/storage/progressStorage';
+import { loadLecturaReadSections } from '@/features/lectura/services/lecturaReadPersistence';
+import { getStudyTimeStats, STUDY_TIME_META_KEY } from '@/services/studyTime/studyTimeService';
 
 export type AchievementProgressEntry = {
   current: number;
@@ -101,7 +103,11 @@ function buildProgressFromGameplay(
   examCount: number,
   perfectCount: number,
   currentStreak: number,
-  level: number
+  level: number,
+  readImportancia: number,
+  readInformacion: number,
+  readConsejos: number,
+  longestStudySessionMinutes: number
 ): AchievementProgressMap {
   const metrics: Record<string, number> = {
     study_1: completedLessons,
@@ -112,6 +118,10 @@ function buildProgressFromGameplay(
     practice_1: practiceCount,
     practice_5: practiceCount,
     exam_1: examCount,
+    time_1: longestStudySessionMinutes,
+    read_importancia: readImportancia,
+    read_informacion: readInformacion,
+    read_consejos: readConsejos,
   };
 
   const next: AchievementProgressMap = {};
@@ -165,6 +175,8 @@ async function computeAchievementProgressFromGameplay(userId: string): Promise<A
   const streakState = await loadStreakState(scope);
   const streakMetrics = getStreakMetrics(streakState);
   const level = await readLevel(userId);
+  const readSections = loadLecturaReadSections(userId);
+  const studyTime = getStudyTimeStats(userId);
 
   return buildProgressFromGameplay(
     getCompletedLessons().length,
@@ -173,7 +185,11 @@ async function computeAchievementProgressFromGameplay(userId: string): Promise<A
     countPerfectAttempts(getStoredPractices() as Array<Record<string, unknown>>) +
       countPerfectAttempts(getStoredExams() as Array<Record<string, unknown>>),
     streakMetrics.currentStreak,
-    level
+    level,
+    readSections.includes('importancia') ? 1 : 0,
+    readSections.includes('informacion') ? 1 : 0,
+    readSections.includes('consejos') ? 1 : 0,
+    studyTime.longestSessionMinutes
   );
 }
 
@@ -192,6 +208,17 @@ async function loadRemoteAchievementProgress(userId: string): Promise<Achievemen
   }
 }
 
+function attachStudyTimeMeta(userId: string, progress: AchievementProgressMap): Record<string, unknown> {
+  const studyStats = getStudyTimeStats(userId);
+  return {
+    ...progress,
+    [STUDY_TIME_META_KEY]: {
+      totalMinutes: studyStats.totalMinutes,
+      longestSessionMinutes: studyStats.longestSessionMinutes,
+    },
+  };
+}
+
 export async function reconcileAchievementsWithoutRewards(
   userId: string,
   extraBaseline: AchievementProgressMap = {}
@@ -207,7 +234,7 @@ export async function reconcileAchievementsWithoutRewards(
   const merged = mergeAchievementProgressMaps(baseline, computed);
 
   if (!isDemoUserId(userId) && isSupabaseConfigured()) {
-    await GamificationSupabaseService.updateAchievements(userId, merged as Record<string, unknown>);
+    await GamificationSupabaseService.updateAchievements(userId, attachStudyTimeMeta(userId, merged));
   }
   writeAchievementProgress(userId, merged);
 
@@ -224,7 +251,7 @@ export async function syncAchievementsFromGameplay(userId: string): Promise<Achi
   await awardNewUnlocks(userId, previous, next);
 
   if (!isDemoUserId(userId) && isSupabaseConfigured()) {
-    await GamificationSupabaseService.updateAchievements(userId, next as Record<string, unknown>);
+    await GamificationSupabaseService.updateAchievements(userId, attachStudyTimeMeta(userId, next));
   }
   writeAchievementProgress(userId, next);
 

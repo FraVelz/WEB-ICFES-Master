@@ -26,12 +26,13 @@ export const PerfilNormal = () => {
     achievements,
     coursesProgress,
     loading,
+    studyTimeMinutes,
   } = useUserProfile();
 
   const [copied, setCopied] = useState(false);
 
   const handleShare = () => {
-    const url = `${window.location.origin}/perfil/public?userId=${uid}`;
+    const url = `${window.location.origin}/perfil/public?userId=${encodeURIComponent(uid ?? '')}`;
     navigator.clipboard.writeText(url).then(() => {
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
@@ -76,7 +77,12 @@ export const PerfilNormal = () => {
             emptyMessage="Aún no has iniciado ningún curso."
             onStartLearning={() => router.push('/ruta-aprendizaje')}
           />
-          <ProfileStatsSection achievements={achievements} level={level} totalXP={totalXP} />
+          <ProfileStatsSection
+            achievements={achievements}
+            level={level}
+            totalXP={totalXP}
+            studyTimeMinutes={studyTimeMinutes}
+          />
         </div>
         <div className="lg:col-span-1">
           <ProfileAchievementsSection

@@ -37,3 +37,16 @@ export function clearLecturaReadSections(scopeId: string): void {
   if (typeof window === 'undefined') return;
   localStorage.removeItem(storageKey(scopeId));
 }
+
+/** Fusiona secciones leídas del demo al usuario autenticado. */
+export function mergeLecturaReadDemoIntoUser(userId: string): void {
+  if (typeof window === 'undefined') return;
+
+  const demoRead = loadLecturaReadSections('demo');
+  if (demoRead.length === 0) return;
+
+  const userRead = loadLecturaReadSections(userId);
+  const merged = ALL_SECTION_IDS.filter((id) => demoRead.includes(id) || userRead.includes(id));
+  localStorage.setItem(storageKey(userId), JSON.stringify(merged));
+  clearLecturaReadSections('demo');
+}

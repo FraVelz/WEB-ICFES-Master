@@ -11,6 +11,7 @@ import { DEMO_USER_ID, isDemoUserId } from '@/services/demo/demoCoins';
 import { addDemoXP, getDemoTotalXP } from '@/services/demo/demoGamification';
 import { calculateLevel } from '@/services/gamification/gamificationUtils';
 import {
+  mergeAchievementProgressMaps,
   normalizeAchievementsRecord,
   syncAchievementsFromGameplay,
 } from '@/services/achievements/achievementProgressService';
@@ -128,9 +129,7 @@ export const useGamification = (scope: StreakScope | undefined) => {
         setCoins((profile?.totalCoins ?? 0) - (profile?.spentCoins ?? 0));
 
         const remoteAchievements = normalizeAchievementsRecord(profile?.achievements);
-        if (Object.keys(remoteAchievements).length > Object.keys(achProgress).length) {
-          achProgress = remoteAchievements;
-        }
+        achProgress = mergeAchievementProgressMaps(achProgress, remoteAchievements);
 
         const merged = mergeAchievements(achProgress);
         setAchievements(merged);

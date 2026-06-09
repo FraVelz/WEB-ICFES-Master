@@ -1,12 +1,16 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '@/features/auth/context/AuthContext';
-import { useGamification } from '@/hooks/gamification';
+import { useGamification, useGamificationScope } from '@/hooks/gamification';
 import { getLevelInfo } from '@/services/gamification/gamificationUtils';
 import { RANKS } from '@/shared/constants/ranks';
 import { getDemoProfile } from '@/services/demo/demoProfile';
 import { isDemoUserId } from '@/services/demo/demoCoins';
 import UserSupabaseService from '@/services/supabase/UserSupabaseService';
 import { isSupabaseConfigured } from '@/services/persistence/supabaseConfigured';
+import {
+  getStudyTimeStats,
+  STUDY_TIME_UPDATED_EVENT,
+} from '@/services/studyTime';
 
 const levelToRankId = (level: number): string => {
   const rankOrder = Math.min(Math.max(level, 1), 7);
@@ -18,11 +22,28 @@ const levelToRankId = (level: number): string => {
  * Profile view — Supabase for real users, demo profile for demo scope.
  */
 export const useUserProfile = (targetUserId: string | null = null) => {
-  const { user: authUser } = useAuth();
+  const { user: authUser, loading: authLoading } = useAuth();
+  const ownGamificationScope = useGamificationScope();
   const uid = targetUserId || authUser?.uid;
   const isOwnProfile = authUser?.uid && uid === authUser.uid;
-  const streakScope = uid ? (isDemoUserId(uid) ? 'demo' : uid) : undefined;
-  const gamification = useGamification(streakScope);
+  const streakScope = targetUserId
+    ? isDemoUserId(targetUserId)
+      ? 'demo'
+      : targetUserId
+    : ownGamificationScope;
+  const {
+    loading: gamificationLoading,
+    achievements,
+    totalXP,
+    level,
+    completedCount,
+    coins,
+    streak,
+    currentStreak,
+    longestStreak,
+    refreshData,
+    isDemoScope,
+  } = useGamification(streakScope);
 
   const [profileData, setProfileData] = useState<{
     profileImage: string | null;
@@ -42,9 +63,29 @@ export const useUserProfile = (targetUserId: string | null = null) => {
     exists: false,
   });
 
+  const [studyTimeMinutes, setStudyTimeMinutes] = useState(0);
+
   useEffect(() => {
     if (!uid) {
-      setProfileData((prev) => ({ ...prev, loading: false, exists: false }));
+      setStudyTimeMinutes(0);
+      return;
+    }
+
+    const refreshStudyTime = () => {
+      const localMinutes = getStudyTimeStats(uid).totalMinutes;
+      setStudyTimeMinutes(localMinutes);
+    };
+
+    refreshStudyTime();
+    window.addEventListener(STUDY_TIME_UPDATED_EVENT, refreshStudyTime);
+    return () => window.removeEventListener(STUDY_TIME_UPDATED_EVENT, refreshStudyTime);
+  }, [uid]);
+
+  useEffect(() => {
+    if (!uid) {
+      if (!authLoading) {
+        setProfileData((prev) => ({ ...prev, loading: false, exists: false }));
+      }
       return;
     }
 
@@ -109,19 +150,30 @@ export const useUserProfile = (targetUserId: string | null = null) => {
     return () => {
       cancelled = true;
     };
-  }, [uid, authUser, isOwnProfile]);
+  }, [uid, authUser, isOwnProfile, authLoading]);
 
-  const totalXPFromDB = typeof gamification.totalXP === 'number' ? gamification.totalXP : 0;
+  const totalXPFromDB = typeof totalXP === 'number' ? totalXP : 0;
   const levelInfo = getLevelInfo(totalXPFromDB);
   const rank = levelToRankId(levelInfo.level);
+  const loading = profileData.loading || gamificationLoading || (!uid && authLoading);
 
   return {
     uid,
     isOwnProfile,
     rank,
     ...profileData,
-    ...gamification,
+    achievements,
     totalXP: totalXPFromDB,
+    level,
+    completedCount,
+    coins,
+    streak,
+    currentStreak,
+    longestStreak,
+    refreshData,
+    isDemoScope,
+    studyTimeMinutes,
+    loading,
     levelInfo: {
       level: levelInfo.level,
       levelName: levelInfo.levelData.name,

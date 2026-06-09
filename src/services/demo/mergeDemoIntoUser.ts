@@ -17,6 +17,8 @@ import ProgressSupabaseService from '@/services/supabase/ProgressSupabaseService
 import UserSupabaseService from '@/services/supabase/UserSupabaseService';
 import { migrateLocalAttemptsToSupabase } from '@/services/demo/migrateLocalAttemptsToSupabase';
 import { mergeDemoStreakIntoUser } from '@/services/streak';
+import { mergeLecturaReadDemoIntoUser } from '@/features/lectura/services/lecturaReadPersistence';
+import { mergeDemoStudyTimeIntoUser } from '@/services/studyTime';
 import { getProgress, getStoredExams, getStoredPractices } from '@/storage/progressStorage';
 
 const DEMO_COINS_KEY = 'icfes_demo_coins';
@@ -29,6 +31,7 @@ export function hasDemoDataToMigrate(): boolean {
   if (localStorage.getItem(DEMO_COINS_KEY) != null) return true;
   if (localStorage.getItem(DEMO_GAMIFICATION_KEY) != null) return true;
   if (localStorage.getItem('icfes_achievement_progress_demo') != null) return true;
+  if (localStorage.getItem('icfes_lectura_read_demo') != null) return true;
   if (localStorage.getItem('icfes_streak_dates') != null) return true;
   if (localStorage.getItem('icfes_level_assessment_done_demo') === 'true') return true;
   if (getStoredExams().length > 0 || getStoredPractices().length > 0) {
@@ -135,9 +138,11 @@ export function clearDemoLocalStorageAfterMigration(): void {
   localStorage.removeItem(DEMO_COINS_KEY);
   localStorage.removeItem(DEMO_GAMIFICATION_KEY);
   localStorage.removeItem('icfes_achievement_progress_demo');
+  localStorage.removeItem('icfes_lectura_read_demo');
   localStorage.removeItem('icfes_skill_level_demo');
   localStorage.removeItem('icfes_level_assessment_done_demo');
   localStorage.removeItem('icfes_level_assessment_meta_demo');
+  localStorage.removeItem('icfes_study_time_demo');
 }
 
 /** Fusiona todo el progreso demo en el usuario autenticado. */
@@ -149,6 +154,18 @@ export async function mergeDemoIntoUser(userId: string): Promise<void> {
     await mergeDemoStreakIntoUser(userId);
   } catch (err) {
     console.warn('No se pudo migrar la racha del demo:', err);
+  }
+
+  try {
+    mergeLecturaReadDemoIntoUser(userId);
+  } catch (err) {
+    console.warn('No se pudo migrar lectura del demo:', err);
+  }
+
+  try {
+    await mergeDemoStudyTimeIntoUser(userId);
+  } catch (err) {
+    console.warn('No se pudo migrar tiempo de estudio del demo:', err);
   }
 
   await Promise.all([

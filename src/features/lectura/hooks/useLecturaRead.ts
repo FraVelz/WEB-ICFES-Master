@@ -2,7 +2,9 @@
 
 import { useCallback, useEffect, useState } from 'react';
 import { useAuth } from '@/features/auth/context/AuthContext';
+import { syncAchievementsFromGameplay } from '@/services/achievements/achievementProgressService';
 import { resolveCoinsUserId } from '@/services/demo/demoCoins';
+import { STREAK_UPDATED_EVENT } from '@/services/streak';
 import { useUiSessionStore } from '@/store/uiSessionStore';
 import type { LecturaSectionId } from '../constants';
 import {
@@ -10,6 +12,14 @@ import {
   loadLecturaReadSections,
   saveLecturaReadSection,
 } from '../services/lecturaReadPersistence';
+
+function syncAchievementsAfterLecturaRead(scopeId: string): void {
+  void syncAchievementsFromGameplay(scopeId).then(() => {
+    if (typeof window !== 'undefined') {
+      window.dispatchEvent(new Event(STREAK_UPDATED_EVENT));
+    }
+  });
+}
 
 export function useLecturaRead() {
   const { user } = useAuth();
@@ -43,8 +53,12 @@ export function useLecturaRead() {
   const markAsRead = useCallback(
     (sectionId: LecturaSectionId) => {
       if (!scopeId) return readSections;
+      const alreadyRead = readSections.includes(sectionId);
       const next = saveLecturaReadSection(scopeId, sectionId);
       setReadSections(next);
+      if (!alreadyRead) {
+        syncAchievementsAfterLecturaRead(scopeId);
+      }
       return next;
     },
     [readSections, scopeId]
