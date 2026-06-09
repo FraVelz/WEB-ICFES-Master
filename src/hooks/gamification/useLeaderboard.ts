@@ -13,7 +13,6 @@ export interface LeaderboardPlayer {
   displayName?: string;
   name?: string;
   username?: string;
-  photoUrl?: string;
   profileImage?: string;
   weeklyXP?: number;
   rank?: string;

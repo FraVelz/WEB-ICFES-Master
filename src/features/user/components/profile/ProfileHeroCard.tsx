@@ -13,7 +13,7 @@ type LevelInfo = {
 };
 
 type ProfileHeroCardProps = {
-  photoUrl: string | null;
+  profileImage: string | null;
   name: string;
   personalPhrase: string;
   createdAt: string;
@@ -26,7 +26,7 @@ type ProfileHeroCardProps = {
 };
 
 export function ProfileHeroCard({
-  photoUrl,
+  profileImage,
   name,
   personalPhrase,
   createdAt,
@@ -70,7 +70,7 @@ export function ProfileHeroCard({
           >
             <div className="relative h-full w-full overflow-hidden rounded-full bg-slate-800">
               <AvatarImage
-                src={photoUrl || `https://api.dicebear.com/7.x/avataaars/svg?seed=${name}`}
+                src={profileImage || `https://api.dicebear.com/7.x/avataaars/svg?seed=${name}`}
                 alt={name}
                 className="rounded-full"
               />

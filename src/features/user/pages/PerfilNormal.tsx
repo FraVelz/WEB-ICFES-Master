@@ -16,7 +16,7 @@ export const PerfilNormal = () => {
   const router = useRouter();
   const {
     uid,
-    photoUrl,
+    profileImage,
     name,
     personalPhrase,
     createdAt,
@@ -45,7 +45,7 @@ export const PerfilNormal = () => {
   return (
     <ProfilePageLayout>
       <ProfileHeroCard
-        photoUrl={photoUrl}
+        profileImage={profileImage}
         name={name}
         personalPhrase={personalPhrase}
         createdAt={createdAt}

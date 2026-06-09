@@ -10,7 +10,7 @@ import { setActiveStreakUserId, STREAK_UPDATED_EVENT } from '@/services/streak';
 import { mapSupabaseAuthError, REQUIRES_EMAIL_CONFIRMATION } from '@/features/auth/utils/mapSupabaseAuthError';
 import { isSupabaseAuthConfigured } from '@/features/auth/utils/isSupabaseAuthConfigured';
 import type { AuthContextType, AuthUser } from './authTypes';
-import { mapSupabaseUser } from './authSupabase';
+import { mapSupabaseUser, getOAuthProfileImage } from './authSupabase';
 
 export type { AuthUser } from './authTypes';
 
@@ -68,6 +68,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
             await UserSupabaseService.createUser(session.user.id, {
               email: session.user.email,
               displayName: meta?.display_name || meta?.full_name || session.user.email?.split('@')[0] || 'Usuario',
+              profileImage: getOAuthProfileImage(session.user),
             });
           }
         } catch (profileErr) {

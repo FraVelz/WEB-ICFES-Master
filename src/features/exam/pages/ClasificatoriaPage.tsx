@@ -170,7 +170,6 @@ export const ClasificatoriaPage = () => {
                     <div className="relative h-12 w-12 overflow-hidden rounded-full border-2 border-slate-700 bg-slate-800">
                       <AvatarImage
                         src={
-                          player.photoUrl ||
                           player.profileImage ||
                           `https://api.dicebear.com/7.x/avataaars/svg?seed=${player.name || player.username}`
                         }

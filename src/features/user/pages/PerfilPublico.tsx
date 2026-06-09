@@ -38,7 +38,7 @@ export const PerfilPublico = () => {
   const userId = searchParams.get('userId');
   const router = useRouter();
   const {
-    photoUrl,
+    profileImage,
     name,
     personalPhrase,
     createdAt,
@@ -95,7 +95,7 @@ export const PerfilPublico = () => {
   return (
     <ProfilePageLayout glowVariant="public">
       <ProfileHeroCard
-        photoUrl={photoUrl}
+        profileImage={profileImage}
         name={name}
         personalPhrase={personalPhrase}
         createdAt={createdAt}

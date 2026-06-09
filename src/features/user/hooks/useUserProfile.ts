@@ -25,7 +25,7 @@ export const useUserProfile = (targetUserId: string | null = null) => {
   const gamification = useGamification(streakScope);
 
   const [profileData, setProfileData] = useState<{
-    photoUrl: string | null;
+    profileImage: string | null;
     name: string;
     personalPhrase: string;
     createdAt: string;
@@ -33,7 +33,7 @@ export const useUserProfile = (targetUserId: string | null = null) => {
     loading: boolean;
     exists: boolean;
   }>({
-    photoUrl: null,
+    profileImage: null,
     name: '',
     personalPhrase: '',
     createdAt: 'Reciente',
@@ -57,7 +57,7 @@ export const useUserProfile = (targetUserId: string | null = null) => {
         const demo = getDemoProfile();
         if (cancelled) return;
         setProfileData({
-          photoUrl: null,
+          profileImage: null,
           name: demo.username ?? 'Estudiante',
           personalPhrase: demo.bio ?? '',
           createdAt: 'Modo demo',
@@ -84,7 +84,7 @@ export const useUserProfile = (targetUserId: string | null = null) => {
         }
 
         setProfileData({
-          photoUrl: profile.profileImage ?? (isOwnProfile ? authUser?.photoURL : null),
+          profileImage: profile.profileImage ?? (isOwnProfile ? authUser?.profileImage : null),
           name: profile.username ?? profile.displayName ?? 'Usuario',
           personalPhrase: profile.bio ?? '¡Preparándome para el éxito!',
           createdAt: profile.createdAt

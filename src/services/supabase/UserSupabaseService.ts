@@ -21,7 +21,6 @@ export interface DbUserRow {
   username?: string | null;
   bio?: string | null;
   profile_image?: string | null;
-  photo_url?: string | null;
   virtual_money?: number | null;
   skill_level?: string | null;
   level_assessment_completed_at?: string | null;
@@ -52,7 +51,7 @@ const mapFromDb = (row: DbUserRow | Record<string, unknown> | null): MappedUser 
     displayName: (r.display_name as string | null) ?? null,
     username: (r.username as string | null) ?? null,
     bio: (r.bio as string | null) ?? null,
-    profileImage: ((r.profile_image ?? r.photo_url) as string | null) ?? null,
+    profileImage: (r.profile_image as string | null) ?? null,
     virtualMoney: Number(r.virtual_money) || 0,
     skillLevel: parseSkillLevel(r.skill_level),
     levelAssessmentCompletedAt: (r.level_assessment_completed_at as string | null) ?? null,
@@ -71,7 +70,7 @@ const UserSupabaseService = {
     const sb = ensureSupabase();
     const { data, error } = await sb.from(TABLE).select('*').eq('id', userId).maybeSingle();
     if (error) throw new Error(`Error leyendo usuario: ${error.message}`);
-    return data ? mapFromDb(data) : null;
+    return data ? mapFromDb(data as Record<string, unknown>) : null;
   },
 
   async createUser(userId: string, userData: Record<string, unknown>): Promise<MappedUser> {
@@ -84,8 +83,6 @@ const UserSupabaseService = {
       bio?: string;
       profileImage?: string;
       profile_image?: string;
-      photoURL?: string;
-      photo_url?: string;
       virtualMoney?: number;
       virtual_money?: number;
     };
@@ -95,8 +92,7 @@ const UserSupabaseService = {
       display_name: ud.displayName ?? ud.display_name ?? 'Usuario ICFES',
       username: ud.username ?? null,
       bio: ud.bio ?? null,
-      profile_image: ud.profileImage ?? ud.profile_image ?? ud.photoURL ?? ud.photo_url ?? null,
-      photo_url: ud.photoURL ?? ud.photo_url ?? ud.profileImage ?? ud.profile_image ?? null,
+      profile_image: ud.profileImage ?? ud.profile_image ?? null,
       virtual_money: ud.virtualMoney ?? ud.virtual_money ?? 0,
       created_at: new Date().toISOString(),
       updated_at: new Date().toISOString(),
@@ -123,7 +119,6 @@ const UserSupabaseService = {
       username: pd.username,
       bio: pd.bio,
       profile_image: pd.profileImage ?? pd.profile_image,
-      photo_url: pd.profileImage ?? pd.profile_image,
       virtual_money: pd.virtualMoney ?? pd.virtual_money,
       updated_at: new Date().toISOString(),
     };
