@@ -113,8 +113,6 @@ export function useUserData() {
     [user?.uid, user?.email, user?.displayName]
   );
 
-  const addBadge = useCallback(() => [], []);
-
   return {
     user: userData,
     loading,
@@ -127,7 +125,6 @@ export function useUserData() {
     updatePreferences: () => ({}),
     addMoney,
     spendMoney,
-    addBadge,
     refresh: loadUserData,
   };
 }

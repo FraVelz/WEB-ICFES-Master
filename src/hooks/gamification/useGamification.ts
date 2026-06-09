@@ -122,8 +122,9 @@ export const useGamification = (scope: StreakScope | undefined) => {
 
       if (accountUserId) {
         const profile = await gamificationPersistence.getProfile(accountUserId);
-        setTotalXP(profile?.totalXP ?? profile?.xp ?? 0);
-        setLevel(profile?.level ?? 1);
+        const xp = profile?.xp ?? 0;
+        setTotalXP(xp);
+        setLevel(calculateLevel(xp));
         setCoins((profile?.totalCoins ?? 0) - (profile?.spentCoins ?? 0));
 
         if (!achProgress || Object.keys(achProgress).length === 0) {

@@ -29,7 +29,7 @@ vi.mock('@/services/persistence/coinsPersistence', () => ({
 
 vi.mock('@/services/persistence/gamificationPersistence', () => ({
   gamificationPersistence: {
-    getProfile: vi.fn(async () => ({ totalXP: 0, level: 1 })),
+    getProfile: vi.fn(async () => ({ xp: 0 })),
     addXP: vi.fn(),
     addCoins: vi.fn(),
   },

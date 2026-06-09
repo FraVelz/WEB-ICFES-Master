@@ -8,12 +8,8 @@ const TABLE = 'user_gamification';
 export interface GamificationProfile {
   userId: string;
   xp: number;
-  level: number;
-  totalXP: number;
-  currentXP: number;
   totalCoins: number;
   spentCoins: number;
-  badges: unknown[];
   achievements: unknown[];
   xpHistory: unknown[];
   coinsHistory: unknown[];
@@ -26,13 +22,9 @@ const mapFromDb = (row: Record<string, unknown> | null): GamificationProfile | n
   if (!row || typeof row !== 'object') return null;
   return {
     userId: String(row.user_id ?? ''),
-    xp: Number(row.xp ?? row.total_xp ?? 0),
-    level: Number(row.level ?? 1),
-    totalXP: Number(row.total_xp ?? row.xp ?? 0),
-    currentXP: Number(row.current_xp ?? row.xp ?? 0),
-    totalCoins: Number(row.total_coins ?? row.points ?? 0),
+    xp: Number(row.xp ?? 0),
+    totalCoins: Number(row.total_coins ?? 0),
     spentCoins: Number(row.spent_coins ?? 0),
-    badges: (row.badges as unknown[]) || [],
     achievements: (row.achievements as unknown[]) || [],
     xpHistory: (row.xp_history as unknown[]) || [],
     coinsHistory: (row.coins_history as unknown[]) || [],
@@ -61,12 +53,8 @@ const GamificationSupabaseService = {
       const payload = {
         user_id: userId,
         xp: 0,
-        level: 1,
-        total_xp: 0,
-        current_xp: 0,
         total_coins: 0,
         spent_coins: 0,
-        badges: [],
         achievements: [],
         xp_history: [],
         coins_history: [],
@@ -84,16 +72,12 @@ const GamificationSupabaseService = {
 
   async addXP(userId: string, points: number, reason = 'activity'): Promise<GamificationProfile> {
     const profile = await this.getOrCreate(userId);
-    const newTotalXP = (profile.totalXP || 0) + points;
-    const newLevel = this._calculateLevel(newTotalXP);
+    const newXP = (profile.xp || 0) + points;
     const xpHistory = [...(profile.xpHistory || []), { date: new Date().toISOString(), points, reason }];
 
     const payload = {
       user_id: userId,
-      xp: newTotalXP,
-      total_xp: newTotalXP,
-      current_xp: newTotalXP,
-      level: newLevel,
+      xp: newXP,
       xp_history: xpHistory,
       updated_at: new Date().toISOString(),
     };
@@ -143,21 +127,6 @@ const GamificationSupabaseService = {
     const { data, error } = await sb.from(TABLE).update(payload).eq('user_id', userId).select().single();
     if (error) throw new Error(`Error gastando monedas: ${error.message}`);
     return mapFromDb(data as Record<string, unknown>)!;
-  },
-
-  _calculateLevel(totalXP: number): number {
-    const levels = [
-      { level: 1, xp: 0 },
-      { level: 2, xp: 100 },
-      { level: 3, xp: 300 },
-      { level: 4, xp: 600 },
-      { level: 5, xp: 1000 },
-    ];
-    let level = 1;
-    for (const l of levels) {
-      if (totalXP >= l.xp) level = l.level;
-    }
-    return level;
   },
 
   async getStreak(userId: string): Promise<{ dates: string[]; longestStreak: number }> {

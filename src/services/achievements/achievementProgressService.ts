@@ -59,8 +59,7 @@ async function readLevel(userId: string): Promise<number> {
 
   try {
     const profile = await gamificationPersistence.getProfile(userId);
-    const totalXP = profile?.totalXP ?? profile?.xp ?? 0;
-    return profile?.level ?? calculateLevel(Number(totalXP));
+    return calculateLevel(Number(profile?.xp ?? 0));
   } catch {
     return 1;
   }
