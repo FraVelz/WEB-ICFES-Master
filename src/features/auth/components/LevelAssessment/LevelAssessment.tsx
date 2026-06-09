@@ -6,7 +6,11 @@ import { MASCOT_IMAGES } from '@/assets';
 import { OnboardingIntroStage } from '@/features/auth/components/OnboardingQuiz/OnboardingIntroStage';
 import { getPathForSkillLevel } from '@/features/auth/constants/skillLevelRoutes';
 import type { LevelAssessmentContext, SkillLevel } from '@/features/auth/types/skillLevel';
-import { getAssessmentScope, persistLevelAssessment } from '@/services/persistence/skillLevelPersistence';
+import {
+  getAssessmentOptionsFromContext,
+  getAssessmentScope,
+  persistLevelAssessment,
+} from '@/services/persistence/skillLevelPersistence';
 import { useUiSessionStore } from '@/store/uiSessionStore';
 import { useAuth } from '@/features/auth/context/AuthContext';
 import { LEVEL_ASSESSMENT_INTRO } from './data';
@@ -28,11 +32,7 @@ export function LevelAssessment({ context }: LevelAssessmentProps) {
   const [isSaving, setIsSaving] = useState(false);
   const [saveError, setSaveError] = useState<string | null>(null);
 
-  const isDemo = context === 'demo' || (demoMode && !user);
-  const scope = getAssessmentScope({
-    demoMode: isDemo,
-    userId: user?.uid,
-  });
+  const scope = getAssessmentScope(getAssessmentOptionsFromContext(context, demoMode, user?.uid));
 
   const handleConfirmLevel = async () => {
     if (!selectedLevel || isSaving) return;

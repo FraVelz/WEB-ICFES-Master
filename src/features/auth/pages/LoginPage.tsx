@@ -9,26 +9,18 @@ import { ThemeToggle } from '@/shared/components/ThemeToggle';
 import { GoogleSignInButton } from '@/features/auth/components/GoogleSignInButton';
 import { useAuth } from '@/features/auth/context/AuthContext';
 import { AUTH_DEFAULT_REDIRECT } from '@/features/auth/constants/authRoutes';
-import { buildLevelAssessmentUrl, getPathForSkillLevel } from '@/features/auth/constants/skillLevelRoutes';
+import { buildLevelAssessmentUrl } from '@/features/auth/constants/skillLevelRoutes';
 import { mapSupabaseAuthError } from '@/features/auth/utils/mapSupabaseAuthError';
-import {
-  getAssessmentScope,
-  hasCompletedLevelAssessment,
-  loadPersistedSkillLevel,
-} from '@/services/persistence/skillLevelPersistence';
+import { resolveLevelAssessmentRedirect } from '@/services/persistence/skillLevelPersistence';
 
 async function redirectAfterAuth(
   userId: string,
   navigate: (path: string) => void
 ): Promise<void> {
-  const scope = getAssessmentScope({ demoMode: false, userId });
-  const done = await hasCompletedLevelAssessment(scope, userId);
-  if (!done) {
-    navigate(buildLevelAssessmentUrl('account'));
-    return;
-  }
-  const level = await loadPersistedSkillLevel(scope, userId);
-  navigate(level ? getPathForSkillLevel(level) : AUTH_DEFAULT_REDIRECT);
+  const redirect =
+    (await resolveLevelAssessmentRedirect({ demoMode: false, userId }, userId)) ??
+    buildLevelAssessmentUrl('account');
+  navigate(redirect);
 }
 
 export const LoginPage = () => {

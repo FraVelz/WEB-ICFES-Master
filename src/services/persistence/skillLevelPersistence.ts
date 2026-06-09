@@ -1,7 +1,13 @@
 /**
  * Persistencia del nivel autodeclarado: localStorage (demo) o Supabase users (cuenta).
  */
-import type { LevelAssessmentResult, SkillLevel } from '@/features/auth/types/skillLevel';
+import { AUTH_DEFAULT_REDIRECT } from '@/features/auth/constants/authRoutes';
+import { getPathForSkillLevel } from '@/features/auth/constants/skillLevelRoutes';
+import type {
+  LevelAssessmentContext,
+  LevelAssessmentResult,
+  SkillLevel,
+} from '@/features/auth/types/skillLevel';
 import {
   getStoredSkillLevel,
   isLevelAssessmentDone,
@@ -18,6 +24,29 @@ export type LevelAssessmentScopeOptions = {
 
 export function getAssessmentScope(options: LevelAssessmentScopeOptions): string {
   return resolveAssessmentScope(options);
+}
+
+/** Scope options from assessment URL context (demo vs account). */
+export function getAssessmentOptionsFromContext(
+  context: LevelAssessmentContext,
+  demoMode: boolean,
+  userId?: string | null
+): LevelAssessmentScopeOptions {
+  const isDemo = context === 'demo' || (demoMode && !userId);
+  return { demoMode: isDemo, userId };
+}
+
+/** Redirect target when assessment is already done; null if the user still needs it. */
+export async function resolveLevelAssessmentRedirect(
+  options: LevelAssessmentScopeOptions,
+  userId?: string | null
+): Promise<string | null> {
+  const scope = getAssessmentScope(options);
+  const done = await hasCompletedLevelAssessment(scope, userId);
+  if (!done) return null;
+
+  const level = await loadPersistedSkillLevel(scope, userId);
+  return level ? getPathForSkillLevel(level) : AUTH_DEFAULT_REDIRECT;
 }
 
 export function isDemoScope(scope: string): boolean {

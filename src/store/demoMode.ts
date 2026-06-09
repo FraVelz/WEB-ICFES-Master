@@ -1,5 +1,6 @@
 import { buildLevelAssessmentUrl } from '@/features/auth/constants/skillLevelRoutes';
 import { ensureDemoCoinsMinimum } from '@/services/demo/demoCoins';
+import { resolveLevelAssessmentRedirect } from '@/services/persistence/skillLevelPersistence';
 import { useUiSessionStore } from '@/store/uiSessionStore';
 
 /** Activa modo demo y persiste en localStorage antes de navegar (evita perder el flag al recargar). */
@@ -11,12 +12,18 @@ export function enterDemoMode() {
   useUiSessionStore.getState().setDemoMode(true);
 }
 
-/** Activa demo y lleva a la evaluación inicial (primera vez). */
+/** Activa demo y lleva a la evaluación inicial solo si aún no se completó. */
 export function enterDemoModeWithAssessment() {
   enterDemoMode();
-  if (typeof window !== 'undefined') {
+  if (typeof window === 'undefined') return;
+
+  void resolveLevelAssessmentRedirect({ demoMode: true }, null).then((redirect) => {
+    if (redirect) {
+      window.location.href = redirect;
+      return;
+    }
     window.location.href = buildLevelAssessmentUrl('demo');
-  }
+  });
 }
 
 /**

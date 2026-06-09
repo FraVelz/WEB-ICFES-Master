@@ -3,6 +3,7 @@ import { describe, expect, it, vi, beforeEach } from 'vitest';
 import {
   hasCompletedLevelAssessment,
   persistLevelAssessment,
+  resolveLevelAssessmentRedirect,
 } from '@/services/persistence/skillLevelPersistence';
 
 vi.mock('@/services/supabase/UserSupabaseService', () => ({
@@ -93,5 +94,21 @@ describe('skillLevelPersistence', () => {
     const done = await hasCompletedLevelAssessment('user-2', 'user-2');
     expect(done).toBe(true);
     expect(storage.get('icfes_skill_level_user-2')).toBe('intermediate');
+  });
+
+  it('resolveLevelAssessmentRedirect devuelve null si la evaluación no está hecha', async () => {
+    const redirect = await resolveLevelAssessmentRedirect({ demoMode: true }, null);
+    expect(redirect).toBeNull();
+  });
+
+  it('resolveLevelAssessmentRedirect devuelve ruta según nivel guardado', async () => {
+    await persistLevelAssessment(
+      'demo',
+      { level: 'intermediate', completedAt: '2026-01-01T00:00:00.000Z' },
+      null
+    );
+
+    const redirect = await resolveLevelAssessmentRedirect({ demoMode: true }, null);
+    expect(redirect).toBe('/practica/matematicas');
   });
 });

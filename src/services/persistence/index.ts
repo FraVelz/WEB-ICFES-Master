@@ -28,9 +28,11 @@ export {
 export { getAggregatedUserData } from './userDataBundle';
 export {
   getAssessmentScope,
+  getAssessmentOptionsFromContext,
   persistLevelAssessment,
   hasCompletedLevelAssessment,
   loadPersistedSkillLevel,
+  resolveLevelAssessmentRedirect,
 } from './skillLevelPersistence';
 
 export type { UserProfile, UserRank, RankInfo } from '@/features/user/types/userProfile.types';
