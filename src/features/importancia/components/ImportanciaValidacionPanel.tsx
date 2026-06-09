@@ -91,7 +91,10 @@ export function ImportanciaValidacionPanel() {
             .
           </p>
           <ul className="text-on-surface-muted list-disc space-y-2 pl-5 leading-relaxed">
-            <li>Consulta requisitos e inscripción en tu secretaría de educación o centro de validación.</li>
+            <li>
+              Consulta requisitos e inscripción en tu secretaría de educación, en un centro de validación o en la página
+              web del ICFES.
+            </li>
             <li>Repasa por áreas empezando por lectura crítica y matemáticas.</li>
             <li>Usa simulacros para acostumbrarte al tiempo y al formato.</li>
           </ul>
