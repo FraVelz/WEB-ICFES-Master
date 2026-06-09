@@ -63,10 +63,10 @@ Services that connect directly to PostgreSQL tables in Supabase:
 
 | Service                         | Table               | Description                                        |
 | ------------------------------- | ------------------- | -------------------------------------------------- |
-| **UserSupabaseService**         | `users`             | Profile, username, bio, virtualMoney, profileImage |
-| **ProgressSupabaseService**     | `user_progress`     | totalAttempts, totalCorrect, streakDays, areaStats |
-| **GamificationSupabaseService** | `user_gamification` | XP, level, totalCoins, badges, achievements        |
-| **ExamSupabaseService**         | `exam_results`      | Completed exams, scores, answers                   |
+| **UserSupabaseService**         | `users`             | Profile, username, bio, profileImage, skill_level |
+| **ProgressSupabaseService**     | `user_progress`     | Aggregates rebuilt from `exam_results`              |
+| **GamificationSupabaseService** | `user_gamification` | xp, coins, streak, achievements                   |
+| **ExamSupabaseService**         | `exam_results`      | Each exam/practice attempt (synced on save)       |
 | **LearningSupabaseService**     | `learning_content`  | Lessons by area, content, quizzes                  |
 
 ### 4. **`gamificationPersistence`**
@@ -85,7 +85,7 @@ Services that connect directly to PostgreSQL tables in Supabase:
 | **exam**         | `src/services/persistence/examPersistence.ts`                                      | `useExam` uses `getExamById`, `resetUserExams`, …                       |
 | **achievements** | `GamificationSupabaseService` + localStorage; `gamificationPersistence` in lessons | `useGamification`; `LessonQuizModal` uses **`gamificationPersistence`** |
 | **learning**     | `src/features/learning/services/LearningService.ts`                                | Supabase (`learning_content`) or static roadmap data                    |
-| **store**        | `src/services/store/` (`SubscriptionPlanService`, `PlanScheduleService`)           | Plans and scheduling                                                    |
+| **store**        | `src/features/store/` + `coinsPersistence`                                         | Shop using `user_gamification` coins                                    |
 | **auth**         | `src/context/AuthContext.tsx`, pages under `features/auth/`                        | Supabase/OAuth session; no `AuthService` stub                           |
 
 ---
@@ -111,7 +111,7 @@ const { progress, areaStats, recommendations, attemptHistory, resetProgress, ref
 ```
 
 - **Supabase**: ProgressSupabaseService
-- **localStorage**: `@/services/persistence` (implementation in `src/storage/progressStorage`)
+- **Supabase + local**: aggregates in `user_progress`; merged attempt history from local + `exam_results`
 
 ### **useGamification(userId)**
 
@@ -121,7 +121,8 @@ const { achievements, totalXP, level, coins, currentStreak, updateAchievementPro
 ```
 
 - **Supabase**: GamificationSupabaseService
-- **localStorage**: progress cache (`icfes_streak_dates`, attempts, completed lessons)
+- **Supabase**: `user_gamification` (xp, coins, streak, achievements as source of truth)
+- **localStorage**: streak and offline attempt cache
 
 ### **useExam(examId)**
 
@@ -130,7 +131,7 @@ const { exam, getUserExams, resetUserExams, refresh } = useExam(examId);
 ```
 
 - **Supabase**: ExamSupabaseService
-- **localStorage**: `getStoredExams()` from progressStorage
+- **Supabase + local**: `examSyncService` syncs each attempt; merged reads
 
 ---
 
@@ -146,7 +147,8 @@ const { exam, getUserExams, resetUserExams, refresh } = useExam(examId);
 | username      | text        | Username                |
 | bio           | text        | Biography               |
 | profile_image | text        | URL or base64 of photo  |
-| virtual_money | int         | Virtual coins           |
+| skill_level   | text        | Prep level (initial assessment) |
+| level_assessment_completed_at | timestamptz | Initial assessment date |
 | created_at    | timestamptz | Creation date           |
 | updated_at    | timestamptz | Update date             |
 
@@ -158,7 +160,6 @@ const { exam, getUserExams, resetUserExams, refresh } = useExam(examId);
 | total_attempts     | int   | Total attempts  |
 | total_correct      | int   | Correct answers |
 | percentage         | float | Percentage      |
-| streak_days        | int   | Streak days     |
 | area_stats         | jsonb | Stats per area  |
 | last_activity_date | date  | Last activity   |
 
@@ -167,12 +168,12 @@ const { exam, getUserExams, resetUserExams, refresh } = useExam(examId);
 | Column        | Type  | Description          |
 | ------------- | ----- | -------------------- |
 | user_id       | uuid  | FK to users          |
-| xp / total_xp | int   | Total experience     |
-| level         | int   | Current level        |
+| xp            | int   | Accumulated XP (level derived client-side via `getLevelInfo`) |
 | total_coins   | int   | Coins earned         |
 | spent_coins   | int   | Coins spent          |
-| badges        | jsonb | Unlocked badges      |
-| achievements  | jsonb | Achievement progress |
+| streak_dates  | jsonb | Active streak dates  |
+| longest_streak | int  | Longest streak       |
+| achievements  | jsonb | Achievement progress (remote source of truth) |
 | xp_history    | jsonb | XP history           |
 | coins_history | jsonb | Coins history        |
 
@@ -388,7 +389,6 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJ...
 ## Exports from `@/services`
 
 ```typescript
-import { SubscriptionPlanService, PlanScheduleService } from '@/services';
 import { LEVELS, getLevelInfo } from '@/services/gamification';
 import { ACHIEVEMENTS_DATA } from '@/features/achievements/constants/achievements';
 
