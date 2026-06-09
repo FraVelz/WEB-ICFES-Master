@@ -14,6 +14,7 @@ import {
   type AttemptWithQuestions,
 } from '@/storage/progressStorage';
 import { isSupabaseConfigured } from './supabaseConfigured';
+import { getMergedAttemptHistory } from './examPersistence';
 
 export type ProgressViewState = {
   progress: ProgressData | null;
@@ -56,11 +57,13 @@ export async function loadProgressViewState(userId: string): Promise<ProgressVie
       }
     : null;
 
+  const attemptHistory = await getMergedAttemptHistory(userId);
+
   return {
     progress: mapped ?? local.progress,
     areaStats: mapped?.areaStats ?? local.areaStats,
     recommendations: getRecommendations(mapped ?? local.progress ?? getDefaultProgress()),
-    attemptHistory: local.attemptHistory,
+    attemptHistory,
   };
 }
 

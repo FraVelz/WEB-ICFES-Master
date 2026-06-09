@@ -98,10 +98,16 @@ export const saveFullExam = (
   };
   exams.push(newExam);
   localStorage.setItem(STORAGE_KEYS.EXAMS, JSON.stringify(exams));
-  void recordStreakToday(resolveStreakScopeFromStorage()).then(() => {
+  const scope = resolveStreakScopeFromStorage();
+  void recordStreakToday(scope).then(() => {
     updateProgress();
     syncAchievementsAfterGameplay();
   });
+  if (scope !== 'demo') {
+    void import('@/services/persistence/examPersistence').then(({ syncSavedAttempt }) =>
+      syncSavedAttempt(scope, newExam)
+    );
+  }
   return newExam;
 };
 
@@ -128,10 +134,16 @@ export const savePractice = (
   };
   practices.push(newPractice);
   localStorage.setItem(STORAGE_KEYS.PRACTICE, JSON.stringify(practices));
-  void recordStreakToday(resolveStreakScopeFromStorage()).then(() => {
+  const scope = resolveStreakScopeFromStorage();
+  void recordStreakToday(scope).then(() => {
     updateProgress();
     syncAchievementsAfterGameplay();
   });
+  if (scope !== 'demo') {
+    void import('@/services/persistence/examPersistence').then(({ syncSavedAttempt }) =>
+      syncSavedAttempt(scope, newPractice)
+    );
+  }
   return newPractice;
 };
 

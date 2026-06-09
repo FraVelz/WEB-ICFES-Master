@@ -27,6 +27,16 @@ vi.mock('@/storage/progressStorage', () => ({
 vi.mock('@/services/supabase/ExamSupabaseService', () => ({
   default: {
     insertMigratedAttempt: vi.fn(async () => true),
+    getByUserId: vi.fn(async () => [
+      { correct_answers: 7, total_questions: 10, completed_at: '2026-06-01', questions: {} },
+      { correct_answers: 9, total_questions: 10, completed_at: '2026-06-02', questions: {} },
+    ]),
+  },
+}));
+
+vi.mock('@/services/supabase/ProgressSupabaseService', () => ({
+  default: {
+    upsert: vi.fn(async () => ({})),
   },
 }));
 

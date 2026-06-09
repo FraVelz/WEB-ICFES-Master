@@ -1,4 +1,5 @@
 import { mapLocalAttemptToExamResult, type LocalAttemptRecord } from '@/services/demo/mapLocalAttemptToExamResult';
+import { rebuildUserProgress } from '@/services/exam/examSyncService';
 import { isSupabaseConfigured } from '@/services/persistence/supabaseConfigured';
 import ExamSupabaseService from '@/services/supabase/ExamSupabaseService';
 import { getStoredExams, getStoredPractices } from '@/storage/progressStorage';
@@ -20,6 +21,10 @@ export async function migrateLocalAttemptsToSupabase(userId: string): Promise<nu
     } catch (err) {
       console.warn('No se pudo migrar un intento del demo:', err);
     }
+  }
+
+  if (attempts.length > 0) {
+    await rebuildUserProgress(userId);
   }
 
   return inserted;

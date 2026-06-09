@@ -33,48 +33,6 @@ const ExamSupabaseService = {
     return data;
   },
 
-  async create(userId: string, examData: Record<string, unknown>): Promise<Record<string, unknown>> {
-    const sb = ensureSupabase();
-    const ed = examData as { type?: string; questions?: unknown[]; totalQuestions?: number };
-    const id = `exam_${Date.now()}_${Math.random().toString(36).slice(2)}`;
-    const payload = {
-      id,
-      user_id: userId,
-      exam_type: ed.type || 'practice',
-      score: null,
-      total_questions: (ed.questions as unknown[])?.length || ed.totalQuestions || 0,
-      correct_answers: 0,
-      time_spent: 0,
-      completed_at: null,
-      questions: ed.questions || [],
-    };
-    const { data, error } = await sb.from(TABLE).insert(payload).select().single();
-    if (error) throw new Error(`Error creando examen: ${error.message}`);
-    return data;
-  },
-
-  async complete(
-    examId: string,
-    score: number,
-    correctAnswers: number,
-    totalQuestions: number,
-    timeSpent: number,
-    answers: unknown[] = []
-  ): Promise<Record<string, unknown>> {
-    const payload = {
-      score,
-      correct_answers: correctAnswers,
-      total_questions: totalQuestions,
-      time_spent: timeSpent || 0,
-      completed_at: new Date().toISOString(),
-      questions: answers,
-    };
-    const sb = ensureSupabase();
-    const { data, error } = await sb.from(TABLE).update(payload).eq('id', examId).select().single();
-    if (error) throw new Error(`Error completando examen: ${error.message}`);
-    return data;
-  },
-
   async resetUserExams(userId: string): Promise<{ success: boolean }> {
     const sb = ensureSupabase();
     const { error } = await sb.from(TABLE).delete().eq('user_id', userId);
@@ -82,7 +40,7 @@ const ExamSupabaseService = {
     return { success: true };
   },
 
-  /** Inserta un intento migrado desde localStorage; no duplica si el ID ya existe. */
+  /** Inserta un intento; no duplica si el ID ya existe. */
   async insertMigratedAttempt(row: Record<string, unknown>): Promise<boolean> {
     const id = String(row.id ?? '');
     if (!id) return false;
@@ -92,7 +50,7 @@ const ExamSupabaseService = {
 
     const sb = ensureSupabase();
     const { error } = await sb.from(TABLE).insert(row).select().single();
-    if (error) throw new Error(`Error migrando examen: ${error.message}`);
+    if (error) throw new Error(`Error guardando examen: ${error.message}`);
     return true;
   },
 };
