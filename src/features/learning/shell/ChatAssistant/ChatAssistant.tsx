@@ -179,9 +179,10 @@ export const ChatAssistant = () => {
         <div
           ref={chatPanelRef}
           className={cn(
-            'fixed right-6 bottom-24 z-50 flex h-[min(500px,70vh)] w-[min(400px,calc(100vw-3rem))]',
-            'border-app-ring/30 flex-col overflow-hidden rounded-2xl border bg-slate-900/98 shadow-2xl',
-            'shadow-app-ring/20 backdrop-blur-xl'
+            'fixed z-50 flex h-[min(500px,70vh)] flex-col overflow-hidden rounded-2xl',
+            'border-app-ring/30 border bg-slate-900/98 shadow-2xl shadow-app-ring/20 backdrop-blur-xl',
+            'bottom-24 left-3 right-3 w-auto',
+            'sm:left-auto sm:right-6 sm:w-[min(400px,calc(100vw-3rem))]'
           )}
         >
           {/* Header */}
@@ -216,7 +217,7 @@ export const ChatAssistant = () => {
           </div>
 
           {/* Message list */}
-          <div className="custom-scrollbar flex-1 space-y-4 overflow-y-auto p-4">
+          <div className="custom-scrollbar min-h-0 flex-1 space-y-4 overflow-y-auto p-3 sm:p-4">
             {messages.length === 0 && (
               <div className="flex h-full flex-col items-center justify-center px-4 text-center">
                 <div className="bg-app-ring/20 mb-4 flex h-16 w-16 items-center justify-center rounded-full">
@@ -295,7 +296,7 @@ export const ChatAssistant = () => {
           </div>
 
           {/* Input */}
-          <div className="border-t border-slate-700/50 bg-slate-900/50 p-4">
+          <div className="min-w-0 border-t border-slate-700/50 bg-slate-900/50 p-3 sm:p-4">
             {anonQuotaReached ? (
               <p className="text-center text-sm text-slate-300">
                 Has usado las {CHAT_ANON_LIMIT} preguntas gratis.{' '}
@@ -312,7 +313,7 @@ export const ChatAssistant = () => {
                 para seguir.
               </p>
             ) : (
-              <div className="flex gap-2">
+              <div className="flex min-w-0 items-stretch gap-2">
                 <input
                   ref={inputRef}
                   type="text"
@@ -322,7 +323,8 @@ export const ChatAssistant = () => {
                   placeholder="Escribe tu pregunta..."
                   disabled={isTyping}
                   className={cn(
-                    'flex-1 rounded-xl border border-slate-600 bg-slate-800 px-4 py-3 text-white',
+                    'min-w-0 flex-1 rounded-xl border border-slate-600 bg-slate-800 px-3 py-2.5 text-sm text-white',
+                    'sm:px-4 sm:py-3 sm:text-base',
                     'focus:border-app-ring placeholder-slate-500 transition-all focus:ring-2',
                     'focus:ring-app-ring/30 focus:outline-none disabled:opacity-60'
                   )}
@@ -331,8 +333,10 @@ export const ChatAssistant = () => {
                   type="button"
                   onClick={handleSend}
                   disabled={!inputValue.trim() || isTyping}
+                  aria-label="Enviar mensaje"
                   className={cn(
-                    'from-cta-from to-cta-to cursor-pointer rounded-xl bg-linear-to-r px-4 py-3 text-white',
+                    'from-cta-from to-cta-to shrink-0 cursor-pointer rounded-xl bg-linear-to-r px-3 py-2.5 text-white',
+                    'sm:px-4 sm:py-3',
                     'hover:from-app-accent-strong transition-all hover:to-blue-700 disabled:cursor-not-allowed',
                     'focus-visible:ring-2 focus-visible:ring-white focus-visible:outline-none disabled:opacity-50',
                     'focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900'

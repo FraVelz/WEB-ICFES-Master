@@ -4,7 +4,6 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Icon } from '@/shared/components/Icon';
 import { AvatarImage } from '@/features/user/components/AvatarImage';
-import { resolveProfileAvatarSrc } from '@/features/user/constants/defaultProfileAvatar';
 import { isAccountOnlyPath } from '@/features/auth/constants/accountOnlyRoutes';
 import { useUser } from '@/features/user/hooks/useUser';
 import { useUiSessionStore } from '@/store/uiSessionStore';
@@ -205,15 +204,7 @@ export function DesktopSidebar({ className, sidebarExpanded, onToggleSidebar }: 
               isProfileActive ? 'border-app-accent' : 'border-app-ring/30'
             )}
           >
-            <AvatarImage
-              src={resolveProfileAvatarSrc(user?.profileImage, user?.username || 'Usuario')}
-              alt="Profile"
-              fallback={
-                <div className="flex h-full w-full items-center justify-center">
-                  <Icon name="circle-user" size="lg" className="text-slate-400" />
-                </div>
-              }
-            />
+            <AvatarImage src={user?.profileImage} alt="Profile" />
           </div>
           {sidebarExpanded && (
             <span className="min-w-0 overflow-hidden whitespace-nowrap">

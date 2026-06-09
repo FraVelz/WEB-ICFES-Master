@@ -1,7 +1,6 @@
 import { cn } from '@/utils/cn';
 import { Icon, type IconName } from '@/shared/components/Icon';
 import { AvatarImage } from '@/features/user/components/AvatarImage';
-import { resolveProfileAvatarSrc } from '@/features/user/constants/defaultProfileAvatar';
 import type { ReactNode } from 'react';
 
 type LevelInfo = {
@@ -41,7 +40,7 @@ export function ProfileHeroCard({
   return (
     <div
       className={cn(
-        'relative mb-8 overflow-hidden rounded-3xl border border-slate-800 bg-slate-900/80 p-6',
+        'relative mb-8 overflow-visible rounded-3xl border border-slate-800 bg-slate-900/80 p-6',
         'shadow-2xl backdrop-blur-xl md:p-10'
       )}
     >
@@ -60,7 +59,7 @@ export function ProfileHeroCard({
       </div>
 
       <div className="flex flex-col items-center gap-8 md:flex-row">
-        <div className="group relative">
+        <div className="group relative shrink-0 overflow-visible pb-3 pr-3 md:pb-4 md:pr-4">
           <div
             className={cn(
               'h-32 w-32 rounded-full border-4 bg-slate-950 p-1 shadow-lg md:h-40 md:w-40',
@@ -70,17 +69,13 @@ export function ProfileHeroCard({
             )}
           >
             <div className="relative h-full w-full overflow-hidden rounded-full bg-slate-800">
-              <AvatarImage
-                src={resolveProfileAvatarSrc(profileImage, name)}
-                alt={name}
-                className="rounded-full"
-              />
+              <AvatarImage src={profileImage} alt={name} className="rounded-full" />
             </div>
           </div>
           <div
             className={cn(
-              'absolute -right-2 -bottom-2 rounded-full border border-slate-700 bg-slate-900 px-3 py-1',
-              'text-xs font-bold shadow-lg',
+              'absolute right-0 bottom-0 z-10 rounded-full border border-slate-700 bg-slate-900 px-3 py-1',
+              'text-xs font-bold whitespace-nowrap shadow-lg',
               accent === 'purple' ? 'text-purple-400' : 'text-app-accent'
             )}
           >
