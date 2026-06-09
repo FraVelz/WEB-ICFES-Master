@@ -1,0 +1,53 @@
+---
+description: Tailwind — clases inline, cn si >120 chars; no extraer a constantes
+globs: src/**/*.{tsx,jsx}
+alwaysApply: false
+---
+
+# Estilos Tailwind — cliente ICFES Master
+
+Complementa `docs/es/frontend/styles-guide.md` (tokens semánticos en `globals.css`).
+
+## No refactorizar clases a constantes
+
+- **Prohibido** extraer cadenas Tailwind a `const`, archivos `*Class.ts` o variables solo por “limpieza”, salvo petición explícita del usuario.
+- **Prohibido** barridos masivos: convertir `className` inline existente en constantes compartidas durante otra tarea (contenido, lógica, etc.).
+- **Excepciones** (ya establecidas en el repo, no duplicar):
+  - Tokens `@theme` en `src/app/globals.css` (`text-app-accent`, `bg-surface`, …).
+  - Constantes **transversales** ya usadas en varias features: `PAGE_SHELL_CLASS`, `FULL_PAGE_SHELL_CLASS`, `FOCUS_RING` (header).
+  - No crear nuevas constantes de una sola pantalla o feature.
+
+## Cuándo usar `cn`
+
+Utilidad: `@/utils/cn` (`clsx` + `tailwind-merge`).
+
+| Situación | Acción |
+| --- | --- |
+| Clases estáticas y la línea **≤ 120 caracteres** | `className="..."` inline |
+| Línea **> 120 caracteres** | Partir con `cn('...', '...')` |
+| Clases condicionales (`nested`, `isActive`, …) | `cn(...)` aunque cada rama sea corta |
+| Combinar shell compartido + extras | `cn('extras', PAGE_SHELL_CLASS)` |
+
+## Ejemplos
+
+```tsx
+// ❌ constante nueva solo para una página
+const CARD = 'border-app-ring/20 bg-surface-elevated/60 rounded-2xl border p-6';
+
+// ✅ inline (corta)
+<aside className="border-app-ring/20 bg-surface-elevated/60 rounded-2xl border p-6">
+
+// ❌ ternario largo en un solo string
+className={nested ? 'bg-app-ring/10 text-app-accent flex h-9 w-9 ...' : 'bg-app-ring/15 ...'}
+
+// ✅ cn
+className={cn(
+  'text-app-accent flex shrink-0 items-center justify-center',
+  nested ? 'bg-app-ring/10 h-9 w-9 rounded-lg' : 'bg-app-ring/15 h-10 w-10 rounded-xl',
+)}
+```
+
+## Pantallas nuevas
+
+- Preferir tokens semánticos del tema (`text-on-surface`, `bg-surface-elevated`) frente a `blue-500`, `slate-950`, etc.
+- Copiar **patrones visuales** de páginas hermanas (p. ej. `/consejos`) con clases inline; no inventar capas extra de abstracción CSS.

@@ -1,7 +1,6 @@
 'use client';
 
 import { Icon } from '@/shared/components/Icon';
-import { PAGE_SHELL_CLASS } from '@/shared/constants/pageShell';
 import { ImportanciaSection } from '../components/ImportanciaSection';
 import { ImportanciaTrackPanel } from '../components/ImportanciaTrackPanel';
 import {
@@ -13,7 +12,7 @@ import {
 
 export function ImportanciaPage() {
   return (
-    <div className={PAGE_SHELL_CLASS}>
+    <div className="min-h-dvh bg-linear-to-b from-surface via-surface-via to-surface pb-24 text-on-surface md:pb-0">
       <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
         <div className="from-app-ring/10 absolute top-0 left-0 h-96 w-full bg-linear-to-b to-transparent" />
       </div>

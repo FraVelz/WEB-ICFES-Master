@@ -28,7 +28,10 @@ export function ImportanciaTrackPanel({ track }: ImportanciaTrackPanelProps) {
         </div>
         <Icon
           name="chevron-down"
-          className="text-on-surface-muted mt-1 shrink-0 transition-transform group-open:rotate-180"
+          className={cn(
+            'text-on-surface-muted mt-1 shrink-0 transition-transform',
+            'group-open:rotate-180'
+          )}
         />
       </summary>
 

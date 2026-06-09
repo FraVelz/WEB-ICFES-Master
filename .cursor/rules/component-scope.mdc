@@ -73,7 +73,7 @@ Preguntarse: **¿quién lo importa?** Si la respuesta es una sola carpeta (`feat
 
 ## Refactor de componentes
 
-Ver también **`component-refactor.mdc`** (tamaño, prop drilling) y **`barrel-exports.mdc`** (sin `export *` en `index.ts`).
+Ver también **`component-refactor.mdc`** (tamaño, prop drilling), **`barrel-exports.mdc`** (sin `export *` en `index.ts`) y **`tailwind-styles.mdc`** (clases inline, `cn`).
 
 ## Convención URL vs código
 
