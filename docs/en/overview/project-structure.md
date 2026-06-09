@@ -72,7 +72,7 @@ features/feature-name/
 | **learning/**     | Roadmap and AI chat (`roadmap/`, `shell/`, `context/`)                                                     |
 | **exam/**         | Practice, full exam, ranking; data in `exam/data/`                                                         |
 | **user/**         | Profile, settings, hooks `useProgress`, `useUserData`                                                      |
-| **achievements/** | Badges, daily challenges, achievements UI (route `/logros/`; cross-feature hooks in `hooks/gamification/`) |
+| **achievements/** | Badges, achievements UI (route `/logros/`; cross-feature hooks in `hooks/gamification/`) |
 | **store/**        | Virtual shop (UI), purchase modals                                                                         |
 
 ### Three different “store” names
@@ -127,7 +127,6 @@ URLs end with a **trailing slash** (`trailingSlash: true`). Full list in [routes
 | `/practica/[area]`                    | Practice by area                            |
 | `/examen-completo`                    | Full exam                                   |
 | `/clasificatoria`                     | Ranking                                     |
-| `/desafios-diarios`                   | Daily challenges                            |
 | `/logros/`                            | Achievements hub (`features/achievements/`) |
 | `/perfil`, `/perfil/public`           | Private and public profile                  |
 | `/configuracion`                      | Settings                                    |

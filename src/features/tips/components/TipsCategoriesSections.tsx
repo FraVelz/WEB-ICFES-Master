@@ -92,7 +92,7 @@ export function TipsCategoriesSections() {
         />
         <TipCard
           title="Estudia con alguien"
-          description="Comparte metas con un compañero o familia. La clasificatoria y los retos diarios también añaden motivación social."
+          description="Comparte metas con un compañero o familia. La clasificatoria también añade motivación social."
         />
         <TipCard
           title="Descansa bien"

@@ -73,7 +73,7 @@ features/nombre-feature/
 | **learning/**     | Roadmap y chat IA (`roadmap/`, `shell/`, `context/`)                                                   |
 | **exam/**         | Práctica, examen completo, clasificatoria; datos en `exam/data/`                                       |
 | **user/**         | Perfil, configuración, hooks `useProgress`, `useUserData`                                              |
-| **achievements/** | Badges, desafíos diarios, UI de logros (ruta `/logros/`; hooks transversales en `hooks/gamification/`) |
+| **achievements/** | Badges, UI de logros (ruta `/logros/`; hooks transversales en `hooks/gamification/`) |
 | **store/**        | Tienda virtual (UI), modales de compra                                                                 |
 
 ### Tres nombres “store”
@@ -128,7 +128,6 @@ Las URLs llevan **`/` final** (`trailingSlash: true`). Lista completa en [routes
 | `/practica/[area]`                    | Práctica por área                           |
 | `/examen-completo`                    | Examen completo                             |
 | `/clasificatoria`                     | Clasificatoria / ranking                    |
-| `/desafios-diarios`                   | Desafíos diarios                            |
 | `/logros/`                            | Centro de logros (`features/achievements/`) |
 | `/perfil`, `/perfil/public`           | Perfil privado y público                    |
 | `/configuracion`                      | Ajustes                                     |

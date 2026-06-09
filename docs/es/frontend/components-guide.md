@@ -122,7 +122,7 @@ export const NEW_AREA_QUESTIONS = [
 | ----------------- | -------------------------------------------------------- |
 | **shared/**       | `Icon`, `MascotaCircle`, `ModalOverlay`                  |
 | **home/**         | `Footer` (landing)                                       |
-| **achievements/** | `ConstructionAlert`, `AchievementsList`, `ChallengeCard` |
+| **achievements/** | `AchievementsList` |
 | **user/**         | `AvatarImage`, `ProfileComponents`                       |
 | **Shell global**  | `src/components/DashboardHeader/`                        |
 

@@ -21,14 +21,12 @@ export const mainNavOptions: NavOption[] = [
 ];
 
 export const secondaryNavOptions: NavOption[] = [
-  { path: '/desafios-diarios', label: 'Desafíos', icon: 'fire', accent: 'orange', showActiveIndicator: false },
   { path: '/importancia', label: 'Importancia', icon: 'info-circle', showActiveIndicator: false },
   { path: '/consejos', label: 'Consejos', icon: 'lightbulb', showActiveIndicator: false },
 ];
 
 export const mobileMenuOptions: NavOption[] = [
   { path: '/perfil', label: 'Perfil', icon: 'circle-user' },
-  { path: '/desafios-diarios', label: 'Desafíos Diarios', icon: 'fire' },
   { path: '/importancia', label: 'Importancia', icon: 'info-circle' },
   { path: '/consejos', label: 'Consejos', icon: 'lightbulb' },
   { path: '/configuracion', label: 'Configuración', icon: 'cog' },

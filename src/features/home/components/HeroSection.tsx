@@ -47,7 +47,7 @@ export const HeroSection = ({ onDemoAccess }: { onDemoAccess: () => void }) => {
         <AnimatedReveal isVisible delay={0.3}>
           <p className="text-on-surface-muted mx-auto max-w-3xl text-lg leading-relaxed font-medium md:text-xl">
             Prepárate para Saber 11° y la validación del bachillerato en Colombia. Plataforma 100% gratuita con acceso
-            web y app móvil en App Store: practica por áreas, retos diarios y simulacros tipo ICFES.
+            web y app móvil en App Store: practica por áreas y simulacros tipo ICFES.
           </p>
         </AnimatedReveal>
 

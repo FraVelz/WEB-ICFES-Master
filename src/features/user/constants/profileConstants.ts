@@ -35,15 +35,6 @@ export const NAVIGATION_CARDS = [
     link: '/ruta-aprendizaje',
     badge: 'Nueva',
   },
-  {
-    id: 'daily-challenges',
-    title: 'Desafíos Diarios',
-    description: 'Completa retos para ganar XP y bonificaciones',
-    icon: 'fire',
-    color: 'from-nav-challenges-from to-nav-challenges-to',
-    link: '/desafios-diarios',
-    badge: null,
-  },
 ];
 
 export const AREA_ICONS = {

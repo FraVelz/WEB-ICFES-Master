@@ -29,7 +29,6 @@ Estas son las **URLs** del proyecto.
 | `/logros/`           | Logros y gamificación             |
 | `/perfil/`           | Perfil del usuario                |
 | `/clasificatoria/`   | Clasificación / ranking           |
-| `/desafios-diarios/` | Desafíos diarios                  |
 | `/configuracion/`    | Configuración                     |
 | `/examen-completo/`  | Simulacro completo                |
 

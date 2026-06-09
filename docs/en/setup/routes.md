@@ -29,7 +29,6 @@ These are the application **URLs**.
 | `/logros/`           | Achievements and gamification |
 | `/perfil/`           | User profile                  |
 | `/clasificatoria/`   | Ranking                       |
-| `/desafios-diarios/` | Daily challenges              |
 | `/configuracion/`    | Settings                      |
 | `/examen-completo/`  | Full mock exam                |
 

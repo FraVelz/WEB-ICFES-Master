@@ -53,7 +53,7 @@ Usar esta escala en el informe:
 
 ### 3. Rutas, App Router y datos (P0–P1)
 
-- Rutas del dashboard: `ruta-aprendizaje`, `practica/[area]`, `lessons/[area]/[topic]`, `desafios-diarios`, etc.
+- Rutas del dashboard: `ruta-aprendizaje`, `practica/[area]`, `lessons/[area]/[topic]`, etc.
 - `generateStaticParams` / params inválidos en rutas dinámicas.
 - Datos de aprendizaje en `src/` (lecciones, preguntas, progreso): slugs, referencias rotas, KaTeX/markdown mal
   renderizado.
