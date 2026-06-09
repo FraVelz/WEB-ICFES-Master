@@ -5,6 +5,8 @@ export {
   readAchievementProgress,
   resolveAchievementUserId,
   syncAchievementsFromGameplay,
+  reconcileAchievementsWithoutRewards,
+  mergeAchievementProgressMaps,
   type AchievementProgressEntry,
   type AchievementProgressMap,
 } from './achievementProgressService';

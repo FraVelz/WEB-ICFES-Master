@@ -13,6 +13,7 @@ export {
   STREAK_UPDATED_EVENT,
   type StreakScope,
 } from './streakPersistence';
+export { mergeDemoIntoUser, hasDemoDataToMigrate } from '@/services/demo/mergeDemoIntoUser';
 export { getCoinsBalance, addCoinsBalance, spendCoinsBalance, COINS_CHANGE_EVENT } from './coinsPersistence';
 export { loadProgressViewState, resetProgressData, type ProgressViewState } from './progressPersistence';
 export { getExamById, resetUserExams, getUserExamsList } from './examPersistence';

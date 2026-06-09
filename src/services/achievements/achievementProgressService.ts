@@ -66,6 +66,31 @@ async function readLevel(userId: string): Promise<number> {
   }
 }
 
+/** Fusiona dos mapas de logros tomando el mayor progreso y preservando desbloqueos previos. */
+export function mergeAchievementProgressMaps(
+  base: AchievementProgressMap,
+  incoming: AchievementProgressMap
+): AchievementProgressMap {
+  const merged: AchievementProgressMap = { ...base };
+
+  for (const achievement of ACHIEVEMENTS_DATA) {
+    const a = base[achievement.id];
+    const b = incoming[achievement.id];
+    if (!a && !b) continue;
+
+    const current = Math.max(a?.current ?? 0, b?.current ?? 0);
+    const capped = Math.min(current, achievement.target);
+    const unlocked = (a?.unlocked ?? false) || (b?.unlocked ?? false) || capped >= achievement.target;
+    const unlockedAt = unlocked
+      ? ([a?.unlockedAt, b?.unlockedAt].filter(Boolean).sort()[0] ?? new Date().toISOString())
+      : null;
+
+    merged[achievement.id] = { current: capped, unlocked, unlockedAt };
+  }
+
+  return merged;
+}
+
 function buildProgressFromGameplay(
   completedLessons: number,
   practiceCount: number,
@@ -124,14 +149,13 @@ async function awardNewUnlocks(
   }
 }
 
-export async function syncAchievementsFromGameplay(userId: string): Promise<AchievementProgressMap> {
-  const previous = readAchievementProgress(userId);
+async function computeAchievementProgressFromGameplay(userId: string): Promise<AchievementProgressMap> {
   const scope = toStreakScope(userId);
   const streakState = await loadStreakState(scope);
   const streakMetrics = getStreakMetrics(streakState);
   const level = await readLevel(userId);
 
-  const next = buildProgressFromGameplay(
+  return buildProgressFromGameplay(
     getCompletedLessons().length,
     getStoredPractices().length,
     getStoredExams().length,
@@ -140,17 +164,35 @@ export async function syncAchievementsFromGameplay(userId: string): Promise<Achi
     streakMetrics.currentStreak,
     level
   );
+}
 
-  // Preserve unlock timestamps when already unlocked
-  for (const achievement of ACHIEVEMENTS_DATA) {
-    const prev = previous[achievement.id];
-    if (prev?.unlocked && next[achievement.id]?.unlocked) {
-      next[achievement.id] = {
-        ...next[achievement.id],
-        unlockedAt: prev.unlockedAt ?? next[achievement.id].unlockedAt,
-      };
-    }
+/**
+ * Reconcilia logros desde gameplay + baseline (p. ej. demo) sin otorgar recompensas.
+ * Usar en migración demo → cuenta para evitar duplicar monedas/XP.
+ */
+export async function reconcileAchievementsWithoutRewards(
+  userId: string,
+  extraBaseline: AchievementProgressMap = {}
+): Promise<AchievementProgressMap> {
+  const existing = readAchievementProgress(userId);
+  const demoBaseline = readAchievementProgress(DEMO_USER_ID);
+  const baseline = mergeAchievementProgressMaps(existing, mergeAchievementProgressMaps(demoBaseline, extraBaseline));
+  const computed = await computeAchievementProgressFromGameplay(userId);
+  const merged = mergeAchievementProgressMaps(baseline, computed);
+
+  writeAchievementProgress(userId, merged);
+
+  if (!isDemoUserId(userId) && isSupabaseConfigured()) {
+    await GamificationSupabaseService.updateAchievements(userId, merged as Record<string, unknown>);
   }
+
+  return merged;
+}
+
+export async function syncAchievementsFromGameplay(userId: string): Promise<AchievementProgressMap> {
+  const previous = readAchievementProgress(userId);
+  const computed = await computeAchievementProgressFromGameplay(userId);
+  const next = mergeAchievementProgressMaps(previous, computed);
 
   await awardNewUnlocks(userId, previous, next);
   writeAchievementProgress(userId, next);

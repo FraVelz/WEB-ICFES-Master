@@ -5,8 +5,8 @@ import { createContext, useContext, useEffect, useState, useCallback } from 'rea
 import { supabase } from '@/config/supabase';
 import { useUiSessionStore } from '@/store/uiSessionStore';
 import UserSupabaseService from '@/services/supabase/UserSupabaseService';
-import { getAggregatedUserData } from '@/services/persistence';
-import { mergeDemoStreakIntoUser, setActiveStreakUserId, STREAK_UPDATED_EVENT } from '@/services/streak';
+import { getAggregatedUserData, mergeDemoIntoUser } from '@/services/persistence';
+import { setActiveStreakUserId, STREAK_UPDATED_EVENT } from '@/services/streak';
 import { mapSupabaseAuthError, REQUIRES_EMAIL_CONFIRMATION } from '@/features/auth/utils/mapSupabaseAuthError';
 import { isSupabaseAuthConfigured } from '@/features/auth/utils/isSupabaseAuthConfigured';
 import type { AuthContextType, AuthUser } from './authTypes';
@@ -33,15 +33,15 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     useUiSessionStore.getState().setDemoMode(false);
   }, []);
 
-  const migrateStreakOnAuth = useCallback(async (userId: string) => {
+  const migrateDemoOnAuth = useCallback(async (userId: string) => {
     try {
-      await mergeDemoStreakIntoUser(userId);
+      await mergeDemoIntoUser(userId);
       setActiveStreakUserId(userId);
       if (typeof window !== 'undefined') {
         window.dispatchEvent(new CustomEvent(STREAK_UPDATED_EVENT));
       }
     } catch (err) {
-      console.warn('No se pudo migrar la racha del demo:', err);
+      console.warn('No se pudo migrar el progreso del demo:', err);
     }
   }, []);
 
@@ -59,7 +59,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       setLoading(false);
 
       if (event === 'SIGNED_IN' && session?.user) {
-        await migrateStreakOnAuth(session.user.id);
+        await migrateDemoOnAuth(session.user.id);
         clearDemoMode();
         try {
           const existing = await UserSupabaseService.getByUserId(session.user.id);
@@ -85,7 +85,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     });
 
     return () => subscription?.unsubscribe();
-  }, [clearDemoMode, migrateStreakOnAuth]);
+  }, [clearDemoMode, migrateDemoOnAuth]);
 
   const signup = async (email: string, password: string, displayName?: string): Promise<AuthUser | null> => {
     setError(null);
@@ -121,7 +121,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     } catch (profileErr) {
       console.warn('Perfil tras registro (puede existir por trigger):', profileErr);
     }
-    await migrateStreakOnAuth(data.user.id);
+    await migrateDemoOnAuth(data.user.id);
     clearDemoMode();
     return mapSupabaseUser(data.user);
   };
@@ -135,7 +135,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       setError(msg);
       throw new Error(msg);
     }
-    await migrateStreakOnAuth(data.user.id);
+    await migrateDemoOnAuth(data.user.id);
     setActiveStreakUserId(data.user.id);
     clearDemoMode();
     return mapSupabaseUser(data.user);
