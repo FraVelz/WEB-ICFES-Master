@@ -1,9 +1,18 @@
 'use client';
 
+import Link from 'next/link';
 import { Icon } from '@/shared/components/Icon';
+import { cn } from '@/utils/cn';
 import { ImportanciaGeneralSections } from '../components/ImportanciaGeneralSections';
 import { ImportanciaSaber11Panel } from '../components/ImportanciaSaber11Panel';
 import { ImportanciaValidacionPanel } from '../components/ImportanciaValidacionPanel';
+
+const internalLinkClass = cn(
+  'text-app-accent font-semibold underline underline-offset-2',
+  'hover:text-app-accent-muted transition-colors',
+  'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none',
+  'focus-visible:ring-offset-surface'
+);
 
 export function ImportanciaPage() {
   return (
@@ -38,6 +47,14 @@ export function ImportanciaPage() {
           <ImportanciaSaber11Panel />
           <ImportanciaValidacionPanel />
         </div>
+
+        <p className="text-on-surface-muted text-sm leading-relaxed">
+          Infografías, tarifas, fechas e inscripción:{' '}
+          <Link href="/informacion" className={internalLinkClass}>
+            Información del ICFES
+          </Link>
+          .
+        </p>
 
         <aside className="border-app-ring/20 bg-surface-elevated/60 rounded-2xl border p-6">
           <p className="text-on-surface leading-relaxed">

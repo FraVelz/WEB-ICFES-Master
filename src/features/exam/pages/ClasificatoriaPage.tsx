@@ -9,6 +9,7 @@ import { useLeaderboard, type LeaderboardPlayer } from '@/hooks/gamification';
 import { RANKS, getRankInfo } from '@/shared/constants/ranks';
 import { useUserProfile } from '@/features/user/hooks/useUserProfile';
 import { AvatarImage } from '@/features/user/components/AvatarImage';
+import { resolveProfileAvatarSrc } from '@/features/user/constants/defaultProfileAvatar';
 import { PAGE_SHELL_CLASS } from '@/shared/constants/pageShell';
 
 export const ClasificatoriaPage = () => {
@@ -169,10 +170,10 @@ export const ClasificatoriaPage = () => {
                   <div className="relative">
                     <div className="relative h-12 w-12 overflow-hidden rounded-full border-2 border-slate-700 bg-slate-800">
                       <AvatarImage
-                        src={
-                          player.profileImage ||
-                          `https://api.dicebear.com/7.x/avataaars/svg?seed=${player.name || player.username}`
-                        }
+                        src={resolveProfileAvatarSrc(
+                          player.profileImage,
+                          player.name || player.username || 'Jugador'
+                        )}
                         alt={player.name || player.username || 'Jugador'}
                       />
                     </div>

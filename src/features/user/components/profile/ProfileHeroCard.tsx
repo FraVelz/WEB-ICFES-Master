@@ -1,6 +1,7 @@
 import { cn } from '@/utils/cn';
 import { Icon, type IconName } from '@/shared/components/Icon';
 import { AvatarImage } from '@/features/user/components/AvatarImage';
+import { resolveProfileAvatarSrc } from '@/features/user/constants/defaultProfileAvatar';
 import type { ReactNode } from 'react';
 
 type LevelInfo = {
@@ -70,7 +71,7 @@ export function ProfileHeroCard({
           >
             <div className="relative h-full w-full overflow-hidden rounded-full bg-slate-800">
               <AvatarImage
-                src={profileImage || `https://api.dicebear.com/7.x/avataaars/svg?seed=${name}`}
+                src={resolveProfileAvatarSrc(profileImage, name)}
                 alt={name}
                 className="rounded-full"
               />

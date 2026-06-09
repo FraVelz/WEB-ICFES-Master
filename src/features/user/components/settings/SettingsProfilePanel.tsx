@@ -1,6 +1,7 @@
 import { cn } from '@/utils/cn';
 import { Icon } from '@/shared/components/Icon';
 import { AvatarImage } from '@/features/user/components/AvatarImage';
+import { resolveProfileAvatarSrc } from '@/features/user/constants/defaultProfileAvatar';
 import { useUserSettingsContext } from '@/features/user/context/UserSettingsContext';
 import { SettingsSection } from './SettingsSection';
 
@@ -26,21 +27,15 @@ export function SettingsProfilePanel() {
 
         <div className="group relative mb-4 inline-block">
           <div className="relative h-32 w-32 overflow-hidden rounded-full border-4 border-slate-800 bg-slate-800 shadow-2xl">
-            {user?.profileImage ? (
-              <AvatarImage
-                src={user.profileImage}
-                alt="Profile"
-                fallback={
-                  <div className="flex h-full w-full items-center justify-center bg-slate-700 text-slate-500">
-                    <Icon name="user" className="text-4xl" />
-                  </div>
-                }
-              />
-            ) : (
-              <div className="flex h-full w-full items-center justify-center bg-slate-700 text-slate-500">
-                <Icon name="user" className="text-4xl" />
-              </div>
-            )}
+            <AvatarImage
+              src={resolveProfileAvatarSrc(user?.profileImage, user?.username || 'Usuario')}
+              alt="Profile"
+              fallback={
+                <div className="flex h-full w-full items-center justify-center bg-slate-700 text-slate-500">
+                  <Icon name="user" className="text-4xl" />
+                </div>
+              }
+            />
           </div>
           <button
             type="button"

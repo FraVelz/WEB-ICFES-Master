@@ -1,10 +1,18 @@
 'use client';
 
+import Link from 'next/link';
 import { Icon } from '@/shared/components/Icon';
 import { PAGE_SHELL_CLASS } from '@/shared/constants/pageShell';
-import { IcfesInfographicsSection } from '../components/IcfesInfographicsSection';
+import { cn } from '@/utils/cn';
 import { PersonalizedTipsSection } from '../components/PersonalizedTipsSection';
 import { TipsCategoriesSections } from '../components/TipsCategoriesSections';
+
+const internalLinkClass = cn(
+  'text-app-accent font-semibold underline underline-offset-2',
+  'hover:text-app-accent-muted transition-colors',
+  'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none',
+  'focus-visible:ring-offset-surface'
+);
 
 export function TipsPage() {
   return (
@@ -30,7 +38,13 @@ export function TipsPage() {
 
         <TipsCategoriesSections />
 
-        <IcfesInfographicsSection />
+        <p className="text-on-surface-muted text-sm leading-relaxed">
+          Las infografías oficiales del Saber 11° y los enlaces al sitio del ICFES están en{' '}
+          <Link href="/informacion" className={internalLinkClass}>
+            Información del ICFES
+          </Link>
+          .
+        </p>
       </div>
     </div>
   );

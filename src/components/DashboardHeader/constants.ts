@@ -22,12 +22,14 @@ export const mainNavOptions: NavOption[] = [
 
 export const secondaryNavOptions: NavOption[] = [
   { path: '/importancia', label: 'Importancia', icon: 'info-circle', showActiveIndicator: false },
+  { path: '/informacion', label: 'Información', icon: 'clipboard-list', showActiveIndicator: false },
   { path: '/consejos', label: 'Consejos', icon: 'lightbulb', showActiveIndicator: false },
 ];
 
 export const mobileMenuOptions: NavOption[] = [
   { path: '/perfil', label: 'Perfil', icon: 'circle-user' },
   { path: '/importancia', label: 'Importancia', icon: 'info-circle' },
+  { path: '/informacion', label: 'Información', icon: 'clipboard-list' },
   { path: '/consejos', label: 'Consejos', icon: 'lightbulb' },
   { path: '/configuracion', label: 'Configuración', icon: 'cog' },
 ];
