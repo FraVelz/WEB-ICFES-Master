@@ -1,4 +1,4 @@
-import type { IcfesInfographic } from '@/features/tips/data/icfesInfographics';
+import type { IcfesInfographic } from '@/features/tips/components/icfesInfographicItems';
 import { getR2PublicAssetUrl, isR2PublicUrlConfigured } from './r2PublicUrl';
 
 /** URL para ver/descargar una infografía: API del servidor o URL pública de R2. */

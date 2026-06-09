@@ -6,9 +6,8 @@ import { cn } from '@/utils/cn';
 import { getInfographicPdfUrl, isInfographicStorageConfigured } from '@/shared/utils/infographicAssetUrl';
 import {
   ICFES_INFOGRAPHIC_GROUPS,
-  ICFES_INFOGRAPHICS_INTRO,
   type IcfesInfographic,
-} from '../data/icfesInfographics';
+} from './icfesInfographicItems';
 import { PdfViewerModal } from './PdfViewerModal';
 
 type ActivePdf = {
@@ -47,7 +46,10 @@ export function IcfesInfographicsSection() {
             <h2 id="tips-icfes-infographics" className="text-on-surface text-xl font-bold">
               Infografías oficiales Saber 11°
             </h2>
-            <p className="text-on-surface-muted mt-1 text-sm leading-relaxed">{ICFES_INFOGRAPHICS_INTRO}</p>
+            <p className="text-on-surface-muted mt-1 text-sm leading-relaxed">
+              Estas infografías oficiales ayudan a docentes, estudiantes y familias a familiarizarse con el examen
+              Saber 11° y las pruebas que lo componen.
+            </p>
           </div>
         </div>
 

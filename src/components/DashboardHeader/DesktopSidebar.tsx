@@ -8,7 +8,7 @@ import { isAccountOnlyPath } from '@/features/auth/constants/accountOnlyRoutes';
 import { useUser } from '@/features/user/hooks/useUser';
 import { useUiSessionStore } from '@/store/uiSessionStore';
 import { cn } from '@/utils/cn';
-import { FOCUS_RING, mainNavOptions, secondaryNavOptions, type NavOption } from './constants';
+import { FOCUS_RING, isNavPathActive, mainNavOptions, secondaryNavOptions, type NavOption } from './constants';
 
 type DesktopSidebarProps = {
   className?: string;
@@ -27,34 +27,57 @@ function SidebarNavLink({
   sidebarExpanded: boolean;
   isLocked: boolean;
 }) {
-  const isActive = pathname === option.path;
+  const isActive = isNavPathActive(pathname, option.path);
   const accent = option.accent ?? 'default';
 
   return (
     <Link
       href={option.path}
       title={!sidebarExpanded ? option.label : undefined}
+      aria-current={isActive ? 'page' : undefined}
       className={cn(
         'group/item relative flex h-12 items-center rounded-xl transition-all duration-300 focus-visible:z-10',
         sidebarExpanded ? 'gap-3 px-3' : 'justify-center px-0',
         FOCUS_RING,
         isActive
           ? accent === 'orange'
-            ? 'bg-orange-500/10 text-orange-400'
-            : 'bg-app-ring/10 text-app-accent shadow-app-ring/5 shadow-lg'
+            ? cn(
+                'bg-orange-500/15 text-orange-400 shadow-lg shadow-orange-500/10',
+                !sidebarExpanded && 'ring-2 ring-orange-400/45'
+              )
+            : cn(
+                'bg-app-ring/15 text-app-accent shadow-app-ring/25 shadow-lg',
+                !sidebarExpanded && 'ring-2 ring-app-accent/45'
+              )
           : 'text-on-surface-muted hover:bg-surface-elevated/60 hover:text-on-surface',
         isLocked && 'opacity-70'
       )}
     >
-      <Icon name={option.icon} size="lg" className="shrink-0" />
+      <Icon
+        name={option.icon}
+        size="lg"
+        className={cn(
+          'shrink-0 transition-all duration-300',
+          isActive && !sidebarExpanded && 'scale-110',
+          isActive && 'drop-shadow-[0_0_8px_currentColor]'
+        )}
+      />
       {sidebarExpanded && (
         <span className="font-medium whitespace-nowrap">
           {option.label}
           {isLocked && <Icon name="lock" size="sm" className="ml-1.5 inline text-slate-500" />}
         </span>
       )}
-      {isActive && option.showActiveIndicator !== false && (
+      {isActive && option.showActiveIndicator !== false && sidebarExpanded && (
         <div className="bg-app-ring absolute top-1/2 right-0 h-6 w-1 -translate-y-1/2 rounded-l-full" />
+      )}
+      {isActive && !sidebarExpanded && (
+        <span
+          className={cn(
+            'absolute bottom-1 left-1/2 h-1.5 w-1.5 -translate-x-1/2 rounded-full',
+            accent === 'orange' ? 'bg-orange-400' : 'bg-app-accent'
+          )}
+        />
       )}
     </Link>
   );
@@ -65,6 +88,8 @@ export function DesktopSidebar({ className, sidebarExpanded, onToggleSidebar }: 
   const { user, rank, coinsBalance } = useUser();
   const demoMode = useUiSessionStore((s) => s.demoMode);
   const isLockedInDemo = (path: string) => demoMode && isAccountOnlyPath(path);
+  const isProfileActive = isNavPathActive(pathname, '/perfil');
+  const isSettingsActive = isNavPathActive(pathname, '/configuracion');
 
   return (
     <header className={cn('min-w-fit', className, sidebarExpanded ? 'w-72' : 'w-20')}>
@@ -162,14 +187,23 @@ export function DesktopSidebar({ className, sidebarExpanded, onToggleSidebar }: 
         <Link
           href="/perfil"
           title={!sidebarExpanded ? user?.username || 'Perfil' : undefined}
+          aria-current={isProfileActive ? 'page' : undefined}
           className={cn(
-            'group/profile hover:bg-on-surface/5 flex items-center overflow-hidden rounded-xl p-2 transition-colors',
+            'group/profile flex items-center overflow-hidden rounded-xl p-2 transition-colors',
             sidebarExpanded ? 'gap-3' : 'justify-center',
             FOCUS_RING,
+            isProfileActive
+              ? 'bg-app-ring/15 ring-app-accent/45 ring-2'
+              : 'hover:bg-on-surface/5',
             isLockedInDemo('/perfil') && 'opacity-70'
           )}
         >
-          <div className="border-app-ring/30 h-10 w-10 shrink-0 overflow-hidden rounded-full border-2 bg-slate-800">
+          <div
+            className={cn(
+              'h-10 w-10 shrink-0 overflow-hidden rounded-full border-2 bg-slate-800',
+              isProfileActive ? 'border-app-accent' : 'border-app-ring/30'
+            )}
+          >
             {user?.profileImage ? (
               <AvatarImage
                 src={user.profileImage}
@@ -196,16 +230,31 @@ export function DesktopSidebar({ className, sidebarExpanded, onToggleSidebar }: 
 
         <Link
           href="/configuracion"
+          aria-current={isSettingsActive ? 'page' : undefined}
           className={cn(
-            'hover:text-app-accent mt-2 flex h-10 items-center rounded-xl p-2 text-slate-500 transition-colors',
-            sidebarExpanded ? 'gap-1 px-2' : 'justify-center',
+            'mt-2 flex h-10 items-center rounded-xl p-2 transition-colors',
+            sidebarExpanded ? 'gap-3 px-3' : 'justify-center',
             FOCUS_RING,
+            isSettingsActive
+              ? 'bg-app-ring/15 text-app-accent ring-app-accent/45 ring-2'
+              : 'text-slate-500 hover:text-app-accent',
             isLockedInDemo('/configuracion') && 'opacity-70'
           )}
-          title={isLockedInDemo('/configuracion') ? 'Requiere cuenta' : 'Configuración'}
+          title={!sidebarExpanded ? (isLockedInDemo('/configuracion') ? 'Requiere cuenta' : 'Configuración') : undefined}
         >
-          <Icon name="cog" size="lg" />
-          {sidebarExpanded && isLockedInDemo('/configuracion') && <Icon name="lock" size="sm" />}
+          <Icon
+            name="cog"
+            size="lg"
+            className={cn('shrink-0', isSettingsActive && 'drop-shadow-[0_0_8px_currentColor]')}
+          />
+          {sidebarExpanded && (
+            <span className="font-medium whitespace-nowrap">
+              Configuración
+              {isLockedInDemo('/configuracion') && (
+                <Icon name="lock" size="sm" className="ml-1.5 inline text-slate-500" />
+              )}
+            </span>
+          )}
         </Link>
       </div>
     </header>

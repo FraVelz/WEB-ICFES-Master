@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { findIcfesInfographicById } from '@/features/tips/data/icfesInfographics';
+import { findIcfesInfographicById } from '@/features/tips/components/icfesInfographicItems';
 import { fetchR2Object, R2ObjectNotFoundError } from '@/services/r2/r2Client';
 import { isR2ServerConfigured } from '@/services/r2/r2Config';
 

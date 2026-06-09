@@ -1,14 +1,9 @@
 'use client';
 
 import { Icon } from '@/shared/components/Icon';
-import { ImportanciaSection } from '../components/ImportanciaSection';
-import { ImportanciaTrackPanel } from '../components/ImportanciaTrackPanel';
-import {
-  IMPORTANCIA_CLOSING,
-  IMPORTANCIA_GENERAL_SECTIONS,
-  IMPORTANCIA_INTRO,
-  IMPORTANCIA_TRACKS,
-} from '../data/importanciaContent';
+import { ImportanciaGeneralSections } from '../components/ImportanciaGeneralSections';
+import { ImportanciaSaber11Panel } from '../components/ImportanciaSaber11Panel';
+import { ImportanciaValidacionPanel } from '../components/ImportanciaValidacionPanel';
 
 export function ImportanciaPage() {
   return (
@@ -23,25 +18,30 @@ export function ImportanciaPage() {
             <Icon name="info-circle" className="text-app-accent" />
             Importancia del ICFES y el bachiller
           </h1>
-          <p className="text-on-surface-muted max-w-3xl leading-relaxed">{IMPORTANCIA_INTRO}</p>
+          <p className="text-on-surface-muted max-w-3xl leading-relaxed">
+            Terminar el bachillerato y prepararte para el examen no es solo un trámite escolar: abre puertas reales en
+            empleo, ingresos, estabilidad y proyectos de vida. Abajo encontrarás lo que aplica para todos y, en los
+            menús desplegables, la información específica del Saber 11° o de la Prueba de Validación, según tu caso.
+          </p>
         </header>
 
-        {IMPORTANCIA_GENERAL_SECTIONS.map((section) => (
-          <ImportanciaSection key={section.id} section={section} />
-        ))}
+        <ImportanciaGeneralSections />
 
         <div className="space-y-4">
           <h2 className="text-on-surface text-xl font-bold">Elige tu camino</h2>
           <p className="text-on-surface-muted text-sm leading-relaxed">
             Despliega el menú que corresponda a tu situación para ver requisitos, áreas y consejos específicos.
           </p>
-          {IMPORTANCIA_TRACKS.map((track) => (
-            <ImportanciaTrackPanel key={track.id} track={track} />
-          ))}
+          <ImportanciaSaber11Panel />
+          <ImportanciaValidacionPanel />
         </div>
 
         <aside className="border-app-ring/20 bg-surface-elevated/60 rounded-2xl border p-6">
-          <p className="text-on-surface leading-relaxed">{IMPORTANCIA_CLOSING}</p>
+          <p className="text-on-surface leading-relaxed">
+            Prepararte con método —ya sea para el Saber 11° o para la Prueba de Validación— es invertir en opciones: más
+            ingresos, más estabilidad, más libertad para elegir qué quieres hacer. ICFES Master está aquí para ayudarte
+            en ese camino con práctica, simulacros y una ruta de aprendizaje guiada.
+          </p>
         </aside>
       </div>
     </div>

@@ -2,10 +2,9 @@
 
 import { Icon } from '@/shared/components/Icon';
 import { PAGE_SHELL_CLASS } from '@/shared/constants/pageShell';
-import { TIP_CATEGORIES } from '../data/tips';
 import { IcfesInfographicsSection } from '../components/IcfesInfographicsSection';
 import { PersonalizedTipsSection } from '../components/PersonalizedTipsSection';
-import { TipsCategorySection } from '../components/TipsCategorySection';
+import { TipsCategoriesSections } from '../components/TipsCategoriesSections';
 
 export function TipsPage() {
   return (
@@ -29,9 +28,7 @@ export function TipsPage() {
 
         <PersonalizedTipsSection />
 
-        {TIP_CATEGORIES.map((category) => (
-          <TipsCategorySection key={category.id} category={category} />
-        ))}
+        <TipsCategoriesSections />
 
         <IcfesInfographicsSection />
       </div>

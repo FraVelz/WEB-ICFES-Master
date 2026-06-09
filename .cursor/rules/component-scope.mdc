@@ -42,6 +42,8 @@ Coloca cada archivo donde **realmente se usa**. No crear piezas globales si solo
 - **Prohibido** crear “globales por si acaso” antes de comprobar usos.
 - Al extraer un componente, **mantener el import relativo al scope** (feature → feature; no promover sin necesidad).
 - Misma lógica para **hooks**, **utils** e **iconos** específicos de un dominio: van en la feature, no en carpetas globales.
+- **Copy estático de páginas informativas** (`/importancia`, `/consejos`, etc.): escribir en **componentes JSX** de la feature, no en `data/*.ts` con arrays tipados + `.map()`.
+- **Excepción:** catálogos con ids/API o lógica de dominio (preguntas, tienda, PDFs R2) pueden vivir en archivos dedicados junto al componente que los consume.
 - Si refactorizas y el archivo pasa a usarse en otro sitio, **mover el archivo** al scope correcto y actualizar imports; no duplicar.
 - **No usar Atomic Design** como capa de carpetas; el proyecto es **feature-based**.
 

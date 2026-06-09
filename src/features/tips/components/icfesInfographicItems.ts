@@ -11,9 +11,6 @@ export type IcfesInfographicGroup = {
   items: IcfesInfographic[];
 };
 
-export const ICFES_INFOGRAPHICS_INTRO =
-  'Estas infografías oficiales ayudan a docentes, estudiantes y familias a familiarizarse con el examen Saber 11° y las pruebas que lo componen.';
-
 export const ICFES_INFOGRAPHIC_GROUPS: IcfesInfographicGroup[] = [
   {
     id: 'general',
