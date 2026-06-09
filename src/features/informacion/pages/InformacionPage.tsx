@@ -2,6 +2,7 @@
 
 import { Icon } from '@/shared/components/Icon';
 import { PAGE_SHELL_CLASS } from '@/shared/constants/pageShell';
+import { LecturaSectionShell } from '@/features/lectura';
 import { IcfesInfographicsSection } from '@/features/tips/components/IcfesInfographicsSection';
 import { IcfesOfficialLinksSection } from '../components/IcfesOfficialLinksSection';
 
@@ -13,7 +14,8 @@ export function InformacionPage() {
       </div>
 
       <div className="relative z-10 container mx-auto max-w-4xl space-y-10 px-4 py-8">
-        <header className="space-y-2">
+        <LecturaSectionShell sectionId="informacion">
+          <header className="space-y-2">
           <h1 className="text-on-surface flex items-center gap-3 text-3xl font-bold">
             <Icon name="clipboard-list" className="text-app-accent" />
             Información del ICFES
@@ -27,6 +29,7 @@ export function InformacionPage() {
         <IcfesInfographicsSection />
 
         <IcfesOfficialLinksSection />
+        </LecturaSectionShell>
       </div>
     </div>
   );

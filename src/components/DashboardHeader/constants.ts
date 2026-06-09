@@ -4,6 +4,8 @@ export type NavOption = {
   icon: string;
   accent?: 'default' | 'orange';
   showActiveIndicator?: boolean;
+  /** Rutas hijas que también marcan este ítem como activo (p. ej. subsecciones de Lectura). */
+  activePaths?: string[];
 };
 
 export const FOCUS_RING =
@@ -14,6 +16,13 @@ export function isNavPathActive(pathname: string, path: string): boolean {
   return pathname === path || pathname.startsWith(`${path}/`);
 }
 
+export function isNavOptionActive(pathname: string, option: NavOption): boolean {
+  if (isNavPathActive(pathname, option.path)) return true;
+  return option.activePaths?.some((path) => isNavPathActive(pathname, path)) ?? false;
+}
+
+export const LECTURA_SUB_PATHS = ['/importancia', '/informacion', '/consejos'] as const;
+
 export const mainNavOptions: NavOption[] = [
   { path: '/ruta-aprendizaje', label: 'Aprendizaje', icon: 'graduation-cap' },
   { path: '/logros', label: 'Logros', icon: 'medal' },
@@ -21,15 +30,22 @@ export const mainNavOptions: NavOption[] = [
 ];
 
 export const secondaryNavOptions: NavOption[] = [
-  { path: '/importancia', label: 'Importancia', icon: 'info-circle', showActiveIndicator: false },
-  { path: '/informacion', label: 'Información', icon: 'clipboard-list', showActiveIndicator: false },
-  { path: '/consejos', label: 'Consejos', icon: 'lightbulb', showActiveIndicator: false },
+  {
+    path: '/lectura',
+    label: 'Lectura',
+    icon: 'book-open',
+    showActiveIndicator: false,
+    activePaths: [...LECTURA_SUB_PATHS],
+  },
 ];
 
 export const mobileMenuOptions: NavOption[] = [
   { path: '/perfil', label: 'Perfil', icon: 'circle-user' },
-  { path: '/importancia', label: 'Importancia', icon: 'info-circle' },
-  { path: '/informacion', label: 'Información', icon: 'clipboard-list' },
-  { path: '/consejos', label: 'Consejos', icon: 'lightbulb' },
+  {
+    path: '/lectura',
+    label: 'Lectura',
+    icon: 'book-open',
+    activePaths: [...LECTURA_SUB_PATHS],
+  },
   { path: '/configuracion', label: 'Configuración', icon: 'cog' },
 ];

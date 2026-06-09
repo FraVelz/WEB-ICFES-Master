@@ -8,7 +8,7 @@ import { isAccountOnlyPath } from '@/features/auth/constants/accountOnlyRoutes';
 import { useUser } from '@/features/user/hooks/useUser';
 import { useUiSessionStore } from '@/store/uiSessionStore';
 import { cn } from '@/utils/cn';
-import { FOCUS_RING, isNavPathActive, mainNavOptions, secondaryNavOptions, type NavOption } from './constants';
+import { FOCUS_RING, isNavOptionActive, isNavPathActive, mainNavOptions, secondaryNavOptions, type NavOption } from './constants';
 
 type DesktopSidebarProps = {
   className?: string;
@@ -27,7 +27,7 @@ function SidebarNavLink({
   sidebarExpanded: boolean;
   isLocked: boolean;
 }) {
-  const isActive = isNavPathActive(pathname, option.path);
+  const isActive = isNavOptionActive(pathname, option);
   const accent = option.accent ?? 'default';
 
   return (

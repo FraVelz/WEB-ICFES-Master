@@ -7,7 +7,7 @@ import { ModalOverlay } from '@/shared/components/ModalOverlay';
 import { isAccountOnlyPath } from '@/features/auth/constants/accountOnlyRoutes';
 import { useUiSessionStore } from '@/store/uiSessionStore';
 import { cn } from '@/utils/cn';
-import { FOCUS_RING, isNavPathActive, mainNavOptions, mobileMenuOptions, type NavOption } from './constants';
+import { FOCUS_RING, isNavOptionActive, isNavPathActive, mainNavOptions, mobileMenuOptions, type NavOption } from './constants';
 
 type MobileNavProps = {
   menuOpen: boolean;
@@ -19,7 +19,7 @@ export function MobileNav({ menuOpen, onToggleMenu, onCloseMenu }: MobileNavProp
   const pathname = usePathname();
   const demoMode = useUiSessionStore((s) => s.demoMode);
   const isLockedInDemo = (path: string) => demoMode && isAccountOnlyPath(path);
-  const isOverflowRouteActive = mobileMenuOptions.some((option) => isNavPathActive(pathname, option.path));
+  const isOverflowRouteActive = mobileMenuOptions.some((option) => isNavOptionActive(pathname, option));
 
   return (
     <>
@@ -94,7 +94,7 @@ export function MobileNav({ menuOpen, onToggleMenu, onCloseMenu }: MobileNavProp
             <div className="flex flex-col divide-y divide-slate-700/50">
               {mobileMenuOptions.map((option: NavOption) => {
                 const isLocked = isLockedInDemo(option.path);
-                const isActive = isNavPathActive(pathname, option.path);
+                const isActive = isNavOptionActive(pathname, option);
                 return (
                   <Link
                     key={option.path}

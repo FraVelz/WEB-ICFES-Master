@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { Icon } from '@/shared/components/Icon';
 import { PAGE_SHELL_CLASS } from '@/shared/constants/pageShell';
+import { LecturaSectionShell } from '@/features/lectura';
 import { cn } from '@/utils/cn';
 import { PersonalizedTipsSection } from '../components/PersonalizedTipsSection';
 import { TipsCategoriesSections } from '../components/TipsCategoriesSections';
@@ -23,7 +24,8 @@ export function TipsPage() {
       </div>
 
       <div className="relative z-10 container mx-auto max-w-4xl space-y-10 px-4 py-8">
-        <header className="space-y-2">
+        <LecturaSectionShell sectionId="consejos">
+          <header className="space-y-2">
           <h1 className="text-on-surface flex items-center gap-3 text-3xl font-bold">
             <Icon name="lightbulb" className="text-amber-400" />
             Consejos de preparación
@@ -45,6 +47,7 @@ export function TipsPage() {
           </Link>
           .
         </p>
+        </LecturaSectionShell>
       </div>
     </div>
   );

@@ -2,6 +2,8 @@
 
 import Link from 'next/link';
 import { Icon } from '@/shared/components/Icon';
+import { PAGE_SHELL_CLASS } from '@/shared/constants/pageShell';
+import { LecturaSectionShell } from '@/features/lectura';
 import { cn } from '@/utils/cn';
 import { ImportanciaGeneralSections } from '../components/ImportanciaGeneralSections';
 import { ImportanciaSaber11Panel } from '../components/ImportanciaSaber11Panel';
@@ -16,12 +18,13 @@ const internalLinkClass = cn(
 
 export function ImportanciaPage() {
   return (
-    <div className="min-h-dvh bg-linear-to-b from-surface via-surface-via to-surface pb-24 text-on-surface md:pb-0">
+    <div className={PAGE_SHELL_CLASS}>
       <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
         <div className="from-app-ring/10 absolute top-0 left-0 h-96 w-full bg-linear-to-b to-transparent" />
       </div>
 
       <div className="relative z-10 container mx-auto max-w-4xl space-y-10 px-4 py-8">
+        <LecturaSectionShell sectionId="importancia">
         <header className="space-y-2">
           <h1 className="text-on-surface flex items-center gap-3 text-3xl font-bold">
             <Icon name="info-circle" className="text-app-accent" />
@@ -64,6 +67,7 @@ export function ImportanciaPage() {
             <strong className="font-semibold">hacia un puntaje que amplíe tus posibilidades</strong>.
           </p>
         </aside>
+        </LecturaSectionShell>
       </div>
     </div>
   );

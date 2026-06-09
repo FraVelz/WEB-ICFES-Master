@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import { cn } from '@/utils/cn';
 import { useState, useMemo } from 'react';
 import { Icon } from '@/shared/components/Icon';
@@ -11,9 +12,6 @@ import { getStreakScope } from '@/services/streak';
 import { AreasModal } from './AreasModal';
 import { StreakModal } from './StreakModal';
 import { CoinsModal } from './CoinsModal';
-import { StoreModal } from '@/features/store/components/StoreModal';
-
-import { createPortal } from 'react-dom';
 
 /**
  * Header secundario tipo Duolingo para la página de ruta de aprendizaje
@@ -26,12 +24,10 @@ export interface SecondaryHeaderProps {
 }
 
 export const SecondaryHeader = ({ currentArea = 'lectura-critica', onAreaChange }: SecondaryHeaderProps) => {
-  const [activeModal, setActiveModal] = useState<'areas' | 'streak' | 'store' | 'coins' | null>(null);
+  const [activeModal, setActiveModal] = useState<'areas' | 'streak' | 'coins' | null>(null);
   const { user } = useAuth();
   const demoMode = useUiSessionStore((state) => state.demoMode);
   const streakScope = getStreakScope(user?.uid, demoMode) ?? undefined;
-
-  const container_main = document.getElementById('container-main');
 
   // Gamification snapshot (XP, coins, streak)
   const { currentStreak = 0, longestStreak = 0, coins = 0, streak = [], loading } = useGamification(streakScope);
@@ -64,8 +60,6 @@ export const SecondaryHeader = ({ currentArea = 'lectura-critica', onAreaChange 
   };
 
   const closeModals = () => setActiveModal(null);
-
-  if (!container_main) return null;
 
   return (
     <div className="relative z-50">
@@ -143,24 +137,22 @@ export const SecondaryHeader = ({ currentArea = 'lectura-critica', onAreaChange 
             </span>
           </button>
 
-          {/* Coins / store */}
-          <button
-            type="button"
-            onClick={() => setActiveModal(activeModal === 'store' ? null : 'store')}
+          {/* Coins → tienda */}
+          <Link
+            href="/tienda"
             className={cn(
               'group border-surface-border flex cursor-pointer items-center gap-2 rounded-full border',
               'bg-surface-elevated px-3 py-1.5 transition-colors hover:border-yellow-500/50',
               'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none',
               'focus-visible:ring-offset-surface'
             )}
-            title="Abrir tienda"
-            aria-expanded={activeModal === 'store'}
+            title="Ir a la tienda"
           >
             <Icon name="coins" className="text-sm text-yellow-500" />
             <span className={cn('text-sm font-bold text-yellow-500', loading && 'animate-pulse opacity-60')}>
               {coins}
             </span>
-          </button>
+          </Link>
         </div>
       </div>
 
@@ -175,8 +167,6 @@ export const SecondaryHeader = ({ currentArea = 'lectura-critica', onAreaChange 
       <StreakModal isOpen={activeModal === 'streak'} onClose={closeModals} streakData={streakData} />
 
       <CoinsModal isOpen={activeModal === 'coins'} onClose={closeModals} coins={coins} />
-
-      {createPortal(<StoreModal isOpen={activeModal === 'store'} onClose={closeModals} />, container_main)}
     </div>
   );
 };

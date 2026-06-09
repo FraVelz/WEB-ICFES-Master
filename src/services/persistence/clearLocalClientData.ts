@@ -29,12 +29,14 @@ export function clearLocalClientData(userId?: string | null): void {
     localStorage.removeItem(`icfes_skill_level_${userId}`);
     localStorage.removeItem(`icfes_level_assessment_done_${userId}`);
     localStorage.removeItem(`icfes_level_assessment_meta_${userId}`);
+    localStorage.removeItem(`icfes_lectura_read_${userId}`);
   }
 
   localStorage.removeItem('icfes_achievement_progress_demo');
   localStorage.removeItem('icfes_skill_level_demo');
   localStorage.removeItem('icfes_level_assessment_done_demo');
   localStorage.removeItem('icfes_level_assessment_meta_demo');
+  localStorage.removeItem('icfes_lectura_read_demo');
 
   for (let i = localStorage.length - 1; i >= 0; i--) {
     const key = localStorage.key(i);
