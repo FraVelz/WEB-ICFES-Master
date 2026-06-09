@@ -1,7 +1,6 @@
 import React from 'react';
 
 import { DashboardHeader } from '@/components/DashboardHeader';
-import { DashboardThemeControl } from '@/components/DashboardThemeControl';
 import { LevelAssessmentGate } from '@/components/LevelAssessmentGate';
 import { cn } from '@/utils/cn';
 
@@ -21,7 +20,6 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
         {/* Main Content Area */}
         <main className="relative h-screen w-full flex-1 overflow-y-scroll transition-all duration-300 lg:w-auto lg:pt-0">
-          <DashboardThemeControl />
           {children}
         </main>
       </div>

@@ -4,7 +4,6 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Icon } from '@/shared/components/Icon';
 import { ModalOverlay } from '@/shared/components/ModalOverlay';
-import { ThemeToggle } from '@/shared/components/ThemeToggle';
 import { isAccountOnlyPath } from '@/features/auth/constants/accountOnlyRoutes';
 import { useUiSessionStore } from '@/store/uiSessionStore';
 import { cn } from '@/utils/cn';
@@ -57,7 +56,6 @@ export function MobileNav({ menuOpen, onToggleMenu, onCloseMenu }: MobileNavProp
               </Link>
             );
           })}
-          <ThemeToggle navBar />
           <button
             type="button"
             onClick={onToggleMenu}
