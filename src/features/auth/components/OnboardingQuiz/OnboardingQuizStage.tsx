@@ -95,7 +95,7 @@ export function OnboardingQuizStage({
                     selected ? 'border-app-ring bg-app-ring scale-110' : 'border-slate-600 group-hover:border-slate-400'
                   )}
                 >
-                  {selected && <span className="text-sm font-bold text-white">✓</span>}
+                  {selected && <Icon name="check" size="sm" className="text-white" />}
                 </div>
                 <span className="text-base sm:text-lg">{option.label}</span>
               </button>

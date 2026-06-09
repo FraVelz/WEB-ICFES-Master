@@ -1,3 +1,5 @@
+import type { IconName } from '@/shared/components/Icon';
+
 /** Shared user profile shape for UI (Supabase-backed). */
 export interface UserProfile {
   id: string | number;
@@ -13,7 +15,7 @@ export interface UserProfile {
 
 export interface RankInfo {
   name: string;
-  icon: string;
+  icon: IconName;
   color: string;
   minScore: number;
 }

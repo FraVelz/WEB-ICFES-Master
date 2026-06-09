@@ -1,5 +1,6 @@
 import { cn } from '@/utils/cn';
 import Link from 'next/link';
+import { Icon } from '@/shared/components/Icon';
 import { FULL_PAGE_SHELL_CLASS } from '@/shared/constants/pageShell';
 
 export const metadata = {
@@ -17,7 +18,8 @@ export default function TerminosPage() {
 
       <div className="relative z-10 mx-auto max-w-4xl rounded-2xl border border-white/10 bg-white/5 p-4 shadow-2xl backdrop-blur-xl sm:p-8">
         <h1 className="mb-4 flex items-center gap-3 bg-linear-to-r from-purple-400 to-pink-500 bg-clip-text text-4xl font-bold text-transparent">
-          <span className="text-purple-400">📜</span> Términos y Condiciones
+          <Icon name="balance-scale" size="2xl" className="shrink-0 text-purple-400" />
+          Términos y Condiciones
         </h1>
         <p className="mb-8 text-gray-300">
           <strong>ICFES Master</strong>

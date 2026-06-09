@@ -1,5 +1,6 @@
 import { cn } from '@/utils/cn';
 import Link from 'next/link';
+import { Icon } from '@/shared/components/Icon';
 import { FULL_PAGE_SHELL_CLASS } from '@/shared/constants/pageShell';
 
 export const metadata = {
@@ -17,7 +18,8 @@ export default function PrivacidadPage() {
 
       <div className="relative z-10 mx-auto max-w-4xl rounded-2xl border border-white/10 bg-white/5 p-4 shadow-2xl backdrop-blur-xl sm:p-8">
         <h1 className="from-cta-text-start mb-4 flex items-center gap-3 bg-linear-to-r to-blue-500 bg-clip-text text-4xl font-bold text-transparent">
-          <span className="text-app-accent">📄</span> Política de Privacidad
+          <Icon name="shield-alt" size="2xl" className="text-app-accent shrink-0" />
+          Política de Privacidad
         </h1>
         <p className="mb-8 text-gray-300">
           <strong>ICFES Master</strong>

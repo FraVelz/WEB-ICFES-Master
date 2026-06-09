@@ -6,7 +6,7 @@ export const LEVELS = [
   {
     level: 1,
     name: 'Aprendiz',
-    icon: '📚',
+    icon: 'book-open',
     minXP: 0,
     maxXP: 1000,
     color: 'from-blue-400 to-blue-600',
@@ -14,7 +14,7 @@ export const LEVELS = [
   {
     level: 2,
     name: 'Estudiante',
-    icon: '📖',
+    icon: 'book',
     minXP: 1000,
     maxXP: 3000,
     color: 'from-app-accent to-app-accent-strong',
@@ -22,7 +22,7 @@ export const LEVELS = [
   {
     level: 3,
     name: 'Profesional',
-    icon: '💼',
+    icon: 'award',
     minXP: 3000,
     maxXP: 6000,
     color: 'from-green-400 to-green-600',
@@ -30,7 +30,7 @@ export const LEVELS = [
   {
     level: 4,
     name: 'Experto',
-    icon: '🎓',
+    icon: 'graduation-cap',
     minXP: 6000,
     maxXP: 10000,
     color: 'from-purple-400 to-purple-600',
@@ -38,7 +38,7 @@ export const LEVELS = [
   {
     level: 5,
     name: 'Maestro',
-    icon: '👑',
+    icon: 'crown',
     minXP: 10000,
     maxXP: null,
     color: 'from-yellow-400 to-yellow-600',

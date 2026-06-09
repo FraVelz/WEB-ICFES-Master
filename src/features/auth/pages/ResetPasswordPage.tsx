@@ -239,17 +239,26 @@ export const ResetPasswordPage = () => {
                     {EMAIL_MESSAGES.resetPasswordPage.requirementsTitle}
                   </p>
                   <ul className="space-y-1 text-xs text-slate-400">
-                    <li className={password.length >= 6 ? 'text-green-400' : ''}>
-                      ✓ {EMAIL_MESSAGES.resetPasswordPage.requirement1}
+                    <li className={cn('flex items-center gap-1.5', password.length >= 6 ? 'text-green-400' : '')}>
+                      <Icon name="check" size="sm" className="shrink-0" />
+                      {EMAIL_MESSAGES.resetPasswordPage.requirement1}
                     </li>
-                    <li className={/[A-Z]/.test(password) ? 'text-green-400' : ''}>
-                      ✓ {EMAIL_MESSAGES.resetPasswordPage.requirement2}
+                    <li className={cn('flex items-center gap-1.5', /[A-Z]/.test(password) ? 'text-green-400' : '')}>
+                      <Icon name="check" size="sm" className="shrink-0" />
+                      {EMAIL_MESSAGES.resetPasswordPage.requirement2}
                     </li>
-                    <li className={/[0-9]/.test(password) ? 'text-green-400' : ''}>
-                      ✓ {EMAIL_MESSAGES.resetPasswordPage.requirement3}
+                    <li className={cn('flex items-center gap-1.5', /[0-9]/.test(password) ? 'text-green-400' : '')}>
+                      <Icon name="check" size="sm" className="shrink-0" />
+                      {EMAIL_MESSAGES.resetPasswordPage.requirement3}
                     </li>
-                    <li className={password === confirmPassword && password ? 'text-green-400' : ''}>
-                      ✓ {EMAIL_MESSAGES.resetPasswordPage.requirement4}
+                    <li
+                      className={cn(
+                        'flex items-center gap-1.5',
+                        password === confirmPassword && password ? 'text-green-400' : ''
+                      )}
+                    >
+                      <Icon name="check" size="sm" className="shrink-0" />
+                      {EMAIL_MESSAGES.resetPasswordPage.requirement4}
                     </li>
                   </ul>
                 </div>

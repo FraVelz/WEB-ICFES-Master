@@ -92,7 +92,7 @@ export const ClasificatoriaPage = () => {
                   : 'border-slate-700 bg-slate-900 text-slate-400 hover:bg-slate-800'
               )}
             >
-              <span className="text-lg">{rank.icon}</span>
+              <Icon name={rank.icon} size="md" className="shrink-0" />
               <span className="font-bold">{rank.label}</span>
             </button>
           ))}
@@ -105,11 +105,11 @@ export const ClasificatoriaPage = () => {
               <div className="flex items-center gap-4">
                 <div
                   className={cn(
-                    'flex h-16 w-16 items-center justify-center rounded-xl text-3xl shadow-lg',
+                    'flex h-16 w-16 items-center justify-center rounded-xl text-white shadow-lg',
                     `bg-linear-to-br ${currentRankInfo.color}`
                   )}
                 >
-                  {currentRankInfo.icon}
+                  <Icon name={currentRankInfo.icon} size="2xl" />
                 </div>
                 <div>
                   <h2 className="text-2xl font-bold text-white">{currentRankInfo.label}</h2>
@@ -138,7 +138,7 @@ export const ClasificatoriaPage = () => {
             <LoadingState label="Cargando clasificación..." layout="section" />
           ) : error ? (
             <div className="rounded-2xl border border-red-500/20 bg-red-500/10 py-12 text-center">
-              <div className="mb-4 text-4xl text-red-400">⚠️</div>
+              <Icon name="exclamation-triangle" size="3xl" className="mx-auto mb-4 text-red-400" />
               <h3 className="mb-2 text-xl font-bold text-white">Error al cargar</h3>
               <p className="px-4 text-slate-400">
                 {error?.message?.includes('index')
@@ -212,7 +212,7 @@ export const ClasificatoriaPage = () => {
             })
           ) : (
             <div className="rounded-2xl border border-slate-800 bg-slate-900/50 py-12 text-center">
-              <div className="mb-4 text-4xl">😴</div>
+              <Icon name="moon" size="3xl" className="mx-auto mb-4 text-slate-400" />
               <h3 className="mb-2 text-xl font-bold text-white">¡Está muy tranquilo por aquí!</h3>
               <p className="text-slate-400">Sé el primero en sumar puntos en la liga {currentRankInfo.label}.</p>
             </div>

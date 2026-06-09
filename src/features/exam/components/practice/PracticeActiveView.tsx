@@ -1,4 +1,5 @@
 import { cn } from '@/utils/cn';
+import { Icon } from '@/shared/components/Icon';
 import { AnswerSheet } from '@/features/exam/components';
 import type { ExamConfig } from '@/features/exam/types';
 import type { ExamQuestion } from '@/features/exam/types/question';
@@ -179,7 +180,7 @@ export function PracticeActiveView({
                   'focus-visible:ring-offset-2 focus-visible:ring-offset-gray-900'
                 )}
               >
-                ✕
+                <Icon name="x-mark" size="lg" />
               </button>
             </div>
             <div className="p-4">

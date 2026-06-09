@@ -6,7 +6,7 @@
 export const EMAIL_MESSAGES = {
   // Password recovery email subject line
   resetPassword: {
-    subject: '🔐 Recupera tu contraseña - ICFES Master',
+    subject: 'Recupera tu contraseña - ICFES Master',
     title: 'Recuperar tu Contraseña',
     greeting: 'Hola,',
     intro: 'Recibimos una solicitud para restablecer tu contraseña en ICFES Master.',

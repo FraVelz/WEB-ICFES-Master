@@ -205,7 +205,7 @@ export const updateProgress = (): ProgressData => {
           areaStats['Matemáticas'].total > 0
             ? Math.round((areaStats['Matemáticas'].correct / areaStats['Matemáticas'].total) * 100)
             : 0,
-        icon: 'faRuler',
+        icon: 'calculator',
         color: 'from-yellow-500 to-yellow-600',
       },
       lenguaje: {
@@ -216,7 +216,7 @@ export const updateProgress = (): ProgressData => {
           areaStats['Lectura Crítica'].total > 0
             ? Math.round((areaStats['Lectura Crítica'].correct / areaStats['Lectura Crítica'].total) * 100)
             : 0,
-        icon: 'faBook',
+        icon: 'book-open',
         color: 'from-blue-500 to-blue-600',
       },
       ciencias: {
@@ -227,7 +227,7 @@ export const updateProgress = (): ProgressData => {
           areaStats['Ciencias Naturales'].total > 0
             ? Math.round((areaStats['Ciencias Naturales'].correct / areaStats['Ciencias Naturales'].total) * 100)
             : 0,
-        icon: 'faFlask',
+        icon: 'flask',
         color: 'from-green-500 to-green-600',
       },
       sociales: {
@@ -238,7 +238,7 @@ export const updateProgress = (): ProgressData => {
           areaStats['Sociales y Ciudadanas'].total > 0
             ? Math.round((areaStats['Sociales y Ciudadanas'].correct / areaStats['Sociales y Ciudadanas'].total) * 100)
             : 0,
-        icon: 'faGlobe',
+        icon: 'landmark',
         color: 'from-orange-500 to-orange-600',
       },
     },
@@ -288,7 +288,7 @@ export const getDefaultProgress = (): ProgressData => {
         correct: 0,
         total: 0,
         percentage: 0,
-        icon: 'faRuler',
+        icon: 'calculator',
         color: 'from-yellow-500 to-yellow-600',
       },
       lenguaje: {
@@ -296,7 +296,7 @@ export const getDefaultProgress = (): ProgressData => {
         correct: 0,
         total: 0,
         percentage: 0,
-        icon: 'faBook',
+        icon: 'book-open',
         color: 'from-blue-500 to-blue-600',
       },
       ciencias: {
@@ -304,7 +304,7 @@ export const getDefaultProgress = (): ProgressData => {
         correct: 0,
         total: 0,
         percentage: 0,
-        icon: 'faFlask',
+        icon: 'flask',
         color: 'from-green-500 to-green-600',
       },
       sociales: {
@@ -312,7 +312,7 @@ export const getDefaultProgress = (): ProgressData => {
         correct: 0,
         total: 0,
         percentage: 0,
-        icon: 'faGlobe',
+        icon: 'landmark',
         color: 'from-orange-500 to-orange-600',
       },
     },

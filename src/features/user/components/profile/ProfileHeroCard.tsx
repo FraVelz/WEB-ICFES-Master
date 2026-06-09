@@ -1,11 +1,11 @@
 import { cn } from '@/utils/cn';
-import { Icon } from '@/shared/components/Icon';
+import { Icon, type IconName } from '@/shared/components/Icon';
 import { AvatarImage } from '@/features/user/components/AvatarImage';
 import type { ReactNode } from 'react';
 
 type LevelInfo = {
   level?: number;
-  levelIcon?: string;
+  levelIcon?: IconName;
   levelName?: string;
   levelColor?: string;
   xpProgress?: number;
@@ -83,7 +83,8 @@ export function ProfileHeroCard({
               accent === 'purple' ? 'text-purple-400' : 'text-app-accent'
             )}
           >
-            {levelInfo?.levelIcon} Nivel {levelInfo?.level || level}
+            {levelInfo?.levelIcon && <Icon name={levelInfo.levelIcon} size="sm" className="inline" />}{' '}
+            Nivel {levelInfo?.level || level}
           </div>
         </div>
 
@@ -131,7 +132,7 @@ export function ProfileHeroCard({
                 <span className="font-semibold text-slate-300">Nivel {levelInfo?.level ?? level}</span>
                 <span className="text-slate-500">•</span>
                 <span className="text-slate-400">{levelInfo?.levelName || 'Aprendiz'}</span>
-                {levelInfo?.levelIcon && <span className="text-lg">{levelInfo.levelIcon}</span>}
+                {levelInfo?.levelIcon && <Icon name={levelInfo.levelIcon} size="sm" />}
               </div>
               {levelInfo?.xpProgress != null && (
                 <span className="text-slate-500">{Math.round(levelInfo.xpProgress ?? 0)}%</span>
