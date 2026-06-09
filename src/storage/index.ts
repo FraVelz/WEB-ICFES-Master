@@ -14,20 +14,4 @@ export {
   type AttemptWithQuestions,
 } from './progressStorage';
 
-export { clearLocalUserData } from './userProfile';
-
-export {
-  getUserProfile,
-  getUserRank,
-  updateUserProfile,
-  updateUsername,
-  updateUserBio,
-  updateProfileImage,
-  getVirtualMoney,
-  addVirtualMoney,
-  removeVirtualMoney,
-  type UserProfile,
-  type UserRank,
-} from './userProfile';
-
 export { formatTimeExtended } from './timeFormatter';

@@ -3,7 +3,10 @@ import { useAuth } from '@/features/auth/context/AuthContext';
 import { useGamification } from '@/hooks/gamification';
 import { getLevelInfo } from '@/services/gamification/gamificationUtils';
 import { RANKS } from '@/shared/constants/ranks';
-import { getUserProfile } from '@/services/persistence';
+import { getDemoProfile } from '@/services/demo/demoProfile';
+import { isDemoUserId } from '@/services/demo/demoCoins';
+import UserSupabaseService from '@/services/supabase/UserSupabaseService';
+import { isSupabaseConfigured } from '@/services/persistence/supabaseConfigured';
 
 const levelToRankId = (level: number): string => {
   const rankOrder = Math.min(Math.max(level, 1), 7);
@@ -12,13 +15,14 @@ const levelToRankId = (level: number): string => {
 };
 
 /**
- * Hook unificado para gestionar perfiles de usuario (localStorage)
+ * Profile view — Supabase for real users, demo profile for demo scope.
  */
 export const useUserProfile = (targetUserId: string | null = null) => {
   const { user: authUser } = useAuth();
   const uid = targetUserId || authUser?.uid;
   const isOwnProfile = authUser?.uid && uid === authUser.uid;
-  const gamification = useGamification(uid);
+  const streakScope = uid ? (isDemoUserId(uid) ? 'demo' : uid) : undefined;
+  const gamification = useGamification(streakScope);
 
   const [profileData, setProfileData] = useState<{
     photoUrl: string | null;
@@ -43,27 +47,72 @@ export const useUserProfile = (targetUserId: string | null = null) => {
       setProfileData((prev) => ({ ...prev, loading: false, exists: false }));
       return;
     }
-    const profile = getUserProfile();
-    setProfileData({
-      photoUrl: profile.profileImage || (isOwnProfile ? authUser?.photoURL : null),
-      name: profile.username || authUser?.displayName || 'Usuario',
-      personalPhrase: profile.bio || '¡Preparándome para el éxito!',
-      createdAt: profile.createdAt
-        ? new Date(profile.createdAt).toLocaleDateString('es-CO', {
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric',
-          })
-        : 'Reciente',
-      coursesProgress: (profile as { coursesProgress?: Record<string, unknown> }).coursesProgress || {},
-      loading: false,
-      exists: true,
-    });
+
+    let cancelled = false;
+
+    const load = async () => {
+      setProfileData((prev) => ({ ...prev, loading: true }));
+
+      if (isDemoUserId(uid)) {
+        const demo = getDemoProfile();
+        if (cancelled) return;
+        setProfileData({
+          photoUrl: null,
+          name: demo.username ?? 'Estudiante',
+          personalPhrase: demo.bio ?? '',
+          createdAt: 'Modo demo',
+          coursesProgress: {},
+          loading: false,
+          exists: true,
+        });
+        return;
+      }
+
+      if (!isSupabaseConfigured()) {
+        if (cancelled) return;
+        setProfileData((prev) => ({ ...prev, loading: false, exists: false }));
+        return;
+      }
+
+      try {
+        const profile = await UserSupabaseService.getByUserId(uid);
+        if (cancelled) return;
+
+        if (!profile) {
+          setProfileData((prev) => ({ ...prev, loading: false, exists: false }));
+          return;
+        }
+
+        setProfileData({
+          photoUrl: profile.profileImage ?? (isOwnProfile ? authUser?.photoURL : null),
+          name: profile.username ?? profile.displayName ?? 'Usuario',
+          personalPhrase: profile.bio ?? '¡Preparándome para el éxito!',
+          createdAt: profile.createdAt
+            ? new Date(profile.createdAt).toLocaleDateString('es-CO', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+              })
+            : 'Reciente',
+          coursesProgress: {},
+          loading: false,
+          exists: true,
+        });
+      } catch {
+        if (!cancelled) {
+          setProfileData((prev) => ({ ...prev, loading: false, exists: false }));
+        }
+      }
+    };
+
+    void load();
+    return () => {
+      cancelled = true;
+    };
   }, [uid, authUser, isOwnProfile]);
 
   const totalXPFromDB = typeof gamification.totalXP === 'number' ? gamification.totalXP : 0;
   const levelInfo = getLevelInfo(totalXPFromDB);
-
   const rank = levelToRankId(levelInfo.level);
 
   return {

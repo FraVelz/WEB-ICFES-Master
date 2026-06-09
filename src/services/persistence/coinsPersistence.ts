@@ -2,7 +2,6 @@
  * Monedas virtuales — Supabase `user_gamification` o demo local.
  */
 import { gamificationPersistence } from './gamificationPersistence';
-import { getVirtualMoney, updateUserProfile } from '@/storage/userProfile';
 import UserSupabaseService from '@/services/supabase/UserSupabaseService';
 import { addDemoCoins, getDemoCoins, isDemoUserId, spendDemoCoins } from '@/services/demo/demoCoins';
 import { isSupabaseConfigured } from './supabaseConfigured';
@@ -20,27 +19,21 @@ async function readGamificationBalance(userId: string): Promise<number> {
   return (profile?.totalCoins ?? 0) - (profile?.spentCoins ?? 0);
 }
 
-async function migrateLegacyBalance(userId: string, currentBalance: number): Promise<number> {
+/** One-time migration from legacy `users.virtual_money` into gamification coins. */
+async function migrateLegacyVirtualMoney(userId: string, currentBalance: number): Promise<number> {
   if (!isSupabaseConfigured() || currentBalance > 0) return currentBalance;
-
-  const localBalance = getVirtualMoney();
-  let legacyBalance = localBalance;
 
   try {
     const userProfile = await UserSupabaseService.getByUserId(userId);
-    legacyBalance = Math.max(localBalance, userProfile?.virtualMoney ?? 0);
-    if (userProfile && (userProfile.virtualMoney ?? 0) > 0) {
-      await UserSupabaseService.updateProfile(userId, { virtualMoney: 0 });
-    }
+    const legacyBalance = userProfile?.virtualMoney ?? 0;
+    if (legacyBalance <= 0) return currentBalance;
+
+    await UserSupabaseService.updateProfile(userId, { virtualMoney: 0 });
+    await gamificationPersistence.addCoins(userId, legacyBalance, 'migration_legacy_balance');
+    return legacyBalance;
   } catch {
-    // Usuario inexistente o Supabase no disponible
+    return currentBalance;
   }
-
-  if (legacyBalance <= 0) return currentBalance;
-
-  await gamificationPersistence.addCoins(userId, legacyBalance, 'migration_legacy_balance');
-  updateUserProfile({ virtualMoney: 0 });
-  return legacyBalance;
 }
 
 export async function getCoinsBalance(userId: string): Promise<number> {
@@ -49,7 +42,7 @@ export async function getCoinsBalance(userId: string): Promise<number> {
   }
 
   let balance = await readGamificationBalance(userId);
-  balance = await migrateLegacyBalance(userId, balance);
+  balance = await migrateLegacyVirtualMoney(userId, balance);
   return balance;
 }
 

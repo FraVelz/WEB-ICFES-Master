@@ -2,7 +2,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useAuth } from '@/features/auth/context/AuthContext';
 import type { MappedUser } from '@/services/supabase/UserSupabaseService';
-import type { UserProfile } from '@/services/persistence';
+import type { UserProfile } from '@/features/user/types/userProfile.types';
 import {
   loadUserProfile,
   patchUserProfile,

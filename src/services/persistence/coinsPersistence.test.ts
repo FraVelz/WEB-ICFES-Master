@@ -2,19 +2,20 @@ import { describe, it, expect, beforeEach, vi } from 'vitest';
 
 vi.mock('./gamificationPersistence', () => ({
   gamificationPersistence: {
-    getProfile: vi.fn(async () => ({ totalCoins: 0, spentCoins: 0 })),
+    getProfile: vi.fn(async () => ({ totalCoins: 200, spentCoins: 0 })),
     addCoins: vi.fn(async () => ({})),
     spendCoins: vi.fn(async () => ({})),
   },
 }));
 
-vi.mock('@/storage/userProfile', () => ({
-  getVirtualMoney: vi.fn(() => 200),
-  updateUserProfile: vi.fn(),
+vi.mock('@/services/supabase/UserSupabaseService', () => ({
+  default: {
+    getByUserId: vi.fn(async () => ({ virtualMoney: 0 })),
+    updateProfile: vi.fn(async () => ({})),
+  },
 }));
 
 import { gamificationPersistence } from './gamificationPersistence';
-import { getVirtualMoney, updateUserProfile } from '@/storage/userProfile';
 import { getCoinsBalance, addCoinsBalance, spendCoinsBalance, COINS_CHANGE_EVENT } from './coinsPersistence';
 
 describe('coinsPersistence', () => {
@@ -24,7 +25,6 @@ describe('coinsPersistence', () => {
       totalCoins: 200,
       spentCoins: 0,
     } as Awaited<ReturnType<typeof gamificationPersistence.getProfile>>);
-    vi.mocked(getVirtualMoney).mockReturnValue(200);
   });
 
   it('getCoinsBalance lee el saldo del perfil Supabase', async () => {
@@ -46,10 +46,5 @@ describe('coinsPersistence', () => {
     await spendCoinsBalance('user-1', 30, 'shop_item');
 
     expect(gamificationPersistence.spendCoins).toHaveBeenCalledWith('user-1', 30, 'shop_item');
-  });
-
-  it('migra saldo legacy solo cuando el balance Supabase es cero', async () => {
-    await getCoinsBalance('user-1');
-    expect(updateUserProfile).not.toHaveBeenCalled();
   });
 });

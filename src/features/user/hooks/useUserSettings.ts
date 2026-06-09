@@ -7,14 +7,14 @@ import { useUser } from '@/features/user/hooks/useUser';
 import { useUserData } from '@/features/user/hooks/useUserData';
 import { useProgress } from '@/features/user/hooks/useProgress';
 import { useExam } from '@/features/exam/hooks/useExam';
-import { clearLocalUserData, updateUsername, updateUserBio, updateProfileImage } from '@/services/persistence';
+import { clearLocalClientData } from '@/services/persistence/clearLocalClientData';
 import { isSupabaseConfigured } from '@/services/persistence/supabaseConfigured';
 
 export function useUserSettings() {
   const router = useRouter();
   const { user, refreshUser } = useUser();
-  const { logout } = useAuth();
-  const { user: userData } = useUserData();
+  const { logout, user: authUser } = useAuth();
+  const { user: userData, updateUsername, updateBio, updateProfileImage, refresh } = useUserData();
   const { resetProgress } = useProgress();
   const { resetUserExams } = useExam(undefined);
 
@@ -30,6 +30,7 @@ export function useUserSettings() {
   const [supportCategory, setSupportCategory] = useState('technical');
   const [supportMessage, setSupportMessage] = useState('');
   const [supportEmail, setSupportEmail] = useState('');
+
   useEffect(() => {
     setUsername(user?.username ?? userData?.displayName ?? userData?.username ?? '');
     setSupportEmail((user?.email ?? userData?.email ?? '') as string);
@@ -50,10 +51,17 @@ export function useUserSettings() {
       showMessage('El nombre de usuario no puede estar vacío', 'error');
       return;
     }
+    if (username.length > 30) {
+      showMessage('El nombre de usuario no puede exceder 30 caracteres', 'error');
+      return;
+    }
     try {
       setLoading(true);
-      await updateUsername(username);
-      refreshUser();
+      if (authUser?.uid) {
+        await updateUsername(username.trim());
+      }
+      await refreshUser();
+      await refresh();
       showMessage('Nombre de usuario actualizado');
     } catch (err) {
       showMessage(`Error: ${err instanceof Error ? err.message : 'Error desconocido'}`, 'error');
@@ -63,10 +71,17 @@ export function useUserSettings() {
   };
 
   const handleBioUpdate = async () => {
+    if (bio.length > 150) {
+      showMessage('La biografía no puede exceder 150 caracteres', 'error');
+      return;
+    }
     try {
       setLoading(true);
-      await updateUserBio(bio);
-      refreshUser();
+      if (authUser?.uid) {
+        await updateBio(bio.trim());
+      }
+      await refreshUser();
+      await refresh();
       showMessage('Frase personal actualizada');
     } catch (err) {
       showMessage(`Error: ${err instanceof Error ? err.message : 'Error desconocido'}`, 'error');
@@ -78,10 +93,21 @@ export function useUserSettings() {
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
+    if (!file.type.startsWith('image/')) {
+      showMessage('El archivo debe ser una imagen', 'error');
+      return;
+    }
+    if (file.size > 2 * 1024 * 1024) {
+      showMessage('La imagen no puede exceder 2MB', 'error');
+      return;
+    }
     try {
       setLoading(true);
-      await updateProfileImage(file);
+      if (authUser?.uid) {
+        await updateProfileImage(file);
+      }
       await refreshUser();
+      await refresh();
       showMessage('Foto de perfil actualizada');
     } catch (err) {
       showMessage(`Error: ${err instanceof Error ? err.message : 'Error desconocido'}`, 'error');
@@ -93,8 +119,11 @@ export function useUserSettings() {
   const handleRemoveProfileImage = async () => {
     try {
       setLoading(true);
-      await updateProfileImage(null);
+      if (authUser?.uid) {
+        await updateProfileImage(null);
+      }
       await refreshUser();
+      await refresh();
       showMessage('Foto de perfil eliminada');
     } finally {
       setLoading(false);
@@ -143,7 +172,7 @@ export function useUserSettings() {
       setLoading(true);
       await resetProgress();
       await resetUserExams();
-      clearLocalUserData();
+      clearLocalClientData(authUser?.uid);
       sessionStorage.clear();
       showMessage('Todos tus datos han sido eliminados', 'success');
       setShowDeleteModal(false);
@@ -165,7 +194,7 @@ export function useUserSettings() {
       setLoading(true);
       await resetProgress();
       await resetUserExams();
-      clearLocalUserData();
+      clearLocalClientData(authUser?.uid);
       sessionStorage.clear();
       await logout();
       const suffix = isSupabaseConfigured()

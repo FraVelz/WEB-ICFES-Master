@@ -3,7 +3,7 @@
  */
 import UserSupabaseService from '@/services/supabase/UserSupabaseService';
 import type { MappedUser } from '@/services/supabase/UserSupabaseService';
-import type { UserProfile } from '@/storage/userProfile';
+import type { UserProfile } from '@/features/user/types/userProfile.types';
 import { addCoinsBalance, getCoinsBalance, spendCoinsBalance } from './coinsPersistence';
 
 export async function loadUserProfile(
@@ -31,21 +31,37 @@ export async function patchUserProfile(
 }
 
 export async function setUsername(uid: string, username: string): Promise<MappedUser | UserProfile | null> {
-  return UserSupabaseService.updateProfile(uid, { username });
+  if (!username.trim()) {
+    throw new Error('El nombre de usuario no puede estar vacío');
+  }
+  if (username.length > 30) {
+    throw new Error('El nombre de usuario no puede exceder 30 caracteres');
+  }
+  return UserSupabaseService.updateProfile(uid, { username: username.trim() });
 }
 
 export async function setUserBio(uid: string, bio: string): Promise<MappedUser | UserProfile | null> {
-  return UserSupabaseService.updateProfile(uid, { bio });
+  if (bio.length > 150) {
+    throw new Error('La biografía no puede exceder 150 caracteres');
+  }
+  return UserSupabaseService.updateProfile(uid, { bio: bio.trim() });
 }
 
 export async function setUserProfileImage(uid: string, file: File | null): Promise<MappedUser | UserProfile | null> {
-  const reader = new FileReader();
+  if (!file) {
+    return UserSupabaseService.updateProfile(uid, { profileImage: null });
+  }
+
+  if (!file.type.startsWith('image/')) {
+    throw new Error('El archivo debe ser una imagen');
+  }
+  if (file.size > 2 * 1024 * 1024) {
+    throw new Error('La imagen no puede exceder 2MB');
+  }
+
   return new Promise((resolve, reject) => {
+    const reader = new FileReader();
     reader.onload = async () => {
-      if (!file) {
-        resolve(await UserSupabaseService.updateProfile(uid, { profileImage: null }));
-        return;
-      }
       resolve(
         await UserSupabaseService.updateProfile(uid, {
           profileImage: reader.result,
@@ -53,7 +69,7 @@ export async function setUserProfileImage(uid: string, file: File | null): Promi
       );
     };
     reader.onerror = () => reject(new Error('Error al leer la imagen'));
-    reader.readAsDataURL(file || new Blob());
+    reader.readAsDataURL(file);
   });
 }
 

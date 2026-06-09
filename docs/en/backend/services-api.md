@@ -102,7 +102,7 @@ const { user, loading, updateProfile, updateUsername, updateBio, updateProfileIm
 ```
 
 - **Supabase**: UserSupabaseService
-- **localStorage**: `@/services/persistence` (implementation in `src/storage/userProfile`)
+- **Supabase**: `@/services/persistence/userPersistence.ts` → `users` table
 
 ### **useProgress()**
 
@@ -121,7 +121,7 @@ const { achievements, totalXP, level, coins, currentStreak, updateAchievementPro
 ```
 
 - **Supabase**: GamificationSupabaseService
-- **localStorage**: localStorage (`icfes_gamification`, `icfes_streak_dates`)
+- **localStorage**: progress cache (`icfes_streak_dates`, attempts, completed lessons)
 
 ### **useExam(examId)**
 

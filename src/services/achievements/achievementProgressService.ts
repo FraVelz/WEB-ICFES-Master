@@ -17,8 +17,6 @@ export type AchievementProgressEntry = {
 
 export type AchievementProgressMap = Record<string, AchievementProgressEntry>;
 
-const GAMIFICATION_KEY = 'icfes_gamification';
-
 function progressStorageKey(userId: string): string {
   return `icfes_achievement_progress_${userId}`;
 }
@@ -32,22 +30,10 @@ export function readAchievementProgress(userId: string): AchievementProgressMap 
   if (typeof window === 'undefined') return {};
 
   const stored = localStorage.getItem(progressStorageKey(userId));
-  if (stored) {
-    try {
-      return normalizeAchievementsRecord(JSON.parse(stored));
-    } catch {
-      return {};
-    }
-  }
-
-  if (isDemoUserId(userId)) return {};
-
-  const gamStored = localStorage.getItem(GAMIFICATION_KEY);
-  if (!gamStored) return {};
+  if (!stored) return {};
 
   try {
-    const gam = JSON.parse(gamStored) as { achievements?: unknown };
-    return normalizeAchievementsRecord(gam.achievements);
+    return normalizeAchievementsRecord(JSON.parse(stored));
   } catch {
     return {};
   }

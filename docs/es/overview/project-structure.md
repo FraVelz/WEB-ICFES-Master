@@ -98,7 +98,7 @@ La navegación del dashboard vive en **`src/components/DashboardHeader/`** (no e
 ## Persistencia
 
 - **API para UI:** `@/services/persistence` (progreso, perfil, exámenes, gamificación).
-- **Implementación local:** `src/storage/` (`progressStorage`, `userProfile`, `dataEncryption`).
+- **Local implementation:** `src/storage/progressStorage.ts` (client progress cache).
 - **Supabase:** `src/services/supabase/*`.
 
 Ver también [progreso-cliente-local.md](../data/progreso-cliente-local.md) para datos que no se sincronizan solos.

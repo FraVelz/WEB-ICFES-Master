@@ -1,13 +1,35 @@
 import { useState, useEffect, useCallback } from 'react';
-import { getUserProfile, getUserRank, type UserProfile, type UserRank } from '@/services/persistence';
-import { getCoinsBalance, addCoinsBalance, spendCoinsBalance, COINS_CHANGE_EVENT } from '@/services/persistence';
+import type { UserProfile, UserRank } from '@/features/user/types/userProfile.types';
+import { getPerformanceRank } from '@/features/user/utils/performanceRank';
+import { getDemoProfile } from '@/services/demo/demoProfile';
+import {
+  getCoinsBalance,
+  addCoinsBalance,
+  spendCoinsBalance,
+  COINS_CHANGE_EVENT,
+  loadUserProfile,
+} from '@/services/persistence';
 import { useAuth } from '@/features/auth/context/AuthContext';
 import { useUiSessionStore } from '@/store/uiSessionStore';
 import { resolveCoinsUserId } from '@/services/demo/demoCoins';
+import type { MappedUser } from '@/services/supabase/UserSupabaseService';
+
+function toUserProfile(data: MappedUser): UserProfile {
+  return {
+    id: data.id,
+    username: data.username ?? data.displayName,
+    displayName: data.displayName,
+    email: data.email,
+    bio: data.bio,
+    profileImage: data.profileImage,
+    virtualMoney: data.virtualMoney,
+    createdAt: data.createdAt,
+    updatedAt: data.updatedAt,
+  };
+}
 
 /**
- * Hook personalizado para manejar datos del usuario.
- * El saldo de monedas usa la capa unificada (gamificación / nube).
+ * Header/sidebar user state — Supabase for accounts, demo profile for demo mode.
  */
 export const useUser = () => {
   const [user, setUser] = useState<UserProfile | null>(null);
@@ -31,28 +53,33 @@ export const useUser = () => {
     }
   }, [coinsUserId]);
 
-  useEffect(() => {
-    const loadUserData = async () => {
-      try {
-        let profile = getUserProfile();
-        if (authUser?.displayName) {
-          profile = {
-            ...profile,
-            username: authUser.displayName,
-            displayName: authUser.displayName,
-          } as UserProfile;
+  const loadUserData = useCallback(async () => {
+    try {
+      setRank(getPerformanceRank());
+
+      if (authUser?.uid) {
+        const remote = await loadUserProfile(authUser.uid, authUser.email, authUser.displayName);
+        if (remote && 'id' in remote) {
+          setUser(toUserProfile(remote as MappedUser));
         }
-        const userRank = getUserRank();
-        setUser(profile);
-        setRank(userRank);
-        await loadCoins();
-      } catch (err) {
-        console.error('Error cargando datos del usuario:', err);
+      } else if (demoMode) {
+        setUser(getDemoProfile());
+      } else {
+        setUser(null);
       }
+
+      await loadCoins();
+    } catch (err) {
+      console.error('Error cargando datos del usuario:', err);
+    } finally {
       setIsLoading(false);
-    };
-    loadUserData();
-  }, [authUser?.uid, authUser?.displayName, loadCoins, demoMode]);
+    }
+  }, [authUser?.uid, authUser?.email, authUser?.displayName, demoMode, loadCoins]);
+
+  useEffect(() => {
+    setIsLoading(true);
+    void loadUserData();
+  }, [loadUserData]);
 
   useEffect(() => {
     const onCoinsChanged = (event: Event) => {
@@ -61,18 +88,14 @@ export const useUser = () => {
         setVirtualMoney(detail.balance);
         return;
       }
-      loadCoins();
+      void loadCoins();
     };
     window.addEventListener(COINS_CHANGE_EVENT, onCoinsChanged);
     return () => window.removeEventListener(COINS_CHANGE_EVENT, onCoinsChanged);
   }, [loadCoins]);
 
   const refreshUser = async () => {
-    const profile = getUserProfile();
-    const userRank = getUserRank();
-    setUser(profile);
-    setRank(userRank);
-    await loadCoins();
+    await loadUserData();
   };
 
   const addMoney = async (amount: number) => {

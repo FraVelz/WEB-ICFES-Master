@@ -95,18 +95,6 @@ export function resolveStreakScopeFromStorage(options?: { userId?: string | null
   const active = getActiveStreakUserId();
   if (active) return active;
 
-  if (typeof window !== 'undefined') {
-    try {
-      const mock = localStorage.getItem('icfes_mock_user');
-      if (mock) {
-        const parsed = JSON.parse(mock) as { uid?: string };
-        if (parsed?.uid) return parsed.uid;
-      }
-    } catch {
-      /* ignore */
-    }
-  }
-
   return 'demo';
 }
 

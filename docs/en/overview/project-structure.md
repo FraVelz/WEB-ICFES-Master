@@ -97,7 +97,7 @@ Dashboard navigation lives in **`src/components/DashboardHeader/`** (not in `sha
 ## Persistence
 
 - **UI API:** `@/services/persistence` (progress, profile, exams, gamification).
-- **Local implementation:** `src/storage/` (`progressStorage`, `userProfile`, `dataEncryption`).
+- **Local implementation:** `src/storage/progressStorage.ts` (client progress cache).
 - **Supabase:** `src/services/supabase/*`.
 
 See also [client-local-progress.md](../data/client-local-progress.md) for data not auto-synced to the backend.

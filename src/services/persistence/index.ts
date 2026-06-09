@@ -3,6 +3,7 @@
  * Prefer this module in features/UI instead of `@/storage` directly.
  */
 export { isSupabaseConfigured } from './supabaseConfigured';
+export { clearLocalClientData } from './clearLocalClientData';
 export { gamificationPersistence } from './gamificationPersistence';
 export {
   loadStreakState,
@@ -32,6 +33,9 @@ export {
   loadPersistedSkillLevel,
 } from './skillLevelPersistence';
 
+export type { UserProfile, UserRank, RankInfo } from '@/features/user/types/userProfile.types';
+export { getPerformanceRank } from '@/features/user/utils/performanceRank';
+
 export {
   getProgress,
   getStoredExams,
@@ -44,20 +48,5 @@ export {
   type ProgressData,
   type AttemptWithQuestions,
 } from '@/storage/progressStorage';
-
-export {
-  clearLocalUserData,
-  getUserProfile,
-  getUserRank,
-  updateUserProfile,
-  updateUsername,
-  updateUserBio,
-  updateProfileImage,
-  getVirtualMoney,
-  addVirtualMoney,
-  removeVirtualMoney,
-  type UserProfile,
-  type UserRank,
-} from '@/storage/userProfile';
 
 export { formatTimeExtended } from '@/storage/timeFormatter';
