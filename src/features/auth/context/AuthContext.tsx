@@ -7,13 +7,12 @@ import { useUiSessionStore } from '@/store/uiSessionStore';
 import UserSupabaseService from '@/services/supabase/UserSupabaseService';
 import { getAggregatedUserData } from '@/services/persistence';
 import { mergeDemoStreakIntoUser, setActiveStreakUserId, STREAK_UPDATED_EVENT } from '@/services/streak';
-import { normalizePlanFeatures } from '@/shared/constants/planFeatures';
 import { mapSupabaseAuthError, REQUIRES_EMAIL_CONFIRMATION } from '@/features/auth/utils/mapSupabaseAuthError';
 import { isSupabaseAuthConfigured } from '@/features/auth/utils/isSupabaseAuthConfigured';
-import type { AuthContextType, AuthUser, PlanData } from './authTypes';
+import type { AuthContextType, AuthUser } from './authTypes';
 import { mapSupabaseUser } from './authSupabase';
 
-export type { AuthUser, PlanData } from './authTypes';
+export type { AuthUser } from './authTypes';
 
 const AuthContext = createContext<AuthContextType | null>(null);
 
@@ -204,45 +203,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const getUserData = async (uid: string): Promise<Record<string, unknown>> => getAggregatedUserData(uid);
 
-  const getUserPlan = async (): Promise<Record<string, unknown>> => {
-    const defaultPlan = {
-      planType: 'free',
-      planName: 'Plan Gratuito',
-      status: 'active',
-      features: { questionsPerDay: 5, simulationTests: false, advancedAnalytics: false },
-    };
-    if (!supabase) return defaultPlan;
-    const {
-      data: { user: authUser },
-    } = await supabase.auth.getUser();
-    if (!authUser) return defaultPlan;
-    const { data } = await supabase.from('user_plans').select('*').eq('user_id', authUser.id).maybeSingle();
-    if (data) {
-      return {
-        planType: data.plan_type || 'free',
-        planName: data.plan_name || 'Plan Gratuito',
-        status: data.status || 'active',
-        features: normalizePlanFeatures(data.features, data.plan_type),
-      };
-    }
-    return defaultPlan;
-  };
-
-  const updateUserPlan = async (uid: string, planData: PlanData): Promise<void> => {
-    if (!supabase) return;
-    await supabase.from('user_plans').upsert(
-      {
-        user_id: uid,
-        plan_type: planData.planType || planData.plan_type,
-        plan_name: planData.planName || planData.plan_name,
-        status: planData.status || 'active',
-        features: normalizePlanFeatures(planData.features, planData.planType ?? planData.plan_type),
-        updated_at: new Date().toISOString(),
-      },
-      { onConflict: 'user_id' }
-    );
-  };
-
   const value: AuthContextType = {
     user,
     loading,
@@ -257,8 +217,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     getUserData,
     isAuthenticated: !!user,
     isAccountAuth: !!user,
-    getUserPlan,
-    updateUserPlan,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

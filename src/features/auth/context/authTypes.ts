@@ -6,15 +6,6 @@ export interface AuthUser {
   photoURL: string | null;
 }
 
-export interface PlanData {
-  planType?: string;
-  plan_type?: string;
-  planName?: string;
-  plan_name?: string;
-  status?: string;
-  features?: Record<string, unknown>;
-}
-
 export type AuthContextType = {
   user: AuthUser | null;
   loading: boolean;
@@ -29,8 +20,6 @@ export type AuthContextType = {
   updatePassword: (newPassword: string) => Promise<boolean>;
   verifyEmailExists: () => Promise<boolean>;
   getUserData: (uid: string) => Promise<Record<string, unknown>>;
-  getUserPlan: () => Promise<Record<string, unknown>>;
-  updateUserPlan: (uid: string, planData: PlanData) => Promise<void>;
 };
 
 export interface SupabaseUserLike {

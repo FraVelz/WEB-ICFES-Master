@@ -11,15 +11,11 @@ export function UiSessionHydrator() {
   const hydrateUiSession = useUiSessionStore((s) => s.hydrateUiSession);
 
   useEffect(() => {
-    const { demoMode, selectedPlan, fromPricingScrollPending } = readUiSessionFromStorage();
+    const { demoMode } = readUiSessionFromStorage();
     if (demoMode) {
       ensureDemoCoinsMinimum();
     }
-    hydrateUiSession({
-      demoMode,
-      selectedPlan,
-      fromPricingScrollPending,
-    });
+    hydrateUiSession({ demoMode });
   }, [hydrateUiSession]);
 
   return null;

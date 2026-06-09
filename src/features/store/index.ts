@@ -1,6 +1,5 @@
 /**
- * Public exports for the shop and subscription plans UI.
+ * Public exports for the in-app shop (virtual coins / gamification).
  */
-export { StoreModal, ShopItemCard, ShopItemModal, ClientChecker } from './components';
+export { StoreModal, ShopItemCard, ShopItemModal } from './components';
 export { useShop } from './hooks/useShop';
-export { usePlanScheduleChecker } from './hooks/usePlanScheduleChecker';

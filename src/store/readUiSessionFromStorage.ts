@@ -1,29 +1,18 @@
 import type { UiSessionState } from '@/store/uiSessionStore';
-import type { UiPlan } from '@/store/types/uiPlan';
+
+const LEGACY_PLAN_KEYS = ['selectedPlan', 'fromPricing', 'icfes_user_plan'] as const;
 
 /** Lee flags de sesión UI desde localStorage (solo cliente). */
-export function readUiSessionFromStorage(): Pick<
-  UiSessionState,
-  'demoMode' | 'selectedPlan' | 'fromPricingScrollPending'
-> {
+export function readUiSessionFromStorage(): Pick<UiSessionState, 'demoMode'> {
   if (typeof window === 'undefined') {
-    return { demoMode: false, selectedPlan: null, fromPricingScrollPending: false };
+    return { demoMode: false };
+  }
+
+  for (const key of LEGACY_PLAN_KEYS) {
+    localStorage.removeItem(key);
   }
 
   const demoMode = localStorage.getItem('demoMode') === 'true';
 
-  let selectedPlan: UiPlan | null = null;
-  try {
-    const raw = localStorage.getItem('selectedPlan');
-    if (raw) selectedPlan = JSON.parse(raw) as UiPlan;
-  } catch {
-    selectedPlan = null;
-  }
-
-  const fromPricingScrollPending = !!localStorage.getItem('fromPricing');
-  if (fromPricingScrollPending) {
-    localStorage.removeItem('fromPricing');
-  }
-
-  return { demoMode, selectedPlan, fromPricingScrollPending };
+  return { demoMode };
 }

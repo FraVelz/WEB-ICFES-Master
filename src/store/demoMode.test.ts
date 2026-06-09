@@ -12,8 +12,6 @@ describe('demoMode', () => {
     useUiSessionStore.setState({
       hydrated: false,
       demoMode: false,
-      selectedPlan: null,
-      fromPricingScrollPending: false,
     });
     vi.restoreAllMocks();
     vi.stubGlobal('localStorage', {

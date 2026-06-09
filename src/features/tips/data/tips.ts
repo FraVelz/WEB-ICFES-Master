@@ -1,0 +1,155 @@
+export type Tip = {
+  title: string;
+  description: string;
+};
+
+export type TipCategory = {
+  id: string;
+  title: string;
+  description: string;
+  icon: string;
+  tips: Tip[];
+};
+
+export const TIP_CATEGORIES: TipCategory[] = [
+  {
+    id: 'tiempo',
+    title: 'Gestión del tiempo',
+    description: 'Organiza tu estudio sin agobiarte ni dejar todo para el final.',
+    icon: 'clock',
+    tips: [
+      {
+        title: 'Bloques de 25–45 minutos',
+        description:
+          'Estudia en sesiones cortas con descansos de 5–10 minutos. Es más sostenible que maratones de horas y mejora la retención.',
+      },
+      {
+        title: 'Prioriza por área débil',
+        description:
+          'Dedica más tiempo a las materias donde obtienes menos aciertos. Revisa tus estadísticas en ICFES Master para identificarlas.',
+      },
+      {
+        title: 'Horario fijo diario',
+        description:
+          'Elige un momento del día (mañana, tarde o noche) y respétalo como una cita. La constancia importa más que la cantidad de horas.',
+      },
+      {
+        title: 'Plan semanal realista',
+        description:
+          'Distribuye simulacros, práctica por área y repaso. Deja al menos un día de descanso activo para evitar el agotamiento.',
+      },
+    ],
+  },
+  {
+    id: 'estudio',
+    title: 'Métodos de estudio',
+    description: 'Técnicas probadas para aprender más en menos tiempo.',
+    icon: 'book-open',
+    tips: [
+      {
+        title: 'Practica activa, no solo lectura',
+        description:
+          'Resuelve preguntas en lugar de releer apuntes. La práctica con retroalimentación es lo que más sube tu puntaje.',
+      },
+      {
+        title: 'Aprende de los errores',
+        description:
+          'Lee siempre la explicación de las preguntas incorrectas. Anota el patrón del error para no repetirlo.',
+      },
+      {
+        title: 'Resume con tus palabras',
+        description:
+          'Después de una lección, explica el concepto en voz alta o por escrito. Si no puedes explicarlo, repasa.',
+      },
+      {
+        title: 'Alterna tipos de ejercicio',
+        description:
+          'Combina lecciones del roadmap, práctica por área y simulacros completos. La variedad mantiene el cerebro activo.',
+      },
+    ],
+  },
+  {
+    id: 'preparacion',
+    title: 'Preparación ICFES',
+    description: 'Estrategias específicas para las pruebas Saber 11.',
+    icon: 'graduation-cap',
+    tips: [
+      {
+        title: 'Conoce el formato del examen',
+        description:
+          'Familiarízate con el número de preguntas, tiempos y áreas evaluadas. Los simulacros de la app replican esa estructura.',
+      },
+      {
+        title: 'Domina el manejo del tiempo en el simulacro',
+        description:
+          'Practica con cronómetro. Si una pregunta te bloquea, márcala y sigue; vuelve al final si queda tiempo.',
+      },
+      {
+        title: 'Refuerza lectura crítica',
+        description:
+          'Muchas áreas dependen de comprender bien el enunciado. Lee con calma y subraya datos clave antes de responder.',
+      },
+      {
+        title: 'Repasa fórmulas y conceptos base',
+        description:
+          'En matemáticas y ciencias naturales, ten a mano las fórmulas que más aparecen y practícalas con contexto, no de memoria aislada.',
+      },
+    ],
+  },
+  {
+    id: 'constancia',
+    title: 'Motivación y constancia',
+    description: 'Mantén el ritmo durante semanas y meses de preparación.',
+    icon: 'fire',
+    tips: [
+      {
+        title: 'Metas pequeñas y alcanzables',
+        description:
+          'En lugar de “sacar 400”, apunta a “completar 3 lecciones hoy” o “mantener la racha 7 días”. Las metas pequeñas generan momentum.',
+      },
+      {
+        title: 'Celebra los avances',
+        description:
+          'Revisa tus logros y nivel en la app. Ver progreso concreto refuerza la motivación más que compararte solo con el puntaje final.',
+      },
+      {
+        title: 'Estudia con alguien',
+        description:
+          'Comparte metas con un compañero o familia. La clasificatoria y los retos diarios también añaden motivación social.',
+      },
+      {
+        title: 'Descansa bien',
+        description:
+          'Dormir 7–8 horas mejora memoria y concentración. Estudiar cansado es menos eficiente que una sesión corta descansado.',
+      },
+    ],
+  },
+  {
+    id: 'examen',
+    title: 'El día del examen',
+    description: 'Qué hacer antes, durante y después de presentar las pruebas.',
+    icon: 'clipboard-list',
+    tips: [
+      {
+        title: 'Prepara la logística con anticipación',
+        description:
+          'Revisa sede, horario, documentos y transporte el día anterior. Llegar con tiempo reduce el estrés.',
+      },
+      {
+        title: 'Desayuno ligero y agua',
+        description:
+          'Evita comidas pesadas. Lleva un snack permitido si lo autorizan. Mantente hidratado durante la jornada.',
+      },
+      {
+        title: 'Lee todas las opciones antes de marcar',
+        description:
+          'En preguntas de selección múltiple, descarta las opciones claramente incorrectas y elige entre las que quedan.',
+      },
+      {
+        title: 'No te quedes atascado',
+        description:
+          'Si no sabes una respuesta, elige la más razonable y avanza. Es mejor responder todo que dejar preguntas en blanco sin intentar.',
+      },
+    ],
+  },
+];

@@ -3,7 +3,6 @@
 import { cn } from '@/utils/cn';
 import { useState, useMemo } from 'react';
 import { Icon } from '@/shared/components/Icon';
-import { ThemeToggle } from '@/shared/components/ThemeToggle';
 import { getAreaInfo } from '@/shared/constants';
 import { useAuth } from '@/features/auth/context/AuthContext';
 import { useGamification } from '@/hooks/gamification';
@@ -162,8 +161,6 @@ export const SecondaryHeader = ({ currentArea = 'lectura-critica', onAreaChange 
               {coins}
             </span>
           </button>
-
-          <ThemeToggle compact className="border-surface-border bg-surface-elevated hover:border-app-ring/40" />
         </div>
       </div>
 
