@@ -42,19 +42,19 @@ export async function loadProgressViewState(userId: string): Promise<ProgressVie
   }
 
   const prog = await ProgressSupabaseService.getByUserId(userId);
+  const local = loadLocalProgressViewState();
+
   const mapped: ProgressData | null = prog
     ? {
         totalAttempts: prog.totalAttempts,
         totalQuestions: prog.totalCorrect * 2,
         totalCorrect: prog.totalCorrect,
         percentage: prog.percentage,
-        streakDays: prog.streakDays,
+        streakDays: local.progress?.streakDays ?? 0,
         lastAttemptDate: (prog as { lastAttemptDate?: string | null }).lastAttemptDate ?? null,
         areaStats: (prog.areaStats || {}) as ProgressData['areaStats'],
       }
     : null;
-
-  const local = loadLocalProgressViewState();
 
   return {
     progress: mapped ?? local.progress,
@@ -70,7 +70,6 @@ export async function resetProgressData(userId: string): Promise<void> {
       totalAttempts: 0,
       totalCorrect: 0,
       percentage: 0,
-      streakDays: 0,
       areaStats: {},
     });
   }

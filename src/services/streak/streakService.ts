@@ -1,4 +1,3 @@
-import ProgressSupabaseService from '@/services/supabase/ProgressSupabaseService';
 import GamificationSupabaseService from '@/services/supabase/GamificationSupabaseService';
 import { isSupabaseConfigured } from '@/services/persistence/supabaseConfigured';
 import { getStoredExams, getStoredPractices } from '@/storage/progressStorage';
@@ -28,15 +27,6 @@ async function loadRemoteStreak(userId: string): Promise<StreakState | null> {
   }
 }
 
-async function syncProgressStreakDays(userId: string, currentStreak: number): Promise<void> {
-  if (!isSupabaseConfigured()) return;
-  try {
-    await ProgressSupabaseService.update(userId, { streakDays: currentStreak });
-  } catch (err) {
-    console.warn('No se pudo sincronizar streak_days en user_progress:', err);
-  }
-}
-
 async function persistStreak(scope: StreakScope, state: StreakState): Promise<StreakState> {
   const normalized = withUpdatedLongest(state);
   saveLocalStreakState(scope, normalized);
@@ -44,7 +34,6 @@ async function persistStreak(scope: StreakScope, state: StreakState): Promise<St
   if (scope !== 'demo' && isSupabaseConfigured()) {
     try {
       await GamificationSupabaseService.updateStreak(scope, normalized);
-      await syncProgressStreakDays(scope, calculateCurrentStreak(normalized.dates));
     } catch (err) {
       console.warn('No se pudo persistir racha en Supabase:', err);
     }

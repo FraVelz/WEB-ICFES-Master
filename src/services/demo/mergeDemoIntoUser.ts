@@ -120,7 +120,6 @@ async function migrateAggregatedProgress(userId: string): Promise<void> {
         totalAttempts: local.totalAttempts,
         totalCorrect: local.totalCorrect,
         percentage: local.percentage,
-        streakDays: local.streakDays,
         lastActivityDate: local.lastAttemptDate,
         areaStats: local.areaStats,
       });

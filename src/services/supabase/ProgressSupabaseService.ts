@@ -10,7 +10,6 @@ export interface MappedProgress {
   totalAttempts: number;
   totalCorrect: number;
   percentage: number;
-  streakDays: number;
   lastActivityDate: unknown;
   areaStats: Record<string, unknown>;
   updatedAt: unknown;
@@ -23,7 +22,6 @@ const mapFromDb = (row: Record<string, unknown> | null): MappedProgress | null =
     totalAttempts: Number(row.total_attempts ?? 0),
     totalCorrect: Number(row.total_correct ?? 0),
     percentage: Number(row.percentage) ?? 0,
-    streakDays: Number(row.streak_days ?? 0),
     lastActivityDate: row.last_activity_date,
     areaStats: (row.area_stats as Record<string, unknown>) || {},
     updatedAt: row.updated_at,
@@ -51,8 +49,6 @@ const ProgressSupabaseService = {
       totalCorrect?: number;
       total_correct?: number;
       percentage?: number;
-      streakDays?: number;
-      streak_days?: number;
       lastActivityDate?: unknown;
       last_activity_date?: unknown;
       areaStats?: Record<string, unknown>;
@@ -63,7 +59,6 @@ const ProgressSupabaseService = {
       total_attempts: pd.totalAttempts ?? pd.total_attempts ?? 0,
       total_correct: pd.totalCorrect ?? pd.total_correct ?? 0,
       percentage: pd.percentage ?? 0,
-      streak_days: pd.streakDays ?? pd.streak_days ?? 0,
       last_activity_date: pd.lastActivityDate ?? pd.last_activity_date,
       area_stats: pd.areaStats ?? pd.area_stats ?? {},
       updated_at: new Date().toISOString(),
@@ -80,7 +75,6 @@ const ProgressSupabaseService = {
       totalAttempts: updates.totalAttempts ?? current.totalAttempts ?? 0,
       totalCorrect: updates.totalCorrect ?? current.totalCorrect ?? 0,
       percentage: updates.percentage ?? current.percentage ?? 0,
-      streakDays: updates.streakDays ?? current.streakDays ?? 0,
       lastActivityDate: updates.lastActivityDate ?? current.lastActivityDate,
       areaStats: { ...(current.areaStats || {}), ...(updates.areaStats || {}) },
     };
