@@ -24,7 +24,7 @@ Where progress lives that is **not** automatically synced with Supabase or anoth
 
 - **Service:** [`src/services/streak/`](../../../src/services/streak/)
 - **Demo:** scope `'demo'` → key `icfes_streak_dates`
-- **User:** scope `userId` → key `icfes_streak_dates_{userId}` + Supabase columns `streak_dates` / `longest_streak` on `user_gamification` (see [`supabase-streak-migration.sql`](../../es/data/supabase-streak-migration.sql))
+- **User:** scope `userId` → key `icfes_streak_dates_{userId}` + Supabase columns `streak_dates` / `longest_streak` on `user_gamification`
 - **Recording:** visit to `/ruta-aprendizaje` (once/day), practice, or full exam
 - **Demo → account:** on signup/login, `mergeDemoStreakIntoUser` merges demo dates into the user and clears the demo key
 

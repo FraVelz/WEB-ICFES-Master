@@ -34,10 +34,6 @@ de nuevos desarrolladores y servir como referencia técnica.
 - **[Estructura de aprendizaje](../data/learning-structure-guide.md)**: Tabla `learning_content` (roadmap).
 - **[Progreso solo en cliente](../data/progreso-cliente-local.md)**: Progreso en `localStorage` sin sync automática.
 
-### 6. Integraciones (`/integrations`)
-
-- **[Pagos](../integrations/payments.md)**: Donaciones y tienda (en desarrollo).
-
 ---
 
 ## 🚀 Inicio rápido

@@ -34,10 +34,6 @@ developers and serve as a technical reference.
 - **[Learning structure guide](../data/learning-structure-guide.md)**: `learning_content` table (roadmap).
 - **[Client-only progress](../data/client-local-progress.md)**: Progress in `localStorage` without auto-sync.
 
-### 6. Integrations (`/integrations`)
-
-- **[Payments](../integrations/payments.md)**: Donations and shop (in development).
-
 ---
 
 ## 🚀 Quick start
