@@ -127,8 +127,9 @@ export const useGamification = (scope: StreakScope | undefined) => {
         setLevel(calculateLevel(xp));
         setCoins((profile?.totalCoins ?? 0) - (profile?.spentCoins ?? 0));
 
-        if (!achProgress || Object.keys(achProgress).length === 0) {
-          achProgress = normalizeAchievementsRecord(profile?.achievements);
+        const remoteAchievements = normalizeAchievementsRecord(profile?.achievements);
+        if (Object.keys(remoteAchievements).length > Object.keys(achProgress).length) {
+          achProgress = remoteAchievements;
         }
 
         const merged = mergeAchievements(achProgress);

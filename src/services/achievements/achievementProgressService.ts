@@ -169,36 +169,52 @@ async function computeAchievementProgressFromGameplay(userId: string): Promise<A
  * Reconcilia logros desde gameplay + baseline (p. ej. demo) sin otorgar recompensas.
  * Usar en migración demo → cuenta para evitar duplicar monedas/XP.
  */
+async function loadRemoteAchievementProgress(userId: string): Promise<AchievementProgressMap> {
+  if (isDemoUserId(userId) || !isSupabaseConfigured()) return {};
+
+  try {
+    const profile = await gamificationPersistence.getProfile(userId);
+    return normalizeAchievementsRecord(profile?.achievements);
+  } catch {
+    return {};
+  }
+}
+
 export async function reconcileAchievementsWithoutRewards(
   userId: string,
   extraBaseline: AchievementProgressMap = {}
 ): Promise<AchievementProgressMap> {
-  const existing = readAchievementProgress(userId);
+  const remote = await loadRemoteAchievementProgress(userId);
+  const local = readAchievementProgress(userId);
   const demoBaseline = readAchievementProgress(DEMO_USER_ID);
-  const baseline = mergeAchievementProgressMaps(existing, mergeAchievementProgressMaps(demoBaseline, extraBaseline));
+  const baseline = mergeAchievementProgressMaps(
+    remote,
+    mergeAchievementProgressMaps(local, mergeAchievementProgressMaps(demoBaseline, extraBaseline))
+  );
   const computed = await computeAchievementProgressFromGameplay(userId);
   const merged = mergeAchievementProgressMaps(baseline, computed);
-
-  writeAchievementProgress(userId, merged);
 
   if (!isDemoUserId(userId) && isSupabaseConfigured()) {
     await GamificationSupabaseService.updateAchievements(userId, merged as Record<string, unknown>);
   }
+  writeAchievementProgress(userId, merged);
 
   return merged;
 }
 
 export async function syncAchievementsFromGameplay(userId: string): Promise<AchievementProgressMap> {
-  const previous = readAchievementProgress(userId);
+  const remote = await loadRemoteAchievementProgress(userId);
+  const local = readAchievementProgress(userId);
+  const previous = mergeAchievementProgressMaps(remote, local);
   const computed = await computeAchievementProgressFromGameplay(userId);
   const next = mergeAchievementProgressMaps(previous, computed);
 
   await awardNewUnlocks(userId, previous, next);
-  writeAchievementProgress(userId, next);
 
   if (!isDemoUserId(userId) && isSupabaseConfigured()) {
     await GamificationSupabaseService.updateAchievements(userId, next as Record<string, unknown>);
   }
+  writeAchievementProgress(userId, next);
 
   return next;
 }
