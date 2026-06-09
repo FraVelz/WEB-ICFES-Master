@@ -54,14 +54,19 @@ export function ImportanciaValidacionPanel() {
           </p>
           <p className="text-on-surface-muted leading-relaxed">
             Tu puntaje se reporta en la misma escala que el Saber 11°. Las universidades y entidades que piden puntaje
-            ICFES reconocen un resultado sólido en validación como comparable al de un estudiante de grado 11.
+            ICFES reconocen{' '}
+            <strong className="text-on-surface font-semibold">
+              un buen resultado en validación como comparable al de un estudiante de grado 11
+            </strong>
+            .
           </p>
         </ImportanciaContentSection>
 
         <ImportanciaContentSection id="validacion-areas" title="Áreas que presentas" icon="book-open" nested>
           <p className="text-on-surface-muted leading-relaxed">
             Las pruebas cubren los mismos aprendizajes y las mismas cinco áreas que el Saber 11°. No es un examen “más
-            fácil”: exige dominar contenidos que muchas personas retoman después de años sin estudiar.
+            fácil”: exige dominar contenidos que muchas personas retoman después de años sin estudiar, aunque con una
+            preparación ordenada es un reto alcanzable.
           </p>
           <ul className="text-on-surface-muted list-disc space-y-2 pl-5 leading-relaxed">
             <li>Lectura crítica</li>
@@ -79,20 +84,36 @@ export function ImportanciaValidacionPanel() {
             requisitos de la secretaría de educación y presentar la prueba en las fechas del calendario ICFES.
           </p>
           <p className="text-on-surface-muted leading-relaxed">
-            Si trabajas a tiempo completo, planifica bloques cortos pero constantes: 30–45 minutos diarios suelen rendir
-            más que estudiar solo los fines de semana.
+            Si trabajas a tiempo completo, planifica bloques cortos pero constantes:{' '}
+            <strong className="text-on-surface font-semibold">
+              30–45 minutos al día suelen rendir más que estudiar solo los fines de semana
+            </strong>
+            .
           </p>
           <ul className="text-on-surface-muted list-disc space-y-2 pl-5 leading-relaxed">
             <li>Consulta requisitos e inscripción en tu secretaría de educación o centro de validación.</li>
             <li>Repasa por áreas empezando por lectura crítica y matemáticas.</li>
             <li>Usa simulacros para acostumbrarte al tiempo y al formato.</li>
           </ul>
+          <p className="text-on-surface-muted leading-relaxed">
+            Puedes complementar esa ruta con{' '}
+            <strong className="text-app-accent font-semibold">ICFES Master</strong>, nuestra web gratuita para practicar
+            por área y hacer simulacros. La plataforma está pensada para ayudarte a{' '}
+            <strong className="text-on-surface font-semibold">
+              subir tu puntaje ICFES, desde 0 hasta 500 puntos
+            </strong>
+            , según tu nivel de partida, el tiempo que dediques y la constancia con la que estudies —útil si retomas
+            contenidos después de años sin verlos en un aula.
+          </p>
         </ImportanciaContentSection>
 
         <ImportanciaContentSection id="validacion-despues" title="Después de validar" icon="arrow-up" nested>
           <p className="text-on-surface-muted leading-relaxed">
-            Con bachiller acreditado puedes postular a tecnología, universidad o empleos formales. Un puntaje alto en
-            validación abre las mismas puertas académicas que un buen Saber 11°: no compites con un estándar distinto.
+            Con bachiller acreditado puedes postular a tecnología, universidad o empleos formales.{' '}
+            <strong className="text-on-surface font-semibold">
+              Un puntaje alto en validación abre las mismas puertas académicas que un buen Saber 11°
+            </strong>
+            : no compites con un estándar distinto.
           </p>
           <p className="text-on-surface-muted leading-relaxed">
             Muchas personas usan la validación como primer paso y luego continúan a pregrado, emprendimiento

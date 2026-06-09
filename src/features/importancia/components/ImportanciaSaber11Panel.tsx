@@ -48,8 +48,12 @@ export function ImportanciaSaber11Panel() {
         <ImportanciaContentSection id="saber-para-que" title="¿Para qué sirve el puntaje?" icon="bullseye" nested>
           <p className="text-on-surface-muted leading-relaxed">
             Las universidades e institutos usan el puntaje global y por área para admisión, cupos especiales y becas. Un
-            buen resultado amplía las opciones de carrera, ciudad e institución; un puntaje bajo puede limitar programas
-            competitivos, aunque siempre hay rutas alternativas (tecnología, ciclos propedéuticos, etc.).
+            buen resultado{' '}
+            <strong className="text-on-surface font-semibold">
+              amplía las opciones de carrera, ciudad e institución
+            </strong>
+            ; un puntaje bajo puede limitar programas competitivos, aunque siempre hay rutas alternativas (tecnología,
+            ciclos propedéuticos, etc.).
           </p>
           <ul className="text-on-surface-muted list-disc space-y-2 pl-5 leading-relaxed">
             <li>Admisión a pregrado en universidades públicas y privadas.</li>
@@ -75,11 +79,20 @@ export function ImportanciaSaber11Panel() {
         <ImportanciaContentSection id="saber-preparacion" title="Cómo prepararte" icon="lightbulb" nested>
           <p className="text-on-surface-muted leading-relaxed">
             Combina repaso de tu grado 11, simulacros cronometrados y análisis de errores. Identifica áreas débiles con
-            tiempo: suele ser más rentable subir matemáticas o lectura crítica que repasar todo por igual.
+            tiempo: suele ser más rentable subir matemáticas o lectura crítica que repasar todo por igual.{' '}
+            <strong className="text-on-surface font-semibold">
+              Estudiar un poco cada día suele rendir más que acumular horas de un solo golpe
+            </strong>
+            .
           </p>
           <p className="text-on-surface-muted leading-relaxed">
-            En ICFES Master puedes practicar por área, hacer simulacros completos y seguir una ruta de aprendizaje según
-            tu nivel.
+            <strong className="text-app-accent font-semibold">ICFES Master</strong> es nuestra plataforma web gratuita
+            para practicar por área, hacer simulacros completos y seguir una ruta según tu nivel. La estamos construyendo
+            para ayudarte a{' '}
+            <strong className="text-on-surface font-semibold">
+              alcanzar un puntaje alto en el ICFES, desde 0 hasta 500 puntos
+            </strong>
+            , adaptándonos a tu preparación previa, al tiempo que puedas dedicar y a tu ritmo de avance.
           </p>
         </ImportanciaContentSection>
       </div>

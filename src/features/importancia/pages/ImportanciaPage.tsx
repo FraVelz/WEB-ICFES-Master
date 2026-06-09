@@ -19,9 +19,12 @@ export function ImportanciaPage() {
             Importancia del ICFES y el bachiller
           </h1>
           <p className="text-on-surface-muted max-w-3xl leading-relaxed">
-            Terminar el bachillerato y prepararte para el examen no es solo un trámite escolar: abre puertas reales en
-            empleo, ingresos, estabilidad y proyectos de vida. Abajo encontrarás lo que aplica para todos y, en los
-            menús desplegables, la información específica del Saber 11° o de la Prueba de Validación, según tu caso.
+            Terminar el bachillerato y prepararte para el examen no es solo un trámite escolar:{' '}
+            <strong className="text-on-surface font-semibold">
+              abre opciones reales en empleo, ingresos y proyectos de vida
+            </strong>
+            . Abajo encontrarás lo que aplica para todos y, en los menús desplegables, la información específica del
+            Saber 11° o de la Prueba de Validación, según tu caso.
           </p>
         </header>
 
@@ -38,9 +41,10 @@ export function ImportanciaPage() {
 
         <aside className="border-app-ring/20 bg-surface-elevated/60 rounded-2xl border p-6">
           <p className="text-on-surface leading-relaxed">
-            Prepararte con método —ya sea para el Saber 11° o para la Prueba de Validación— es invertir en opciones: más
-            ingresos, más estabilidad, más libertad para elegir qué quieres hacer. ICFES Master está aquí para ayudarte
-            en ese camino con práctica, simulacros y una ruta de aprendizaje guiada.
+            Prepararte con método —ya sea para el Saber 11° o para la Prueba de Validación— es invertir en más opciones
+            para tu futuro. <strong className="text-app-accent font-semibold">ICFES Master</strong> está aquí para
+            ayudarte con práctica, simulacros y una ruta de aprendizaje guiada{' '}
+            <strong className="font-semibold">hacia un puntaje que amplíe tus posibilidades</strong>.
           </p>
         </aside>
       </div>
