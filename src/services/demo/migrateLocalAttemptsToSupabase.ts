@@ -11,17 +11,18 @@ export async function migrateLocalAttemptsToSupabase(userId: string): Promise<nu
   const attempts: LocalAttemptRecord[] = [...getStoredExams(), ...getStoredPractices()] as LocalAttemptRecord[];
   if (attempts.length === 0) return 0;
 
-  let inserted = 0;
-
-  for (const attempt of attempts) {
-    try {
-      const row = mapLocalAttemptToExamResult(userId, attempt);
-      const created = await ExamSupabaseService.insertMigratedAttempt(row);
-      if (created) inserted += 1;
-    } catch (err) {
-      console.warn('No se pudo migrar un intento del demo:', err);
-    }
-  }
+  const results = await Promise.all(
+    attempts.map(async (attempt) => {
+      try {
+        const row = mapLocalAttemptToExamResult(userId, attempt);
+        return (await ExamSupabaseService.insertMigratedAttempt(row)) ? 1 : 0;
+      } catch (err) {
+        console.warn('No se pudo migrar un intento del demo:', err);
+        return 0;
+      }
+    })
+  );
+  const inserted = results.reduce((total, count) => total + count, 0);
 
   if (attempts.length > 0) {
     await rebuildUserProgress(userId);

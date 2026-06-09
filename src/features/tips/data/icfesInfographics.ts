@@ -119,10 +119,12 @@ export const ICFES_INFOGRAPHIC_GROUPS: IcfesInfographicGroup[] = [
   },
 ];
 
+const ICFES_INFOGRAPHIC_BY_ID = new Map<string, IcfesInfographic>(
+  ICFES_INFOGRAPHIC_GROUPS.flatMap((group) =>
+    group.items.map((item) => [item.id, item] as const)
+  )
+);
+
 export function findIcfesInfographicById(id: string): IcfesInfographic | undefined {
-  for (const group of ICFES_INFOGRAPHIC_GROUPS) {
-    const item = group.items.find((entry) => entry.id === id);
-    if (item) return item;
-  }
-  return undefined;
+  return ICFES_INFOGRAPHIC_BY_ID.get(id);
 }

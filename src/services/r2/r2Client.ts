@@ -51,6 +51,47 @@ export class R2ObjectNotFoundError extends Error {
   }
 }
 
+async function fetchR2ObjectByKey(
+  s3: S3Client,
+  bucket: string,
+  key: string
+): Promise<R2ObjectResult | null> {
+  try {
+    const response = await s3.send(
+      new GetObjectCommand({
+        Bucket: bucket,
+        Key: key,
+      }),
+    );
+
+    if (!response.Body) return null;
+
+    return {
+      key,
+      body: response.Body,
+      contentType: response.ContentType ?? 'application/pdf',
+      contentLength: response.ContentLength,
+    };
+  } catch (error) {
+    if (isNotFoundError(error)) return null;
+    throw error;
+  }
+}
+
+async function fetchFirstAvailableKey(
+  s3: S3Client,
+  bucket: string,
+  keys: string[],
+  index = 0
+): Promise<R2ObjectResult | null> {
+  if (index >= keys.length) return null;
+
+  const result = await fetchR2ObjectByKey(s3, bucket, keys[index]!);
+  if (result) return result;
+
+  return fetchFirstAvailableKey(s3, bucket, keys, index + 1);
+}
+
 export async function fetchR2Object(filename: string): Promise<R2ObjectResult> {
   const config = getR2ServerConfig();
   const s3 = getR2Client();
@@ -59,29 +100,8 @@ export async function fetchR2Object(filename: string): Promise<R2ObjectResult> {
   }
 
   const candidateKeys = buildR2ObjectKeyCandidates(filename);
-
-  for (const key of candidateKeys) {
-    try {
-      const response = await s3.send(
-        new GetObjectCommand({
-          Bucket: config.bucket,
-          Key: key,
-        }),
-      );
-
-      if (!response.Body) continue;
-
-      return {
-        key,
-        body: response.Body,
-        contentType: response.ContentType ?? 'application/pdf',
-        contentLength: response.ContentLength,
-      };
-    } catch (error) {
-      if (isNotFoundError(error)) continue;
-      throw error;
-    }
-  }
+  const result = await fetchFirstAvailableKey(s3, config.bucket, candidateKeys);
+  if (result) return result;
 
   throw new R2ObjectNotFoundError(filename, candidateKeys);
 }

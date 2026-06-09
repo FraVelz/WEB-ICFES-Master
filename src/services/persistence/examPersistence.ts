@@ -13,14 +13,14 @@ import type { LocalAttemptRecord } from '@/services/demo/mapLocalAttemptToExamRe
 import { getStoredExams, getStoredPractices, clearExamsOnly, type AttemptWithQuestions } from '@/storage/progressStorage';
 import { isSupabaseConfigured } from './supabaseConfigured';
 
-function useRemoteExams(userId: string | undefined): userId is string {
+function shouldSyncExamsWithSupabase(userId: string | undefined): userId is string {
   return Boolean(userId && isSupabaseConfigured() && !isDemoUserId(userId));
 }
 
 export { syncAttemptToSupabase, rebuildUserProgress };
 
 export async function getExamById(examId: string, userId: string | undefined): Promise<unknown> {
-  if (useRemoteExams(userId)) {
+  if (shouldSyncExamsWithSupabase(userId)) {
     const remote = await ExamSupabaseService.getById(examId);
     if (remote) return remote;
   }
@@ -32,7 +32,7 @@ export async function getExamById(examId: string, userId: string | undefined): P
 }
 
 export async function resetUserExams(userId: string | undefined): Promise<void> {
-  if (useRemoteExams(userId)) {
+  if (shouldSyncExamsWithSupabase(userId)) {
     await ExamSupabaseService.resetUserExams(userId);
     await rebuildUserProgress(userId);
   }
@@ -40,7 +40,7 @@ export async function resetUserExams(userId: string | undefined): Promise<void> 
 }
 
 export async function getUserExamsList(userId: string | undefined): Promise<unknown> {
-  if (!useRemoteExams(userId)) {
+  if (!shouldSyncExamsWithSupabase(userId)) {
     return getStoredExams();
   }
 
@@ -50,7 +50,7 @@ export async function getUserExamsList(userId: string | undefined): Promise<unkn
 }
 
 export async function getMergedAttemptHistory(userId: string): Promise<AttemptWithQuestions[]> {
-  if (!useRemoteExams(userId)) {
+  if (!shouldSyncExamsWithSupabase(userId)) {
     const exams = getStoredExams();
     const practices = getStoredPractices();
     return [...exams, ...practices]
@@ -64,6 +64,6 @@ export async function getMergedAttemptHistory(userId: string): Promise<AttemptWi
 }
 
 export async function syncSavedAttempt(userId: string | undefined, attempt: LocalAttemptRecord): Promise<void> {
-  if (!useRemoteExams(userId)) return;
+  if (!shouldSyncExamsWithSupabase(userId)) return;
   await syncAttemptToSupabase(userId, attempt);
 }

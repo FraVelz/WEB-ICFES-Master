@@ -80,8 +80,13 @@ export function mergeAchievementProgressMaps(
     const current = Math.max(a?.current ?? 0, b?.current ?? 0);
     const capped = Math.min(current, achievement.target);
     const unlocked = (a?.unlocked ?? false) || (b?.unlocked ?? false) || capped >= achievement.target;
+    const unlockedTimestamps = [a?.unlockedAt, b?.unlockedAt]
+      .filter(Boolean)
+      .map((date) => new Date(date as string).getTime());
     const unlockedAt = unlocked
-      ? ([a?.unlockedAt, b?.unlockedAt].filter(Boolean).sort()[0] ?? new Date().toISOString())
+      ? (unlockedTimestamps.length > 0
+          ? new Date(Math.min(...unlockedTimestamps)).toISOString()
+          : new Date().toISOString())
       : null;
 
     merged[achievement.id] = { current: capped, unlocked, unlockedAt };
@@ -124,28 +129,35 @@ function buildProgressFromGameplay(
   return next;
 }
 
+async function awardAchievementUnlock(
+  userId: string,
+  achievement: (typeof ACHIEVEMENTS_DATA)[number]
+): Promise<void> {
+  if (achievement.coinsReward > 0) {
+    await addCoinsBalance(userId, achievement.coinsReward, `achievement_${achievement.id}`);
+  }
+
+  if (achievement.xpReward > 0) {
+    if (isDemoUserId(userId)) {
+      addDemoXP(achievement.xpReward);
+    } else {
+      await gamificationPersistence.addXP(userId, achievement.xpReward, `achievement_${achievement.id}`);
+    }
+  }
+}
+
 async function awardNewUnlocks(
   userId: string,
   previous: AchievementProgressMap,
   next: AchievementProgressMap
 ): Promise<void> {
-  for (const achievement of ACHIEVEMENTS_DATA) {
+  const newlyUnlocked = ACHIEVEMENTS_DATA.filter((achievement) => {
     const wasUnlocked = previous[achievement.id]?.unlocked ?? false;
     const isUnlocked = next[achievement.id]?.unlocked ?? false;
-    if (!isUnlocked || wasUnlocked) continue;
+    return isUnlocked && !wasUnlocked;
+  });
 
-    if (achievement.coinsReward > 0) {
-      await addCoinsBalance(userId, achievement.coinsReward, `achievement_${achievement.id}`);
-    }
-
-    if (achievement.xpReward > 0) {
-      if (isDemoUserId(userId)) {
-        addDemoXP(achievement.xpReward);
-      } else {
-        await gamificationPersistence.addXP(userId, achievement.xpReward, `achievement_${achievement.id}`);
-      }
-    }
-  }
+  await Promise.all(newlyUnlocked.map((achievement) => awardAchievementUnlock(userId, achievement)));
 }
 
 async function computeAchievementProgressFromGameplay(userId: string): Promise<AchievementProgressMap> {

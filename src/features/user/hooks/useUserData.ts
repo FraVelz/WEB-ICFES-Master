@@ -93,8 +93,10 @@ export function useUserData() {
     async (amount: number) => {
       if (!user?.uid) return 0;
       await addUserMoney(user.uid, amount);
-      const balance = await getCoinsBalance(user.uid);
-      const updated = await loadUserProfile(user.uid, user.email, user.displayName);
+      const [balance, updated] = await Promise.all([
+        getCoinsBalance(user.uid),
+        loadUserProfile(user.uid, user.email, user.displayName),
+      ]);
       setUserData(updated ? { ...updated, coinsBalance: balance } : updated);
       return balance;
     },
@@ -105,8 +107,10 @@ export function useUserData() {
     async (amount: number) => {
       if (!user?.uid) return 0;
       await spendUserMoney(user.uid, amount);
-      const balance = await getCoinsBalance(user.uid);
-      const updated = await loadUserProfile(user.uid, user.email, user.displayName);
+      const [balance, updated] = await Promise.all([
+        getCoinsBalance(user.uid),
+        loadUserProfile(user.uid, user.email, user.displayName),
+      ]);
       setUserData(updated ? { ...updated, coinsBalance: balance } : updated);
       return balance;
     },

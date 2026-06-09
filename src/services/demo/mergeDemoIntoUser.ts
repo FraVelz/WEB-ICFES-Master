@@ -151,9 +151,11 @@ export async function mergeDemoIntoUser(userId: string): Promise<void> {
     console.warn('No se pudo migrar la racha del demo:', err);
   }
 
-  await migrateSkillLevel(userId);
-  await migrateGamificationBalances(userId);
-  await migrateAggregatedProgress(userId);
+  await Promise.all([
+    migrateSkillLevel(userId),
+    migrateGamificationBalances(userId),
+    migrateAggregatedProgress(userId),
+  ]);
 
   try {
     await migrateLocalAttemptsToSupabase(userId);
