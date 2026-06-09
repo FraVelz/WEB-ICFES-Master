@@ -8,7 +8,7 @@ export interface UserProfile {
   email?: string | null;
   bio?: string | null;
   profileImage?: string | null;
-  virtualMoney?: number;
+  coinsBalance?: number;
   createdAt?: string | null;
   updatedAt?: string | null;
 }

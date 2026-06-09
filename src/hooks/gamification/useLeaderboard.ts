@@ -16,7 +16,7 @@ export interface LeaderboardPlayer {
   profileImage?: string;
   weeklyXP?: number;
   rank?: string;
-  virtualMoney?: number;
+  coinsBalance?: number;
 }
 
 export const useLeaderboard = (currentRankId = 'novato') => {
@@ -35,7 +35,7 @@ export const useLeaderboard = (currentRankId = 'novato') => {
           displayName: 'Tú',
           weeklyXP: Math.floor((progress?.totalCorrect || 0) * 10),
           rank: 'novato',
-          virtualMoney: coins,
+          coinsBalance: coins,
         },
         {
           id: 'm1',
@@ -80,7 +80,7 @@ export const useLeaderboard = (currentRankId = 'novato') => {
     const onCoinsChanged = async () => {
       const coins = await getCoinsBalance(user.uid);
       setLeaderboardData((prev) =>
-        prev.map((entry) => (entry.id === 'local_user' ? { ...entry, virtualMoney: coins } : entry))
+        prev.map((entry) => (entry.id === 'local_user' ? { ...entry, coinsBalance: coins } : entry))
       );
     };
     window.addEventListener(COINS_CHANGE_EVENT, onCoinsChanged);

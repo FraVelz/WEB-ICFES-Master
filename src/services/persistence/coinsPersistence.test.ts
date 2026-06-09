@@ -8,13 +8,6 @@ vi.mock('./gamificationPersistence', () => ({
   },
 }));
 
-vi.mock('@/services/supabase/UserSupabaseService', () => ({
-  default: {
-    getByUserId: vi.fn(async () => ({ virtualMoney: 0 })),
-    updateProfile: vi.fn(async () => ({})),
-  },
-}));
-
 import { gamificationPersistence } from './gamificationPersistence';
 import { getCoinsBalance, addCoinsBalance, spendCoinsBalance, COINS_CHANGE_EVENT } from './coinsPersistence';
 

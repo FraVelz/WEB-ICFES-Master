@@ -21,7 +21,6 @@ export interface DbUserRow {
   username?: string | null;
   bio?: string | null;
   profile_image?: string | null;
-  virtual_money?: number | null;
   skill_level?: string | null;
   level_assessment_completed_at?: string | null;
   created_at?: string | null;
@@ -35,7 +34,6 @@ export interface MappedUser {
   username: string | null;
   bio: string | null;
   profileImage: string | null;
-  virtualMoney: number;
   skillLevel: SkillLevel | null;
   levelAssessmentCompletedAt: string | null;
   createdAt: string | null;
@@ -52,7 +50,6 @@ const mapFromDb = (row: DbUserRow | Record<string, unknown> | null): MappedUser 
     username: (r.username as string | null) ?? null,
     bio: (r.bio as string | null) ?? null,
     profileImage: (r.profile_image as string | null) ?? null,
-    virtualMoney: Number(r.virtual_money) || 0,
     skillLevel: parseSkillLevel(r.skill_level),
     levelAssessmentCompletedAt: (r.level_assessment_completed_at as string | null) ?? null,
     createdAt: (r.created_at as string | null) ?? null,
@@ -83,8 +80,6 @@ const UserSupabaseService = {
       bio?: string;
       profileImage?: string;
       profile_image?: string;
-      virtualMoney?: number;
-      virtual_money?: number;
     };
     const payload = {
       id: userId,
@@ -93,7 +88,6 @@ const UserSupabaseService = {
       username: ud.username ?? null,
       bio: ud.bio ?? null,
       profile_image: ud.profileImage ?? ud.profile_image ?? null,
-      virtual_money: ud.virtualMoney ?? ud.virtual_money ?? 0,
       created_at: new Date().toISOString(),
       updated_at: new Date().toISOString(),
     };
@@ -111,27 +105,18 @@ const UserSupabaseService = {
       bio?: string;
       profileImage?: string;
       profile_image?: string;
-      virtualMoney?: number;
-      virtual_money?: number;
     };
     const payload: Record<string, unknown> = {
       display_name: pd.displayName ?? pd.display_name,
       username: pd.username,
       bio: pd.bio,
       profile_image: pd.profileImage ?? pd.profile_image,
-      virtual_money: pd.virtualMoney ?? pd.virtual_money,
       updated_at: new Date().toISOString(),
     };
     Object.keys(payload).forEach((k) => payload[k] === undefined && delete payload[k]);
     const { data, error } = await sb.from(TABLE).update(payload).eq('id', userId).select().single();
     if (error) throw new Error(`Error actualizando perfil: ${error.message}`);
     return mapFromDb(data as DbUserRow)!;
-  },
-
-  async updateVirtualMoney(userId: string, amount: number): Promise<MappedUser> {
-    const user = await this.getByUserId(userId);
-    const current = (user?.virtualMoney ?? 0) + amount;
-    return this.updateProfile(userId, { virtualMoney: current });
   },
 
   async updateSkillLevel(userId: string, skillLevel: SkillLevel): Promise<MappedUser> {
@@ -147,7 +132,7 @@ const UserSupabaseService = {
       .eq('id', userId)
       .select()
       .single();
-    if (error) throw new Error(`Error guardando nivel de preparación: ${error.message}`);
+    if (error) throw new Error(`Error actualizando nivel de preparación: ${error.message}`);
     return mapFromDb(data as DbUserRow)!;
   },
 };

@@ -62,7 +62,7 @@ function SidebarNavLink({
 
 export function DesktopSidebar({ className, sidebarExpanded, onToggleSidebar }: DesktopSidebarProps) {
   const pathname = usePathname();
-  const { user, rank, virtualMoney } = useUser();
+  const { user, rank, coinsBalance } = useUser();
   const demoMode = useUiSessionStore((s) => s.demoMode);
   const isLockedInDemo = (path: string) => demoMode && isAccountOnlyPath(path);
 
@@ -155,7 +155,7 @@ export function DesktopSidebar({ className, sidebarExpanded, onToggleSidebar }: 
         {sidebarExpanded && (
           <div className="bg-surface-elevated/80 mb-4 flex h-10 items-center gap-3 rounded-lg border border-amber-500/20 px-3">
             <Icon name="coins" className="shrink-0 text-amber-400" />
-            <span className="font-bold whitespace-nowrap text-amber-400">{virtualMoney}</span>
+            <span className="font-bold whitespace-nowrap text-amber-400">{coinsBalance}</span>
           </div>
         )}
 

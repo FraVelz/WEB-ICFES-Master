@@ -32,7 +32,7 @@ export function useUserData() {
       const data = await loadUserProfile(user.uid, user.email, user.displayName);
       if (data) {
         const balance = await getCoinsBalance(user.uid);
-        setUserData({ ...data, virtualMoney: balance });
+        setUserData({ ...data, coinsBalance: balance });
       } else {
         setUserData(null);
       }
@@ -95,7 +95,7 @@ export function useUserData() {
       await addUserMoney(user.uid, amount);
       const balance = await getCoinsBalance(user.uid);
       const updated = await loadUserProfile(user.uid, user.email, user.displayName);
-      setUserData(updated ? { ...updated, virtualMoney: balance } : updated);
+      setUserData(updated ? { ...updated, coinsBalance: balance } : updated);
       return balance;
     },
     [user?.uid, user?.email, user?.displayName]
@@ -107,7 +107,7 @@ export function useUserData() {
       await spendUserMoney(user.uid, amount);
       const balance = await getCoinsBalance(user.uid);
       const updated = await loadUserProfile(user.uid, user.email, user.displayName);
-      setUserData(updated ? { ...updated, virtualMoney: balance } : updated);
+      setUserData(updated ? { ...updated, coinsBalance: balance } : updated);
       return balance;
     },
     [user?.uid, user?.email, user?.displayName]

@@ -78,7 +78,7 @@ export async function addUserMoney(uid: string, amount: number): Promise<MappedU
   const profile = await UserSupabaseService.getByUserId(uid);
   if (!profile) return null;
   const balance = await getCoinsBalance(uid);
-  return { ...profile, virtualMoney: balance };
+  return { ...profile, coinsBalance: balance };
 }
 
 export async function spendUserMoney(uid: string, amount: number): Promise<MappedUser | UserProfile | null> {
@@ -86,5 +86,5 @@ export async function spendUserMoney(uid: string, amount: number): Promise<Mappe
   const profile = await UserSupabaseService.getByUserId(uid);
   if (!profile) return null;
   const balance = await getCoinsBalance(uid);
-  return { ...profile, virtualMoney: balance };
+  return { ...profile, coinsBalance: balance };
 }

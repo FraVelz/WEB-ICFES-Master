@@ -22,7 +22,7 @@ function toUserProfile(data: MappedUser): UserProfile {
     email: data.email,
     bio: data.bio,
     profileImage: data.profileImage,
-    virtualMoney: data.virtualMoney,
+    coinsBalance: data.coinsBalance,
     createdAt: data.createdAt,
     updatedAt: data.updatedAt,
   };
@@ -34,7 +34,7 @@ function toUserProfile(data: MappedUser): UserProfile {
 export const useUser = () => {
   const [user, setUser] = useState<UserProfile | null>(null);
   const [rank, setRank] = useState<UserRank | null>(null);
-  const [virtualMoney, setVirtualMoney] = useState(0);
+  const [coinsBalance, setCoinsBalance] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const { user: authUser } = useAuth();
   const demoMode = useUiSessionStore((state) => state.demoMode);
@@ -42,12 +42,12 @@ export const useUser = () => {
 
   const loadCoins = useCallback(async () => {
     if (!coinsUserId) {
-      setVirtualMoney(0);
+      setCoinsBalance(0);
       return;
     }
     try {
       const balance = await getCoinsBalance(coinsUserId);
-      setVirtualMoney(balance);
+      setCoinsBalance(balance);
     } catch (err) {
       console.error('Error cargando monedas:', err);
     }
@@ -123,7 +123,7 @@ export const useUser = () => {
   return {
     user,
     rank,
-    virtualMoney,
+    coinsBalance,
     isLoading,
     refreshUser,
     addMoney,
