@@ -6,8 +6,10 @@ import { Icon } from '@/shared/components/Icon';
 import { LoadingState } from '@/shared/components/LoadingState';
 import { useAuth } from '@/features/auth/context/AuthContext';
 import { useLeaderboard, type LeaderboardPlayer } from '@/hooks/gamification';
+import { useMyLeague } from '@/hooks/gamification/useMyLeague';
 import { RANKS, getRankInfo } from '@/shared/constants/ranks';
-import { useUserProfile } from '@/features/user/hooks/useUserProfile';
+import { LEAGUE_GROUP_SIZE } from '@/shared/constants/gamification';
+import { formatCountdownToReset } from '@/services/league/leagueWeekUtils';
 import { AvatarImage } from '@/features/user/components/AvatarImage';
 import { VIP_AVATAR_BORDER_CLASS } from '@/features/store/constants/vipBadge';
 import { PAGE_SHELL_CLASS } from '@/shared/constants/pageShell';
@@ -15,38 +17,46 @@ import { PAGE_SHELL_CLASS } from '@/shared/constants/pageShell';
 export const ClasificatoriaPage = () => {
   const router = useRouter();
   const { user } = useAuth();
-  const { rank: myRank } = useUserProfile(); // Current user rank
+  const { leagueState, leagueRank: myLeagueRank, loading: leagueLoading, resetMs } = useMyLeague();
 
   const [selectedRank, setSelectedRank] = useState('novato');
-  const { leaderboardData, loading, error } = useLeaderboard(selectedRank);
+  const { leaderboardData, loading, error, isMyLeague } = useLeaderboard(selectedRank, myLeagueRank);
   const currentRankInfo = getRankInfo(selectedRank);
+  const isViewingOwnLeague = isMyLeague && selectedRank === myLeagueRank;
 
-  // Sync tab when rank data loads
   useEffect(() => {
-    if (myRank) {
-      setSelectedRank(myRank);
+    if (myLeagueRank) {
+      setSelectedRank(myLeagueRank);
     }
-  }, [myRank]);
+  }, [myLeagueRank]);
 
   const getPositionStyle = (index: number, totalUsers: number) => {
+    if (!isViewingOwnLeague) {
+      return {
+        status: 'stable',
+        icon: 'minus' as const,
+        color: 'text-slate-400',
+        bg: 'bg-slate-800/30 border-slate-700/50',
+        label: 'Solo referencia',
+      };
+    }
+
     const position = index + 1;
 
-    // Zona de Ascenso
     if (currentRankInfo.promoteCount > 0 && position <= currentRankInfo.promoteCount) {
       return {
         status: 'promote',
-        icon: 'arrow-up',
+        icon: 'arrow-up' as const,
         color: 'text-green-400',
         bg: 'bg-green-500/10 border-green-500/30',
         label: 'Zona de Ascenso',
       };
     }
 
-    // Zona de Descenso
     if (currentRankInfo.demoteCount > 0 && position > totalUsers - currentRankInfo.demoteCount) {
       return {
         status: 'demote',
-        icon: 'arrow-down',
+        icon: 'arrow-down' as const,
         color: 'text-red-400',
         bg: 'bg-red-500/10 border-red-500/30',
         label: 'Zona de Descenso',
@@ -55,51 +65,64 @@ export const ClasificatoriaPage = () => {
 
     return {
       status: 'stable',
-      icon: 'minus',
+      icon: 'minus' as const,
       color: 'text-slate-400',
       bg: 'bg-slate-800/30 border-slate-700/50',
       label: 'Zona Segura',
     };
   };
 
+  const memberCount = leagueState?.memberCount ?? leaderboardData.length;
+  const groupSize = leagueState?.groupSize ?? LEAGUE_GROUP_SIZE;
+  const groupNumber = leagueState?.groupNumber ?? 1;
+  const slotsRemaining = Math.max(0, groupSize - memberCount);
+
   return (
     <div className={PAGE_SHELL_CLASS}>
-      {/* Background Effects */}
       <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
         <div className="absolute top-0 left-0 h-96 w-full bg-linear-to-b from-purple-900/20 to-transparent"></div>
         <div className="bg-app-ring/10 absolute right-0 bottom-0 h-96 w-96 rounded-full blur-3xl"></div>
       </div>
 
       <div className="relative z-10 container mx-auto max-w-5xl px-4 py-8">
-        {/* Header */}
         <div className="mb-8 text-center">
           <h1 className="mb-2 flex items-center justify-center gap-3 text-4xl font-bold">
             <Icon name="trophy" className="text-yellow-400" />
             Clasificatoria Semanal
           </h1>
-          <p className="text-slate-400">Compite con otros estudiantes y sube de rango. ¡Se actualiza cada lunes!</p>
+          <p className="text-slate-400">Compite en tu grupo de {groupSize} y sube de liga. ¡Se actualiza cada lunes!</p>
+          {isViewingOwnLeague && (
+            <p className="mt-2 text-sm text-app-accent-muted">
+              Próximo reset: <span className="font-mono font-semibold text-app-accent">{formatCountdownToReset(resetMs)}</span>
+            </p>
+          )}
         </div>
 
-        {/* Rank Tabs */}
         <div className="no-scrollbar mb-6 flex gap-2 overflow-x-auto pb-4">
-          {Object.values(RANKS).map((rank) => (
-            <button
-              key={rank.id}
-              onClick={() => setSelectedRank(rank.id)}
-              className={cn(
-                'flex cursor-pointer items-center gap-2 rounded-full border px-4 py-2 whitespace-nowrap transition-all',
-                selectedRank === rank.id
-                  ? cn(`bg-linear-to-r ${rank.color}`, 'border-transparent text-white shadow-lg')
-                  : 'border-slate-700 bg-slate-900 text-slate-400 hover:bg-slate-800'
-              )}
-            >
-              <Icon name={rank.icon} size="md" className="shrink-0" />
-              <span className="font-bold">{rank.label}</span>
-            </button>
-          ))}
+          {Object.values(RANKS).map((rank) => {
+            const isActiveLeague = rank.id === myLeagueRank;
+            return (
+              <button
+                key={rank.id}
+                onClick={() => setSelectedRank(rank.id)}
+                className={cn(
+                  'flex cursor-pointer items-center gap-2 rounded-full border px-4 py-2 whitespace-nowrap transition-all',
+                  selectedRank === rank.id
+                    ? cn(`bg-linear-to-r ${rank.color}`, 'border-transparent text-white shadow-lg')
+                    : 'border-slate-700 bg-slate-900 text-slate-400 hover:bg-slate-800',
+                  isActiveLeague && selectedRank !== rank.id && 'ring-app-ring/40 ring-1'
+                )}
+              >
+                <Icon name={rank.icon} size="md" className="shrink-0" />
+                <span className="font-bold">{rank.label}</span>
+                {isActiveLeague && (
+                  <span className="rounded-full bg-black/20 px-1.5 py-0.5 text-[10px]">Tú</span>
+                )}
+              </button>
+            );
+          })}
         </div>
 
-        {/* Rank Info Card */}
         <div className={cn('mb-8 rounded-2xl p-px', `bg-linear-to-r ${currentRankInfo.color}`)}>
           <div className="rounded-2xl bg-slate-900/95 p-6 backdrop-blur-xl">
             <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
@@ -120,34 +143,55 @@ export const ClasificatoriaPage = () => {
                       ? ` Últimos ${currentRankInfo.demoteCount} bajan`
                       : ' Sin descenso'}
                   </p>
+                  {isViewingOwnLeague && (
+                    <p className="mt-1 text-xs text-slate-500">
+                      Grupo {groupNumber} · {memberCount}/{groupSize} competidores
+                      {slotsRemaining > 0 && ` · faltan ${slotsRemaining} para llenar el grupo`}
+                    </p>
+                  )}
                 </div>
               </div>
 
-              <div className="flex gap-4 text-center">
-                <div className="rounded-lg bg-slate-800/50 px-4 py-2">
-                  <div className="text-2xl font-bold text-white">{leaderboardData.length}</div>
-                  <div className="text-xs text-slate-400 uppercase">Competidores</div>
+              {isViewingOwnLeague && (
+                <div className="flex gap-4 text-center">
+                  <div className="rounded-lg bg-slate-800/50 px-4 py-2">
+                    <div className="text-2xl font-bold text-white">
+                      {leagueState?.myPosition ?? '—'}
+                    </div>
+                    <div className="text-xs text-slate-400 uppercase">Tu posición</div>
+                  </div>
+                  <div className="rounded-lg bg-slate-800/50 px-4 py-2">
+                    <div className="text-2xl font-bold text-white">{leagueState?.weeklyXp ?? 0}</div>
+                    <div className="text-xs text-slate-400 uppercase">Tu XP semanal</div>
+                  </div>
                 </div>
-              </div>
+              )}
             </div>
           </div>
         </div>
 
-        {/* Leaderboard List */}
+        {!isViewingOwnLeague && !leagueLoading && (
+          <div className="mb-6 rounded-xl border border-slate-700 bg-slate-900/60 px-4 py-3 text-center text-sm text-slate-400">
+            No participas en la liga {currentRankInfo.label}. Estás en{' '}
+            <span className="font-semibold text-white">{getRankInfo(myLeagueRank).label}</span>.
+            Aquí solo ves las reglas de esta liga.
+          </div>
+        )}
+
         <div className="space-y-3">
-          {loading ? (
+          {loading || leagueLoading ? (
             <LoadingState label="Cargando clasificación..." layout="section" />
           ) : error ? (
             <div className="rounded-2xl border border-red-500/20 bg-red-500/10 py-12 text-center">
               <Icon name="exclamation-triangle" size="3xl" className="mx-auto mb-4 text-red-400" />
               <h3 className="mb-2 text-xl font-bold text-white">Error al cargar</h3>
               <p className="px-4 text-slate-400">
-                {error?.message?.includes('index')
-                  ? 'Estamos optimizando la base de datos. Por favor espera unos minutos.'
-                  : 'Hubo un problema al cargar la clasificación.'}
+                {error?.message?.includes('index') || error?.message?.includes('function')
+                  ? 'Ejecuta la migración de ligas en Supabase y recarga el esquema (NOTIFY pgrst).'
+                  : error.message || 'Hubo un problema al cargar la clasificación.'}
               </p>
             </div>
-          ) : leaderboardData.length > 0 ? (
+          ) : isViewingOwnLeague && leaderboardData.length > 0 ? (
             leaderboardData.map((player: LeaderboardPlayer, index: number) => {
               const isCurrentUser = user?.uid === player.id;
               const isVip = Boolean(player.hasVipBadge);
@@ -164,10 +208,8 @@ export const ClasificatoriaPage = () => {
                       : cn(style.bg, 'hover:bg-slate-800')
                   )}
                 >
-                  {/* Position */}
                   <div className="w-8 text-center text-lg font-bold text-slate-300">{index + 1}</div>
 
-                  {/* Avatar */}
                   <div className="relative">
                     <div
                       className={cn(
@@ -195,7 +237,6 @@ export const ClasificatoriaPage = () => {
                     )}
                   </div>
 
-                  {/* Info */}
                   <div className="min-w-0 flex-1">
                     <div className="flex items-center gap-2">
                       <h3 className={cn('truncate font-bold', isCurrentUser ? 'text-app-accent' : 'text-white')}>
@@ -222,7 +263,6 @@ export const ClasificatoriaPage = () => {
                     </div>
                   </div>
 
-                  {/* XP */}
                   <div className="text-right">
                     <div className="text-xl font-bold text-white">{player.weeklyXP || 0} XP</div>
                     <div className="text-xs text-slate-500">Esta semana</div>
@@ -230,13 +270,16 @@ export const ClasificatoriaPage = () => {
                 </div>
               );
             })
-          ) : (
+          ) : isViewingOwnLeague ? (
             <div className="rounded-2xl border border-slate-800 bg-slate-900/50 py-12 text-center">
               <Icon name="moon" size="3xl" className="mx-auto mb-4 text-slate-400" />
               <h3 className="mb-2 text-xl font-bold text-white">¡Está muy tranquilo por aquí!</h3>
-              <p className="text-slate-400">Sé el primero en sumar puntos en la liga {currentRankInfo.label}.</p>
+              <p className="text-slate-400">
+                Sé el primero en sumar puntos en tu grupo de {currentRankInfo.label}.
+                {slotsRemaining > 0 && ` Faltan ${slotsRemaining} estudiantes para completar el grupo.`}
+              </p>
             </div>
-          )}
+          ) : null}
         </div>
       </div>
     </div>

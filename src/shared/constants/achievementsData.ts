@@ -119,6 +119,66 @@ export const ACHIEVEMENTS_DATA = [
     xpReward: 50,
     coinsReward: 25,
   },
+  {
+    id: 'league_explorador',
+    category: 'ligas',
+    title: 'Liga Explorador',
+    description: 'Ascendiste a la liga Explorador en la clasificatoria',
+    icon: 'map',
+    target: 1,
+    xpReward: 150,
+    coinsReward: 75,
+  },
+  {
+    id: 'league_aprendiz',
+    category: 'ligas',
+    title: 'Liga Aprendiz',
+    description: 'Ascendiste a la liga Aprendiz en la clasificatoria',
+    icon: 'book-open',
+    target: 1,
+    xpReward: 200,
+    coinsReward: 100,
+  },
+  {
+    id: 'league_competente',
+    category: 'ligas',
+    title: 'Liga Competente',
+    description: 'Ascendiste a la liga Competente en la clasificatoria',
+    icon: 'lightbulb',
+    target: 1,
+    xpReward: 300,
+    coinsReward: 150,
+  },
+  {
+    id: 'league_avanzado',
+    category: 'ligas',
+    title: 'Liga Avanzado',
+    description: 'Ascendiste a la liga Avanzado en la clasificatoria',
+    icon: 'bolt',
+    target: 1,
+    xpReward: 400,
+    coinsReward: 200,
+  },
+  {
+    id: 'league_experto',
+    category: 'ligas',
+    title: 'Liga Experto',
+    description: 'Ascendiste a la liga Experto en la clasificatoria',
+    icon: 'fire',
+    target: 1,
+    xpReward: 500,
+    coinsReward: 250,
+  },
+  {
+    id: 'league_maestro',
+    category: 'ligas',
+    title: 'Liga Maestro',
+    description: 'Llegaste a la liga Maestro, el nivel más alto',
+    icon: 'crown',
+    target: 1,
+    xpReward: 1000,
+    coinsReward: 500,
+  },
 ] as const;
 
 export const ACHIEVEMENT_CATEGORIES = {
@@ -128,6 +188,17 @@ export const ACHIEVEMENT_CATEGORIES = {
   constancia: { label: 'Constancia', icon: 'fire' },
   metas: { label: 'Metas', icon: 'trophy' },
   lectura: { label: 'Lectura', icon: 'book-open' },
+  ligas: { label: 'Ligas', icon: 'trophy' },
 } as const;
+
+/** IDs de logros otorgados al ascender de liga (job semanal). */
+export const LEAGUE_ACHIEVEMENT_IDS: Record<string, string> = {
+  explorador: 'league_explorador',
+  aprendiz: 'league_aprendiz',
+  competente: 'league_competente',
+  avanzado: 'league_avanzado',
+  experto: 'league_experto',
+  maestro: 'league_maestro',
+};
 
 export type AchievementCategoryKey = keyof typeof ACHIEVEMENT_CATEGORIES;

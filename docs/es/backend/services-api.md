@@ -177,6 +177,20 @@ const { exam, getUserExams, resetUserExams, refresh } = useExam(examId);
 | achievements  | jsonb | Progreso de logros (fuente de verdad remota) |
 | xp_history    | jsonb | Historial XP         |
 | coins_history | jsonb | Historial monedas    |
+| league_rank   | text  | Liga competitiva actual (`novato` … `maestro`) |
+| league_group_id | uuid | FK a `league_groups` — cohorte de hasta 30 jugadores |
+| weekly_xp     | int   | XP de la semana en curso (clasificatoria) |
+| weekly_xp_week | text | Semana ISO activa, ej. `2026-W24` |
+
+### `league_groups`
+
+| Columna       | Tipo | Descripción |
+| ------------- | ---- | ----------- |
+| id            | uuid | Grupo/cohorte dentro de una liga |
+| league_rank   | text | Liga (`novato`, `explorador`, …) |
+| member_count  | int  | Miembros actuales (máx. 30) |
+
+RPC: `get_my_leaderboard`, `get_my_league_state`, `assign_league_group`, `process_weekly_leagues` (cron). Migración: `supabase/migrations/20260610120000_league_system.sql`.
 
 ### `exam_results`
 

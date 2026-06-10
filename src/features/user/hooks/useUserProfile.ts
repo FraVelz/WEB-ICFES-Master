@@ -182,7 +182,9 @@ export const useUserProfile = (targetUserId: string | null = null) => {
   return {
     uid,
     isOwnProfile,
+    /** Nivel visual (por XP total); no confundir con liga competitiva — usar `useMyLeague`. */
     rank,
+    levelRank: rank,
     ...profileData,
     achievements,
     totalXP: totalXPFromDB,

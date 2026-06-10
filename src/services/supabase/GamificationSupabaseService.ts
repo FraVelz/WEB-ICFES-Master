@@ -2,7 +2,7 @@
  * GamificationSupabaseService - Gestión de gamificación en Supabase
  */
 import { supabase } from '@/config/supabase';
-import { STARTING_COINS_BALANCE } from '@/shared/constants/gamification';
+import { STARTING_COINS_BALANCE, countsForWeeklyLeagueXp } from '@/shared/constants/gamification';
 import { isLogoShopItem } from '@/features/store/data/shopCatalog';
 import { DOUBLE_XP_DURATION_MS, isDoubleXpActive } from '@/features/store/constants/doubleXp';
 import { MAX_STREAK_SHIELDS } from '@/features/store/constants/streakShield';
@@ -29,6 +29,10 @@ export interface GamificationProfile {
   doubleXpExpiresAt: string | null;
   personalLogos: PersonalLogo[];
   streakShieldCount: number;
+  leagueRank: string;
+  leagueGroupId: string | null;
+  weeklyXp: number;
+  weeklyXpWeek: string | null;
   updatedAt: unknown;
 }
 
@@ -80,6 +84,10 @@ const mapFromDb = (row: Record<string, unknown> | null): GamificationProfile | n
       MAX_STREAK_SHIELDS,
       Math.max(0, Number(row.streak_shield_count ?? 0))
     ),
+    leagueRank: typeof row.league_rank === 'string' ? row.league_rank : 'novato',
+    leagueGroupId: typeof row.league_group_id === 'string' ? row.league_group_id : null,
+    weeklyXp: Number(row.weekly_xp ?? 0),
+    weeklyXpWeek: typeof row.weekly_xp_week === 'string' ? row.weekly_xp_week : null,
     updatedAt: row.updated_at,
   };
 };
@@ -122,6 +130,20 @@ const GamificationSupabaseService = {
       if (error) throw new Error(`Error creando gamificación: ${error.message}`);
       profile = mapFromDb(data as Record<string, unknown>)!;
     }
+
+    if (profile && !profile.leagueGroupId) {
+      const sb = ensureSupabase();
+      const { error: assignError } = await sb.rpc('assign_league_group', {
+        p_user_id: userId,
+        p_league_rank: profile.leagueRank || 'novato',
+      });
+      if (assignError) {
+        console.warn('No se pudo asignar grupo de liga:', assignError.message);
+      } else {
+        profile = (await this.getByUserId(userId)) ?? profile;
+      }
+    }
+
     return profile;
   },
 
@@ -150,7 +172,18 @@ const GamificationSupabaseService = {
     const sb = ensureSupabase();
     const { data, error } = await sb.from(TABLE).upsert(payload, { onConflict: 'user_id' }).select().single();
     if (error) throw new Error(`Error añadiendo XP: ${error.message}`);
-    return mapFromDb(data as Record<string, unknown>)!;
+
+    if (countsForWeeklyLeagueXp(reason)) {
+      const { error: weeklyError } = await sb.rpc('add_weekly_xp', {
+        p_user_id: userId,
+        p_points: awardedPoints,
+      });
+      if (weeklyError) {
+        console.warn('No se pudo sumar XP semanal de liga:', weeklyError.message);
+      }
+    }
+
+    return (await this.getByUserId(userId)) ?? mapFromDb(data as Record<string, unknown>)!;
   },
 
   async addCoins(userId: string, amount: number, reason = 'reward'): Promise<GamificationProfile> {

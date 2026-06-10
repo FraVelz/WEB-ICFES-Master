@@ -18,32 +18,36 @@ export function SettingsSupportPanel() {
 
   return (
     <SettingsSection title="Ayuda y Soporte" icon="headset">
-      <p className="mb-4 text-sm text-slate-400">
+      <p className="text-on-surface-muted mb-4 text-sm">
         Completa el formulario y se abrirá tu cliente de correo con el mensaje preparado.
       </p>
-      <div className="mb-6 flex rounded-xl border border-slate-800 bg-slate-950/50 p-1">
+      <div className="border-surface-border bg-surface/50 mb-6 flex rounded-xl border p-1">
         <button
           type="button"
           onClick={() => setSupportMode('response')}
           className={cn(
-            'flex-1 cursor-pointer rounded-lg px-4 py-2 text-sm font-medium transition-all',
+            'flex flex-1 cursor-pointer flex-col items-center justify-center gap-1.5 rounded-lg px-4 py-3 text-sm font-medium transition-all',
             'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:outline-none focus-visible:ring-inset',
-            supportMode === 'response' ? 'bg-slate-800 text-white shadow-sm' : 'text-slate-400 hover:text-white'
+            supportMode === 'response'
+              ? 'bg-surface-elevated text-on-surface shadow-sm'
+              : 'text-on-surface-muted hover:bg-surface-elevated/60 hover:text-on-surface'
           )}
         >
-          <Icon name="paper-plane" className="mr-2" />
+          <Icon name="paper-plane" />
           Contactar
         </button>
         <button
           type="button"
           onClick={() => setSupportMode('report')}
           className={cn(
-            'flex-1 cursor-pointer rounded-lg px-4 py-2 text-sm font-medium transition-all',
+            'flex flex-1 cursor-pointer flex-col items-center justify-center gap-1.5 rounded-lg px-4 py-3 text-sm font-medium transition-all',
             'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:outline-none focus-visible:ring-inset',
-            supportMode === 'report' ? 'bg-slate-800 text-white shadow-sm' : 'text-slate-400 hover:text-white'
+            supportMode === 'report'
+              ? 'bg-surface-elevated text-on-surface shadow-sm'
+              : 'text-on-surface-muted hover:bg-surface-elevated/60 hover:text-on-surface'
           )}
         >
-          <Icon name="bug" className="mr-2" />
+          <Icon name="bug" />
           Reportar Bug
         </button>
       </div>
