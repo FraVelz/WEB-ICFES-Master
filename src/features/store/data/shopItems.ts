@@ -34,7 +34,7 @@ const BASE_SHOP_ITEMS: ShopItem[] = [
   {
     id: 'badge_vip',
     name: 'Insignia VIP',
-    description: 'Destaca en la clasificatoria con un borde dorado.',
+    description: 'Borde dorado en tu perfil y en la clasificatoria.',
     price: 5000,
     category: 'badge',
     icon: 'crown',

@@ -32,15 +32,20 @@ export function ProfileAchievementsSection({ achievements, showViewAll, onViewAl
   const completedCount = achievements.filter((achievement) => achievement.status === 'completed').length;
 
   return (
-    <div className="sticky top-24 rounded-2xl border border-slate-800 bg-slate-900/50 p-6">
+    <div
+      className={cn(
+        'sticky top-24 rounded-2xl border border-surface-border bg-surface-elevated/80 p-6 shadow-sm',
+        'dark:border-slate-800 dark:bg-slate-900/50'
+      )}
+    >
       <div className="mb-6 flex items-center justify-between">
         <div>
-          <h2 className="flex items-center gap-3 text-xl font-bold">
-            <Icon name="trophy" className="text-yellow-400" />
+          <h2 className="flex items-center gap-3 text-xl font-bold text-on-surface">
+            <Icon name="trophy" className="text-amber-600 dark:text-yellow-400" />
             Logros
           </h2>
           {achievements.length > 0 && (
-            <p className="mt-1 text-xs text-slate-400">
+            <p className="mt-1 text-xs text-on-surface-muted">
               {completedCount} de {achievements.length} desbloqueados
             </p>
           )}
@@ -49,7 +54,7 @@ export function ProfileAchievementsSection({ achievements, showViewAll, onViewAl
           <button
             type="button"
             onClick={onViewAll}
-            className="text-app-accent hover:text-app-accent-muted cursor-pointer text-xs font-bold tracking-wider uppercase"
+            className="text-app-accent-strong hover:text-app-accent cursor-pointer text-xs font-bold tracking-wider uppercase dark:text-app-accent dark:hover:text-app-accent-muted"
           >
             Ver todos
           </button>
@@ -66,16 +71,20 @@ export function ProfileAchievementsSection({ achievements, showViewAll, onViewAl
               className={cn(
                 'relative flex aspect-square flex-col items-center justify-center rounded-xl border p-2 transition-all',
                 isUnlocked
-                  ? 'border-yellow-500/30 bg-yellow-500/10 text-yellow-400'
+                  ? 'border-amber-500/35 bg-amber-50 text-amber-700 dark:border-yellow-500/30 dark:bg-yellow-500/10 dark:text-yellow-400'
                   : inProgress
-                    ? 'border-app-ring/40 bg-app-ring/10 text-app-accent'
-                    : 'border-slate-700 bg-slate-800/50 text-slate-600 opacity-50 grayscale'
+                    ? 'border-app-ring/40 bg-app-ring/10 text-app-accent-strong dark:text-app-accent'
+                    : 'border-surface-border bg-surface-via/50 text-on-surface-muted opacity-60 grayscale dark:border-slate-700 dark:bg-slate-800/50 dark:text-slate-600'
               )}
               title={achievement.title}
             >
               <Icon name={typeof achievement.icon === 'string' ? achievement.icon : 'star'} className="mb-1 text-2xl" />
               {isUnlocked && (
-                <Icon name="star" size="sm" className="absolute top-2 right-2 text-[8px] text-yellow-200" />
+                <Icon
+                  name="star"
+                  size="sm"
+                  className="absolute top-2 right-2 text-[8px] text-amber-500 dark:text-yellow-200"
+                />
               )}
             </div>
           );
@@ -83,7 +92,7 @@ export function ProfileAchievementsSection({ achievements, showViewAll, onViewAl
       </div>
 
       {achievements.length === 0 && (
-        <p className="py-4 text-center text-sm text-slate-500">
+        <p className="py-4 text-center text-sm text-on-surface-muted">
           {showViewAll ? 'Completa lecciones para desbloquear logros.' : 'Sin logros desbloqueados aún.'}
         </p>
       )}

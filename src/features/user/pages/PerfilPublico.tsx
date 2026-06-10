@@ -11,8 +11,15 @@ import { ProfileHeroCard } from '../components/profile/ProfileHeroCard';
 import { ProfileCoursesSection } from '../components/profile/ProfileCoursesSection';
 import { ProfileStatsSection } from '../components/profile/ProfileStatsSection';
 import { ProfileAchievementsSection } from '../components/profile/ProfileAchievementsSection';
+import { ProfileStoreHighlights } from '../components/profile/ProfileStoreHighlights';
 import { PublicProfileErrorState } from '../components/profile/PublicProfileErrorState';
 import { PublicProfileChrome } from '../components/profile/PublicProfileChrome';
+
+const profileActionButtonClass = cn(
+  'flex cursor-pointer items-center gap-2 rounded-lg border border-surface-border bg-surface-elevated p-2 text-sm font-medium',
+  'text-app-accent-strong transition-colors hover:bg-surface-via',
+  'dark:border-transparent dark:bg-slate-800 dark:text-app-accent dark:hover:bg-slate-700'
+);
 
 type PerfilPublicoProps = {
   view: PublicProfileViewState;
@@ -34,6 +41,8 @@ export const PerfilPublico = ({ view }: PerfilPublicoProps) => {
     levelInfo,
     achievements,
     coursesProgress,
+    hasVipBadge,
+    storeHighlights,
   } = view;
 
   const isOwnProfile = Boolean(authUser?.uid && userId === authUser.uid);
@@ -109,17 +118,10 @@ export const PerfilPublico = ({ view }: PerfilPublicoProps) => {
         totalXP={totalXP}
         levelInfo={levelInfo}
         accent="purple"
+        isVip={hasVipBadge}
         headerActions={
           <>
-            <button
-              type="button"
-              onClick={handleShare}
-              className={cn(
-                'flex cursor-pointer items-center gap-2 rounded-lg bg-slate-800 p-2 text-sm font-medium',
-                'text-app-accent transition-colors hover:bg-slate-700'
-              )}
-              title="Copiar enlace"
-            >
+            <button type="button" onClick={handleShare} className={profileActionButtonClass} title="Copiar enlace">
               <Icon name={copied ? 'check' : 'share-nodes'} />
               <span className="hidden sm:inline">{copied ? '¡Copiado!' : 'Compartir'}</span>
             </button>
@@ -127,8 +129,9 @@ export const PerfilPublico = ({ view }: PerfilPublicoProps) => {
               type="button"
               onClick={handleReport}
               className={cn(
-                'cursor-pointer rounded-lg bg-slate-800 p-2 transition-colors hover:bg-red-900/30',
-                reported ? 'text-red-500' : 'text-slate-400 hover:text-red-400'
+                'cursor-pointer rounded-lg border border-surface-border bg-surface-elevated p-2 transition-colors',
+                'hover:bg-red-50 dark:border-transparent dark:bg-slate-800 dark:hover:bg-red-900/30',
+                reported ? 'text-red-600 dark:text-red-500' : 'text-on-surface-muted hover:text-red-600 dark:hover:text-red-400'
               )}
               title="Reportar usuario"
             >
@@ -140,6 +143,13 @@ export const PerfilPublico = ({ view }: PerfilPublicoProps) => {
 
       <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
         <div className="space-y-8 lg:col-span-2">
+          {storeHighlights.length > 0 && (
+            <ProfileStoreHighlights
+              highlights={storeHighlights}
+              title="Colección de la tienda"
+              emptyMessage="Este usuario aún no tiene ítems de la tienda."
+            />
+          )}
           <ProfileStatsSection
             achievements={achievements}
             level={level}

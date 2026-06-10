@@ -1,5 +1,6 @@
 import { Icon } from '@/shared/components/Icon';
 import { formatStudyTime } from '@/services/studyTime';
+import { cn } from '@/utils/cn';
 
 type Achievement = { id: string; status: string };
 
@@ -12,6 +13,11 @@ type ProfileStatsSectionProps = {
   showRanking?: boolean;
 };
 
+const statCardClass = cn(
+  'rounded-xl border border-surface-border bg-surface-via/70 p-4 text-center',
+  'dark:border-transparent dark:bg-slate-800/50'
+);
+
 export function ProfileStatsSection({
   achievements,
   level,
@@ -21,35 +27,39 @@ export function ProfileStatsSection({
   showRanking = false,
 }: ProfileStatsSectionProps) {
   const completed = achievements.filter((a) => a.status === 'completed').length;
-  const cols = showRanking ? 'grid-cols-2 sm:grid-cols-4' : 'grid-cols-2 sm:grid-cols-4';
 
   return (
-    <div className="rounded-2xl border border-slate-800 bg-slate-900/50 p-6">
-      <h2 className="mb-6 flex items-center gap-3 text-xl font-bold">
-        <Icon name="chart-line" className="text-green-400" />
+    <div
+      className={cn(
+        'rounded-2xl border border-surface-border bg-surface-elevated/80 p-6 shadow-sm',
+        'dark:border-slate-800 dark:bg-slate-900/50'
+      )}
+    >
+      <h2 className="mb-6 flex items-center gap-3 text-xl font-bold text-on-surface">
+        <Icon name="chart-line" className="text-emerald-600 dark:text-green-400" />
         {title}
       </h2>
-      <div className={`grid gap-4 ${cols}`}>
-        <div className="rounded-xl bg-slate-800/50 p-4 text-center">
-          <div className="text-2xl font-bold text-white">{completed}</div>
-          <div className="mt-1 text-xs text-slate-400 uppercase">Logros</div>
+      <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
+        <div className={statCardClass}>
+          <div className="text-2xl font-bold text-on-surface">{completed}</div>
+          <div className="mt-1 text-xs text-on-surface-muted uppercase">Logros</div>
         </div>
-        <div className="rounded-xl bg-slate-800/50 p-4 text-center">
-          <div className="text-2xl font-bold text-white">{level}</div>
-          <div className="mt-1 text-xs text-slate-400 uppercase">Nivel</div>
+        <div className={statCardClass}>
+          <div className="text-2xl font-bold text-on-surface">{level}</div>
+          <div className="mt-1 text-xs text-on-surface-muted uppercase">Nivel</div>
         </div>
-        <div className="rounded-xl bg-slate-800/50 p-4 text-center">
-          <div className="text-2xl font-bold text-white">{typeof totalXP === 'number' ? totalXP : 0}</div>
-          <div className="mt-1 text-xs text-slate-400 uppercase">XP Total</div>
+        <div className={statCardClass}>
+          <div className="text-2xl font-bold text-on-surface">{typeof totalXP === 'number' ? totalXP : 0}</div>
+          <div className="mt-1 text-xs text-on-surface-muted uppercase">XP Total</div>
         </div>
-        <div className="rounded-xl bg-slate-800/50 p-4 text-center">
-          <div className="text-2xl font-bold text-white">{formatStudyTime(studyTimeMinutes)}</div>
-          <div className="mt-1 text-xs text-slate-400 uppercase">Tiempo de estudio</div>
+        <div className={statCardClass}>
+          <div className="text-2xl font-bold text-on-surface">{formatStudyTime(studyTimeMinutes)}</div>
+          <div className="mt-1 text-xs text-on-surface-muted uppercase">Tiempo de estudio</div>
         </div>
         {showRanking && (
-          <div className="rounded-xl bg-slate-800/50 p-4 text-center">
-            <div className="text-2xl font-bold text-white">Top 10%</div>
-            <div className="mt-1 text-xs text-slate-400 uppercase">Ranking</div>
+          <div className={statCardClass}>
+            <div className="text-2xl font-bold text-on-surface">Top 10%</div>
+            <div className="mt-1 text-xs text-on-surface-muted uppercase">Ranking</div>
           </div>
         )}
       </div>

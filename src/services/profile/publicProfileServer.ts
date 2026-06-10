@@ -16,6 +16,7 @@ export type PublicProfilePayload = {
     achievements: Record<string, unknown>;
     studyTimeMinutes: number;
     equippedLogoId?: string | null;
+    shopInventory?: string[];
   };
 };
 
@@ -41,9 +42,13 @@ async function fetchViaServiceRole(userId: string): Promise<PublicProfilePayload
 
   const { data: gamification } = await sb
     .from('user_gamification')
-    .select('xp, achievements, equipped_logo_id')
+    .select('xp, achievements, equipped_logo_id, shop_inventory')
     .eq('user_id', userId)
     .maybeSingle();
+
+  const shopInventory = Array.isArray(gamification?.shop_inventory)
+    ? gamification.shop_inventory.filter((entry): entry is string => typeof entry === 'string')
+    : [];
 
   return {
     profile: {
@@ -59,6 +64,7 @@ async function fetchViaServiceRole(userId: string): Promise<PublicProfilePayload
       achievements: (gamification?.achievements as Record<string, unknown>) ?? {},
       studyTimeMinutes: readStudyTimeRemoteMeta(gamification?.achievements).totalMinutes,
       equippedLogoId: gamification?.equipped_logo_id ?? null,
+      shopInventory,
     },
   };
 }
@@ -93,6 +99,10 @@ async function fetchViaPublicRpc(userId: string): Promise<PublicProfilePayload |
   const payload = data as PublicProfilePayload;
   if (!payload.profile?.id) return null;
 
+  const shopInventory = Array.isArray(payload.gamification?.shopInventory)
+    ? payload.gamification.shopInventory.filter((entry): entry is string => typeof entry === 'string')
+    : [];
+
   return {
     profile: payload.profile,
     gamification: {
@@ -102,6 +112,7 @@ async function fetchViaPublicRpc(userId: string): Promise<PublicProfilePayload |
         payload.gamification?.studyTimeMinutes ??
         readStudyTimeRemoteMeta(payload.gamification?.achievements).totalMinutes,
       equippedLogoId: payload.gamification?.equippedLogoId ?? null,
+      shopInventory,
     },
   };
 }

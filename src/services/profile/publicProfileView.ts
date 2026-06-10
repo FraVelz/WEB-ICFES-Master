@@ -2,6 +2,11 @@ import { ACHIEVEMENTS_DATA } from '@/shared/constants/achievementsData';
 import { getLevelInfo } from '@/services/gamification/gamificationUtils';
 import { RANKS } from '@/shared/constants/ranks';
 import { normalizeAchievementsRecord } from '@/services/achievements/achievementProgressService';
+import { hasVipBadge } from '@/features/store/constants/vipBadge';
+import {
+  buildProfileStoreHighlights,
+  type ProfileStoreHighlight,
+} from '@/features/user/utils/profileStoreHighlights';
 import type { ImageSource } from '@/assets';
 import { resolveProfileAvatarSrc } from '@/features/user/utils/resolveProfileAvatar';
 import type { PublicProfilePayload } from './publicProfileServer';
@@ -54,6 +59,8 @@ export type PublicProfileViewState = {
     nextLevelName: string | null;
   };
   coursesProgress: Record<string, unknown>;
+  hasVipBadge: boolean;
+  storeHighlights: ProfileStoreHighlight[];
 };
 
 const EMPTY_VIEW: Omit<PublicProfileViewState, 'userId' | 'errorCode' | 'exists'> = {
@@ -76,6 +83,8 @@ const EMPTY_VIEW: Omit<PublicProfileViewState, 'userId' | 'errorCode' | 'exists'
     nextLevelName: null,
   },
   coursesProgress: {},
+  hasVipBadge: false,
+  storeHighlights: [],
 };
 
 export function buildPublicProfileViewState(
@@ -96,6 +105,8 @@ export function buildPublicProfileViewState(
   const mergedAchievements = mergeAchievements(
     normalizeAchievementsRecord(payload.gamification.achievements)
   );
+  const shopInventory = payload.gamification.shopInventory ?? [];
+  const equippedLogoId = payload.gamification.equippedLogoId ?? null;
 
   return {
     userId,
@@ -129,5 +140,7 @@ export function buildPublicProfileViewState(
       nextLevelName: levelInfo.nextLevelData?.name || null,
     },
     coursesProgress: {},
+    hasVipBadge: hasVipBadge(shopInventory),
+    storeHighlights: buildProfileStoreHighlights(shopInventory, equippedLogoId),
   };
 }
