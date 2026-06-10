@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { cn } from '@/utils/cn';
 import { Icon } from '@/shared/components/Icon';
+import { LoadingState } from '@/shared/components/LoadingState';
 
 type Achievement = {
   id: string;
@@ -16,6 +17,7 @@ type Achievement = {
 
 type ProfileAchievementsSectionProps = {
   achievements: Achievement[];
+  loading?: boolean;
   showViewAll?: boolean;
   onViewAll?: () => void;
 };
@@ -137,11 +139,17 @@ function AchievementDetailRow({ achievement }: { achievement: Achievement }) {
   );
 }
 
-export function ProfileAchievementsSection({ achievements, showViewAll, onViewAll }: ProfileAchievementsSectionProps) {
+export function ProfileAchievementsSection({
+  achievements,
+  loading = false,
+  showViewAll,
+  onViewAll,
+}: ProfileAchievementsSectionProps) {
   const [detailsOpen, setDetailsOpen] = useState(false);
   const sortedAchievements = sortAchievementsForProfile(achievements);
   const visibleAchievements = sortedAchievements.slice(0, 9);
   const completedCount = achievements.filter((achievement) => achievement.status === 'completed').length;
+  const showSectionLoading = loading && achievements.length === 0;
 
   return (
     <div
@@ -173,7 +181,9 @@ export function ProfileAchievementsSection({ achievements, showViewAll, onViewAl
         )}
       </div>
 
-      {visibleAchievements.length > 0 && (
+      {showSectionLoading && <LoadingState label="Cargando logros..." layout="section" className="py-6" />}
+
+      {!showSectionLoading && visibleAchievements.length > 0 && (
         <>
           <div className="grid grid-cols-3 gap-3">
             {visibleAchievements.map((achievement) => (
@@ -211,7 +221,7 @@ export function ProfileAchievementsSection({ achievements, showViewAll, onViewAl
         </>
       )}
 
-      {achievements.length === 0 && (
+      {!showSectionLoading && achievements.length === 0 && (
         <p className="text-on-surface-muted py-4 text-center text-sm">
           {showViewAll ? 'Completa lecciones para desbloquear logros.' : 'Sin logros desbloqueados aún.'}
         </p>

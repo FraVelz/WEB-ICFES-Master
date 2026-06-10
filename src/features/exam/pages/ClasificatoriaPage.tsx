@@ -76,6 +76,8 @@ export const ClasificatoriaPage = () => {
   const groupSize = leagueState?.groupSize ?? LEAGUE_GROUP_SIZE;
   const groupNumber = leagueState?.groupNumber ?? 1;
   const slotsRemaining = Math.max(0, groupSize - memberCount);
+  const showLeaderboardLoading =
+    isViewingOwnLeague && ((loading && leaderboardData.length === 0) || (leagueLoading && !leagueState));
 
   return (
     <div className={PAGE_SHELL_CLASS}>
@@ -178,7 +180,7 @@ export const ClasificatoriaPage = () => {
         )}
 
         <div className="space-y-3">
-          {loading || leagueLoading ? (
+          {showLeaderboardLoading ? (
             <LoadingState label="Cargando clasificación..." layout="section" />
           ) : error ? (
             <div className="rounded-2xl border border-red-500/20 bg-red-500/10 py-12 text-center">

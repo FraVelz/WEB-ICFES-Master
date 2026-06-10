@@ -84,6 +84,10 @@ async function mergeLegacyPurchases(userId: string, state: ShopInventoryState): 
   return next;
 }
 
+export function readDemoShopInventorySync(): ShopInventoryState {
+  return readDemoShopState();
+}
+
 export async function getShopInventoryState(userId: string): Promise<ShopInventoryState> {
   if (isDemoUserId(userId)) {
     const demo = readDemoShopState();

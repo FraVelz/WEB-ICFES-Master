@@ -17,6 +17,7 @@ export { mergeDemoIntoUser, hasDemoDataToMigrate } from '@/services/demo/mergeDe
 export { getCoinsBalance, addCoinsBalance, spendCoinsBalance, COINS_CHANGE_EVENT } from './coinsPersistence';
 export {
   getShopInventoryState,
+  readDemoShopInventorySync,
   addShopInventoryItem,
   setEquippedShopLogo,
   hasShopInventoryItem,

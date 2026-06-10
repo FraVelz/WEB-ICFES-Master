@@ -19,3 +19,4 @@ export {
   setActiveStreakUserId,
   resolveStreakScopeFromStorage,
 } from './streakService';
+export { loadLocalStreakState } from './streakLocalStorage';

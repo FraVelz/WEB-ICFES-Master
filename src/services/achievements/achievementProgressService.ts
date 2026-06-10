@@ -11,6 +11,25 @@ import { getCompletedLessons, getStoredExams, getStoredPractices } from '@/stora
 import { loadLecturaReadSections } from '@/features/lectura/services/lecturaReadPersistence';
 import { getStudyTimeStats, STUDY_TIME_META_KEY } from '@/services/studyTime/studyTimeService';
 
+export type SyncAchievementsOptions = {
+  /** Evita un getOrCreate extra si el caller ya tiene logros remotos. */
+  remoteAchievements?: AchievementProgressMap;
+  /** Evita leer XP otra vez al calcular meta_1. */
+  userLevel?: number;
+  /** Evita recargar racha dentro del sync si el caller ya la tiene. */
+  currentStreak?: number;
+};
+
+function progressMapsEqual(a: AchievementProgressMap, b: AchievementProgressMap): boolean {
+  for (const achievement of ACHIEVEMENTS_DATA) {
+    const left = a[achievement.id];
+    const right = b[achievement.id];
+    if ((left?.current ?? 0) !== (right?.current ?? 0)) return false;
+    if ((left?.unlocked ?? false) !== (right?.unlocked ?? false)) return false;
+  }
+  return true;
+}
+
 export type AchievementProgressEntry = {
   current: number;
   unlocked: boolean;
@@ -167,11 +186,13 @@ async function awardNewUnlocks(
   await Promise.all(newlyUnlocked.map((achievement) => awardAchievementUnlock(userId, achievement)));
 }
 
-async function computeAchievementProgressFromGameplay(userId: string): Promise<AchievementProgressMap> {
+async function computeAchievementProgressFromGameplay(
+  userId: string,
+  options: Pick<SyncAchievementsOptions, 'userLevel' | 'currentStreak'> = {}
+): Promise<AchievementProgressMap> {
   const scope = toStreakScope(userId);
-  const streakState = await loadStreakState(scope);
-  const streakMetrics = getStreakMetrics(streakState);
-  const level = await readLevel(userId);
+  const currentStreak = options.currentStreak ?? getStreakMetrics(await loadStreakState(scope)).currentStreak;
+  const level = options.userLevel ?? (await readLevel(userId));
   const readSections = loadLecturaReadSections(userId);
   const studyTime = getStudyTimeStats(userId);
 
@@ -181,7 +202,7 @@ async function computeAchievementProgressFromGameplay(userId: string): Promise<A
     getStoredExams().length,
     countPerfectAttempts(getStoredPractices() as Array<Record<string, unknown>>) +
       countPerfectAttempts(getStoredExams() as Array<Record<string, unknown>>),
-    streakMetrics.currentStreak,
+    currentStreak,
     level,
     readSections.includes('importancia') ? 1 : 0,
     readSections.includes('informacion') ? 1 : 0,
@@ -238,16 +259,21 @@ export async function reconcileAchievementsWithoutRewards(
   return merged;
 }
 
-export async function syncAchievementsFromGameplay(userId: string): Promise<AchievementProgressMap> {
-  const remote = await loadRemoteAchievementProgress(userId);
+export async function syncAchievementsFromGameplay(
+  userId: string,
+  options: SyncAchievementsOptions = {}
+): Promise<AchievementProgressMap> {
+  const remote = options.remoteAchievements ?? (await loadRemoteAchievementProgress(userId));
   const local = readAchievementProgress(userId);
   const previous = mergeAchievementProgressMaps(remote, local);
-  const computed = await computeAchievementProgressFromGameplay(userId);
+  const computed = await computeAchievementProgressFromGameplay(userId, options);
   const next = mergeAchievementProgressMaps(previous, computed);
 
   await awardNewUnlocks(userId, previous, next);
 
-  if (!isDemoUserId(userId) && isSupabaseConfigured()) {
+  const progressChanged = !progressMapsEqual(previous, next);
+
+  if (!isDemoUserId(userId) && isSupabaseConfigured() && progressChanged) {
     await GamificationSupabaseService.updateAchievements(userId, attachStudyTimeMeta(userId, next));
   }
   writeAchievementProgress(userId, next);

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { useAuth } from '@/features/auth/context/AuthContext';
 import { LeagueSupabaseService } from '@/services/league';
 import { hasVipBadge } from '@/features/store/constants/vipBadge';
@@ -23,28 +23,34 @@ export const useLeaderboard = (selectedLeagueRank: string, myLeagueRank: string 
   const [leaderboardData, setLeaderboardData] = useState<LeaderboardPlayer[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
+  const hasLoadedRef = useRef(false);
 
   const isMyLeague = myLeagueRank != null && selectedLeagueRank === myLeagueRank;
 
   const buildLeaderboard = useCallback(async () => {
     if (!user?.uid) {
       setLeaderboardData([]);
+      hasLoadedRef.current = false;
       setLoading(false);
       return;
     }
 
     if (!isMyLeague) {
       setLeaderboardData([]);
+      hasLoadedRef.current = false;
       setLoading(false);
       setError(null);
       return;
     }
 
-    setLoading(true);
+    if (!hasLoadedRef.current) {
+      setLoading(true);
+    }
     setError(null);
     try {
       const rows = await LeagueSupabaseService.getMyLeaderboard();
       setLeaderboardData(rows);
+      hasLoadedRef.current = rows.length > 0;
     } catch (err) {
       setError(err instanceof Error ? err : new Error('Error cargando clasificación'));
       setLeaderboardData([]);

@@ -86,7 +86,10 @@ export const useUserProfile = (targetUserId: string | null = null) => {
     let cancelled = false;
 
     const load = async () => {
-      setProfileData((prev) => ({ ...prev, loading: true }));
+      const canShowAuthShell = Boolean(isOwnProfile && authUser);
+      if (!canShowAuthShell) {
+        setProfileData((prev) => ({ ...prev, loading: true }));
+      }
 
       if (isDemoUserId(uid)) {
         const demo = getDemoProfile();
@@ -147,6 +150,18 @@ export const useUserProfile = (targetUserId: string | null = null) => {
   }, [uid, authUser, isOwnProfile, authLoading]);
 
   useEffect(() => {
+    if (!isOwnProfile || !authUser?.uid || authLoading) return;
+
+    setProfileData((prev) => ({
+      ...prev,
+      profileImage: authUser.profileImage ?? prev.profileImage,
+      name: authUser.displayName ?? prev.name ?? 'Usuario',
+      exists: true,
+      loading: false,
+    }));
+  }, [isOwnProfile, authUser, authLoading]);
+
+  useEffect(() => {
     if (!isOwnProfile) return;
 
     const onProfileChanged = (event: Event) => {
@@ -168,11 +183,12 @@ export const useUserProfile = (targetUserId: string | null = null) => {
   const totalXPFromDB = typeof totalXP === 'number' ? totalXP : 0;
   const levelInfo = getLevelInfo(totalXPFromDB);
   const rank = levelToRankId(levelInfo.level);
-  const loading = profileData.loading || gamificationLoading || (!uid && authLoading);
+  const loading = profileData.loading || (!uid && authLoading);
 
   return {
     uid,
     isOwnProfile,
+    gamificationLoading,
     /** Nivel visual (por XP total); no confundir con liga competitiva — usar `useMyLeague`. */
     rank,
     levelRank: rank,

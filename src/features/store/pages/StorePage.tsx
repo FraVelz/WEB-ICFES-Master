@@ -27,6 +27,7 @@ const FILTERS = [
 export function StorePage() {
   const {
     coins,
+    inventory,
     hasItem,
     isEquipped,
     loading,
@@ -55,6 +56,8 @@ export function StorePage() {
       if (toastTimerRef.current) clearTimeout(toastTimerRef.current);
     };
   }, []);
+
+  const showStoreLoading = loading && coins === 0 && inventory.length === 0;
 
   const handleBuy = async (item: ShopItem) => {
     try {
@@ -158,7 +161,7 @@ export function StorePage() {
       </div>
 
       <div className="relative z-10 container mx-auto max-w-5xl flex-1 space-y-6 px-4 py-6 lg:py-8">
-        {loading ? (
+        {showStoreLoading ? (
           <LoadingState label="Cargando tienda..." layout="section" />
         ) : error ? (
           <div className="border-surface-border bg-surface-elevated/40 rounded-3xl border border-dashed py-16 text-center">

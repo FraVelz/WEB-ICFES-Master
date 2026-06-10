@@ -5,7 +5,6 @@ import { Icon } from '@/shared/components/Icon';
 import { PAGE_SHELL_CLASS } from '@/shared/constants/pageShell';
 import { LecturaSectionShell, LECTURA_CONSEJOS_ACCENT } from '@/features/lectura';
 import { cn } from '@/utils/cn';
-import { PersonalizedTipsSection } from '../components/PersonalizedTipsSection';
 import { TipsCategoriesSections } from '../components/TipsCategoriesSections';
 
 const internalLinkClass = cn(
@@ -35,8 +34,6 @@ export function TipsPage() {
               complementar tu ruta en la plataforma.
             </p>
           </header>
-
-          <PersonalizedTipsSection />
 
           <TipsCategoriesSections />
 

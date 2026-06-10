@@ -1,13 +1,14 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useAuth } from '@/features/auth/context/AuthContext';
 import { useUiSessionStore } from '@/store/uiSessionStore';
-import { resolveCoinsUserId } from '@/services/demo/demoCoins';
+import { resolveCoinsUserId, getDemoCoins, isDemoUserId } from '@/services/demo/demoCoins';
 import { SHOP_ITEMS } from '../data/shopItems';
 import {
   getCoinsBalance,
   spendCoinsBalance,
   COINS_CHANGE_EVENT,
   getShopInventoryState,
+  readDemoShopInventorySync,
   addShopInventoryItem,
   setEquippedShopLogo,
   hasShopInventoryItem,
@@ -76,8 +77,28 @@ export const useShop = () => {
   }, [coinsUserId]);
 
   useEffect(() => {
+    if (!coinsUserId) {
+      setCoins(0);
+      setInventory([]);
+      setEquippedLogoId(null);
+      setStreakShieldCount(0);
+      setLoading(false);
+      return;
+    }
+
+    let hydratedFromCache = false;
+
+    if (isDemoUserId(coinsUserId)) {
+      setCoins(getDemoCoins());
+      applyInventoryState(readDemoShopInventorySync());
+      hydratedFromCache = true;
+      setLoading(false);
+    }
+
     const load = async () => {
-      setLoading(true);
+      if (!hydratedFromCache) {
+        setLoading(true);
+      }
       setError(null);
       try {
         await Promise.all([loadCoins(), loadInventory(), loadStreakShields()]);

@@ -7,12 +7,12 @@ import { useState, useEffect, useCallback, useRef } from 'react';
 import { ACHIEVEMENTS_DATA } from '@/shared/constants/achievementsData';
 import { gamificationPersistence, getCoinsBalance } from '@/services/persistence';
 import { addCoinsBalance } from '@/services/persistence/coinsPersistence';
-import { DEMO_USER_ID, isDemoUserId } from '@/services/demo/demoCoins';
+import { DEMO_USER_ID, isDemoUserId, getDemoCoins } from '@/services/demo/demoCoins';
 import { addDemoXP, getDemoTotalXP } from '@/services/demo/demoGamification';
 import { calculateLevel } from '@/services/gamification/gamificationUtils';
 import {
-  mergeAchievementProgressMaps,
   normalizeAchievementsRecord,
+  readAchievementProgress,
   syncAchievementsFromGameplay,
   type AchievementProgressMap,
 } from '@/services/achievements/achievementProgressService';
@@ -21,6 +21,7 @@ import {
   backfillStreakFromAttempts,
   getStreakMetrics,
   loadStreakState,
+  loadLocalStreakState,
   STREAK_UPDATED_EVENT,
   type StreakScope,
 } from '@/services/streak';
@@ -113,25 +114,42 @@ export const useGamification = (scope: StreakScope | undefined) => {
       return;
     }
 
-    setLoading(true);
-    try {
-      const achievementUserId = accountUserId ?? (isDemoScope ? DEMO_USER_ID : null);
-      let achProgress: AchievementProgressMap = {};
+    const achievementUserId = accountUserId ?? (isDemoScope ? DEMO_USER_ID : null);
+    const hasCachedAchievements =
+      achievementUserId != null && Object.keys(readAchievementProgress(achievementUserId)).length > 0;
 
-      if (achievementUserId) {
-        achProgress = await syncAchievementsFromGameplay(achievementUserId);
-      }
+    if (!hasCachedAchievements) {
+      setLoading(true);
+    }
+
+    try {
+      let achProgress: AchievementProgressMap = {};
+      let profile: Awaited<ReturnType<typeof gamificationPersistence.getProfile>> | null = null;
 
       if (accountUserId) {
-        const profile = await gamificationPersistence.getProfile(accountUserId);
+        profile = await gamificationPersistence.getProfile(accountUserId);
         const xp = profile?.xp ?? 0;
         setTotalXP(xp);
         setLevel(calculateLevel(xp));
         setCoins((profile?.totalCoins ?? 0) - (profile?.spentCoins ?? 0));
+      }
 
-        const remoteAchievements = normalizeAchievementsRecord(profile?.achievements);
-        achProgress = mergeAchievementProgressMaps(achProgress, remoteAchievements);
+      await backfillStreakFromAttempts(scope);
+      const streakState = await loadStreakState(scope);
+      const metrics = getStreakMetrics(streakState);
+      setStreak(metrics.dates);
+      setCurrentStreak(metrics.currentStreak);
+      setLongestStreak(metrics.longestStreak);
 
+      if (achievementUserId) {
+        achProgress = await syncAchievementsFromGameplay(achievementUserId, {
+          remoteAchievements: profile ? normalizeAchievementsRecord(profile.achievements) : undefined,
+          userLevel: profile ? calculateLevel(profile.xp ?? 0) : undefined,
+          currentStreak: metrics.currentStreak,
+        });
+      }
+
+      if (accountUserId) {
         const merged = mergeAchievements(achProgress);
         setAchievements(merged);
         setCompletedCount(merged.filter((m) => m.status === 'completed').length);
@@ -146,15 +164,8 @@ export const useGamification = (scope: StreakScope | undefined) => {
         setCompletedCount(merged.filter((m) => m.status === 'completed').length);
       }
 
-      await backfillStreakFromAttempts(scope);
-      const streakState = await loadStreakState(scope);
-      const metrics = getStreakMetrics(streakState);
-      setStreak(metrics.dates);
-      setCurrentStreak(metrics.currentStreak);
-      setLongestStreak(metrics.longestStreak);
-
       if (accountUserId && metrics.currentStreak > 0) {
-        await syncStreakAchievement(accountUserId, metrics.currentStreak);
+        void syncStreakAchievement(accountUserId, metrics.currentStreak);
       }
     } catch (err) {
       console.error('Error loading gamification:', err);
@@ -162,6 +173,35 @@ export const useGamification = (scope: StreakScope | undefined) => {
       setLoading(false);
     }
   }, [scope, accountUserId, isDemoScope, syncStreakAchievement]);
+
+  useEffect(() => {
+    if (!scope) return;
+
+    const achievementUserId = accountUserId ?? (isDemoScope ? DEMO_USER_ID : null);
+
+    const streakState = loadLocalStreakState(scope);
+    const metrics = getStreakMetrics(streakState);
+    setStreak(metrics.dates);
+    setCurrentStreak(metrics.currentStreak);
+    setLongestStreak(metrics.longestStreak);
+
+    if (isDemoScope) {
+      setCoins(getDemoCoins());
+      const demoXP = getDemoTotalXP();
+      setTotalXP(demoXP);
+      setLevel(calculateLevel(demoXP));
+    }
+
+    if (!achievementUserId) return;
+
+    const cached = readAchievementProgress(achievementUserId);
+    if (Object.keys(cached).length === 0) return;
+
+    const merged = mergeAchievements(cached);
+    setAchievements(merged);
+    setCompletedCount(merged.filter((m) => m.status === 'completed').length);
+    setLoading(false);
+  }, [scope, accountUserId, isDemoScope]);
 
   useEffect(() => {
     loadData();

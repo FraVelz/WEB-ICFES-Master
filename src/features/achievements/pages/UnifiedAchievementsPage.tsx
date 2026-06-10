@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import { useAuth } from '@/features/auth/context/AuthContext';
 import { useGamification, useGamificationScope } from '@/hooks/gamification';
 import { AchievementsList } from '../components/AchievementsList';
 import { Icon } from '@/shared/components/Icon';
@@ -9,10 +10,13 @@ import { LoadingState } from '@/shared/components/LoadingState';
 import { PAGE_SHELL_CLASS } from '@/shared/constants/pageShell';
 
 export const UnifiedAchievementsPage = () => {
+  const { loading: authLoading } = useAuth();
   const scope = useGamificationScope();
   const { achievements, loading, totalXP, level, completedCount } = useGamification(scope);
 
-  if (loading) {
+  const showLoading = authLoading || (loading && achievements.length === 0);
+
+  if (showLoading) {
     return <LoadingState label="Cargando logros..." layout="fill" />;
   }
 

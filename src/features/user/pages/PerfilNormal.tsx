@@ -37,6 +37,7 @@ export const PerfilNormal = () => {
     achievements,
     coursesProgress,
     loading,
+    gamificationLoading,
     studyTimeMinutes,
   } = useUserProfile();
   const displayProfileImage = useResolvedProfileAvatar(profileImage);
@@ -105,6 +106,7 @@ export const PerfilNormal = () => {
         <div className="lg:col-span-1">
           <ProfileAchievementsSection
             achievements={achievements}
+            loading={gamificationLoading}
             showViewAll
             onViewAll={() => router.push('/logros')}
           />
