@@ -123,6 +123,26 @@ export function TipsCategoriesSections() {
           description="Revisa sede, horario, documentos y transporte el día anterior. Llegar con tiempo reduce el estrés."
         />
         <TipCard
+          title="Prepárate para la jornada completa"
+          description="El ICFES son varias horas seguidas de concentración y resolución de problemas. Entrenar tu resistencia mental y saber manejar el estrés es tan importante como dominar los contenidos."
+        />
+        <TipCard
+          title="Lleva un reloj analógico tradicional"
+          description="Si el reglamento lo permite, un reloj analógico te ayuda a controlar el tiempo sin distracciones de pantallas. Practica con él en simulacros para acostumbrarte a revisarlo sin perder el ritmo."
+        />
+        <TipCard
+          title="Ritmo: unos 2 min 8 s por pregunta"
+          description="Como referencia, apunta a unos 2 minutos y 8 segundos por pregunta. No es regla fija, pero te sirve para detectar si te estás quedando atrás o adelantado en cada bloque."
+        />
+        <TipCard
+          title="Organiza descansos y pausas"
+          description="Entre bloques o periodos, aprovecha los descansos autorizados: estírate, respira, ve al baño con tiempo. Distribuye bien el tiempo para responder cada pregunta sin apresurarte al final."
+        />
+        <TipCard
+          title="Prepárate para el entorno, no solo el contenido"
+          description="A mayor ambición, mayor preparación: no basta con saber la materia. Simula la duración, el silencio, las hojas de respuesta y la presión del día real para llegar acostumbrado a la situación de evaluación."
+        />
+        <TipCard
           title="Desayuno ligero y agua"
           description="Evita comidas pesadas. Lleva un snack permitido si lo autorizan. Mantente hidratado durante la jornada."
         />
