@@ -86,9 +86,9 @@ export function mergeAchievementProgressMaps(
       .filter(Boolean)
       .map((date) => new Date(date as string).getTime());
     const unlockedAt = unlocked
-      ? (unlockedTimestamps.length > 0
-          ? new Date(Math.min(...unlockedTimestamps)).toISOString()
-          : new Date().toISOString())
+      ? unlockedTimestamps.length > 0
+        ? new Date(Math.min(...unlockedTimestamps)).toISOString()
+        : new Date().toISOString()
       : null;
 
     merged[achievement.id] = { current: capped, unlocked, unlockedAt };
@@ -139,10 +139,7 @@ function buildProgressFromGameplay(
   return next;
 }
 
-async function awardAchievementUnlock(
-  userId: string,
-  achievement: (typeof ACHIEVEMENTS_DATA)[number]
-): Promise<void> {
+async function awardAchievementUnlock(userId: string, achievement: (typeof ACHIEVEMENTS_DATA)[number]): Promise<void> {
   if (achievement.coinsReward > 0) {
     await addCoinsBalance(userId, achievement.coinsReward, `achievement_${achievement.id}`);
   }

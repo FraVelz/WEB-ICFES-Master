@@ -118,13 +118,13 @@ export const NEW_AREA_QUESTIONS = [
 
 ## Components (repo convention)
 
-| Scope             | Components                                               |
-| ----------------- | -------------------------------------------------------- |
-| **shared/**       | `Icon`, `MascotaCircle`, `ModalOverlay`                  |
-| **home/**         | `Footer` (landing)                                       |
-| **achievements/** | `AchievementsList` |
-| **user/**         | `AvatarImage`, `ProfileComponents`                       |
-| **Global shell**  | `src/components/DashboardHeader/`                        |
+| Scope             | Components                              |
+| ----------------- | --------------------------------------- |
+| **shared/**       | `Icon`, `MascotaCircle`, `ModalOverlay` |
+| **home/**         | `Footer` (landing)                      |
+| **achievements/** | `AchievementsList`                      |
+| **user/**         | `AvatarImage`, `ProfileComponents`      |
+| **Global shell**  | `src/components/DashboardHeader/`       |
 
 Cross-feature hooks: `src/hooks/gamification/` (`useGamification`, `useLeaderboard`). Achievement catalog:
 `src/shared/constants/achievementsData.ts`.

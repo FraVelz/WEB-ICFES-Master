@@ -4,10 +4,7 @@ import { useMemo, useState } from 'react';
 import { Icon } from '@/shared/components/Icon';
 import { cn } from '@/utils/cn';
 import { getInfographicPdfUrl, isInfographicStorageConfigured } from '@/shared/utils/infographicAssetUrl';
-import {
-  ICFES_INFOGRAPHIC_GROUPS,
-  type IcfesInfographic,
-} from './icfesInfographicItems';
+import { ICFES_INFOGRAPHIC_GROUPS, type IcfesInfographic } from './icfesInfographicItems';
 import { PdfViewerModal } from './PdfViewerModal';
 
 type ActivePdf = {
@@ -26,9 +23,9 @@ export function IcfesInfographicsSection() {
           group,
           item,
           url: getInfographicPdfUrl(item),
-        })),
+        }))
       ),
-    [],
+    []
   );
 
   const openPdf = (item: IcfesInfographic) => {
@@ -47,15 +44,15 @@ export function IcfesInfographicsSection() {
               Infografías oficiales Saber 11°
             </h2>
             <p className="text-on-surface-muted mt-1 text-sm leading-relaxed">
-              Estas infografías oficiales ayudan a docentes, estudiantes y familias a familiarizarse con el examen
-              Saber 11° y las pruebas que lo componen.
+              Estas infografías oficiales ayudan a docentes, estudiantes y familias a familiarizarse con el examen Saber
+              11° y las pruebas que lo componen.
             </p>
           </div>
         </div>
 
         {!storageConfigured && (
           <div
-            className="border-amber-500/30 bg-amber-500/10 text-on-surface rounded-2xl border px-4 py-3 text-sm leading-relaxed"
+            className="text-on-surface rounded-2xl border border-amber-500/30 bg-amber-500/10 px-4 py-3 text-sm leading-relaxed"
             role="status"
           >
             Configura R2 en <code className="text-amber-200">.env.local</code>: credenciales del servidor (
@@ -84,10 +81,10 @@ export function IcfesInfographicsSection() {
                         'transition-all duration-200',
                         'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none',
                         'focus-visible:ring-offset-slate-950',
-                        'enabled:cursor-pointer enabled:hover:border-app-ring/50 enabled:hover:bg-surface-elevated',
+                        'enabled:hover:border-app-ring/50 enabled:hover:bg-surface-elevated enabled:cursor-pointer',
                         'enabled:hover:shadow-app-ring/10 enabled:hover:-translate-y-0.5 enabled:hover:shadow-md',
                         'enabled:active:translate-y-0 enabled:active:shadow-sm',
-                        'disabled:cursor-not-allowed disabled:opacity-50',
+                        'disabled:cursor-not-allowed disabled:opacity-50'
                       )}
                     >
                       <div className="mb-2 flex items-start gap-2">
@@ -111,12 +108,7 @@ export function IcfesInfographicsSection() {
       </section>
 
       {activePdf && (
-        <PdfViewerModal
-          isOpen
-          title={activePdf.title}
-          url={activePdf.url}
-          onClose={() => setActivePdf(null)}
-        />
+        <PdfViewerModal isOpen title={activePdf.title} url={activePdf.url} onClose={() => setActivePdf(null)} />
       )}
     </>
   );

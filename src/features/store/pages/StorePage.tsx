@@ -138,11 +138,7 @@ export function StorePage() {
         <div className="flex flex-1 items-center justify-center gap-3">
           <h1 className="text-on-surface text-xl font-bold lg:text-2xl">Tienda</h1>
           <div className="flex items-center gap-2 rounded-full border border-amber-600/35 bg-amber-100 px-3 py-1.5 dark:border-yellow-500/30 dark:bg-yellow-500/10">
-            <Icon
-              name="coins"
-              size="md"
-              className="text-sm text-amber-800 lg:text-base dark:text-yellow-400"
-            />
+            <Icon name="coins" size="md" className="text-sm text-amber-800 lg:text-base dark:text-yellow-400" />
             <span className="text-sm font-bold text-amber-800 lg:text-base dark:text-yellow-400">
               {loading ? '…' : coins}
             </span>
@@ -178,7 +174,9 @@ export function StorePage() {
                   <Icon name="bolt" className="text-orange-700 dark:text-orange-400" />
                   <div>
                     <p className="text-sm font-bold text-orange-900 dark:text-orange-300">Doble XP activo</p>
-                    <p className="text-on-surface-muted text-xs">Ganas el doble de experiencia mientras dure el efecto.</p>
+                    <p className="text-on-surface-muted text-xs">
+                      Ganas el doble de experiencia mientras dure el efecto.
+                    </p>
                   </div>
                 </div>
                 <span className="font-mono text-lg font-bold text-orange-800 tabular-nums dark:text-orange-300">
@@ -249,8 +247,7 @@ export function StorePage() {
               !!selectedItem &&
               coins >= selectedItem.price &&
               (selectedItem.id !== STREAK_SHIELD_ITEM_ID || streakShieldCount < MAX_STREAK_SHIELDS),
-            isPurchased:
-              !!selectedItem && selectedItem.category !== 'powerup' && hasItem(selectedItem.id),
+            isPurchased: !!selectedItem && selectedItem.category !== 'powerup' && hasItem(selectedItem.id),
             isEquipped: !!selectedItem && isEquipped(selectedItem.id),
           }}
           coins={coins}

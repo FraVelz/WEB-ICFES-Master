@@ -10,7 +10,12 @@ import {
   rebuildUserProgress,
 } from '@/services/exam/examSyncService';
 import type { LocalAttemptRecord } from '@/services/demo/mapLocalAttemptToExamResult';
-import { getStoredExams, getStoredPractices, clearExamsOnly, type AttemptWithQuestions } from '@/storage/progressStorage';
+import {
+  getStoredExams,
+  getStoredPractices,
+  clearExamsOnly,
+  type AttemptWithQuestions,
+} from '@/storage/progressStorage';
 import { isSupabaseConfigured } from './supabaseConfigured';
 
 function shouldSyncExamsWithSupabase(userId: string | undefined): userId is string {
@@ -26,9 +31,7 @@ export async function getExamById(examId: string, userId: string | undefined): P
   }
   const exams = getStoredExams();
   const practices = getStoredPractices();
-  return (
-    [...exams, ...practices].find((e: AttemptWithQuestions) => String(e.id) === examId) ?? null
-  );
+  return [...exams, ...practices].find((e: AttemptWithQuestions) => String(e.id) === examId) ?? null;
 }
 
 export async function resetUserExams(userId: string | undefined): Promise<void> {

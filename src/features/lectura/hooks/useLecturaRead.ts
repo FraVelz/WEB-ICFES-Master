@@ -46,10 +46,7 @@ export function useLecturaRead() {
     return () => window.removeEventListener(LECTURA_READ_CHANGE_EVENT, onChange);
   }, [refresh, scopeId]);
 
-  const isRead = useCallback(
-    (sectionId: LecturaSectionId) => readSections.includes(sectionId),
-    [readSections]
-  );
+  const isRead = useCallback((sectionId: LecturaSectionId) => readSections.includes(sectionId), [readSections]);
 
   const markAsRead = useCallback(
     (sectionId: LecturaSectionId) => {

@@ -85,12 +85,19 @@ export function PublicProfileErrorState({ errorCode, userId, isOwnProfile }: Pub
         )}
 
         <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:justify-center">
-          <button type="button" onClick={() => router.push('/')} className={cn(buttonClass, 'bg-app-accent text-white')}>
+          <button
+            type="button"
+            onClick={() => router.push('/')}
+            className={cn(buttonClass, 'bg-app-accent text-white')}
+          >
             <Icon name="home" />
             Ir al inicio
           </button>
           {isOwnProfile ? (
-            <Link href="/perfil" className={cn(buttonClass, 'border-surface-border text-on-surface border bg-transparent')}>
+            <Link
+              href="/perfil"
+              className={cn(buttonClass, 'border-surface-border text-on-surface border bg-transparent')}
+            >
               <Icon name="circle-user" />
               Mi perfil
             </Link>

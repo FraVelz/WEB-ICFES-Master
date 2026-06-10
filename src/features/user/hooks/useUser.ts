@@ -24,7 +24,6 @@ function toUserProfile(data: MappedUser): UserProfile {
     email: data.email,
     bio: data.bio,
     profileImage: data.profileImage,
-    coinsBalance: data.coinsBalance,
     createdAt: data.createdAt,
     updatedAt: data.updatedAt,
   };

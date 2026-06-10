@@ -39,15 +39,9 @@ export function ShopItemPreview({ item, variant = 'card', className }: ShopItemP
         )}
       >
         {item.image ? (
-          <Image
-            src={item.image}
-            alt={item.name}
-            fill
-            sizes={IMAGE_SIZES[variant]}
-            className="object-cover"
-          />
+          <Image src={item.image} alt={item.name} fill sizes={IMAGE_SIZES[variant]} className="object-cover" />
         ) : (
-          <Icon name={item.icon} className="text-4xl text-on-surface" />
+          <Icon name={item.icon} className="text-on-surface text-4xl" />
         )}
       </div>
     </div>

@@ -47,7 +47,9 @@ export default function PrivacidadPage() {
             </ul>
             <div className="border-app-ring/40 bg-app-ring/10 mb-6 rounded-lg border p-4">
               <p className="text-on-surface">
-                <strong className="text-app-accent-strong">ICFES Master almacena datos localmente en tu dispositivo.</strong>{' '}
+                <strong className="text-app-accent-strong">
+                  ICFES Master almacena datos localmente en tu dispositivo.
+                </strong>{' '}
                 En futuras versiones se implementará sincronización en la nube.
               </p>
             </div>
@@ -131,7 +133,9 @@ export default function PrivacidadPage() {
 
           <div>
             <h2 className="text-app-accent mt-8 mb-4 text-2xl font-bold">8. Cambios en esta política</h2>
-            <p className="text-on-surface-muted mb-6">Nos reservamos el derecho de actualizar esta Política de Privacidad.</p>
+            <p className="text-on-surface-muted mb-6">
+              Nos reservamos el derecho de actualizar esta Política de Privacidad.
+            </p>
           </div>
 
           <div className="border-surface-border mt-12 flex justify-center border-t pt-8">

@@ -65,23 +65,23 @@ features/feature-name/
 
 ### Current features
 
-| Feature           | Responsibility                                                                                             |
-| ----------------- | ---------------------------------------------------------------------------------------------------------- |
-| **auth/**         | Login, signup, OAuth, onboarding, `AuthContext`                                                            |
-| **home/**         | Landing, marketing sections, donations                                                                     |
-| **learning/**     | Roadmap and AI chat (`roadmap/`, `shell/`, `context/`)                                                     |
-| **exam/**         | Practice, full exam, ranking; data in `exam/data/`                                                         |
-| **user/**         | Profile, settings, hooks `useProgress`, `useUserData`                                                      |
+| Feature           | Responsibility                                                                           |
+| ----------------- | ---------------------------------------------------------------------------------------- |
+| **auth/**         | Login, signup, OAuth, onboarding, `AuthContext`                                          |
+| **home/**         | Landing, marketing sections, donations                                                   |
+| **learning/**     | Roadmap and AI chat (`roadmap/`, `shell/`, `context/`)                                   |
+| **exam/**         | Practice, full exam, ranking; data in `exam/data/`                                       |
+| **user/**         | Profile, settings, hooks `useProgress`, `useUserData`                                    |
 | **achievements/** | Badges, achievements UI (route `/logros/`; cross-feature hooks in `hooks/gamification/`) |
-| **store/**        | Virtual shop (UI), purchase modals                                                                         |
+| **store/**        | Virtual shop (UI), purchase modals                                                       |
 
 ### Three different “store” names
 
-| Path              | What it is                                                    |
-| ----------------- | ------------------------------------------------------------- |
-| `features/store/` | Shop components and hooks                                     |
-| `services/store/` | Plan logic (`SubscriptionPlanService`, `PlanScheduleService`) |
-| `store/` (Zustand) | UI state: demo mode, selected plan                                |
+| Path               | What it is                                                    |
+| ------------------ | ------------------------------------------------------------- |
+| `features/store/`  | Shop components and hooks                                     |
+| `services/store/`  | Plan logic (`SubscriptionPlanService`, `PlanScheduleService`) |
+| `store/` (Zustand) | UI state: demo mode, selected plan                            |
 
 ## Shared layer (`src/shared/`)
 

@@ -66,23 +66,23 @@ features/nombre-feature/
 
 ### Features actuales
 
-| Feature           | Responsabilidad                                                                                        |
-| ----------------- | ------------------------------------------------------------------------------------------------------ |
-| **auth/**         | Login, registro, OAuth, onboarding, `AuthContext`                                                      |
-| **home/**         | Landing, secciones marketing, donaciones                                                               |
-| **learning/**     | Roadmap y chat IA (`roadmap/`, `shell/`, `context/`)                                                   |
-| **exam/**         | Práctica, examen completo, clasificatoria; datos en `exam/data/`                                       |
-| **user/**         | Perfil, configuración, hooks `useProgress`, `useUserData`                                              |
+| Feature           | Responsabilidad                                                                      |
+| ----------------- | ------------------------------------------------------------------------------------ |
+| **auth/**         | Login, registro, OAuth, onboarding, `AuthContext`                                    |
+| **home/**         | Landing, secciones marketing, donaciones                                             |
+| **learning/**     | Roadmap y chat IA (`roadmap/`, `shell/`, `context/`)                                 |
+| **exam/**         | Práctica, examen completo, clasificatoria; datos en `exam/data/`                     |
+| **user/**         | Perfil, configuración, hooks `useProgress`, `useUserData`                            |
 | **achievements/** | Badges, UI de logros (ruta `/logros/`; hooks transversales en `hooks/gamification/`) |
-| **store/**        | Tienda virtual (UI), modales de compra                                                                 |
+| **store/**        | Tienda virtual (UI), modales de compra                                               |
 
 ### Tres nombres “store”
 
-| Ruta              | Qué es                                                              |
-| ----------------- | ------------------------------------------------------------------- |
-| `features/store/` | Componentes y hooks de la tienda                                    |
-| `services/store/` | Lógica de planes (`SubscriptionPlanService`, `PlanScheduleService`) |
-| `store/` (Zustand) | Estado UI: modo demo, plan seleccionado                           |
+| Ruta               | Qué es                                                              |
+| ------------------ | ------------------------------------------------------------------- |
+| `features/store/`  | Componentes y hooks de la tienda                                    |
+| `services/store/`  | Lógica de planes (`SubscriptionPlanService`, `PlanScheduleService`) |
+| `store/` (Zustand) | Estado UI: modo demo, plan seleccionado                             |
 
 ## Capa compartida (`src/shared/`)
 

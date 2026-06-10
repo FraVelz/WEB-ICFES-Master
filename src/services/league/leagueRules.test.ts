@@ -1,9 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import {
-  getDemotionIndices,
-  getEffectiveLeagueRules,
-  getPromotionIndices,
-} from './leagueRules';
+import { getDemotionIndices, getEffectiveLeagueRules, getPromotionIndices } from './leagueRules';
 
 describe('leagueRules', () => {
   it('novato no tiene descensos', () => {

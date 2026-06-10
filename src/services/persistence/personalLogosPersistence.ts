@@ -11,11 +11,7 @@ import {
   SHOP_INVENTORY_CHANGE_EVENT,
 } from './shopInventoryPersistence';
 import type { ShopInventoryState } from '@/services/supabase/GamificationSupabaseService';
-import {
-  createPersonalLogoId,
-  isPersonalLogoId,
-  type PersonalLogo,
-} from '@/features/user/types/personalLogo.types';
+import { createPersonalLogoId, isPersonalLogoId, type PersonalLogo } from '@/features/user/types/personalLogo.types';
 
 export const PERSONAL_LOGOS_CHANGE_EVENT = 'icfes:personal-logos-changed';
 
@@ -64,11 +60,7 @@ export async function getPersonalLogos(userId: string): Promise<PersonalLogo[]> 
   return GamificationSupabaseService.getPersonalLogos(userId);
 }
 
-export async function addPersonalLogo(
-  userId: string,
-  image: string,
-  label: string
-): Promise<PersonalLogo[]> {
+export async function addPersonalLogo(userId: string, image: string, label: string): Promise<PersonalLogo[]> {
   const logo: PersonalLogo = {
     id: createPersonalLogoId(),
     image,
@@ -92,10 +84,7 @@ export async function addPersonalLogo(
   return logos;
 }
 
-export async function removePersonalLogo(
-  userId: string,
-  logoId: string
-): Promise<PersonalLogosChangeDetail> {
+export async function removePersonalLogo(userId: string, logoId: string): Promise<PersonalLogosChangeDetail> {
   if (isDemoUserId(userId)) {
     const shopState = await getShopInventoryState(userId);
     const logos = readDemoPersonalLogos().filter((logo) => logo.id !== logoId);
@@ -114,11 +103,7 @@ export async function removePersonalLogo(
   return result;
 }
 
-export async function canEquipLogo(
-  userId: string,
-  logoId: string,
-  shopInventory: string[]
-): Promise<boolean> {
+export async function canEquipLogo(userId: string, logoId: string, shopInventory: string[]): Promise<boolean> {
   if (isPersonalLogoId(logoId)) {
     const logos = await getPersonalLogos(userId);
     return logos.some((logo) => logo.id === logoId);

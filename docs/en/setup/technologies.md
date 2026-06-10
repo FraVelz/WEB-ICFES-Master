@@ -8,12 +8,12 @@ This document describes the technologies used in **WEB-ICFES Master**, for both 
 
 ### Framework and UI
 
-| Technology        | Version | Description                                             |
-| ----------------- | ------- | ------------------------------------------------------- |
-| **Next.js**       | 15.1    | React framework with App Router, SSR, and server render |
-| **React**         | 19.2    | UI library                                              |
-| **TypeScript**    | 5.9     | Static typing (new code and most of the repo in TS)     |
-| **Zustand**       | 5.0     | Global UI state (`uiSession`: demo, plan)               |
+| Technology     | Version | Description                                             |
+| -------------- | ------- | ------------------------------------------------------- |
+| **Next.js**    | 15.1    | React framework with App Router, SSR, and server render |
+| **React**      | 19.2    | UI library                                              |
+| **TypeScript** | 5.9     | Static typing (new code and most of the repo in TS)     |
+| **Zustand**    | 5.0     | Global UI state (`uiSession`: demo, plan)               |
 
 ### Styles and animation
 

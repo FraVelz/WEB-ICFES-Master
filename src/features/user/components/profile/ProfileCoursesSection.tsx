@@ -13,11 +13,11 @@ export function ProfileCoursesSection({ coursesProgress, emptyMessage, onStartLe
   return (
     <div
       className={cn(
-        'rounded-2xl border border-surface-border bg-surface-elevated/80 p-6 shadow-sm',
+        'border-surface-border bg-surface-elevated/80 rounded-2xl border p-6 shadow-sm',
         'dark:border-slate-800 dark:bg-slate-900/50'
       )}
     >
-      <h2 className="mb-6 flex items-center gap-3 text-xl font-bold text-on-surface">
+      <h2 className="text-on-surface mb-6 flex items-center gap-3 text-xl font-bold">
         <Icon name="book-open" className="text-purple-600 dark:text-purple-400" />
         {onStartLearning ? 'Mis Cursos' : 'Progreso en Cursos'}
       </h2>
@@ -27,10 +27,10 @@ export function ProfileCoursesSection({ coursesProgress, emptyMessage, onStartLe
           entries.map(([courseId, progress]) => (
             <div key={courseId} className="group">
               <div className="mb-2 flex justify-between">
-                <span className="font-medium text-on-surface capitalize">{courseId.replace('-', ' ')}</span>
+                <span className="text-on-surface font-medium capitalize">{courseId.replace('-', ' ')}</span>
                 <span className="font-bold text-purple-700 dark:text-purple-400">{Number(progress)}%</span>
               </div>
-              <div className="h-2.5 overflow-hidden rounded-full bg-surface-via dark:bg-slate-800">
+              <div className="bg-surface-via h-2.5 overflow-hidden rounded-full dark:bg-slate-800">
                 <div
                   className={cn(
                     'h-full rounded-full bg-purple-600 transition-all duration-500 dark:bg-purple-500',
@@ -42,7 +42,7 @@ export function ProfileCoursesSection({ coursesProgress, emptyMessage, onStartLe
             </div>
           ))
         ) : (
-          <div className="py-8 text-center text-on-surface-muted">
+          <div className="text-on-surface-muted py-8 text-center">
             <p>{emptyMessage}</p>
             {onStartLearning && (
               <button

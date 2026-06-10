@@ -97,7 +97,7 @@ describe('achievementProgressService', () => {
     );
     expect(merged.practice_1?.unlocked).toBe(true);
     expect(merged.practice_1?.current).toBe(1);
-    expect(merged.practice_1?.unlockedAt).toBe('2026-01-01');
+    expect(merged.practice_1?.unlockedAt).toBe('2026-01-01T00:00:00.000Z');
   });
 
   it('reconcileAchievementsWithoutRewards no otorga monedas por logros ya migrados', async () => {

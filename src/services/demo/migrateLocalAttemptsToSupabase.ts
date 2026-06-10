@@ -22,7 +22,7 @@ export async function migrateLocalAttemptsToSupabase(userId: string): Promise<nu
       }
     })
   );
-  const inserted = results.reduce((total, count) => total + count, 0);
+  const inserted = results.reduce<number>((total, count) => total + count, 0);
 
   if (attempts.length > 0) {
     await rebuildUserProgress(userId);

@@ -4,8 +4,7 @@
 import GamificationSupabaseService from '@/services/supabase/GamificationSupabaseService';
 
 export const gamificationPersistence = {
-  addXP: (userId: string, points: number, reason?: string) =>
-    GamificationSupabaseService.addXP(userId, points, reason),
+  addXP: (userId: string, points: number, reason?: string) => GamificationSupabaseService.addXP(userId, points, reason),
 
   addCoins: (userId: string, amount: number, reason?: string) =>
     GamificationSupabaseService.addCoins(userId, amount, reason),

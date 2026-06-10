@@ -201,11 +201,7 @@ export async function processStudyTimeActivity(userId: string, now = Date.now())
   const previousLongest = getStudyTimeStats(userId).longestSessionMinutes;
   let state = loadStudyTimeState(userId);
 
-  if (
-    state.sessionStartedAt &&
-    state.lastActivityAt &&
-    now - state.lastActivityAt > IDLE_MS
-  ) {
+  if (state.sessionStartedAt && state.lastActivityAt && now - state.lastActivityAt > IDLE_MS) {
     state = closeSession(state, state.lastActivityAt + IDLE_MS);
   }
 

@@ -13,13 +13,9 @@ import { buildLevelAssessmentUrl } from '@/features/auth/constants/skillLevelRou
 import { mapSupabaseAuthError } from '@/features/auth/utils/mapSupabaseAuthError';
 import { resolveLevelAssessmentRedirect } from '@/services/persistence/skillLevelPersistence';
 
-async function redirectAfterAuth(
-  userId: string,
-  navigate: (path: string) => void
-): Promise<void> {
+async function redirectAfterAuth(userId: string, navigate: (path: string) => void): Promise<void> {
   const redirect =
-    (await resolveLevelAssessmentRedirect({ demoMode: false, userId }, userId)) ??
-    buildLevelAssessmentUrl('account');
+    (await resolveLevelAssessmentRedirect({ demoMode: false, userId }, userId)) ?? buildLevelAssessmentUrl('account');
   navigate(redirect);
 }
 

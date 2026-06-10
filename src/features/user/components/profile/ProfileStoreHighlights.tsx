@@ -24,11 +24,11 @@ export function ProfileStoreHighlights({
   return (
     <div
       className={cn(
-        'rounded-2xl border border-surface-border bg-surface-elevated/80 p-6',
+        'border-surface-border bg-surface-elevated/80 rounded-2xl border p-6',
         'shadow-sm dark:border-slate-800 dark:bg-slate-900/50'
       )}
     >
-      <h2 className="mb-6 flex items-center gap-3 text-xl font-bold text-on-surface">
+      <h2 className="text-on-surface mb-6 flex items-center gap-3 text-xl font-bold">
         <Icon name="shopping-bag" className="text-amber-600 dark:text-yellow-400" />
         {title}
       </h2>
@@ -45,7 +45,7 @@ export function ProfileStoreHighlights({
                   item.category === 'badge'
                     ? 'border-amber-500/30 bg-amber-50/80 dark:border-yellow-500/25 dark:bg-yellow-500/5'
                     : 'border-surface-border bg-surface-via/60 dark:border-slate-700 dark:bg-slate-800/40',
-                  item.isEquipped && 'ring-2 ring-app-ring/40'
+                  item.isEquipped && 'ring-app-ring/40 ring-2'
                 )}
               >
                 <div className="shrink-0">
@@ -64,21 +64,21 @@ export function ProfileStoreHighlights({
                 </div>
                 <div className="min-w-0 flex-1">
                   <div className="flex flex-wrap items-center gap-2">
-                    <p className="truncate font-semibold text-on-surface">{item.name}</p>
+                    <p className="text-on-surface truncate font-semibold">{item.name}</p>
                     {item.isEquipped && (
-                      <span className="rounded-full border border-app-ring/30 bg-app-ring/10 px-2 py-0.5 text-[10px] font-bold text-app-accent-strong dark:text-app-accent">
+                      <span className="border-app-ring/30 bg-app-ring/10 text-app-accent-strong dark:text-app-accent rounded-full border px-2 py-0.5 text-[10px] font-bold">
                         Equipado
                       </span>
                     )}
                   </div>
-                  <p className="mt-0.5 line-clamp-2 text-sm text-on-surface-muted">{item.description}</p>
+                  <p className="text-on-surface-muted mt-0.5 line-clamp-2 text-sm">{item.description}</p>
                 </div>
               </div>
             );
           })}
         </div>
       ) : (
-        <div className="py-6 text-center text-on-surface-muted">
+        <div className="text-on-surface-muted py-6 text-center">
           <p>{emptyMessage}</p>
           {onGoToStore && (
             <button

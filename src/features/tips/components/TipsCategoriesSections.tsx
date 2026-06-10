@@ -84,7 +84,7 @@ export function TipsCategoriesSections() {
       >
         <TipCard
           title="Metas pequeñas y alcanzables"
-          description='En lugar de “sacar 400”, apunta a “completar 3 lecciones hoy” o “mantener la racha 7 días”. Las metas pequeñas generan momentum.'
+          description="En lugar de “sacar 400”, apunta a “completar 3 lecciones hoy” o “mantener la racha 7 días”. Las metas pequeñas generan momentum."
         />
         <TipCard
           title="Celebra los avances"

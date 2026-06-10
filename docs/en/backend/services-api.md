@@ -61,13 +61,13 @@ The generic `BaseService` and `SupabaseService` classes under `src/services/` we
 
 Services that connect directly to PostgreSQL tables in Supabase:
 
-| Service                         | Table               | Description                                        |
-| ------------------------------- | ------------------- | -------------------------------------------------- |
+| Service                         | Table               | Description                                       |
+| ------------------------------- | ------------------- | ------------------------------------------------- |
 | **UserSupabaseService**         | `users`             | Profile, username, bio, profileImage, skill_level |
-| **ProgressSupabaseService**     | `user_progress`     | Aggregates rebuilt from `exam_results`              |
+| **ProgressSupabaseService**     | `user_progress`     | Aggregates rebuilt from `exam_results`            |
 | **GamificationSupabaseService** | `user_gamification` | xp, coins, streak, achievements                   |
 | **ExamSupabaseService**         | `exam_results`      | Each exam/practice attempt (synced on save)       |
-| **LearningSupabaseService**     | `learning_content`  | Lessons by area, content, quizzes                  |
+| **LearningSupabaseService**     | `learning_content`  | Lessons by area, content, quizzes                 |
 
 ### 4. **`gamificationPersistence`**
 
@@ -139,18 +139,18 @@ const { exam, getUserExams, resetUserExams, refresh } = useExam(examId);
 
 ### `users`
 
-| Column        | Type        | Description             |
-| ------------- | ----------- | ----------------------- |
-| id            | uuid        | User ID (Supabase Auth) |
-| email         | text        | Email                   |
-| display_name  | text        | Display name            |
-| username      | text        | Username                |
-| bio           | text        | Biography               |
-| profile_image | text        | URL or base64 of photo  |
-| skill_level   | text        | Prep level (initial assessment) |
-| level_assessment_completed_at | timestamptz | Initial assessment date |
-| created_at    | timestamptz | Creation date           |
-| updated_at    | timestamptz | Update date             |
+| Column                        | Type        | Description                     |
+| ----------------------------- | ----------- | ------------------------------- |
+| id                            | uuid        | User ID (Supabase Auth)         |
+| email                         | text        | Email                           |
+| display_name                  | text        | Display name                    |
+| username                      | text        | Username                        |
+| bio                           | text        | Biography                       |
+| profile_image                 | text        | URL or base64 of photo          |
+| skill_level                   | text        | Prep level (initial assessment) |
+| level_assessment_completed_at | timestamptz | Initial assessment date         |
+| created_at                    | timestamptz | Creation date                   |
+| updated_at                    | timestamptz | Update date                     |
 
 ### `user_progress`
 
@@ -165,17 +165,17 @@ const { exam, getUserExams, resetUserExams, refresh } = useExam(examId);
 
 ### `user_gamification`
 
-| Column        | Type  | Description          |
-| ------------- | ----- | -------------------- |
-| user_id       | uuid  | FK to users          |
-| xp            | int   | Accumulated XP (level derived client-side via `getLevelInfo`) |
-| total_coins   | int   | Coins earned         |
-| spent_coins   | int   | Coins spent          |
-| streak_dates  | jsonb | Active streak dates  |
-| longest_streak | int  | Longest streak       |
-| achievements  | jsonb | Achievement progress (remote source of truth) |
-| xp_history    | jsonb | XP history           |
-| coins_history | jsonb | Coins history        |
+| Column         | Type  | Description                                                   |
+| -------------- | ----- | ------------------------------------------------------------- |
+| user_id        | uuid  | FK to users                                                   |
+| xp             | int   | Accumulated XP (level derived client-side via `getLevelInfo`) |
+| total_coins    | int   | Coins earned                                                  |
+| spent_coins    | int   | Coins spent                                                   |
+| streak_dates   | jsonb | Active streak dates                                           |
+| longest_streak | int   | Longest streak                                                |
+| achievements   | jsonb | Achievement progress (remote source of truth)                 |
+| xp_history     | jsonb | XP history                                                    |
+| coins_history  | jsonb | Coins history                                                 |
 
 ### `exam_results`
 
@@ -372,10 +372,10 @@ await gamificationPersistence.addXP(userId, 50, 'lesson_quiz_lessonId');
 
 ## Demo vs authenticated account
 
-| Context | Auth | Main persistence |
-| ------- | ---- | ---------------- |
-| Demo (landing) | No account | localStorage (`icfes_*_demo`) |
-| Account | Supabase Auth | PostgreSQL via `*SupabaseService` |
+| Context        | Auth          | Main persistence                  |
+| -------------- | ------------- | --------------------------------- |
+| Demo (landing) | No account    | localStorage (`icfes_*_demo`)     |
+| Account        | Supabase Auth | PostgreSQL via `*SupabaseService` |
 
 Env vars in `.env.local`:
 

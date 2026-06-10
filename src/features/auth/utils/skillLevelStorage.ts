@@ -6,10 +6,7 @@ function scopeKey(scope: string, suffix: string): string {
   return scope === DEMO_SCOPE ? `icfes_${suffix}_demo` : `icfes_${suffix}_${scope}`;
 }
 
-export function resolveAssessmentScope(options: {
-  demoMode: boolean;
-  userId?: string | null;
-}): string {
+export function resolveAssessmentScope(options: { demoMode: boolean; userId?: string | null }): string {
   if (options.demoMode) return DEMO_SCOPE;
   if (options.userId) return options.userId;
   return DEMO_SCOPE;

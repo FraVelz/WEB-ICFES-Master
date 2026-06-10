@@ -3,11 +3,7 @@
  */
 import { AUTH_DEFAULT_REDIRECT } from '@/features/auth/constants/authRoutes';
 import { getPathForSkillLevel } from '@/features/auth/constants/skillLevelRoutes';
-import type {
-  LevelAssessmentContext,
-  LevelAssessmentResult,
-  SkillLevel,
-} from '@/features/auth/types/skillLevel';
+import type { LevelAssessmentContext, LevelAssessmentResult, SkillLevel } from '@/features/auth/types/skillLevel';
 import {
   getStoredSkillLevel,
   isLevelAssessmentDone,
@@ -67,10 +63,7 @@ export async function persistLevelAssessment(
 }
 
 /** ¿Completó la evaluación? Demo: local. Cuenta: local o columna en users. */
-export async function hasCompletedLevelAssessment(
-  scope: string,
-  userId?: string | null
-): Promise<boolean> {
+export async function hasCompletedLevelAssessment(scope: string, userId?: string | null): Promise<boolean> {
   if (isLevelAssessmentDone(scope)) return true;
 
   if (isDemoScope(scope) || !userId || !isSupabaseConfigured()) return false;
@@ -91,10 +84,7 @@ export async function hasCompletedLevelAssessment(
 }
 
 /** Nivel guardado: local primero; cuenta en Supabase si hace falta. */
-export async function loadPersistedSkillLevel(
-  scope: string,
-  userId?: string | null
-): Promise<SkillLevel | null> {
+export async function loadPersistedSkillLevel(scope: string, userId?: string | null): Promise<SkillLevel | null> {
   const local = getStoredSkillLevel(scope);
   if (local) return local;
 

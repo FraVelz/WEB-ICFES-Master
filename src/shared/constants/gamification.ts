@@ -23,9 +23,5 @@ export function countsForWeeklyLeagueXp(reason: string): boolean {
   if (reason.startsWith('achievement_') || reason.startsWith('league_')) {
     return false;
   }
-  return (
-    reason.startsWith('lesson_quiz_') ||
-    reason.startsWith('practice_') ||
-    reason.startsWith('exam_')
-  );
+  return reason.startsWith('lesson_quiz_') || reason.startsWith('practice_') || reason.startsWith('exam_');
 }

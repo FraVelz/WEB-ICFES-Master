@@ -14,6 +14,7 @@ import {
   mergeAchievementProgressMaps,
   normalizeAchievementsRecord,
   syncAchievementsFromGameplay,
+  type AchievementProgressMap,
 } from '@/services/achievements/achievementProgressService';
 import GamificationSupabaseService from '@/services/supabase/GamificationSupabaseService';
 import {
@@ -115,7 +116,7 @@ export const useGamification = (scope: StreakScope | undefined) => {
     setLoading(true);
     try {
       const achievementUserId = accountUserId ?? (isDemoScope ? DEMO_USER_ID : null);
-      let achProgress: Record<string, { current?: number; unlocked?: boolean; unlockedAt?: string | null }> = {};
+      let achProgress: AchievementProgressMap = {};
 
       if (achievementUserId) {
         achProgress = await syncAchievementsFromGameplay(achievementUserId);

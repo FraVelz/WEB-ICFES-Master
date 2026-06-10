@@ -74,7 +74,7 @@ The `@/hooks` barrel re-exports feature hooks for convenience, but **prefer dire
 | --------------------- | ---------------------------------------------------------- |
 | `src/features/store/` | Shop UI (modals, item cards)                               |
 | `src/services/store/` | Plan and subscription services (`SubscriptionPlanService`) |
-| `src/store/`          | Zustand: UI session (`uiSession`: demo, selected plan)        |
+| `src/store/`          | Zustand: UI session (`uiSession`: demo, selected plan)     |
 
 ---
 

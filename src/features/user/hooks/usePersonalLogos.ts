@@ -4,11 +4,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { useAuth } from '@/features/auth/context/AuthContext';
 import { useUiSessionStore } from '@/store/uiSessionStore';
 import { resolveCoinsUserId } from '@/services/demo/demoCoins';
-import {
-  getPersonalLogos,
-  PERSONAL_LOGOS_CHANGE_EVENT,
-  type PersonalLogosChangeDetail,
-} from '@/services/persistence';
+import { getPersonalLogos, PERSONAL_LOGOS_CHANGE_EVENT, type PersonalLogosChangeDetail } from '@/services/persistence';
 import type { PersonalLogo } from '@/features/user/types/personalLogo.types';
 
 export function usePersonalLogos() {

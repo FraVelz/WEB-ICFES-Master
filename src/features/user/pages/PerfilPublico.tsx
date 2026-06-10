@@ -51,7 +51,7 @@ export const PerfilPublico = ({ view }: PerfilPublicoProps) => {
 
   if (!userId || errorCode === 'invalid_id') {
     return (
-      <div className="min-h-dvh bg-linear-to-b from-surface via-surface-via to-surface px-4 py-6">
+      <div className="from-surface via-surface-via to-surface min-h-dvh bg-linear-to-b px-4 py-6">
         <div className="container mx-auto max-w-6xl">
           <PublicProfileChrome />
           <PublicProfileErrorState errorCode="invalid_id" userId={userId} isOwnProfile={isOwnProfile} />
@@ -62,14 +62,10 @@ export const PerfilPublico = ({ view }: PerfilPublicoProps) => {
 
   if (!exists) {
     return (
-      <div className="min-h-dvh bg-linear-to-b from-surface via-surface-via to-surface px-4 py-6">
+      <div className="from-surface via-surface-via to-surface min-h-dvh bg-linear-to-b px-4 py-6">
         <div className="container mx-auto max-w-6xl">
           <PublicProfileChrome />
-          <PublicProfileErrorState
-            errorCode={errorCode ?? 'not_found'}
-            userId={userId}
-            isOwnProfile={isOwnProfile}
-          />
+          <PublicProfileErrorState errorCode={errorCode ?? 'not_found'} userId={userId} isOwnProfile={isOwnProfile} />
         </div>
       </div>
     );
@@ -129,9 +125,11 @@ export const PerfilPublico = ({ view }: PerfilPublicoProps) => {
               type="button"
               onClick={handleReport}
               className={cn(
-                'cursor-pointer rounded-lg border border-surface-border bg-surface-elevated p-2 transition-colors',
+                'border-surface-border bg-surface-elevated cursor-pointer rounded-lg border p-2 transition-colors',
                 'hover:bg-red-50 dark:border-transparent dark:bg-slate-800 dark:hover:bg-red-900/30',
-                reported ? 'text-red-600 dark:text-red-500' : 'text-on-surface-muted hover:text-red-600 dark:hover:text-red-400'
+                reported
+                  ? 'text-red-600 dark:text-red-500'
+                  : 'text-on-surface-muted hover:text-red-600 dark:hover:text-red-400'
               )}
               title="Reportar usuario"
             >

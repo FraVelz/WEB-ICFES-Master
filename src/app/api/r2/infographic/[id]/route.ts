@@ -24,22 +24,21 @@ export async function GET(_request: Request, context: RouteContext) {
   if (!isR2ServerConfigured()) {
     return NextResponse.json(
       {
-        error:
-          'R2 no configurado en el servidor (R2_ENDPOINT, R2_ACCESS_KEY_ID, R2_SECRET_ACCESS_KEY, R2_BUCKET_NAME)',
+        error: 'R2 no configurado en el servidor (R2_ENDPOINT, R2_ACCESS_KEY_ID, R2_SECRET_ACCESS_KEY, R2_BUCKET_NAME)',
       },
-      { status: 503 },
+      { status: 503 }
     );
   }
 
   try {
     const object = await fetchR2Object(infographic.filename);
-    const body = await object.body.transformToByteArray();
+    const bytes = await object.body.transformToByteArray();
 
-    return new NextResponse(body, {
+    return new NextResponse(Buffer.from(bytes), {
       status: 200,
       headers: {
         'Content-Type': object.contentType,
-        'Content-Length': String(object.contentLength ?? body.byteLength),
+        'Content-Length': String(object.contentLength ?? bytes.byteLength),
         'Cache-Control': 'public, max-age=3600, stale-while-revalidate=86400',
         'Content-Disposition': `inline; filename="${infographic.filename}"`,
       },
@@ -55,7 +54,7 @@ export async function GET(_request: Request, context: RouteContext) {
           triedKeys: isDev() ? error.triedKeys : undefined,
           hint: 'Verifica el Object key en Cloudflare y R2_PDF_PREFIX en .env',
         },
-        { status: 404 },
+        { status: 404 }
       );
     }
 
@@ -71,7 +70,7 @@ export async function GET(_request: Request, context: RouteContext) {
           : 'No se pudo leer el PDF desde R2',
         details: isDev() ? message : undefined,
       },
-      { status: isAccessDenied ? 403 : 502 },
+      { status: isAccessDenied ? 403 : 502 }
     );
   }
 }

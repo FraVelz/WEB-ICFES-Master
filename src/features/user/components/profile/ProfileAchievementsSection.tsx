@@ -21,9 +21,7 @@ const STATUS_ORDER: Record<string, number> = {
 };
 
 function sortAchievementsForProfile(achievements: Achievement[]): Achievement[] {
-  return [...achievements].sort(
-    (a, b) => (STATUS_ORDER[a.status] ?? 3) - (STATUS_ORDER[b.status] ?? 3)
-  );
+  return [...achievements].sort((a, b) => (STATUS_ORDER[a.status] ?? 3) - (STATUS_ORDER[b.status] ?? 3));
 }
 
 export function ProfileAchievementsSection({ achievements, showViewAll, onViewAll }: ProfileAchievementsSectionProps) {
@@ -34,18 +32,18 @@ export function ProfileAchievementsSection({ achievements, showViewAll, onViewAl
   return (
     <div
       className={cn(
-        'sticky top-24 rounded-2xl border border-surface-border bg-surface-elevated/80 p-6 shadow-sm',
+        'border-surface-border bg-surface-elevated/80 sticky top-24 rounded-2xl border p-6 shadow-sm',
         'dark:border-slate-800 dark:bg-slate-900/50'
       )}
     >
       <div className="mb-6 flex items-center justify-between">
         <div>
-          <h2 className="flex items-center gap-3 text-xl font-bold text-on-surface">
+          <h2 className="text-on-surface flex items-center gap-3 text-xl font-bold">
             <Icon name="trophy" className="text-amber-600 dark:text-yellow-400" />
             Logros
           </h2>
           {achievements.length > 0 && (
-            <p className="mt-1 text-xs text-on-surface-muted">
+            <p className="text-on-surface-muted mt-1 text-xs">
               {completedCount} de {achievements.length} desbloqueados
             </p>
           )}
@@ -54,7 +52,7 @@ export function ProfileAchievementsSection({ achievements, showViewAll, onViewAl
           <button
             type="button"
             onClick={onViewAll}
-            className="text-app-accent-strong hover:text-app-accent cursor-pointer text-xs font-bold tracking-wider uppercase dark:text-app-accent dark:hover:text-app-accent-muted"
+            className="text-app-accent-strong hover:text-app-accent dark:text-app-accent dark:hover:text-app-accent-muted cursor-pointer text-xs font-bold tracking-wider uppercase"
           >
             Ver todos
           </button>
@@ -92,7 +90,7 @@ export function ProfileAchievementsSection({ achievements, showViewAll, onViewAl
       </div>
 
       {achievements.length === 0 && (
-        <p className="py-4 text-center text-sm text-on-surface-muted">
+        <p className="text-on-surface-muted py-4 text-center text-sm">
           {showViewAll ? 'Completa lecciones para desbloquear logros.' : 'Sin logros desbloqueados aún.'}
         </p>
       )}

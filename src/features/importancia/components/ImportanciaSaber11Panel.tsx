@@ -25,19 +25,16 @@ export function ImportanciaSaber11Panel() {
         </div>
         <Icon
           name="chevron-down"
-          className={cn(
-            'text-on-surface-muted mt-1 shrink-0 transition-transform',
-            'group-open:rotate-180'
-          )}
+          className={cn('text-on-surface-muted mt-1 shrink-0 transition-transform', 'group-open:rotate-180')}
         />
       </summary>
 
       <div className="border-app-ring/10 space-y-8 border-t px-5 pt-2 pb-6">
         <ImportanciaContentSection id="saber-quien" title="¿Para quién es?" icon="circle-user" nested>
           <p className="text-on-surface-muted leading-relaxed">
-            El Saber 11° está pensado para jóvenes que culminan el grado 11 en colegio, institución o modalidad flexible,
-            y que necesitan el puntaje para postularse a programas de educación superior, becas, créditos o convenios que
-            exigen resultados del ICFES.
+            El Saber 11° está pensado para jóvenes que culminan el grado 11 en colegio, institución o modalidad
+            flexible, y que necesitan el puntaje para postularse a programas de educación superior, becas, créditos o
+            convenios que exigen resultados del ICFES.
           </p>
           <p className="text-on-surface-muted leading-relaxed">
             Evalúa los mismos criterios y competencias del bachillerato que la Prueba de Validación: no es un examen
@@ -87,8 +84,8 @@ export function ImportanciaSaber11Panel() {
           </p>
           <p className="text-on-surface-muted leading-relaxed">
             <strong className="text-app-accent font-semibold">ICFES Master</strong> es nuestra plataforma web gratuita
-            para practicar por área, hacer simulacros completos y seguir una ruta según tu nivel. La estamos construyendo
-            para ayudarte a{' '}
+            para practicar por área, hacer simulacros completos y seguir una ruta según tu nivel. La estamos
+            construyendo para ayudarte a{' '}
             <strong className="text-on-surface font-semibold">
               alcanzar un puntaje alto en el ICFES, desde 0 hasta 500 puntos
             </strong>

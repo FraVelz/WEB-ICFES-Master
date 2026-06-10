@@ -8,12 +8,12 @@ Este documento describe las tecnologías utilizadas en **WEB-ICFES Master**, tan
 
 ### Framework y UI
 
-| Tecnología        | Versión | Descripción                                              |
-| ----------------- | ------- | -------------------------------------------------------- |
-| **Next.js**       | 15.1    | Framework React con App Router, SSR y render en servidor |
-| **React**         | 19.2    | Biblioteca para construcción de interfaces               |
-| **TypeScript**    | 5.9     | Tipado estático (código nuevo y mayoría del repo en TS)  |
-| **Zustand**       | 5.0     | Estado UI global (`uiSession`: demo, plan)               |
+| Tecnología     | Versión | Descripción                                              |
+| -------------- | ------- | -------------------------------------------------------- |
+| **Next.js**    | 15.1    | Framework React con App Router, SSR y render en servidor |
+| **React**      | 19.2    | Biblioteca para construcción de interfaces               |
+| **TypeScript** | 5.9     | Tipado estático (código nuevo y mayoría del repo en TS)  |
+| **Zustand**    | 5.0     | Estado UI global (`uiSession`: demo, plan)               |
 
 ### Estilos y animación
 

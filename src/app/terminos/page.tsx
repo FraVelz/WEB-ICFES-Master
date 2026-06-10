@@ -28,9 +28,8 @@ export default function TerminosPage() {
 
         <div className="space-y-6">
           <p className="text-on-surface leading-relaxed">
-            Al acceder y utilizar{' '}
-            <strong className="text-purple-700 dark:text-purple-400">ICFES Master</strong>, aceptas los siguientes
-            Términos y Condiciones.
+            Al acceder y utilizar <strong className="text-purple-700 dark:text-purple-400">ICFES Master</strong>,
+            aceptas los siguientes Términos y Condiciones.
           </p>
 
           <div>
@@ -63,7 +62,7 @@ export default function TerminosPage() {
             <h2 className="mt-8 mb-4 text-2xl font-bold text-purple-700 dark:text-purple-400">
               4. Resultados académicos
             </h2>
-            <div className="mb-6 rounded-lg border border-amber-600/35 bg-amber-100 p-4 dark:border-yellow-500/50 dark:bg-lesson-math-glow-a/20">
+            <div className="dark:bg-lesson-math-glow-a/20 mb-6 rounded-lg border border-amber-600/35 bg-amber-100 p-4 dark:border-yellow-500/50">
               <p className="text-on-surface">
                 <strong className="text-amber-800 dark:text-yellow-300">
                   No garantiza resultados específicos en el examen ICFES
@@ -91,7 +90,9 @@ export default function TerminosPage() {
             <h2 className="mt-8 mb-4 text-2xl font-bold text-purple-700 dark:text-purple-400">
               7. Propiedad intelectual
             </h2>
-            <p className="text-on-surface-muted mb-6">Todo el contenido de ICFES Master pertenece a sus desarrolladores.</p>
+            <p className="text-on-surface-muted mb-6">
+              Todo el contenido de ICFES Master pertenece a sus desarrolladores.
+            </p>
           </div>
 
           <div>

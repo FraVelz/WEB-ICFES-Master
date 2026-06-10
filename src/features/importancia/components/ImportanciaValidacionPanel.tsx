@@ -25,10 +25,7 @@ export function ImportanciaValidacionPanel() {
         </div>
         <Icon
           name="chevron-down"
-          className={cn(
-            'text-on-surface-muted mt-1 shrink-0 transition-transform',
-            'group-open:rotate-180'
-          )}
+          className={cn('text-on-surface-muted mt-1 shrink-0 transition-transform', 'group-open:rotate-180')}
         />
       </summary>
 
@@ -46,7 +43,12 @@ export function ImportanciaValidacionPanel() {
           </p>
         </ImportanciaContentSection>
 
-        <ImportanciaContentSection id="validacion-para-que" title="¿Qué obtienes al aprobar?" icon="check-circle" nested>
+        <ImportanciaContentSection
+          id="validacion-para-que"
+          title="¿Qué obtienes al aprobar?"
+          icon="check-circle"
+          nested
+        >
           <p className="text-on-surface-muted leading-relaxed">
             Al superar la validación obtienes la acreditación del bachillerato académico. Eso te habilita para
             inscribirte en educación superior, postular a empleos que piden diploma y acceder a trámites que antes te
@@ -99,13 +101,10 @@ export function ImportanciaValidacionPanel() {
             <li>Usa simulacros para acostumbrarte al tiempo y al formato.</li>
           </ul>
           <p className="text-on-surface-muted leading-relaxed">
-            Puedes complementar esa ruta con{' '}
-            <strong className="text-app-accent font-semibold">ICFES Master</strong>, nuestra web gratuita para practicar
-            por área y hacer simulacros. La plataforma está pensada para ayudarte a{' '}
-            <strong className="text-on-surface font-semibold">
-              subir tu puntaje ICFES, desde 0 hasta 500 puntos
-            </strong>
-            , según tu nivel de partida, el tiempo que dediques y la constancia con la que estudies —útil si retomas
+            Puedes complementar esa ruta con <strong className="text-app-accent font-semibold">ICFES Master</strong>,
+            nuestra web gratuita para practicar por área y hacer simulacros. La plataforma está pensada para ayudarte a{' '}
+            <strong className="text-on-surface font-semibold">subir tu puntaje ICFES, desde 0 hasta 500 puntos</strong>,
+            según tu nivel de partida, el tiempo que dediques y la constancia con la que estudies —útil si retomas
             contenidos después de años sin verlos en un aula.
           </p>
         </ImportanciaContentSection>

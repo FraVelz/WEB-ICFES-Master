@@ -117,9 +117,7 @@ export const ICFES_INFOGRAPHIC_GROUPS: IcfesInfographicGroup[] = [
 ];
 
 const ICFES_INFOGRAPHIC_BY_ID = new Map<string, IcfesInfographic>(
-  ICFES_INFOGRAPHIC_GROUPS.flatMap((group) =>
-    group.items.map((item) => [item.id, item] as const)
-  )
+  ICFES_INFOGRAPHIC_GROUPS.flatMap((group) => group.items.map((item) => [item.id, item] as const))
 );
 
 export function findIcfesInfographicById(id: string): IcfesInfographic | undefined {

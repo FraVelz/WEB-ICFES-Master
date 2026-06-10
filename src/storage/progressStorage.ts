@@ -108,9 +108,7 @@ export const saveFullExam = (
       syncSavedAttempt(scope, newExam)
     );
     const correctCount = Number(examData.correctCount ?? 0);
-    void import('@/services/league/activityXp').then(({ awardFullExamXp }) =>
-      awardFullExamXp(scope, correctCount)
-    );
+    void import('@/services/league/activityXp').then(({ awardFullExamXp }) => awardFullExamXp(scope, correctCount));
   }
   return newExam;
 };
@@ -148,9 +146,7 @@ export const savePractice = (
       syncSavedAttempt(scope, newPractice)
     );
     const correctCount = Number(practiceData.correctCount ?? 0);
-    void import('@/services/league/activityXp').then(({ awardPracticeXp }) =>
-      awardPracticeXp(scope, correctCount)
-    );
+    void import('@/services/league/activityXp').then(({ awardPracticeXp }) => awardPracticeXp(scope, correctCount));
   }
   return newPractice;
 };

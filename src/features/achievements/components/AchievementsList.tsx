@@ -116,9 +116,7 @@ export const AchievementsList = ({ achievements = [] }: AchievementsListProps) =
                     >
                       {achievement.title}
                     </h3>
-                    {isCompleted && (
-                      <Icon name="check" className="text-sm text-cyan-800 dark:text-amber-400" />
-                    )}
+                    {isCompleted && <Icon name="check" className="text-sm text-cyan-800 dark:text-amber-400" />}
                     {isIncomplete && <Icon name="lock" className="text-sm text-slate-600" />}
                   </div>
 
@@ -135,17 +133,11 @@ export const AchievementsList = ({ achievements = [] }: AchievementsListProps) =
                   <div className="space-y-1.5">
                     <div className="flex justify-between text-xs font-medium">
                       <span
-                        className={
-                          isCompleted ? 'font-semibold text-cyan-800 dark:text-amber-400' : 'text-app-ring/80'
-                        }
+                        className={isCompleted ? 'font-semibold text-cyan-800 dark:text-amber-400' : 'text-app-ring/80'}
                       >
                         {isCompleted ? '¡Completado!' : `${achievement.progress ?? 0} / ${achievement.target ?? 0}`}
                       </span>
-                      <span
-                        className={
-                          isCompleted ? 'text-cyan-700/75 dark:text-slate-400' : 'text-slate-500'
-                        }
-                      >
+                      <span className={isCompleted ? 'text-cyan-700/75 dark:text-slate-400' : 'text-slate-500'}>
                         +{achievement.xpReward ?? 0} XP
                       </span>
                     </div>

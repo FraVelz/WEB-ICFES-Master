@@ -7,7 +7,14 @@ import { ModalOverlay } from '@/shared/components/ModalOverlay';
 import { isAccountOnlyPath } from '@/features/auth/constants/accountOnlyRoutes';
 import { useUiSessionStore } from '@/store/uiSessionStore';
 import { cn } from '@/utils/cn';
-import { FOCUS_RING, isNavOptionActive, isNavPathActive, mainNavOptions, mobileMenuOptions, type NavOption } from './constants';
+import {
+  FOCUS_RING,
+  isNavOptionActive,
+  isNavPathActive,
+  mainNavOptions,
+  mobileMenuOptions,
+  type NavOption,
+} from './constants';
 
 type MobileNavProps = {
   menuOpen: boolean;
@@ -104,7 +111,7 @@ export function MobileNav({ menuOpen, onToggleMenu, onCloseMenu }: MobileNavProp
                       'flex items-center gap-4 px-6 py-4 transition-colors',
                       'focus-visible:ring-app-accent rounded-lg focus-visible:ring-2 focus-visible:outline-none focus-visible:ring-inset',
                       isActive
-                        ? 'bg-app-ring/10 border-app-accent border-l-4 text-on-surface'
+                        ? 'bg-app-ring/10 border-app-accent text-on-surface border-l-4'
                         : 'text-on-surface hover:bg-app-ring/10 active:bg-app-ring/20',
                       isLocked && 'opacity-70'
                     )}
@@ -114,9 +121,7 @@ export function MobileNav({ menuOpen, onToggleMenu, onCloseMenu }: MobileNavProp
                       name={option.icon}
                       size="xl"
                       className={cn(
-                        isActive
-                          ? 'text-app-accent drop-shadow-[0_0_8px_currentColor]'
-                          : 'text-on-surface-muted'
+                        isActive ? 'text-app-accent drop-shadow-[0_0_8px_currentColor]' : 'text-on-surface-muted'
                       )}
                     />
                     <span className="flex flex-1 items-center justify-between text-lg font-semibold">

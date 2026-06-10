@@ -74,7 +74,7 @@ propietaria (p. ej. `@/features/auth/utils/mapSupabaseAuthError`, no shims en `@
 | --------------------- | ------------------------------------------------------------- |
 | `src/features/store/` | UI de tienda (modales, tarjetas de items)                     |
 | `src/services/store/` | Servicios de planes y suscripción (`SubscriptionPlanService`) |
-| `src/store/`          | Zustand: sesión UI (`uiSession`: demo, plan seleccionado)      |
+| `src/store/`          | Zustand: sesión UI (`uiSession`: demo, plan seleccionado)     |
 
 ---
 

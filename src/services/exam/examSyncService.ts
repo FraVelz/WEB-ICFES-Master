@@ -64,7 +64,9 @@ function accumulateQuestionStats(
   return { totalQuestions, totalCorrect };
 }
 
-export function mapExamResultRowToAttempt(row: Record<string, unknown>): AttemptWithQuestions & Record<string, unknown> {
+export function mapExamResultRowToAttempt(
+  row: Record<string, unknown>
+): AttemptWithQuestions & Record<string, unknown> {
   const questionsPayload = row.questions;
   let questions: unknown[] = [];
   let answers: Record<string, string> = {};
@@ -115,10 +117,7 @@ export function mergeAttemptHistories(
     .slice(0, 50);
 }
 
-export async function syncAttemptToSupabase(
-  userId: string,
-  attempt: LocalAttemptRecord
-): Promise<boolean> {
+export async function syncAttemptToSupabase(userId: string, attempt: LocalAttemptRecord): Promise<boolean> {
   if (!isSupabaseConfigured() || isDemoUserId(userId)) return false;
 
   try {

@@ -5,10 +5,7 @@ export function getR2PublicAssetUrl(filename: string): string | null {
   const base = process.env.NEXT_PUBLIC_R2_PUBLIC_URL?.trim().replace(/\/$/, '');
   if (!base) return null;
 
-  const prefix = (process.env.NEXT_PUBLIC_R2_PDF_PREFIX?.trim() || DEFAULT_PDF_PREFIX).replace(
-    /^\/+|\/+$/g,
-    '',
-  );
+  const prefix = (process.env.NEXT_PUBLIC_R2_PDF_PREFIX?.trim() || DEFAULT_PDF_PREFIX).replace(/^\/+|\/+$/g, '');
 
   const encoded = filename
     .split('/')

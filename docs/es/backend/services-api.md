@@ -140,18 +140,18 @@ const { exam, getUserExams, resetUserExams, refresh } = useExam(examId);
 
 ### `users`
 
-| Columna       | Tipo        | Descripción                    |
-| ------------- | ----------- | ------------------------------ |
-| id            | uuid        | ID del usuario (Supabase Auth) |
-| email         | text        | Email                          |
-| display_name  | text        | Nombre mostrado                |
-| username      | text        | Nombre de usuario              |
-| bio           | text        | Biografía                      |
-| profile_image | text        | URL o base64 de foto           |
-| skill_level   | text        | Nivel de preparación (evaluación inicial) |
-| level_assessment_completed_at | timestamptz | Fecha evaluación inicial |
-| created_at    | timestamptz | Fecha creación                 |
-| updated_at    | timestamptz | Fecha actualización            |
+| Columna                       | Tipo        | Descripción                               |
+| ----------------------------- | ----------- | ----------------------------------------- |
+| id                            | uuid        | ID del usuario (Supabase Auth)            |
+| email                         | text        | Email                                     |
+| display_name                  | text        | Nombre mostrado                           |
+| username                      | text        | Nombre de usuario                         |
+| bio                           | text        | Biografía                                 |
+| profile_image                 | text        | URL o base64 de foto                      |
+| skill_level                   | text        | Nivel de preparación (evaluación inicial) |
+| level_assessment_completed_at | timestamptz | Fecha evaluación inicial                  |
+| created_at                    | timestamptz | Fecha creación                            |
+| updated_at                    | timestamptz | Fecha actualización                       |
 
 ### `user_progress`
 
@@ -166,29 +166,29 @@ const { exam, getUserExams, resetUserExams, refresh } = useExam(examId);
 
 ### `user_gamification`
 
-| Columna       | Tipo  | Descripción          |
-| ------------- | ----- | -------------------- |
-| user_id       | uuid  | FK a users           |
-| xp            | int   | Experiencia acumulada (nivel se calcula en cliente con `getLevelInfo`) |
-| total_coins   | int   | Monedas ganadas      |
-| spent_coins   | int   | Monedas gastadas     |
-| streak_dates  | jsonb | Fechas de racha activa |
-| longest_streak | int  | Racha máxima         |
-| achievements  | jsonb | Progreso de logros (fuente de verdad remota) |
-| xp_history    | jsonb | Historial XP         |
-| coins_history | jsonb | Historial monedas    |
-| league_rank   | text  | Liga competitiva actual (`novato` … `maestro`) |
-| league_group_id | uuid | FK a `league_groups` — cohorte de hasta 30 jugadores |
-| weekly_xp     | int   | XP de la semana en curso (clasificatoria) |
-| weekly_xp_week | text | Semana ISO activa, ej. `2026-W24` |
+| Columna         | Tipo  | Descripción                                                            |
+| --------------- | ----- | ---------------------------------------------------------------------- |
+| user_id         | uuid  | FK a users                                                             |
+| xp              | int   | Experiencia acumulada (nivel se calcula en cliente con `getLevelInfo`) |
+| total_coins     | int   | Monedas ganadas                                                        |
+| spent_coins     | int   | Monedas gastadas                                                       |
+| streak_dates    | jsonb | Fechas de racha activa                                                 |
+| longest_streak  | int   | Racha máxima                                                           |
+| achievements    | jsonb | Progreso de logros (fuente de verdad remota)                           |
+| xp_history      | jsonb | Historial XP                                                           |
+| coins_history   | jsonb | Historial monedas                                                      |
+| league_rank     | text  | Liga competitiva actual (`novato` … `maestro`)                         |
+| league_group_id | uuid  | FK a `league_groups` — cohorte de hasta 30 jugadores                   |
+| weekly_xp       | int   | XP de la semana en curso (clasificatoria)                              |
+| weekly_xp_week  | text  | Semana ISO activa, ej. `2026-W24`                                      |
 
 ### `league_groups`
 
-| Columna       | Tipo | Descripción |
-| ------------- | ---- | ----------- |
-| id            | uuid | Grupo/cohorte dentro de una liga |
-| league_rank   | text | Liga (`novato`, `explorador`, …) |
-| member_count  | int  | Miembros actuales (máx. 30) |
+| Columna      | Tipo | Descripción                      |
+| ------------ | ---- | -------------------------------- |
+| id           | uuid | Grupo/cohorte dentro de una liga |
+| league_rank  | text | Liga (`novato`, `explorador`, …) |
+| member_count | int  | Miembros actuales (máx. 30)      |
 
 RPC: `get_my_leaderboard`, `get_my_league_state`, `assign_league_group`, `process_weekly_leagues` (cron). Migración: `supabase/migrations/20260610120000_league_system.sql`.
 
@@ -387,10 +387,10 @@ await gamificationPersistence.addXP(userId, 50, 'lesson_quiz_lessonId');
 
 ## Demo vs cuenta autenticada
 
-| Contexto | Auth | Persistencia principal |
-| -------- | ---- | ---------------------- |
-| Demo (landing) | Sin cuenta | localStorage (`icfes_*_demo`) |
-| Cuenta | Supabase Auth | PostgreSQL vía `*SupabaseService` |
+| Contexto       | Auth          | Persistencia principal            |
+| -------------- | ------------- | --------------------------------- |
+| Demo (landing) | Sin cuenta    | localStorage (`icfes_*_demo`)     |
+| Cuenta         | Supabase Auth | PostgreSQL vía `*SupabaseService` |
 
 Variables en `.env.local`:
 

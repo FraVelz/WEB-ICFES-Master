@@ -6,11 +6,7 @@ import { STARTING_COINS_BALANCE, countsForWeeklyLeagueXp } from '@/shared/consta
 import { isLogoShopItem } from '@/features/store/data/shopCatalog';
 import { DOUBLE_XP_DURATION_MS, isDoubleXpActive } from '@/features/store/constants/doubleXp';
 import { MAX_STREAK_SHIELDS } from '@/features/store/constants/streakShield';
-import {
-  MAX_PERSONAL_LOGOS,
-  type PersonalLogo,
-  isPersonalLogoId,
-} from '@/features/user/types/personalLogo.types';
+import { MAX_PERSONAL_LOGOS, type PersonalLogo, isPersonalLogoId } from '@/features/user/types/personalLogo.types';
 
 const TABLE = 'user_gamification';
 
@@ -80,10 +76,7 @@ const mapFromDb = (row: Record<string, unknown> | null): GamificationProfile | n
     equippedLogoId: typeof row.equipped_logo_id === 'string' ? row.equipped_logo_id : null,
     doubleXpExpiresAt: typeof row.double_xp_expires_at === 'string' ? row.double_xp_expires_at : null,
     personalLogos: parsePersonalLogos(row.personal_logos),
-    streakShieldCount: Math.min(
-      MAX_STREAK_SHIELDS,
-      Math.max(0, Number(row.streak_shield_count ?? 0))
-    ),
+    streakShieldCount: Math.min(MAX_STREAK_SHIELDS, Math.max(0, Number(row.streak_shield_count ?? 0))),
     leagueRank: typeof row.league_rank === 'string' ? row.league_rank : 'novato',
     leagueGroupId: typeof row.league_group_id === 'string' ? row.league_group_id : null,
     weeklyXp: Number(row.weekly_xp ?? 0),
@@ -345,7 +338,10 @@ const GamificationSupabaseService = {
     return this.savePersonalLogos(userId, [...current, logo]);
   },
 
-  async removePersonalLogo(userId: string, logoId: string): Promise<{ logos: PersonalLogo[]; equippedLogoId: string | null }> {
+  async removePersonalLogo(
+    userId: string,
+    logoId: string
+  ): Promise<{ logos: PersonalLogo[]; equippedLogoId: string | null }> {
     const profile = await this.getOrCreate(userId);
     const logos = profile.personalLogos.filter((logo) => logo.id !== logoId);
     const nextEquipped = profile.equippedLogoId === logoId ? null : profile.equippedLogoId;

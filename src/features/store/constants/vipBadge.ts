@@ -7,5 +7,4 @@ export function hasVipBadge(inventory: string[]): boolean {
 }
 
 /** Borde dorado del avatar en clasificatoria y perfil. */
-export const VIP_AVATAR_BORDER_CLASS =
-  'border-yellow-400 shadow-lg shadow-yellow-500/30 ring-2 ring-yellow-500/40';
+export const VIP_AVATAR_BORDER_CLASS = 'border-yellow-400 shadow-lg shadow-yellow-500/30 ring-2 ring-yellow-500/40';

@@ -10,10 +10,7 @@ export interface LeaguePromotionRules {
 }
 
 /** Reglas efectivas de ascenso/descenso según tamaño del grupo. */
-export function getEffectiveLeagueRules(
-  leagueRankId: string,
-  groupSize: number
-): LeaguePromotionRules {
+export function getEffectiveLeagueRules(leagueRankId: string, groupSize: number): LeaguePromotionRules {
   const rank = Object.values(RANKS).find((r) => r.id === leagueRankId) ?? RANKS.NOVATO;
   let promoteCount = rank.promoteCount;
   let demoteCount = rank.demoteCount;
@@ -33,11 +30,7 @@ export function getPromotionIndices(groupSize: number, promoteCount: number): nu
 }
 
 /** Índices (0-based) de jugadores que descienden (excluye promovidos si se solapan). */
-export function getDemotionIndices(
-  groupSize: number,
-  demoteCount: number,
-  promotedIndices: number[]
-): number[] {
+export function getDemotionIndices(groupSize: number, demoteCount: number, promotedIndices: number[]): number[] {
   if (demoteCount <= 0 || groupSize <= demoteCount) {
     return [];
   }

@@ -9,15 +9,9 @@ import { useShop } from '@/features/store/hooks/useShop';
 import { listOwnedLogoItems } from '@/features/store/data/shopCatalog';
 import { usePersonalLogos } from '@/features/user/hooks/usePersonalLogos';
 import { useUserSettingsContext } from '@/features/user/context/UserSettingsContext';
-import {
-  addPersonalLogo,
-  removePersonalLogo,
-} from '@/services/persistence';
+import { addPersonalLogo, removePersonalLogo } from '@/services/persistence';
 import { MAX_PERSONAL_LOGOS, type PersonalLogo } from '@/features/user/types/personalLogo.types';
-import {
-  readImageFileAsDataUrl,
-  validateLogoImageFile,
-} from '@/features/user/utils/validateLogoImageFile';
+import { readImageFileAsDataUrl, validateLogoImageFile } from '@/features/user/utils/validateLogoImageFile';
 import type { ShopItem } from '@/features/store/data/shopItems';
 import { SettingsSection } from './SettingsSection';
 
@@ -50,7 +44,7 @@ function LogoTile({ id, name, image, color, equipped, processing, onSelect, onDe
         <div
           className={cn(
             'relative h-16 w-16 rounded-full p-0.5 shadow-md',
-            color ? `bg-linear-to-br ${color}` : 'bg-linear-to-br from-app-ring/40 to-slate-700'
+            color ? `bg-linear-to-br ${color}` : 'from-app-ring/40 bg-linear-to-br to-slate-700'
           )}
         >
           <div className="relative h-full w-full overflow-hidden rounded-full bg-white">
@@ -93,9 +87,7 @@ export function SettingsLogosPanel() {
   const [feedback, setFeedback] = useState<{ text: string; type: 'success' | 'error' } | null>(null);
 
   const profileImage = user?.profileImage?.trim() ?? '';
-  const profileAlreadySaved = profileImage
-    ? personalLogos.some((logo) => logo.image === profileImage)
-    : false;
+  const profileAlreadySaved = profileImage ? personalLogos.some((logo) => logo.image === profileImage) : false;
   const canAddPersonalLogo = personalLogos.length < MAX_PERSONAL_LOGOS;
 
   const notify = (text: string, type: 'success' | 'error' = 'success') => {
@@ -254,7 +246,7 @@ export function SettingsLogosPanel() {
                   type="button"
                   disabled={!userId}
                   onClick={() => fileInputRef.current?.click()}
-                  className="cursor-pointer rounded-lg bg-app-ring/15 px-2 py-1.5 text-[11px] font-semibold text-app-accent hover:bg-app-ring/25"
+                  className="bg-app-ring/15 text-app-accent hover:bg-app-ring/25 cursor-pointer rounded-lg px-2 py-1.5 text-[11px] font-semibold"
                 >
                   Subir imagen
                 </button>
@@ -272,7 +264,13 @@ export function SettingsLogosPanel() {
             </div>
           ))}
         </div>
-        <input ref={fileInputRef} type="file" accept="image/*" className="hidden" onChange={(e) => void handleUpload(e)} />
+        <input
+          ref={fileInputRef}
+          type="file"
+          accept="image/*"
+          className="hidden"
+          onChange={(e) => void handleUpload(e)}
+        />
       </div>
 
       {ownedShopLogos.length > 0 && (

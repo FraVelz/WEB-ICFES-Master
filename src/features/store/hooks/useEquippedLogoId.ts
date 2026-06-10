@@ -2,11 +2,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { useAuth } from '@/features/auth/context/AuthContext';
 import { useUiSessionStore } from '@/store/uiSessionStore';
 import { resolveCoinsUserId } from '@/services/demo/demoCoins';
-import {
-  getShopInventoryState,
-  SHOP_INVENTORY_CHANGE_EVENT,
-  type ShopInventoryState,
-} from '@/services/persistence';
+import { getShopInventoryState, SHOP_INVENTORY_CHANGE_EVENT, type ShopInventoryState } from '@/services/persistence';
 
 /** Logo equipado — sincronizado entre tienda, ajustes y avatar del shell. */
 export function useEquippedLogoId() {

@@ -180,9 +180,9 @@ export const ChatAssistant = () => {
           ref={chatPanelRef}
           className={cn(
             'fixed z-50 flex h-[min(500px,70vh)] flex-col overflow-hidden rounded-2xl',
-            'border-app-ring/30 border bg-slate-900/98 shadow-2xl shadow-app-ring/20 backdrop-blur-xl',
-            'bottom-24 left-3 right-3 w-auto',
-            'sm:left-auto sm:right-6 sm:w-[min(400px,calc(100vw-3rem))]'
+            'border-app-ring/30 shadow-app-ring/20 border bg-slate-900/98 shadow-2xl backdrop-blur-xl',
+            'right-3 bottom-24 left-3 w-auto',
+            'sm:right-6 sm:left-auto sm:w-[min(400px,calc(100vw-3rem))]'
           )}
         >
           {/* Header */}

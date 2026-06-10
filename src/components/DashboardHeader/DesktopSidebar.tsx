@@ -9,7 +9,14 @@ import { useUser } from '@/features/user/hooks/useUser';
 import { useResolvedProfileAvatar } from '@/features/user/hooks/useResolvedProfileAvatar';
 import { useUiSessionStore } from '@/store/uiSessionStore';
 import { cn } from '@/utils/cn';
-import { FOCUS_RING, isNavOptionActive, isNavPathActive, mainNavOptions, secondaryNavOptions, type NavOption } from './constants';
+import {
+  FOCUS_RING,
+  isNavOptionActive,
+  isNavPathActive,
+  mainNavOptions,
+  secondaryNavOptions,
+  type NavOption,
+} from './constants';
 
 type DesktopSidebarProps = {
   className?: string;
@@ -48,7 +55,7 @@ function SidebarNavLink({
               )
             : cn(
                 'bg-app-ring/15 text-app-accent shadow-app-ring/25 shadow-lg',
-                !sidebarExpanded && 'ring-2 ring-app-accent/45'
+                !sidebarExpanded && 'ring-app-accent/45 ring-2'
               )
           : 'text-on-surface-muted hover:bg-surface-elevated/60 hover:text-on-surface',
         isLocked && 'opacity-70'
@@ -194,9 +201,7 @@ export function DesktopSidebar({ className, sidebarExpanded, onToggleSidebar }: 
             'group/profile flex items-center overflow-hidden rounded-xl p-2 transition-colors',
             sidebarExpanded ? 'gap-3' : 'justify-center',
             FOCUS_RING,
-            isProfileActive
-              ? 'bg-app-ring/15 ring-app-accent/45 ring-2'
-              : 'hover:bg-on-surface/5',
+            isProfileActive ? 'bg-app-ring/15 ring-app-accent/45 ring-2' : 'hover:bg-on-surface/5',
             isLockedInDemo('/perfil') && 'opacity-70'
           )}
         >
@@ -225,10 +230,12 @@ export function DesktopSidebar({ className, sidebarExpanded, onToggleSidebar }: 
             FOCUS_RING,
             isSettingsActive
               ? 'bg-app-ring/15 text-app-accent ring-app-accent/45 ring-2'
-              : 'text-slate-500 hover:text-app-accent',
+              : 'hover:text-app-accent text-slate-500',
             isLockedInDemo('/configuracion') && 'opacity-70'
           )}
-          title={!sidebarExpanded ? (isLockedInDemo('/configuracion') ? 'Requiere cuenta' : 'Configuración') : undefined}
+          title={
+            !sidebarExpanded ? (isLockedInDemo('/configuracion') ? 'Requiere cuenta' : 'Configuración') : undefined
+          }
         >
           <Icon
             name="cog"

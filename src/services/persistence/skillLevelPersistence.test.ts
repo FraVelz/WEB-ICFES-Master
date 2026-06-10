@@ -40,11 +40,7 @@ describe('skillLevelPersistence', () => {
   });
 
   it('persiste solo en localStorage en modo demo', async () => {
-    await persistLevelAssessment(
-      'demo',
-      { level: 'basics', completedAt: '2026-01-01T00:00:00.000Z' },
-      null
-    );
+    await persistLevelAssessment('demo', { level: 'basics', completedAt: '2026-01-01T00:00:00.000Z' }, null);
 
     expect(storage.get('icfes_level_assessment_done_demo')).toBe('true');
     expect(storage.get('icfes_skill_level_demo')).toBe('basics');
@@ -65,11 +61,7 @@ describe('skillLevelPersistence', () => {
       updatedAt: null,
     });
 
-    await persistLevelAssessment(
-      'user-1',
-      { level: 'advanced', completedAt: '2026-01-01T00:00:00.000Z' },
-      'user-1'
-    );
+    await persistLevelAssessment('user-1', { level: 'advanced', completedAt: '2026-01-01T00:00:00.000Z' }, 'user-1');
 
     expect(UserSupabaseService.updateSkillLevel).toHaveBeenCalledWith('user-1', 'advanced');
     expect(storage.get('icfes_skill_level_user-1')).toBe('advanced');
@@ -100,11 +92,7 @@ describe('skillLevelPersistence', () => {
   });
 
   it('resolveLevelAssessmentRedirect devuelve ruta según nivel guardado', async () => {
-    await persistLevelAssessment(
-      'demo',
-      { level: 'intermediate', completedAt: '2026-01-01T00:00:00.000Z' },
-      null
-    );
+    await persistLevelAssessment('demo', { level: 'intermediate', completedAt: '2026-01-01T00:00:00.000Z' }, null);
 
     const redirect = await resolveLevelAssessmentRedirect({ demoMode: true }, null);
     expect(redirect).toBe('/practica/matematicas');

@@ -7,10 +7,7 @@ import { getDemoProfile } from '@/services/demo/demoProfile';
 import { isDemoUserId } from '@/services/demo/demoCoins';
 import UserSupabaseService from '@/services/supabase/UserSupabaseService';
 import { isSupabaseConfigured } from '@/services/persistence/supabaseConfigured';
-import {
-  getStudyTimeStats,
-  STUDY_TIME_UPDATED_EVENT,
-} from '@/services/studyTime';
+import { getStudyTimeStats, STUDY_TIME_UPDATED_EVENT } from '@/services/studyTime';
 import { USER_PROFILE_CHANGE_EVENT, type UserProfileChangeDetail } from '@/services/persistence';
 
 const levelToRankId = (level: number): string => {
@@ -27,11 +24,7 @@ export const useUserProfile = (targetUserId: string | null = null) => {
   const ownGamificationScope = useGamificationScope();
   const uid = targetUserId || authUser?.uid;
   const isOwnProfile = authUser?.uid && uid === authUser.uid;
-  const streakScope = targetUserId
-    ? isDemoUserId(targetUserId)
-      ? 'demo'
-      : targetUserId
-    : ownGamificationScope;
+  const streakScope = targetUserId ? (isDemoUserId(targetUserId) ? 'demo' : targetUserId) : ownGamificationScope;
   const {
     loading: gamificationLoading,
     achievements,
@@ -163,9 +156,7 @@ export const useUserProfile = (targetUserId: string | null = null) => {
       setProfileData((prev) => ({
         ...prev,
         ...(detail.profileImage !== undefined ? { profileImage: detail.profileImage } : {}),
-        ...(detail.username !== undefined
-          ? { name: detail.username ?? prev.name }
-          : {}),
+        ...(detail.username !== undefined ? { name: detail.username ?? prev.name } : {}),
         ...(detail.bio !== undefined ? { personalPhrase: detail.bio ?? prev.personalPhrase } : {}),
       }));
     };

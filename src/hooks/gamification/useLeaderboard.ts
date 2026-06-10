@@ -4,11 +4,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { useAuth } from '@/features/auth/context/AuthContext';
 import { LeagueSupabaseService } from '@/services/league';
 import { hasVipBadge } from '@/features/store/constants/vipBadge';
-import {
-  getShopInventoryState,
-  SHOP_INVENTORY_CHANGE_EVENT,
-  type ShopInventoryState,
-} from '@/services/persistence';
+import { getShopInventoryState, SHOP_INVENTORY_CHANGE_EVENT, type ShopInventoryState } from '@/services/persistence';
 
 export interface LeaderboardPlayer {
   id: string;

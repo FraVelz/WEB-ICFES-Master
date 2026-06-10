@@ -1,9 +1,7 @@
 /**
  * Inventario de tienda — Supabase (`user_gamification`) o demo local.
  */
-import GamificationSupabaseService, {
-  type ShopInventoryState,
-} from '@/services/supabase/GamificationSupabaseService';
+import GamificationSupabaseService, { type ShopInventoryState } from '@/services/supabase/GamificationSupabaseService';
 import { isDemoUserId } from '@/services/demo/demoCoins';
 import { isLogoShopItem } from '@/features/store/data/shopCatalog';
 import { isPersonalLogoId } from '@/features/user/types/personalLogo.types';

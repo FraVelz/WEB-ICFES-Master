@@ -1,6 +1,7 @@
-import { GetObjectCommand, S3Client } from '@aws-sdk/client-s3';
-import type { SdkStreamMixin } from '@smithy/types';
+import { GetObjectCommand, S3Client, type GetObjectCommandOutput } from '@aws-sdk/client-s3';
 import { buildR2ObjectKeyCandidates, getR2ServerConfig } from './r2Config';
+
+type R2ObjectBody = NonNullable<GetObjectCommandOutput['Body']>;
 
 let client: S3Client | null = null;
 
@@ -36,7 +37,7 @@ export function getR2Client(): S3Client | null {
 
 export type R2ObjectResult = {
   key: string;
-  body: SdkStreamMixin;
+  body: R2ObjectBody;
   contentType: string;
   contentLength?: number;
 };
@@ -51,17 +52,13 @@ export class R2ObjectNotFoundError extends Error {
   }
 }
 
-async function fetchR2ObjectByKey(
-  s3: S3Client,
-  bucket: string,
-  key: string
-): Promise<R2ObjectResult | null> {
+async function fetchR2ObjectByKey(s3: S3Client, bucket: string, key: string): Promise<R2ObjectResult | null> {
   try {
     const response = await s3.send(
       new GetObjectCommand({
         Bucket: bucket,
         Key: key,
-      }),
+      })
     );
 
     if (!response.Body) return null;

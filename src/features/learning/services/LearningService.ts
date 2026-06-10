@@ -40,31 +40,30 @@ export const LearningService = {
     const lessons = await LearningSupabaseService.getLessonsByArea(areaId);
     if (lessons?.length > 0) {
       return lessons.map((lesson, i) => {
-          const l = lesson as Record<string, unknown>;
-          const quiz = (l.quiz ?? {}) as Record<string, unknown>;
-          const nestedContent = l.content;
-          const rawContent =
-            l.body ??
-            l.markdown ??
-            (typeof nestedContent === 'string'
-              ? nestedContent
-              : nestedContent && typeof nestedContent === 'object'
-                ? ((nestedContent as Record<string, unknown>).body ??
-                  (nestedContent as Record<string, unknown>).markdown)
-                : undefined);
-          const contentStr = typeof rawContent === 'string' ? rawContent : '';
-          return {
-            id: String(l.id ?? `${areaId}_${i}`),
-            title: l.title,
-            order: i,
-            difficulty: String(l.difficulty || 'facil'),
-            rewards: (quiz.rewards as { xp?: number; coins?: number }) || { xp: 50, coins: 25 },
-            duration: l.duration,
-            content: contentStr,
-            questions: l.questions,
-            quiz: l.quiz,
-          } satisfies LearningPathLesson;
-        });
+        const l = lesson as Record<string, unknown>;
+        const quiz = (l.quiz ?? {}) as Record<string, unknown>;
+        const nestedContent = l.content;
+        const rawContent =
+          l.body ??
+          l.markdown ??
+          (typeof nestedContent === 'string'
+            ? nestedContent
+            : nestedContent && typeof nestedContent === 'object'
+              ? ((nestedContent as Record<string, unknown>).body ?? (nestedContent as Record<string, unknown>).markdown)
+              : undefined);
+        const contentStr = typeof rawContent === 'string' ? rawContent : '';
+        return {
+          id: String(l.id ?? `${areaId}_${i}`),
+          title: l.title,
+          order: i,
+          difficulty: String(l.difficulty || 'facil'),
+          rewards: (quiz.rewards as { xp?: number; coins?: number }) || { xp: 50, coins: 25 },
+          duration: l.duration,
+          content: contentStr,
+          questions: l.questions,
+          quiz: l.quiz,
+        } satisfies LearningPathLesson;
+      });
     }
 
     const key = getStaticRoadmapDataKey(areaId);

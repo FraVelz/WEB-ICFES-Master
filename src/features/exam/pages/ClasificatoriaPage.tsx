@@ -90,10 +90,13 @@ export const ClasificatoriaPage = () => {
             <Icon name="trophy" className="text-amber-600 dark:text-yellow-400" />
             Clasificatoria Semanal
           </h1>
-          <p className="text-on-surface-muted">Compite en tu grupo de {groupSize} y sube de liga. ¡Se actualiza cada lunes!</p>
+          <p className="text-on-surface-muted">
+            Compite en tu grupo de {groupSize} y sube de liga. ¡Se actualiza cada lunes!
+          </p>
           {isViewingOwnLeague && (
-            <p className="mt-2 text-sm text-app-accent-muted">
-              Próximo reset: <span className="font-mono font-semibold text-app-accent">{formatCountdownToReset(resetMs)}</span>
+            <p className="text-app-accent-muted mt-2 text-sm">
+              Próximo reset:{' '}
+              <span className="text-app-accent font-mono font-semibold">{formatCountdownToReset(resetMs)}</span>
             </p>
           )}
         </div>
@@ -115,9 +118,7 @@ export const ClasificatoriaPage = () => {
               >
                 <Icon name={rank.icon} size="md" className="shrink-0" />
                 <span className="font-bold">{rank.label}</span>
-                {isActiveLeague && (
-                  <span className="rounded-full bg-black/20 px-1.5 py-0.5 text-[10px]">Tú</span>
-                )}
+                {isActiveLeague && <span className="rounded-full bg-black/20 px-1.5 py-0.5 text-[10px]">Tú</span>}
               </button>
             );
           })}
@@ -155,9 +156,7 @@ export const ClasificatoriaPage = () => {
               {isViewingOwnLeague && (
                 <div className="flex gap-4 text-center">
                   <div className="border-surface-border bg-surface-elevated rounded-lg border px-4 py-2 dark:border-transparent dark:bg-slate-800/50">
-                    <div className="text-on-surface text-2xl font-bold">
-                      {leagueState?.myPosition ?? '—'}
-                    </div>
+                    <div className="text-on-surface text-2xl font-bold">{leagueState?.myPosition ?? '—'}</div>
                     <div className="text-on-surface-muted text-xs uppercase">Tu posición</div>
                   </div>
                   <div className="border-surface-border bg-surface-elevated rounded-lg border px-4 py-2 dark:border-transparent dark:bg-slate-800/50">
@@ -173,8 +172,8 @@ export const ClasificatoriaPage = () => {
         {!isViewingOwnLeague && !leagueLoading && (
           <div className="border-surface-border bg-surface-elevated/60 text-on-surface-muted mb-6 rounded-xl border px-4 py-3 text-center text-sm dark:border-slate-700 dark:bg-slate-900/60">
             No participas en la liga {currentRankInfo.label}. Estás en{' '}
-            <span className="text-on-surface font-semibold">{getRankInfo(myLeagueRank).label}</span>.
-            Aquí solo ves las reglas de esta liga.
+            <span className="text-on-surface font-semibold">{getRankInfo(myLeagueRank).label}</span>. Aquí solo ves las
+            reglas de esta liga.
           </div>
         )}
 
@@ -204,7 +203,7 @@ export const ClasificatoriaPage = () => {
                   className={cn(
                     'group relative flex cursor-pointer items-center gap-4 rounded-xl border p-4 transition-all',
                     isCurrentUser
-                      ? 'border-app-ring/50 bg-cyan-50 shadow-sm dark:bg-app-ring/10 dark:shadow-app-ring/10 dark:shadow-lg'
+                      ? 'border-app-ring/50 dark:bg-app-ring/10 dark:shadow-app-ring/10 bg-cyan-50 shadow-sm dark:shadow-lg'
                       : cn(style.bg, 'hover:bg-surface-elevated dark:hover:bg-slate-800')
                   )}
                 >
@@ -217,10 +216,7 @@ export const ClasificatoriaPage = () => {
                         isVip ? VIP_AVATAR_BORDER_CLASS : 'border-surface-border dark:border-slate-700'
                       )}
                     >
-                      <AvatarImage
-                        src={player.profileImage}
-                        alt={player.name || player.username || 'Jugador'}
-                      />
+                      <AvatarImage src={player.profileImage} alt={player.name || player.username || 'Jugador'} />
                     </div>
                     {index === 0 && (
                       <div className="absolute -top-2 -right-1 text-lg text-amber-600 drop-shadow-lg dark:text-yellow-400">
@@ -257,7 +253,7 @@ export const ClasificatoriaPage = () => {
                         </span>
                       )}
                       {isCurrentUser && (
-                        <span className="border-app-ring/40 bg-app-ring/15 text-app-accent-strong rounded-full border px-2 py-0.5 text-[10px] font-semibold dark:text-app-accent-muted">
+                        <span className="border-app-ring/40 bg-app-ring/15 text-app-accent-strong dark:text-app-accent-muted rounded-full border px-2 py-0.5 text-[10px] font-semibold">
                           Tú
                         </span>
                       )}

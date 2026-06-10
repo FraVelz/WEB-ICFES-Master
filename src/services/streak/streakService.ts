@@ -1,9 +1,6 @@
 import GamificationSupabaseService from '@/services/supabase/GamificationSupabaseService';
 import { isSupabaseConfigured } from '@/services/persistence/supabaseConfigured';
-import {
-  consumeStreakShields,
-  getStreakShieldCount,
-} from '@/services/persistence/streakShieldPersistence';
+import { consumeStreakShields, getStreakShieldCount } from '@/services/persistence/streakShieldPersistence';
 import { DEMO_USER_ID } from '@/services/demo/demoCoins';
 import { getStoredExams, getStoredPractices } from '@/storage/progressStorage';
 

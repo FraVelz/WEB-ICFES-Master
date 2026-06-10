@@ -44,8 +44,8 @@ export const ShopItemCard = ({
     isDoubleXpActive
       ? 'border-orange-500/60 bg-orange-50 shadow-md shadow-orange-200/60 dark:border-orange-500/50 dark:bg-orange-500/5 dark:shadow-lg dark:shadow-orange-500/10'
       : isOwnedPermanent
-      ? 'border-green-600/35 bg-surface-elevated dark:border-green-500/30 dark:bg-slate-900/50'
-      : canAfford
+        ? 'border-green-600/35 bg-surface-elevated dark:border-green-500/30 dark:bg-slate-900/50'
+        : canAfford
           ? 'border-surface-border bg-surface-elevated hover:border-app-ring hover:shadow-app-ring/10 cursor-pointer hover:-translate-y-1 hover:shadow-xl dark:border-slate-700 dark:bg-slate-800/40 dark:hover:bg-slate-800/60'
           : 'border-surface-border bg-surface-elevated/60 cursor-pointer opacity-80 hover:opacity-100 dark:border-slate-800 dark:bg-slate-900/30 dark:opacity-70'
   );
@@ -75,8 +75,8 @@ export const ShopItemCard = ({
         ) : isPurchasedLogo && isEquipped ? (
           <span
             className={cn(
-              'bg-app-ring/20 flex items-center gap-1 rounded-full border border-app-ring/30 px-2 py-1',
-              'text-xs font-bold text-app-accent'
+              'bg-app-ring/20 border-app-ring/30 flex items-center gap-1 rounded-full border px-2 py-1',
+              'text-app-accent text-xs font-bold'
             )}
           >
             <Icon name="check" />
@@ -86,7 +86,7 @@ export const ShopItemCard = ({
           <span
             className={cn(
               'flex items-center gap-1 rounded-full border border-green-600/35 bg-green-100 px-2 py-1',
-              'text-xs font-bold text-green-800 dark:border-green-500/30 dark:bg-lesson-sci-glow-a/20 dark:text-green-400'
+              'dark:bg-lesson-sci-glow-a/20 text-xs font-bold text-green-800 dark:border-green-500/30 dark:text-green-400'
             )}
           >
             <Icon name="check" />
@@ -179,7 +179,9 @@ export const ShopItemCard = ({
             <Icon name="coins" />
             {item.price}
             {streakShieldCount > 0 && (
-              <span className="text-xs opacity-80">({streakShieldCount}/{MAX_STREAK_SHIELDS})</span>
+              <span className="text-xs opacity-80">
+                ({streakShieldCount}/{MAX_STREAK_SHIELDS})
+              </span>
             )}
           </div>
         ) : (

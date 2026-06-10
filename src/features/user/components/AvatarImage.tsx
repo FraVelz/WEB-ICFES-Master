@@ -30,15 +30,7 @@ export function AvatarImage({ src, alt, className, fallback, sizes = '96px' }: A
   }
 
   if (typeof src !== 'string') {
-    return (
-      <Image
-        src={src}
-        alt={alt}
-        fill
-        sizes={sizes}
-        className={cn('object-cover', className)}
-      />
-    );
+    return <Image src={src} alt={alt} fill sizes={sizes} className={cn('object-cover', className)} />;
   }
 
   const trimmed = src.trim();

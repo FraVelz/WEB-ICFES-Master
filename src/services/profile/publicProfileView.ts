@@ -3,18 +3,14 @@ import { getLevelInfo } from '@/services/gamification/gamificationUtils';
 import { RANKS } from '@/shared/constants/ranks';
 import { normalizeAchievementsRecord } from '@/services/achievements/achievementProgressService';
 import { hasVipBadge } from '@/features/store/constants/vipBadge';
-import {
-  buildProfileStoreHighlights,
-  type ProfileStoreHighlight,
-} from '@/features/user/utils/profileStoreHighlights';
+import { buildProfileStoreHighlights, type ProfileStoreHighlight } from '@/features/user/utils/profileStoreHighlights';
 import type { ImageSource } from '@/assets';
 import { resolveProfileAvatarSrc } from '@/features/user/utils/resolveProfileAvatar';
 import type { PublicProfilePayload } from './publicProfileServer';
 
 export type PublicProfileErrorCode = 'invalid_id' | 'not_found' | 'unavailable' | 'server' | 'network' | null;
 
-export const PUBLIC_PROFILE_UUID_REGEX =
-  /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+export const PUBLIC_PROFILE_UUID_REGEX = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 
 const levelToRankId = (level: number): string => {
   const rankOrder = Math.min(Math.max(level, 1), 7);
@@ -22,7 +18,9 @@ const levelToRankId = (level: number): string => {
   return rank?.id ?? 'novato';
 };
 
-function mergeAchievements(achProgress: Record<string, { current?: number; unlocked?: boolean; unlockedAt?: string | null }>) {
+function mergeAchievements(
+  achProgress: Record<string, { current?: number; unlocked?: boolean; unlockedAt?: string | null }>
+) {
   return ACHIEVEMENTS_DATA.map((a) => {
     const p = achProgress[a.id] ?? {};
     const current = p.current ?? 0;
@@ -102,9 +100,7 @@ export function buildPublicProfileViewState(
   }
 
   const levelInfo = getLevelInfo(payload.gamification.xp ?? 0);
-  const mergedAchievements = mergeAchievements(
-    normalizeAchievementsRecord(payload.gamification.achievements)
-  );
+  const mergedAchievements = mergeAchievements(normalizeAchievementsRecord(payload.gamification.achievements));
   const shopInventory = payload.gamification.shopInventory ?? [];
   const equippedLogoId = payload.gamification.equippedLogoId ?? null;
 
@@ -112,10 +108,7 @@ export function buildPublicProfileViewState(
     userId,
     errorCode: null,
     exists: true,
-    profileImage: resolveProfileAvatarSrc(
-      payload.profile.profileImage,
-      payload.gamification.equippedLogoId ?? null
-    ),
+    profileImage: resolveProfileAvatarSrc(payload.profile.profileImage, payload.gamification.equippedLogoId ?? null),
     name: payload.profile.username ?? payload.profile.displayName ?? 'Usuario',
     personalPhrase: payload.profile.bio ?? '¡Preparándome para el éxito!',
     createdAt: payload.profile.createdAt

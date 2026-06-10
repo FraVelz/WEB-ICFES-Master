@@ -4,14 +4,8 @@ import { useEffect } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 
 import { useAuth } from '@/features/auth/context/AuthContext';
-import {
-  buildLevelAssessmentUrl,
-  LEVEL_ASSESSMENT_PATH,
-} from '@/features/auth/constants/skillLevelRoutes';
-import {
-  getAssessmentScope,
-  hasCompletedLevelAssessment,
-} from '@/services/persistence/skillLevelPersistence';
+import { buildLevelAssessmentUrl, LEVEL_ASSESSMENT_PATH } from '@/features/auth/constants/skillLevelRoutes';
+import { getAssessmentScope, hasCompletedLevelAssessment } from '@/services/persistence/skillLevelPersistence';
 import { useUiSessionStore } from '@/store/uiSessionStore';
 
 /** Redirige a la evaluación inicial si el usuario demo o cuenta nueva aún no la completó. */

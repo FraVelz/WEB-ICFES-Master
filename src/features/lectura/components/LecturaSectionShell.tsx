@@ -52,7 +52,7 @@ export function LecturaSectionShell({ sectionId, children }: LecturaSectionShell
             'focus-visible:ring-offset-surface',
             read
               ? 'border-surface-border bg-surface-elevated text-on-surface-muted hover:text-on-surface hover:bg-surface-elevated/80 border'
-              : 'bg-app-accent text-white hover:brightness-110 shadow-lg shadow-app-accent/20'
+              : 'bg-app-accent shadow-app-accent/20 text-white shadow-lg hover:brightness-110'
           )}
         >
           <Icon name={read ? 'times' : 'book-open'} className="text-base" />

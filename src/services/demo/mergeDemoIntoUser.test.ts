@@ -97,7 +97,10 @@ describe('mergeDemoIntoUser', () => {
     storage.set('icfes_demo_gamification', JSON.stringify({ totalXP: 250 }));
     storage.set('icfes_level_assessment_done_demo', 'true');
     storage.set('icfes_skill_level_demo', 'intermediate');
-    storage.set('icfes_level_assessment_meta_demo', JSON.stringify({ level: 'intermediate', completedAt: '2026-06-01' }));
+    storage.set(
+      'icfes_level_assessment_meta_demo',
+      JSON.stringify({ level: 'intermediate', completedAt: '2026-06-01' })
+    );
 
     await mergeDemoIntoUser('user-abc');
 

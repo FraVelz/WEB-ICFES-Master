@@ -14,9 +14,6 @@ export function isPersonalLogoId(logoId: string | null | undefined): boolean {
 }
 
 export function createPersonalLogoId(): string {
-  const suffix =
-    typeof crypto !== 'undefined' && 'randomUUID' in crypto
-      ? crypto.randomUUID()
-      : String(Date.now());
+  const suffix = typeof crypto !== 'undefined' && 'randomUUID' in crypto ? crypto.randomUUID() : String(Date.now());
   return `${PERSONAL_LOGO_ID_PREFIX}${suffix}`;
 }

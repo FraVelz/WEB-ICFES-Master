@@ -44,8 +44,7 @@ export const ShopItemModal = ({
 }: ShopItemModalProps) => {
   const { processing, canAfford, isPurchased, isEquipped } = purchase;
   const isDoubleXpActive = item?.id === DOUBLE_XP_ITEM_ID && doubleXpRemainingMs > 0;
-  const isStreakShieldFull =
-    item?.id === STREAK_SHIELD_ITEM_ID && streakShieldCount >= MAX_STREAK_SHIELDS;
+  const isStreakShieldFull = item?.id === STREAK_SHIELD_ITEM_ID && streakShieldCount >= MAX_STREAK_SHIELDS;
   const overlayRef = useRef(null);
   const contentRef = useRef(null);
 
@@ -100,11 +99,7 @@ export const ShopItemModal = ({
         <div className="px-8 pt-12 pb-8 text-center">
           <h2 className="mb-2 text-2xl font-bold text-white">{item.name}</h2>
           <div className="mb-4 inline-block rounded-full bg-slate-800 px-3 py-1 text-xs font-bold tracking-wider text-slate-400 uppercase">
-            {item.category === 'powerup'
-              ? 'Consumible'
-              : item.category === 'logo'
-                ? 'Logo'
-                : 'Cosmético'}
+            {item.category === 'powerup' ? 'Consumible' : item.category === 'logo' ? 'Logo' : 'Cosmético'}
           </div>
 
           <p className="mb-8 leading-relaxed text-slate-300">{item.description}</p>
@@ -171,7 +166,7 @@ export const ShopItemModal = ({
                 processing
                   ? 'cursor-wait bg-slate-700 text-slate-400'
                   : canAfford
-                    ? 'cursor-pointer transform bg-linear-to-r from-yellow-500 to-orange-500 text-black shadow-lg shadow-orange-500/20 hover:-translate-y-0.5 hover:from-yellow-400 hover:to-orange-400 hover:shadow-orange-500/40'
+                    ? 'transform cursor-pointer bg-linear-to-r from-yellow-500 to-orange-500 text-black shadow-lg shadow-orange-500/20 hover:-translate-y-0.5 hover:from-yellow-400 hover:to-orange-400 hover:shadow-orange-500/40'
                     : 'cursor-not-allowed bg-slate-800 text-slate-500'
               )}
             >
