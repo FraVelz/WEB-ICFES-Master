@@ -1,6 +1,15 @@
 'use client';
 
-import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from 'react';
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useLayoutEffect,
+  useMemo,
+  useState,
+  type ReactNode,
+} from 'react';
+import { usePathname } from 'next/navigation';
 
 import { applyThemeToDocument, persistTheme, readStoredTheme, type AppTheme } from '@/features/theme/themeStorage';
 
@@ -14,10 +23,12 @@ const ThemeContext = createContext<ThemeContextValue | null>(null);
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
   const [theme, setThemeState] = useState<AppTheme>(() => readStoredTheme());
+  const pathname = usePathname();
 
-  useEffect(() => {
+  // useLayoutEffect + pathname: evita flash oscuro al navegar (Next puede resetear <html>)
+  useLayoutEffect(() => {
     applyThemeToDocument(theme);
-  }, [theme]);
+  }, [theme, pathname]);
 
   const setTheme = useCallback((next: AppTheme) => {
     setThemeState(next);

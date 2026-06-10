@@ -13,7 +13,7 @@ export const UnifiedAchievementsPage = () => {
   const { achievements, loading, totalXP, level, completedCount } = useGamification(scope);
 
   if (loading) {
-    return <LoadingState label="Cargando logros..." layout="page" />;
+    return <LoadingState label="Cargando logros..." layout="fill" />;
   }
 
   return (

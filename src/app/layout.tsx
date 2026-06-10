@@ -1,5 +1,4 @@
 import type { Metadata } from 'next';
-import Script from 'next/script';
 
 import './globals.css';
 
@@ -75,13 +74,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="es" className="dark" suppressHydrationWarning>
-      <body className="bg-surface text-on-surface m-0 box-border min-h-dvh p-0 font-sans antialiased">
-        <Script
-          id="theme-init"
-          strategy="beforeInteractive"
+    <html lang="es" suppressHydrationWarning>
+      <head>
+        <script
           dangerouslySetInnerHTML={{ __html: themeInitScript }}
+          suppressHydrationWarning
         />
+      </head>
+      <body className="bg-surface text-on-surface m-0 box-border min-h-dvh p-0 font-sans antialiased">
         <Providers>{children}</Providers>
         <VercelMetrics />
       </body>

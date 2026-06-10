@@ -42,7 +42,7 @@ export const PerfilNormal = () => {
   };
 
   if (loading) {
-    return <LoadingState label="Cargando tu perfil..." layout="page" />;
+    return <LoadingState label="Cargando tu perfil..." layout="fill" />;
   }
 
   return (

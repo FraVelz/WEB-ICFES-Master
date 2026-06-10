@@ -1,15 +1,10 @@
 import { Suspense } from 'react';
 import { ResetPasswordPage } from '@/features/auth';
+import { LoadingState } from '@/shared/components/LoadingState';
 
 export default function Page() {
   return (
-    <Suspense
-      fallback={
-        <div className="flex min-h-dvh items-center justify-center bg-slate-950">
-          <div className="text-app-accent animate-spin text-4xl">...</div>
-        </div>
-      }
-    >
+    <Suspense fallback={<LoadingState label="Cargando..." layout="page" />}>
       <ResetPasswordPage />
     </Suspense>
   );
