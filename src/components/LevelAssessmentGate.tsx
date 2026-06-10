@@ -1,11 +1,15 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 
 import { useAuth } from '@/features/auth/context/AuthContext';
 import { buildLevelAssessmentUrl, LEVEL_ASSESSMENT_PATH } from '@/features/auth/constants/skillLevelRoutes';
-import { getAssessmentScope, hasCompletedLevelAssessment } from '@/services/persistence/skillLevelPersistence';
+import {
+  getAssessmentScope,
+  getAssessmentScopeForSession,
+  hasCompletedLevelAssessment,
+} from '@/services/persistence/skillLevelPersistence';
 import { useUiSessionStore } from '@/store/uiSessionStore';
 
 /** Redirige a la evaluación inicial si el usuario demo o cuenta nueva aún no la completó. */
@@ -15,6 +19,7 @@ export function LevelAssessmentGate() {
   const demoMode = useUiSessionStore((s) => s.demoMode);
   const hydrated = useUiSessionStore((s) => s.hydrated);
   const { user, loading } = useAuth();
+  const checkVersionRef = useRef(0);
 
   useEffect(() => {
     if (!hydrated || loading) return;
@@ -23,19 +28,15 @@ export function LevelAssessmentGate() {
     const hasAccess = demoMode || !!user;
     if (!hasAccess) return;
 
-    let cancelled = false;
-
-    const scope = getAssessmentScope({ demoMode, userId: user?.uid });
+    const scopeOptions = getAssessmentScopeForSession(demoMode, user?.uid);
+    const scope = getAssessmentScope(scopeOptions);
+    const context = scopeOptions.demoMode && !user ? 'demo' : 'account';
+    const checkVersion = ++checkVersionRef.current;
 
     void hasCompletedLevelAssessment(scope, user?.uid).then((done) => {
-      if (cancelled || done) return;
-      const context = demoMode && !user ? 'demo' : 'account';
+      if (checkVersion !== checkVersionRef.current || done) return;
       router.replace(buildLevelAssessmentUrl(context));
     });
-
-    return () => {
-      cancelled = true;
-    };
   }, [demoMode, hydrated, loading, pathname, router, user]);
 
   return null;

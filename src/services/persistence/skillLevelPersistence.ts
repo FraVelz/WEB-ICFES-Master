@@ -32,6 +32,12 @@ export function getAssessmentOptionsFromContext(
   return { demoMode: isDemo, userId };
 }
 
+/** Misma resolución de scope que login y /evaluacion-nivel (cuenta si hay sesión). */
+export function getAssessmentScopeForSession(demoMode: boolean, userId?: string | null): LevelAssessmentScopeOptions {
+  const context: LevelAssessmentContext = demoMode && !userId ? 'demo' : 'account';
+  return getAssessmentOptionsFromContext(context, demoMode, userId);
+}
+
 /** Redirect target when assessment is already done; null if the user still needs it. */
 export async function resolveLevelAssessmentRedirect(
   options: LevelAssessmentScopeOptions,

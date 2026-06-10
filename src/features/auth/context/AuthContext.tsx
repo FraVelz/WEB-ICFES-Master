@@ -81,6 +81,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       setUser(session?.user ? mapSupabaseUser(session.user) : null);
       if (session?.user) {
         setActiveStreakUserId(session.user.id);
+        clearDemoMode();
       }
       setLoading(false);
     });

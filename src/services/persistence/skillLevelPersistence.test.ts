@@ -1,6 +1,8 @@
 import { describe, expect, it, vi, beforeEach } from 'vitest';
 
 import {
+  getAssessmentScope,
+  getAssessmentScopeForSession,
   hasCompletedLevelAssessment,
   persistLevelAssessment,
   resolveLevelAssessmentRedirect,
@@ -89,6 +91,11 @@ describe('skillLevelPersistence', () => {
   it('resolveLevelAssessmentRedirect devuelve null si la evaluación no está hecha', async () => {
     const redirect = await resolveLevelAssessmentRedirect({ demoMode: true }, null);
     expect(redirect).toBeNull();
+  });
+
+  it('getAssessmentScopeForSession prioriza cuenta si hay userId aunque demoMode esté activo', () => {
+    const scopeOptions = getAssessmentScopeForSession(true, 'user-1');
+    expect(getAssessmentScope(scopeOptions)).toBe('user-1');
   });
 
   it('resolveLevelAssessmentRedirect devuelve ruta según nivel guardado', async () => {
