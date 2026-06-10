@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import { Icon } from '@/shared/components/Icon';
 import { FULL_PAGE_SHELL_CLASS } from '@/shared/constants/pageShell';
 import { cn } from '@/utils/cn';
-import type { PublicProfileErrorCode } from '../../hooks/usePublicUserProfile';
+import type { PublicProfileErrorCode } from '@/services/profile/publicProfileView';
 
 type PublicProfileErrorStateProps = {
   errorCode: PublicProfileErrorCode;

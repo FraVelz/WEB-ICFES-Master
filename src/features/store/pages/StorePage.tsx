@@ -243,18 +243,18 @@ export function StorePage() {
           onBuy={handleBuy}
           onEquip={handleEquip}
           onUnequip={handleUnequip}
-          processing={processing}
+          purchase={{
+            processing,
+            canAfford:
+              !!selectedItem &&
+              coins >= selectedItem.price &&
+              (selectedItem.id !== STREAK_SHIELD_ITEM_ID || streakShieldCount < MAX_STREAK_SHIELDS),
+            isPurchased:
+              !!selectedItem && selectedItem.category !== 'powerup' && hasItem(selectedItem.id),
+            isEquipped: !!selectedItem && isEquipped(selectedItem.id),
+          }}
           coins={coins}
-          canAfford={
-            !!selectedItem &&
-            coins >= selectedItem.price &&
-            (selectedItem.id !== STREAK_SHIELD_ITEM_ID || streakShieldCount < MAX_STREAK_SHIELDS)
-          }
           streakShieldCount={streakShieldCount}
-          isPurchased={
-            !!selectedItem && selectedItem.category !== 'powerup' && hasItem(selectedItem.id)
-          }
-          isEquipped={!!selectedItem && isEquipped(selectedItem.id)}
           doubleXpRemainingMs={doubleXpRemainingMs}
         />
       </div>

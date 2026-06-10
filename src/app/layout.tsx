@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import Script from 'next/script';
 
 import './globals.css';
 
@@ -75,13 +76,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es" suppressHydrationWarning>
-      <head>
-        <script
-          dangerouslySetInnerHTML={{ __html: themeInitScript }}
-          suppressHydrationWarning
-        />
-      </head>
       <body className="bg-surface text-on-surface m-0 box-border min-h-dvh p-0 font-sans antialiased">
+        <Script
+          id="theme-init"
+          strategy="beforeInteractive"
+          dangerouslySetInnerHTML={{ __html: themeInitScript }}
+        />
         <Providers>{children}</Providers>
         <VercelMetrics />
       </body>

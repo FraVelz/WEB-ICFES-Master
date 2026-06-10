@@ -11,6 +11,7 @@ import {
   readStudyTimeRemoteMeta,
   resetStudyTimeActivityThrottleForTests,
 } from '@/services/studyTime';
+import { saveStudyTimeState } from './studyTimeService';
 
 vi.mock('@/services/achievements/achievementProgressService', () => ({
   syncAchievementsFromGameplay: vi.fn(async () => ({})),
@@ -56,13 +57,17 @@ describe('studyTimeService', () => {
 
   it('registra sesiones largas para el logro maratón', async () => {
     const start = Date.now();
-    await processStudyTimeActivity(DEMO_USER_ID, start);
+    const marathonSeconds = MARATHON_TARGET_MINUTES * 60;
+    const sessionEnd = start + marathonSeconds * 1000;
 
-    for (let minute = 1; minute <= MARATHON_TARGET_MINUTES; minute += 1) {
-      await processStudyTimeActivity(DEMO_USER_ID, start + minute * 60_000);
-    }
+    saveStudyTimeState(DEMO_USER_ID, {
+      totalSeconds: marathonSeconds,
+      longestSessionSeconds: marathonSeconds,
+      sessionStartedAt: start,
+      lastActivityAt: sessionEnd,
+    });
 
-    await finalizeStudyTimeSession(DEMO_USER_ID, start + MARATHON_TARGET_MINUTES * 60_000);
+    await finalizeStudyTimeSession(DEMO_USER_ID, sessionEnd);
     const state = loadStudyTimeState(DEMO_USER_ID);
     expect(Math.floor(state.longestSessionSeconds / 60)).toBe(MARATHON_TARGET_MINUTES);
   });

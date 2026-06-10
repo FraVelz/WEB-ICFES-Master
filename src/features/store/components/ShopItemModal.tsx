@@ -10,6 +10,13 @@ import type { ShopItem } from '../data/shopItems';
 import { formatCountdown } from '../utils/formatCountdown';
 import { ShopItemPreview } from './ShopItemPreview';
 
+export type ShopItemModalPurchase = {
+  processing: boolean;
+  canAfford: boolean;
+  isPurchased: boolean;
+  isEquipped: boolean;
+};
+
 export interface ShopItemModalProps {
   item: ShopItem | null;
   isOpen: boolean;
@@ -17,11 +24,8 @@ export interface ShopItemModalProps {
   onBuy: (item: ShopItem) => void | Promise<void>;
   onEquip?: (item: ShopItem) => void | Promise<void>;
   onUnequip?: () => void | Promise<void>;
-  processing: boolean;
+  purchase: ShopItemModalPurchase;
   coins: number;
-  canAfford: boolean;
-  isPurchased: boolean;
-  isEquipped?: boolean;
   doubleXpRemainingMs?: number;
   streakShieldCount?: number;
 }
@@ -33,14 +37,12 @@ export const ShopItemModal = ({
   onBuy,
   onEquip,
   onUnequip,
-  processing,
+  purchase,
   coins,
-  canAfford,
-  isPurchased,
-  isEquipped = false,
   doubleXpRemainingMs = 0,
   streakShieldCount = 0,
 }: ShopItemModalProps) => {
+  const { processing, canAfford, isPurchased, isEquipped } = purchase;
   const isDoubleXpActive = item?.id === DOUBLE_XP_ITEM_ID && doubleXpRemainingMs > 0;
   const isStreakShieldFull =
     item?.id === STREAK_SHIELD_ITEM_ID && streakShieldCount >= MAX_STREAK_SHIELDS;

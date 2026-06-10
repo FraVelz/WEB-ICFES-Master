@@ -54,14 +54,22 @@ export async function addStreakShield(userId: string): Promise<number> {
 }
 
 export async function consumeStreakShield(userId: string): Promise<number> {
+  return consumeStreakShields(userId, 1);
+}
+
+export async function consumeStreakShields(userId: string, count: number): Promise<number> {
+  if (count <= 0) return getStreakShieldCount(userId);
+
   const current = await getStreakShieldCount(userId);
   if (current <= 0) return 0;
 
+  const next = Math.max(0, current - count);
+
   if (isDemoUserId(userId)) {
-    return writeDemoShieldCount(current - 1);
+    return writeDemoShieldCount(next);
   }
 
-  const next = await GamificationSupabaseService.setStreakShieldCount(userId, current - 1);
-  emitStreakShieldChanged(next);
-  return next;
+  const saved = await GamificationSupabaseService.setStreakShieldCount(userId, next);
+  emitStreakShieldChanged(saved);
+  return saved;
 }

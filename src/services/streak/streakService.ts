@@ -1,7 +1,7 @@
 import GamificationSupabaseService from '@/services/supabase/GamificationSupabaseService';
 import { isSupabaseConfigured } from '@/services/persistence/supabaseConfigured';
 import {
-  consumeStreakShield,
+  consumeStreakShields,
   getStreakShieldCount,
 } from '@/services/persistence/streakShieldPersistence';
 import { DEMO_USER_ID } from '@/services/demo/demoCoins';
@@ -56,18 +56,21 @@ function resolveShieldUserId(scope: StreakScope): string {
 async function applyStreakProtectorsIfNeeded(scope: StreakScope, state: StreakState): Promise<StreakState> {
   const userId = resolveShieldUserId(scope);
   let dates = [...state.dates];
-  let shields = await getStreakShieldCount(userId);
-  let used = false;
+  const shields = await getStreakShieldCount(userId);
+  const filledDays: string[] = [];
+  let remainingShields = shields;
 
-  while (shields > 0) {
+  while (remainingShields > 0) {
     const missedDay = findMissedStreakDayToProtect(dates);
     if (!missedDay) break;
     dates = [...dates, missedDay];
-    shields = await consumeStreakShield(userId);
-    used = true;
+    filledDays.push(missedDay);
+    remainingShields -= 1;
   }
 
-  if (!used) return state;
+  if (filledDays.length === 0) return state;
+
+  await consumeStreakShields(userId, filledDays.length);
   return persistStreak(scope, { ...state, dates });
 }
 

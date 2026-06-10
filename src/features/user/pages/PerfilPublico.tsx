@@ -1,11 +1,11 @@
 'use client';
 
 import { useState } from 'react';
-import { useSearchParams, useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { cn } from '@/utils/cn';
 import { Icon } from '@/shared/components/Icon';
-import { LoadingState } from '@/shared/components/LoadingState';
-import { usePublicUserProfile } from '../hooks/usePublicUserProfile';
+import { useAuth } from '@/features/auth/context/AuthContext';
+import type { PublicProfileViewState } from '@/services/profile/publicProfileView';
 import { ProfilePageLayout } from '../components/profile/ProfilePageLayout';
 import { ProfileHeroCard } from '../components/profile/ProfileHeroCard';
 import { ProfileCoursesSection } from '../components/profile/ProfileCoursesSection';
@@ -14,11 +14,17 @@ import { ProfileAchievementsSection } from '../components/profile/ProfileAchieve
 import { PublicProfileErrorState } from '../components/profile/PublicProfileErrorState';
 import { PublicProfileChrome } from '../components/profile/PublicProfileChrome';
 
-export const PerfilPublico = () => {
-  const searchParams = useSearchParams();
-  const userId = searchParams.get('userId');
+type PerfilPublicoProps = {
+  view: PublicProfileViewState;
+};
+
+export const PerfilPublico = ({ view }: PerfilPublicoProps) => {
   const router = useRouter();
+  const { user: authUser } = useAuth();
   const {
+    userId,
+    errorCode,
+    exists,
     profileImage,
     name,
     personalPhrase,
@@ -28,12 +34,9 @@ export const PerfilPublico = () => {
     levelInfo,
     achievements,
     coursesProgress,
-    loading,
-    exists,
-    errorCode,
-    isOwnProfile,
-  } = usePublicUserProfile(userId);
+  } = view;
 
+  const isOwnProfile = Boolean(authUser?.uid && userId === authUser.uid);
   const [copied, setCopied] = useState(false);
   const [reported, setReported] = useState(false);
 
@@ -46,10 +49,6 @@ export const PerfilPublico = () => {
         </div>
       </div>
     );
-  }
-
-  if (loading) {
-    return <LoadingState label="Cargando perfil público..." layout="page" />;
   }
 
   if (!exists) {

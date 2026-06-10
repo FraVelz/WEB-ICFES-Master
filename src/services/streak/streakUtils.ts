@@ -107,7 +107,7 @@ export function findMissedStreakDayToProtect(dates: string[]): string | null {
   if (normalized.includes(today) || normalized.includes(yesterday)) return null;
   if (normalized.length === 0) return null;
 
-  const lastDate = [...normalized].sort((a, b) => b.localeCompare(a))[0];
+  const lastDate = normalized.reduce((latest, date) => (date > latest ? date : latest));
   const nextDay = new Date(`${lastDate}T12:00:00`);
   nextDay.setDate(nextDay.getDate() + 1);
   const missedDay = getLocalDateString(nextDay);

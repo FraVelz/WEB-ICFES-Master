@@ -87,7 +87,7 @@ function LogoTile({ id, name, image, color, equipped, processing, onSelect, onDe
 export function SettingsLogosPanel() {
   const { user } = useUserSettingsContext();
   const { inventory, equippedLogoId, processing, equipLogo, unequipLogo } = useShop();
-  const { logos: personalLogos, userId, refresh: refreshPersonalLogos } = usePersonalLogos();
+  const { logos: personalLogos, userId } = usePersonalLogos();
   const ownedShopLogos = listOwnedLogoItems(inventory);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const [feedback, setFeedback] = useState<{ text: string; type: 'success' | 'error' } | null>(null);
@@ -131,7 +131,6 @@ export function SettingsLogosPanel() {
     try {
       const image = await readImageFileAsDataUrl(file);
       await addPersonalLogo(userId, image, 'Logo personal');
-      await refreshPersonalLogos();
       notify('Logo personal guardado');
     } catch (err) {
       notify(err instanceof Error ? err.message : 'No se pudo guardar el logo', 'error');
@@ -154,7 +153,6 @@ export function SettingsLogosPanel() {
 
     try {
       await addPersonalLogo(userId, profileImage, 'Desde perfil');
-      await refreshPersonalLogos();
       notify('Foto de perfil guardada como logo');
     } catch (err) {
       notify(err instanceof Error ? err.message : 'No se pudo guardar el logo', 'error');
@@ -165,7 +163,6 @@ export function SettingsLogosPanel() {
     if (!userId) return;
     try {
       await removePersonalLogo(userId, logo.id);
-      await refreshPersonalLogos();
       notify('Logo personal eliminado');
     } catch (err) {
       notify(err instanceof Error ? err.message : 'No se pudo eliminar el logo', 'error');
