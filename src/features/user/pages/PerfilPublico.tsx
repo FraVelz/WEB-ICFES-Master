@@ -1,10 +1,14 @@
 'use client';
 
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { cn } from '@/utils/cn';
 import { Icon } from '@/shared/components/Icon';
 import { useAuth } from '@/features/auth/context/AuthContext';
+import { useShop } from '@/features/store/hooks/useShop';
+import { useVipBadge } from '@/features/store/hooks/useVipBadge';
+import { hasVipBadge as checkVipBadge } from '@/features/store/constants/vipBadge';
+import { buildProfileStoreHighlights } from '@/features/user/utils/profileStoreHighlights';
 import type { PublicProfileViewState } from '@/services/profile/publicProfileView';
 import { ProfilePageLayout } from '../components/profile/ProfilePageLayout';
 import { ProfileHeroCard } from '../components/profile/ProfileHeroCard';
@@ -14,6 +18,7 @@ import { ProfileAchievementsSection } from '../components/profile/ProfileAchieve
 import { ProfileStoreHighlights } from '../components/profile/ProfileStoreHighlights';
 import { PublicProfileErrorState } from '../components/profile/PublicProfileErrorState';
 import { PublicProfileChrome } from '../components/profile/PublicProfileChrome';
+import { ReportUserDialog } from '../components/ReportUserDialog';
 
 const profileActionButtonClass = cn(
   'flex cursor-pointer items-center gap-2 rounded-lg border border-surface-border bg-surface-elevated p-2 text-sm font-medium',
@@ -46,8 +51,19 @@ export const PerfilPublico = ({ view }: PerfilPublicoProps) => {
   } = view;
 
   const isOwnProfile = Boolean(authUser?.uid && userId === authUser.uid);
+  const ownVip = useVipBadge();
+  const { inventory, equippedLogoId } = useShop();
   const [copied, setCopied] = useState(false);
-  const [reported, setReported] = useState(false);
+  const [reportDialogOpen, setReportDialogOpen] = useState(false);
+  const [reportAcknowledged, setReportAcknowledged] = useState(false);
+
+  const displayStoreHighlights = useMemo(() => {
+    if (storeHighlights.length > 0) return storeHighlights;
+    if (isOwnProfile) return buildProfileStoreHighlights(inventory, equippedLogoId);
+    return [];
+  }, [storeHighlights, isOwnProfile, inventory, equippedLogoId]);
+
+  const displayVip = hasVipBadge || (isOwnProfile && (ownVip || checkVipBadge(inventory)));
 
   if (!userId || errorCode === 'invalid_id') {
     return (
@@ -78,11 +94,13 @@ export const PerfilPublico = ({ view }: PerfilPublicoProps) => {
     });
   };
 
-  const handleReport = () => {
-    if (window.confirm(`¿Deseas reportar al usuario ${name}?`)) {
-      setReported(true);
-      setTimeout(() => setReported(false), 3000);
-    }
+  const handleReportClick = () => {
+    setReportDialogOpen(true);
+  };
+
+  const handleReportSuccess = () => {
+    setReportAcknowledged(true);
+    window.setTimeout(() => setReportAcknowledged(false), 4000);
   };
 
   return (
@@ -114,36 +132,38 @@ export const PerfilPublico = ({ view }: PerfilPublicoProps) => {
         totalXP={totalXP}
         levelInfo={levelInfo}
         accent="purple"
-        isVip={hasVipBadge}
+        isVip={displayVip}
         headerActions={
           <>
             <button type="button" onClick={handleShare} className={profileActionButtonClass} title="Copiar enlace">
               <Icon name={copied ? 'check' : 'share-nodes'} />
               <span className="hidden sm:inline">{copied ? '¡Copiado!' : 'Compartir'}</span>
             </button>
-            <button
-              type="button"
-              onClick={handleReport}
-              className={cn(
-                'border-surface-border bg-surface-elevated cursor-pointer rounded-lg border p-2 transition-colors',
-                'hover:bg-red-50 dark:border-transparent dark:bg-slate-800 dark:hover:bg-red-900/30',
-                reported
-                  ? 'text-red-600 dark:text-red-500'
-                  : 'text-on-surface-muted hover:text-red-600 dark:hover:text-red-400'
-              )}
-              title="Reportar usuario"
-            >
-              <Icon name="flag" />
-            </button>
+            {!isOwnProfile && (
+              <button
+                type="button"
+                onClick={handleReportClick}
+                className={cn(
+                  'border-surface-border bg-surface-elevated cursor-pointer rounded-lg border p-2 transition-colors',
+                  'hover:bg-red-50 dark:border-transparent dark:bg-slate-800 dark:hover:bg-red-900/30',
+                  reportAcknowledged
+                    ? 'text-red-600 dark:text-red-500'
+                    : 'text-on-surface-muted hover:text-red-600 dark:hover:text-red-400'
+                )}
+                title={reportAcknowledged ? 'Reporte enviado' : 'Reportar usuario'}
+              >
+                <Icon name={reportAcknowledged ? 'check' : 'flag'} />
+              </button>
+            )}
           </>
         }
       />
 
       <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
         <div className="space-y-8 lg:col-span-2">
-          {storeHighlights.length > 0 && (
+          {displayStoreHighlights.length > 0 && (
             <ProfileStoreHighlights
-              highlights={storeHighlights}
+              highlights={displayStoreHighlights}
               title="Colección de la tienda"
               emptyMessage="Este usuario aún no tiene ítems de la tienda."
             />
@@ -164,6 +184,17 @@ export const PerfilPublico = ({ view }: PerfilPublicoProps) => {
           <ProfileAchievementsSection achievements={achievements} />
         </div>
       </div>
+
+      <ReportUserDialog
+        isOpen={reportDialogOpen}
+        reportedUserId={userId}
+        reportedUserName={name}
+        profileUrl=""
+        isAuthenticated={Boolean(authUser?.uid)}
+        reporterEmail={authUser?.email}
+        onClose={() => setReportDialogOpen(false)}
+        onSuccess={handleReportSuccess}
+      />
     </ProfilePageLayout>
   );
 };

@@ -84,9 +84,13 @@ async function fetchViaPublicRpc(userId: string): Promise<PublicProfilePayload |
       msg.includes('function public.get_public_profile') ||
       msg.includes('schema cache');
 
-    if (missingFunction) {
+    const overloadConflict = msg.includes('Could not choose the best candidate function');
+
+    if (missingFunction || overloadConflict) {
       console.error(
-        'public profile RPC missing: ejecuta supabase/migrations/20260609120000_public_profile_rpc.sql y NOTIFY pgrst'
+        overloadConflict
+          ? 'get_public_profile overload (uuid/text): ejecuta supabase/migrations/20260610160000_fix_get_public_profile_overload.sql'
+          : 'public profile RPC missing: ejecuta supabase/migrations/20260609120000_public_profile_rpc.sql y NOTIFY pgrst'
       );
       return null;
     }
@@ -117,21 +121,58 @@ async function fetchViaPublicRpc(userId: string): Promise<PublicProfilePayload |
   };
 }
 
-/** Consulta perfil público sin sesión del visitante (service role o RPC anónima). */
-export async function fetchPublicProfile(userId: string): Promise<PublicProfilePayload | null> {
-  // 1) RPC anónima (funciona sin service role si está creada en Supabase)
-  try {
-    const viaRpc = await fetchViaPublicRpc(userId);
-    if (viaRpc) return viaRpc;
-  } catch (err) {
-    console.error('public profile RPC failed, trying service role:', err);
+async function enrichShopGamification(userId: string, payload: PublicProfilePayload): Promise<PublicProfilePayload> {
+  if ((payload.gamification.shopInventory?.length ?? 0) > 0) {
+    return payload;
   }
 
-  // 2) Service role (desarrollo local con SUPABASE_SERVICE_ROLE_KEY)
+  const sb = createServiceClient();
+  if (!sb) return payload;
+
+  const { data: gamification } = await sb
+    .from('user_gamification')
+    .select('shop_inventory, equipped_logo_id')
+    .eq('user_id', userId)
+    .maybeSingle();
+
+  const shopInventory = Array.isArray(gamification?.shop_inventory)
+    ? gamification.shop_inventory.filter((entry): entry is string => typeof entry === 'string')
+    : [];
+
+  if (shopInventory.length === 0 && !gamification?.equipped_logo_id) {
+    return payload;
+  }
+
+  return {
+    ...payload,
+    gamification: {
+      ...payload.gamification,
+      equippedLogoId: gamification?.equipped_logo_id ?? payload.gamification.equippedLogoId ?? null,
+      shopInventory,
+    },
+  };
+}
+
+/** Consulta perfil público sin sesión del visitante (service role o RPC anónima). */
+export async function fetchPublicProfile(userId: string): Promise<PublicProfilePayload | null> {
+  // 1) Service role (local / server con SUPABASE_SERVICE_ROLE_KEY): datos completos
   try {
-    return await fetchViaServiceRole(userId);
+    const viaService = await fetchViaServiceRole(userId);
+    if (viaService) return viaService;
   } catch (err) {
     console.error('public profile service role:', err);
+  }
+
+  // 2) RPC anónima (producción); enriquecer shop si la RPC aún no incluye inventario
+  try {
+    const viaRpc = await fetchViaPublicRpc(userId);
+    if (viaRpc) {
+      return enrichShopGamification(userId, viaRpc);
+    }
+  } catch (err) {
+    console.error('public profile RPC failed:', err);
     throw err;
   }
+
+  return null;
 }

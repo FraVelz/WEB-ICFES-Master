@@ -1,6 +1,15 @@
 'use client';
 
-import { createContext, useCallback, useContext, useLayoutEffect, useMemo, useState, type ReactNode } from 'react';
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useLayoutEffect,
+  useMemo,
+  useRef,
+  useState,
+  type ReactNode,
+} from 'react';
 import { usePathname } from 'next/navigation';
 
 import { applyThemeToDocument, persistTheme, readStoredTheme, type AppTheme } from '@/features/theme/themeStorage';
@@ -13,12 +22,23 @@ type ThemeContextValue = {
 
 const ThemeContext = createContext<ThemeContextValue | null>(null);
 
+/** SSR + primer render cliente: mismo valor que el HTML del servidor (evita mismatch de hidratación). */
+const SSR_THEME_DEFAULT: AppTheme = 'dark';
+
 export function ThemeProvider({ children }: { children: ReactNode }) {
-  const [theme, setThemeState] = useState<AppTheme>(() => readStoredTheme());
+  const [theme, setThemeState] = useState<AppTheme>(SSR_THEME_DEFAULT);
   const pathname = usePathname();
+  const syncedFromStorage = useRef(false);
 
   // useLayoutEffect + pathname: evita flash oscuro al navegar (Next puede resetear <html>)
   useLayoutEffect(() => {
+    if (!syncedFromStorage.current) {
+      syncedFromStorage.current = true;
+      const stored = readStoredTheme();
+      setThemeState(stored);
+      applyThemeToDocument(stored);
+      return;
+    }
     applyThemeToDocument(theme);
   }, [theme, pathname]);
 
