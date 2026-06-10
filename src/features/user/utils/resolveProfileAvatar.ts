@@ -1,12 +1,18 @@
 import type { ImageSource } from '@/assets';
-import { getLogoItemImage } from '@/features/store/data/shopCatalog';
+import type { PersonalLogo } from '@/features/user/types/personalLogo.types';
+import { getEquippedLogoImage } from './equippedLogoImage';
 
-/** Foto subida > logo equipado > silueta por defecto. */
+/** Logo equipado > foto de perfil > silueta por defecto. */
 export function resolveProfileAvatarSrc(
   profileImage: string | null | undefined,
-  equippedLogoId: string | null | undefined
+  equippedLogoId: string | null | undefined,
+  personalLogos: PersonalLogo[] = []
 ): ImageSource | null {
+  const equipped = getEquippedLogoImage(equippedLogoId ?? null, personalLogos);
+  if (equipped) return equipped;
+
   const trimmed = profileImage?.trim();
   if (trimmed) return trimmed;
-  return getLogoItemImage(equippedLogoId ?? null);
+
+  return null;
 }

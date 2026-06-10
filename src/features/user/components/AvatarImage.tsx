@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { cn } from '@/utils/cn';
 import type { ImageSource } from '@/assets';
@@ -17,6 +17,10 @@ type AvatarImageProps = {
 
 export function AvatarImage({ src, alt, className, fallback, sizes = '96px' }: AvatarImageProps) {
   const [failed, setFailed] = useState(false);
+
+  useEffect(() => {
+    setFailed(false);
+  }, [src]);
 
   if (!src || failed) {
     if (fallback !== undefined) {

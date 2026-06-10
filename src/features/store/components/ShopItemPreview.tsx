@@ -47,7 +47,7 @@ export function ShopItemPreview({ item, variant = 'card', className }: ShopItemP
             className="object-cover"
           />
         ) : (
-          <Icon name={item.icon} className="text-4xl text-white" />
+          <Icon name={item.icon} className="text-4xl text-on-surface" />
         )}
       </div>
     </div>

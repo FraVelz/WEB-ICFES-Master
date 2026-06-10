@@ -7,7 +7,9 @@ import {
   addCoinsBalance,
   spendCoinsBalance,
   COINS_CHANGE_EVENT,
+  USER_PROFILE_CHANGE_EVENT,
   loadUserProfile,
+  type UserProfileChangeDetail,
 } from '@/services/persistence';
 import { useAuth } from '@/features/auth/context/AuthContext';
 import { useUiSessionStore } from '@/store/uiSessionStore';
@@ -85,7 +87,7 @@ export const useUser = () => {
     const onCoinsChanged = (event: Event) => {
       const detail = (event as CustomEvent<{ balance?: number }>).detail;
       if (detail?.balance != null) {
-        setVirtualMoney(detail.balance);
+        setCoinsBalance(detail.balance);
         return;
       }
       void loadCoins();
@@ -93,6 +95,28 @@ export const useUser = () => {
     window.addEventListener(COINS_CHANGE_EVENT, onCoinsChanged);
     return () => window.removeEventListener(COINS_CHANGE_EVENT, onCoinsChanged);
   }, [loadCoins]);
+
+  useEffect(() => {
+    const onProfileChanged = (event: Event) => {
+      const detail = (event as CustomEvent<UserProfileChangeDetail>).detail;
+      if (detail && (detail.profileImage !== undefined || detail.username !== undefined || detail.bio !== undefined)) {
+        setUser((prev) =>
+          prev
+            ? {
+                ...prev,
+                ...(detail.profileImage !== undefined ? { profileImage: detail.profileImage } : {}),
+                ...(detail.username !== undefined ? { username: detail.username ?? prev.username } : {}),
+                ...(detail.bio !== undefined ? { bio: detail.bio ?? prev.bio } : {}),
+              }
+            : prev
+        );
+        return;
+      }
+      void loadUserData();
+    };
+    window.addEventListener(USER_PROFILE_CHANGE_EVENT, onProfileChanged);
+    return () => window.removeEventListener(USER_PROFILE_CHANGE_EVENT, onProfileChanged);
+  }, [loadUserData]);
 
   const refreshUser = async () => {
     await loadUserData();

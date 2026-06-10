@@ -33,6 +33,15 @@ export function saveLecturaReadSection(scopeId: string, sectionId: LecturaSectio
   return next;
 }
 
+export function removeLecturaReadSection(scopeId: string, sectionId: LecturaSectionId): LecturaSectionId[] {
+  const current = loadLecturaReadSections(scopeId);
+  if (!current.includes(sectionId)) return current;
+  const next = current.filter((id) => id !== sectionId);
+  localStorage.setItem(storageKey(scopeId), JSON.stringify(next));
+  window.dispatchEvent(new CustomEvent(LECTURA_READ_CHANGE_EVENT, { detail: { scopeId, sectionId } }));
+  return next;
+}
+
 export function clearLecturaReadSections(scopeId: string): void {
   if (typeof window === 'undefined') return;
   localStorage.removeItem(storageKey(scopeId));

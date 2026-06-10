@@ -96,6 +96,28 @@ export function serializeStreakState(state: StreakState): string {
 }
 
 /** Derive YYYY-MM-DD dates from exam/practice attempt ISO strings. */
+/** Día perdido que un protector puede rellenar (solo un día por protector). */
+export function findMissedStreakDayToProtect(dates: string[]): string | null {
+  if (calculateCurrentStreak(dates) > 0) return null;
+
+  const today = getLocalDateString();
+  const yesterday = getLocalDateString(new Date(Date.now() - 86400000));
+  const normalized = normalizeStreakDates(dates);
+
+  if (normalized.includes(today) || normalized.includes(yesterday)) return null;
+  if (normalized.length === 0) return null;
+
+  const lastDate = [...normalized].sort((a, b) => b.localeCompare(a))[0];
+  const nextDay = new Date(`${lastDate}T12:00:00`);
+  nextDay.setDate(nextDay.getDate() + 1);
+  const missedDay = getLocalDateString(nextDay);
+
+  if (missedDay >= today) return null;
+  if (normalized.includes(missedDay)) return null;
+
+  return missedDay;
+}
+
 export function datesFromAttemptIsoStrings(isoDates: (string | undefined)[]): string[] {
   const out: string[] = [];
   for (const iso of isoDates) {

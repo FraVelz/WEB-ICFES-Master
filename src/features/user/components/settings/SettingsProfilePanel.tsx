@@ -1,8 +1,7 @@
 import { cn } from '@/utils/cn';
 import { Icon } from '@/shared/components/Icon';
 import { AvatarImage } from '@/features/user/components/AvatarImage';
-import { useEquippedLogoId } from '@/features/store/hooks/useEquippedLogoId';
-import { resolveProfileAvatarSrc } from '@/features/user/utils/resolveProfileAvatar';
+import { useResolvedProfileAvatar } from '@/features/user/hooks/useResolvedProfileAvatar';
 import { useUserSettingsContext } from '@/features/user/context/UserSettingsContext';
 import { SettingsSection } from './SettingsSection';
 
@@ -20,8 +19,7 @@ export function SettingsProfilePanel() {
     handleImageUpload,
     handleRemoveProfileImage,
   } = useUserSettingsContext();
-  const equippedLogoId = useEquippedLogoId();
-  const avatarSrc = resolveProfileAvatarSrc(user?.profileImage, equippedLogoId);
+  const avatarSrc = useResolvedProfileAvatar(user?.profileImage);
 
   return (
     <div className="lg:sticky lg:top-24">

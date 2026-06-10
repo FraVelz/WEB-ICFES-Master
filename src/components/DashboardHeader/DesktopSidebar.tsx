@@ -6,8 +6,7 @@ import { Icon } from '@/shared/components/Icon';
 import { AvatarImage } from '@/features/user/components/AvatarImage';
 import { isAccountOnlyPath } from '@/features/auth/constants/accountOnlyRoutes';
 import { useUser } from '@/features/user/hooks/useUser';
-import { useEquippedLogoId } from '@/features/store/hooks/useEquippedLogoId';
-import { resolveProfileAvatarSrc } from '@/features/user/utils/resolveProfileAvatar';
+import { useResolvedProfileAvatar } from '@/features/user/hooks/useResolvedProfileAvatar';
 import { useUiSessionStore } from '@/store/uiSessionStore';
 import { cn } from '@/utils/cn';
 import { FOCUS_RING, isNavOptionActive, isNavPathActive, mainNavOptions, secondaryNavOptions, type NavOption } from './constants';
@@ -88,8 +87,7 @@ function SidebarNavLink({
 export function DesktopSidebar({ className, sidebarExpanded, onToggleSidebar }: DesktopSidebarProps) {
   const pathname = usePathname();
   const { user, rank, coinsBalance } = useUser();
-  const equippedLogoId = useEquippedLogoId();
-  const avatarSrc = resolveProfileAvatarSrc(user?.profileImage, equippedLogoId);
+  const avatarSrc = useResolvedProfileAvatar(user?.profileImage);
   const demoMode = useUiSessionStore((s) => s.demoMode);
   const isLockedInDemo = (path: string) => demoMode && isAccountOnlyPath(path);
   const isProfileActive = isNavPathActive(pathname, '/perfil');
@@ -204,11 +202,11 @@ export function DesktopSidebar({ className, sidebarExpanded, onToggleSidebar }: 
         >
           <div
             className={cn(
-              'h-10 w-10 shrink-0 overflow-hidden rounded-full border-2 bg-slate-800',
+              'relative h-10 w-10 shrink-0 overflow-hidden rounded-full border-2 bg-slate-800',
               isProfileActive ? 'border-app-accent' : 'border-app-ring/30'
             )}
           >
-            <AvatarImage src={avatarSrc} alt="Profile" />
+            <AvatarImage src={avatarSrc} alt="Profile" sizes="40px" />
           </div>
           {sidebarExpanded && (
             <span className="min-w-0 overflow-hidden whitespace-nowrap">

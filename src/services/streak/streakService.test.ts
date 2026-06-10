@@ -3,6 +3,7 @@ import { describe, expect, it, beforeEach, vi } from 'vitest';
 import {
   calculateCurrentStreak,
   calculateLongestStreak,
+  findMissedStreakDayToProtect,
   getLocalDateString,
   mergeStreakStates,
   normalizeStreakDates,
@@ -43,6 +44,18 @@ describe('streakUtils', () => {
 
   it('calculateLongestStreak finds max consecutive run', () => {
     expect(calculateLongestStreak(['2026-06-01', '2026-06-02', '2026-06-03', '2026-06-10'])).toBe(3);
+  });
+
+  it('findMissedStreakDayToProtect detects one skipped day before today', () => {
+    const twoDaysAgo = getLocalDateString(new Date(Date.now() - 2 * 86400000));
+    const yesterday = getLocalDateString(new Date(Date.now() - 86400000));
+    expect(findMissedStreakDayToProtect([twoDaysAgo])).toBe(yesterday);
+  });
+
+  it('findMissedStreakDayToProtect returns null when streak is still active', () => {
+    const today = getLocalDateString();
+    const yesterday = getLocalDateString(new Date(Date.now() - 86400000));
+    expect(findMissedStreakDayToProtect([today, yesterday])).toBeNull();
   });
 
   it('mergeStreakStates unions dates and longest', () => {

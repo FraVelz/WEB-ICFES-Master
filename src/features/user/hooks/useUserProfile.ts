@@ -11,6 +11,7 @@ import {
   getStudyTimeStats,
   STUDY_TIME_UPDATED_EVENT,
 } from '@/services/studyTime';
+import { USER_PROFILE_CHANGE_EVENT, type UserProfileChangeDetail } from '@/services/persistence';
 
 const levelToRankId = (level: number): string => {
   const rankOrder = Math.min(Math.max(level, 1), 7);
@@ -151,6 +152,27 @@ export const useUserProfile = (targetUserId: string | null = null) => {
       cancelled = true;
     };
   }, [uid, authUser, isOwnProfile, authLoading]);
+
+  useEffect(() => {
+    if (!isOwnProfile) return;
+
+    const onProfileChanged = (event: Event) => {
+      const detail = (event as CustomEvent<UserProfileChangeDetail>).detail;
+      if (!detail) return;
+
+      setProfileData((prev) => ({
+        ...prev,
+        ...(detail.profileImage !== undefined ? { profileImage: detail.profileImage } : {}),
+        ...(detail.username !== undefined
+          ? { name: detail.username ?? prev.name }
+          : {}),
+        ...(detail.bio !== undefined ? { personalPhrase: detail.bio ?? prev.personalPhrase } : {}),
+      }));
+    };
+
+    window.addEventListener(USER_PROFILE_CHANGE_EVENT, onProfileChanged);
+    return () => window.removeEventListener(USER_PROFILE_CHANGE_EVENT, onProfileChanged);
+  }, [isOwnProfile]);
 
   const totalXPFromDB = typeof totalXP === 'number' ? totalXP : 0;
   const levelInfo = getLevelInfo(totalXPFromDB);

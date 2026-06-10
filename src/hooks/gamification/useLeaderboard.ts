@@ -1,8 +1,18 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import { getProgress, getCoinsBalance, COINS_CHANGE_EVENT } from '@/services/persistence';
+import { useState, useEffect, useCallback } from 'react';
+import {
+  getProgress,
+  getCoinsBalance,
+  COINS_CHANGE_EVENT,
+  getShopInventoryState,
+  SHOP_INVENTORY_CHANGE_EVENT,
+  type ShopInventoryState,
+} from '@/services/persistence';
 import { useAuth } from '@/features/auth/context/AuthContext';
+import { useUiSessionStore } from '@/store/uiSessionStore';
+import { resolveCoinsUserId } from '@/services/demo/demoCoins';
+import { hasVipBadge } from '@/features/store/constants/vipBadge';
 
 /**
  * Hook de clasificación - Versión local con datos mock
@@ -17,26 +27,36 @@ export interface LeaderboardPlayer {
   weeklyXP?: number;
   rank?: string;
   coinsBalance?: number;
+  hasVipBadge?: boolean;
 }
 
 export const useLeaderboard = (currentRankId = 'novato') => {
   const { user } = useAuth();
+  const demoMode = useUiSessionStore((state) => state.demoMode);
+  const coinsUserId = resolveCoinsUserId(user?.uid, demoMode);
   const [leaderboardData, setLeaderboardData] = useState<LeaderboardPlayer[]>([]);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const buildLeaderboard = async () => {
-      setLoading(true);
-      const progress = getProgress();
-      const coins = user?.uid ? await getCoinsBalance(user.uid) : 0;
-      const mockUsers = [
-        {
-          id: 'local_user',
-          displayName: 'Tú',
-          weeklyXP: Math.floor((progress?.totalCorrect || 0) * 10),
-          rank: 'novato',
-          coinsBalance: coins,
-        },
+  const buildLeaderboard = useCallback(async () => {
+    setLoading(true);
+    const progress = getProgress();
+    const coins = coinsUserId ? await getCoinsBalance(coinsUserId) : 0;
+    let userHasVip = false;
+    if (coinsUserId) {
+      const shopState = await getShopInventoryState(coinsUserId);
+      userHasVip = hasVipBadge(shopState.inventory);
+    }
+    const currentUserId = user?.uid ?? 'guest';
+    const mockUsers: LeaderboardPlayer[] = [
+      {
+        id: currentUserId,
+        displayName: 'Tú',
+        name: user?.displayName ?? undefined,
+        weeklyXP: Math.floor((progress?.totalCorrect || 0) * 10),
+        rank: 'novato',
+        coinsBalance: coins,
+        hasVipBadge: userHasVip,
+      },
         {
           id: 'm1',
           displayName: 'Estudiante Ejemplo 1',
@@ -67,25 +87,43 @@ export const useLeaderboard = (currentRankId = 'novato') => {
           weeklyXP: 90,
           rank: 'novato',
         },
-      ].sort((a, b) => (b.weeklyXP || 0) - (a.weeklyXP || 0));
-      setLeaderboardData(mockUsers);
-      setLoading(false);
-    };
-
-    buildLeaderboard();
-  }, [currentRankId, user?.uid]);
+    ].sort((a, b) => (b.weeklyXP || 0) - (a.weeklyXP || 0));
+    setLeaderboardData(mockUsers);
+    setLoading(false);
+  }, [coinsUserId, user?.displayName, user?.uid]);
 
   useEffect(() => {
-    if (!user?.uid) return;
+    void buildLeaderboard();
+  }, [buildLeaderboard, currentRankId]);
+
+  useEffect(() => {
+    if (!coinsUserId || !user?.uid) return;
     const onCoinsChanged = async () => {
-      const coins = await getCoinsBalance(user.uid);
+      const coins = await getCoinsBalance(coinsUserId);
       setLeaderboardData((prev) =>
-        prev.map((entry) => (entry.id === 'local_user' ? { ...entry, coinsBalance: coins } : entry))
+        prev.map((entry) => (entry.id === user.uid ? { ...entry, coinsBalance: coins } : entry))
       );
     };
     window.addEventListener(COINS_CHANGE_EVENT, onCoinsChanged);
     return () => window.removeEventListener(COINS_CHANGE_EVENT, onCoinsChanged);
-  }, [user?.uid]);
+  }, [coinsUserId, user?.uid]);
+
+  useEffect(() => {
+    if (!coinsUserId || !user?.uid) return;
+    const onInventoryChanged = (event: Event) => {
+      const detail = (event as CustomEvent<ShopInventoryState>).detail;
+      const vip = detail?.inventory ? hasVipBadge(detail.inventory) : null;
+      if (vip == null) {
+        void buildLeaderboard();
+        return;
+      }
+      setLeaderboardData((prev) =>
+        prev.map((entry) => (entry.id === user.uid ? { ...entry, hasVipBadge: vip } : entry))
+      );
+    };
+    window.addEventListener(SHOP_INVENTORY_CHANGE_EVENT, onInventoryChanged);
+    return () => window.removeEventListener(SHOP_INVENTORY_CHANGE_EVENT, onInventoryChanged);
+  }, [buildLeaderboard, coinsUserId, user?.uid]);
 
   return { leaderboardData, loading, error: null as Error | null };
 };

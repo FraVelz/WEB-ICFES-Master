@@ -12,8 +12,15 @@ import {
   setEquippedShopLogo,
   hasShopInventoryItem,
   SHOP_INVENTORY_CHANGE_EVENT,
+  activateDoubleXp,
+  canEquipLogo,
+  getStreakShieldCount,
+  addStreakShield,
+  STREAK_SHIELD_CHANGE_EVENT,
   type ShopInventoryState,
 } from '@/services/persistence';
+import { DOUBLE_XP_ITEM_ID } from '../constants/doubleXp';
+import { MAX_STREAK_SHIELDS, STREAK_SHIELD_ITEM_ID } from '../constants/streakShield';
 import type { ShopItem } from '../data/shopItems';
 
 function nextPurchaseId(item: ShopItem): string {
@@ -33,6 +40,7 @@ export const useShop = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [processing, setProcessing] = useState(false);
+  const [streakShieldCount, setStreakShieldCount] = useState(0);
 
   const applyInventoryState = useCallback((state: ShopInventoryState) => {
     setInventory(state.inventory);
@@ -58,12 +66,21 @@ export const useShop = () => {
     applyInventoryState(state);
   }, [applyInventoryState, coinsUserId]);
 
+  const loadStreakShields = useCallback(async () => {
+    if (!coinsUserId) {
+      setStreakShieldCount(0);
+      return;
+    }
+    const count = await getStreakShieldCount(coinsUserId);
+    setStreakShieldCount(count);
+  }, [coinsUserId]);
+
   useEffect(() => {
     const load = async () => {
       setLoading(true);
       setError(null);
       try {
-        await Promise.all([loadCoins(), loadInventory()]);
+        await Promise.all([loadCoins(), loadInventory(), loadStreakShields()]);
       } catch (err) {
         setError(err instanceof Error ? err.message : 'Error cargando la tienda');
       } finally {
@@ -71,7 +88,20 @@ export const useShop = () => {
       }
     };
     void load();
-  }, [coinsUserId, loadCoins, loadInventory]);
+  }, [coinsUserId, loadCoins, loadInventory, loadStreakShields]);
+
+  useEffect(() => {
+    const onShieldChanged = (event: Event) => {
+      const detail = (event as CustomEvent<{ count?: number }>).detail;
+      if (detail?.count != null) {
+        setStreakShieldCount(detail.count);
+        return;
+      }
+      void loadStreakShields();
+    };
+    window.addEventListener(STREAK_SHIELD_CHANGE_EVENT, onShieldChanged);
+    return () => window.removeEventListener(STREAK_SHIELD_CHANGE_EVENT, onShieldChanged);
+  }, [loadStreakShields]);
 
   useEffect(() => {
     const onCoinsChanged = (event: Event) => {
@@ -100,7 +130,7 @@ export const useShop = () => {
   }, [applyInventoryState, loadInventory]);
 
   const refreshData = async () => {
-    await Promise.all([loadCoins(), loadInventory()]);
+    await Promise.all([loadCoins(), loadInventory(), loadStreakShields()]);
   };
 
   const hasItem = (itemId: string) => hasShopInventoryItem(inventory, itemId);
@@ -112,6 +142,9 @@ export const useShop = () => {
     if (item.category !== 'powerup' && hasItem(item.id)) {
       throw new Error('Ya tienes este artículo');
     }
+    if (item.id === STREAK_SHIELD_ITEM_ID && streakShieldCount >= MAX_STREAK_SHIELDS) {
+      throw new Error(`Ya tienes el máximo de protectores de racha (${MAX_STREAK_SHIELDS})`);
+    }
     if (coins < item.price) {
       throw new Error('Monedas insuficientes');
     }
@@ -119,8 +152,15 @@ export const useShop = () => {
     setProcessing(true);
     try {
       await spendCoinsBalance(coinsUserId, item.price, `shop_${item.id}`);
-      const state = await addShopInventoryItem(coinsUserId, nextPurchaseId(item));
-      applyInventoryState(state);
+      if (item.id === DOUBLE_XP_ITEM_ID) {
+        await activateDoubleXp(coinsUserId);
+      } else if (item.id === STREAK_SHIELD_ITEM_ID) {
+        const count = await addStreakShield(coinsUserId);
+        setStreakShieldCount(count);
+      } else {
+        const state = await addShopInventoryItem(coinsUserId, nextPurchaseId(item));
+        applyInventoryState(state);
+      }
       return true;
     } finally {
       setProcessing(false);
@@ -129,7 +169,8 @@ export const useShop = () => {
 
   const equipLogo = async (logoId: string) => {
     if (!coinsUserId) throw new Error('Debes iniciar sesión o usar el modo demo');
-    if (!hasItem(logoId)) throw new Error('No tienes este logo');
+    const allowed = await canEquipLogo(coinsUserId, logoId, inventory);
+    if (!allowed) throw new Error('No tienes este logo');
     setProcessing(true);
     try {
       const state = await setEquippedShopLogo(coinsUserId, logoId);
@@ -163,6 +204,7 @@ export const useShop = () => {
     equipLogo,
     unequipLogo,
     shopItems: SHOP_ITEMS,
+    streakShieldCount,
     refreshData,
   };
 };

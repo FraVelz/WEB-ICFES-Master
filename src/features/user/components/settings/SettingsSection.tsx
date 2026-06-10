@@ -23,7 +23,7 @@ export function SettingsSection({
       {title && (
         <h2 className="border-surface-border text-on-surface mb-6 flex items-center gap-3 border-b pb-4 text-lg font-bold sm:text-xl">
           <div className="text-app-accent bg-surface-elevated flex h-8 w-8 items-center justify-center rounded-lg shadow-inner">
-            <Icon name={icon ?? 'settings'} />
+            <Icon name={icon ?? 'cog'} />
           </div>
           {title}
         </h2>
@@ -82,7 +82,7 @@ export function SettingOption({
                 : 'group-hover:text-app-accent bg-surface-elevated text-on-surface-muted group-hover:bg-surface-elevated'
             )}
           >
-            <Icon name={icon ?? 'settings'} />
+            <Icon name={icon ?? 'cog'} />
           </div>
         )}
         <div>

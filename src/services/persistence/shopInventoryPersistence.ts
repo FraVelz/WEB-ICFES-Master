@@ -6,6 +6,8 @@ import GamificationSupabaseService, {
 } from '@/services/supabase/GamificationSupabaseService';
 import { isDemoUserId } from '@/services/demo/demoCoins';
 import { isLogoShopItem } from '@/features/store/data/shopCatalog';
+import { isPersonalLogoId } from '@/features/user/types/personalLogo.types';
+import { canEquipLogo } from './personalLogosPersistence';
 
 export type { ShopInventoryState };
 export const SHOP_INVENTORY_CHANGE_EVENT = 'icfes:shop-inventory-changed';
@@ -114,14 +116,17 @@ export async function addShopInventoryItem(userId: string, itemId: string): Prom
 }
 
 export async function setEquippedShopLogo(userId: string, logoId: string | null): Promise<ShopInventoryState> {
-  if (logoId && !isLogoShopItem(logoId)) {
-    throw new Error('Solo puedes equipar logos de la tienda');
+  if (logoId && !isLogoShopItem(logoId) && !isPersonalLogoId(logoId)) {
+    throw new Error('Logo no válido');
   }
 
   if (isDemoUserId(userId)) {
     const current = readDemoShopState();
-    if (logoId && !current.inventory.includes(logoId)) {
-      throw new Error('No tienes este logo en tu inventario');
+    if (logoId) {
+      const allowed = await canEquipLogo(userId, logoId, current.inventory);
+      if (!allowed) {
+        throw new Error('No tienes este logo en tu inventario');
+      }
     }
     return writeDemoShopState({
       ...current,

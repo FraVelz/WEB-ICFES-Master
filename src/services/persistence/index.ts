@@ -23,6 +23,21 @@ export {
   SHOP_INVENTORY_CHANGE_EVENT,
   type ShopInventoryState,
 } from './shopInventoryPersistence';
+export { getDoubleXpExpiresAt, activateDoubleXp, DOUBLE_XP_CHANGE_EVENT } from './doubleXpPersistence';
+export {
+  getStreakShieldCount,
+  addStreakShield,
+  consumeStreakShield,
+  STREAK_SHIELD_CHANGE_EVENT,
+} from './streakShieldPersistence';
+export {
+  getPersonalLogos,
+  addPersonalLogo,
+  removePersonalLogo,
+  canEquipLogo,
+  PERSONAL_LOGOS_CHANGE_EVENT,
+  type PersonalLogosChangeDetail,
+} from './personalLogosPersistence';
 export { loadProgressViewState, resetProgressData, type ProgressViewState } from './progressPersistence';
 export { getExamById, resetUserExams, getUserExamsList } from './examPersistence';
 export {
@@ -33,6 +48,9 @@ export {
   setUserProfileImage,
   addUserMoney,
   spendUserMoney,
+  USER_PROFILE_CHANGE_EVENT,
+  emitUserProfileChanged,
+  type UserProfileChangeDetail,
 } from './userPersistence';
 export { getAggregatedUserData } from './userDataBundle';
 export {

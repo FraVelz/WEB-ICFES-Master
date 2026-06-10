@@ -4,7 +4,10 @@ import { cn } from '@/utils/cn';
 import React, { useEffect, useRef } from 'react';
 import { Icon } from '@/shared/components/Icon';
 import { gsap } from '@/lib/gsap';
+import { DOUBLE_XP_ITEM_ID } from '../constants/doubleXp';
+import { MAX_STREAK_SHIELDS, STREAK_SHIELD_ITEM_ID } from '../constants/streakShield';
 import type { ShopItem } from '../data/shopItems';
+import { formatCountdown } from '../utils/formatCountdown';
 import { ShopItemPreview } from './ShopItemPreview';
 
 export interface ShopItemModalProps {
@@ -15,9 +18,12 @@ export interface ShopItemModalProps {
   onEquip?: (item: ShopItem) => void | Promise<void>;
   onUnequip?: () => void | Promise<void>;
   processing: boolean;
+  coins: number;
   canAfford: boolean;
   isPurchased: boolean;
   isEquipped?: boolean;
+  doubleXpRemainingMs?: number;
+  streakShieldCount?: number;
 }
 
 export const ShopItemModal = ({
@@ -28,10 +34,16 @@ export const ShopItemModal = ({
   onEquip,
   onUnequip,
   processing,
+  coins,
   canAfford,
   isPurchased,
   isEquipped = false,
+  doubleXpRemainingMs = 0,
+  streakShieldCount = 0,
 }: ShopItemModalProps) => {
+  const isDoubleXpActive = item?.id === DOUBLE_XP_ITEM_ID && doubleXpRemainingMs > 0;
+  const isStreakShieldFull =
+    item?.id === STREAK_SHIELD_ITEM_ID && streakShieldCount >= MAX_STREAK_SHIELDS;
   const overlayRef = useRef(null);
   const contentRef = useRef(null);
 
@@ -46,6 +58,9 @@ export const ShopItemModal = ({
   }, [isOpen]);
 
   if (!isOpen || !item) return null;
+
+  const isConsumible = item.category === 'powerup';
+  const showBuyAction = isConsumible || !isPurchased;
 
   return (
     <div
@@ -62,7 +77,7 @@ export const ShopItemModal = ({
           onClick={onClose}
           aria-label="Cerrar"
           className={cn(
-            'absolute top-4 right-4 z-10 flex h-8 w-8 items-center justify-center rounded-full',
+            'absolute top-4 right-4 z-10 flex h-8 w-8 cursor-pointer items-center justify-center rounded-full',
             'bg-slate-800 text-slate-400 transition-colors hover:bg-slate-700 hover:text-white',
             'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none',
             'focus-visible:ring-offset-slate-900'
@@ -92,62 +107,57 @@ export const ShopItemModal = ({
 
           <p className="mb-8 leading-relaxed text-slate-300">{item.description}</p>
 
+          {item.id === STREAK_SHIELD_ITEM_ID && streakShieldCount > 0 && (
+            <div className="mb-4 flex items-center justify-center gap-2 rounded-xl border border-green-600/35 bg-green-100 px-4 py-3 text-green-900 dark:border-green-500/30 dark:bg-green-500/10 dark:text-green-300">
+              <Icon name="shield-alt" />
+              <span className="text-sm font-bold">
+                Tienes {streakShieldCount} protector{streakShieldCount === 1 ? '' : 'es'} ({streakShieldCount}/
+                {MAX_STREAK_SHIELDS})
+              </span>
+            </div>
+          )}
+
+          {isDoubleXpActive && (
+            <div className="mb-4 flex items-center justify-center gap-2 rounded-xl border border-orange-600/35 bg-orange-100 px-4 py-3 text-orange-900 dark:border-orange-500/30 dark:bg-orange-500/10 dark:text-orange-300">
+              <Icon name="bolt" />
+              <span className="text-sm font-bold">Doble XP activo</span>
+              <span className="font-mono text-base font-bold tabular-nums">{formatCountdown(doubleXpRemainingMs)}</span>
+            </div>
+          )}
+
           {/* Action Button */}
-          {isPurchased && item.category !== 'powerup' ? (
-            item.category === 'logo' ? (
-              <div className="space-y-3">
-                <div
-                  className={cn(
-                    'flex items-center justify-center gap-3 rounded-xl border border-green-500/30',
-                    'bg-green-500/10 p-4 font-bold text-green-400'
-                  )}
-                >
-                  <Icon name="check-circle" className="text-xl" />
-                  <span>¡Ya tienes este logo!</span>
-                </div>
-                <button
-                  type="button"
-                  disabled={processing}
-                  onClick={() => void (isEquipped ? onUnequip?.() : onEquip?.(item))}
-                  className={cn(
-                    'flex w-full cursor-pointer items-center justify-center gap-2 rounded-xl py-3 font-bold transition-all',
-                    'focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:outline-none',
-                    'focus-visible:ring-offset-slate-950',
-                    isEquipped
-                      ? 'bg-slate-800 text-slate-300 hover:bg-slate-700'
-                      : 'bg-app-ring/20 text-app-accent hover:bg-app-ring/30'
-                  )}
-                >
-                  {processing ? (
-                    <>
-                      <Icon name="spinner" className="animate-spin" />
-                      Guardando...
-                    </>
-                  ) : isEquipped ? (
-                    <>
-                      <Icon name="times" />
-                      Quitar logo
-                    </>
-                  ) : (
-                    <>
-                      <Icon name="check" />
-                      Equipar logo
-                    </>
-                  )}
-                </button>
-              </div>
-            ) : (
-              <div
-                className={cn(
-                  'flex items-center justify-center gap-3 rounded-xl border border-green-500/30',
-                  'bg-green-500/10 p-4 font-bold text-green-400'
-                )}
-              >
-                <Icon name="check-circle" className="text-xl" />
-                <span>¡Ya tienes este artículo!</span>
-              </div>
-            )
-          ) : (
+          {isPurchased && item.category === 'logo' ? (
+            <button
+              type="button"
+              disabled={processing}
+              onClick={() => void (isEquipped ? onUnequip?.() : onEquip?.(item))}
+              className={cn(
+                'flex w-full cursor-pointer items-center justify-center gap-2 rounded-xl py-3 font-bold transition-all',
+                'focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:outline-none',
+                'focus-visible:ring-offset-slate-950',
+                isEquipped
+                  ? 'bg-slate-800 text-slate-300 hover:bg-slate-700'
+                  : 'bg-app-ring/20 text-app-accent hover:bg-app-ring/30'
+              )}
+            >
+              {processing ? (
+                <>
+                  <Icon name="spinner" className="animate-spin" />
+                  Guardando...
+                </>
+              ) : isEquipped ? (
+                <>
+                  <Icon name="times" />
+                  Quitar logo
+                </>
+              ) : (
+                <>
+                  <Icon name="check" />
+                  Equipar logo
+                </>
+              )}
+            </button>
+          ) : showBuyAction ? (
             <button
               type="button"
               onClick={() => onBuy(item)}
@@ -159,7 +169,7 @@ export const ShopItemModal = ({
                 processing
                   ? 'cursor-wait bg-slate-700 text-slate-400'
                   : canAfford
-                    ? 'transform bg-linear-to-r from-yellow-500 to-orange-500 text-black shadow-lg shadow-orange-500/20 hover:-translate-y-0.5 hover:from-yellow-400 hover:to-orange-400 hover:shadow-orange-500/40'
+                    ? 'cursor-pointer transform bg-linear-to-r from-yellow-500 to-orange-500 text-black shadow-lg shadow-orange-500/20 hover:-translate-y-0.5 hover:from-yellow-400 hover:to-orange-400 hover:shadow-orange-500/40'
                     : 'cursor-not-allowed bg-slate-800 text-slate-500'
               )}
             >
@@ -168,9 +178,20 @@ export const ShopItemModal = ({
                   <Icon name="spinner" className="animate-spin" />
                   Procesando...
                 </>
+              ) : isStreakShieldFull ? (
+                <>
+                  <Icon name="shield-alt" />
+                  Inventario lleno ({MAX_STREAK_SHIELDS}/{MAX_STREAK_SHIELDS})
+                </>
               ) : canAfford ? (
                 <>
-                  <span>Comprar por</span>
+                  <span>
+                    {isDoubleXpActive
+                      ? 'Añadir 1 hora más por'
+                      : item.id === STREAK_SHIELD_ITEM_ID
+                        ? 'Comprar protector por'
+                        : 'Comprar por'}
+                  </span>
                   <span className="flex items-center gap-1 rounded-lg bg-black/20 px-2 py-0.5">
                     <Icon name="coins" /> {item.price}
                   </span>
@@ -182,11 +203,17 @@ export const ShopItemModal = ({
                 </>
               )}
             </button>
+          ) : null}
+
+          {isStreakShieldFull && showBuyAction && (
+            <p className="text-on-surface-muted mt-3 text-sm">
+              Ya tienes el máximo de protectores. Se usarán automáticamente si fallas un día de racha.
+            </p>
           )}
 
-          {!canAfford && !isPurchased && (
+          {!canAfford && showBuyAction && !isStreakShieldFull && (
             <p className="mt-3 text-sm font-medium text-red-400">
-              Te faltan {item.price - (canAfford ? 0 : 999999)} monedas para comprar esto.
+              Te faltan {Math.max(0, item.price - coins)} monedas para comprar esto.
             </p>
           )}
         </div>

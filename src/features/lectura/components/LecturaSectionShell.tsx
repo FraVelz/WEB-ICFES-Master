@@ -21,11 +21,15 @@ const navButtonClass = cn(
 
 export function LecturaSectionShell({ sectionId, children }: LecturaSectionShellProps) {
   const router = useRouter();
-  const { isRead, markAsRead } = useLecturaRead();
+  const { isRead, markAsRead, unmarkAsRead } = useLecturaRead();
   const read = isRead(sectionId);
 
-  const handleMarkReadAndReturn = () => {
-    markAsRead(sectionId);
+  const handleActionAndReturn = () => {
+    if (read) {
+      unmarkAsRead(sectionId);
+    } else {
+      markAsRead(sectionId);
+    }
     router.push('/lectura');
   };
 
@@ -41,18 +45,18 @@ export function LecturaSectionShell({ sectionId, children }: LecturaSectionShell
       <div className="border-surface-border flex flex-col items-center gap-3 border-t pt-8">
         <button
           type="button"
-          onClick={handleMarkReadAndReturn}
+          onClick={handleActionAndReturn}
           className={cn(
             'inline-flex cursor-pointer items-center gap-2 rounded-xl px-5 py-3 text-sm font-semibold transition-all',
             'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none',
             'focus-visible:ring-offset-surface',
             read
-              ? 'border-emerald-500/30 bg-emerald-500/10 text-emerald-400 hover:bg-emerald-500/15'
+              ? 'border-surface-border bg-surface-elevated text-on-surface-muted hover:text-on-surface hover:bg-surface-elevated/80 border'
               : 'bg-app-accent text-white hover:brightness-110 shadow-lg shadow-app-accent/20'
           )}
         >
-          <Icon name={read ? 'check-circle' : 'book-open'} className="text-base" />
-          {read ? 'Marcado como leído — regresar' : 'Marcar como leído y regresar'}
+          <Icon name={read ? 'times' : 'book-open'} className="text-base" />
+          {read ? 'Desmarcar como leído y regresar' : 'Marcar como leído y regresar'}
         </button>
       </div>
     </div>

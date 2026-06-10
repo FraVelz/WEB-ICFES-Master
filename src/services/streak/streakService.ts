@@ -1,5 +1,10 @@
 import GamificationSupabaseService from '@/services/supabase/GamificationSupabaseService';
 import { isSupabaseConfigured } from '@/services/persistence/supabaseConfigured';
+import {
+  consumeStreakShield,
+  getStreakShieldCount,
+} from '@/services/persistence/streakShieldPersistence';
+import { DEMO_USER_ID } from '@/services/demo/demoCoins';
 import { getStoredExams, getStoredPractices } from '@/storage/progressStorage';
 
 import { clearDemoStreakLocal, loadLocalStreakState, saveLocalStreakState } from './streakLocalStorage';
@@ -8,6 +13,7 @@ import { getStreakScope, STREAK_UPDATED_EVENT } from './streakTypes';
 import {
   calculateCurrentStreak,
   datesFromAttemptIsoStrings,
+  findMissedStreakDayToProtect,
   getLocalDateString,
   mergeStreakStates,
   withUpdatedLongest,
@@ -43,22 +49,47 @@ async function persistStreak(scope: StreakScope, state: StreakState): Promise<St
   return normalized;
 }
 
+function resolveShieldUserId(scope: StreakScope): string {
+  return scope === 'demo' ? DEMO_USER_ID : scope;
+}
+
+async function applyStreakProtectorsIfNeeded(scope: StreakScope, state: StreakState): Promise<StreakState> {
+  const userId = resolveShieldUserId(scope);
+  let dates = [...state.dates];
+  let shields = await getStreakShieldCount(userId);
+  let used = false;
+
+  while (shields > 0) {
+    const missedDay = findMissedStreakDayToProtect(dates);
+    if (!missedDay) break;
+    dates = [...dates, missedDay];
+    shields = await consumeStreakShield(userId);
+    used = true;
+  }
+
+  if (!used) return state;
+  return persistStreak(scope, { ...state, dates });
+}
+
 /** Load streak: merge local + remote for authenticated users in Supabase mode. */
 export async function loadStreakState(scope: StreakScope): Promise<StreakState> {
   const local = loadLocalStreakState(scope);
 
+  let state: StreakState;
   if (scope === 'demo') {
-    return local;
+    state = local;
+  } else {
+    const remote = await loadRemoteStreak(scope);
+    if (remote) {
+      const merged = mergeStreakStates(local, remote);
+      saveLocalStreakState(scope, merged);
+      state = merged;
+    } else {
+      state = local;
+    }
   }
 
-  const remote = await loadRemoteStreak(scope);
-  if (remote) {
-    const merged = mergeStreakStates(local, remote);
-    saveLocalStreakState(scope, merged);
-    return merged;
-  }
-
-  return local;
+  return applyStreakProtectorsIfNeeded(scope, state);
 }
 
 export async function saveStreakState(scope: StreakScope, state: StreakState): Promise<StreakState> {

@@ -9,6 +9,7 @@ import { useLeaderboard, type LeaderboardPlayer } from '@/hooks/gamification';
 import { RANKS, getRankInfo } from '@/shared/constants/ranks';
 import { useUserProfile } from '@/features/user/hooks/useUserProfile';
 import { AvatarImage } from '@/features/user/components/AvatarImage';
+import { VIP_AVATAR_BORDER_CLASS } from '@/features/store/constants/vipBadge';
 import { PAGE_SHELL_CLASS } from '@/shared/constants/pageShell';
 
 export const ClasificatoriaPage = () => {
@@ -149,6 +150,7 @@ export const ClasificatoriaPage = () => {
           ) : leaderboardData.length > 0 ? (
             leaderboardData.map((player: LeaderboardPlayer, index: number) => {
               const isCurrentUser = user?.uid === player.id;
+              const isVip = Boolean(player.hasVipBadge);
               const style = getPositionStyle(index, leaderboardData.length);
 
               return (
@@ -167,7 +169,12 @@ export const ClasificatoriaPage = () => {
 
                   {/* Avatar */}
                   <div className="relative">
-                    <div className="relative h-12 w-12 overflow-hidden rounded-full border-2 border-slate-700 bg-slate-800">
+                    <div
+                      className={cn(
+                        'relative h-12 w-12 overflow-hidden rounded-full border-2 bg-slate-800',
+                        isVip ? VIP_AVATAR_BORDER_CLASS : 'border-slate-700'
+                      )}
+                    >
                       <AvatarImage
                         src={player.profileImage}
                         alt={player.name || player.username || 'Jugador'}
@@ -175,6 +182,14 @@ export const ClasificatoriaPage = () => {
                     </div>
                     {index === 0 && (
                       <div className="absolute -top-2 -right-1 text-lg text-yellow-400 drop-shadow-lg">
+                        <Icon name="crown" />
+                      </div>
+                    )}
+                    {isVip && index !== 0 && (
+                      <div
+                        className="absolute -top-1.5 -right-1 text-sm text-yellow-400 drop-shadow-lg"
+                        title="Insignia VIP"
+                      >
                         <Icon name="crown" />
                       </div>
                     )}
@@ -186,6 +201,15 @@ export const ClasificatoriaPage = () => {
                       <h3 className={cn('truncate font-bold', isCurrentUser ? 'text-app-accent' : 'text-white')}>
                         {player.name || player.username || 'Usuario'}
                       </h3>
+                      {isVip && (
+                        <span
+                          className="flex items-center gap-0.5 rounded-full border border-yellow-500/40 bg-yellow-500/15 px-1.5 py-0.5 text-[10px] font-bold text-yellow-400"
+                          title="Insignia VIP"
+                        >
+                          <Icon name="crown" size="sm" />
+                          VIP
+                        </span>
+                      )}
                       {isCurrentUser && (
                         <span className="border-app-ring/30 bg-app-ring/20 text-app-accent-muted rounded-full border px-2 py-0.5 text-[10px]">
                           Tú

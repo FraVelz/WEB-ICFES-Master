@@ -10,6 +10,7 @@ import type { LecturaSectionId } from '../constants';
 import {
   LECTURA_READ_CHANGE_EVENT,
   loadLecturaReadSections,
+  removeLecturaReadSection,
   saveLecturaReadSection,
 } from '../services/lecturaReadPersistence';
 
@@ -64,5 +65,19 @@ export function useLecturaRead() {
     [readSections, scopeId]
   );
 
-  return { readSections, isRead, markAsRead, scopeId };
+  const unmarkAsRead = useCallback(
+    (sectionId: LecturaSectionId) => {
+      if (!scopeId) return readSections;
+      const wasRead = readSections.includes(sectionId);
+      const next = removeLecturaReadSection(scopeId, sectionId);
+      setReadSections(next);
+      if (wasRead) {
+        syncAchievementsAfterLecturaRead(scopeId);
+      }
+      return next;
+    },
+    [readSections, scopeId]
+  );
+
+  return { readSections, isRead, markAsRead, unmarkAsRead, scopeId };
 }
