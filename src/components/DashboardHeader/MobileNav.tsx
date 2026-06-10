@@ -13,6 +13,8 @@ import {
   isNavPathActive,
   mainNavOptions,
   mobileMenuOptions,
+  MOBILE_MENU_ITEM_HOVER,
+  MOBILE_TAB_HOVER,
   type NavOption,
 } from './constants';
 
@@ -49,7 +51,7 @@ export function MobileNav({ menuOpen, onToggleMenu, onCloseMenu }: MobileNavProp
                   FOCUS_RING,
                   isActive
                     ? 'border-app-ring text-app-accent bg-app-ring/10 border-t-2'
-                    : 'text-on-surface-muted hover:text-on-surface'
+                    : cn('text-on-surface-muted', MOBILE_TAB_HOVER)
                 )}
               >
                 <Icon
@@ -74,7 +76,7 @@ export function MobileNav({ menuOpen, onToggleMenu, onCloseMenu }: MobileNavProp
               'focus-visible:ring-offset-surface focus-visible:ring-offset-2',
               isOverflowRouteActive
                 ? 'border-app-ring text-app-accent bg-app-ring/10 border-t-2'
-                : 'text-on-surface-muted hover:text-on-surface'
+                : cn('text-on-surface-muted', MOBILE_TAB_HOVER)
             )}
           >
             <Icon
@@ -112,7 +114,7 @@ export function MobileNav({ menuOpen, onToggleMenu, onCloseMenu }: MobileNavProp
                       'focus-visible:ring-app-accent rounded-lg focus-visible:ring-2 focus-visible:outline-none focus-visible:ring-inset',
                       isActive
                         ? 'bg-app-ring/10 border-app-accent text-on-surface border-l-4'
-                        : 'text-on-surface hover:bg-app-ring/10 active:bg-app-ring/20',
+                        : cn('text-on-surface-muted border-l-4 border-transparent', MOBILE_MENU_ITEM_HOVER),
                       isLocked && 'opacity-70'
                     )}
                     onClick={onCloseMenu}

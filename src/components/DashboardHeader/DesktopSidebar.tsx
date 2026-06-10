@@ -15,6 +15,7 @@ import {
   isNavPathActive,
   mainNavOptions,
   secondaryNavOptions,
+  SIDEBAR_NAV_HOVER,
   type NavOption,
 } from './constants';
 
@@ -57,7 +58,7 @@ function SidebarNavLink({
                 'bg-app-ring/15 text-app-accent shadow-app-ring/25 shadow-lg',
                 !sidebarExpanded && 'ring-app-accent/45 ring-2'
               )
-          : 'text-on-surface-muted hover:bg-surface-elevated/60 hover:text-on-surface',
+          : cn(SIDEBAR_NAV_HOVER, 'group-hover/item:scale-[1.02]'),
         isLocked && 'opacity-70'
       )}
     >
@@ -66,12 +67,13 @@ function SidebarNavLink({
         size="lg"
         className={cn(
           'shrink-0 transition-all duration-300',
+          !isActive && 'group-hover/item:scale-110 group-hover/item:text-app-accent',
           isActive && !sidebarExpanded && 'scale-110',
           isActive && 'drop-shadow-[0_0_8px_currentColor]'
         )}
       />
       {sidebarExpanded && (
-        <span className="font-medium whitespace-nowrap">
+        <span className="font-medium whitespace-nowrap transition-colors group-hover/item:text-app-accent">
           {option.label}
           {isLocked && <Icon name="lock" size="sm" className="ml-1.5 inline text-slate-500" />}
         </span>
@@ -201,7 +203,7 @@ export function DesktopSidebar({ className, sidebarExpanded, onToggleSidebar }: 
             'group/profile flex items-center overflow-hidden rounded-xl p-2 transition-colors',
             sidebarExpanded ? 'gap-3' : 'justify-center',
             FOCUS_RING,
-            isProfileActive ? 'bg-app-ring/15 ring-app-accent/45 ring-2' : 'hover:bg-on-surface/5',
+            isProfileActive ? 'bg-app-ring/15 ring-app-accent/45 ring-2' : SIDEBAR_NAV_HOVER,
             isLockedInDemo('/perfil') && 'opacity-70'
           )}
         >
@@ -230,7 +232,7 @@ export function DesktopSidebar({ className, sidebarExpanded, onToggleSidebar }: 
             FOCUS_RING,
             isSettingsActive
               ? 'bg-app-ring/15 text-app-accent ring-app-accent/45 ring-2'
-              : 'hover:text-app-accent text-slate-500',
+              : cn(SIDEBAR_NAV_HOVER, 'text-slate-500'),
             isLockedInDemo('/configuracion') && 'opacity-70'
           )}
           title={

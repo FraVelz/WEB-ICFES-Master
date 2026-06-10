@@ -11,6 +11,18 @@ export type NavOption = {
 export const FOCUS_RING =
   'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:outline-none focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950';
 
+/** Hover visible en sidebar (claro y oscuro): borde + tinte accent + sombra suave. */
+export const SIDEBAR_NAV_HOVER =
+  'border border-transparent text-on-surface-muted hover:border-app-ring/35 hover:bg-app-ring/12 hover:text-app-accent hover:shadow-md hover:shadow-app-ring/15 dark:hover:border-app-ring/40 dark:hover:bg-app-ring/18';
+
+/** Hover en barra inferior móvil. */
+export const MOBILE_TAB_HOVER =
+  'hover:bg-app-ring/12 hover:text-app-accent active:bg-app-ring/20 dark:hover:bg-app-ring/18';
+
+/** Hover en ítems del menú desplegable móvil. */
+export const MOBILE_MENU_ITEM_HOVER =
+  'hover:border-app-ring/25 hover:bg-app-ring/12 hover:text-app-accent active:bg-app-ring/20 dark:hover:bg-app-ring/18';
+
 /** Coincidencia exacta o subruta (p. ej. `/logros` y `/logros/...`). */
 export function isNavPathActive(pathname: string, path: string): boolean {
   return pathname === path || pathname.startsWith(`${path}/`);
