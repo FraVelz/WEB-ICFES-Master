@@ -67,13 +67,13 @@ function SidebarNavLink({
         size="lg"
         className={cn(
           'shrink-0 transition-all duration-300',
-          !isActive && 'group-hover/item:scale-110 group-hover/item:text-app-accent',
+          !isActive && 'group-hover/item:text-app-accent group-hover/item:scale-110',
           isActive && !sidebarExpanded && 'scale-110',
           isActive && 'drop-shadow-[0_0_8px_currentColor]'
         )}
       />
       {sidebarExpanded && (
-        <span className="font-medium whitespace-nowrap transition-colors group-hover/item:text-app-accent">
+        <span className="group-hover/item:text-app-accent font-medium whitespace-nowrap transition-colors">
           {option.label}
           {isLocked && <Icon name="lock" size="sm" className="ml-1.5 inline text-slate-500" />}
         </span>

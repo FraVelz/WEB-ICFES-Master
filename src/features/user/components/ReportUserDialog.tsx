@@ -149,7 +149,7 @@ export function ReportUserDialog({
         </div>
 
         {success ? (
-          <div className="border-emerald-500/30 bg-emerald-500/10 rounded-xl border px-4 py-6 text-center">
+          <div className="rounded-xl border border-emerald-500/30 bg-emerald-500/10 px-4 py-6 text-center">
             <Icon name="check-circle" className="mx-auto mb-3 text-3xl text-emerald-600 dark:text-emerald-400" />
             <p className="text-on-surface font-semibold">Reporte enviado</p>
             <p className="text-on-surface-muted mt-1 text-sm">
@@ -168,7 +168,7 @@ export function ReportUserDialog({
                 onClick={onClose}
                 className={cn(
                   'border-surface-border bg-surface-via text-on-surface flex-1 cursor-pointer rounded-xl border px-4 py-2.5',
-                  'text-sm font-semibold transition-colors hover:bg-surface-elevated',
+                  'hover:bg-surface-elevated text-sm font-semibold transition-colors',
                   'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:outline-none'
                 )}
               >
@@ -258,7 +258,7 @@ export function ReportUserDialog({
                 disabled={submitting}
                 className={cn(
                   'border-surface-border bg-surface-via text-on-surface flex-1 cursor-pointer rounded-xl border px-4 py-2.5',
-                  'text-sm font-semibold transition-colors hover:bg-surface-elevated',
+                  'hover:bg-surface-elevated text-sm font-semibold transition-colors',
                   'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:outline-none',
                   'disabled:cursor-not-allowed disabled:opacity-50'
                 )}

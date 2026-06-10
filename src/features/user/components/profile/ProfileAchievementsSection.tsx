@@ -78,7 +78,7 @@ function AchievementGridTile({ achievement }: { achievement: Achievement }) {
         role="tooltip"
         className={cn(
           'border-surface-border bg-surface-elevated pointer-events-none absolute bottom-[calc(100%+0.5rem)] left-1/2 z-30 hidden w-52 -translate-x-1/2 rounded-xl border p-3 text-left shadow-xl',
-          'opacity-0 transition-opacity group-hover:opacity-100 group-focus-within:opacity-100',
+          'opacity-0 transition-opacity group-focus-within:opacity-100 group-hover:opacity-100',
           'dark:border-slate-700 dark:bg-slate-900',
           'max-md:hidden'
         )}
@@ -191,7 +191,7 @@ export function ProfileAchievementsSection({ achievements, showViewAll, onViewAl
             aria-expanded={detailsOpen}
             className={cn(
               'border-surface-border bg-surface-via/60 text-on-surface mt-4 flex w-full cursor-pointer items-center justify-center gap-2 rounded-xl border px-4 py-2.5',
-              'text-sm font-semibold transition-colors hover:bg-surface-via',
+              'hover:bg-surface-via text-sm font-semibold transition-colors',
               'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none',
               'focus-visible:ring-offset-surface dark:border-slate-700 dark:bg-slate-800/60 dark:hover:bg-slate-800',
               'md:mt-3'
