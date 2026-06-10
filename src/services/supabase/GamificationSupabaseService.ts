@@ -287,13 +287,16 @@ const GamificationSupabaseService = {
 
   async savePersonalLogos(userId: string, logos: PersonalLogo[]): Promise<PersonalLogo[]> {
     await this.getOrCreate(userId);
-    const payload = {
-      user_id: userId,
-      personal_logos: logos.slice(0, MAX_PERSONAL_LOGOS),
-      updated_at: new Date().toISOString(),
-    };
     const sb = ensureSupabase();
-    const { data, error } = await sb.from(TABLE).upsert(payload, { onConflict: 'user_id' }).select().single();
+    const { data, error } = await sb
+      .from(TABLE)
+      .update({
+        personal_logos: logos.slice(0, MAX_PERSONAL_LOGOS),
+        updated_at: new Date().toISOString(),
+      })
+      .eq('user_id', userId)
+      .select()
+      .single();
     if (error) throw new Error(`Error guardando logos personales: ${error.message}`);
     return mapFromDb(data as Record<string, unknown>)!.personalLogos;
   },

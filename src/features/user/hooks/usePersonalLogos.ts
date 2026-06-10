@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { useAuth } from '@/features/auth/context/AuthContext';
 import { useUiSessionStore } from '@/store/uiSessionStore';
 import { resolveCoinsUserId } from '@/services/demo/demoCoins';
@@ -17,6 +17,7 @@ export function usePersonalLogos() {
   const userId = resolveCoinsUserId(user?.uid, demoMode);
   const [logos, setLogos] = useState<PersonalLogo[]>([]);
   const [loading, setLoading] = useState(true);
+  const loadGeneration = useRef(0);
 
   const load = useCallback(async () => {
     if (!userId) {
@@ -24,12 +25,17 @@ export function usePersonalLogos() {
       setLoading(false);
       return;
     }
+    const generation = ++loadGeneration.current;
     setLoading(true);
     try {
       const next = await getPersonalLogos(userId);
-      setLogos(next);
+      if (generation === loadGeneration.current) {
+        setLogos(next);
+      }
     } finally {
-      setLoading(false);
+      if (generation === loadGeneration.current) {
+        setLoading(false);
+      }
     }
   }, [userId]);
 
@@ -41,6 +47,7 @@ export function usePersonalLogos() {
     const onChanged = (event: Event) => {
       const detail = (event as CustomEvent<PersonalLogosChangeDetail>).detail;
       if (detail?.logos) {
+        loadGeneration.current += 1;
         setLogos(detail.logos);
         return;
       }

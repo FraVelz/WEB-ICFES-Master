@@ -117,10 +117,19 @@ export function SettingsLogosPanel() {
     }
   };
 
+  const equipPersonalLogo = async (logoId: string) => {
+    if (equippedLogoId === logoId) return;
+    await equipLogo(logoId);
+  };
+
   const handleUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     event.target.value = '';
-    if (!file || !userId) return;
+    if (!file) return;
+    if (!userId) {
+      notify('Debes iniciar sesión para guardar logos personales', 'error');
+      return;
+    }
 
     const validationError = validateLogoImageFile(file);
     if (validationError) {
@@ -130,8 +139,14 @@ export function SettingsLogosPanel() {
 
     try {
       const image = await readImageFileAsDataUrl(file);
-      await addPersonalLogo(userId, image, 'Logo personal');
-      notify('Logo personal guardado');
+      const saved = await addPersonalLogo(userId, image, 'Logo personal');
+      const newLogo = saved[saved.length - 1];
+      if (newLogo) {
+        await equipPersonalLogo(newLogo.id);
+        notify('Logo personal guardado y equipado');
+      } else {
+        notify('Logo personal guardado');
+      }
     } catch (err) {
       notify(err instanceof Error ? err.message : 'No se pudo guardar el logo', 'error');
     }
@@ -152,8 +167,14 @@ export function SettingsLogosPanel() {
     }
 
     try {
-      await addPersonalLogo(userId, profileImage, 'Desde perfil');
-      notify('Foto de perfil guardada como logo');
+      const saved = await addPersonalLogo(userId, profileImage, 'Desde perfil');
+      const newLogo = saved[saved.length - 1];
+      if (newLogo) {
+        await equipPersonalLogo(newLogo.id);
+        notify('Foto de perfil guardada y equipada como logo');
+      } else {
+        notify('Foto de perfil guardada como logo');
+      }
     } catch (err) {
       notify(err instanceof Error ? err.message : 'No se pudo guardar el logo', 'error');
     }
