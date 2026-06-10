@@ -29,6 +29,18 @@ export function TipsCategoriesSections() {
       </TipsCategorySection>
 
       <TipsCategorySection
+        id="concentracion"
+        title="Concentración y enfoque"
+        description="Recupera la calma y la atención cuando te sientes alterado o sin ganas de estudiar."
+        icon="brain"
+      >
+        <TipCard
+          title="Desintoxicación mental de 10 minutos"
+          description="Si estás alterado, ansioso o sin ganas de estudiar, siéntate al menos 10 minutos sin hacer nada: medita, mira un punto fijo o respira en silencio. No revises el celular ni pienses en pendientes. Al terminar, empieza con una tarea corta; la mente llegará más limpia y concentrada."
+        />
+      </TipsCategorySection>
+
+      <TipsCategorySection
         id="estudio"
         title="Métodos de estudio"
         description="Técnicas probadas para aprender más en menos tiempo."
