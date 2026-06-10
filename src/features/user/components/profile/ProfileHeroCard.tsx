@@ -1,6 +1,7 @@
 import { cn } from '@/utils/cn';
 import { Icon, type IconName } from '@/shared/components/Icon';
 import { AvatarImage } from '@/features/user/components/AvatarImage';
+import type { ImageSource } from '@/assets';
 import type { ReactNode } from 'react';
 
 type LevelInfo = {
@@ -13,7 +14,7 @@ type LevelInfo = {
 };
 
 type ProfileHeroCardProps = {
-  profileImage: string | null;
+  profileImage: ImageSource | null;
   name: string;
   personalPhrase: string;
   createdAt: string;

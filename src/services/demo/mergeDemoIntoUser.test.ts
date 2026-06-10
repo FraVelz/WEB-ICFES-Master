@@ -102,7 +102,7 @@ describe('mergeDemoIntoUser', () => {
     await mergeDemoIntoUser('user-abc');
 
     expect(vi.mocked(mergeDemoStreakIntoUser)).toHaveBeenCalledWith('user-abc');
-    expect(vi.mocked(gamificationPersistence.addCoins)).toHaveBeenCalledWith('user-abc', 1800, 'demo_migration');
+    expect(vi.mocked(gamificationPersistence.addCoins)).toHaveBeenCalledWith('user-abc', 1700, 'demo_migration');
     expect(vi.mocked(gamificationPersistence.addXP)).toHaveBeenCalledWith('user-abc', 250, 'demo_migration');
     expect(vi.mocked(UserSupabaseService.updateSkillLevel)).toHaveBeenCalledWith('user-abc', 'intermediate');
     expect(vi.mocked(ProgressSupabaseService.upsert)).toHaveBeenCalled();
@@ -119,6 +119,15 @@ describe('mergeDemoIntoUser', () => {
     clearDemoLocalStorageAfterMigration();
     expect(storage.has('icfes_demo_coins')).toBe(false);
     expect(storage.has('icfes_achievement_progress_demo')).toBe(false);
+  });
+
+  it('no migra monedas si el demo solo tiene el saldo inicial', async () => {
+    storage.set('demoMode', 'true');
+    storage.set('icfes_demo_coins', '100');
+
+    await mergeDemoIntoUser('user-abc');
+
+    expect(vi.mocked(gamificationPersistence.addCoins)).not.toHaveBeenCalled();
   });
 
   it('no migra si no hay datos demo', async () => {

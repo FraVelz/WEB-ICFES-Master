@@ -1,9 +1,9 @@
 import { cn } from '@/utils/cn';
 import React from 'react';
-import Image from 'next/image';
 import { Icon } from '@/shared/components/Icon';
 
 import type { ShopItem } from '../data/shopItems';
+import { ShopItemPreview } from './ShopItemPreview';
 
 export interface ShopItemCardProps {
   item: ShopItem;
@@ -60,20 +60,11 @@ export const ShopItemCard = ({ item, isPurchased, canAfford, onClick }: ShopItem
 
       {/* Icon / Image */}
       <div className="mt-2 mb-6 flex justify-center">
-        <div
-          className={cn(
-            'h-20 w-20 rounded-2xl p-0.5 shadow-lg transition-transform duration-300 group-hover:scale-110',
-            `bg-linear-to-br ${item.color}`
-          )}
-        >
-          <div className="relative flex h-full w-full items-center justify-center overflow-hidden rounded-xl bg-slate-900">
-            {item.image ? (
-              <Image src={item.image} alt={item.name} fill sizes="80px" className="object-cover" />
-            ) : (
-              <Icon name={item.icon} className="text-4xl text-white" />
-            )}
-          </div>
-        </div>
+        <ShopItemPreview
+          item={item}
+          variant="card"
+          className="transition-transform duration-300 group-hover:scale-110"
+        />
       </div>
 
       {/* Info */}

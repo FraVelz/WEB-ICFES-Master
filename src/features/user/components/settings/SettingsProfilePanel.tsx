@@ -1,6 +1,8 @@
 import { cn } from '@/utils/cn';
 import { Icon } from '@/shared/components/Icon';
 import { AvatarImage } from '@/features/user/components/AvatarImage';
+import { useEquippedLogoId } from '@/features/store/hooks/useEquippedLogoId';
+import { resolveProfileAvatarSrc } from '@/features/user/utils/resolveProfileAvatar';
 import { useUserSettingsContext } from '@/features/user/context/UserSettingsContext';
 import { SettingsSection } from './SettingsSection';
 
@@ -18,6 +20,8 @@ export function SettingsProfilePanel() {
     handleImageUpload,
     handleRemoveProfileImage,
   } = useUserSettingsContext();
+  const equippedLogoId = useEquippedLogoId();
+  const avatarSrc = resolveProfileAvatarSrc(user?.profileImage, equippedLogoId);
 
   return (
     <div className="lg:sticky lg:top-24">
@@ -26,7 +30,7 @@ export function SettingsProfilePanel() {
 
         <div className="group relative mb-4 inline-block">
           <div className="relative h-32 w-32 overflow-hidden rounded-full border-4 border-slate-800 bg-slate-800 shadow-2xl">
-            <AvatarImage src={user?.profileImage} alt="Profile" />
+            <AvatarImage src={avatarSrc} alt="Profile" />
           </div>
           <button
             type="button"

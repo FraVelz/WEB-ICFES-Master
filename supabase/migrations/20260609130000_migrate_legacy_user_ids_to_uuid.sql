@@ -4,7 +4,9 @@
 -- 1. Haz backup o snapshot del proyecto antes de ejecutar.
 -- 2. Ejecuta primero el bloque "DIAGNÓSTICO" y revisa el resultado.
 -- 3. Luego ejecuta "MIGRACIÓN" (descomenta COMMIT al final si usas BEGIN).
--- 4. Por último ejecuta el bloque de get_public_profile (archivo 20260609120000).
+-- 4. Por último ejecuta las migraciones de perfil y tienda (en orden):
+--    20260609140000_user_shop_inventory.sql
+--    20260609141000_public_profile_equipped_logo.sql
 --
 -- Empareja public.users con auth.users por email (case-insensitive).
 -- Usuarios sin email o sin cuenta en auth.users NO se migran (quedan en el reporte).

@@ -6,6 +6,8 @@ import { cn } from '@/utils/cn';
 import { Icon } from '@/shared/components/Icon';
 import { LoadingState } from '@/shared/components/LoadingState';
 import { useUserProfile } from '../hooks/useUserProfile';
+import { useEquippedLogoId } from '@/features/store/hooks/useEquippedLogoId';
+import { resolveProfileAvatarSrc } from '@/features/user/utils/resolveProfileAvatar';
 import { ProfilePageLayout } from '../components/profile/ProfilePageLayout';
 import { ProfileHeroCard } from '../components/profile/ProfileHeroCard';
 import { ProfileCoursesSection } from '../components/profile/ProfileCoursesSection';
@@ -28,6 +30,8 @@ export const PerfilNormal = () => {
     loading,
     studyTimeMinutes,
   } = useUserProfile();
+  const equippedLogoId = useEquippedLogoId();
+  const displayProfileImage = resolveProfileAvatarSrc(profileImage, equippedLogoId);
 
   const [copied, setCopied] = useState(false);
 
@@ -46,7 +50,7 @@ export const PerfilNormal = () => {
   return (
     <ProfilePageLayout>
       <ProfileHeroCard
-        profileImage={profileImage}
+        profileImage={displayProfileImage}
         name={name}
         personalPhrase={personalPhrase}
         createdAt={createdAt}

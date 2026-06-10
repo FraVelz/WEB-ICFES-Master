@@ -9,7 +9,9 @@ import {
   markLevelAssessmentDone,
 } from '@/features/auth/utils/skillLevelStorage';
 import { reconcileAchievementsWithoutRewards } from '@/services/achievements/achievementProgressService';
+import { DEMO_COINS_MIN } from '@/services/demo/demoCoins';
 import { getDemoTotalXP } from '@/services/demo/demoGamification';
+import { STARTING_COINS_BALANCE } from '@/shared/constants/gamification';
 import { gamificationPersistence } from '@/services/persistence/gamificationPersistence';
 import { COINS_CHANGE_EVENT } from '@/services/persistence/coinsPersistence';
 import { isSupabaseConfigured } from '@/services/persistence/supabaseConfigured';
@@ -83,12 +85,18 @@ async function migrateGamificationBalances(userId: string): Promise<void> {
 
   const coinsRaw = localStorage.getItem(DEMO_COINS_KEY);
   if (coinsRaw != null) {
-    const coins = Math.max(0, Number.parseInt(coinsRaw, 10) || 0);
-    if (coins > 0) {
+    const demoCoins = Math.max(0, Number.parseInt(coinsRaw, 10) || 0);
+    // Solo migrar monedas ganadas por encima del saldo inicial (la cuenta ya arranca con STARTING_COINS_BALANCE).
+    const extraCoins = Math.max(0, demoCoins - DEMO_COINS_MIN);
+    if (extraCoins > 0) {
       try {
-        await gamificationPersistence.addCoins(userId, coins, 'demo_migration');
+        await gamificationPersistence.addCoins(userId, extraCoins, 'demo_migration');
         if (typeof window !== 'undefined') {
-          window.dispatchEvent(new CustomEvent(COINS_CHANGE_EVENT, { detail: { balance: coins } }));
+          window.dispatchEvent(
+            new CustomEvent(COINS_CHANGE_EVENT, {
+              detail: { balance: STARTING_COINS_BALANCE + extraCoins },
+            })
+          );
         }
       } catch (err) {
         console.warn('No se pudieron migrar monedas del demo:', err);

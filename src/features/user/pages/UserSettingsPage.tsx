@@ -8,6 +8,7 @@ import { SettingsProfilePanel } from '@/features/user/components/settings/Settin
 import { SettingsAccountPanel } from '@/features/user/components/settings/SettingsAccountPanel';
 import { SettingsAppearancePanel } from '@/features/user/components/settings/SettingsAppearancePanel';
 import { SettingsSupportPanel } from '@/features/user/components/settings/SettingsSupportPanel';
+import { SettingsLogosPanel } from '@/features/user/components/settings/SettingsLogosPanel';
 import { SettingsInfoPanel } from '@/features/user/components/settings/SettingsInfoPanel';
 import { SettingsDeleteModal } from '@/features/user/components/settings/SettingsDeleteModal';
 import { PAGE_SHELL_CLASS } from '@/shared/constants/pageShell';
@@ -58,6 +59,7 @@ function UserSettingsContent() {
             </div>
             <div className="space-y-6 lg:col-span-8">
               <SettingsAppearancePanel />
+              <SettingsLogosPanel />
               <SettingsAccountPanel />
               <SettingsSupportPanel />
               <SettingsInfoPanel />

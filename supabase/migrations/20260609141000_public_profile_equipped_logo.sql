@@ -1,17 +1,6 @@
--- Perfiles públicos: lectura anónima de campos limitados (sin email ni historial).
+-- Expone el logo equipado en perfiles públicos (el cliente resuelve la URL del catálogo).
 -- Ejecutar TODO este bloque en Supabase → SQL Editor → Run.
---
--- Si aún hay IDs legacy de Firebase, ejecuta antes:
---   20260609130000_migrate_legacy_user_ids_to_uuid.sql
---
--- Después de la tienda de logos, ejecuta también:
---   20260609140000_user_shop_inventory.sql
---   20260609141000_public_profile_equipped_logo.sql  (reemplaza esta función)
---
--- Verificar después:
---   SELECT public.get_public_profile('TU-UUID-DE-AUTH');
---   (null = no existe ese usuario en la tabla users)
-
+-- Requiere columnas de 20260609140000_user_shop_inventory.sql.
 DROP FUNCTION IF EXISTS public.get_public_profile(uuid);
 DROP FUNCTION IF EXISTS public.get_public_profile(text);
 
@@ -36,7 +25,8 @@ BEGIN
     ),
     'gamification', jsonb_build_object(
       'xp', COALESCE(g.xp, 0),
-      'achievements', COALESCE(g.achievements, '{}'::jsonb)
+      'achievements', COALESCE(g.achievements, '{}'::jsonb),
+      'equippedLogoId', g.equipped_logo_id
     )
   )
   INTO result

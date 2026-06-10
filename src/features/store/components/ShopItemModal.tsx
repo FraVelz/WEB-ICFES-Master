@@ -2,19 +2,22 @@
 
 import { cn } from '@/utils/cn';
 import React, { useEffect, useRef } from 'react';
-import Image from 'next/image';
 import { Icon } from '@/shared/components/Icon';
 import { gsap } from '@/lib/gsap';
 import type { ShopItem } from '../data/shopItems';
+import { ShopItemPreview } from './ShopItemPreview';
 
 export interface ShopItemModalProps {
   item: ShopItem | null;
   isOpen: boolean;
   onClose: () => void;
   onBuy: (item: ShopItem) => void | Promise<void>;
+  onEquip?: (item: ShopItem) => void | Promise<void>;
+  onUnequip?: () => void | Promise<void>;
   processing: boolean;
   canAfford: boolean;
   isPurchased: boolean;
+  isEquipped?: boolean;
 }
 
 export const ShopItemModal = ({
@@ -22,9 +25,12 @@ export const ShopItemModal = ({
   isOpen,
   onClose,
   onBuy,
+  onEquip,
+  onUnequip,
   processing,
   canAfford,
   isPurchased,
+  isEquipped = false,
 }: ShopItemModalProps) => {
   const overlayRef = useRef(null);
   const contentRef = useRef(null);
@@ -68,14 +74,8 @@ export const ShopItemModal = ({
         {/* Header Image */}
         <div className={cn('relative flex h-32 items-center justify-center', `bg-linear-to-br ${item.color}`)}>
           <div className="absolute inset-0 bg-black/20"></div>
-          <div className="relative z-10 h-24 w-24 translate-y-8 rounded-2xl bg-slate-900 p-1 shadow-2xl">
-            <div className="relative flex h-full w-full items-center justify-center overflow-hidden rounded-xl bg-slate-800">
-              {item.image ? (
-                <Image src={item.image} alt={item.name} fill sizes="96px" className="object-cover" />
-              ) : (
-                <Icon name={item.icon} className="text-4xl text-white" />
-              )}
-            </div>
+          <div className="relative z-10 translate-y-8">
+            <ShopItemPreview item={item} variant="modal" />
           </div>
         </div>
 
@@ -83,22 +83,70 @@ export const ShopItemModal = ({
         <div className="px-8 pt-12 pb-8 text-center">
           <h2 className="mb-2 text-2xl font-bold text-white">{item.name}</h2>
           <div className="mb-4 inline-block rounded-full bg-slate-800 px-3 py-1 text-xs font-bold tracking-wider text-slate-400 uppercase">
-            {item.category === 'powerup' ? 'Consumible' : 'Cosmético'}
+            {item.category === 'powerup'
+              ? 'Consumible'
+              : item.category === 'logo'
+                ? 'Logo'
+                : 'Cosmético'}
           </div>
 
           <p className="mb-8 leading-relaxed text-slate-300">{item.description}</p>
 
           {/* Action Button */}
           {isPurchased && item.category !== 'powerup' ? (
-            <div
-              className={cn(
-                'flex items-center justify-center gap-3 rounded-xl border border-green-500/30',
-                'bg-green-500/10 p-4 font-bold text-green-400'
-              )}
-            >
-              <Icon name="check-circle" className="text-xl" />
-              <span>¡Ya tienes este artículo!</span>
-            </div>
+            item.category === 'logo' ? (
+              <div className="space-y-3">
+                <div
+                  className={cn(
+                    'flex items-center justify-center gap-3 rounded-xl border border-green-500/30',
+                    'bg-green-500/10 p-4 font-bold text-green-400'
+                  )}
+                >
+                  <Icon name="check-circle" className="text-xl" />
+                  <span>¡Ya tienes este logo!</span>
+                </div>
+                <button
+                  type="button"
+                  disabled={processing}
+                  onClick={() => void (isEquipped ? onUnequip?.() : onEquip?.(item))}
+                  className={cn(
+                    'flex w-full cursor-pointer items-center justify-center gap-2 rounded-xl py-3 font-bold transition-all',
+                    'focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:outline-none',
+                    'focus-visible:ring-offset-slate-950',
+                    isEquipped
+                      ? 'bg-slate-800 text-slate-300 hover:bg-slate-700'
+                      : 'bg-app-ring/20 text-app-accent hover:bg-app-ring/30'
+                  )}
+                >
+                  {processing ? (
+                    <>
+                      <Icon name="spinner" className="animate-spin" />
+                      Guardando...
+                    </>
+                  ) : isEquipped ? (
+                    <>
+                      <Icon name="times" />
+                      Quitar logo
+                    </>
+                  ) : (
+                    <>
+                      <Icon name="check" />
+                      Equipar logo
+                    </>
+                  )}
+                </button>
+              </div>
+            ) : (
+              <div
+                className={cn(
+                  'flex items-center justify-center gap-3 rounded-xl border border-green-500/30',
+                  'bg-green-500/10 p-4 font-bold text-green-400'
+                )}
+              >
+                <Icon name="check-circle" className="text-xl" />
+                <span>¡Ya tienes este artículo!</span>
+              </div>
+            )
           ) : (
             <button
               type="button"

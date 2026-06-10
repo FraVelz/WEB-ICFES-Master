@@ -1,5 +1,7 @@
+import { STARTING_COINS_BALANCE } from '@/shared/constants/gamification';
+
 export const DEMO_USER_ID = 'demo';
-export const DEMO_COINS_MIN = 2000;
+export const DEMO_COINS_MIN = STARTING_COINS_BALANCE;
 
 const DEMO_COINS_KEY = 'icfes_demo_coins';
 

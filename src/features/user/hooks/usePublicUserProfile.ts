@@ -6,6 +6,8 @@ import { ACHIEVEMENTS_DATA } from '@/shared/constants/achievementsData';
 import { getLevelInfo } from '@/services/gamification/gamificationUtils';
 import { RANKS } from '@/shared/constants/ranks';
 import { normalizeAchievementsRecord } from '@/services/achievements/achievementProgressService';
+import type { ImageSource } from '@/assets';
+import { resolveProfileAvatarSrc } from '@/features/user/utils/resolveProfileAvatar';
 
 export type PublicProfileErrorCode = 'invalid_id' | 'not_found' | 'unavailable' | 'server' | 'network' | null;
 
@@ -44,6 +46,7 @@ type PublicProfileApiResponse = {
   gamification: {
     xp: number;
     achievements: Record<string, unknown>;
+    equippedLogoId?: string | null;
   };
 };
 
@@ -52,7 +55,7 @@ export function usePublicUserProfile(userId: string | null) {
   const [loading, setLoading] = useState(true);
   const [exists, setExists] = useState(false);
   const [errorCode, setErrorCode] = useState<PublicProfileErrorCode>(null);
-  const [profileImage, setProfileImage] = useState<string | null>(null);
+  const [profileImage, setProfileImage] = useState<ImageSource | null>(null);
   const [name, setName] = useState('');
   const [personalPhrase, setPersonalPhrase] = useState('');
   const [createdAt, setCreatedAt] = useState('Reciente');
@@ -105,7 +108,12 @@ export function usePublicUserProfile(userId: string | null) {
           normalizeAchievementsRecord(payload.gamification.achievements)
         );
 
-        setProfileImage(payload.profile.profileImage ?? null);
+        setProfileImage(
+          resolveProfileAvatarSrc(
+            payload.profile.profileImage,
+            payload.gamification.equippedLogoId ?? null
+          )
+        );
         setName(payload.profile.username ?? payload.profile.displayName ?? 'Usuario');
         setPersonalPhrase(payload.profile.bio ?? '¡Preparándome para el éxito!');
         setCreatedAt(

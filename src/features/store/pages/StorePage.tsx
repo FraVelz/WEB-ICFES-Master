@@ -12,6 +12,7 @@ import type { ShopItem } from '../data/shopItems';
 
 const FILTERS = [
   { id: 'all', label: 'Todo' },
+  { id: 'logo', label: 'Logos' },
   { id: 'avatar', label: 'Avatares' },
   { id: 'theme', label: 'Temas' },
   { id: 'powerup', label: 'Potenciadores' },
@@ -19,7 +20,8 @@ const FILTERS = [
 ] as const;
 
 export function StorePage() {
-  const { coins, hasItem, loading, processing, buyItem, shopItems } = useShop();
+  const { coins, hasItem, isEquipped, loading, error, processing, buyItem, equipLogo, unequipLogo, shopItems } =
+    useShop();
   const [selectedItem, setSelectedItem] = useState<ShopItem | null>(null);
   const [filter, setFilter] = useState<string>('all');
 
@@ -30,6 +32,24 @@ export function StorePage() {
       alert(`¡Has comprado ${item.name}!`);
     } catch (err) {
       alert(err instanceof Error ? err.message : 'Error en la compra');
+    }
+  };
+
+  const handleEquip = async (item: ShopItem) => {
+    try {
+      await equipLogo(item.id);
+      alert(`Logo "${item.name}" equipado.`);
+    } catch (err) {
+      alert(err instanceof Error ? err.message : 'No se pudo equipar el logo');
+    }
+  };
+
+  const handleUnequip = async () => {
+    try {
+      await unequipLogo();
+      alert('Logo quitado.');
+    } catch (err) {
+      alert(err instanceof Error ? err.message : 'No se pudo quitar el logo');
     }
   };
 
@@ -67,6 +87,12 @@ export function StorePage() {
       <div className="relative z-10 container mx-auto max-w-5xl flex-1 space-y-6 px-4 py-6 lg:py-8">
         {loading ? (
           <LoadingState label="Cargando tienda..." layout="section" />
+        ) : error ? (
+          <div className="border-surface-border bg-surface-elevated/40 rounded-3xl border border-dashed py-16 text-center">
+            <Icon name="exclamation-triangle" size="2xl" className="mb-4 text-red-400" />
+            <p className="text-on-surface mb-2 text-lg font-semibold">No se pudo cargar la tienda</p>
+            <p className="text-on-surface-muted mx-auto max-w-md text-sm">{error}</p>
+          </div>
         ) : (
           <>
             <div className="no-scrollbar flex gap-2 overflow-x-auto pb-1">
@@ -115,9 +141,12 @@ export function StorePage() {
           isOpen={!!selectedItem}
           onClose={() => setSelectedItem(null)}
           onBuy={handleBuy}
+          onEquip={handleEquip}
+          onUnequip={handleUnequip}
           processing={processing}
           canAfford={!!selectedItem && coins >= selectedItem.price}
           isPurchased={!!selectedItem && hasItem(selectedItem.id)}
+          isEquipped={!!selectedItem && isEquipped(selectedItem.id)}
         />
       </div>
     </div>

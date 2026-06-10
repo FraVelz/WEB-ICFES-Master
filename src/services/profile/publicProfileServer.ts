@@ -15,6 +15,7 @@ export type PublicProfilePayload = {
     xp: number;
     achievements: Record<string, unknown>;
     studyTimeMinutes: number;
+    equippedLogoId?: string | null;
   };
 };
 
@@ -40,7 +41,7 @@ async function fetchViaServiceRole(userId: string): Promise<PublicProfilePayload
 
   const { data: gamification } = await sb
     .from('user_gamification')
-    .select('xp, achievements')
+    .select('xp, achievements, equipped_logo_id')
     .eq('user_id', userId)
     .maybeSingle();
 
@@ -57,6 +58,7 @@ async function fetchViaServiceRole(userId: string): Promise<PublicProfilePayload
       xp: gamification?.xp ?? 0,
       achievements: (gamification?.achievements as Record<string, unknown>) ?? {},
       studyTimeMinutes: readStudyTimeRemoteMeta(gamification?.achievements).totalMinutes,
+      equippedLogoId: gamification?.equipped_logo_id ?? null,
     },
   };
 }
@@ -99,6 +101,7 @@ async function fetchViaPublicRpc(userId: string): Promise<PublicProfilePayload |
       studyTimeMinutes:
         payload.gamification?.studyTimeMinutes ??
         readStudyTimeRemoteMeta(payload.gamification?.achievements).totalMinutes,
+      equippedLogoId: payload.gamification?.equippedLogoId ?? null,
     },
   };
 }

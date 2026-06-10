@@ -32,11 +32,11 @@ describe('demoCoins', () => {
 
   it('gasta monedas del demo', () => {
     ensureDemoCoinsMinimum();
-    expect(spendDemoCoins(200)).toBe(DEMO_COINS_MIN - 200);
+    expect(spendDemoCoins(30)).toBe(DEMO_COINS_MIN - 30);
   });
 
   it('sube al mínimo si el saldo guardado es menor', () => {
-    localStorage.setItem('icfes_demo_coins', '100');
+    localStorage.setItem('icfes_demo_coins', '50');
     expect(ensureDemoCoinsMinimum()).toBe(DEMO_COINS_MIN);
   });
 });

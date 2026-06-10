@@ -15,6 +15,14 @@ export {
 } from './streakPersistence';
 export { mergeDemoIntoUser, hasDemoDataToMigrate } from '@/services/demo/mergeDemoIntoUser';
 export { getCoinsBalance, addCoinsBalance, spendCoinsBalance, COINS_CHANGE_EVENT } from './coinsPersistence';
+export {
+  getShopInventoryState,
+  addShopInventoryItem,
+  setEquippedShopLogo,
+  hasShopInventoryItem,
+  SHOP_INVENTORY_CHANGE_EVENT,
+  type ShopInventoryState,
+} from './shopInventoryPersistence';
 export { loadProgressViewState, resetProgressData, type ProgressViewState } from './progressPersistence';
 export { getExamById, resetUserExams, getUserExamsList } from './examPersistence';
 export {

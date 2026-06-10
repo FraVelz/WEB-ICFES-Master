@@ -2,6 +2,7 @@
  * GamificationSupabaseService - Gestión de gamificación en Supabase
  */
 import { supabase } from '@/config/supabase';
+import { STARTING_COINS_BALANCE } from '@/shared/constants/gamification';
 
 const TABLE = 'user_gamification';
 
@@ -15,7 +16,19 @@ export interface GamificationProfile {
   coinsHistory: unknown[];
   streakDates: string[];
   longestStreak: number;
+  shopInventory: string[];
+  equippedLogoId: string | null;
   updatedAt: unknown;
+}
+
+export interface ShopInventoryState {
+  inventory: string[];
+  equippedLogoId: string | null;
+}
+
+function parseShopInventory(value: unknown): string[] {
+  if (!Array.isArray(value)) return [];
+  return value.filter((entry): entry is string => typeof entry === 'string' && entry.length > 0);
 }
 
 const mapFromDb = (row: Record<string, unknown> | null): GamificationProfile | null => {
@@ -30,6 +43,8 @@ const mapFromDb = (row: Record<string, unknown> | null): GamificationProfile | n
     coinsHistory: (row.coins_history as unknown[]) || [],
     streakDates: Array.isArray(row.streak_dates) ? (row.streak_dates as string[]) : [],
     longestStreak: Number(row.longest_streak ?? 0),
+    shopInventory: parseShopInventory(row.shop_inventory),
+    equippedLogoId: typeof row.equipped_logo_id === 'string' ? row.equipped_logo_id : null,
     updatedAt: row.updated_at,
   };
 };
@@ -53,13 +68,15 @@ const GamificationSupabaseService = {
       const payload = {
         user_id: userId,
         xp: 0,
-        total_coins: 0,
+        total_coins: STARTING_COINS_BALANCE,
         spent_coins: 0,
         achievements: [],
         xp_history: [],
         coins_history: [],
         streak_dates: [],
         longest_streak: 0,
+        shop_inventory: [],
+        equipped_logo_id: null,
         updated_at: new Date().toISOString(),
       };
       const sb = ensureSupabase();
@@ -162,6 +179,52 @@ const GamificationSupabaseService = {
       .single();
     if (error) throw new Error(`Error actualizando logros: ${error.message}`);
     return mapFromDb(data as Record<string, unknown>)!;
+  },
+
+  async getShopInventory(userId: string): Promise<ShopInventoryState> {
+    const profile = await this.getOrCreate(userId);
+    return {
+      inventory: profile.shopInventory ?? [],
+      equippedLogoId: profile.equippedLogoId ?? null,
+    };
+  },
+
+  async saveShopInventory(userId: string, state: ShopInventoryState): Promise<ShopInventoryState> {
+    await this.getOrCreate(userId);
+    const sb = ensureSupabase();
+    const payload = {
+      user_id: userId,
+      shop_inventory: state.inventory,
+      equipped_logo_id: state.equippedLogoId,
+      updated_at: new Date().toISOString(),
+    };
+    const { data, error } = await sb.from(TABLE).upsert(payload, { onConflict: 'user_id' }).select().single();
+    if (error) throw new Error(`Error guardando inventario de tienda: ${error.message}`);
+    const profile = mapFromDb(data as Record<string, unknown>)!;
+    return {
+      inventory: profile.shopInventory ?? [],
+      equippedLogoId: profile.equippedLogoId ?? null,
+    };
+  },
+
+  async addShopItem(userId: string, itemId: string): Promise<ShopInventoryState> {
+    const current = await this.getShopInventory(userId);
+    if (current.inventory.includes(itemId)) return current;
+    return this.saveShopInventory(userId, {
+      inventory: [...current.inventory, itemId],
+      equippedLogoId: current.equippedLogoId,
+    });
+  },
+
+  async setEquippedLogo(userId: string, logoId: string | null): Promise<ShopInventoryState> {
+    const current = await this.getShopInventory(userId);
+    if (logoId && !current.inventory.includes(logoId)) {
+      throw new Error('No tienes este logo en tu inventario');
+    }
+    return this.saveShopInventory(userId, {
+      inventory: current.inventory,
+      equippedLogoId: logoId,
+    });
   },
 };
 

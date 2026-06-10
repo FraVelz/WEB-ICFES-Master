@@ -1,3 +1,6 @@
+import type { ImageSource } from '@/assets';
+import { SHOP_LOGO_ITEMS } from './shopLogoItems';
+
 export interface ShopItem {
   id: string;
   name: string;
@@ -6,10 +9,10 @@ export interface ShopItem {
   category: string;
   icon: string;
   color: string;
-  image?: string;
+  image?: ImageSource;
 }
 
-export const SHOP_ITEMS: ShopItem[] = [
+const BASE_SHOP_ITEMS: ShopItem[] = [
   {
     id: 'avatar_robot',
     name: 'Robo-Tutor',
@@ -67,3 +70,5 @@ export const SHOP_ITEMS: ShopItem[] = [
     color: 'from-yellow-300 to-yellow-600',
   },
 ];
+
+export const SHOP_ITEMS: ShopItem[] = [...BASE_SHOP_ITEMS, ...SHOP_LOGO_ITEMS];
