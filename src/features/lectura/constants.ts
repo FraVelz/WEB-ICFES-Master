@@ -1,5 +1,14 @@
 export type LecturaSectionId = 'importancia' | 'informacion' | 'consejos';
 
+/** Consejos: violeta legible en claro y coherente con el ambiente frío de Lectura */
+export const LECTURA_CONSEJOS_ACCENT = {
+  iconClassName: 'text-xl text-violet-700 dark:text-violet-400',
+  iconWrapClassName: 'bg-violet-100 dark:bg-violet-500/10',
+  hoverTitleClassName: 'group-hover:text-violet-700 dark:group-hover:text-violet-400',
+  hoverChevronClassName: 'group-hover:text-violet-700 dark:group-hover:text-violet-400',
+  headerIconClassName: 'text-violet-700 dark:text-violet-400',
+} as const;
+
 export type LecturaSectionMeta = {
   id: LecturaSectionId;
   path: string;
@@ -43,9 +52,6 @@ export const LECTURA_SECTIONS: LecturaSectionMeta[] = [
     title: 'Consejos',
     description: 'Guías prácticas para gestionar tu tiempo, estudiar con método y llegar al examen con confianza.',
     icon: 'lightbulb',
-    iconClassName: 'text-xl text-amber-400',
-    iconWrapClassName: 'bg-amber-500/10',
-    hoverTitleClassName: 'group-hover:text-amber-400',
-    hoverChevronClassName: 'group-hover:text-amber-400',
+    ...LECTURA_CONSEJOS_ACCENT,
   },
 ];

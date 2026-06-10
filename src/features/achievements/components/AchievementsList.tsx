@@ -30,7 +30,7 @@ export const AchievementsList = ({ achievements = [] }: AchievementsListProps) =
   const getStatusColor = (status: string) => {
     switch (status) {
       case 'completed':
-        return 'border-cyan-700/45 bg-cyan-50 text-cyan-900 dark:border-yellow-500/50 dark:bg-yellow-500/10 dark:text-yellow-400';
+        return 'border-cyan-700/45 bg-cyan-50 text-cyan-900 dark:border-amber-500/45 dark:bg-amber-500/15 dark:text-amber-300';
       case 'in_progress':
         return 'text-app-accent border-app-ring/50 bg-app-ring/10';
       default:
@@ -39,7 +39,7 @@ export const AchievementsList = ({ achievements = [] }: AchievementsListProps) =
   };
 
   const getProgressBarColor = (status: string) => {
-    if (status === 'completed') return 'bg-cyan-700 dark:bg-yellow-400';
+    if (status === 'completed') return 'bg-cyan-700 dark:bg-amber-500';
     if (status === 'incomplete') return 'bg-slate-600';
     return 'bg-hub-orb';
   };
@@ -88,7 +88,7 @@ export const AchievementsList = ({ achievements = [] }: AchievementsListProps) =
               className={cn(
                 'group relative overflow-hidden rounded-xl border p-4 transition-all duration-300',
                 isCompleted
-                  ? 'border-cyan-700/45 bg-white shadow-sm hover:border-cyan-800 dark:border-yellow-500/30 dark:bg-linear-to-br dark:from-yellow-500/10 dark:to-orange-500/5 dark:shadow-none dark:hover:border-yellow-500/50'
+                  ? 'border-cyan-700/45 bg-white shadow-sm hover:border-cyan-800 dark:border-amber-500/35 dark:bg-slate-800/80 dark:shadow-none dark:hover:border-amber-500/55'
                   : isIncomplete
                     ? 'border-slate-800 bg-slate-900/50 opacity-75'
                     : 'hover:border-app-ring/30 border-slate-700 bg-slate-800/30 hover:bg-slate-800/50'
@@ -111,13 +111,13 @@ export const AchievementsList = ({ achievements = [] }: AchievementsListProps) =
                     <h3
                       className={cn(
                         'truncate pr-2 font-bold',
-                        isCompleted ? 'text-on-surface dark:text-yellow-100' : 'text-white'
+                        isCompleted ? 'text-cyan-900 dark:text-amber-50' : 'text-white'
                       )}
                     >
                       {achievement.title}
                     </h3>
                     {isCompleted && (
-                      <Icon name="check" className="text-sm text-cyan-800 dark:text-yellow-400" />
+                      <Icon name="check" className="text-sm text-cyan-800 dark:text-amber-400" />
                     )}
                     {isIncomplete && <Icon name="lock" className="text-sm text-slate-600" />}
                   </div>
@@ -125,7 +125,7 @@ export const AchievementsList = ({ achievements = [] }: AchievementsListProps) =
                   <p
                     className={cn(
                       'mb-3 line-clamp-2 text-xs',
-                      isCompleted ? 'text-on-surface-muted dark:text-slate-400' : 'text-slate-400'
+                      isCompleted ? 'text-cyan-800/80 dark:text-slate-300' : 'text-slate-400'
                     )}
                   >
                     {achievement.description}
@@ -136,14 +136,14 @@ export const AchievementsList = ({ achievements = [] }: AchievementsListProps) =
                     <div className="flex justify-between text-xs font-medium">
                       <span
                         className={
-                          isCompleted ? 'font-semibold text-cyan-800 dark:text-yellow-500/80' : 'text-app-ring/80'
+                          isCompleted ? 'font-semibold text-cyan-800 dark:text-amber-400' : 'text-app-ring/80'
                         }
                       >
                         {isCompleted ? '¡Completado!' : `${achievement.progress ?? 0} / ${achievement.target ?? 0}`}
                       </span>
                       <span
                         className={
-                          isCompleted ? 'text-on-surface-muted dark:text-slate-500' : 'text-slate-500'
+                          isCompleted ? 'text-cyan-700/75 dark:text-slate-400' : 'text-slate-500'
                         }
                       >
                         +{achievement.xpReward ?? 0} XP
