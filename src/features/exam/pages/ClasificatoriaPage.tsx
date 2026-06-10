@@ -35,8 +35,8 @@ export const ClasificatoriaPage = () => {
       return {
         status: 'stable',
         icon: 'minus' as const,
-        color: 'text-slate-400',
-        bg: 'bg-slate-800/30 border-slate-700/50',
+        color: 'text-on-surface-muted',
+        bg: 'border-surface-border bg-surface-elevated/80 dark:border-slate-700/50 dark:bg-slate-800/30',
         label: 'Solo referencia',
       };
     }
@@ -47,8 +47,8 @@ export const ClasificatoriaPage = () => {
       return {
         status: 'promote',
         icon: 'arrow-up' as const,
-        color: 'text-green-400',
-        bg: 'bg-green-500/10 border-green-500/30',
+        color: 'text-green-700 dark:text-green-400',
+        bg: 'border-green-600/35 bg-green-50 dark:border-green-500/30 dark:bg-green-500/10',
         label: 'Zona de Ascenso',
       };
     }
@@ -57,8 +57,8 @@ export const ClasificatoriaPage = () => {
       return {
         status: 'demote',
         icon: 'arrow-down' as const,
-        color: 'text-red-400',
-        bg: 'bg-red-500/10 border-red-500/30',
+        color: 'text-red-700 dark:text-red-400',
+        bg: 'border-red-600/35 bg-red-50 dark:border-red-500/30 dark:bg-red-500/10',
         label: 'Zona de Descenso',
       };
     }
@@ -66,8 +66,8 @@ export const ClasificatoriaPage = () => {
     return {
       status: 'stable',
       icon: 'minus' as const,
-      color: 'text-slate-400',
-      bg: 'bg-slate-800/30 border-slate-700/50',
+      color: 'text-on-surface-muted',
+      bg: 'border-surface-border bg-surface-elevated/80 dark:border-slate-700/50 dark:bg-slate-800/30',
       label: 'Zona Segura',
     };
   };
@@ -87,10 +87,10 @@ export const ClasificatoriaPage = () => {
       <div className="relative z-10 container mx-auto max-w-5xl px-4 py-8">
         <div className="mb-8 text-center">
           <h1 className="mb-2 flex items-center justify-center gap-3 text-4xl font-bold">
-            <Icon name="trophy" className="text-yellow-400" />
+            <Icon name="trophy" className="text-amber-600 dark:text-yellow-400" />
             Clasificatoria Semanal
           </h1>
-          <p className="text-slate-400">Compite en tu grupo de {groupSize} y sube de liga. ¡Se actualiza cada lunes!</p>
+          <p className="text-on-surface-muted">Compite en tu grupo de {groupSize} y sube de liga. ¡Se actualiza cada lunes!</p>
           {isViewingOwnLeague && (
             <p className="mt-2 text-sm text-app-accent-muted">
               Próximo reset: <span className="font-mono font-semibold text-app-accent">{formatCountdownToReset(resetMs)}</span>
@@ -124,7 +124,7 @@ export const ClasificatoriaPage = () => {
         </div>
 
         <div className={cn('mb-8 rounded-2xl p-px', `bg-linear-to-r ${currentRankInfo.color}`)}>
-          <div className="rounded-2xl bg-slate-900/95 p-6 backdrop-blur-xl">
+          <div className="bg-surface-elevated/95 rounded-2xl p-6 backdrop-blur-xl dark:bg-slate-900/95">
             <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
               <div className="flex items-center gap-4">
                 <div
@@ -136,15 +136,15 @@ export const ClasificatoriaPage = () => {
                   <Icon name={currentRankInfo.icon} size="2xl" />
                 </div>
                 <div>
-                  <h2 className="text-2xl font-bold text-white">{currentRankInfo.label}</h2>
-                  <p className="text-sm text-slate-400">
+                  <h2 className="text-on-surface text-2xl font-bold">{currentRankInfo.label}</h2>
+                  <p className="text-on-surface-muted text-sm">
                     {currentRankInfo.promoteCount > 0 ? `Top ${currentRankInfo.promoteCount} suben` : 'Rango Máximo'} •
                     {currentRankInfo.demoteCount > 0
                       ? ` Últimos ${currentRankInfo.demoteCount} bajan`
                       : ' Sin descenso'}
                   </p>
                   {isViewingOwnLeague && (
-                    <p className="mt-1 text-xs text-slate-500">
+                    <p className="text-on-surface-muted/80 mt-1 text-xs">
                       Grupo {groupNumber} · {memberCount}/{groupSize} competidores
                       {slotsRemaining > 0 && ` · faltan ${slotsRemaining} para llenar el grupo`}
                     </p>
@@ -154,15 +154,15 @@ export const ClasificatoriaPage = () => {
 
               {isViewingOwnLeague && (
                 <div className="flex gap-4 text-center">
-                  <div className="rounded-lg bg-slate-800/50 px-4 py-2">
-                    <div className="text-2xl font-bold text-white">
+                  <div className="border-surface-border bg-surface-elevated rounded-lg border px-4 py-2 dark:border-transparent dark:bg-slate-800/50">
+                    <div className="text-on-surface text-2xl font-bold">
                       {leagueState?.myPosition ?? '—'}
                     </div>
-                    <div className="text-xs text-slate-400 uppercase">Tu posición</div>
+                    <div className="text-on-surface-muted text-xs uppercase">Tu posición</div>
                   </div>
-                  <div className="rounded-lg bg-slate-800/50 px-4 py-2">
-                    <div className="text-2xl font-bold text-white">{leagueState?.weeklyXp ?? 0}</div>
-                    <div className="text-xs text-slate-400 uppercase">Tu XP semanal</div>
+                  <div className="border-surface-border bg-surface-elevated rounded-lg border px-4 py-2 dark:border-transparent dark:bg-slate-800/50">
+                    <div className="text-on-surface text-2xl font-bold">{leagueState?.weeklyXp ?? 0}</div>
+                    <div className="text-on-surface-muted text-xs uppercase">Tu XP semanal</div>
                   </div>
                 </div>
               )}
@@ -171,9 +171,9 @@ export const ClasificatoriaPage = () => {
         </div>
 
         {!isViewingOwnLeague && !leagueLoading && (
-          <div className="mb-6 rounded-xl border border-slate-700 bg-slate-900/60 px-4 py-3 text-center text-sm text-slate-400">
+          <div className="border-surface-border bg-surface-elevated/60 text-on-surface-muted mb-6 rounded-xl border px-4 py-3 text-center text-sm dark:border-slate-700 dark:bg-slate-900/60">
             No participas en la liga {currentRankInfo.label}. Estás en{' '}
-            <span className="font-semibold text-white">{getRankInfo(myLeagueRank).label}</span>.
+            <span className="text-on-surface font-semibold">{getRankInfo(myLeagueRank).label}</span>.
             Aquí solo ves las reglas de esta liga.
           </div>
         )}
@@ -204,17 +204,17 @@ export const ClasificatoriaPage = () => {
                   className={cn(
                     'group relative flex cursor-pointer items-center gap-4 rounded-xl border p-4 transition-all',
                     isCurrentUser
-                      ? 'border-app-ring/50 bg-app-ring/10 shadow-app-ring/10 shadow-lg'
-                      : cn(style.bg, 'hover:bg-slate-800')
+                      ? 'border-app-ring/50 bg-cyan-50 shadow-sm dark:bg-app-ring/10 dark:shadow-app-ring/10 dark:shadow-lg'
+                      : cn(style.bg, 'hover:bg-surface-elevated dark:hover:bg-slate-800')
                   )}
                 >
-                  <div className="w-8 text-center text-lg font-bold text-slate-300">{index + 1}</div>
+                  <div className="text-on-surface w-8 text-center text-lg font-bold">{index + 1}</div>
 
                   <div className="relative">
                     <div
                       className={cn(
-                        'relative h-12 w-12 overflow-hidden rounded-full border-2 bg-slate-800',
-                        isVip ? VIP_AVATAR_BORDER_CLASS : 'border-slate-700'
+                        'bg-surface-elevated relative h-12 w-12 overflow-hidden rounded-full border-2 dark:bg-slate-800',
+                        isVip ? VIP_AVATAR_BORDER_CLASS : 'border-surface-border dark:border-slate-700'
                       )}
                     >
                       <AvatarImage
@@ -223,13 +223,13 @@ export const ClasificatoriaPage = () => {
                       />
                     </div>
                     {index === 0 && (
-                      <div className="absolute -top-2 -right-1 text-lg text-yellow-400 drop-shadow-lg">
+                      <div className="absolute -top-2 -right-1 text-lg text-amber-600 drop-shadow-lg dark:text-yellow-400">
                         <Icon name="crown" />
                       </div>
                     )}
                     {isVip && index !== 0 && (
                       <div
-                        className="absolute -top-1.5 -right-1 text-sm text-yellow-400 drop-shadow-lg"
+                        className="absolute -top-1.5 -right-1 text-sm text-amber-600 drop-shadow-lg dark:text-yellow-400"
                         title="Insignia VIP"
                       >
                         <Icon name="crown" />
@@ -239,12 +239,17 @@ export const ClasificatoriaPage = () => {
 
                   <div className="min-w-0 flex-1">
                     <div className="flex items-center gap-2">
-                      <h3 className={cn('truncate font-bold', isCurrentUser ? 'text-app-accent' : 'text-white')}>
+                      <h3
+                        className={cn(
+                          'truncate font-bold',
+                          isCurrentUser ? 'text-app-accent-strong dark:text-app-accent' : 'text-on-surface'
+                        )}
+                      >
                         {player.name || player.username || 'Usuario'}
                       </h3>
                       {isVip && (
                         <span
-                          className="flex items-center gap-0.5 rounded-full border border-yellow-500/40 bg-yellow-500/15 px-1.5 py-0.5 text-[10px] font-bold text-yellow-400"
+                          className="flex items-center gap-0.5 rounded-full border border-amber-600/35 bg-amber-100 px-1.5 py-0.5 text-[10px] font-bold text-amber-800 dark:border-yellow-500/40 dark:bg-yellow-500/15 dark:text-yellow-400"
                           title="Insignia VIP"
                         >
                           <Icon name="crown" size="sm" />
@@ -252,7 +257,7 @@ export const ClasificatoriaPage = () => {
                         </span>
                       )}
                       {isCurrentUser && (
-                        <span className="border-app-ring/30 bg-app-ring/20 text-app-accent-muted rounded-full border px-2 py-0.5 text-[10px]">
+                        <span className="border-app-ring/40 bg-app-ring/15 text-app-accent-strong rounded-full border px-2 py-0.5 text-[10px] font-semibold dark:text-app-accent-muted">
                           Tú
                         </span>
                       )}
@@ -264,8 +269,8 @@ export const ClasificatoriaPage = () => {
                   </div>
 
                   <div className="text-right">
-                    <div className="text-xl font-bold text-white">{player.weeklyXP || 0} XP</div>
-                    <div className="text-xs text-slate-500">Esta semana</div>
+                    <div className="text-on-surface text-xl font-bold">{player.weeklyXP || 0} XP</div>
+                    <div className="text-on-surface-muted text-xs">Esta semana</div>
                   </div>
                 </div>
               );

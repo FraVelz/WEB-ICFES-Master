@@ -6,7 +6,7 @@ export const Footer = () => {
           <span>Contacto:</span>
           <a
             href="mailto:fravelz@proton.me"
-            className="focus-visible:ring-app-accent focus-visible:ring-offset-surface text-blue-400 transition-colors hover:text-blue-300 focus-visible:rounded focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none"
+            className="text-app-accent hover:text-app-accent-muted focus-visible:ring-app-accent focus-visible:ring-offset-surface transition-colors focus-visible:rounded focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none"
           >
             fravelz@proton.me
           </a>

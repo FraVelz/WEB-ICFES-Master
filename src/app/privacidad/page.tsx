@@ -16,18 +16,18 @@ export default function PrivacidadPage() {
         <div className="absolute right-1/4 bottom-1/3 h-96 w-96 animate-pulse rounded-full bg-purple-500/20 blur-3xl" />
       </div>
 
-      <div className="relative z-10 mx-auto max-w-4xl rounded-2xl border border-white/10 bg-white/5 p-4 shadow-2xl backdrop-blur-xl sm:p-8">
+      <div className="border-surface-border bg-surface-elevated/90 relative z-10 mx-auto max-w-4xl rounded-2xl border p-4 shadow-sm backdrop-blur-xl sm:p-8">
         <h1 className="from-cta-text-start mb-4 flex items-center gap-3 bg-linear-to-r to-blue-500 bg-clip-text text-4xl font-bold text-transparent">
           <Icon name="shield-alt" size="2xl" className="text-app-accent shrink-0" />
           Política de Privacidad
         </h1>
-        <p className="mb-8 text-gray-300">
-          <strong>ICFES Master</strong>
+        <p className="text-on-surface-muted mb-8">
+          <strong className="text-on-surface">ICFES Master</strong>
         </p>
-        <p className="mb-8 text-sm text-gray-400">Última actualización: 16 de diciembre de 2025</p>
+        <p className="text-on-surface-muted mb-8 text-sm">Última actualización: 16 de diciembre de 2025</p>
 
         <div className="space-y-6">
-          <p className="leading-relaxed text-gray-200">
+          <p className="text-on-surface leading-relaxed">
             En <strong className="text-app-accent">ICFES Master</strong>, valoramos y respetamos la privacidad de
             nuestros usuarios. Esta Política de Privacidad explica cómo recopilamos, usamos y protegemos la información
             cuando utilizas nuestra aplicación y sitio web, enfocados en la preparación académica para el examen ICFES.
@@ -35,31 +35,31 @@ export default function PrivacidadPage() {
 
           <div>
             <h2 className="text-app-accent mt-8 mb-4 text-2xl font-bold">1. Información que recopilamos</h2>
-            <p className="mb-4 text-gray-300">Podemos recopilar los siguientes datos:</p>
-            <h3 className="mt-6 mb-3 text-xl font-semibold text-blue-400">
+            <p className="text-on-surface-muted mb-4">Podemos recopilar los siguientes datos:</p>
+            <h3 className="text-app-accent mt-6 mb-3 text-xl font-semibold">
               a) Información proporcionada por el usuario
             </h3>
-            <ul className="mb-4 list-inside list-disc space-y-2 text-gray-300">
+            <ul className="text-on-surface-muted mb-4 list-inside list-disc space-y-2">
               <li>Correo electrónico</li>
               <li>Nombre asociado a la cuenta de Google (si se usa ese método de registro)</li>
               <li>Apodo o nombre de usuario</li>
               <li>Información de autenticación (modo local en dispositivo)</li>
             </ul>
-            <div className="bg-lesson-lc-glow-a/20 mb-6 rounded-lg border border-blue-500/50 p-4">
-              <p className="text-gray-200">
-                <strong className="text-blue-300">ICFES Master almacena datos localmente en tu dispositivo.</strong> En
-                futuras versiones se implementará sincronización en la nube.
+            <div className="border-app-ring/40 bg-app-ring/10 mb-6 rounded-lg border p-4">
+              <p className="text-on-surface">
+                <strong className="text-app-accent-strong">ICFES Master almacena datos localmente en tu dispositivo.</strong>{' '}
+                En futuras versiones se implementará sincronización en la nube.
               </p>
             </div>
-            <h3 className="mt-6 mb-3 text-xl font-semibold text-blue-400">b) Información de uso y progreso</h3>
-            <ul className="mb-4 list-inside list-disc space-y-2 text-gray-300">
+            <h3 className="text-app-accent mt-6 mb-3 text-xl font-semibold">b) Información de uso y progreso</h3>
+            <ul className="text-on-surface-muted mb-4 list-inside list-disc space-y-2">
               <li>Progreso académico dentro de la app</li>
               <li>Resultados de preguntas (aciertos y errores)</li>
               <li>Rachas de estudio</li>
               <li>Estadísticas internas de uso</li>
             </ul>
-            <h3 className="mt-6 mb-3 text-xl font-semibold text-blue-400">c) Información automática</h3>
-            <ul className="mb-4 list-inside list-disc space-y-2 text-gray-300">
+            <h3 className="text-app-accent mt-6 mb-3 text-xl font-semibold">c) Información automática</h3>
+            <ul className="text-on-surface-muted mb-4 list-inside list-disc space-y-2">
               <li>
                 Datos agregados y anónimos de navegación mediante <strong>Vercel Web Analytics</strong> (páginas
                 visitadas, origen del tráfico, dispositivo)
@@ -73,7 +73,7 @@ export default function PrivacidadPage() {
 
           <div>
             <h2 className="text-app-accent mt-8 mb-4 text-2xl font-bold">2. Uso de la información</h2>
-            <ul className="mb-6 list-inside list-disc space-y-2 text-gray-300">
+            <ul className="text-on-surface-muted mb-6 list-inside list-disc space-y-2">
               <li>Brindar y mejorar la experiencia educativa</li>
               <li>Guardar el progreso del usuario</li>
               <li>Mostrar estadísticas personalizadas</li>
@@ -83,7 +83,7 @@ export default function PrivacidadPage() {
 
           <div>
             <h2 className="text-app-accent mt-8 mb-4 text-2xl font-bold">3. Servicios de terceros</h2>
-            <ul className="mb-6 list-inside list-disc space-y-2 text-gray-300">
+            <ul className="text-on-surface-muted mb-6 list-inside list-disc space-y-2">
               <li>
                 <strong>LocalStorage del navegador</strong>: datos del usuario, progreso y preferencias
               </li>
@@ -98,7 +98,7 @@ export default function PrivacidadPage() {
 
           <div>
             <h2 className="text-app-accent mt-8 mb-4 text-2xl font-bold">4. Menores de edad</h2>
-            <p className="mb-6 text-gray-300">
+            <p className="text-on-surface-muted mb-6">
               ICFES Master es una plataforma educativa dirigida tanto a menores como a mayores de edad. No recopilamos
               intencionalmente información sensible.
             </p>
@@ -106,7 +106,7 @@ export default function PrivacidadPage() {
 
           <div>
             <h2 className="text-app-accent mt-8 mb-4 text-2xl font-bold">5. Monetización</h2>
-            <p className="mb-6 text-gray-300">
+            <p className="text-on-surface-muted mb-6">
               La plataforma es <strong>gratuita</strong>. Los datos personales{' '}
               <strong>no se venden ni se comparten con fines comerciales</strong>.
             </p>
@@ -114,14 +114,14 @@ export default function PrivacidadPage() {
 
           <div>
             <h2 className="text-app-accent mt-8 mb-4 text-2xl font-bold">6. Seguridad de la información</h2>
-            <p className="mb-6 text-gray-300">
+            <p className="text-on-surface-muted mb-6">
               Aplicamos medidas técnicas y organizativas razonables para proteger la información del usuario.
             </p>
           </div>
 
           <div>
             <h2 className="text-app-accent mt-8 mb-4 text-2xl font-bold">7. Derechos del usuario</h2>
-            <p className="mb-4 text-gray-300">
+            <p className="text-on-surface-muted mb-4">
               El usuario puede solicitar eliminación de su cuenta, consultar o actualizar su información. Contacto:{' '}
               <a href="mailto:fravelz@proton.me" className="text-app-accent hover:text-app-accent-muted underline">
                 fravelz@proton.me
@@ -131,10 +131,10 @@ export default function PrivacidadPage() {
 
           <div>
             <h2 className="text-app-accent mt-8 mb-4 text-2xl font-bold">8. Cambios en esta política</h2>
-            <p className="mb-6 text-gray-300">Nos reservamos el derecho de actualizar esta Política de Privacidad.</p>
+            <p className="text-on-surface-muted mb-6">Nos reservamos el derecho de actualizar esta Política de Privacidad.</p>
           </div>
 
-          <div className="mt-12 flex justify-center border-t border-white/10 pt-8">
+          <div className="border-surface-border mt-12 flex justify-center border-t pt-8">
             <Link
               href="/"
               className={cn(
