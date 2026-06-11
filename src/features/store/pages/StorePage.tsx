@@ -1,5 +1,6 @@
 'use client';
 
+import dynamic from 'next/dynamic';
 import { useState } from 'react';
 import { cn } from '@/utils/cn';
 import { Icon } from '@/shared/components';
@@ -10,7 +11,9 @@ import { MAX_STREAK_SHIELDS, STREAK_SHIELD_ITEM_ID } from '../constants/streakSh
 import { useDoubleXpTimer } from '../hooks/useDoubleXpTimer';
 import { useShop } from '../hooks/useShop';
 import { ShopItemCard } from '../components/ShopItemCard';
-import { ShopItemModal } from '../components/ShopItemModal';
+const ShopItemModal = dynamic(() => import('../components/ShopItemModal').then((m) => m.ShopItemModal), {
+  ssr: false,
+});
 import type { ShopItem } from '../data/shopItems';
 import { STORE_FILTERS } from './storePageConstants';
 import { StoreDoubleXpBanner } from './StoreDoubleXpBanner';

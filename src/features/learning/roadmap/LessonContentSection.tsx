@@ -1,5 +1,6 @@
 import { cn } from '@/utils/cn';
 import { MASCOT_IMAGES } from '@/assets';
+import { EmptyState } from '@/shared/components/EmptyState';
 import { LessonMascotBubble } from './LessonMascotBubble';
 import { LessonMarkdownBody } from './LessonMarkdownBody';
 
@@ -48,9 +49,12 @@ export function LessonContentSection({
           <LessonMarkdownBody content={markdownContent} />
         </div>
       ) : (
-        <div className="rounded-2xl border border-slate-700/60 bg-slate-900/30 p-4 text-center sm:p-6">
-          <p className="text-sm text-slate-400 sm:text-base">No hay contenido disponible para esta lección.</p>
-        </div>
+        <EmptyState
+          icon="book-open"
+          title="Sin contenido"
+          description="No hay contenido disponible para esta lección todavía."
+          className="border-slate-700/60 bg-slate-900/30"
+        />
       )}
     </div>
   );

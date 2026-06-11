@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect } from 'react';
+import './globals.css';
 
 type GlobalErrorProps = {
   error: Error & { digest?: string };
@@ -14,14 +15,14 @@ export default function GlobalError({ error, reset }: GlobalErrorProps) {
 
   return (
     <html lang="es">
-      <body className="flex min-h-dvh items-center justify-center bg-slate-950 p-4 text-white">
+      <body className="bg-surface text-on-surface flex min-h-dvh items-center justify-center p-4">
         <div className="max-w-md text-center" role="alert">
           <h1 className="mb-2 text-2xl font-semibold">Error crítico</h1>
-          <p className="mb-8 text-slate-400">No se pudo cargar la aplicación. Intenta recargar la página.</p>
+          <p className="text-on-surface-muted mb-8">No se pudo cargar la aplicación. Intenta recargar la página.</p>
           <button
             type="button"
             onClick={reset}
-            className="cursor-pointer rounded-lg bg-blue-600 px-6 py-3 font-semibold hover:bg-blue-500"
+            className="bg-app-ring hover:bg-hub-orb cursor-pointer rounded-lg px-6 py-3 font-semibold text-white"
           >
             Reintentar
           </button>

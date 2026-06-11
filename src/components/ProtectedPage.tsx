@@ -8,6 +8,7 @@ import { cn } from '@/utils/cn';
 import { useUiSessionStore } from '@/store/uiSessionStore';
 import { FULL_PAGE_SHELL_CLASS } from '@/shared/constants/pageShell';
 
+import { LoadingState } from '@/shared/components/LoadingState';
 import SignInRequiredBlock from './SignInRequiredBlock';
 
 type ProtectedPageProps = {
@@ -40,15 +41,7 @@ export default function ProtectedPage({
   if (loading || !hydrated) {
     return (
       <div className={cn('flex flex-col items-center justify-center', FULL_PAGE_SHELL_CLASS)}>
-        <div className="text-center">
-          <div
-            className={cn(
-              'border-app-ring/30 border-t-app-ring mx-auto mb-4 h-16 w-16',
-              'animate-spin rounded-full border-4'
-            )}
-          />
-          <p className="text-app-accent text-lg font-semibold">Verificando sesión...</p>
-        </div>
+        <LoadingState label="Verificando sesión..." layout="fill" />
       </div>
     );
   }

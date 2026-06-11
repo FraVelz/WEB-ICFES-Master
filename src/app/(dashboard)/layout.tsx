@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import React from 'react';
 
+import { ErrorBoundary } from '@/components/ErrorBoundary';
 import { LevelAssessmentGate } from '@/components/LevelAssessmentGate';
 
 export const metadata: Metadata = {
@@ -12,7 +13,9 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   return (
     <div className="from-surface via-surface-via to-surface text-on-surface relative flex min-h-dvh bg-linear-to-b">
       <LevelAssessmentGate />
-      <DashboardLayoutChrome>{children}</DashboardLayoutChrome>
+      <DashboardLayoutChrome>
+        <ErrorBoundary title="Error en el panel">{children}</ErrorBoundary>
+      </DashboardLayoutChrome>
     </div>
   );
 }

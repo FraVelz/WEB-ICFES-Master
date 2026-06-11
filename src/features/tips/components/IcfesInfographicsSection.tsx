@@ -1,11 +1,12 @@
 'use client';
 
+import dynamic from 'next/dynamic';
 import { useMemo, useState } from 'react';
 import { Icon } from '@/shared/components/Icon';
 import { cn } from '@/utils/cn';
 import { getInfographicPdfUrl, isInfographicStorageConfigured } from '@/shared/utils/infographicAssetUrl';
 import { ICFES_INFOGRAPHIC_GROUPS, type IcfesInfographic } from './icfesInfographicItems';
-import { PdfViewerModal } from './PdfViewerModal';
+const PdfViewerModal = dynamic(() => import('./PdfViewerModal').then((m) => m.PdfViewerModal), { ssr: false });
 
 type ActivePdf = {
   title: string;
