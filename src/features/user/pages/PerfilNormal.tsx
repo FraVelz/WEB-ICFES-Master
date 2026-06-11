@@ -19,6 +19,7 @@ import { ProfileLeagueSection } from '../components/profile/ProfileLeagueSection
 import { ProfileStoreHighlights } from '../components/profile/ProfileStoreHighlights';
 import { mapMyLeagueToDisplay } from '../components/profile/profileLeagueTypes';
 import { useMyLeague } from '@/hooks/gamification/useMyLeague';
+import { useProfileCourseProgress } from '../hooks/useProfileCourseProgress';
 
 const profileActionButtonClass = cn(
   'flex cursor-pointer items-center gap-2 rounded-lg border border-surface-border',
@@ -42,7 +43,6 @@ export const PerfilNormal = () => {
     totalXP,
     levelInfo,
     achievements,
-    coursesProgress,
     loading,
     gamificationLoading,
     studyTimeMinutes,
@@ -51,6 +51,7 @@ export const PerfilNormal = () => {
   const isVip = useVipBadge();
   const { inventory, equippedLogoId } = useShop();
   const { leagueState, leagueRank, loading: leagueLoading, resetMs } = useMyLeague();
+  const { courseProgress, loading: courseProgressLoading } = useProfileCourseProgress(uid);
 
   const leagueDisplay = useMemo(() => mapMyLeagueToDisplay(leagueState, leagueRank), [leagueState, leagueRank]);
 
@@ -102,7 +103,8 @@ export const PerfilNormal = () => {
         <div className="space-y-8 lg:col-span-2">
           <ProfileStoreHighlights highlights={storeHighlights} onGoToStore={() => router.push('/tienda')} />
           <ProfileCoursesSection
-            coursesProgress={coursesProgress}
+            courseProgress={courseProgress}
+            loading={courseProgressLoading}
             emptyMessage="Aún no has iniciado ningún curso."
             onStartLearning={() => router.push('/ruta-aprendizaje')}
           />

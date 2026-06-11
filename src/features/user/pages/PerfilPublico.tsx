@@ -18,6 +18,7 @@ import { ProfileAchievementsSection } from '../components/profile/ProfileAchieve
 import { ProfileLeagueSection } from '../components/profile/ProfileLeagueSection';
 import { ProfileStoreHighlights } from '../components/profile/ProfileStoreHighlights';
 import { useMyLeague } from '@/hooks/gamification/useMyLeague';
+import { useProfileCourseProgress } from '../hooks/useProfileCourseProgress';
 import { mapMyLeagueToDisplay } from '../components/profile/profileLeagueTypes';
 import { PublicProfileChrome } from '../components/profile/PublicProfileChrome';
 import { PublicProfileGate } from '../components/profile/PublicProfileGate';
@@ -50,7 +51,7 @@ export const PerfilPublico = ({ view }: PerfilPublicoProps) => {
     totalXP,
     levelInfo,
     achievements,
-    coursesProgress,
+    courseProgress: publicCourseProgress,
     hasVipBadge,
     storeHighlights,
     league,
@@ -61,6 +62,9 @@ export const PerfilPublico = ({ view }: PerfilPublicoProps) => {
   const ownLeagueDisplay = useMemo(
     () => mapMyLeagueToDisplay(leagueState, leagueRank),
     [leagueState, leagueRank]
+  );
+  const { courseProgress: ownCourseProgress, loading: ownCourseProgressLoading } = useProfileCourseProgress(
+    isOwnProfile ? userId ?? undefined : undefined
   );
   const ownVip = useVipBadge();
   const { inventory, equippedLogoId } = useShop();
@@ -78,6 +82,8 @@ export const PerfilPublico = ({ view }: PerfilPublicoProps) => {
 
   const leagueDisplay = isOwnProfile ? ownLeagueDisplay : league;
   const leagueLoading = isOwnProfile && ownLeagueLoading;
+  const courseProgress = isOwnProfile ? ownCourseProgress : publicCourseProgress;
+  const courseProgressLoading = isOwnProfile && ownCourseProgressLoading;
 
   const handleShare = () => {
     navigator.clipboard.writeText(window.location.href).then(() => {
@@ -160,7 +166,8 @@ export const PerfilPublico = ({ view }: PerfilPublicoProps) => {
               showRanking={false}
             />
             <ProfileCoursesSection
-              coursesProgress={coursesProgress}
+              courseProgress={courseProgress}
+              loading={courseProgressLoading}
               emptyMessage="Este usuario aún no ha iniciado cursos."
             />
           </div>

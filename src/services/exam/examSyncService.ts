@@ -72,6 +72,8 @@ export function mapExamResultRowToAttempt(
   let answers: Record<string, string> = {};
   let areaName: string | undefined;
   let config: unknown;
+  let examMode: string | undefined;
+  let phaseSkipSectionId: string | undefined;
 
   if (questionsPayload && typeof questionsPayload === 'object' && !Array.isArray(questionsPayload)) {
     const payload = questionsPayload as Record<string, unknown>;
@@ -79,6 +81,8 @@ export function mapExamResultRowToAttempt(
     answers = (payload.answers as Record<string, string>) ?? {};
     areaName = payload.areaName as string | undefined;
     config = payload.config;
+    examMode = payload.examMode as string | undefined;
+    phaseSkipSectionId = payload.phaseSkipSectionId as string | undefined;
   } else if (Array.isArray(questionsPayload)) {
     questions = questionsPayload;
   }
@@ -97,7 +101,14 @@ export function mapExamResultRowToAttempt(
     percentage: Number(row.score ?? 0),
     totalQuestions: Number(row.total_questions ?? 0),
     config,
-    ...(isFullExam ? {} : { practiceArea: examType, areaName }),
+    ...(isFullExam
+      ? {}
+      : {
+          practiceArea: examType,
+          areaName,
+          examMode,
+          phaseSkipSectionId,
+        }),
   };
 }
 

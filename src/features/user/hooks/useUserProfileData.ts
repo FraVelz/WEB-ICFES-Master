@@ -11,7 +11,6 @@ export type UserProfileData = {
   name: string;
   personalPhrase: string;
   createdAt: string;
-  coursesProgress: Record<string, unknown>;
   loading: boolean;
   exists: boolean;
 };
@@ -21,7 +20,6 @@ const EMPTY_PROFILE: UserProfileData = {
   name: '',
   personalPhrase: '',
   createdAt: 'Reciente',
-  coursesProgress: {},
   loading: true,
   exists: false,
 };
@@ -55,7 +53,6 @@ export function useUserProfileData(uid: string | undefined) {
           name: demo.username ?? 'Estudiante',
           personalPhrase: demo.bio ?? '',
           createdAt: 'Modo demo',
-          coursesProgress: {},
           loading: false,
           exists: true,
         });
@@ -88,7 +85,6 @@ export function useUserProfileData(uid: string | undefined) {
                 day: 'numeric',
               })
             : 'Reciente',
-          coursesProgress: {},
           loading: false,
           exists: true,
         });

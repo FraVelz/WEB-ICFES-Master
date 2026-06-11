@@ -1,3 +1,6 @@
+/** Simulacro general del área vs examen para saltar una fase. */
+export type AreaPracticeExamMode = 'area-general' | 'phase-skip';
+
 /** Intento guardado en localStorage (examen completo o práctica por área). */
 export type LocalAttemptRecord = Record<string, unknown> & {
   id?: string | number;
@@ -5,12 +8,21 @@ export type LocalAttemptRecord = Record<string, unknown> & {
   date?: string;
   completedAt?: string;
   practiceArea?: string;
+  examMode?: AreaPracticeExamMode;
+  phaseSkipSectionId?: string;
   correctCount?: number;
   percentage?: number;
   totalQuestions?: number;
   questions?: Array<{ id?: string; correctAnswer?: string }>;
   answers?: Record<string, string>;
 };
+
+export function resolvePracticeExamMode(attempt: LocalAttemptRecord): AreaPracticeExamMode {
+  if (attempt.examMode === 'phase-skip' || attempt.examMode === 'area-general') {
+    return attempt.examMode;
+  }
+  return 'area-general';
+}
 
 export type MappedExamResultRow = {
   id: string;
@@ -80,6 +92,8 @@ export function mapLocalAttemptToExamResult(userId: string, attempt: LocalAttemp
       answers: attempt.answers ?? {},
       areaName: attempt.areaName,
       config: attempt.config,
+      examMode: attempt.examMode ?? resolvePracticeExamMode(attempt),
+      phaseSkipSectionId: attempt.phaseSkipSectionId ?? null,
       migratedFrom: 'demo',
       localAttemptId: attempt.id ?? null,
     },

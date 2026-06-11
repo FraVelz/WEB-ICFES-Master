@@ -2,6 +2,8 @@ import { createClient, type SupabaseClient } from '@supabase/supabase-js';
 import { createSupabaseClient } from '@/config/supabaseClient';
 import { readStudyTimeRemoteMeta } from '@/services/studyTime/studyTimeService';
 import { buildPublicLeagueSnapshot, type PublicProfileLeaguePayload } from './publicProfileLeague';
+import { fetchPublicCourseProgress } from './publicProfileCourseProgress';
+import type { ProfileCourseProgressSnapshot } from '@/features/user/types/profileCourseProgress';
 
 export type PublicProfilePayload = {
   profile: {
@@ -19,6 +21,7 @@ export type PublicProfilePayload = {
     equippedLogoId?: string | null;
     shopInventory?: string[];
     league?: PublicProfileLeaguePayload;
+    courseProgress?: ProfileCourseProgressSnapshot;
   };
 };
 
@@ -52,7 +55,10 @@ async function fetchViaServiceRole(userId: string): Promise<PublicProfilePayload
     ? gamification.shop_inventory.filter((entry): entry is string => typeof entry === 'string')
     : [];
 
-  const league = await buildPublicLeagueSnapshot(sb, userId, gamification);
+  const [league, courseProgress] = await Promise.all([
+    buildPublicLeagueSnapshot(sb, userId, gamification),
+    fetchPublicCourseProgress(sb, userId),
+  ]);
 
   return {
     profile: {
@@ -70,6 +76,7 @@ async function fetchViaServiceRole(userId: string): Promise<PublicProfilePayload
       equippedLogoId: gamification?.equipped_logo_id ?? null,
       shopInventory,
       league,
+      courseProgress,
     },
   };
 }
@@ -191,9 +198,28 @@ async function enrichShopGamification(userId: string, payload: PublicProfilePayl
   };
 }
 
+async function enrichCourseProgress(userId: string, payload: PublicProfilePayload): Promise<PublicProfilePayload> {
+  if (payload.gamification.courseProgress) {
+    return payload;
+  }
+
+  const sb = createServiceClient();
+  if (!sb) return payload;
+
+  const courseProgress = await fetchPublicCourseProgress(sb, userId);
+  return {
+    ...payload,
+    gamification: {
+      ...payload.gamification,
+      courseProgress,
+    },
+  };
+}
+
 async function enrichPublicGamification(userId: string, payload: PublicProfilePayload): Promise<PublicProfilePayload> {
   const withLeague = await enrichLeagueGamification(userId, payload);
-  return enrichShopGamification(userId, withLeague);
+  const withShop = await enrichShopGamification(userId, withLeague);
+  return enrichCourseProgress(userId, withShop);
 }
 
 /** Consulta perfil público sin sesión del visitante (service role o RPC anónima). */

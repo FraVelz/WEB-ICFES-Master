@@ -56,6 +56,8 @@ export function usePracticeExamGrading({
         savePractice({
           practiceArea: areaStr,
           areaName,
+          examMode: isPhaseSkipMode ? 'phase-skip' : 'area-general',
+          phaseSkipSectionId: phaseSkipSectionId ?? undefined,
           questions: fullQuestions,
           answers,
           correctCount,

@@ -8,6 +8,10 @@ import type { ImageSource } from '@/assets';
 import { resolveProfileAvatarSrc } from '@/features/user/utils/resolveProfileAvatar';
 import type { ProfileLeagueDisplay } from '@/features/user/components/profile/profileLeagueTypes';
 import { EMPTY_PROFILE_LEAGUE } from '@/features/user/components/profile/profileLeagueTypes';
+import {
+  EMPTY_PROFILE_COURSE_PROGRESS,
+  type ProfileCourseProgressSnapshot,
+} from '@/features/user/types/profileCourseProgress';
 import { leagueFromPayload } from './publicProfileLeague';
 import type { PublicProfilePayload } from './publicProfileServer';
 
@@ -59,7 +63,7 @@ export type PublicProfileViewState = {
     xpProgress: number;
     nextLevelName: string | null;
   };
-  coursesProgress: Record<string, unknown>;
+  courseProgress: ProfileCourseProgressSnapshot;
   hasVipBadge: boolean;
   storeHighlights: ProfileStoreHighlight[];
   league: ProfileLeagueDisplay;
@@ -84,7 +88,7 @@ const EMPTY_VIEW: Omit<PublicProfileViewState, 'userId' | 'errorCode' | 'exists'
     xpProgress: 0,
     nextLevelName: null,
   },
-  coursesProgress: {},
+  courseProgress: EMPTY_PROFILE_COURSE_PROGRESS,
   hasVipBadge: false,
   storeHighlights: [],
   league: EMPTY_PROFILE_LEAGUE,
@@ -137,7 +141,7 @@ export function buildPublicProfileViewState(
       xpProgress: levelInfo.progress,
       nextLevelName: levelInfo.nextLevelData?.name || null,
     },
-    coursesProgress: {},
+    courseProgress: payload.gamification.courseProgress ?? EMPTY_PROFILE_COURSE_PROGRESS,
     hasVipBadge: hasVipBadge(shopInventory),
     storeHighlights: buildProfileStoreHighlights(shopInventory, equippedLogoId),
     league: leagueFromPayload(payload.gamification.league),
