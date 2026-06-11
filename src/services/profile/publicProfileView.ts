@@ -64,6 +64,7 @@ export type PublicProfileViewState = {
     nextLevelName: string | null;
   };
   courseProgress: ProfileCourseProgressSnapshot;
+  studyTimeMinutes: number;
   hasVipBadge: boolean;
   storeHighlights: ProfileStoreHighlight[];
   league: ProfileLeagueDisplay;
@@ -89,6 +90,7 @@ const EMPTY_VIEW: Omit<PublicProfileViewState, 'userId' | 'errorCode' | 'exists'
     nextLevelName: null,
   },
   courseProgress: EMPTY_PROFILE_COURSE_PROGRESS,
+  studyTimeMinutes: 0,
   hasVipBadge: false,
   storeHighlights: [],
   league: EMPTY_PROFILE_LEAGUE,
@@ -142,6 +144,7 @@ export function buildPublicProfileViewState(
       nextLevelName: levelInfo.nextLevelData?.name || null,
     },
     courseProgress: payload.gamification.courseProgress ?? EMPTY_PROFILE_COURSE_PROGRESS,
+    studyTimeMinutes: payload.gamification.studyTimeMinutes ?? 0,
     hasVipBadge: hasVipBadge(shopInventory),
     storeHighlights: buildProfileStoreHighlights(shopInventory, equippedLogoId),
     league: leagueFromPayload(payload.gamification.league),

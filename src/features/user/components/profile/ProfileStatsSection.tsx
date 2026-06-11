@@ -10,7 +10,6 @@ type ProfileStatsSectionProps = {
   totalXP: number;
   studyTimeMinutes?: number;
   title?: string;
-  showRanking?: boolean;
 };
 
 const statCardClass = cn(
@@ -24,7 +23,6 @@ export function ProfileStatsSection({
   totalXP,
   studyTimeMinutes = 0,
   title = 'Estadísticas Rápidas',
-  showRanking = false,
 }: ProfileStatsSectionProps) {
   const completed = achievements.filter((a) => a.status === 'completed').length;
 
@@ -56,12 +54,6 @@ export function ProfileStatsSection({
           <div className="text-on-surface text-2xl font-bold">{formatStudyTime(studyTimeMinutes)}</div>
           <div className="text-on-surface-muted mt-1 text-xs uppercase">Tiempo de estudio</div>
         </div>
-        {showRanking && (
-          <div className={statCardClass}>
-            <div className="text-on-surface text-2xl font-bold">Top 10%</div>
-            <div className="text-on-surface-muted mt-1 text-xs uppercase">Ranking</div>
-          </div>
-        )}
       </div>
     </div>
   );

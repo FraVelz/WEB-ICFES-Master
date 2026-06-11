@@ -19,6 +19,7 @@ import { ProfileLeagueSection } from '../components/profile/ProfileLeagueSection
 import { ProfileStoreHighlights } from '../components/profile/ProfileStoreHighlights';
 import { useMyLeague } from '@/hooks/gamification/useMyLeague';
 import { useProfileCourseProgress } from '../hooks/useProfileCourseProgress';
+import { useUserProfileStudyTime } from '../hooks/useUserProfileStudyTime';
 import { mapMyLeagueToDisplay } from '../components/profile/profileLeagueTypes';
 import { PublicProfileChrome } from '../components/profile/PublicProfileChrome';
 import { PublicProfileGate } from '../components/profile/PublicProfileGate';
@@ -52,6 +53,7 @@ export const PerfilPublico = ({ view }: PerfilPublicoProps) => {
     levelInfo,
     achievements,
     courseProgress: publicCourseProgress,
+    studyTimeMinutes: publicStudyTimeMinutes,
     hasVipBadge,
     storeHighlights,
     league,
@@ -66,6 +68,7 @@ export const PerfilPublico = ({ view }: PerfilPublicoProps) => {
   const { courseProgress: ownCourseProgress, loading: ownCourseProgressLoading } = useProfileCourseProgress(
     isOwnProfile ? userId ?? undefined : undefined
   );
+  const ownStudyTimeMinutes = useUserProfileStudyTime(isOwnProfile ? userId ?? undefined : undefined);
   const ownVip = useVipBadge();
   const { inventory, equippedLogoId } = useShop();
   const [copied, setCopied] = useState(false);
@@ -84,6 +87,7 @@ export const PerfilPublico = ({ view }: PerfilPublicoProps) => {
   const leagueLoading = isOwnProfile && ownLeagueLoading;
   const courseProgress = isOwnProfile ? ownCourseProgress : publicCourseProgress;
   const courseProgressLoading = isOwnProfile && ownCourseProgressLoading;
+  const studyTimeMinutes = isOwnProfile ? ownStudyTimeMinutes : publicStudyTimeMinutes;
 
   const handleShare = () => {
     navigator.clipboard.writeText(window.location.href).then(() => {
@@ -162,8 +166,8 @@ export const PerfilPublico = ({ view }: PerfilPublicoProps) => {
               achievements={achievements}
               level={level}
               totalXP={totalXP}
+              studyTimeMinutes={studyTimeMinutes}
               title="Estadísticas"
-              showRanking={false}
             />
             <ProfileCoursesSection
               courseProgress={courseProgress}
