@@ -6,6 +6,7 @@ import { reconcileAchievementsWithoutRewards } from '@/services/achievements/ach
 import { migrateLocalAttemptsToSupabase } from '@/services/demo/migrateLocalAttemptsToSupabase';
 import { mergeDemoStreakIntoUser } from '@/services/streak';
 import { mergeLecturaReadDemoIntoUser } from '@/features/lectura/services/lecturaReadPersistence';
+import { pushLearningProgressToRemote } from '@/services/learning';
 import { mergeDemoStudyTimeIntoUser } from '@/services/studyTime';
 import { clearDemoLocalStorageAfterMigration, hasDemoDataToMigrate } from './mergeDemoDetection';
 import { migrateAggregatedProgress, migrateGamificationBalances, migrateSkillLevel } from './mergeDemoMigrationSteps';
@@ -51,6 +52,12 @@ export async function mergeDemoIntoUser(userId: string): Promise<void> {
     await reconcileAchievementsWithoutRewards(userId);
   } catch (err) {
     console.warn('No se pudieron migrar logros del demo:', err);
+  }
+
+  try {
+    await pushLearningProgressToRemote(userId);
+  } catch (err) {
+    console.warn('No se pudo sincronizar progreso de aprendizaje del demo:', err);
   }
 
   clearDemoLocalStorageAfterMigration();

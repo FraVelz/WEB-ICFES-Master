@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
+import { useAuth } from '@/features/auth/context/AuthContext';
 import { markPhaseSkipped, PHASE_SKIP_PASS_PERCENT, savePractice } from '@/services/persistence';
 import { fetchGradedExamResults, gradedToExamQuestion } from '@/features/exam/services/examGradingClient';
 import type { GradedExamAnswer } from '@/features/exam/services/examGradingServer';
@@ -30,6 +31,7 @@ export function usePracticeExamGrading({
   isPhaseSkipMode,
   phaseSkipSectionId,
 }: GradingParams) {
+  const { user } = useAuth();
   const [gradedResults, setGradedResults] = useState<GradedExamAnswer[] | null>(null);
   const [gradingError, setGradingError] = useState<string | null>(null);
   const [phaseSkipPassed, setPhaseSkipPassed] = useState(false);
@@ -74,7 +76,7 @@ export function usePracticeExamGrading({
           !phaseSkipAppliedRef.current
         ) {
           phaseSkipAppliedRef.current = true;
-          markPhaseSkipped(areaStr, phaseSkipSectionId, percentage);
+          markPhaseSkipped(user?.uid, areaStr, phaseSkipSectionId, percentage);
           setPhaseSkipPassed(true);
         }
       })
@@ -87,7 +89,18 @@ export function usePracticeExamGrading({
     return () => {
       active = false;
     };
-  }, [isFinished, showResults, questions, answers, examConfig, areaStr, areaName, isPhaseSkipMode, phaseSkipSectionId]);
+  }, [
+    isFinished,
+    showResults,
+    questions,
+    answers,
+    examConfig,
+    areaStr,
+    areaName,
+    isPhaseSkipMode,
+    phaseSkipSectionId,
+    user?.uid,
+  ]);
 
   const resetGrading = () => {
     setGradedResults(null);

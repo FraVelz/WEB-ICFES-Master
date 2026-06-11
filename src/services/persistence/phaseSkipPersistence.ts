@@ -1,3 +1,5 @@
+import { pushLearningProgressToRemote } from '@/services/learning';
+
 /** Porcentaje mínimo en el examen de salto para superar una fase bloqueada. */
 export const PHASE_SKIP_PASS_PERCENT = 70;
 
@@ -44,7 +46,12 @@ export function getSkippedSectionIdsForArea(areaId: string): Set<string> {
   );
 }
 
-export function markPhaseSkipped(areaId: string, sectionId: string, score: number): void {
+export function markPhaseSkipped(
+  userId: string | undefined,
+  areaId: string,
+  sectionId: string,
+  score: number
+): void {
   const records = readSkips().filter((r) => !(r.areaId === areaId && r.sectionId === sectionId));
   records.push({
     areaId,
@@ -53,4 +60,7 @@ export function markPhaseSkipped(areaId: string, sectionId: string, score: numbe
     score,
   });
   writeSkips(records);
+  if (userId) {
+    void pushLearningProgressToRemote(userId);
+  }
 }
