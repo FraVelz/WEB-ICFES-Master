@@ -123,7 +123,11 @@ export function RoadmapAside({
           <p className="text-on-surface-muted mt-1 text-sm">
             {currentSection ? getStageLabel(currentSection.id) : 'Fase actual'}
           </p>
-          <p className="text-on-surface-muted/80 mt-3 text-xs italic">Plantilla — datos reales próximamente</p>
+          {sectionProgress.studyTimeMinutes > 0 ? (
+            <p className="text-on-surface-muted mt-3 text-xs leading-relaxed">
+              Tiempo registrado en esta fase: {formatStudyTime(sectionProgress.studyTimeMinutes)}
+            </p>
+          ) : null}
         </AsideCard>
 
         <AsideCard
@@ -164,7 +168,6 @@ export function RoadmapAside({
               </span>
             </li>
           </ul>
-          <p className="text-on-surface-muted/80 mt-4 text-xs italic">Plantilla — más métricas próximamente</p>
         </AsideCard>
       </div>
 

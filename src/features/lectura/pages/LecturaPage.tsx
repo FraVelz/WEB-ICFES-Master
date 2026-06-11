@@ -2,7 +2,8 @@
 
 import { Icon } from '@/shared/components/Icon';
 import { LecturaSectionCard } from '../components/LecturaSectionCard';
-import { LECTURA_SECTIONS } from '../constants';
+import { LECTURA_PAGE_SHELL_CLASS, LECTURA_SECTIONS } from '../constants';
+import { cn } from '@/utils/cn';
 import { useLecturaRead } from '../hooks/useLecturaRead';
 
 export function LecturaPage() {
@@ -11,7 +12,7 @@ export function LecturaPage() {
   const totalCount = LECTURA_SECTIONS.length;
 
   return (
-    <div className="relative z-10 mx-auto max-w-3xl space-y-6">
+    <div className={cn(LECTURA_PAGE_SHELL_CLASS, 'max-w-3xl space-y-6')}>
       <header className="space-y-2">
         <p className="text-on-surface-muted max-w-2xl leading-relaxed">
           Material informativo de solo lectura sobre el ICFES, el bachillerato y cómo prepararte. Elige una sección para

@@ -3,25 +3,46 @@
 import { useMemo } from 'react';
 import Link from 'next/link';
 import { cn } from '@/utils/cn';
+import { useAuth } from '@/features/auth/context/AuthContext';
+import { useGamification, useGamificationScope } from '@/hooks/gamification';
 import { getStageLabel } from '@/features/learning/shell/SecondaryHeader/sectionStageUtils';
 import { getPracticaHrefForRoadmapArea } from '@/shared/constants';
+import { resolveStudyTimeUserId } from '@/services/studyTime';
+import { useUiSessionStore } from '@/store/uiSessionStore';
 import { AsideCard } from './AsideCard';
 import { useDashboardShell } from './DashboardShellContext';
-import { computeSectionProgress, formatStudyTime } from './asidePanelUtils';
+import { computeSectionProgress, findNextLesson, formatStudyTime } from './asidePanelUtils';
+import { useStudyTimeStats } from './useStudyTimeStats';
 
 export function LearningAsidePanels() {
   const { currentArea, currentAreaData, currentSection, currentStreak, coins } = useDashboardShell();
+  const { user } = useAuth();
+  const demoMode = useUiSessionStore((state) => state.demoMode);
+  const studyUserId = resolveStudyTimeUserId(user?.uid, demoMode);
+  const studyStats = useStudyTimeStats(studyUserId);
+  const gamificationScope = useGamificationScope();
+  const { totalXP, level, longestStreak } = useGamification(gamificationScope);
+
   const sectionProgress = useMemo(() => computeSectionProgress(currentSection), [currentSection]);
+  const nextLesson = useMemo(() => findNextLesson(currentSection), [currentSection]);
   const areaExamHref = getPracticaHrefForRoadmapArea(currentArea);
+  const pendingLessons = Math.max(0, sectionProgress.totalLessons - sectionProgress.completedLessons);
+
+  const studyDetail =
+    studyStats.currentSessionMinutes > 0
+      ? `Sesión actual: ${formatStudyTime(studyStats.currentSessionMinutes)}`
+      : studyStats.longestSessionMinutes > 0
+        ? `Mejor sesión: ${formatStudyTime(studyStats.longestSessionMinutes)}`
+        : 'Se registra mientras estudias en la ruta o en práctica';
 
   return (
     <>
       <AsideCard title="Tiempo de estudio" icon="clock">
-        <p className="text-on-surface text-3xl font-bold">{formatStudyTime(sectionProgress.studyTimeMinutes)}</p>
+        <p className="text-on-surface text-3xl font-bold">{formatStudyTime(studyStats.totalMinutes)}</p>
         <p className="text-on-surface-muted mt-1 text-sm">
-          {currentSection ? getStageLabel(currentSection.id) : 'Fase actual'}
+          {currentAreaData.name} · {currentSection ? getStageLabel(currentSection.id) : 'Fase actual'}
         </p>
-        <p className="text-on-surface-muted/80 mt-3 text-xs italic">Plantilla — datos reales próximamente</p>
+        <p className="text-on-surface-muted mt-3 text-xs leading-relaxed">{studyDetail}</p>
       </AsideCard>
 
       <AsideCard
@@ -43,23 +64,38 @@ export function LearningAsidePanels() {
           {sectionProgress.percent}% de lecciones completadas en{' '}
           <span className="text-on-surface font-medium">{currentSection?.title ?? 'esta fase'}</span>
         </p>
+        {nextLesson?.title ? (
+          <p className="text-on-surface-muted/90 mt-2 text-xs leading-relaxed">
+            Siguiente lección: <span className="text-on-surface font-medium">{nextLesson.title}</span>
+          </p>
+        ) : sectionProgress.totalLessons > 0 && pendingLessons === 0 ? (
+          <p className="text-on-surface-muted/90 mt-2 text-xs text-emerald-500">Fase completada en esta área</p>
+        ) : null}
       </AsideCard>
 
       <AsideCard title="Resumen rápido" icon="star">
         <ul className="text-on-surface-muted space-y-2 text-sm">
           <li className="flex items-center justify-between gap-2">
+            <span>Nivel</span>
+            <span className="text-on-surface font-semibold">
+              {level} · {totalXP.toLocaleString('es-CO')} XP
+            </span>
+          </li>
+          <li className="flex items-center justify-between gap-2">
             <span>Racha activa</span>
             <span className="text-on-surface font-semibold">{currentStreak} días</span>
           </li>
           <li className="flex items-center justify-between gap-2">
+            <span>Mejor racha</span>
+            <span className="text-on-surface font-semibold">{longestStreak} días</span>
+          </li>
+          <li className="flex items-center justify-between gap-2">
             <span>Monedas</span>
-            <span className="font-semibold text-yellow-500">{coins}</span>
+            <span className="font-semibold text-yellow-500">{coins.toLocaleString('es-CO')}</span>
           </li>
           <li className="flex items-center justify-between gap-2">
             <span>Lecciones pendientes</span>
-            <span className="text-on-surface font-semibold">
-              {Math.max(0, sectionProgress.totalLessons - sectionProgress.completedLessons)}
-            </span>
+            <span className="text-on-surface font-semibold">{pendingLessons}</span>
           </li>
         </ul>
       </AsideCard>

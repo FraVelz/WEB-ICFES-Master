@@ -3,18 +3,58 @@
 import Link from 'next/link';
 import { cn } from '@/utils/cn';
 import { getPracticaHrefForRoadmapArea } from '@/shared/constants';
+import { useMyLeague } from '@/hooks/gamification/useMyLeague';
+import { getRankInfo } from '@/shared/constants/ranks';
 import { ProfileStatusPicker } from '@/features/user/components/profile/ProfileStatusPicker';
 import { AsideCard } from './AsideCard';
 import { useDashboardShell } from './DashboardShellContext';
 
 export function LeaderboardAsidePanels() {
   const { currentArea, currentAreaData, currentStreak, coins } = useDashboardShell();
+  const { leagueState, leagueRank, loading: leagueLoading } = useMyLeague();
+  const rankInfo = getRankInfo(leagueRank);
   const areaExamHref = getPracticaHrefForRoadmapArea(currentArea);
+
+  const weeklyXp = leagueState?.weeklyXp ?? 0;
+  const position = leagueState?.weeklyXp ? leagueState.myPosition : null;
+  const groupLabel =
+    leagueState?.leagueGroupId && leagueState.groupNumber != null
+      ? `Grupo ${leagueState.groupNumber}`
+      : 'Sin grupo esta semana';
 
   return (
     <>
       <AsideCard title="Tu perfil" icon="user" className="border-surface-border/60 dark:bg-surface-elevated/80">
         <ProfileStatusPicker />
+      </AsideCard>
+
+      <AsideCard title="Tu liga" icon="trophy">
+        <p className="text-on-surface text-lg font-bold">División {rankInfo.label}</p>
+        <ul className="text-on-surface-muted mt-3 space-y-2 text-sm">
+          <li className="flex justify-between gap-2">
+            <span>XP semanal</span>
+            <span className="text-on-surface font-semibold">{leagueLoading ? '…' : weeklyXp}</span>
+          </li>
+          <li className="flex justify-between gap-2">
+            <span>Torneo</span>
+            <span className="text-on-surface text-right font-semibold">{groupLabel}</span>
+          </li>
+          {position != null ? (
+            <li className="flex justify-between gap-2">
+              <span>Posición en grupo</span>
+              <span className="text-on-surface font-semibold">#{position}</span>
+            </li>
+          ) : null}
+        </ul>
+        <Link
+          href="/clasificatoria"
+          className={cn(
+            'text-app-accent hover:text-app-accent-muted mt-4 inline-flex text-xs font-semibold underline',
+            'underline-offset-2 transition-colors'
+          )}
+        >
+          Ver clasificatoria completa
+        </Link>
       </AsideCard>
 
       <AsideCard title="Tu energía" icon="fire">
@@ -25,7 +65,7 @@ export function LeaderboardAsidePanels() {
           </li>
           <li className="flex justify-between gap-2">
             <span>Monedas</span>
-            <span className="font-semibold text-yellow-500">{coins}</span>
+            <span className="font-semibold text-yellow-500">{coins.toLocaleString('es-CO')}</span>
           </li>
         </ul>
       </AsideCard>

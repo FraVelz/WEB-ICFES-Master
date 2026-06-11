@@ -1,5 +1,8 @@
 export type LecturaSectionId = 'importancia' | 'informacion' | 'consejos';
 
+/** El dashboard shell usa `px-0` en móvil; las rutas de lectura aportan su propio margen lateral. */
+export const LECTURA_PAGE_SHELL_CLASS = 'relative z-10 mx-auto w-full px-4 sm:px-5 lg:px-0';
+
 /** Consejos: violeta legible en claro y coherente con el ambiente frío de Lectura */
 export const LECTURA_CONSEJOS_ACCENT = {
   iconClassName: 'text-xl text-violet-700 dark:text-violet-400',

@@ -3,33 +3,57 @@
 import Link from 'next/link';
 import { cn } from '@/utils/cn';
 import { Icon } from '@/shared/components/Icon';
+import { useGamification, useGamificationScope } from '@/hooks/gamification';
+import { getLevelInfo } from '@/services/gamification/gamificationUtils';
 import { AsideCard } from './AsideCard';
 import { useDashboardShell } from './DashboardShellContext';
 
 export function AchievementsAsidePanels() {
   const { currentStreak, coins } = useDashboardShell();
+  const gamificationScope = useGamificationScope();
+  const { achievements, completedCount, totalXP, level, longestStreak, loading } = useGamification(gamificationScope);
+  const levelInfo = getLevelInfo(totalXP);
+  const inProgressCount = achievements.filter((a) => a.status === 'in_progress').length;
 
   return (
     <>
       <AsideCard title="Tu progreso XP" icon="star">
-        <p className="text-on-surface-muted text-sm">
-          Completa retos en la ruta y simulacros para desbloquear medallas y subir de nivel.
+        <p className="text-on-surface text-2xl font-bold">
+          Nivel {level}
+          <span className="text-on-surface-muted ml-2 text-sm font-medium">({levelInfo.levelData.name})</span>
         </p>
+        <p className="text-on-surface-muted mt-1 text-sm">{totalXP.toLocaleString('es-CO')} XP acumulados</p>
         <ul className="text-on-surface-muted mt-4 space-y-2 text-sm">
+          <li className="flex justify-between gap-2">
+            <span>Logros desbloqueados</span>
+            <span className="text-on-surface font-semibold">
+              {loading ? '…' : `${completedCount}/${achievements.length}`}
+            </span>
+          </li>
+          <li className="flex justify-between gap-2">
+            <span>En progreso</span>
+            <span className="text-on-surface font-semibold">{loading ? '…' : inProgressCount}</span>
+          </li>
           <li className="flex justify-between gap-2">
             <span>Racha</span>
             <span className="text-on-surface font-semibold">{currentStreak} días</span>
           </li>
           <li className="flex justify-between gap-2">
+            <span>Mejor racha</span>
+            <span className="text-on-surface font-semibold">{longestStreak} días</span>
+          </li>
+          <li className="flex justify-between gap-2">
             <span>Monedas</span>
-            <span className="font-semibold text-yellow-500">{coins}</span>
+            <span className="font-semibold text-yellow-500">{coins.toLocaleString('es-CO')}</span>
           </li>
         </ul>
       </AsideCard>
 
       <AsideCard title="Consejo" icon="lightbulb">
         <p className="text-on-surface-muted text-sm leading-relaxed">
-          Prioriza logros de racha y de fase: mantener constancia suele dar más XP que intentar todo de una vez.
+          {inProgressCount > 0
+            ? `Tienes ${inProgressCount} logro${inProgressCount === 1 ? '' : 's'} en camino. Completa lecciones y simulacros para desbloquearlos.`
+            : 'Prioriza logros de racha y de fase: mantener constancia suele dar más XP que intentar todo de una vez.'}
         </p>
       </AsideCard>
 

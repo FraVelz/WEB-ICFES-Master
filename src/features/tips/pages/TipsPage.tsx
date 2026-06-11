@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { Icon } from '@/shared/components/Icon';
 import { LecturaSectionShell, LECTURA_CONSEJOS_ACCENT } from '@/features/lectura';
+import { LECTURA_PAGE_SHELL_CLASS } from '@/features/lectura/constants';
 import { cn } from '@/utils/cn';
 import { TipsCategoriesSections } from '../components/TipsCategoriesSections';
 
@@ -15,7 +16,7 @@ const internalLinkClass = cn(
 
 export function TipsPage() {
   return (
-    <div className="relative z-10 mx-auto max-w-4xl space-y-10">
+    <div className={cn(LECTURA_PAGE_SHELL_CLASS, 'max-w-4xl space-y-10')}>
       <LecturaSectionShell sectionId="consejos">
         <header className="space-y-2">
           <h1 className="text-on-surface flex items-center gap-3 text-3xl font-bold">

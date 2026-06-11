@@ -13,7 +13,7 @@ export function ProfilePageLayout({
   showThemeControl?: boolean;
 }) {
   return (
-    <div className={PAGE_SHELL_CLASS}>
+    <div className={cn(PAGE_SHELL_CLASS, 'relative')}>
       <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
         {glowVariant === 'public' ? (
           <>
@@ -47,8 +47,10 @@ export function ProfilePageLayout({
           </>
         )}
       </div>
+      {showThemeControl ? (
+        <PageThemeControl placement={glowVariant === 'public' ? 'viewport' : 'container'} />
+      ) : null}
       <div className="relative z-10 container mx-auto max-w-6xl px-4 py-8">
-        {showThemeControl ? <PageThemeControl /> : null}
         {children}
       </div>
     </div>
