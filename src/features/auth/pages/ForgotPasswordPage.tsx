@@ -35,7 +35,12 @@ export const ForgotPasswordPage = () => {
       {/* Background glow effects */}
       <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
         <div className="bg-ambient-a/30 absolute top-1/3 left-1/4 h-96 w-96 animate-pulse rounded-full blur-3xl"></div>
-        <div className="bg-ambient-b/30 absolute right-1/4 bottom-1/3 h-96 w-96 animate-pulse rounded-full blur-3xl"></div>
+        <div
+          className={cn(
+            'bg-ambient-b/30 absolute right-1/4 bottom-1/3 h-96 w-96',
+            'animate-pulse rounded-full blur-3xl'
+          )}
+        />
       </div>
 
       {/* Card */}

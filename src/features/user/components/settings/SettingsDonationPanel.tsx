@@ -48,7 +48,11 @@ export function SettingsDonationPanel() {
           <p className="text-on-surface-muted mb-4 text-xs">
             Titular: <span className="text-on-surface font-medium">{DONATION_BRE_B_HOLDER}</span>
           </p>
-          <div className="border-surface-border bg-surface-elevated flex items-center gap-2 rounded-lg border px-3 py-2.5">
+          <div
+          className={cn(
+            "border-surface-border bg-surface-elevated flex items-center gap-2 rounded-lg",
+            "border px-3 py-2.5"
+          )}>
             <span className="text-on-surface flex-1 font-mono text-sm font-semibold tracking-wide">
               {DONATION_BRE_B_KEY}
             </span>
@@ -89,7 +93,8 @@ export function SettingsDonationPanel() {
               'inline-flex w-full cursor-pointer items-center justify-center gap-2 rounded-lg px-4 py-2.5',
               'from-app-accent-strong bg-linear-to-r to-blue-600 text-sm font-semibold text-white',
               'shadow-app-ring/20 shadow-md transition-opacity hover:opacity-90',
-              'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none',
+              'focus-visible:ring-app-accent focus-visible:ring-2 ' +
+              'focus-visible:ring-offset-2 focus-visible:outline-none',
               'focus-visible:ring-offset-surface'
             )}
           >

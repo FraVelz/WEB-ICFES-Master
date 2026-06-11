@@ -83,7 +83,8 @@ export function OnboardingQuizStage({
                 key={option.value}
                 onClick={() => onSelectOption(option.value)}
                 className={cn(
-                  'group flex w-full cursor-pointer items-center gap-4 rounded-xl border-2 p-4 text-left font-semibold transition-all duration-200',
+                  'group flex w-full cursor-pointer items-center gap-4 rounded-xl ' +
+                  'border-2 p-4 text-left font-semibold transition-all duration-200',
                   selected
                     ? 'border-app-ring bg-app-ring/20 shadow-app-ring/10 text-white shadow-lg'
                     : 'border-slate-700 bg-slate-800/50 text-slate-300 hover:border-slate-500 hover:bg-slate-800'

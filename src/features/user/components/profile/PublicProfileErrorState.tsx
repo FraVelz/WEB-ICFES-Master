@@ -26,14 +26,16 @@ const ERROR_CONTENT: Record<
   not_found: {
     title: 'Perfil no encontrado',
     message:
-      'No hay un perfil registrado con este identificador. El enlace puede estar desactualizado o el usuario aún no completó su registro en la plataforma.',
+      'No hay un perfil registrado con este identificador. El enlace puede estar ' +
+      'desactualizado o el usuario aún no completó su registro en la plataforma.',
     icon: 'user-slash',
     iconClassName: 'text-on-surface-muted',
   },
   unavailable: {
     title: 'Perfil público no disponible',
     message:
-      'No se pudo conectar con la base de datos en este entorno. Comprueba la configuración de Supabase o intenta más tarde.',
+      'No se pudo conectar con la base de datos en este entorno. ' +
+      'Comprueba la configuración de Supabase o intenta más tarde.',
     icon: 'cog',
     iconClassName: 'text-app-accent',
   },
@@ -52,7 +54,8 @@ const ERROR_CONTENT: Record<
 };
 
 const buttonClass = cn(
-  'inline-flex cursor-pointer items-center justify-center gap-2 rounded-xl px-5 py-2.5 text-sm font-semibold transition-colors',
+  'inline-flex cursor-pointer items-center justify-center gap-2 ' +
+  'rounded-xl px-5 py-2.5 text-sm font-semibold transition-colors',
   'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none',
   'focus-visible:ring-offset-surface'
 );
@@ -64,10 +67,18 @@ export function PublicProfileErrorState({ errorCode, userId, isOwnProfile }: Pub
   return (
     <div className={cn(FULL_PAGE_SHELL_CLASS, 'flex items-center justify-center px-4 py-12')}>
       <div className="pointer-events-none fixed inset-0 overflow-hidden">
-        <div className="from-app-ring/10 absolute top-0 left-1/2 h-72 w-72 -translate-x-1/2 rounded-full bg-linear-to-b to-transparent blur-3xl" />
+        <div
+        className={cn(
+          "from-app-ring/10 absolute top-0 left-1/2 h-72 w-72 -translate-x-1/2",
+          "rounded-full bg-linear-to-b to-transparent blur-3xl"
+        )}/>
       </div>
 
-      <div className="border-surface-border bg-surface-elevated/80 relative w-full max-w-lg rounded-3xl border p-8 text-center shadow-xl backdrop-blur-md">
+      <div
+      className={cn(
+        "border-surface-border bg-surface-elevated/80 relative w-full max-w-lg",
+        "rounded-3xl border p-8 text-center shadow-xl backdrop-blur-md"
+      )}>
         <div
           className={cn(
             'mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-2xl',

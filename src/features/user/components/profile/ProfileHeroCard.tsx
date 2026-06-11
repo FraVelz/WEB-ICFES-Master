@@ -94,7 +94,8 @@ export function ProfileHeroCard({
           )}
           <div
             className={cn(
-              'absolute right-0 bottom-0 z-10 rounded-full border px-3 py-1 text-xs font-bold whitespace-nowrap shadow-md',
+              'absolute right-0 bottom-0 z-10 rounded-full border ' +
+              'px-3 py-1 text-xs font-bold whitespace-nowrap shadow-md',
               'border-surface-border bg-surface-elevated dark:border-slate-700 dark:bg-slate-900',
               accent === 'purple'
                 ? 'text-purple-700 dark:text-purple-400'
@@ -143,7 +144,11 @@ export function ProfileHeroCard({
                 <span className="font-semibold text-amber-700 dark:text-yellow-400">Nivel Máximo</span>
               )}
             </div>
-            <div className="border-surface-border bg-surface-via h-4 overflow-hidden rounded-full border shadow-inner dark:border-slate-700 dark:bg-slate-800">
+            <div
+            className={cn(
+              "border-surface-border bg-surface-via h-4 overflow-hidden rounded-full border",
+              "shadow-inner dark:border-slate-700 dark:bg-slate-800"
+            )}>
               <div
                 className={cn(
                   'h-full bg-linear-to-r shadow-md transition-all duration-1000',

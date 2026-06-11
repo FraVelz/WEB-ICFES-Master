@@ -43,7 +43,11 @@ export function ProfileStatusPicker() {
             <AvatarImage src={avatarSrc} alt={displayName} className="rounded-full" />
           </div>
           {statusReaction && (
-            <span className="absolute -top-1 -right-1 flex h-9 w-9 items-center justify-center rounded-full border-2 border-slate-900 bg-slate-800 text-xl shadow-md">
+            <span
+            className={cn(
+              "absolute -top-1 -right-1 flex h-9 w-9 items-center justify-center rounded-full",
+              "border-2 border-slate-900 bg-slate-800 text-xl shadow-md"
+            )}>
               {statusReaction.emoji}
             </span>
           )}
@@ -63,7 +67,7 @@ export function ProfileStatusPicker() {
               onClick={() => setStatus(isActive ? null : reaction.id)}
               className={cn(
                 'flex aspect-square items-center justify-center rounded-2xl border-2 text-2xl transition-all',
-                'hover:scale-105 focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:outline-none',
+                'focus-visible:ring-app-accent hover:scale-105 focus-visible:ring-2 focus-visible:outline-none',
                 isActive
                   ? 'border-sky-500/60 bg-sky-500/15 shadow-[0_0_12px_rgba(56,189,248,0.25)]'
                   : 'border-slate-700/80 bg-slate-800/60 hover:border-slate-600 hover:bg-slate-800'

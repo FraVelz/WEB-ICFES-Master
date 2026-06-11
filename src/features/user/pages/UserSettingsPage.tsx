@@ -29,7 +29,10 @@ function UserSettingsContent() {
           <div className="mx-auto flex max-w-6xl items-center gap-4 px-4 py-4">
             <Link
               href="/perfil"
-              className="text-on-surface-muted hover:bg-surface-elevated hover:text-on-surface rounded-full p-2 transition-colors"
+              className={cn(
+                "text-on-surface-muted hover:bg-surface-elevated hover:text-on-surface",
+                "rounded-full p-2 transition-colors"
+              )}
             >
               <Icon name="arrow-left" className="text-lg" />
             </Link>
@@ -41,7 +44,8 @@ function UserSettingsContent() {
           {message && (
             <div
               className={cn(
-                'animate-fade-in-up fixed top-20 right-4 z-50 max-w-sm rounded-xl border p-4 shadow-xl backdrop-blur-md',
+                'animate-fade-in-up fixed top-20 right-4 z-50 ' +
+                'max-w-sm rounded-xl border p-4 shadow-xl backdrop-blur-md',
                 messageType === 'success'
                   ? 'border-green-500/30 bg-green-500/10 text-green-400'
                   : 'border-red-500/30 bg-red-500/10 text-red-400'

@@ -21,8 +21,16 @@ export function SettingsSection({
       )}
     >
       {title && (
-        <h2 className="border-surface-border text-on-surface mb-6 flex items-center gap-3 border-b pb-4 text-lg font-bold sm:text-xl">
-          <div className="text-app-accent bg-surface-elevated flex h-8 w-8 items-center justify-center rounded-lg shadow-inner">
+        <h2
+        className={cn(
+          "border-surface-border text-on-surface mb-6 flex items-center gap-3 border-b",
+          "pb-4 text-lg font-bold sm:text-xl"
+        )}>
+          <div
+          className={cn(
+            "text-app-accent bg-surface-elevated flex h-8 w-8 items-center justify-center",
+            "rounded-lg shadow-inner"
+          )}>
             <Icon name={icon ?? 'cog'} />
           </div>
           {title}
@@ -64,7 +72,8 @@ export function SettingOption({
           : undefined
       }
       className={cn(
-        'group flex flex-col justify-between rounded-xl border p-4 transition-all duration-200 sm:flex-row sm:items-center',
+        'group flex flex-col justify-between rounded-xl border ' +
+        'p-4 transition-all duration-200 sm:flex-row sm:items-center',
         danger
           ? 'cursor-pointer border-red-500/20 bg-red-500/5 hover:border-red-500/30 hover:bg-red-500/10'
           : 'border-surface-border bg-surface-elevated/70 hover:border-surface-border hover:bg-surface-elevated',
@@ -79,7 +88,8 @@ export function SettingOption({
               'flex h-10 w-10 shrink-0 items-center justify-center rounded-full transition-colors',
               danger
                 ? 'bg-red-500/10 text-red-400 group-hover:bg-red-500/20'
-                : 'group-hover:text-app-accent bg-surface-elevated text-on-surface-muted group-hover:bg-surface-elevated'
+                : 'group-hover:text-app-accent bg-surface-elevated text-on-surface-muted ' +
+                  'group-hover:bg-surface-elevated'
             )}
           >
             <Icon name={icon ?? 'cog'} />

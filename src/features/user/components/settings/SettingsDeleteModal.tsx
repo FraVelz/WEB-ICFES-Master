@@ -18,7 +18,11 @@ export function SettingsDeleteModal() {
   return (
     <div className="fixed inset-0 z-60 flex items-center justify-center bg-black/80 p-4 backdrop-blur-sm">
       <div className="animate-zoom-in w-full max-w-md rounded-2xl border border-slate-800 bg-slate-900 p-6 shadow-2xl">
-        <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-red-500/10 text-red-500">
+        <div
+        className={cn(
+          "mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full",
+          "bg-red-500/10 text-red-500"
+        )}>
           <Icon name="warning" className="text-xl" />
         </div>
         <h2 className="mb-2 text-center text-xl font-bold text-white">Zona de Peligro</h2>
@@ -38,7 +42,10 @@ export function SettingsDeleteModal() {
               type="text"
               value={deleteConfirmation}
               onChange={(e) => setDeleteConfirmation(e.target.value)}
-              className="w-full rounded-lg border border-slate-700 bg-slate-900 px-3 py-2 text-sm text-white outline-none focus:border-red-500"
+              className={cn(
+                "w-full rounded-lg border border-slate-700 bg-slate-900 px-3 py-2 text-sm",
+                "text-white outline-none focus:border-red-500"
+              )}
               placeholder="Confirmación..."
             />
           </div>

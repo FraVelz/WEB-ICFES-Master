@@ -1,0 +1,63 @@
+'use client';
+
+import { useEffect } from 'react';
+import { supabase } from '@/config/supabase';
+import UserSupabaseService from '@/services/supabase/UserSupabaseService';
+import { setActiveStreakUserId } from '@/services/streak';
+import { isSupabaseAuthConfigured } from '@/features/auth/utils/isSupabaseAuthConfigured';
+import type { AuthUser } from './authTypes';
+import { mapSupabaseUser, getOAuthProfileImage } from './authSupabase';
+
+type AuthSessionDeps = {
+  setUser: (user: AuthUser | null) => void;
+  setLoading: (loading: boolean) => void;
+  clearDemoMode: () => void;
+  migrateDemoOnAuth: (userId: string) => Promise<void>;
+};
+
+export function useAuthSession({ setUser, setLoading, clearDemoMode, migrateDemoOnAuth }: AuthSessionDeps) {
+  useEffect(() => {
+    if (!isSupabaseAuthConfigured() || !supabase) {
+      setUser(null);
+      setLoading(false);
+      return;
+    }
+
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange(async (event, session) => {
+      setUser(session?.user ? mapSupabaseUser(session.user) : null);
+      setLoading(false);
+
+      if (event === 'SIGNED_IN' && session?.user) {
+        await migrateDemoOnAuth(session.user.id);
+        clearDemoMode();
+        try {
+          const existing = await UserSupabaseService.getByUserId(session.user.id);
+          if (!existing) {
+            const meta = session.user.user_metadata;
+            const displayName = meta?.display_name || meta?.full_name || session.user.email?.split('@')[0] || 'Usuario';
+            await UserSupabaseService.createUser(session.user.id, {
+              email: session.user.email,
+              displayName,
+              profileImage: getOAuthProfileImage(session.user),
+            });
+          }
+        } catch (profileErr) {
+          console.warn('Perfil tras inicio de sesión (puede existir por trigger):', profileErr);
+        }
+      }
+    });
+
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setUser(session?.user ? mapSupabaseUser(session.user) : null);
+      if (session?.user) {
+        setActiveStreakUserId(session.user.id);
+        clearDemoMode();
+      }
+      setLoading(false);
+    });
+
+    return () => subscription?.unsubscribe();
+  }, [clearDemoMode, migrateDemoOnAuth, setLoading, setUser]);
+}

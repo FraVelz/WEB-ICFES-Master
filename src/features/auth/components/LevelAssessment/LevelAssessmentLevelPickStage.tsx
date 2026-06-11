@@ -68,7 +68,8 @@ export function LevelAssessmentLevelPickStage({
                 disabled={isSaving}
                 onClick={() => onSelectLevel(level)}
                 className={cn(
-                  'relative flex cursor-pointer flex-col rounded-2xl border-2 p-5 text-left transition-all duration-200',
+                  'relative flex cursor-pointer flex-col rounded-2xl ' +
+                  'border-2 p-5 text-left transition-all duration-200',
                   selected
                     ? 'border-app-ring bg-app-ring/15 shadow-app-ring/20 shadow-lg'
                     : 'border-slate-700 bg-slate-800/50 hover:border-slate-500 hover:bg-slate-800'
