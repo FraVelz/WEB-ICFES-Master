@@ -94,13 +94,16 @@ export const StreakModal = ({ isOpen, onClose, streakData, anchorRef }: StreakMo
   const panel = (
     <div
       ref={dropdownRef}
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="streak-modal-title"
       style={usePortal ? panelStyle : undefined}
       className={getRoadmapPanelClassName(isBottomSheet, Boolean(anchorRef), true)}
     >
       {isBottomSheet && <RoadmapBottomSheetHandle />}
       <div className="p-4">
         <div className="mb-4 flex items-center justify-between border-b border-slate-800 pb-3">
-          <h2 className="flex items-center gap-2 text-sm font-bold tracking-wider text-slate-400 uppercase">
+          <h2 id="streak-modal-title" className="flex items-center gap-2 text-sm font-bold tracking-wider text-slate-400 uppercase">
             <Icon name="fire" className="text-orange-400" />
             Mi Racha
           </h2>

@@ -11,6 +11,8 @@ type LessonQuizFeedbackProps = {
 export function LessonQuizFeedback({ isCorrect, isLastQuestion, rewards, alreadyCompleted }: LessonQuizFeedbackProps) {
   return (
     <div
+      role="status"
+      aria-live="polite"
       className={cn(
         'mt-4 rounded-xl border-2 p-3.5 text-center lg:mt-5 lg:rounded-xl lg:p-4',
         isCorrect

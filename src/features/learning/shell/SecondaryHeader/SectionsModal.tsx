@@ -49,13 +49,18 @@ export const SectionsModal = ({
   const panel = (
     <div
       ref={dropdownRef}
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="sections-modal-title"
       style={usePortal ? panelStyle : undefined}
       className={getRoadmapPanelClassName(isBottomSheet, Boolean(anchorRef))}
     >
       {isBottomSheet && <RoadmapBottomSheetHandle />}
       <div className="p-4">
         <div className="mb-3 flex items-center justify-between border-b border-slate-800 pb-2">
-          <h3 className="text-sm font-bold tracking-wider text-slate-400 uppercase">Etapas del curso</h3>
+          <h3 id="sections-modal-title" className="text-sm font-bold tracking-wider text-slate-400 uppercase">
+            Etapas del curso
+          </h3>
           <button
             type="button"
             onClick={onClose}

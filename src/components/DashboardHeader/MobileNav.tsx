@@ -51,6 +51,7 @@ export function MobileNav({ menuOpen, onToggleMenu, onCloseMenu }: MobileNavProp
               <Link
                 key={option.path}
                 href={option.path}
+                aria-label={option.label}
                 aria-current={isActive ? 'page' : undefined}
                 className={cn(
                   'flex h-20 w-16 flex-col items-center justify-center rounded-lg transition-all duration-300',

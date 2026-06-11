@@ -37,6 +37,7 @@ type DashboardShellContextValue = {
   setCurrentSectionId: (id: string | undefined) => void;
   sections: ReturnType<typeof useLearningPath>['sections'];
   pathLoading: boolean;
+  pathError: string | null;
   currentAreaData: ReturnType<typeof getAreaInfo>;
   currentSection: ReturnType<typeof useLearningPath>['sections'][number] | undefined;
   currentSectionIndex: number;
@@ -124,7 +125,7 @@ export function DashboardShellProvider({ children }: { children: ReactNode }) {
     loading: statsLoading,
   } = useGamification(streakScope);
 
-  const { sections, loading: pathLoading } = useLearningPath(isLearningShell ? currentArea : undefined, {
+  const { sections, loading: pathLoading, error: pathError } = useLearningPath(isLearningShell ? currentArea : undefined, {
     loadAllPhases: isPhasesRoute,
     sectionId: isPhasesRoute ? undefined : currentSectionId,
   });
@@ -196,6 +197,7 @@ export function DashboardShellProvider({ children }: { children: ReactNode }) {
       setCurrentSectionId,
       sections,
       pathLoading,
+      pathError,
       currentAreaData,
       currentSection,
       currentSectionIndex,
@@ -216,6 +218,7 @@ export function DashboardShellProvider({ children }: { children: ReactNode }) {
       currentSectionId,
       sections,
       pathLoading,
+      pathError,
       currentAreaData,
       currentSection,
       currentSectionIndex,

@@ -25,11 +25,17 @@ export function LessonQuizQuestionPanel({
         </h4>
       )}
 
-      <div className="space-y-2 lg:space-y-3">
+      <div
+        role="radiogroup"
+        aria-label="Opciones de respuesta"
+        className="space-y-2 lg:space-y-3"
+      >
         {question.options.map((option, index) => (
           <button
             key={option.id}
             type="button"
+            role="radio"
+            aria-checked={selectedOption === option.id}
             onClick={() => !isSubmitted && onSelectOption(option.id)}
             disabled={isSubmitted}
             className={cn(

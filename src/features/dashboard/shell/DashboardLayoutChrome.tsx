@@ -11,16 +11,26 @@ export function DashboardLayoutChrome({ children }: { children: ReactNode }) {
   const pathname = usePathname();
   const isFullscreenLesson = isLessonRoute(pathname);
 
+  const skipLink = (
+    <a href="#main-content" className="skip-link">
+      Saltar al contenido
+    </a>
+  );
+
   if (isFullscreenLesson) {
     return (
-      <main className="relative min-h-dvh w-full flex-1">
-        <DashboardShellGate>{children}</DashboardShellGate>
-      </main>
+      <>
+        {skipLink}
+        <main id="main-content" className="relative min-h-dvh w-full flex-1">
+          <DashboardShellGate>{children}</DashboardShellGate>
+        </main>
+      </>
     );
   }
 
   return (
     <div className="flex min-h-dvh w-full flex-col-reverse lg:flex-row">
+      {skipLink}
       <DashboardHeader
         className={cn(
           'border-app-ring/20 bg-surface-elevated/95 z-40 shrink-0',
@@ -30,7 +40,7 @@ export function DashboardLayoutChrome({ children }: { children: ReactNode }) {
         )}
       />
 
-      <main className="relative min-w-0 flex-1">
+      <main id="main-content" className="relative min-w-0 flex-1">
         <DashboardShellGate>{children}</DashboardShellGate>
       </main>
     </div>

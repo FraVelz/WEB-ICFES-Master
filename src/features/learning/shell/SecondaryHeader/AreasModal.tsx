@@ -40,11 +40,20 @@ export const AreasModal = ({ isOpen, onClose, onSelectArea, currentArea, anchorR
   const usePortal = Boolean(anchorRef) || isBottomSheet;
 
   const panel = (
-    <div ref={dropdownRef} style={usePortal ? panelStyle : undefined} className={getRoadmapPanelClassName(isBottomSheet, Boolean(anchorRef))}>
+    <div
+      ref={dropdownRef}
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="areas-modal-title"
+      style={usePortal ? panelStyle : undefined}
+      className={getRoadmapPanelClassName(isBottomSheet, Boolean(anchorRef))}
+    >
       {isBottomSheet && <RoadmapBottomSheetHandle />}
       <div className="p-4">
         <div className="mb-3 flex items-center justify-between border-b border-slate-800 pb-2">
-          <h3 className="text-sm font-bold tracking-wider text-slate-400 uppercase">Mis Cursos</h3>
+          <h3 id="areas-modal-title" className="text-sm font-bold tracking-wider text-slate-400 uppercase">
+            Mis Cursos
+          </h3>
           <button
             type="button"
             onClick={onClose}
