@@ -9,7 +9,7 @@ export const metadata: Metadata = {
     url: '/',
     title: 'Domina el ICFES desde Cero | ICFES Master',
     description:
-      'Preparate para el ICFES con +500 preguntas, simulacros reales, gamificacion y una ruta de aprendizaje guiada.',
+      'Prepárate para el ICFES con +500 preguntas, simulacros reales, gamificación y una ruta de aprendizaje guiada.',
     images: [
       {
         url: BRAND_IMAGES.screenshot.src,

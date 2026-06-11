@@ -21,7 +21,7 @@ export const metadata: Metadata = {
     template: '%s | ICFES Master',
   },
   description:
-    'Preparate para el ICFES con +500 preguntas, simulacros reales, gamificacion y una ruta de aprendizaje guiada.',
+    'Prepárate para el ICFES con +500 preguntas, simulacros reales, gamificación y una ruta de aprendizaje guiada.',
   applicationName: 'ICFES Master',
   referrer: 'origin-when-cross-origin',
   keywords: [
@@ -66,7 +66,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'Domina el ICFES desde Cero | ICFES Master',
-    description: 'Preparate con simulacros y preguntas reales para lograr un gran puntaje en el ICFES.',
+    description: 'Prepárate con simulacros y preguntas reales para lograr un gran puntaje en el ICFES.',
     images: [BRAND_IMAGES.screenshot.src],
   },
 };

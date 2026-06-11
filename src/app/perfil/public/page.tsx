@@ -1,5 +1,7 @@
+import type { Metadata } from 'next';
 import { PerfilPublico } from '@/features/user/pages';
 import { fetchPublicProfile } from '@/services/profile/publicProfileServer';
+import { getSiteUrl } from '@/config/site';
 import {
   buildPublicProfileViewState,
   PUBLIC_PROFILE_UUID_REGEX,
@@ -39,8 +41,46 @@ export default async function PublicProfilePage({ searchParams }: PageProps) {
   return <PerfilPublico view={view} />;
 }
 
-export function generateMetadata() {
-  return {
-    title: 'Perfil público',
-  };
+const NOINDEX: Metadata['robots'] = { index: false, follow: false };
+
+export async function generateMetadata({ searchParams }: PageProps): Promise<Metadata> {
+  const { userId: rawUserId } = await searchParams;
+  const userId = rawUserId?.trim();
+
+  if (!userId || !PUBLIC_PROFILE_UUID_REGEX.test(userId)) {
+    return {
+      title: 'Perfil público',
+      description: 'Perfil público de un estudiante en ICFES Master.',
+      robots: NOINDEX,
+    };
+  }
+
+  try {
+    const payload = await fetchPublicProfile(userId);
+    if (!payload) {
+      return { title: 'Perfil no encontrado', robots: NOINDEX };
+    }
+
+    const name = payload.profile.displayName ?? payload.profile.username ?? 'Estudiante';
+    const description = `Perfil público de ${name} en ICFES Master.`;
+
+    return {
+      title: `${name} | Perfil ICFES Master`,
+      description,
+      robots: NOINDEX,
+      openGraph: {
+        title: `${name} | Perfil ICFES Master`,
+        description,
+        type: 'profile',
+        url: `${getSiteUrl()}/perfil/public/?userId=${userId}`,
+      },
+      twitter: {
+        card: 'summary',
+        title: `${name} | Perfil ICFES Master`,
+        description,
+      },
+    };
+  } catch {
+    return { title: 'Perfil público', robots: NOINDEX };
+  }
 }
