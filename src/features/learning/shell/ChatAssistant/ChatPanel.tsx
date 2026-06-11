@@ -68,7 +68,7 @@ export function ChatPanel({
       aria-labelledby="chat-panel-title"
       className={cn(
         'fixed z-50 flex h-[min(500px,70vh)] flex-col overflow-hidden rounded-2xl',
-        'border-app-ring/30 shadow-app-ring/20 border bg-slate-900/98 shadow-2xl backdrop-blur-xl',
+        'border-app-ring/30 shadow-app-ring/20 border bg-surface-elevated/98 shadow-2xl backdrop-blur-xl',
         'right-3 bottom-24 left-3 w-auto',
         'sm:right-6 sm:left-auto sm:w-[min(400px,calc(100vw-3rem))]'
       )}
@@ -89,7 +89,7 @@ export function ChatPanel({
             <Icon name="robot" className="text-white" />
           </div>
           <div>
-            <h3 id="chat-panel-title" className="font-bold text-white">Asistente ICFES</h3>
+            <h3 id="chat-panel-title" className="text-on-surface font-bold">Asistente ICFES</h3>
             <p className="text-app-accent-muted/80 text-xs">{statusText}</p>
           </div>
         </div>
@@ -97,8 +97,8 @@ export function ChatPanel({
           type="button"
           onClick={onClose}
           className={cn(
-            'cursor-pointer rounded-lg p-2 text-slate-400 transition-colors hover:bg-white/10',
-            'focus-visible:ring-app-accent hover:text-white focus-visible:ring-2',
+            'text-on-surface-muted cursor-pointer rounded-lg p-2 transition-colors hover:bg-surface/10',
+            'focus-visible:ring-app-accent hover:text-on-surface focus-visible:ring-2',
             'focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900 focus-visible:outline-none'
           )}
           aria-label="Cerrar chat"

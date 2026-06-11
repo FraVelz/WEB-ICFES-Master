@@ -152,7 +152,7 @@ export const AchievementsList = ({ achievements = [] }: AchievementsListProps) =
                   <p
                     className={cn(
                       'mb-3 line-clamp-2 text-xs',
-                      isCompleted ? 'text-cyan-800/80 dark:text-slate-300' : 'text-slate-400'
+                      isCompleted ? 'text-cyan-800/80 dark:text-on-surface-muted' : 'text-on-surface-muted'
                     )}
                   >
                     {achievement.description}
@@ -166,7 +166,7 @@ export const AchievementsList = ({ achievements = [] }: AchievementsListProps) =
                       >
                         {isCompleted ? '¡Completado!' : `${achievement.progress ?? 0} / ${achievement.target ?? 0}`}
                       </span>
-                      <span className={isCompleted ? 'text-cyan-700/75 dark:text-slate-400' : 'text-slate-500'}>
+                      <span className={isCompleted ? 'text-cyan-700/75 dark:text-on-surface-muted' : 'text-on-surface-muted'}>
                         +{achievement.xpReward ?? 0} XP
                       </span>
                     </div>
@@ -178,7 +178,7 @@ export const AchievementsList = ({ achievements = [] }: AchievementsListProps) =
                       aria-label={`Progreso de ${achievement.title}`}
                       className={cn(
                         'h-1.5 w-full overflow-hidden rounded-full',
-                        isCompleted ? 'bg-cyan-100 dark:bg-slate-950' : 'bg-slate-950'
+                        isCompleted ? 'bg-cyan-100 dark:bg-surface-via' : 'bg-surface-via'
                       )}
                     >
                       <div
