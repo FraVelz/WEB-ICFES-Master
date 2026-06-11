@@ -90,10 +90,10 @@ export function usePracticeExam() {
 
   const timeColor =
     timeRemaining !== null && timeRemaining < 300
-      ? 'text-red-400'
+      ? 'text-red-500 dark:text-red-400'
       : timeRemaining !== null && timeRemaining < 600
-        ? 'text-yellow-400'
-        : 'text-app-accent-muted';
+        ? 'text-amber-600 dark:text-yellow-400'
+        : 'text-app-accent-strong';
 
   return {
     areaInfo,

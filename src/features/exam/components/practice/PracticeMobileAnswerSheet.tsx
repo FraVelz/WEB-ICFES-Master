@@ -21,18 +21,18 @@ export function PracticeMobileAnswerSheet({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4 backdrop-blur-sm md:hidden">
-      <div className="max-h-[80vh] w-full max-w-md overflow-y-auto rounded-xl border border-white/20 bg-gray-800">
-        <div className="sticky top-0 flex items-center justify-between border-b border-white/10 bg-gray-900 p-4">
-          <h3 className="font-bold text-white">Hoja de Respuestas</h3>
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4 backdrop-blur-sm md:hidden">
+      <div className="max-h-[80vh] w-full max-w-md overflow-y-auto rounded-xl border border-surface-border bg-surface-elevated">
+        <div className="sticky top-0 flex items-center justify-between border-b border-surface-border bg-surface-via p-4">
+          <h3 className="font-bold text-on-surface">Hoja de Respuestas</h3>
           <button
             type="button"
             onClick={onClose}
             aria-label="Cerrar hoja de respuestas"
             className={cn(
-              'rounded-lg px-3 py-2 text-gray-400 transition-colors hover:bg-white/10 hover:text-white',
+              'rounded-lg px-3 py-2 text-on-surface-muted transition-colors hover:bg-surface-overlay hover:text-on-surface',
               'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:outline-none',
-              'focus-visible:ring-offset-2 focus-visible:ring-offset-gray-900'
+              'focus-visible:ring-offset-2 focus-visible:ring-offset-surface-via'
             )}
           >
             <Icon name="x-mark" size="lg" />

@@ -10,7 +10,7 @@ import { LoadingState } from '@/shared/components/LoadingState';
 import { LEARNING_PHASES_PATH } from '@/features/learning/data/competencyPhases';
 
 const errorBoxClass =
-  'mx-auto max-w-lg rounded-xl border border-red-500/30 bg-red-950/30 px-4 py-6 text-center text-sm text-red-200';
+  'mx-auto max-w-lg rounded-xl border border-red-500/30 bg-red-500/10 px-4 py-6 text-center text-sm text-red-800 dark:text-red-200';
 
 export const PracticePage = () => {
   const {
@@ -57,7 +57,7 @@ export const PracticePage = () => {
   const phaseSkipBanner = isPhaseSkipMode ? (
     <div
       className={cn(
-        'mx-auto mb-6 max-w-lg rounded-2xl border border-amber-500/30 bg-amber-500/10 px-4 py-3 text-sm text-amber-100'
+        'mx-auto mb-6 max-w-lg rounded-2xl border border-amber-500/30 bg-amber-500/10 px-4 py-3 text-sm text-amber-900 dark:text-amber-100'
       )}
     >
       Examen para saltar{' '}
@@ -93,11 +93,13 @@ export const PracticePage = () => {
             <div
               className={cn(
                 'rounded-2xl border border-green-500/30 bg-green-500/10 px-4 py-4',
-                'text-center text-green-100'
+                'text-center text-green-900 dark:text-green-100'
               )}
             >
               <p className="font-semibold">¡Fase superada!</p>
-              <p className="mt-1 text-sm text-green-200/90">Superaste la fase en {areaInfo.name}.</p>
+              <p className="mt-1 text-sm text-green-800/90 dark:text-green-200/90">
+                Superaste la fase en {areaInfo.name}.
+              </p>
               <Link
                 href={LEARNING_PHASES_PATH}
                 className={cn(

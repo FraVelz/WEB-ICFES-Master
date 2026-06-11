@@ -19,15 +19,15 @@ export const AnswerSheet = ({
   return (
     <div
       className={cn(
-        'sticky top-6 h-fit rounded-xl border border-white/10 bg-linear-to-br from-gray-800/40',
-        'via-gray-900/40 to-gray-950/40 p-4 shadow-2xl backdrop-blur-md'
+        'sticky top-6 h-fit rounded-xl border border-surface-border bg-surface-elevated/90',
+        'p-4 shadow-2xl backdrop-blur-md'
       )}
     >
-      <h3 className="mb-4 flex items-center gap-2 text-sm font-bold text-white">
+      <h3 className="mb-4 flex items-center gap-2 text-sm font-bold text-on-surface">
         <span
           className={cn(
             'from-cta-from to-cta-progress-end flex h-8 w-8 items-center justify-center',
-            'rounded-lg bg-linear-to-r text-xs font-bold'
+            'rounded-lg bg-linear-to-r text-xs font-bold text-white'
           )}
         />
         HOJA DE RESPUESTAS
@@ -51,10 +51,10 @@ export const AnswerSheet = ({
                 'flex aspect-square items-center justify-center rounded-lg text-xs font-bold',
                 'transition-all duration-300',
                 'focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none',
-                'focus-visible:ring-offset-gray-950',
+                'focus-visible:ring-offset-surface-via',
                 isCurrent
                   ? cn(
-                      'bg-app-ring/30 text-app-accent-muted ring-app-accent scale-110 ring-2',
+                      'bg-app-ring/30 text-app-accent-strong ring-app-accent scale-110 ring-2',
                       'focus-visible:ring-app-accent-bright'
                     )
                   : isAnswered
@@ -62,7 +62,7 @@ export const AnswerSheet = ({
                         'bg-linear-to-r from-green-500 to-emerald-500 text-white',
                         'hover:shadow-lg hover:shadow-green-500/50 focus-visible:ring-white'
                       )
-                    : 'focus-visible:ring-app-accent border border-white/20 bg-white/10 text-gray-400 hover:bg-white/20'
+                    : 'focus-visible:ring-app-accent border border-surface-border bg-surface-overlay/50 text-on-surface-muted hover:bg-surface-overlay'
               )}
             >
               {isAnswered ? <span className="text-xs">{answer}</span> : <span>{questionNum}</span>}
@@ -71,13 +71,13 @@ export const AnswerSheet = ({
         })}
       </div>
 
-      <div className="mt-6 space-y-2 text-xs text-gray-400">
+      <div className="mt-6 space-y-2 text-xs text-on-surface-muted">
         <div className="flex items-center gap-2">
-          <div className="h-4 w-4 rounded border border-white/20 bg-white/10"></div>
+          <div className="h-4 w-4 rounded border border-surface-border bg-surface-overlay/50" />
           <span>No respondidas</span>
         </div>
         <div className="flex items-center gap-2">
-          <div className="h-4 w-4 rounded bg-linear-to-r from-green-500 to-emerald-500"></div>
+          <div className="h-4 w-4 rounded bg-linear-to-r from-green-500 to-emerald-500" />
           <span>Respondidas</span>
         </div>
       </div>
