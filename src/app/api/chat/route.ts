@@ -1,6 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createServerSupabaseClient } from '@/config/supabaseClient';
-import { CHAT_ANON_COOKIE, CHAT_ANON_LIMIT } from '@/features/learning/constants/chatAnonQuota';
+import {
+  CHAT_ANON_COOKIE,
+  CHAT_ANON_LIMIT,
+  CHAT_AUTH_COOKIE,
+  CHAT_AUTH_DAILY_LIMIT,
+} from '@/features/learning/constants/chatQuota';
 import OpenAI from 'openai';
 
 const MAX_MESSAGES = 30;
@@ -32,27 +37,38 @@ async function getAuthUserFromRequest(request: NextRequest) {
   return user;
 }
 
-function parseAnonCookie(request: NextRequest): number {
-  const raw = request.cookies.get(CHAT_ANON_COOKIE)?.value;
+function parseCountCookie(request: NextRequest, name: string): number {
+  const raw = request.cookies.get(name)?.value;
   const n = raw !== undefined ? parseInt(raw, 10) : 0;
   return Number.isFinite(n) && n >= 0 ? n : 0;
+}
+
+function sanitizeClientMessages(messages: Array<{ role: string; content: string }>) {
+  return messages
+    .filter((m) => m.role === 'user' || m.role === 'assistant')
+    .map((m) => ({
+      role: m.role as 'user' | 'assistant',
+      content: typeof m.content === 'string' ? m.content : String(m.content ?? ''),
+    }));
 }
 
 async function resolveChatAccess(request: NextRequest) {
   const authUser = await getAuthUserFromRequest(request);
   const isLoggedIn = !!authUser;
-  const anonUsed = parseAnonCookie(request);
+  const anonUsed = parseCountCookie(request, CHAT_ANON_COOKIE);
+  const authUsed = parseCountCookie(request, CHAT_AUTH_COOKIE);
 
-  return { isLoggedIn, anonUsed };
+  return { isLoggedIn, anonUsed, authUsed, authUser };
 }
 
 export async function GET(request: NextRequest) {
-  const { isLoggedIn, anonUsed } = await resolveChatAccess(request);
+  const { isLoggedIn, anonUsed, authUsed } = await resolveChatAccess(request);
 
   return NextResponse.json({
     anonUsed: isLoggedIn ? 0 : anonUsed,
-    limit: CHAT_ANON_LIMIT,
-    unlimited: isLoggedIn,
+    limit: isLoggedIn ? CHAT_AUTH_DAILY_LIMIT : CHAT_ANON_LIMIT,
+    unlimited: false,
+    authUsed: isLoggedIn ? authUsed : 0,
   });
 }
 
@@ -87,7 +103,8 @@ export async function POST(request: NextRequest) {
       }
     }
 
-    const { isLoggedIn, anonUsed } = await resolveChatAccess(request);
+    const { isLoggedIn, anonUsed, authUsed } = await resolveChatAccess(request);
+
     if (!isLoggedIn && anonUsed >= CHAT_ANON_LIMIT) {
       return NextResponse.json(
         {
@@ -100,17 +117,28 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    if (isLoggedIn && authUsed >= CHAT_AUTH_DAILY_LIMIT) {
+      return NextResponse.json(
+        {
+          error: 'Has alcanzado el límite diario del asistente. Vuelve mañana o continúa estudiando en la ruta.',
+          code: 'AUTH_QUOTA_EXCEEDED',
+          authUsed: CHAT_AUTH_DAILY_LIMIT,
+          limit: CHAT_AUTH_DAILY_LIMIT,
+        },
+        { status: 429 }
+      );
+    }
+
+    const clientMessages = sanitizeClientMessages(messages);
+    if (clientMessages.length === 0) {
+      return NextResponse.json({ error: 'Se requiere al menos un mensaje de usuario' }, { status: 400 });
+    }
+
     const openai = new OpenAI({ apiKey });
 
     const completion = await openai.chat.completions.create({
       model: 'gpt-4o-mini',
-      messages: [
-        { role: 'system', content: SYSTEM_PROMPT },
-        ...messages.map((m) => ({
-          role: m.role as 'user' | 'assistant' | 'system',
-          content: m.content,
-        })),
-      ],
+      messages: [{ role: 'system', content: SYSTEM_PROMPT }, ...clientMessages],
       max_tokens: 1024,
       temperature: 0.7,
     });
@@ -123,7 +151,7 @@ export async function POST(request: NextRequest) {
 
     const res = NextResponse.json(
       isLoggedIn
-        ? { content: assistantMessage }
+        ? { content: assistantMessage, authUsed: authUsed + 1, limit: CHAT_AUTH_DAILY_LIMIT }
         : {
             content: assistantMessage,
             anonUsed: anonUsed + 1,
@@ -131,15 +159,18 @@ export async function POST(request: NextRequest) {
           }
     );
 
+    const cookieBase = {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'lax' as const,
+      path: '/',
+      maxAge: 60 * 60 * 24,
+    };
+
     if (!isLoggedIn) {
-      const next = anonUsed + 1;
-      res.cookies.set(CHAT_ANON_COOKIE, String(next), {
-        httpOnly: true,
-        secure: process.env.NODE_ENV === 'production',
-        sameSite: 'lax',
-        path: '/',
-        maxAge: 60 * 60 * 24 * 365,
-      });
+      res.cookies.set(CHAT_ANON_COOKIE, String(anonUsed + 1), cookieBase);
+    } else {
+      res.cookies.set(CHAT_AUTH_COOKIE, String(authUsed + 1), cookieBase);
     }
 
     return res;

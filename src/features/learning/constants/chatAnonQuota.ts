@@ -1,3 +1,6 @@
-/** Anonymous chat assistant quota — server cookie is the source of truth. */
-export const CHAT_ANON_COOKIE = 'icfes_chat_anon_used';
-export const CHAT_ANON_LIMIT = 3;
+export {
+  CHAT_ANON_COOKIE,
+  CHAT_ANON_LIMIT,
+  CHAT_AUTH_COOKIE,
+  CHAT_AUTH_DAILY_LIMIT,
+} from './chatQuota';

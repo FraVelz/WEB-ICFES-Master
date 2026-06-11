@@ -85,7 +85,12 @@ const LearningSupabaseService = {
   async getLesson(lessonId: string) {
     const sb = getSupabase();
     if (!sb) return null;
-    const { data, error } = await sb.from(TABLE).select('*').eq('id', lessonId).maybeSingle();
+    const { data, error } = await sb
+      .from(TABLE)
+      .select('*')
+      .eq('id', lessonId)
+      .eq('published', true)
+      .maybeSingle();
     if (error) throw new Error(`Error leyendo lección: ${error.message}`);
     if (!data) return null;
     return mapLessonRow(data as Record<string, unknown>);

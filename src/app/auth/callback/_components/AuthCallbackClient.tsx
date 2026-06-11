@@ -5,6 +5,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 
 import { supabase } from '@/config/supabase';
 import { AUTH_DEFAULT_REDIRECT } from '@/features/auth/constants/authRoutes';
+import { resolveSafeInternalRedirect } from '@/utils/safeRedirect';
 import { FULL_PAGE_SHELL_CLASS } from '@/shared/constants/pageShell';
 import { cn } from '@/utils/cn';
 
@@ -14,7 +15,7 @@ export function AuthCallbackClient() {
   const [message, setMessage] = useState('Completando inicio de sesión...');
 
   useEffect(() => {
-    const next = searchParams.get('next') || AUTH_DEFAULT_REDIRECT;
+    const next = resolveSafeInternalRedirect(searchParams.get('next'));
     const client = supabase;
 
     if (!client) {
