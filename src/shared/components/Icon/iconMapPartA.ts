@@ -1,7 +1,7 @@
-/** Icon registry — SVG paths sourced via icons0.dev. */
-export { ICONS } from './iconRegistry';
-export { ICON_SOURCES } from './iconSources';
-export {
+/** First half of ICONS map. */
+import type { ReactNode } from 'react';
+
+import {
   arrowDownIcon,
   arrowLeftIcon,
   arrowRightIcon,
@@ -28,7 +28,7 @@ export {
   tasksIcon,
   cloudIcon,
 } from './iconPaths/iconPaths1';
-export {
+import {
   cogIcon,
   coinsIcon,
   copyIcon,
@@ -43,7 +43,7 @@ export {
   fireIcon,
   flaskIcon,
 } from './iconPaths/iconPaths2';
-export {
+import {
   gemIcon,
   globeIcon,
   graduationCapIcon,
@@ -62,7 +62,7 @@ export {
   microchipIcon,
   paperPlaneIcon,
 } from './iconPaths/iconPaths3';
-export {
+import {
   playIcon,
   playCircleIcon,
   questionIcon,
@@ -82,7 +82,7 @@ export {
   timesIcon,
   trashIcon,
 } from './iconPaths/iconPaths4';
-export {
+import {
   trophyIcon,
   userIcon,
   userSlashIcon,
@@ -99,7 +99,7 @@ export {
   bitcoinIcon,
   paypalIcon,
 } from './iconPaths/iconPaths5';
-export {
+import {
   ccVisaIcon,
   ccMastercardIcon,
   ccAmexIcon,
@@ -110,7 +110,7 @@ export {
   flagIcon,
   brainIcon,
 } from './iconPaths/iconPaths6';
-export {
+import {
   ringIcon,
   calendarAltIcon,
   giftIcon,
@@ -122,3 +122,58 @@ export {
   dropletIcon,
   handshakeIcon,
 } from './iconPaths/iconPaths7';
+
+export const ICONS_PART_A = {
+  'arrow-down': arrowDownIcon,
+  'arrow-left': arrowLeftIcon,
+  'arrow-right': arrowRightIcon,
+  'arrow-right-from-bracket': arrowRightFromBracketIcon,
+  'arrow-up': arrowUpIcon,
+  bars: barsIcon,
+  bolt: boltIcon,
+  book: bookIcon,
+  'book-open': bookOpenIcon,
+  calculator: calculatorIcon,
+  camera: cameraIcon,
+  'chart-line': chartLineIcon,
+  check: checkIcon,
+  clock: clockIcon,
+  'check-circle': checkCircleIcon,
+  'chevron-down': chevronDownIcon,
+  'chevron-left': chevronLeftIcon,
+  'chevron-right': chevronRightIcon,
+  'chevron-up': chevronUpIcon,
+  'circle-user': circleUserIcon,
+  'circle-notch': circleNotchIcon,
+  clipboard: clipboardIcon,
+  'clipboard-list': clipboardListIcon,
+  tasks: tasksIcon,
+  cloud: cloudIcon,
+  cog: cogIcon,
+  coins: coinsIcon,
+  copy: copyIcon,
+  crown: crownIcon,
+  'ellipsis-vertical': ellipsisVerticalIcon,
+  envelope: envelopeIcon,
+  'exclamation-circle': exclamationCircleIcon,
+  'exclamation-triangle': exclamationTriangleIcon,
+  eye: eyeIcon,
+  'eye-slash': eyeSlashIcon,
+  filter: filterIcon,
+  fire: fireIcon,
+  flask: flaskIcon,
+  gem: gemIcon,
+  globe: globeIcon,
+  'graduation-cap': graduationCapIcon,
+  'hard-hat': hardHatIcon,
+  headset: headsetIcon,
+  heart: heartIcon,
+  home: homeIcon,
+  hourglass: hourglassIcon,
+  'info-circle': infoCircleIcon,
+  landmark: landmarkIcon,
+  language: languageIcon,
+  lightbulb: lightbulbIcon,
+  lock: lockIcon,
+  medal: medalIcon,
+} satisfies Record<string, ReactNode>;

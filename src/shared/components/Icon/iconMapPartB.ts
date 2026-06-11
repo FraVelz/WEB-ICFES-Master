@@ -1,7 +1,7 @@
-/** Icon registry — SVG paths sourced via icons0.dev. */
-export { ICONS } from './iconRegistry';
-export { ICON_SOURCES } from './iconSources';
-export {
+/** Second half of ICONS map. */
+import type { ReactNode } from 'react';
+
+import {
   arrowDownIcon,
   arrowLeftIcon,
   arrowRightIcon,
@@ -28,7 +28,7 @@ export {
   tasksIcon,
   cloudIcon,
 } from './iconPaths/iconPaths1';
-export {
+import {
   cogIcon,
   coinsIcon,
   copyIcon,
@@ -43,7 +43,7 @@ export {
   fireIcon,
   flaskIcon,
 } from './iconPaths/iconPaths2';
-export {
+import {
   gemIcon,
   globeIcon,
   graduationCapIcon,
@@ -62,7 +62,7 @@ export {
   microchipIcon,
   paperPlaneIcon,
 } from './iconPaths/iconPaths3';
-export {
+import {
   playIcon,
   playCircleIcon,
   questionIcon,
@@ -82,7 +82,7 @@ export {
   timesIcon,
   trashIcon,
 } from './iconPaths/iconPaths4';
-export {
+import {
   trophyIcon,
   userIcon,
   userSlashIcon,
@@ -99,7 +99,7 @@ export {
   bitcoinIcon,
   paypalIcon,
 } from './iconPaths/iconPaths5';
-export {
+import {
   ccVisaIcon,
   ccMastercardIcon,
   ccAmexIcon,
@@ -110,7 +110,7 @@ export {
   flagIcon,
   brainIcon,
 } from './iconPaths/iconPaths6';
-export {
+import {
   ringIcon,
   calendarAltIcon,
   giftIcon,
@@ -122,3 +122,61 @@ export {
   dropletIcon,
   handshakeIcon,
 } from './iconPaths/iconPaths7';
+
+export const ICONS_PART_B = {
+  message: messageIcon,
+  microchip: microchipIcon,
+  'paper-plane': paperPlaneIcon,
+  play: playIcon,
+  'play-circle': playCircleIcon,
+  question: questionIcon,
+  'quote-left': quoteLeftIcon,
+  rocket: rocketIcon,
+  ruler: rulerIcon,
+  'shield-alt': shieldAltIcon,
+  'shopping-bag': shoppingBagIcon,
+  'shopping-cart': shoppingCartIcon,
+  'sign-in-alt': signInAltIcon,
+  'sign-out': signOutIcon,
+  spinner: spinnerIcon,
+  'square-root-variable': squareRootVariableIcon,
+  star: starIcon,
+  sun: sunIcon,
+  moon: moonIcon,
+  times: timesIcon,
+  trash: trashIcon,
+  trophy: trophyIcon,
+  user: userIcon,
+  'user-slash': userSlashIcon,
+  warning: warningIcon,
+  'x-mark': xMarkIcon,
+  bug: bugIcon,
+  robot: robotIcon,
+  'credit-card': creditCardIcon,
+  map: mapIcon,
+  zap: zapIcon,
+  award: awardIcon,
+  bullseye: bullseyeIcon,
+  google: googleIcon,
+  bitcoin: bitcoinIcon,
+  paypal: paypalIcon,
+  'cc-visa': ccVisaIcon,
+  'cc-mastercard': ccMastercardIcon,
+  'cc-amex': ccAmexIcon,
+  magic: magicIcon,
+  'bar-chart': barChartIcon,
+  'th-large': thLargeIcon,
+  users: usersIcon,
+  flag: flagIcon,
+  brain: brainIcon,
+  ring: ringIcon,
+  'calendar-alt': calendarAltIcon,
+  gift: giftIcon,
+  'share-nodes': shareNodesIcon,
+  edit: editIcon,
+  'balance-scale': balanceScaleIcon,
+  minus: minusIcon,
+  'device-phone-mobile': devicePhoneMobileIcon,
+  droplet: dropletIcon,
+  handshake: handshakeIcon,
+} satisfies Record<string, ReactNode>;
