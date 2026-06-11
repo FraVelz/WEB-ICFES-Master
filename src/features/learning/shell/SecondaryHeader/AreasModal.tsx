@@ -6,7 +6,11 @@ import { Icon } from '@/shared/components/Icon';
 import { ModalOverlay } from '@/shared/components/ModalOverlay';
 import { AREA_INFO } from '@/shared/constants';
 import { useGSAPModalEntrance } from '@/hooks/useGSAPModalEntrance';
-import { useAnchoredDropdownStyle } from './useAnchoredDropdownStyle';
+import {
+  getRoadmapPanelClassName,
+  useAnchoredDropdownStyle,
+} from './useAnchoredDropdownStyle';
+import { RoadmapBottomSheetHandle } from './RoadmapBottomSheetHandle';
 import type { RefObject } from 'react';
 
 export interface AreasModalProps {
@@ -14,37 +18,30 @@ export interface AreasModalProps {
   onClose: () => void;
   onSelectArea: (area: string) => void;
   currentArea: string;
-  /** Ancla el dropdown debajo del selector (portal + fixed). */
   anchorRef?: RefObject<HTMLElement | null>;
 }
 
 export const AreasModal = ({ isOpen, onClose, onSelectArea, currentArea, anchorRef }: AreasModalProps) => {
-  const dropdownRef = useGSAPModalEntrance({
-    isOpen,
-    type: 'slideFromTop',
-    duration: 0.2,
-  });
-
-  const anchoredStyle = useAnchoredDropdownStyle(isOpen, anchorRef, {
+  const { style: panelStyle, isBottomSheet } = useAnchoredDropdownStyle(isOpen, anchorRef, {
     align: 'stretch',
     minWidth: 280,
     maxWidth: 360,
   });
 
+  const dropdownRef = useGSAPModalEntrance({
+    isOpen,
+    type: isBottomSheet ? 'slideUp' : 'slideFromTop',
+    duration: isBottomSheet ? 0.3 : 0.2,
+  });
+
   if (!isOpen) return null;
 
   const areas = Object.entries(AREA_INFO);
+  const usePortal = Boolean(anchorRef) || isBottomSheet;
 
   const panel = (
-    <div
-      ref={dropdownRef}
-      style={anchorRef ? anchoredStyle : undefined}
-      className={cn(
-        'rounded-2xl border border-slate-700 bg-slate-900 shadow-2xl',
-        anchorRef ? 'max-h-[min(70vh,32rem)] overflow-y-auto' : 'absolute top-full left-0 z-50 w-full sm:w-80',
-        !anchorRef && 'rounded-b-2xl border-x border-b'
-      )}
-    >
+    <div ref={dropdownRef} style={usePortal ? panelStyle : undefined} className={getRoadmapPanelClassName(isBottomSheet, Boolean(anchorRef))}>
+      {isBottomSheet && <RoadmapBottomSheetHandle />}
       <div className="p-4">
         <div className="mb-3 flex items-center justify-between border-b border-slate-800 pb-2">
           <h3 className="text-sm font-bold tracking-wider text-slate-400 uppercase">Mis Cursos</h3>
@@ -62,7 +59,7 @@ export const AreasModal = ({ isOpen, onClose, onSelectArea, currentArea, anchorR
           </button>
         </div>
 
-        <div className="max-h-[60vh] space-y-2 overflow-y-auto">
+        <div className={cn('space-y-2 overflow-y-auto', isBottomSheet ? 'max-h-[60vh]' : 'max-h-[60vh]')}>
           {areas.map(([areaKey, areaData]: [string, { name?: string; color?: string; icon?: string }]) => (
             <button
               type="button"
@@ -99,7 +96,7 @@ export const AreasModal = ({ isOpen, onClose, onSelectArea, currentArea, anchorR
     </div>
   );
 
-  if (anchorRef && typeof document !== 'undefined') {
+  if (usePortal && typeof document !== 'undefined') {
     return createPortal(
       <>
         <ModalOverlay onClose={onClose} />

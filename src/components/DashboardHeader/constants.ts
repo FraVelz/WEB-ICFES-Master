@@ -35,8 +35,15 @@ export function isNavOptionActive(pathname: string, option: NavOption): boolean 
 
 export const LECTURA_SUB_PATHS = ['/importancia', '/informacion', '/consejos'] as const;
 
+/** Rutas donde no se muestra la barra de navegación principal en móvil. */
+export const HIDE_MOBILE_MAIN_NAV_PATHS = ['/tienda'] as const;
+
+export function shouldHideMobileMainNav(pathname: string): boolean {
+  return HIDE_MOBILE_MAIN_NAV_PATHS.some((path) => isNavPathActive(pathname, path));
+}
+
 export const mainNavOptions: NavOption[] = [
-  { path: '/ruta-aprendizaje', label: 'Aprendizaje', icon: 'graduation-cap' },
+  { path: '/ruta-aprendizaje', label: 'Aprendizaje', icon: 'graduation-cap', activePaths: ['/fases'] },
   { path: '/logros', label: 'Logros', icon: 'medal' },
   { path: '/clasificatoria', label: 'Clasificatoria', icon: 'trophy' },
 ];

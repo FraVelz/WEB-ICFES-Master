@@ -7,16 +7,15 @@ import { useGamification } from '@/hooks/gamification';
 import { useUiSessionStore } from '@/store/uiSessionStore';
 import { getStreakScope } from '@/services/streak';
 import type { PathSection } from '@/features/learning/roadmap/AreaPath';
+import { getLearningPhasesHref } from '@/features/learning/data/competencyPhases';
 import { AreasModal } from './AreasModal';
 import { StreakModal } from './StreakModal';
 import { CoinsModal } from './CoinsModal';
 import { SectionStageBanner } from './SectionStageBanner';
-import { SectionsModal } from './SectionsModal';
 import { RoadmapStatsBar } from './RoadmapStatsBar';
 
 /**
  * Navegación secundaria móvil (stacked): stats arriba + banner de etapa abajo.
- * En escritorio el layout vive en LearningRoadmap (centro + aside).
  */
 export interface SecondaryHeaderProps {
   currentArea?: string;
@@ -35,7 +34,7 @@ export const SecondaryHeader = ({
   onSectionChange,
   areaColorClass = 'from-blue-500 to-blue-600',
 }: SecondaryHeaderProps) => {
-  const [activeModal, setActiveModal] = useState<'areas' | 'streak' | 'coins' | 'sections' | null>(null);
+  const [activeModal, setActiveModal] = useState<'areas' | 'streak' | 'coins' | null>(null);
   const { user } = useAuth();
   const demoMode = useUiSessionStore((state) => state.demoMode);
   const streakScope = getStreakScope(user?.uid, demoMode) ?? undefined;
@@ -62,11 +61,6 @@ export const SecondaryHeader = ({
     setActiveModal(null);
   };
 
-  const handleSelectSection = (sectionId: string) => {
-    onSectionChange?.(sectionId);
-    setActiveModal(null);
-  };
-
   const closeModals = () => setActiveModal(null);
 
   const goToAdjacentSection = (direction: -1 | 1) => {
@@ -78,7 +72,8 @@ export const SecondaryHeader = ({
 
   const areaSelectorRef = useRef<HTMLButtonElement>(null);
   const streakButtonRef = useRef<HTMLButtonElement>(null);
-  const sectionBannerRef = useRef<HTMLDivElement>(null);
+
+  const guideHref = getLearningPhasesHref();
 
   return (
     <div className="relative z-50 lg:hidden">
@@ -105,12 +100,11 @@ export const SecondaryHeader = ({
         <SectionStageBanner
           section={currentSection}
           areaColorClass={areaColorClass}
-          onOpenSections={() => setActiveModal(activeModal === 'sections' ? null : 'sections')}
+          guideHref={guideHref}
           onPrevSection={() => goToAdjacentSection(-1)}
           onNextSection={() => goToAdjacentSection(1)}
           hasPrev={currentSectionIndex > 0}
           hasNext={currentSectionIndex < sections.length - 1}
-          bannerRef={sectionBannerRef}
         />
       )}
 
@@ -121,18 +115,6 @@ export const SecondaryHeader = ({
         onSelectArea={handleSelectArea}
         anchorRef={areaSelectorRef}
       />
-
-      {hasSectionNav && currentSectionId && (
-        <SectionsModal
-          isOpen={activeModal === 'sections'}
-          onClose={closeModals}
-          currentSectionId={currentSectionId}
-          onSelectSection={handleSelectSection}
-          sections={sections}
-          areaColorClass={areaColorClass}
-          anchorRef={sectionBannerRef}
-        />
-      )}
 
       <StreakModal
         isOpen={activeModal === 'streak'}

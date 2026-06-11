@@ -6,7 +6,8 @@ import { cn } from '@/utils/cn';
 import { Icon } from '@/shared/components/Icon';
 import { ModalOverlay } from '@/shared/components/ModalOverlay';
 import { useGSAPModalEntrance } from '@/hooks/useGSAPModalEntrance';
-import { useAnchoredDropdownStyle } from './useAnchoredDropdownStyle';
+import { getRoadmapPanelClassName, useAnchoredDropdownStyle } from './useAnchoredDropdownStyle';
+import { RoadmapBottomSheetHandle } from './RoadmapBottomSheetHandle';
 
 export interface StreakData {
   currentStreak?: number;
@@ -23,20 +24,17 @@ export interface StreakModalProps {
   anchorRef?: RefObject<HTMLElement | null>;
 }
 
-/**
- * Dropdown que muestra información detallada de la racha con mini-calendario
- */
 export const StreakModal = ({ isOpen, onClose, streakData, anchorRef }: StreakModalProps) => {
-  const dropdownRef = useGSAPModalEntrance({
-    isOpen,
-    type: 'slideFromTop',
-    duration: 0.2,
-  });
-
-  const anchoredStyle = useAnchoredDropdownStyle(isOpen, anchorRef, {
+  const { style: panelStyle, isBottomSheet } = useAnchoredDropdownStyle(isOpen, anchorRef, {
     align: 'end',
     minWidth: 280,
     maxWidth: 320,
+  });
+
+  const dropdownRef = useGSAPModalEntrance({
+    isOpen,
+    type: isBottomSheet ? 'slideUp' : 'slideFromTop',
+    duration: isBottomSheet ? 0.3 : 0.2,
   });
 
   const { currentStreak = 0, longestStreak = 0, streakHistory = [] } = streakData || {};
@@ -44,14 +42,9 @@ export const StreakModal = ({ isOpen, onClose, streakData, anchorRef }: StreakMo
 
   if (!isOpen) return null;
 
-  const getDaysInMonth = (date: Date) => {
-    return new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
-  };
+  const getDaysInMonth = (date: Date) => new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
 
-  const getFirstDayOfMonth = (date: Date) => {
-    // 0 = Domingo, 1 = Lunes, ...
-    return new Date(date.getFullYear(), date.getMonth(), 1).getDay();
-  };
+  const getFirstDayOfMonth = (date: Date) => new Date(date.getFullYear(), date.getMonth(), 1).getDay();
 
   const changeMonth = (offset: number) => {
     const newDate = new Date(viewDate);
@@ -60,7 +53,7 @@ export const StreakModal = ({ isOpen, onClose, streakData, anchorRef }: StreakMo
   };
 
   const daysInMonth = getDaysInMonth(viewDate);
-  const firstDay = getFirstDayOfMonth(viewDate); // 0 (Sun) - 6 (Sat)
+  const firstDay = getFirstDayOfMonth(viewDate);
 
   const monthNames = [
     'Enero',
@@ -79,14 +72,11 @@ export const StreakModal = ({ isOpen, onClose, streakData, anchorRef }: StreakMo
   const dayNames = ['D', 'L', 'M', 'M', 'J', 'V', 'S'];
 
   const isStreakDay = (day: number) => {
-    // Local date string for calendar compare
-    // Nota: streakHistory son strings YYYY-MM-DD
     const year = viewDate.getFullYear();
-    const month = viewDate.getMonth() + 1; // 1-12
+    const month = viewDate.getMonth() + 1;
     const monthStr = month < 10 ? `0${month}` : month;
     const dayStr = day < 10 ? `0${day}` : day;
     const dateStr = `${year}-${monthStr}-${dayStr}`;
-
     return streakHistory.includes(dateStr);
   };
 
@@ -99,126 +89,117 @@ export const StreakModal = ({ isOpen, onClose, streakData, anchorRef }: StreakMo
     );
   };
 
+  const usePortal = Boolean(anchorRef) || isBottomSheet;
+
   const panel = (
     <div
       ref={dropdownRef}
-      style={anchorRef ? anchoredStyle : undefined}
-      className={cn(
-        'rounded-2xl border border-slate-700 bg-slate-900 shadow-2xl',
-        anchorRef ? 'max-h-[min(70vh,32rem)] overflow-y-auto' : 'absolute top-full right-0 z-50 w-full sm:w-80',
-        !anchorRef && 'rounded-b-2xl border-x border-b'
-      )}
+      style={usePortal ? panelStyle : undefined}
+      className={getRoadmapPanelClassName(isBottomSheet, Boolean(anchorRef), true)}
     >
-        <div className="p-4">
-          {/* Header */}
-          <div className="mb-4 flex items-center justify-between border-b border-slate-800 pb-3">
-            <h2 className="flex items-center gap-2 text-sm font-bold tracking-wider text-slate-400 uppercase">
-              <Icon name="fire" className="text-orange-400" />
-              Mi Racha
-            </h2>
+      {isBottomSheet && <RoadmapBottomSheetHandle />}
+      <div className="p-4">
+        <div className="mb-4 flex items-center justify-between border-b border-slate-800 pb-3">
+          <h2 className="flex items-center gap-2 text-sm font-bold tracking-wider text-slate-400 uppercase">
+            <Icon name="fire" className="text-orange-400" />
+            Mi Racha
+          </h2>
+          <button
+            type="button"
+            onClick={onClose}
+            aria-label="Cerrar"
+            className={cn(
+              'cursor-pointer rounded-lg p-1 text-slate-500 transition-colors hover:text-white',
+              'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none',
+              'focus-visible:ring-offset-slate-900'
+            )}
+          >
+            <Icon name="times" />
+          </button>
+        </div>
+
+        <div className="mb-6 grid grid-cols-2 gap-4">
+          <div className="rounded-xl border border-slate-700 bg-slate-800/50 p-4 text-center">
+            <div className="mb-1 text-3xl font-bold text-orange-500">{currentStreak}</div>
+            <div className="text-xs font-medium text-slate-400 uppercase">Racha Actual</div>
+          </div>
+          <div className="rounded-xl border border-slate-700 bg-slate-800/50 p-4 text-center">
+            <div className="mb-1 text-3xl font-bold text-yellow-500">{longestStreak}</div>
+            <div className="text-xs font-medium text-slate-400 uppercase">Mejor Racha</div>
+          </div>
+        </div>
+
+        <div className="rounded-xl border border-slate-800 bg-slate-950 p-3">
+          <div className="mb-3 flex items-center justify-between px-1">
             <button
               type="button"
-              onClick={onClose}
-              aria-label="Cerrar"
+              onClick={() => changeMonth(-1)}
+              aria-label="Mes anterior"
               className={cn(
                 'cursor-pointer rounded-lg p-1 text-slate-500 transition-colors hover:text-white',
                 'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none',
-                'focus-visible:ring-offset-slate-900'
+                'focus-visible:ring-offset-slate-950'
               )}
             >
-              <Icon name="times" />
+              <Icon name="chevron-left" size="sm" />
+            </button>
+            <span className="text-sm font-bold text-slate-200">
+              {monthNames[viewDate.getMonth()]} {viewDate.getFullYear()}
+            </span>
+            <button
+              type="button"
+              onClick={() => changeMonth(1)}
+              aria-label="Mes siguiente"
+              className={cn(
+                'cursor-pointer rounded-lg p-1 text-slate-500 transition-colors hover:text-white',
+                'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none',
+                'focus-visible:ring-offset-slate-950'
+              )}
+            >
+              <Icon name="chevron-right" size="sm" />
             </button>
           </div>
 
-          {/* Big Number */}
-          <div className="mb-6 grid grid-cols-2 gap-4">
-            <div className="rounded-xl border border-slate-700 bg-slate-800/50 p-4 text-center">
-              <div className="mb-1 text-3xl font-bold text-orange-500">{currentStreak}</div>
-              <div className="text-xs font-medium text-slate-400 uppercase">Racha Actual</div>
-            </div>
-            <div className="rounded-xl border border-slate-700 bg-slate-800/50 p-4 text-center">
-              <div className="mb-1 text-3xl font-bold text-yellow-500">{longestStreak}</div>
-              <div className="text-xs font-medium text-slate-400 uppercase">Mejor Racha</div>
-            </div>
+          <div className="mb-1 grid grid-cols-7 gap-1 text-center">
+            {dayNames.map((d, i) => (
+              <div key={i} className="py-1 text-xs font-medium text-slate-500">
+                {d}
+              </div>
+            ))}
           </div>
+          <div className="grid grid-cols-7 gap-1">
+            {Array.from({ length: firstDay }).map((_, i) => (
+              <div key={`empty-${i}`} />
+            ))}
+            {Array.from({ length: daysInMonth }).map((_, i) => {
+              const day = i + 1;
+              const active = isStreakDay(day);
+              const today = isToday(day);
 
-          {/* Calendar */}
-          <div className="rounded-xl border border-slate-800 bg-slate-950 p-3">
-            {/* Calendar Header */}
-            <div className="mb-3 flex items-center justify-between px-1">
-              <button
-                type="button"
-                onClick={() => changeMonth(-1)}
-                aria-label="Mes anterior"
-                className={cn(
-                  'cursor-pointer rounded-lg p-1 text-slate-500 transition-colors hover:text-white',
-                  'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none',
-                  'focus-visible:ring-offset-slate-950'
-                )}
-              >
-                <Icon name="chevron-left" size="sm" />
-              </button>
-              <span className="text-sm font-bold text-slate-200">
-                {monthNames[viewDate.getMonth()]} {viewDate.getFullYear()}
-              </span>
-              <button
-                type="button"
-                onClick={() => changeMonth(1)}
-                aria-label="Mes siguiente"
-                className={cn(
-                  'cursor-pointer rounded-lg p-1 text-slate-500 transition-colors hover:text-white',
-                  'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none',
-                  'focus-visible:ring-offset-slate-950'
-                )}
-              >
-                <Icon name="chevron-right" size="sm" />
-              </button>
-            </div>
-
-            {/* Days Grid */}
-            <div className="mb-1 grid grid-cols-7 gap-1 text-center">
-              {dayNames.map((d, i) => (
-                <div key={i} className="py-1 text-xs font-medium text-slate-500">
-                  {d}
+              return (
+                <div
+                  key={day}
+                  className={cn(
+                    'flex h-8 w-8 items-center justify-center rounded-full text-xs font-bold transition-all',
+                    active
+                      ? 'bg-orange-500 text-white shadow-lg shadow-orange-500/20'
+                      : 'text-slate-400 hover:bg-slate-800',
+                    today && !active && 'border border-slate-600 text-slate-200'
+                  )}
+                >
+                  {day}
                 </div>
-              ))}
-            </div>
-            <div className="grid grid-cols-7 gap-1">
-              {/* Empty slots for start of month */}
-              {Array.from({ length: firstDay }).map((_, i) => (
-                <div key={`empty-${i}`} />
-              ))}
-
-              {/* Days */}
-              {Array.from({ length: daysInMonth }).map((_, i) => {
-                const day = i + 1;
-                const active = isStreakDay(day);
-                const today = isToday(day);
-
-                return (
-                  <div
-                    key={day}
-                    className={cn(
-                      'flex h-8 w-8 items-center justify-center rounded-full text-xs font-bold transition-all',
-                      active
-                        ? 'bg-orange-500 text-white shadow-lg shadow-orange-500/20'
-                        : 'text-slate-400 hover:bg-slate-800',
-                      today && !active && 'border border-slate-600 text-slate-200'
-                    )}
-                  >
-                    {day}
-                  </div>
-                );
-              })}
-            </div>
+              );
+            })}
           </div>
-
-          <p className="mt-4 text-center text-xs text-slate-500">¡Practica cada día para mantener tu racha!</p>
         </div>
+
+        <p className="mt-4 text-center text-xs text-slate-500">¡Practica cada día para mantener tu racha!</p>
       </div>
+    </div>
   );
 
-  if (anchorRef && typeof document !== 'undefined') {
+  if (usePortal && typeof document !== 'undefined') {
     return createPortal(
       <>
         <ModalOverlay onClose={onClose} />

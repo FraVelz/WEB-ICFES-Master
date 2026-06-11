@@ -105,7 +105,7 @@ export function StorePage() {
   const filteredItems = filter === 'all' ? shopItems : shopItems.filter((item) => item.category === filter);
 
   return (
-    <div className={cn(PAGE_SHELL_CLASS, 'flex min-h-dvh flex-col')}>
+    <div className={cn(PAGE_SHELL_CLASS, 'flex min-h-dvh flex-col pb-0')}>
       {toast && (
         <div
           role="status"

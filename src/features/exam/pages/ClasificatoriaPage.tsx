@@ -12,8 +12,6 @@ import { LEAGUE_GROUP_SIZE } from '@/shared/constants/gamification';
 import { formatCountdownToReset } from '@/services/league/leagueWeekUtils';
 import { AvatarImage } from '@/features/user/components/AvatarImage';
 import { VIP_AVATAR_BORDER_CLASS } from '@/features/store/constants/vipBadge';
-import { PAGE_SHELL_CLASS } from '@/shared/constants/pageShell';
-import { PageThemeControl } from '@/components/PageThemeControl';
 
 export const ClasificatoriaPage = () => {
   const router = useRouter();
@@ -81,29 +79,18 @@ export const ClasificatoriaPage = () => {
     isViewingOwnLeague && ((loading && leaderboardData.length === 0) || (leagueLoading && !leagueState));
 
   return (
-    <div className={PAGE_SHELL_CLASS}>
-      <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
-        <div className="absolute top-0 left-0 h-96 w-full bg-linear-to-b from-purple-900/20 to-transparent"></div>
-        <div className="bg-app-ring/10 absolute right-0 bottom-0 h-96 w-96 rounded-full blur-3xl"></div>
-      </div>
-
-      <div className="relative z-10 container mx-auto max-w-5xl px-4 py-8">
-        <PageThemeControl />
-        <div className="mb-8 text-center">
-          <h1 className="mb-2 flex items-center justify-center gap-3 text-4xl font-bold">
-            <Icon name="trophy" className="text-amber-600 dark:text-yellow-400" />
-            Clasificatoria Semanal
-          </h1>
-          <p className="text-on-surface-muted">
-            Compite en tu grupo de {groupSize} y sube de liga. ¡Se actualiza cada lunes!
+    <div className="relative z-10 mx-auto max-w-5xl px-0">
+      <div className="mb-6 space-y-1">
+        <p className="text-on-surface-muted text-sm">
+          Compite en tu grupo de {groupSize} y sube de liga. Se actualiza cada lunes.
+        </p>
+        {isViewingOwnLeague && (
+          <p className="text-app-accent-muted text-sm">
+            Próximo reset:{' '}
+            <span className="text-app-accent font-mono font-semibold">{formatCountdownToReset(resetMs)}</span>
           </p>
-          {isViewingOwnLeague && (
-            <p className="text-app-accent-muted mt-2 text-sm">
-              Próximo reset:{' '}
-              <span className="text-app-accent font-mono font-semibold">{formatCountdownToReset(resetMs)}</span>
-            </p>
-          )}
-        </div>
+        )}
+      </div>
 
         <div className="no-scrollbar mb-6 flex gap-2 overflow-x-auto pb-4">
           {Object.values(RANKS).map((rank) => {
@@ -286,7 +273,6 @@ export const ClasificatoriaPage = () => {
             </div>
           ) : null}
         </div>
-      </div>
     </div>
   );
 };

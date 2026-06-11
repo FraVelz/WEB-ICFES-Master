@@ -2,25 +2,27 @@ import React from 'react';
 
 import { DashboardHeader } from '@/components/DashboardHeader';
 import { LevelAssessmentGate } from '@/components/LevelAssessmentGate';
+import { DashboardShellGate } from '@/features/dashboard/shell';
 import { cn } from '@/utils/cn';
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="from-surface via-surface-via to-surface text-on-surface relative flex min-h-screen overflow-hidden bg-linear-to-b">
+    <div className="from-surface via-surface-via to-surface text-on-surface relative flex min-h-dvh bg-linear-to-b">
       <LevelAssessmentGate />
 
-      <div className="flex h-screen w-screen flex-col-reverse lg:flex-row">
-        {/* Header - Sidebar */}
+      <div className="flex min-h-dvh w-full flex-col-reverse lg:flex-row">
+        {/* Navegación principal: sticky, ocupa ancho/alto en el flujo (no flota sobre el contenido) */}
         <DashboardHeader
           className={cn(
-            'border-app-ring/20 bg-surface-elevated/95 flex hidden h-screen min-h-0 w-fit flex-col border-r',
-            'shadow-app-ring/10 shadow-2xl backdrop-blur-xl transition-all duration-300 lg:flex'
+            'border-app-ring/20 bg-surface-elevated/95 z-40 shrink-0',
+            'sticky bottom-0 border-t lg:top-0 lg:bottom-auto lg:self-start',
+            'lg:h-dvh lg:max-h-dvh lg:border-t-0 lg:border-r',
+            'shadow-app-ring/10 shadow-2xl backdrop-blur-xl transition-all duration-300'
           )}
         />
 
-        {/* Main Content Area */}
-        <main className="relative h-screen w-full flex-1 overflow-y-scroll transition-all duration-300 lg:w-auto lg:pt-0">
-          {children}
+        <main className="relative min-w-0 flex-1">
+          <DashboardShellGate>{children}</DashboardShellGate>
         </main>
       </div>
     </div>

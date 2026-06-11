@@ -4,30 +4,63 @@ import { useLayoutEffect, useState, type CSSProperties, type RefObject } from 'r
 
 type Align = 'start' | 'end' | 'stretch';
 
+/** Mismo breakpoint que `lg:` de Tailwind (sidebar / layout escritorio). */
+export const MOBILE_BOTTOM_SHEET_MQ = '(max-width: 1023px)';
+
+export function isMobileBottomSheetViewport(): boolean {
+  if (typeof window === 'undefined') return false;
+  return window.matchMedia(MOBILE_BOTTOM_SHEET_MQ).matches;
+}
+
 type AnchoredDropdownOptions = {
   align?: Align;
   offset?: number;
   minWidth?: number;
   maxWidth?: number;
+  /** En móvil abre como hoja inferior (Duolingo). Default: true */
+  bottomSheetOnMobile?: boolean;
+};
+
+export type AnchoredPanelStyle = {
+  style: CSSProperties | undefined;
+  isBottomSheet: boolean;
+};
+
+const BOTTOM_SHEET_STYLE: CSSProperties = {
+  position: 'fixed',
+  left: 0,
+  right: 0,
+  bottom: 0,
+  width: '100%',
+  maxHeight: 'min(85vh, 32rem)',
+  zIndex: 50,
 };
 
 export function useAnchoredDropdownStyle(
   isOpen: boolean,
   anchorRef: RefObject<HTMLElement | null> | undefined,
   options: AnchoredDropdownOptions = {}
-): CSSProperties | undefined {
-  const { align = 'start', offset = 4, minWidth = 0, maxWidth = 400 } = options;
-  const [style, setStyle] = useState<CSSProperties | undefined>();
+): AnchoredPanelStyle {
+  const { align = 'start', offset = 4, minWidth = 0, maxWidth = 400, bottomSheetOnMobile = true } = options;
+  const [result, setResult] = useState<AnchoredPanelStyle>({ style: undefined, isBottomSheet: false });
 
   useLayoutEffect(() => {
-    if (!isOpen || !anchorRef?.current) {
-      setStyle(undefined);
+    if (!isOpen) {
+      setResult({ style: undefined, isBottomSheet: false });
       return;
     }
 
     const update = () => {
-      const el = anchorRef.current;
-      if (!el) return;
+      if (bottomSheetOnMobile && isMobileBottomSheetViewport()) {
+        setResult({ style: BOTTOM_SHEET_STYLE, isBottomSheet: true });
+        return;
+      }
+
+      const el = anchorRef?.current;
+      if (!el) {
+        setResult({ style: undefined, isBottomSheet: false });
+        return;
+      }
 
       const rect = el.getBoundingClientRect();
       const width = Math.min(Math.max(minWidth, rect.width), maxWidth, window.innerWidth - 16);
@@ -39,23 +72,45 @@ export function useAnchoredDropdownStyle(
 
       left = Math.max(8, Math.min(left, window.innerWidth - width - 8));
 
-      setStyle({
-        position: 'fixed',
-        top: rect.bottom + offset,
-        left,
-        width,
-        zIndex: 50,
+      setResult({
+        style: {
+          position: 'fixed',
+          top: rect.bottom + offset,
+          left,
+          width,
+          zIndex: 50,
+        },
+        isBottomSheet: false,
       });
     };
 
     update();
+
+    const mq = window.matchMedia(MOBILE_BOTTOM_SHEET_MQ);
+    mq.addEventListener('change', update);
     window.addEventListener('resize', update);
     window.addEventListener('scroll', update, true);
+
     return () => {
+      mq.removeEventListener('change', update);
       window.removeEventListener('resize', update);
       window.removeEventListener('scroll', update, true);
     };
-  }, [isOpen, anchorRef, align, offset, minWidth, maxWidth]);
+  }, [isOpen, anchorRef, align, offset, minWidth, maxWidth, bottomSheetOnMobile]);
 
-  return style;
+  return result;
+}
+
+export function getRoadmapPanelClassName(isBottomSheet: boolean, hasAnchor: boolean, alignRight = false) {
+  if (isBottomSheet) {
+    return 'max-h-[min(85vh,32rem)] overflow-y-auto rounded-t-2xl border border-slate-700 border-b-0 bg-slate-900 shadow-2xl pb-[env(safe-area-inset-bottom,0px)]';
+  }
+
+  if (hasAnchor) {
+    return 'max-h-[min(70vh,32rem)] overflow-y-auto rounded-2xl border border-slate-700 bg-slate-900 shadow-2xl';
+  }
+
+  return alignRight
+    ? 'absolute top-full right-0 z-50 w-full rounded-b-2xl border-x border-b border-slate-700 bg-slate-900 shadow-2xl sm:w-80'
+    : 'absolute top-full left-0 z-50 w-full rounded-b-2xl border-x border-b border-slate-700 bg-slate-900 shadow-2xl sm:w-80';
 }

@@ -1,11 +1,11 @@
 'use client';
 
 import { LearningRoadmap } from '@/features/learning/components';
-import { ChatAssistant } from '@/features/learning/shell/ChatAssistant/ChatAssistant';
 import { useDailyStreakOnLearningRoute } from '@/features/learning/hooks/useDailyStreakOnLearningRoute';
-
 import { RoadmapUiProvider, useRoadmapUi } from '@/features/learning/context/RoadmapUiContext';
 import { cn } from '@/utils/cn';
+import { Suspense } from 'react';
+import { LoadingState } from '@/shared/components/LoadingState';
 
 const Component = () => {
   const { isActive } = useRoadmapUi();
@@ -14,10 +14,7 @@ const Component = () => {
   return (
     <div
       id="container-main"
-      className={cn(
-        'from-surface via-surface-via to-surface text-on-surface min-h-dvh bg-linear-to-b p-0 lg:relative',
-        isActive && 'h-screen overflow-hidden'
-      )}
+      className={cn('relative min-h-0 p-0', isActive && 'h-screen overflow-hidden')}
     >
       <LearningRoadmap />
     </div>
@@ -26,12 +23,10 @@ const Component = () => {
 
 export const LearningRoadmapPage = () => {
   return (
-    <>
-      <RoadmapUiProvider>
+    <RoadmapUiProvider>
+      <Suspense fallback={<LoadingState label="Cargando ruta..." layout="section" />}>
         <Component />
-      </RoadmapUiProvider>
-
-      <ChatAssistant />
-    </>
+      </Suspense>
+    </RoadmapUiProvider>
   );
 };

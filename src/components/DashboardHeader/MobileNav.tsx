@@ -15,6 +15,7 @@ import {
   mobileMenuOptions,
   MOBILE_MENU_ITEM_HOVER,
   MOBILE_TAB_HOVER,
+  shouldHideMobileMainNav,
   type NavOption,
 } from './constants';
 
@@ -30,12 +31,17 @@ export function MobileNav({ menuOpen, onToggleMenu, onCloseMenu }: MobileNavProp
   const isLockedInDemo = (path: string) => demoMode && isAccountOnlyPath(path);
   const isOverflowRouteActive = mobileMenuOptions.some((option) => isNavOptionActive(pathname, option));
 
+  if (shouldHideMobileMainNav(pathname)) {
+    return null;
+  }
+
   return (
     <>
       <nav
         className={cn(
-          'border-app-ring/20 border-t bg-linear-to-t',
-          'from-surface-elevated/95 via-surface-elevated/90 to-surface-elevated/80 backdrop-blur-xl lg:hidden'
+          'custom-scrollbar sticky bottom-0 z-40 shrink-0 border-t lg:hidden',
+          'border-app-ring/20 bg-linear-to-t',
+          'from-surface-elevated/95 via-surface-elevated/90 to-surface-elevated/80 backdrop-blur-xl'
         )}
       >
         <div className="flex h-20 items-center justify-around">

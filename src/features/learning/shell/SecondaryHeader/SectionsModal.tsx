@@ -5,7 +5,8 @@ import { cn } from '@/utils/cn';
 import { Icon } from '@/shared/components/Icon';
 import { ModalOverlay } from '@/shared/components/ModalOverlay';
 import { useGSAPModalEntrance } from '@/hooks/useGSAPModalEntrance';
-import { useAnchoredDropdownStyle } from './useAnchoredDropdownStyle';
+import { getRoadmapPanelClassName, useAnchoredDropdownStyle } from './useAnchoredDropdownStyle';
+import { RoadmapBottomSheetHandle } from './RoadmapBottomSheetHandle';
 import type { PathSection } from '@/features/learning/roadmap/AreaPath';
 import { getStageLabel } from './sectionStageUtils';
 import type { RefObject } from 'react';
@@ -29,30 +30,29 @@ export const SectionsModal = ({
   areaColorClass,
   anchorRef,
 }: SectionsModalProps) => {
-  const dropdownRef = useGSAPModalEntrance({
-    isOpen,
-    type: 'slideFromTop',
-    duration: 0.2,
-  });
-
-  const anchoredStyle = useAnchoredDropdownStyle(isOpen, anchorRef, {
+  const { style: panelStyle, isBottomSheet } = useAnchoredDropdownStyle(isOpen, anchorRef, {
     align: 'stretch',
     minWidth: 280,
     maxWidth: 480,
   });
 
+  const dropdownRef = useGSAPModalEntrance({
+    isOpen,
+    type: isBottomSheet ? 'slideUp' : 'slideFromTop',
+    duration: isBottomSheet ? 0.3 : 0.2,
+  });
+
   if (!isOpen) return null;
+
+  const usePortal = Boolean(anchorRef) || isBottomSheet;
 
   const panel = (
     <div
       ref={dropdownRef}
-      style={anchorRef ? anchoredStyle : undefined}
-      className={cn(
-        'rounded-2xl border border-slate-700 bg-slate-900 shadow-2xl',
-        anchorRef ? 'max-h-[min(70vh,32rem)] overflow-y-auto' : 'absolute top-full left-0 z-50 w-full sm:w-96',
-        !anchorRef && 'rounded-b-2xl border-x border-b'
-      )}
+      style={usePortal ? panelStyle : undefined}
+      className={getRoadmapPanelClassName(isBottomSheet, Boolean(anchorRef))}
     >
+      {isBottomSheet && <RoadmapBottomSheetHandle />}
       <div className="p-4">
         <div className="mb-3 flex items-center justify-between border-b border-slate-800 pb-2">
           <h3 className="text-sm font-bold tracking-wider text-slate-400 uppercase">Etapas del curso</h3>
@@ -110,7 +110,7 @@ export const SectionsModal = ({
     </div>
   );
 
-  if (anchorRef && typeof document !== 'undefined') {
+  if (usePortal && typeof document !== 'undefined') {
     return createPortal(
       <>
         <ModalOverlay onClose={onClose} />

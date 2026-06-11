@@ -103,7 +103,14 @@ export function DesktopSidebar({ className, sidebarExpanded, onToggleSidebar }: 
   const isSettingsActive = isNavPathActive(pathname, '/configuracion');
 
   return (
-    <header className={cn('min-w-fit', className, sidebarExpanded ? 'w-72' : 'w-20')}>
+    <header
+      className={cn(
+        'hidden min-h-0 flex-col lg:flex',
+        'lg:sticky lg:top-0 lg:h-dvh lg:max-h-dvh lg:shrink-0 lg:overflow-y-auto',
+        className,
+        sidebarExpanded ? 'w-72' : 'w-20'
+      )}
+    >
       <div
         className={cn(
           'border-app-ring/10 relative flex shrink-0 flex-col items-center justify-center gap-0 border-b',
