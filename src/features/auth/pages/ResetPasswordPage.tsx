@@ -74,7 +74,7 @@ export const ResetPasswordPage = () => {
               >
                 {EMAIL_MESSAGES.resetPasswordPage.title}
               </h1>
-              <p className="text-slate-400">{EMAIL_MESSAGES.resetPasswordPage.subtitle}</p>
+              <p className="text-on-surface-muted">{EMAIL_MESSAGES.resetPasswordPage.subtitle}</p>
             </div>
 
             {error ? (

@@ -37,7 +37,7 @@ export const LessonPreview = ({ isOpen, onClose, lesson, onStart }: LessonPrevie
         aria-modal="true"
         aria-labelledby="lesson-preview-title"
         className={cn(
-          'animate-fade-in-up relative mb-20 w-screen max-w-md border-t border-slate-700 bg-slate-900 p-6 shadow-2xl',
+          'animate-fade-in-up relative mb-20 w-screen max-w-md border-t border-surface-border bg-surface-elevated p-6 shadow-2xl',
           'motion-reduce:animate-none sm:rounded-2xl sm:border'
         )}
       >
@@ -47,9 +47,9 @@ export const LessonPreview = ({ isOpen, onClose, lesson, onStart }: LessonPrevie
           onClick={onClose}
           aria-label="Cerrar vista previa"
           className={cn(
-            'absolute top-4 right-4 cursor-pointer rounded-lg p-2 text-slate-400 transition-colors',
+            'absolute top-4 right-4 cursor-pointer rounded-lg p-2 text-on-surface-muted transition-colors',
             'focus-visible:ring-app-accent hover:text-white focus-visible:ring-2 focus-visible:outline-none',
-            'focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900'
+            'focus-visible:ring-offset-2 focus-visible:ring-offset-surface-elevated'
           )}
         >
           <Icon name="times" />
@@ -60,28 +60,28 @@ export const LessonPreview = ({ isOpen, onClose, lesson, onStart }: LessonPrevie
           <h3 id="lesson-preview-title" className="mr-8 mb-2 text-xl font-bold text-white">
             {lesson.title}
           </h3>
-          <p className="text-sm text-slate-400">{lesson.description}</p>
+          <p className="text-sm text-on-surface-muted">{lesson.description}</p>
         </div>
 
         {/* Rewards */}
         <div className="mb-8 flex justify-center gap-4">
           <div
             className={cn(
-              'flex min-w-[100px] flex-col items-center rounded-xl border border-slate-700',
-              'bg-slate-800/50 p-3'
+              'flex min-w-[100px] flex-col items-center rounded-xl border border-surface-border',
+              'bg-surface-overlay/50 p-3'
             )}
           >
             <span className="text-lg font-bold text-orange-400">+{lesson?.xp ?? 0}</span>
-            <span className="text-xs tracking-wider text-slate-500 uppercase">XP</span>
+            <span className="text-xs tracking-wider text-on-surface-muted uppercase">XP</span>
           </div>
           <div
             className={cn(
-              'flex min-w-[100px] flex-col items-center rounded-xl border border-slate-700',
-              'bg-slate-800/50 p-3'
+              'flex min-w-[100px] flex-col items-center rounded-xl border border-surface-border',
+              'bg-surface-overlay/50 p-3'
             )}
           >
             <span className="text-lg font-bold text-yellow-400">+{lesson?.coins ?? 0}</span>
-            <span className="text-xs tracking-wider text-slate-500 uppercase">Monedas</span>
+            <span className="text-xs tracking-wider text-on-surface-muted uppercase">Monedas</span>
           </div>
         </div>
 
@@ -94,9 +94,9 @@ export const LessonPreview = ({ isOpen, onClose, lesson, onStart }: LessonPrevie
           }}
           className={cn(
             'flex w-full cursor-pointer items-center justify-center gap-2 rounded-xl bg-green-500 py-4',
-            'font-bold text-slate-900 shadow-lg shadow-green-500/20 transition-all hover:bg-green-400',
+            'font-bold text-surface-via shadow-lg shadow-green-500/20 transition-all hover:bg-green-400',
             'focus-visible:ring-2 focus-visible:ring-white focus-visible:outline-none active:scale-95',
-            'focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900'
+            'focus-visible:ring-offset-2 focus-visible:ring-offset-surface-elevated'
           )}
         >
           <Icon name="play" />

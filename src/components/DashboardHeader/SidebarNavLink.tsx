@@ -52,7 +52,7 @@ export function SidebarNavLink({ option, pathname, sidebarExpanded, isLocked }: 
       {sidebarExpanded && (
         <span className="group-hover/item:text-app-accent font-medium whitespace-nowrap transition-colors">
           {option.label}
-          {isLocked && <Icon name="lock" size="sm" className="ml-1.5 inline text-slate-500" />}
+          {isLocked && <Icon name="lock" size="sm" className="ml-1.5 inline text-on-surface-muted" />}
         </span>
       )}
       {isActive && option.showActiveIndicator !== false && sidebarExpanded && (

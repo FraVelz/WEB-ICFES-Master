@@ -33,7 +33,7 @@ const profileActionButtonClass = cn(
   'cursor-pointer rounded-lg border border-surface-border bg-surface-elevated p-2',
   'text-on-surface-muted transition-colors',
   'hover:bg-surface-via hover:text-on-surface',
-  'dark:border-transparent dark:bg-slate-800 dark:hover:bg-slate-700 dark:hover:text-white'
+  'dark:border-transparent dark:bg-surface-overlay dark:hover:bg-on-surface-muted dark:hover:text-white'
 );
 
 export function ProfileHeroCard({
@@ -54,7 +54,7 @@ export function ProfileHeroCard({
       className={cn(
         'border-surface-border bg-surface-elevated/90 relative mb-8 overflow-visible rounded-3xl border p-6',
         'shadow-lg backdrop-blur-xl md:p-10',
-        'dark:border-slate-800 dark:bg-slate-900/80 dark:shadow-2xl',
+        'dark:border-surface-border dark:bg-surface-elevated/80 dark:shadow-2xl',
         isVip && 'ring-1 ring-amber-500/25 dark:ring-yellow-500/20'
       )}
     >
@@ -72,7 +72,7 @@ export function ProfileHeroCard({
           <div
             className={cn(
               'bg-surface-via h-32 w-32 rounded-full border-4 p-1 shadow-lg md:h-40 md:w-40',
-              'dark:bg-slate-950',
+              'dark:bg-surface-via',
               isVip
                 ? VIP_AVATAR_BORDER_CLASS
                 : accent === 'purple'
@@ -80,7 +80,7 @@ export function ProfileHeroCard({
                   : 'border-app-ring/40 shadow-app-ring/15 dark:border-app-ring/30'
             )}
           >
-            <div className="bg-surface-elevated relative h-full w-full overflow-hidden rounded-full dark:bg-slate-800">
+            <div className="bg-surface-elevated relative h-full w-full overflow-hidden rounded-full dark:bg-surface-overlay">
               <AvatarImage src={profileImage} alt={name} className="rounded-full" />
             </div>
           </div>
@@ -96,7 +96,7 @@ export function ProfileHeroCard({
             className={cn(
               'absolute right-0 bottom-0 z-10 rounded-full border ' +
                 'px-3 py-1 text-xs font-bold whitespace-nowrap shadow-md',
-              'border-surface-border bg-surface-elevated dark:border-slate-700 dark:bg-slate-900',
+              'border-surface-border bg-surface-elevated dark:border-surface-border dark:bg-surface-elevated',
               accent === 'purple'
                 ? 'text-purple-700 dark:text-purple-400'
                 : 'text-app-accent-strong dark:text-app-accent'
@@ -147,7 +147,7 @@ export function ProfileHeroCard({
             <div
               className={cn(
                 'border-surface-border bg-surface-via h-4 overflow-hidden rounded-full border',
-                'shadow-inner dark:border-slate-700 dark:bg-slate-800'
+                'shadow-inner dark:border-surface-border dark:bg-surface-overlay'
               )}
             >
               <div

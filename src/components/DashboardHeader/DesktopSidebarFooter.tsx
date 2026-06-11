@@ -62,7 +62,7 @@ export function DesktopSidebarFooter({
       >
         <div
           className={cn(
-            'relative h-10 w-10 shrink-0 overflow-hidden rounded-full border-2 bg-slate-800',
+            'relative h-10 w-10 shrink-0 overflow-hidden rounded-full border-2 bg-surface-overlay',
             isProfileActive ? 'border-app-accent' : 'border-app-ring/30'
           )}
         >
@@ -85,7 +85,7 @@ export function DesktopSidebarFooter({
           FOCUS_RING,
           isSettingsActive
             ? 'bg-app-ring/15 text-app-accent ring-app-accent/45 ring-2'
-            : cn(SIDEBAR_NAV_HOVER, 'text-slate-500'),
+            : cn(SIDEBAR_NAV_HOVER, 'text-on-surface-muted'),
           isLockedInDemo('/configuracion') && 'opacity-70'
         )}
         title={!sidebarExpanded ? (isLockedInDemo('/configuracion') ? 'Requiere cuenta' : 'Configuración') : undefined}
@@ -99,7 +99,7 @@ export function DesktopSidebarFooter({
           <span className="font-medium whitespace-nowrap">
             Configuración
             {isLockedInDemo('/configuracion') && (
-              <Icon name="lock" size="sm" className="ml-1.5 inline text-slate-500" />
+              <Icon name="lock" size="sm" className="ml-1.5 inline text-on-surface-muted" />
             )}
           </span>
         )}

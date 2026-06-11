@@ -54,10 +54,10 @@ export function GoogleSignInButton({
     <div className="space-y-3">
       <div className="relative">
         <div className="absolute inset-0 flex items-center">
-          <div className="w-full border-t border-slate-700"></div>
+          <div className="w-full border-t border-surface-border"></div>
         </div>
         <div className="relative flex justify-center text-sm">
-          <span className="bg-black px-2 text-slate-400">O continúa con</span>
+          <span className="bg-black px-2 text-on-surface-muted">O continúa con</span>
         </div>
       </div>
 

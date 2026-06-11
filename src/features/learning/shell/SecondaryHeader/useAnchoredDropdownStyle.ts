@@ -104,18 +104,18 @@ export function useAnchoredDropdownStyle(
 export function getRoadmapPanelClassName(isBottomSheet: boolean, hasAnchor: boolean, alignRight = false) {
   if (isBottomSheet) {
     return (
-      'max-h-[min(85vh,32rem)] overflow-y-auto rounded-t-2xl border border-slate-700 border-b-0 ' +
-      'bg-slate-900 shadow-2xl pb-[env(safe-area-inset-bottom,0px)]'
+      'max-h-[min(85vh,32rem)] overflow-y-auto rounded-t-2xl border border-surface-border border-b-0 ' +
+      'bg-surface-elevated shadow-2xl pb-[env(safe-area-inset-bottom,0px)]'
     );
   }
 
   if (hasAnchor) {
-    return 'max-h-[min(70vh,32rem)] overflow-y-auto rounded-2xl border border-slate-700 bg-slate-900 shadow-2xl';
+    return 'max-h-[min(70vh,32rem)] overflow-y-auto rounded-2xl border border-surface-border bg-surface-elevated shadow-2xl';
   }
 
   const anchoredPanel =
-    'absolute top-full z-50 w-full rounded-b-2xl border-x border-b border-slate-700 ' +
-    'bg-slate-900 shadow-2xl sm:w-80';
+    'absolute top-full z-50 w-full rounded-b-2xl border-x border-b border-surface-border ' +
+    'bg-surface-elevated shadow-2xl sm:w-80';
 
   return alignRight ? `${anchoredPanel} right-0` : `${anchoredPanel} left-0`;
 }

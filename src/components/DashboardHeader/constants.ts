@@ -10,7 +10,7 @@ export type NavOption = {
 
 export const FOCUS_RING =
   'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:outline-none ' +
-  'focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950';
+  'focus-visible:ring-offset-2 focus-visible:ring-offset-surface-via';
 
 /** Hover visible en sidebar (claro y oscuro): borde + tinte accent + sombra suave. */
 export const SIDEBAR_NAV_HOVER =

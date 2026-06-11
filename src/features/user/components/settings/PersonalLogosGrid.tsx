@@ -57,14 +57,14 @@ export function PersonalLogosGrid({
           <div
             key={`empty-${index}`}
             className={cn(
-              'flex flex-col items-center gap-2 rounded-2xl border border-dashed border-slate-700',
-              'bg-slate-900/40 p-3'
+              'flex flex-col items-center gap-2 rounded-2xl border border-dashed border-surface-border',
+              'bg-surface-elevated/40 p-3'
             )}
           >
             <div
               className={cn(
-                'flex h-16 w-16 items-center justify-center rounded-full border border-slate-700',
-                'bg-slate-800/80 text-slate-500'
+                'flex h-16 w-16 items-center justify-center rounded-full border border-surface-border',
+                'bg-surface-overlay/80 text-on-surface-muted'
               )}
             >
               <Icon name="camera" size="lg" />
@@ -87,8 +87,8 @@ export function PersonalLogosGrid({
                   disabled={!userId}
                   onClick={onUseProfilePhoto}
                   className={cn(
-                    'cursor-pointer rounded-lg bg-slate-800 px-2 py-1.5 text-[11px] font-semibold',
-                    'text-slate-300 hover:bg-slate-700'
+                    'cursor-pointer rounded-lg bg-surface-overlay px-2 py-1.5 text-[11px] font-semibold',
+                    'text-on-surface-muted hover:bg-on-surface-muted'
                   )}
                 >
                   Usar foto de perfil

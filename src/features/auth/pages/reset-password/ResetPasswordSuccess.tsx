@@ -28,7 +28,7 @@ export function ResetPasswordSuccess() {
         >
           {EMAIL_MESSAGES.resetPasswordPage.successTitle}
         </h1>
-        <p className="text-slate-400">{EMAIL_MESSAGES.resetPasswordPage.successMessage}</p>
+        <p className="text-on-surface-muted">{EMAIL_MESSAGES.resetPasswordPage.successMessage}</p>
       </div>
 
       <Link

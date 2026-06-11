@@ -46,16 +46,16 @@ export const ShopItemCard = ({
           'dark:border-orange-500/50 dark:bg-orange-500/5 dark:shadow-lg dark:shadow-orange-500/10'
         )
       : isOwnedPermanent
-        ? 'border-green-600/35 bg-surface-elevated dark:border-green-500/30 dark:bg-slate-900/50'
+        ? 'border-green-600/35 bg-surface-elevated dark:border-green-500/30 dark:bg-surface-elevated/50'
         : canAfford
           ? cn(
               'border-surface-border bg-surface-elevated hover:border-app-ring hover:shadow-app-ring/10',
-              'cursor-pointer hover:-translate-y-1 hover:shadow-xl dark:border-slate-700',
-              'dark:bg-slate-800/40 dark:hover:bg-slate-800/60'
+              'cursor-pointer hover:-translate-y-1 hover:shadow-xl dark:border-surface-border',
+              'dark:bg-surface-overlay/40 dark:hover:bg-surface-overlay/60'
             )
           : cn(
               'border-surface-border bg-surface-elevated/60 cursor-pointer opacity-80 hover:opacity-100',
-              'dark:border-slate-800 dark:bg-slate-900/30 dark:opacity-70'
+              'dark:border-surface-border dark:bg-surface-elevated/30 dark:opacity-70'
             )
   );
 
@@ -132,7 +132,7 @@ export const ShopItemCard = ({
       className={cn(
         cardClassName,
         'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none',
-        'focus-visible:ring-offset-slate-950'
+        'focus-visible:ring-offset-surface-via'
       )}
     >
       {content}

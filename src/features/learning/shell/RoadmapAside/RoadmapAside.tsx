@@ -48,7 +48,7 @@ function AsideCard({
     <section
       className={cn(
         'border-surface-border bg-surface-elevated/80 rounded-2xl border p-5 shadow-sm',
-        'dark:border-slate-800 dark:bg-slate-900/50'
+        'dark:border-surface-border dark:bg-surface-elevated/50'
       )}
     >
       <div className="mb-4 flex items-center justify-between gap-2">

@@ -99,7 +99,7 @@ export function ChatPanel({
           className={cn(
             'text-on-surface-muted cursor-pointer rounded-lg p-2 transition-colors hover:bg-surface/10',
             'focus-visible:ring-app-accent hover:text-on-surface focus-visible:ring-2',
-            'focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900 focus-visible:outline-none'
+            'focus-visible:ring-offset-2 focus-visible:ring-offset-surface-elevated focus-visible:outline-none'
           )}
           aria-label="Cerrar chat"
         >

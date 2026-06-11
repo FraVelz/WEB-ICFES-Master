@@ -16,7 +16,7 @@ export function SignupPageHeader({ hasOnboardingAnswers }: SignupPageHeaderProps
     <>
       <Link
         href="/login"
-        className="mb-6 inline-flex items-center gap-2 text-slate-400 transition-colors hover:text-slate-300"
+        className="mb-6 inline-flex items-center gap-2 text-on-surface-muted transition-colors hover:text-on-surface-muted"
       >
         <Icon name="arrow-left" />
         Volver al login
@@ -53,7 +53,7 @@ export function SignupPageHeader({ hasOnboardingAnswers }: SignupPageHeaderProps
         >
           Únete a ICFES Master
         </h1>
-        <p className="text-slate-400">
+        <p className="text-on-surface-muted">
           {hasOnboardingAnswers ? 'Completa tu registro con tus datos' : 'Crea tu cuenta y comienza a prepararte'}
         </p>
       </div>

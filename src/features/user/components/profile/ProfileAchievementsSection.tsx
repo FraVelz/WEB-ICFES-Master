@@ -30,7 +30,7 @@ export function ProfileAchievementsSection({
     <div
       className={cn(
         'border-surface-border bg-surface-elevated/80 sticky top-24 rounded-2xl border p-6 shadow-sm',
-        'dark:border-slate-800 dark:bg-slate-900/50'
+        'dark:border-surface-border dark:bg-surface-elevated/50'
       )}
     >
       <div className="mb-6 flex items-center justify-between">
@@ -81,8 +81,8 @@ export function ProfileAchievementsSection({
               'border-surface-border bg-surface-via/60 text-on-surface mt-4 flex w-full cursor-pointer items-center',
               'hover:bg-surface-via justify-center gap-2 rounded-xl border px-4 py-2.5 text-sm font-semibold',
               'focus-visible:ring-app-accent transition-colors focus-visible:ring-2 focus-visible:ring-offset-2',
-              'focus-visible:ring-offset-surface focus-visible:outline-none dark:border-slate-700',
-              'md:mt-3 dark:bg-slate-800/60 dark:hover:bg-slate-800'
+              'focus-visible:ring-offset-surface focus-visible:outline-none dark:border-surface-border',
+              'md:mt-3 dark:bg-surface-overlay/60 dark:hover:bg-surface-overlay'
             )}
           >
             <Icon name={detailsOpen ? 'chevron-up' : 'info-circle'} size="sm" />

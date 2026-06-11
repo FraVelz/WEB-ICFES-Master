@@ -47,7 +47,7 @@ export function SettingsProfilePanel() {
               'bg-app-ring rounded-full border-4 border-surface-elevated text-white shadow-lg',
               'hover:bg-hub-orb transition-transform hover:scale-110',
               'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:outline-none',
-              'focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950'
+              'focus-visible:ring-offset-2 focus-visible:ring-offset-surface-via'
             )}
           >
             <Icon name="camera" className="text-sm" />
@@ -81,7 +81,7 @@ export function SettingsProfilePanel() {
                   'cursor-pointer rounded-lg bg-surface-elevated px-3 py-2 text-on-surface-muted transition-colors',
                   'hover:bg-app-ring/20 hover:text-app-accent',
                   'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:outline-none',
-                  'focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950'
+                  'focus-visible:ring-offset-2 focus-visible:ring-offset-surface-via'
                 )}
               >
                 <Icon name="check" />
@@ -111,7 +111,7 @@ export function SettingsProfilePanel() {
                   'absolute right-2 bottom-2 flex h-8 w-8 cursor-pointer items-center justify-center',
                   'hover:bg-app-ring/20 rounded-md bg-surface-elevated text-xs text-on-surface-muted transition-colors',
                   'hover:text-app-accent focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:outline-none',
-                  'focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950'
+                  'focus-visible:ring-offset-2 focus-visible:ring-offset-surface-via'
                 )}
               >
                 <Icon name="check" />
@@ -128,7 +128,7 @@ export function SettingsProfilePanel() {
                 'cursor-pointer text-xs text-red-400 underline-offset-2 hover:text-red-300',
                 'hover:underline focus-visible:rounded focus-visible:ring-2',
                 'focus-visible:ring-red-400 focus-visible:ring-offset-2',
-                'focus-visible:ring-offset-slate-950 focus-visible:outline-none'
+                'focus-visible:ring-offset-surface-via focus-visible:outline-none'
               )}
             >
               Eliminar foto de perfil

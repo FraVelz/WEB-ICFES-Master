@@ -35,7 +35,7 @@ export function ShopItemPreview({ item, variant = 'card', className }: ShopItemP
       <div
         className={cn(
           'relative flex h-full w-full items-center justify-center overflow-hidden',
-          isLogo ? 'rounded-full bg-white' : 'rounded-xl bg-slate-900'
+          isLogo ? 'rounded-full bg-white' : 'rounded-xl bg-surface-elevated'
         )}
       >
         {item.image ? (

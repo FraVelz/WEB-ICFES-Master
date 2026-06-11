@@ -91,14 +91,14 @@ project).
 
 ## Dark theme
 
-The UI is dark-first: backgrounds `bg-black`, `bg-slate-950`; text `text-white`, `text-slate-300`, `text-slate-400`.
+The UI is dark-first: backgrounds `bg-surface`, `bg-surface-via`; text `text-on-surface`, `text-on-surface-muted`.
 
 ## Component patterns
 
 - **Buttons:** `bg-linear-to-r` gradients, `hover:shadow-lg`, `transition-all duration-300`; often
   `from-cta-from to-cta-to`
-- **Cards:** `bg-slate-800/50`, borders `border-slate-700`, `backdrop-blur-xl`
-- **Inputs:** `bg-slate-800/50`, focus `focus:border-app-ring`, `focus:ring-app-ring/30`
+- **Cards:** `bg-surface-overlay/50`, borders `border-surface-border`, `backdrop-blur-xl`
+- **Inputs:** `bg-surface-overlay/50`, focus `focus:border-app-ring`, `focus:ring-app-ring/30`
 - **Badges / progress:** subject gradients (`subject-*` tokens), `rounded-xl`, `rounded-full`
 
 ## Typical class structure

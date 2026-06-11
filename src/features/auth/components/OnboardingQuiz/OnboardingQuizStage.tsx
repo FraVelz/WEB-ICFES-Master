@@ -35,25 +35,25 @@ export function OnboardingQuizStage({
 }: OnboardingQuizStageProps) {
   return (
     <OnboardingLayout>
-      <div className="sticky top-0 z-30 border-b border-slate-800 bg-slate-950/95 shadow-lg backdrop-blur-md">
+      <div className="sticky top-0 z-30 border-b border-surface-border bg-surface-via/95 shadow-lg backdrop-blur-md">
         <div className="flex h-16 items-center justify-between px-6">
           <button
             type="button"
             onClick={onBack}
-            className="cursor-pointer rounded-lg p-2 transition-all duration-200 hover:bg-slate-800"
+            className="cursor-pointer rounded-lg p-2 transition-all duration-200 hover:bg-surface-overlay"
             title="Volver atrás"
           >
             <Icon name="chevron-left" className="text-app-accent text-xl" />
           </button>
           <div className="flex flex-1 items-center justify-center gap-6">
-            <h3 className="hidden text-sm font-semibold text-slate-400 sm:block">
+            <h3 className="hidden text-sm font-semibold text-on-surface-muted sm:block">
               Pregunta {questionIndex + 1} de {totalQuestions}
             </h3>
             <span className="text-app-accent text-sm font-semibold">{Math.round(progress)}%</span>
           </div>
         </div>
         <div className="px-6 py-0">
-          <div className="h-1 w-full overflow-hidden rounded-full bg-slate-800">
+          <div className="h-1 w-full overflow-hidden rounded-full bg-surface-overlay">
             <div
               className="from-cta-from to-cta-to h-full bg-linear-to-r transition-all duration-300"
               style={{ width: `${progress}%` }}
@@ -87,13 +87,13 @@ export function OnboardingQuizStage({
                     'border-2 p-4 text-left font-semibold transition-all duration-200',
                   selected
                     ? 'border-app-ring bg-app-ring/20 shadow-app-ring/10 text-white shadow-lg'
-                    : 'border-slate-700 bg-slate-800/50 text-slate-300 hover:border-slate-500 hover:bg-slate-800'
+                    : 'border-surface-border bg-surface-overlay/50 text-on-surface-muted hover:border-on-surface-muted hover:bg-surface-overlay'
                 )}
               >
                 <div
                   className={cn(
                     'flex h-6 w-6 shrink-0 items-center justify-center rounded border-2 transition-all',
-                    selected ? 'border-app-ring bg-app-ring scale-110' : 'border-slate-600 group-hover:border-slate-400'
+                    selected ? 'border-app-ring bg-app-ring scale-110' : 'border-surface-border group-hover:border-surface-via'
                   )}
                 >
                   {selected && <Icon name="check" size="sm" className="text-white" />}

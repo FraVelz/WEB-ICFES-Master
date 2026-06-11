@@ -117,7 +117,7 @@ export function MobileNav({ menuOpen, onToggleMenu, onCloseMenu }: MobileNavProp
               'bg-surface-elevated/98 backdrop-blur-xl lg:hidden'
             )}
           >
-            <div className="flex flex-col divide-y divide-slate-700/50">
+            <div className="flex flex-col divide-y divide-surface-border/50">
               {mobileMenuOptions.map((option: NavOption) => {
                 const isLocked = isLockedInDemo(option.path);
                 const isActive = isNavOptionActive(pathname, option);
@@ -146,7 +146,7 @@ export function MobileNav({ menuOpen, onToggleMenu, onCloseMenu }: MobileNavProp
                     />
                     <span className="flex flex-1 items-center justify-between text-lg font-semibold">
                       {option.label}
-                      {isLocked && <Icon name="lock" className="text-slate-500" />}
+                      {isLocked && <Icon name="lock" className="text-on-surface-muted" />}
                     </span>
                   </Link>
                 );

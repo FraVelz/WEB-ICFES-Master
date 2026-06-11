@@ -88,7 +88,7 @@ export function LessonQuizPanel({
       onSubmit={handleSubmit}
       onRetry={handleRetry}
       onNext={handleNextQuestion}
-      className={isCard ? undefined : 'border-slate-800/80 bg-slate-950/95 p-0 backdrop-blur-md lg:p-0'}
+      className={isCard ? undefined : 'border-surface-border/80 bg-surface-via/95 p-0 backdrop-blur-md lg:p-0'}
       innerClassName={isCard ? undefined : footerInnerClassName}
     />
   );
@@ -100,7 +100,7 @@ export function LessonQuizPanel({
         isCard &&
           cn(
             'max-h-[calc(95vh-5rem)] w-full max-w-lg overflow-hidden rounded-t-2xl',
-            'border-t border-slate-800 bg-slate-900 shadow-2xl lg:max-h-[90vh] lg:rounded-2xl lg:border'
+            'border-t border-surface-border bg-surface-elevated shadow-2xl lg:max-h-[90vh] lg:rounded-2xl lg:border'
           ),
         className
       )}

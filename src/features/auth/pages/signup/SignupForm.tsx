@@ -21,7 +21,7 @@ type SignupFormProps = {
 
 function PasswordRule({ met, label }: { met: boolean; label: string }) {
   return (
-    <div className={cn('flex items-center gap-2', met ? 'text-green-400' : 'text-slate-500')}>
+    <div className={cn('flex items-center gap-2', met ? 'text-green-400' : 'text-on-surface-muted')}>
       <Icon name="check-circle" className={met ? 'opacity-100' : 'opacity-50'} />
       {label}
     </div>
@@ -48,7 +48,7 @@ export function SignupForm({
           Nombre Completo
         </label>
         <div className="relative">
-          <Icon name="user" className="absolute top-1/2 left-4 -translate-y-1/2 text-slate-400" />
+          <Icon name="user" className="absolute top-1/2 left-4 -translate-y-1/2 text-on-surface-muted" />
           <input
             id="displayName"
             type="text"
@@ -67,7 +67,7 @@ export function SignupForm({
           Email
         </label>
         <div className="relative">
-          <Icon name="envelope" className="absolute top-1/2 left-4 -translate-y-1/2 text-slate-400" />
+          <Icon name="envelope" className="absolute top-1/2 left-4 -translate-y-1/2 text-on-surface-muted" />
           <input
             id="email"
             type="email"
@@ -86,7 +86,7 @@ export function SignupForm({
           Contraseña
         </label>
         <div className="relative">
-          <Icon name="lock" className="absolute top-1/2 left-4 -translate-y-1/2 text-slate-400" />
+          <Icon name="lock" className="absolute top-1/2 left-4 -translate-y-1/2 text-on-surface-muted" />
           <input
             id="password"
             type={showPassword ? 'text' : 'password'}
@@ -102,7 +102,7 @@ export function SignupForm({
             type="button"
             onClick={onTogglePassword}
             aria-label={showPassword ? 'Ocultar contraseña' : 'Mostrar contraseña'}
-            className="absolute top-1/2 right-4 -translate-y-1/2 text-slate-400 hover:text-slate-300"
+            className="absolute top-1/2 right-4 -translate-y-1/2 text-on-surface-muted hover:text-on-surface-muted"
           >
             <Icon name={showPassword ? 'eye-slash' : 'eye'} aria-hidden />
           </button>
@@ -119,7 +119,7 @@ export function SignupForm({
           Confirmar Contraseña
         </label>
         <div className="relative">
-          <Icon name="lock" className="absolute top-1/2 left-4 -translate-y-1/2 text-slate-400" />
+          <Icon name="lock" className="absolute top-1/2 left-4 -translate-y-1/2 text-on-surface-muted" />
           <input
             id="confirmPassword"
             type={showConfirmPassword ? 'text' : 'password'}
@@ -134,7 +134,7 @@ export function SignupForm({
             type="button"
             onClick={onToggleConfirmPassword}
             aria-label={showConfirmPassword ? 'Ocultar confirmación de contraseña' : 'Mostrar confirmación de contraseña'}
-            className="absolute top-1/2 right-4 -translate-y-1/2 text-slate-400 hover:text-slate-300"
+            className="absolute top-1/2 right-4 -translate-y-1/2 text-on-surface-muted hover:text-on-surface-muted"
           >
             <Icon name={showConfirmPassword ? 'eye-slash' : 'eye'} aria-hidden />
           </button>

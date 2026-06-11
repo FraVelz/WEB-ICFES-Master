@@ -104,7 +104,7 @@ export function PdfViewerModal({ isOpen, title, url, onClose }: PdfViewerModalPr
           </div>
         </header>
 
-        <div className="min-h-0 flex-1 bg-slate-900/40">
+        <div className="min-h-0 flex-1 bg-surface-elevated/40">
           <iframe src={url} title={title} className="h-full w-full border-0" />
         </div>
       </div>

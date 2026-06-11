@@ -27,7 +27,7 @@ export function IconGallery() {
               <p className="text-on-surface-muted truncate text-xs">{source}</p>
             </div>
 
-            <div className="flex h-10 items-center justify-between gap-2 rounded-lg bg-slate-900/60 px-3">
+            <div className="flex h-10 items-center justify-between gap-2 rounded-lg bg-surface-elevated/60 px-3">
               {SIZES.map((size) => (
                 <Icon key={size} name={name} size={size} className="text-app-accent" />
               ))}

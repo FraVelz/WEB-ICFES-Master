@@ -50,8 +50,8 @@ export const AreasModal = ({ isOpen, onClose, onSelectArea, currentArea, anchorR
     >
       {isBottomSheet && <RoadmapBottomSheetHandle />}
       <div className="p-4">
-        <div className="mb-3 flex items-center justify-between border-b border-slate-800 pb-2">
-          <h3 id="areas-modal-title" className="text-sm font-bold tracking-wider text-slate-400 uppercase">
+        <div className="mb-3 flex items-center justify-between border-b border-surface-border pb-2">
+          <h3 id="areas-modal-title" className="text-sm font-bold tracking-wider text-on-surface-muted uppercase">
             Mis Cursos
           </h3>
           <button
@@ -59,9 +59,9 @@ export const AreasModal = ({ isOpen, onClose, onSelectArea, currentArea, anchorR
             onClick={onClose}
             aria-label="Cerrar"
             className={cn(
-              'cursor-pointer rounded-lg p-1 text-slate-500 transition-colors hover:text-white',
+              'cursor-pointer rounded-lg p-1 text-on-surface-muted transition-colors hover:text-white',
               'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:outline-none',
-              'focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900'
+              'focus-visible:ring-offset-2 focus-visible:ring-offset-surface-elevated'
             )}
           >
             <Icon name="times" />
@@ -80,21 +80,21 @@ export const AreasModal = ({ isOpen, onClose, onSelectArea, currentArea, anchorR
               className={cn(
                 'flex w-full cursor-pointer items-center gap-3 rounded-xl px-4 py-3 transition-all',
                 'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:outline-none',
-                'focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950',
+                'focus-visible:ring-offset-2 focus-visible:ring-offset-surface-via',
                 currentArea === areaKey
                   ? ['bg-linear-to-r text-white shadow-lg', areaData.color]
-                  : 'bg-slate-800/50 text-slate-300 hover:bg-slate-800'
+                  : 'bg-surface-overlay/50 text-on-surface-muted hover:bg-surface-overlay'
               )}
             >
               <div
                 className={cn(
                   'flex h-8 w-8 items-center justify-center rounded-lg',
-                  currentArea === areaKey ? 'bg-white/20' : 'bg-slate-700/50'
+                  currentArea === areaKey ? 'bg-white/20' : 'bg-on-surface-muted/50'
                 )}
               >
                 <Icon
                   name={areaData.icon ?? 'book'}
-                  className={currentArea === areaKey ? 'text-white' : 'text-slate-400'}
+                  className={currentArea === areaKey ? 'text-white' : 'text-on-surface-muted'}
                 />
               </div>
               <span className="text-left text-sm font-semibold">{areaData.name}</span>

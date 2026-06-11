@@ -14,7 +14,7 @@ export function ProfileCoursesSection({ coursesProgress, emptyMessage, onStartLe
     <div
       className={cn(
         'border-surface-border bg-surface-elevated/80 rounded-2xl border p-6 shadow-sm',
-        'dark:border-slate-800 dark:bg-slate-900/50'
+        'dark:border-surface-border dark:bg-surface-elevated/50'
       )}
     >
       <h2 className="text-on-surface mb-6 flex items-center gap-3 text-xl font-bold">
@@ -30,7 +30,7 @@ export function ProfileCoursesSection({ coursesProgress, emptyMessage, onStartLe
                 <span className="text-on-surface font-medium capitalize">{courseId.replace('-', ' ')}</span>
                 <span className="font-bold text-purple-700 dark:text-purple-400">{Number(progress)}%</span>
               </div>
-              <div className="bg-surface-via h-2.5 overflow-hidden rounded-full dark:bg-slate-800">
+              <div className="bg-surface-via h-2.5 overflow-hidden rounded-full dark:bg-surface-overlay">
                 <div
                   className={cn(
                     'h-full rounded-full bg-purple-600 transition-all duration-500 dark:bg-purple-500',

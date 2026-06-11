@@ -44,7 +44,7 @@ export function AchievementGridTile({ achievement }: { achievement: ProfileAchie
           'border-surface-border bg-surface-elevated pointer-events-none absolute bottom-[calc(100%+0.5rem)]',
           'left-1/2 z-30 hidden w-52 -translate-x-1/2 rounded-xl border p-3 text-left shadow-xl',
           'opacity-0 transition-opacity group-focus-within:opacity-100 group-hover:opacity-100',
-          'dark:border-slate-700 dark:bg-slate-900',
+          'dark:border-surface-border dark:bg-surface-elevated',
           'max-md:hidden'
         )}
       >
@@ -72,7 +72,7 @@ export function AchievementDetailRow({ achievement }: { achievement: ProfileAchi
     <li
       className={cn(
         'border-surface-border flex gap-3 rounded-xl border p-3',
-        'bg-surface-via/40 dark:border-slate-800 dark:bg-slate-800/40',
+        'bg-surface-via/40 dark:border-surface-border dark:bg-surface-overlay/40',
         achievement.status === 'completed' && 'border-amber-500/25 dark:border-yellow-500/20'
       )}
     >

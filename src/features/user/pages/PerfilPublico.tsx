@@ -23,7 +23,7 @@ import { ReportUserDialog } from '../components/ReportUserDialog';
 const profileActionButtonClass = cn(
   'flex cursor-pointer items-center gap-2 rounded-lg border border-surface-border bg-surface-elevated p-2',
   'text-sm font-medium text-app-accent-strong transition-colors hover:bg-surface-via',
-  'dark:border-transparent dark:bg-slate-800 dark:text-app-accent dark:hover:bg-slate-700'
+  'dark:border-transparent dark:bg-surface-overlay dark:text-app-accent dark:hover:bg-on-surface-muted'
 );
 
 type PerfilPublicoProps = {
@@ -113,7 +113,7 @@ export const PerfilPublico = ({ view }: PerfilPublicoProps) => {
                   onClick={() => setReportDialogOpen(true)}
                   className={cn(
                     'border-surface-border bg-surface-elevated cursor-pointer rounded-lg border p-2 transition-colors',
-                    'hover:bg-red-50 dark:border-transparent dark:bg-slate-800 dark:hover:bg-red-900/30',
+                    'hover:bg-red-50 dark:border-transparent dark:bg-surface-overlay dark:hover:bg-red-900/30',
                     reportAcknowledged
                       ? 'text-red-600 dark:text-red-500'
                       : 'text-on-surface-muted hover:text-red-600 dark:hover:text-red-400'

@@ -3,7 +3,7 @@ export const RANKS = {
     id: 'novato',
     label: 'Novato',
     order: 1,
-    color: 'from-slate-400 to-slate-600',
+    color: 'from-on-surface-muted to-surface-border',
     icon: 'user',
     promoteCount: 15,
     demoteCount: 0,

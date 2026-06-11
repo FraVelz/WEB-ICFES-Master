@@ -8,7 +8,7 @@ export const FinalCTASection = () => {
       <div
         className={cn(
           'border-surface-border bg-surface-elevated relative overflow-hidden rounded-xl border p-12 shadow-md md:p-16',
-          'dark:border-app-ring/30 dark:bg-linear-to-br dark:from-slate-900 dark:via-slate-900',
+          'dark:border-app-ring/30 dark:bg-linear-to-br dark:from-surface-elevated dark:via-surface-elevated',
           'dark:to-cyan-950/50 dark:shadow-none'
         )}
       >

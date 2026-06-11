@@ -36,8 +36,8 @@ export function ProfileStatusPicker() {
         <div className="relative">
           <div
             className={cn(
-              'h-24 w-24 overflow-hidden rounded-full border-4 bg-slate-800',
-              hasVip ? VIP_AVATAR_BORDER_CLASS : 'border-slate-600'
+              'h-24 w-24 overflow-hidden rounded-full border-4 bg-surface-overlay',
+              hasVip ? VIP_AVATAR_BORDER_CLASS : 'border-surface-border'
             )}
           >
             <AvatarImage src={avatarSrc} alt={displayName} className="rounded-full" />
@@ -46,7 +46,7 @@ export function ProfileStatusPicker() {
             <span
               className={cn(
                 'absolute -top-1 -right-1 flex h-9 w-9 items-center justify-center rounded-full',
-                'border-2 border-slate-900 bg-slate-800 text-xl shadow-md'
+                'border-2 border-on-surface-muted bg-surface-overlay text-xl shadow-md'
               )}
             >
               {statusReaction.emoji}
@@ -71,7 +71,7 @@ export function ProfileStatusPicker() {
                 'focus-visible:ring-app-accent hover:scale-105 focus-visible:ring-2 focus-visible:outline-none',
                 isActive
                   ? 'border-sky-500/60 bg-sky-500/15 shadow-[0_0_12px_rgba(56,189,248,0.25)]'
-                  : 'border-slate-700/80 bg-slate-800/60 hover:border-slate-600 hover:bg-slate-800'
+                  : 'border-surface-border/80 bg-surface-overlay/60 hover:border-surface-border hover:bg-surface-overlay'
               )}
               aria-pressed={isActive}
               aria-label={reaction.label}

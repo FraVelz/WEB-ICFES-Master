@@ -42,8 +42,8 @@ export const ClasificatoriaPage = () => {
       return {
         status: 'stable',
         icon: 'minus' as const,
-        color: 'text-slate-500',
-        bg: 'border-slate-800/80 bg-slate-900/40',
+        color: 'text-on-surface-muted',
+        bg: 'border-surface-border/80 bg-surface-elevated/40',
         label: 'Solo referencia',
       };
     }
@@ -73,8 +73,8 @@ export const ClasificatoriaPage = () => {
     return {
       status: 'stable',
       icon: 'minus' as const,
-      color: 'text-slate-500',
-      bg: 'border-slate-800/80 bg-slate-900/40',
+      color: 'text-on-surface-muted',
+      bg: 'border-surface-border/80 bg-surface-elevated/40',
       label: 'Zona segura',
     };
   };
@@ -125,7 +125,7 @@ export const ClasificatoriaPage = () => {
           <div
             className={cn(
               'border-surface-border bg-surface-elevated/60 text-on-surface-muted mb-6 rounded-2xl border',
-              'px-4 py-3 text-center text-sm dark:border-slate-700 dark:bg-slate-900/60'
+              'px-4 py-3 text-center text-sm dark:border-surface-border dark:bg-surface-elevated/60'
             )}
           >
             No participas en la liga {currentRankInfo.label}. Estás en{' '}
@@ -141,7 +141,7 @@ export const ClasificatoriaPage = () => {
           <div className="rounded-2xl border border-red-500/20 bg-red-500/10 py-12 text-center">
             <Icon name="exclamation-triangle" size="3xl" className="mx-auto mb-4 text-red-400" />
             <h3 className="mb-2 text-xl font-bold text-white">Error al cargar</h3>
-            <p className="px-4 text-slate-400">
+            <p className="px-4 text-on-surface-muted">
               {error?.message?.includes('index') || error?.message?.includes('function')
                 ? 'Ejecuta la migración de ligas en Supabase y recarga el esquema (NOTIFY pgrst).'
                 : error.message || 'Hubo un problema al cargar la clasificación.'}

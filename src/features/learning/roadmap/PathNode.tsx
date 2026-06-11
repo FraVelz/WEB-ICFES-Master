@@ -10,7 +10,7 @@ const BORDER_COLORS = {
   orange: 'border-orange-500/50',
   pink: 'border-pink-500/50',
   indigo: 'border-indigo-500/50',
-  slate: 'border-slate-500/50',
+  slate: 'border-on-surface-muted/50',
 };
 
 export interface PathNodeProps {
@@ -44,17 +44,17 @@ export const PathNode = ({
     'group relative flex w-full cursor-pointer items-center gap-4 rounded-2xl border-2 p-4',
     'text-left transition-all duration-200',
     'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-app-accent focus-visible:ring-offset-2',
-    'focus-visible:ring-offset-slate-950',
-    isPending && 'border-slate-800 bg-slate-900/40 opacity-70 hover:border-slate-600 hover:opacity-90',
-    isCurrent && cn(borderColor, 'lesson-current-glow bg-slate-900 hover:bg-slate-800'),
-    isCompleted && 'border-green-500/40 bg-slate-900/50 hover:bg-slate-900'
+    'focus-visible:ring-offset-surface-via',
+    isPending && 'border-surface-border bg-surface-elevated/40 opacity-70 hover:border-surface-border hover:opacity-90',
+    isCurrent && cn(borderColor, 'lesson-current-glow bg-surface-elevated hover:bg-surface-overlay'),
+    isCompleted && 'border-green-500/40 bg-surface-elevated/50 hover:bg-surface-elevated'
   );
 
   const iconCircleClass = cn(
     'relative flex shrink-0 items-center justify-center rounded-full border-b-4',
     'transition-transform group-hover:scale-105',
     isCheckpoint ? 'h-16 w-16 text-2xl' : 'h-12 w-12 text-lg',
-    isPending && 'border-slate-700 bg-slate-800 text-slate-600',
+    isPending && 'border-surface-border bg-surface-overlay text-on-surface-muted',
     isCurrent && cn(colorClass, 'border-white/20 text-white shadow-md'),
     isCompleted && 'border-green-600 bg-green-600/20 text-green-400'
   );
@@ -64,7 +64,7 @@ export const PathNode = ({
       <div className={iconCircleClass}>
         <Icon
           name={isCompleted ? 'check' : icon || 'book'}
-          className={cn(isPending && 'text-slate-600', isCurrent && 'text-white', isCompleted && 'text-green-400')}
+          className={cn(isPending && 'text-on-surface-muted', isCurrent && 'text-white', isCompleted && 'text-green-400')}
         />
       </div>
 
@@ -72,28 +72,28 @@ export const PathNode = ({
         <h4
           className={cn(
             'truncate text-base font-bold',
-            isPending && 'text-slate-500',
+            isPending && 'text-on-surface-muted',
             isCurrent && 'text-white',
             isCompleted && 'text-green-400'
           )}
         >
           {title}
         </h4>
-        <p className="truncate text-xs text-slate-400">{description}</p>
+        <p className="truncate text-xs text-on-surface-muted">{description}</p>
       </div>
 
       <div
         className={cn(
           'flex h-8 w-8 shrink-0 items-center justify-center rounded-full',
-          isPending && 'bg-slate-700/50 text-slate-500',
-          isCurrent && 'bg-white text-slate-900',
-          isCompleted && 'bg-slate-800 text-green-400'
+          isPending && 'bg-on-surface-muted/50 text-on-surface-muted',
+          isCurrent && 'bg-white text-surface-via',
+          isCompleted && 'bg-surface-overlay text-green-400'
         )}
       >
         <Icon
           name={isCompleted ? 'check' : 'play'}
           size="sm"
-          className={cn(isPending && 'text-slate-500', isCurrent && 'text-slate-900', isCompleted && 'text-green-400')}
+          className={cn(isPending && 'text-on-surface-muted', isCurrent && 'text-surface-via', isCompleted && 'text-green-400')}
         />
       </div>
     </>

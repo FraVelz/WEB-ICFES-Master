@@ -6,7 +6,7 @@ type FullExamShellProps = {
 
 export function FullExamShell({ children }: FullExamShellProps) {
   return (
-    <div className="min-h-dvh bg-linear-to-br from-gray-900 via-slate-900 to-gray-900 text-white">
+    <div className="min-h-dvh bg-linear-to-br from-gray-900 via-surface-elevated to-gray-900 text-white">
       <div className="pointer-events-none fixed inset-0 overflow-hidden">
         <div
           className={[

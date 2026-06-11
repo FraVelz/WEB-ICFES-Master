@@ -19,7 +19,7 @@ export function OnboardingIntroStage({ message, description, avatarSrc, onBack, 
         <button
           type="button"
           onClick={onBack}
-          className="cursor-pointer rounded-lg p-2 transition-all duration-200 hover:bg-slate-800"
+          className="cursor-pointer rounded-lg p-2 transition-all duration-200 hover:bg-surface-overlay"
           title="Volver atrás"
         >
           <Icon name="chevron-left" className="text-app-accent text-xl" />
@@ -30,7 +30,7 @@ export function OnboardingIntroStage({ message, description, avatarSrc, onBack, 
         <MascotaCircle src={avatarSrc} size="large" alt="Zeus - Tu asistente" className="mb-8" />
         <div
           className={cn(
-            'w-full max-w-2xl rounded-lg border border-slate-700 bg-slate-800/50 p-8',
+            'w-full max-w-2xl rounded-lg border border-surface-border bg-surface-overlay/50 p-8',
             'text-center backdrop-blur-sm'
           )}
         >
@@ -42,7 +42,7 @@ export function OnboardingIntroStage({ message, description, avatarSrc, onBack, 
           >
             {message}
           </h2>
-          <p className="text-sm text-slate-300">{description}</p>
+          <p className="text-sm text-on-surface-muted">{description}</p>
         </div>
       </div>
 

@@ -62,21 +62,21 @@ export function StreakCalendar({ streakHistory }: StreakCalendarProps) {
   };
 
   return (
-    <div className="rounded-xl border border-slate-800 bg-slate-950 p-3">
+    <div className="rounded-xl border border-surface-border bg-surface-via p-3">
       <div className="mb-3 flex items-center justify-between px-1">
         <button
           type="button"
           onClick={() => changeMonth(-1)}
           aria-label="Mes anterior"
           className={cn(
-            'cursor-pointer rounded-lg p-1 text-slate-500 transition-colors hover:text-white',
+            'cursor-pointer rounded-lg p-1 text-on-surface-muted transition-colors hover:text-white',
             'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none',
-            'focus-visible:ring-offset-slate-950'
+            'focus-visible:ring-offset-surface-via'
           )}
         >
           <Icon name="chevron-left" size="sm" />
         </button>
-        <span className="text-sm font-bold text-slate-200">
+        <span className="text-sm font-bold text-on-surface">
           {MONTH_NAMES[viewDate.getMonth()]} {viewDate.getFullYear()}
         </span>
         <button
@@ -84,9 +84,9 @@ export function StreakCalendar({ streakHistory }: StreakCalendarProps) {
           onClick={() => changeMonth(1)}
           aria-label="Mes siguiente"
           className={cn(
-            'cursor-pointer rounded-lg p-1 text-slate-500 transition-colors hover:text-white',
+            'cursor-pointer rounded-lg p-1 text-on-surface-muted transition-colors hover:text-white',
             'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none',
-            'focus-visible:ring-offset-slate-950'
+            'focus-visible:ring-offset-surface-via'
           )}
         >
           <Icon name="chevron-right" size="sm" />
@@ -95,7 +95,7 @@ export function StreakCalendar({ streakHistory }: StreakCalendarProps) {
 
       <div className="mb-1 grid grid-cols-7 gap-1 text-center">
         {DAY_NAMES.map((d, i) => (
-          <div key={i} className="py-1 text-xs font-medium text-slate-500">
+          <div key={i} className="py-1 text-xs font-medium text-on-surface-muted">
             {d}
           </div>
         ))}
@@ -116,8 +116,8 @@ export function StreakCalendar({ streakHistory }: StreakCalendarProps) {
                 'flex h-8 w-8 items-center justify-center rounded-full text-xs font-bold transition-all',
                 active
                   ? 'bg-orange-500 text-white shadow-lg shadow-orange-500/20'
-                  : 'text-slate-400 hover:bg-slate-800',
-                today && !active && 'border border-slate-600 text-slate-200'
+                  : 'text-on-surface-muted hover:bg-surface-overlay',
+                today && !active && 'border border-surface-border text-on-surface'
               )}
             >
               {day}

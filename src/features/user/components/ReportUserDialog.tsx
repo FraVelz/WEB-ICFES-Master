@@ -66,7 +66,7 @@ export function ReportUserDialog({
         aria-describedby={descId}
         className={cn(
           'border-surface-border bg-surface-elevated w-full max-w-lg rounded-2xl border p-6 shadow-2xl',
-          'dark:border-slate-700 dark:bg-slate-900'
+          'dark:border-surface-border dark:bg-surface-elevated'
         )}
         onClick={(e) => e.stopPropagation()}
       >

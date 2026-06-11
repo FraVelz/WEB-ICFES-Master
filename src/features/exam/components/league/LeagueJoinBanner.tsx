@@ -18,10 +18,10 @@ export function LeagueJoinBanner({ rankLabel }: LeagueJoinBannerProps) {
         href="/ruta-aprendizaje"
         className={cn(
           'mt-5 inline-flex w-full max-w-sm items-center justify-center rounded-2xl border-2 border-sky-500/50',
-          'bg-slate-900/80 px-6 py-3.5 text-sm font-extrabold tracking-wide text-sky-300 uppercase',
-          'transition-colors hover:border-sky-400 hover:bg-slate-800 hover:text-sky-200',
+          'bg-surface-elevated/80 px-6 py-3.5 text-sm font-extrabold tracking-wide text-sky-300 uppercase',
+          'transition-colors hover:border-sky-400 hover:bg-surface-overlay hover:text-sky-200',
           'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none',
-          'focus-visible:ring-offset-slate-950'
+          'focus-visible:ring-offset-surface-via'
         )}
       >
         Haz una lección

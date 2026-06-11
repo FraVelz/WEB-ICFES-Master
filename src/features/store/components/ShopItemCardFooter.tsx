@@ -47,10 +47,10 @@ export function ShopItemCardFooter({
         className={cn(
           'inline-flex cursor-pointer items-center gap-2 rounded-lg px-4 py-2 text-sm font-bold transition-all',
           'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none',
-          'focus-visible:ring-offset-slate-950',
+          'focus-visible:ring-offset-surface-via',
           processing && 'cursor-wait opacity-70',
           isEquipped
-            ? 'bg-slate-800 text-slate-300 hover:bg-slate-700 hover:text-white'
+            ? 'bg-surface-overlay text-on-surface-muted hover:bg-on-surface-muted hover:text-white'
             : 'bg-app-ring/20 text-app-accent hover:bg-app-ring/35 hover:shadow-app-ring/20 hover:shadow-md'
         )}
       >
@@ -113,7 +113,7 @@ export function ShopItemCardFooter({
                 'border border-emerald-600/35 bg-emerald-100 text-emerald-900 group-hover:bg-emerald-500',
                 'group-hover:text-white dark:border-transparent dark:bg-emerald-500/10 dark:text-emerald-300'
               )
-            : 'bg-slate-800 text-slate-500'
+            : 'bg-surface-overlay text-on-surface-muted'
         )}
       >
         <Icon name="coins" />
@@ -132,14 +132,14 @@ export function ShopItemCardFooter({
       className={cn(
         'inline-flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-bold transition-all',
         isPurchased
-          ? 'bg-slate-800 text-slate-400'
+          ? 'bg-surface-overlay text-on-surface-muted'
           : canAfford
             ? cn(
                 'border border-amber-300/50 bg-amber-100 text-amber-800 group-hover:border-transparent',
                 'group-hover:bg-yellow-500 group-hover:text-black dark:border-transparent',
                 'dark:bg-yellow-500/10 dark:text-yellow-400'
               )
-            : 'bg-slate-800 text-slate-500'
+            : 'bg-surface-overlay text-on-surface-muted'
       )}
     >
       {isPurchased ? (

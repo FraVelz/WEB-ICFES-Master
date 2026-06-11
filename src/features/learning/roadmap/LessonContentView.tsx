@@ -50,7 +50,7 @@ export function LessonContentView({ lesson, areaId = 'lectura-critica', stepSlug
   }, [stepSlug]);
 
   return (
-    <div className="fixed inset-0 z-50 flex h-dvh flex-col overflow-hidden bg-slate-950">
+    <div className="fixed inset-0 z-50 flex h-dvh flex-col overflow-hidden bg-surface-via">
       <LessonContentHeader
         title={lesson.title}
         backHref={backHref}

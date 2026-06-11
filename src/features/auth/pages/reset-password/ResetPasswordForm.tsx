@@ -18,7 +18,7 @@ type ResetPasswordFormProps = {
 };
 
 const INPUT_CLASS = cn(
-  'w-full rounded-lg border border-slate-700 bg-slate-800/50 py-3 pr-10 pl-10 transition-all',
+  'w-full rounded-lg border border-surface-border bg-surface-overlay/50 py-3 pr-10 pl-10 transition-all',
   'focus:border-app-ring focus:ring-app-ring/30 focus:ring-2 focus:outline-none'
 );
 
@@ -50,7 +50,7 @@ export function ResetPasswordForm({
           {EMAIL_MESSAGES.resetPasswordPage.newPasswordLabel}
         </label>
         <div className="relative">
-          <Icon name="lock" className="absolute top-1/2 left-4 -translate-y-1/2 text-slate-400" />
+          <Icon name="lock" className="absolute top-1/2 left-4 -translate-y-1/2 text-on-surface-muted" />
           <input
             id="password"
             type={showPassword ? 'text' : 'password'}
@@ -62,7 +62,7 @@ export function ResetPasswordForm({
           <button
             type="button"
             onClick={onTogglePassword}
-            className="absolute top-1/2 right-4 -translate-y-1/2 text-slate-400 hover:text-slate-300"
+            className="absolute top-1/2 right-4 -translate-y-1/2 text-on-surface-muted hover:text-on-surface-muted"
           >
             <Icon name={showPassword ? 'eye-slash' : 'eye'} />
           </button>
@@ -74,7 +74,7 @@ export function ResetPasswordForm({
           {EMAIL_MESSAGES.resetPasswordPage.confirmPasswordLabel}
         </label>
         <div className="relative">
-          <Icon name="lock" className="absolute top-1/2 left-4 -translate-y-1/2 text-slate-400" />
+          <Icon name="lock" className="absolute top-1/2 left-4 -translate-y-1/2 text-on-surface-muted" />
           <input
             id="confirmPassword"
             type={showConfirmPassword ? 'text' : 'password'}
@@ -86,18 +86,18 @@ export function ResetPasswordForm({
           <button
             type="button"
             onClick={onToggleConfirmPassword}
-            className="absolute top-1/2 right-4 -translate-y-1/2 text-slate-400 hover:text-slate-300"
+            className="absolute top-1/2 right-4 -translate-y-1/2 text-on-surface-muted hover:text-on-surface-muted"
           >
             <Icon name={showConfirmPassword ? 'eye-slash' : 'eye'} />
           </button>
         </div>
       </div>
 
-      <div className="rounded-lg border border-slate-700 bg-slate-800/30 p-4">
-        <p className="mb-2 text-xs font-semibold text-slate-300">
+      <div className="rounded-lg border border-surface-border bg-surface-overlay/30 p-4">
+        <p className="mb-2 text-xs font-semibold text-on-surface-muted">
           {EMAIL_MESSAGES.resetPasswordPage.requirementsTitle}
         </p>
-        <ul className="space-y-1 text-xs text-slate-400">
+        <ul className="space-y-1 text-xs text-on-surface-muted">
           <RequirementItem met={password.length >= 6} label={EMAIL_MESSAGES.resetPasswordPage.requirement1} />
           <RequirementItem met={/[A-Z]/.test(password)} label={EMAIL_MESSAGES.resetPasswordPage.requirement2} />
           <RequirementItem met={/[0-9]/.test(password)} label={EMAIL_MESSAGES.resetPasswordPage.requirement3} />

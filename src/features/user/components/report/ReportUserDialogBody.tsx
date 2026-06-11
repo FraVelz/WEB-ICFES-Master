@@ -103,7 +103,7 @@ export function ReportUserDialogBody({
           className={cn(
             'border-surface-border bg-surface-via text-on-surface w-full rounded-xl border px-3 py-2.5 text-sm',
             'focus-visible:ring-app-accent outline-none focus-visible:ring-2',
-            'dark:border-slate-700 dark:bg-slate-950'
+            'dark:border-surface-border dark:bg-surface-via'
           )}
         >
           {PROFILE_REPORT_REASONS.map((option) => (
@@ -131,7 +131,7 @@ export function ReportUserDialogBody({
           className={cn(
             'border-surface-border bg-surface-via text-on-surface w-full resize-none rounded-xl border',
             'focus-visible:ring-app-accent px-3 py-3 text-sm outline-none focus-visible:ring-2',
-            'dark:border-slate-700 dark:bg-slate-950'
+            'dark:border-surface-border dark:bg-surface-via'
           )}
         />
         <p className="text-on-surface-muted mt-1 text-xs">

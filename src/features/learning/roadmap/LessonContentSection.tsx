@@ -36,8 +36,8 @@ export function LessonContentSection({
       <div className="mb-4 flex justify-center sm:mb-6">
         <span
           className={cn(
-            'rounded-full bg-slate-800/80 px-3 py-1 text-xs font-semibold tracking-wider',
-            'text-slate-400 uppercase'
+            'rounded-full bg-surface-overlay/80 px-3 py-1 text-xs font-semibold tracking-wider',
+            'text-on-surface-muted uppercase'
           )}
         >
           {hasSections ? `${currentSection + 1} de ${sectionsCount}` : 'Lección'}
@@ -45,7 +45,7 @@ export function LessonContentSection({
       </div>
 
       {hasSections ? (
-        <div className="rounded-2xl border border-slate-700/60 bg-slate-900/30 p-4 sm:p-6 md:p-8">
+        <div className="rounded-2xl border border-surface-border/60 bg-surface-elevated/30 p-4 sm:p-6 md:p-8">
           <LessonMarkdownBody content={markdownContent} />
         </div>
       ) : (
@@ -53,7 +53,7 @@ export function LessonContentSection({
           icon="book-open"
           title="Sin contenido"
           description="No hay contenido disponible para esta lección todavía."
-          className="border-slate-700/60 bg-slate-900/30"
+          className="border-surface-border/60 bg-surface-elevated/30"
         />
       )}
     </div>

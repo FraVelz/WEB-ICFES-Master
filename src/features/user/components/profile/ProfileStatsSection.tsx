@@ -15,7 +15,7 @@ type ProfileStatsSectionProps = {
 
 const statCardClass = cn(
   'rounded-xl border border-surface-border bg-surface-via/70 p-4 text-center',
-  'dark:border-transparent dark:bg-slate-800/50'
+  'dark:border-transparent dark:bg-surface-overlay/50'
 );
 
 export function ProfileStatsSection({
@@ -32,7 +32,7 @@ export function ProfileStatsSection({
     <div
       className={cn(
         'border-surface-border bg-surface-elevated/80 rounded-2xl border p-6 shadow-sm',
-        'dark:border-slate-800 dark:bg-slate-900/50'
+        'dark:border-surface-border dark:bg-surface-elevated/50'
       )}
     >
       <h2 className="text-on-surface mb-6 flex items-center gap-3 text-xl font-bold">

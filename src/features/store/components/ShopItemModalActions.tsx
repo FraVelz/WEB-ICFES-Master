@@ -41,9 +41,9 @@ export function ShopItemModalActions({
         className={cn(
           'flex w-full cursor-pointer items-center justify-center gap-2 rounded-xl py-3 font-bold transition-all',
           'focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:outline-none',
-          'focus-visible:ring-offset-slate-950',
+          'focus-visible:ring-offset-surface-via',
           isEquipped
-            ? 'bg-slate-800 text-slate-300 hover:bg-slate-700'
+            ? 'bg-surface-overlay text-on-surface-muted hover:bg-on-surface-muted'
             : 'bg-app-ring/20 text-app-accent hover:bg-app-ring/30'
         )}
       >
@@ -78,16 +78,16 @@ export function ShopItemModalActions({
         className={cn(
           'flex w-full items-center justify-center gap-3 rounded-xl py-4 text-lg font-bold transition-all',
           'focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:outline-none',
-          'focus-visible:ring-offset-slate-950',
+          'focus-visible:ring-offset-surface-via',
           processing
-            ? 'cursor-wait bg-slate-700 text-slate-400'
+            ? 'cursor-wait bg-on-surface-muted text-on-surface-muted'
             : canAfford
               ? cn(
                   'transform cursor-pointer bg-linear-to-r from-yellow-500 to-orange-500 text-black shadow-lg',
                   'shadow-orange-500/20 hover:-translate-y-0.5 hover:from-yellow-400 hover:to-orange-400',
                   'hover:shadow-orange-500/40'
                 )
-              : 'cursor-not-allowed bg-slate-800 text-slate-500'
+              : 'cursor-not-allowed bg-surface-overlay text-on-surface-muted'
         )}
       >
         {processing ? (

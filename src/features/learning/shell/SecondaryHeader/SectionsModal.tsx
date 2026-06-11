@@ -60,8 +60,8 @@ export const SectionsModal = ({
     >
       {isBottomSheet && <RoadmapBottomSheetHandle />}
       <div className="p-4">
-        <div className="mb-3 flex items-center justify-between border-b border-slate-800 pb-2">
-          <h3 id="sections-modal-title" className="text-sm font-bold tracking-wider text-slate-400 uppercase">
+        <div className="mb-3 flex items-center justify-between border-b border-surface-border pb-2">
+          <h3 id="sections-modal-title" className="text-sm font-bold tracking-wider text-on-surface-muted uppercase">
             Fases del curso
           </h3>
           <button
@@ -69,10 +69,10 @@ export const SectionsModal = ({
             onClick={onClose}
             aria-label="Cerrar"
             className={cn(
-              'cursor-pointer rounded-lg p-1 text-slate-500 transition-colors hover:text-white',
+              'cursor-pointer rounded-lg p-1 text-on-surface-muted transition-colors hover:text-white',
               'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:outline-none',
               'focus-visible:ring-offset-2',
-              'focus-visible:ring-offset-slate-900'
+              'focus-visible:ring-offset-surface-elevated'
             )}
           >
             <Icon name="times" />
@@ -94,22 +94,22 @@ export const SectionsModal = ({
                   'flex w-full cursor-pointer flex-col items-start gap-1 rounded-xl px-4 py-3 text-left transition-all',
                   'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:outline-none',
               'focus-visible:ring-offset-2',
-                  'focus-visible:ring-offset-slate-950',
+                  'focus-visible:ring-offset-surface-via',
                   isActive
                     ? ['bg-linear-to-r text-white shadow-lg', areaColorClass]
-                    : 'bg-slate-800/50 text-slate-300 hover:bg-slate-800'
+                    : 'bg-surface-overlay/50 text-on-surface-muted hover:bg-surface-overlay'
                 )}
               >
                 <span
                   className={cn(
                     'text-xs font-bold tracking-wider uppercase',
-                    isActive ? 'text-white/80' : 'text-slate-500'
+                    isActive ? 'text-white/80' : 'text-on-surface-muted'
                   )}
                 >
                   {getStageLabel(section.id)}
                 </span>
                 <span className="text-sm font-semibold">{section.title}</span>
-                <span className={cn('text-xs', isActive ? 'text-white/70' : 'text-slate-500')}>
+                <span className={cn('text-xs', isActive ? 'text-white/70' : 'text-on-surface-muted')}>
                   {section.description}
                 </span>
               </button>

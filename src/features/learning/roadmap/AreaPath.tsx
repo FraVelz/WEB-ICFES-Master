@@ -51,19 +51,19 @@ export const AreaPath = ({
     <div className="mx-auto w-full max-w-md px-4 pb-20">
       {sections.map((section: PathSection) => (
         <div key={section.id} className="relative mb-12">
-          <div className={cn('absolute top-12 bottom-0 left-8 -z-10 w-1 bg-slate-800', hideSectionHeader && 'top-4')} />
+          <div className={cn('absolute top-12 bottom-0 left-8 -z-10 w-1 bg-surface-overlay', hideSectionHeader && 'top-4')} />
 
           {!hideSectionHeader && (
-            <div className="mb-6 ml-2 border-l-4 border-slate-700 pl-4">
+            <div className="mb-6 ml-2 border-l-4 border-surface-border pl-4">
               <h3 className="text-lg font-bold text-white">{section.title}</h3>
-              <p className="text-sm text-slate-400">{section.description}</p>
+              <p className="text-sm text-on-surface-muted">{section.description}</p>
             </div>
           )}
 
           <div className="space-y-6">
             {section.nodes.map((node: PathNodeData) => (
               <div key={node.id} className="relative pl-2">
-                <div className="absolute top-1/2 left-2 -z-10 h-1 w-6 bg-slate-800" />
+                <div className="absolute top-1/2 left-2 -z-10 h-1 w-6 bg-surface-overlay" />
 
                 <PathNode
                   {...node}

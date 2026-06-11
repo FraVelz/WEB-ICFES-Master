@@ -32,6 +32,6 @@ export function achievementTileClass(status: string): string {
   }
   return (
     'border-surface-border bg-surface-via/50 text-on-surface-muted opacity-60 grayscale ' +
-    'dark:border-slate-700 dark:bg-slate-800/50 dark:text-slate-600'
+    'dark:border-surface-border dark:bg-surface-overlay/50 dark:text-on-surface-muted'
   );
 }

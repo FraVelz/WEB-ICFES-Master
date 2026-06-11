@@ -13,7 +13,7 @@ export function LeaderboardAsidePanels() {
 
   return (
     <>
-      <AsideCard title="Tu perfil" icon="user" className="border-slate-700/60 dark:bg-slate-900/80">
+      <AsideCard title="Tu perfil" icon="user" className="border-surface-border/60 dark:bg-surface-elevated/80">
         <ProfileStatusPicker />
       </AsideCard>
 

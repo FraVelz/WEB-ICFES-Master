@@ -18,9 +18,9 @@ export function SettingsAccountPanel() {
             onClick={handleLogout}
             disabled={loading}
             className={cn(
-              'cursor-pointer rounded-lg bg-slate-800 px-4 py-2 text-sm font-medium text-white transition-colors',
-              'focus-visible:ring-app-accent hover:bg-slate-700 focus-visible:ring-2 focus-visible:outline-none',
-              'focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950'
+              'cursor-pointer rounded-lg bg-surface-overlay px-4 py-2 text-sm font-medium text-white transition-colors',
+              'focus-visible:ring-app-accent hover:bg-on-surface-muted focus-visible:ring-2 focus-visible:outline-none',
+              'focus-visible:ring-offset-2 focus-visible:ring-offset-surface-via'
             )}
           >
             Cerrar
@@ -33,7 +33,7 @@ export function SettingsAccountPanel() {
         icon="trash"
         danger
         onClick={() => setShowDeleteModal(true)}
-        action={<Icon name="chevron-right" className="text-slate-600" />}
+        action={<Icon name="chevron-right" className="text-on-surface-muted" />}
       />
       <SettingOption
         label="Eliminar Cuenta"
@@ -41,7 +41,7 @@ export function SettingsAccountPanel() {
         icon="warning"
         danger
         onClick={() => setShowDeleteModal(true)}
-        action={<Icon name="chevron-right" className="text-slate-600" />}
+        action={<Icon name="chevron-right" className="text-on-surface-muted" />}
       />
     </SettingsSection>
   );

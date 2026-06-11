@@ -39,7 +39,7 @@ export const LearningRoadmap = () => {
     if (gradient.includes('orange')) return 'bg-orange-500';
     if (gradient.includes('pink')) return 'bg-pink-500';
     if (gradient.includes('indigo')) return 'bg-indigo-500';
-    return 'bg-slate-500';
+    return 'bg-on-surface-muted';
   };
 
   const colorClass = getColorClass(areaColorClass);
@@ -86,7 +86,7 @@ export const LearningRoadmap = () => {
       )}
 
       {!loading && !pathError && activeSections.length === 0 && (
-        <div className="mx-auto max-w-md rounded-2xl border border-slate-700/60 bg-slate-900/40 px-4 py-8 text-center">
+        <div className="mx-auto max-w-md rounded-2xl border border-surface-border/60 bg-surface-elevated/40 px-4 py-8 text-center">
           <p className="text-sm font-semibold text-white">No hay lecciones en esta fase</p>
           <p className="text-on-surface-muted mt-2 text-xs">
             Prueba otra área o fase, o vuelve más tarde cuando se publique contenido nuevo.

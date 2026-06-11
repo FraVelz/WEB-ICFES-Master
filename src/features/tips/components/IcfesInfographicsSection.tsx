@@ -90,7 +90,7 @@ export function IcfesInfographicsSection() {
                         'transition-all duration-200',
                         'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:ring-offset-2',
                         'focus-visible:outline-none',
-                        'focus-visible:ring-offset-slate-950',
+                        'focus-visible:ring-offset-surface-via',
                         'enabled:hover:border-app-ring/50 enabled:hover:bg-surface-elevated enabled:cursor-pointer',
                         'enabled:hover:shadow-app-ring/10 enabled:hover:-translate-y-0.5 enabled:hover:shadow-md',
                         'enabled:active:translate-y-0 enabled:active:shadow-sm',

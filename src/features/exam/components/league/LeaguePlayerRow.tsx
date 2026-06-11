@@ -45,16 +45,16 @@ export function LeaguePlayerRow({
         'group flex w-full cursor-pointer items-center gap-3 rounded-2xl border px-4 py-3 text-left transition-all',
         isCurrentUser
           ? 'border-sky-500/40 bg-sky-950/30 shadow-[inset_0_0_0_1px_rgba(56,189,248,0.15)]'
-          : cn(style.bg, 'border-slate-800/80 hover:border-slate-700 hover:bg-slate-800/50')
+          : cn(style.bg, 'border-surface-border/80 hover:border-surface-border hover:bg-surface-overlay/50')
       )}
     >
-      <div className="w-6 shrink-0 text-center text-sm font-bold text-slate-500">{position}</div>
+      <div className="w-6 shrink-0 text-center text-sm font-bold text-on-surface-muted">{position}</div>
 
       <div className="relative shrink-0">
         <div
           className={cn(
-            'relative h-11 w-11 overflow-hidden rounded-full border-2 bg-slate-800',
-            isVip ? VIP_AVATAR_BORDER_CLASS : 'border-slate-700'
+            'relative h-11 w-11 overflow-hidden rounded-full border-2 bg-surface-overlay',
+            isVip ? VIP_AVATAR_BORDER_CLASS : 'border-surface-border'
           )}
         >
           <AvatarImage src={player.profileImage} alt={player.name || player.username || 'Jugador'} />
@@ -63,7 +63,7 @@ export function LeaguePlayerRow({
           <span
             className={cn(
               'absolute -top-1 -right-1 flex h-6 w-6 items-center justify-center rounded-full',
-              'border-2 border-slate-900 bg-slate-800 text-sm'
+              'border-2 border-on-surface-muted bg-surface-overlay text-sm'
             )}
             title={statusReaction.label}
           >

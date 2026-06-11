@@ -37,19 +37,19 @@ export function LessonQuizQuestionPanel({
             className={cn(
               'relative min-h-[52px] w-full cursor-pointer rounded-xl border-2 p-3.5 text-left text-sm transition-all',
               'focus-visible:ring-app-accent focus-visible:z-10 focus-visible:ring-2 focus-visible:outline-none',
-              'focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900 disabled:focus-visible:ring-0',
+              'focus-visible:ring-offset-2 focus-visible:ring-offset-surface-elevated disabled:focus-visible:ring-0',
               'lg:min-h-[48px] lg:rounded-xl lg:p-4 lg:text-base',
               isSubmitted
                 ? option.id === question.correctAnswer
                   ? 'border-green-500 bg-green-500/15 text-green-300 shadow-lg shadow-green-500/10'
                   : option.id === selectedOption
                     ? 'border-red-500 bg-red-500/15 text-red-300 shadow-lg shadow-red-500/10'
-                    : 'border-slate-700/50 bg-slate-800/30 text-slate-500 opacity-60'
+                    : 'border-surface-border/50 bg-surface-overlay/30 text-on-surface-muted opacity-60'
                 : selectedOption === option.id
                   ? 'scale-[1.02] border-blue-500 bg-blue-500/15 text-blue-300 shadow-lg shadow-blue-500/10'
                   : cn(
-                      'border-slate-700/50 bg-slate-800/50 text-slate-200',
-                      'hover:border-slate-600 hover:bg-slate-800/70 active:scale-[0.98] active:bg-slate-700'
+                      'border-surface-border/50 bg-surface-overlay/50 text-on-surface',
+                      'hover:border-surface-border hover:bg-surface-overlay/70 active:scale-[0.98] active:bg-on-surface-muted'
                     )
             )}
           >
@@ -63,10 +63,10 @@ export function LessonQuizQuestionPanel({
                       ? 'bg-lesson-sci-glow-a/20 border border-green-500/30 text-green-400'
                       : option.id === selectedOption
                         ? 'border border-red-500/30 bg-red-500/20 text-red-400'
-                        : 'border border-slate-600/50 bg-slate-700/50 text-slate-500'
+                        : 'border border-surface-border/50 bg-on-surface-muted/50 text-on-surface-muted'
                     : selectedOption === option.id
                       ? 'bg-lesson-lc-glow-a/20 border border-blue-500/30 text-blue-400'
-                      : 'border border-slate-600/50 bg-slate-700/50 text-slate-400'
+                      : 'border border-surface-border/50 bg-on-surface-muted/50 text-on-surface-muted'
                 )}
               >
                 {String.fromCharCode(65 + index)}

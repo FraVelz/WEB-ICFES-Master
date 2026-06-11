@@ -93,14 +93,14 @@ en el proyecto).
 
 ## Tema oscuro
 
-La app prioriza tema oscuro: fondos `bg-black`, `bg-slate-950`; texto `text-white`, `text-slate-300`, `text-slate-400`.
+La app prioriza tema oscuro: fondos `bg-surface`, `bg-surface-via`; texto `text-on-surface`, `text-on-surface-muted`.
 
 ## Patrones de componentes
 
 - **Botones:** gradientes `bg-linear-to-r`, `hover:shadow-lg`, `transition-all duration-300`; a menudo
   `from-cta-from to-cta-to`
-- **Cards:** `bg-slate-800/50`, bordes `border-slate-700`, `backdrop-blur-xl`
-- **Inputs:** `bg-slate-800/50`, foco `focus:border-app-ring`, `focus:ring-app-ring/30`
+- **Cards:** `bg-surface-overlay/50`, bordes `border-surface-border`, `backdrop-blur-xl`
+- **Inputs:** `bg-surface-overlay/50`, foco `focus:border-app-ring`, `focus:ring-app-ring/30`
 - **Badges / progreso:** gradientes por área (tokens `subject-*`), `rounded-xl`, `rounded-full`
 
 ## Estructura de clases habitual

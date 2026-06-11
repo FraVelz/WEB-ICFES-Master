@@ -41,11 +41,11 @@ export function LessonQuizActions({
           type="button"
           onClick={onPrevious}
           className={cn(
-            'min-h-[48px] cursor-pointer rounded-xl bg-slate-800/80 px-3.5 py-3 font-bold',
-            'text-slate-300 shadow-md transition-all hover:bg-slate-700 active:scale-95',
+            'min-h-[48px] cursor-pointer rounded-xl bg-surface-overlay/80 px-3.5 py-3 font-bold',
+            'text-on-surface-muted shadow-md transition-all hover:bg-on-surface-muted active:scale-95',
             'lg:min-h-[44px] lg:rounded-xl lg:px-4',
             'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none',
-            'focus-visible:ring-offset-slate-950'
+            'focus-visible:ring-offset-surface-via'
           )}
           aria-label="Pregunta anterior"
         >
@@ -57,11 +57,11 @@ export function LessonQuizActions({
         type="button"
         onClick={onClose}
         className={cn(
-          'min-h-[48px] flex-1 cursor-pointer rounded-xl bg-slate-800/80 px-3 py-3 text-sm',
-          'font-semibold text-slate-300 shadow-md transition-all hover:bg-slate-700 active:scale-95',
+          'min-h-[48px] flex-1 cursor-pointer rounded-xl bg-surface-overlay/80 px-3 py-3 text-sm',
+          'font-semibold text-on-surface-muted shadow-md transition-all hover:bg-on-surface-muted active:scale-95',
           'lg:min-h-[44px] lg:rounded-xl lg:px-4 lg:text-base',
           'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none',
-          'focus-visible:ring-offset-slate-950'
+          'focus-visible:ring-offset-surface-via'
         )}
       >
         {isLastQuestion && (isCorrect || allQuestionsAnswered) ? 'Cerrar' : 'Cancelar'}
@@ -78,7 +78,7 @@ export function LessonQuizActions({
             'hover:from-blue-500 hover:to-blue-400 active:scale-95 disabled:cursor-not-allowed disabled:opacity-50',
             'lg:min-h-[44px] lg:rounded-xl lg:px-4 lg:text-base',
             'focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:outline-none',
-            'focus-visible:ring-offset-slate-950'
+            'focus-visible:ring-offset-surface-via'
           )}
         >
           {loading ? 'Verificando...' : 'Enviar'}
@@ -90,12 +90,12 @@ export function LessonQuizActions({
               type="button"
               onClick={onRetry}
               className={cn(
-                'min-h-[48px] flex-1 cursor-pointer rounded-xl bg-slate-700 px-3 py-3 text-sm font-bold text-white',
-                'shadow-md transition-all hover:bg-slate-600 active:scale-95',
+                'min-h-[48px] flex-1 cursor-pointer rounded-xl bg-on-surface-muted px-3 py-3 text-sm font-bold text-white',
+                'shadow-md transition-all hover:bg-on-surface-muted active:scale-95',
                 'lg:min-h-[44px] lg:rounded-xl lg:px-4 lg:text-base',
                 'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:outline-none',
                 'focus-visible:ring-offset-2',
-                'focus-visible:ring-offset-slate-950'
+                'focus-visible:ring-offset-surface-via'
               )}
             >
               Reintentar
@@ -111,7 +111,7 @@ export function LessonQuizActions({
                 'hover:from-green-500 hover:to-green-400 active:scale-95',
                 'lg:min-h-[44px] lg:rounded-xl lg:px-4 lg:text-base',
                 'focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:outline-none',
-                'focus-visible:ring-offset-slate-950'
+                'focus-visible:ring-offset-surface-via'
               )}
             >
               Siguiente
@@ -126,7 +126,7 @@ export function LessonQuizActions({
   return (
     <div
       className={cn(
-        'shrink-0 border-t border-slate-800 bg-slate-900/95 p-3 pt-2 backdrop-blur-sm lg:p-6 lg:pt-0',
+        'shrink-0 border-t border-surface-border bg-surface-elevated/95 p-3 pt-2 backdrop-blur-sm lg:p-6 lg:pt-0',
         className
       )}
     >

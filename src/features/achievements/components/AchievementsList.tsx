@@ -44,7 +44,7 @@ export const AchievementsList = ({ achievements = [] }: AchievementsListProps) =
 
   const getProgressBarColor = (status: string) => {
     if (status === 'completed') return 'bg-cyan-700 dark:bg-amber-500';
-    if (status === 'incomplete') return 'bg-slate-600';
+    if (status === 'incomplete') return 'bg-on-surface-muted';
     return 'bg-hub-orb';
   };
 
@@ -73,13 +73,13 @@ export const AchievementsList = ({ achievements = [] }: AchievementsListProps) =
                 'text-sm font-semibold whitespace-nowrap transition-all duration-300',
                 'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:outline-none',
                 'focus-visible:ring-offset-2',
-                'focus-visible:ring-offset-slate-950',
+                'focus-visible:ring-offset-surface-via',
                 activeCategory === key
                   ? 'border-app-ring bg-app-ring/20 text-app-accent shadow-app-ring/20 shadow-lg'
                   : cn(
                       'border-surface-border bg-surface-elevated text-on-surface-muted',
-                      'hover:border-app-ring/40 hover:text-on-surface dark:border-slate-700',
-                      'dark:bg-slate-800/50 dark:text-slate-400 dark:hover:border-slate-600 dark:hover:bg-slate-800'
+                      'hover:border-app-ring/40 hover:text-on-surface dark:border-surface-border',
+                      'dark:bg-surface-overlay/50 dark:text-on-surface-muted dark:hover:border-surface-border dark:hover:bg-surface-overlay'
                     )
               )}
             >
@@ -115,12 +115,12 @@ export const AchievementsList = ({ achievements = [] }: AchievementsListProps) =
                 isCompleted
                   ? cn(
                       'border-cyan-700/45 bg-white shadow-sm hover:border-cyan-800',
-                      'dark:border-amber-500/35 dark:bg-slate-800/80 dark:shadow-none',
+                      'dark:border-amber-500/35 dark:bg-surface-overlay/80 dark:shadow-none',
                       'dark:hover:border-amber-500/55'
                     )
                   : isIncomplete
-                    ? 'border-slate-800 bg-slate-900/50 opacity-75'
-                    : 'hover:border-app-ring/30 border-slate-700 bg-slate-800/30 hover:bg-slate-800/50'
+                    ? 'border-surface-border bg-surface-elevated/50 opacity-75'
+                    : 'hover:border-app-ring/30 border-surface-border bg-surface-overlay/30 hover:bg-surface-overlay/50'
               )}
             >
               <div className="flex items-start gap-4">
@@ -146,7 +146,7 @@ export const AchievementsList = ({ achievements = [] }: AchievementsListProps) =
                       {achievement.title}
                     </h3>
                     {isCompleted && <Icon name="check" className="text-sm text-cyan-800 dark:text-amber-400" />}
-                    {isIncomplete && <Icon name="lock" className="text-sm text-slate-600" />}
+                    {isIncomplete && <Icon name="lock" className="text-sm text-on-surface-muted" />}
                   </div>
 
                   <p

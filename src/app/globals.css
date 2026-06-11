@@ -8,6 +8,7 @@
   --icfes-surface: #000000;
   --icfes-surface-via: #020617;
   --icfes-surface-elevated: #0f172a;
+  --icfes-surface-overlay: #1e293b;
   --icfes-surface-border: #334155;
   --icfes-on-surface: #ffffff;
   --icfes-on-surface-muted: #cbd5e1;
@@ -23,20 +24,10 @@ html:not(.dark) {
   --icfes-surface: #dce3ec;
   --icfes-surface-via: #e6ecf3;
   --icfes-surface-elevated: #eef2f7;
+  --icfes-surface-overlay: #e2e8f0;
   --icfes-surface-border: #b8c5d6;
   --icfes-on-surface: #0a101f;
   --icfes-on-surface-muted: #475569;
-
-  /* Legacy slate utilities → paleta clara coherente */
-  --color-slate-950: var(--icfes-surface);
-  --color-slate-900: var(--icfes-surface-elevated);
-  --color-slate-800: #e2e8f0;
-  --color-slate-700: var(--icfes-surface-border);
-  --color-slate-600: #94a3b8;
-  --color-slate-500: #64748b;
-  --color-slate-400: #475569;
-  --color-slate-300: #334155;
-  --color-slate-200: #1e293b;
 
   /* Acentos con más contraste sobre fondo claro */
   --color-app-accent: var(--color-cyan-700);
@@ -55,16 +46,16 @@ html:not(.dark) {
   /* Glows fríos y discretos (sin lavanda/púrpura pastel) */
   --color-ambient-a: var(--color-blue-600);
   --color-ambient-b: var(--color-cyan-700);
-  --color-ambient-c: var(--color-slate-500);
+  --color-ambient-c: var(--icfes-on-surface-muted);
   --color-ambient-a-strong: color-mix(in oklab, var(--color-blue-600) 16%, transparent);
   --color-ambient-b-strong: color-mix(in oklab, var(--color-cyan-700) 14%, transparent);
-  --color-ambient-c-muted: color-mix(in oklab, var(--color-slate-500) 10%, transparent);
+  --color-ambient-c-muted: color-mix(in oklab, var(--icfes-on-surface-muted) 10%, transparent);
 
   --color-hub-sheet-from: var(--color-cyan-200);
 }
 
 /* Evita gradiente negro→claro→negro si queda algún from-black legacy en claro */
-html:not(.dark) [class*='from-black'][class*='via-slate-'] {
+html:not(.dark) [class*='from-black'][class*='via-surface-'] {
   --tw-gradient-from: var(--icfes-surface);
   --tw-gradient-via: var(--icfes-surface-via);
   --tw-gradient-to: var(--icfes-surface);
@@ -122,7 +113,6 @@ html:not(.dark) .hover\:text-white:hover {
 }
 
 /* Tarjetas/paneles con sombra sutil en claro */
-html:not(.dark) :where(.rounded-2xl, .rounded-xl, .rounded-lg).border.border-slate-800,
 html:not(.dark) :where(.rounded-2xl, .rounded-xl, .rounded-lg).border.border-surface-border {
   box-shadow: 0 1px 3px rgb(15 23 42 / 0.1);
 }
@@ -135,6 +125,7 @@ html:not(.dark) :where(.rounded-2xl, .rounded-xl, .rounded-lg).border.border-sur
   --color-surface: var(--icfes-surface);
   --color-surface-via: var(--icfes-surface-via);
   --color-surface-elevated: var(--icfes-surface-elevated);
+  --color-surface-overlay: var(--icfes-surface-overlay);
   --color-surface-border: var(--icfes-surface-border);
   --color-on-surface: var(--icfes-on-surface);
   --color-on-surface-muted: var(--icfes-on-surface-muted);
@@ -265,8 +256,8 @@ html:not(.dark) :where(.rounded-2xl, .rounded-xl, .rounded-lg).border.border-sur
 /*
  * Indicadores de foco por teclado — aplicarlos manualmente en cada control con Tailwind, p. ej.:
  * focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-app-accent
- * focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950
- * Usa ring-offset igual al fondo inmediato (slate-950, slate-900, slate-800, black/transparent).
+ * focus-visible:ring-offset-2 focus-visible:ring-offset-surface-via
+ * Usa ring-offset igual al fondo inmediato (surface-via, surface-elevated, surface-overlay).
  * En botones muy compactos dentro de barras puede servir rounded-md/rounded-xl + ring-offset-2.
  * Acordeón o chip sobre panel oscuro: focus-visible:ring-inset opcionalmente.
  */

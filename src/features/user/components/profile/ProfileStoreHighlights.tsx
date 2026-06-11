@@ -25,7 +25,7 @@ export function ProfileStoreHighlights({
     <div
       className={cn(
         'border-surface-border bg-surface-elevated/80 rounded-2xl border p-6',
-        'shadow-sm dark:border-slate-800 dark:bg-slate-900/50'
+        'shadow-sm dark:border-surface-border dark:bg-surface-elevated/50'
       )}
     >
       <h2 className="text-on-surface mb-6 flex items-center gap-3 text-xl font-bold">
@@ -44,7 +44,7 @@ export function ProfileStoreHighlights({
                   'flex items-center gap-4 rounded-xl border p-4 transition-colors',
                   item.category === 'badge'
                     ? 'border-amber-500/30 bg-amber-50/80 dark:border-yellow-500/25 dark:bg-yellow-500/5'
-                    : 'border-surface-border bg-surface-via/60 dark:border-slate-700 dark:bg-slate-800/40',
+                    : 'border-surface-border bg-surface-via/60 dark:border-surface-border dark:bg-surface-overlay/40',
                   item.isEquipped && 'ring-app-ring/40 ring-2'
                 )}
               >
