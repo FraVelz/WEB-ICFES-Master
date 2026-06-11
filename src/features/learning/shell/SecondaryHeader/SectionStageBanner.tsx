@@ -13,6 +13,7 @@ export interface SectionStageBannerProps {
   onNextSection?: () => void;
   hasPrev?: boolean;
   hasNext?: boolean;
+  className?: string;
 }
 
 export const SectionStageBanner = ({
@@ -23,10 +24,11 @@ export const SectionStageBanner = ({
   onNextSection,
   hasPrev = false,
   hasNext = false,
+  className,
 }: SectionStageBannerProps) => {
   return (
-    <div className={cn('bg-linear-to-r px-4 py-3 shadow-md', areaColorClass)}>
-      <div className="mx-auto flex max-w-2xl items-center gap-2">
+    <div className={cn('bg-linear-to-r px-4 py-3 shadow-md', areaColorClass, className)}>
+      <div className="mx-auto flex w-full max-w-xl items-center gap-2">
         {hasPrev && onPrevSection && (
           <button
             type="button"

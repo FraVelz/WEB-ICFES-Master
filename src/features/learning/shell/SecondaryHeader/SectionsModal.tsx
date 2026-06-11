@@ -38,7 +38,10 @@ export const SectionsModal = ({
 
       <div
         ref={dropdownRef}
-        className="absolute top-full left-0 z-50 w-full rounded-b-2xl border-x border-b border-slate-700 bg-slate-900 shadow-2xl sm:w-96"
+        className={cn(
+          'absolute top-full left-0 z-50 w-full rounded-b-2xl border-x border-b border-slate-700 bg-slate-900 shadow-2xl sm:w-96',
+          'lg:fixed lg:top-1/2 lg:left-1/2 lg:max-h-[85vh] lg:w-[min(100vw-2rem,28rem)] lg:-translate-x-1/2 lg:-translate-y-1/2 lg:overflow-y-auto lg:rounded-2xl lg:border'
+        )}
       >
         <div className="p-4">
           <div className="mb-3 flex items-center justify-between border-b border-slate-800 pb-2">
