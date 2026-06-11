@@ -3,6 +3,7 @@ type RateLimitEntry = {
   resetAt: number;
 };
 
+/** En memoria por instancia serverless; en producción a escala usar Redis/KV compartido. */
 const buckets = new Map<string, RateLimitEntry>();
 
 export type RateLimitResult = {

@@ -415,4 +415,22 @@ los helpers ya usados en los hooks.
 
 ---
 
-_Archivo generado por IA. Última actualización: lunes, 18 de mayo de 2026._
+## Checklist RLS (Supabase)
+
+Políticas que deben existir en el proyecto Supabase para que la app sea segura con **anon key** en el cliente:
+
+| Tabla | Lectura | Escritura |
+| ----- | ------- | --------- |
+| `users` | `auth.uid() = id` | Solo fila propia |
+| `user_gamification` | `auth.uid() = user_id` | Solo fila propia; sin `UPDATE` arbitrario de `xp` desde cliente |
+| `learning_content` | Contenido publicado para autenticados | Solo service role / admin |
+| `exam_questions` | Columnas públicas sin `correct_answer` | Solo service role / admin |
+| `profile_reports` | No listar ajenos | `INSERT` con `reporter_id = auth.uid()` |
+
+**Route Handlers sensibles** (quiz grade, exam grade) deben usar **service role** o validar JWT y no confiar en el body del cliente para recompensas. Ver `gamificationServerEconomy.ts`.
+
+**Middleware** (`src/middleware.ts`) protege rutas del dashboard; la seguridad de datos sigue dependiendo de RLS.
+
+---
+
+_Archivo generado por IA. Última actualización: jueves, 11 de junio de 2026._
