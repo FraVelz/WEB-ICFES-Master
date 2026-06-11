@@ -1,6 +1,6 @@
 import { AnswerSheet } from '@/features/exam/components';
 import type { ExamConfig } from '@/features/exam/types';
-import type { ExamQuestionPublic } from '@/features/exam/types/question';
+import type { ExamQuestion, ExamQuestionPublic } from '@/features/exam/types/question';
 import { FullExamShell } from '@/features/exam/components/fullExam/FullExamShell';
 import { ResultsAnalysis } from '@/features/exam/components/ResultsAnalysis';
 import { PracticeExamHeader } from './PracticeExamHeader';
@@ -10,7 +10,7 @@ type PracticeResultsViewProps = {
   examConfig: ExamConfig;
   questions: ExamQuestionPublic[];
   answers: Record<string, string>;
-  results: Array<{ question: ExamQuestionPublic; correct: boolean; userAnswer: string }>;
+  results: Array<{ question: ExamQuestion; correct: boolean; userAnswer: string }>;
   correctCount: number;
   percentage: number;
   mobileMenuOpen: boolean;

@@ -73,7 +73,7 @@ export const ShopItemModal = ({
         role="dialog"
         aria-modal="true"
         aria-labelledby="shop-item-title"
-        className="relative w-full max-w-md overflow-hidden rounded-3xl border border-surface-border bg-surface-elevated shadow-2xl"
+        className="border-surface-border bg-surface-elevated relative w-full max-w-md overflow-hidden rounded-3xl border shadow-2xl"
       >
         <button
           type="button"
@@ -81,7 +81,7 @@ export const ShopItemModal = ({
           aria-label="Cerrar"
           className={cn(
             'absolute top-4 right-4 z-10 flex h-8 w-8 cursor-pointer items-center justify-center rounded-full',
-            'bg-surface-overlay text-on-surface-muted transition-colors hover:bg-on-surface-muted hover:text-white',
+            'bg-surface-overlay text-on-surface-muted hover:bg-on-surface-muted transition-colors hover:text-white',
             'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none',
             'focus-visible:ring-offset-surface-elevated'
           )}
@@ -102,14 +102,14 @@ export const ShopItemModal = ({
           </h2>
           <div
             className={cn(
-              'mb-4 inline-block rounded-full bg-surface-overlay px-3 py-1 text-xs font-bold',
-              'tracking-wider text-on-surface-muted uppercase'
+              'bg-surface-overlay mb-4 inline-block rounded-full px-3 py-1 text-xs font-bold',
+              'text-on-surface-muted tracking-wider uppercase'
             )}
           >
             {item.category === 'powerup' ? 'Consumible' : item.category === 'logo' ? 'Logo' : 'Cosmético'}
           </div>
 
-          <p className="mb-8 leading-relaxed text-on-surface-muted">{item.description}</p>
+          <p className="text-on-surface-muted mb-8 leading-relaxed">{item.description}</p>
 
           {item.id === STREAK_SHIELD_ITEM_ID && streakShieldCount > 0 && (
             <div

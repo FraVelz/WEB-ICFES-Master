@@ -61,13 +61,15 @@ export function SettingsSupportPanel() {
       <form onSubmit={handleSupportSubmit} className="space-y-4">
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           <div>
-            <label htmlFor={categoryId} className="mb-1 block text-xs font-bold text-on-surface-muted uppercase">Categoría</label>
+            <label htmlFor={categoryId} className="text-on-surface-muted mb-1 block text-xs font-bold uppercase">
+              Categoría
+            </label>
             <select
               id={categoryId}
               value={supportCategory}
               onChange={(e) => setSupportCategory(e.target.value)}
               className={cn(
-                'focus:border-app-ring w-full rounded-lg border border-surface-border bg-surface-via',
+                'focus:border-app-ring border-surface-border bg-surface-via w-full rounded-lg border',
                 'px-3 py-2.5 text-sm text-white outline-none'
               )}
             >
@@ -79,7 +81,9 @@ export function SettingsSupportPanel() {
           </div>
           {supportMode === 'response' && (
             <div>
-              <label htmlFor={emailId} className="mb-1 block text-xs font-bold text-on-surface-muted uppercase">Email de contacto</label>
+              <label htmlFor={emailId} className="text-on-surface-muted mb-1 block text-xs font-bold uppercase">
+                Email de contacto
+              </label>
               <input
                 id={emailId}
                 type="email"
@@ -87,7 +91,7 @@ export function SettingsSupportPanel() {
                 onChange={(e) => setSupportEmail(e.target.value)}
                 required
                 className={cn(
-                  'focus:border-app-ring w-full rounded-lg border border-surface-border bg-surface-via',
+                  'focus:border-app-ring border-surface-border bg-surface-via w-full rounded-lg border',
                   'px-3 py-2.5 text-sm text-white outline-none'
                 )}
                 placeholder="tu@email.com"
@@ -97,14 +101,16 @@ export function SettingsSupportPanel() {
         </div>
 
         <div>
-          <label htmlFor={messageId} className="mb-1 block text-xs font-bold text-on-surface-muted uppercase">Mensaje</label>
+          <label htmlFor={messageId} className="text-on-surface-muted mb-1 block text-xs font-bold uppercase">
+            Mensaje
+          </label>
           <textarea
             id={messageId}
             value={supportMessage}
             onChange={(e) => setSupportMessage(e.target.value)}
             required
             className={cn(
-              'h-32 w-full resize-none rounded-lg border border-surface-border bg-surface-via px-3 py-3 text-sm',
+              'border-surface-border bg-surface-via h-32 w-full resize-none rounded-lg border px-3 py-3 text-sm',
               'focus:border-app-ring text-white outline-none'
             )}
             placeholder={supportMode === 'response' ? '¿En qué podemos ayudarte?' : 'Describe el error encontrado...'}
@@ -118,7 +124,7 @@ export function SettingsSupportPanel() {
             'shadow-app-ring/20 hover:from-cta-from text-white shadow-lg transition-all',
             'hover:to-blue-500 disabled:cursor-not-allowed disabled:opacity-50',
             'focus-visible:ring-2 focus-visible:ring-white focus-visible:outline-none',
-            'focus-visible:ring-offset-2 focus-visible:ring-offset-surface-via'
+            'focus-visible:ring-offset-surface-via focus-visible:ring-offset-2'
           )}
         >
           Abrir correo para enviar

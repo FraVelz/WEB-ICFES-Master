@@ -62,21 +62,21 @@ export function StreakCalendar({ streakHistory }: StreakCalendarProps) {
   };
 
   return (
-    <div className="rounded-xl border border-surface-border bg-surface-via p-3">
+    <div className="border-surface-border bg-surface-via rounded-xl border p-3">
       <div className="mb-3 flex items-center justify-between px-1">
         <button
           type="button"
           onClick={() => changeMonth(-1)}
           aria-label="Mes anterior"
           className={cn(
-            'cursor-pointer rounded-lg p-1 text-on-surface-muted transition-colors hover:text-white',
+            'text-on-surface-muted cursor-pointer rounded-lg p-1 transition-colors hover:text-white',
             'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none',
             'focus-visible:ring-offset-surface-via'
           )}
         >
           <Icon name="chevron-left" size="sm" />
         </button>
-        <span className="text-sm font-bold text-on-surface">
+        <span className="text-on-surface text-sm font-bold">
           {MONTH_NAMES[viewDate.getMonth()]} {viewDate.getFullYear()}
         </span>
         <button
@@ -84,7 +84,7 @@ export function StreakCalendar({ streakHistory }: StreakCalendarProps) {
           onClick={() => changeMonth(1)}
           aria-label="Mes siguiente"
           className={cn(
-            'cursor-pointer rounded-lg p-1 text-on-surface-muted transition-colors hover:text-white',
+            'text-on-surface-muted cursor-pointer rounded-lg p-1 transition-colors hover:text-white',
             'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none',
             'focus-visible:ring-offset-surface-via'
           )}
@@ -95,7 +95,7 @@ export function StreakCalendar({ streakHistory }: StreakCalendarProps) {
 
       <div className="mb-1 grid grid-cols-7 gap-1 text-center">
         {DAY_NAMES.map((d, i) => (
-          <div key={i} className="py-1 text-xs font-medium text-on-surface-muted">
+          <div key={i} className="text-on-surface-muted py-1 text-xs font-medium">
             {d}
           </div>
         ))}
@@ -117,7 +117,7 @@ export function StreakCalendar({ streakHistory }: StreakCalendarProps) {
                 active
                   ? 'bg-orange-500 text-white shadow-lg shadow-orange-500/20'
                   : 'text-on-surface-muted hover:bg-surface-overlay',
-                today && !active && 'border border-surface-border text-on-surface'
+                today && !active && 'border-surface-border text-on-surface border'
               )}
             >
               {day}

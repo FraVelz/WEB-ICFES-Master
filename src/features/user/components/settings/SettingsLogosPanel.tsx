@@ -61,9 +61,8 @@ export function SettingsLogosPanel() {
         </div>
       ) : null}
 
-      <p className="text-sm text-on-surface-muted">
-        El logo equipado se muestra como avatar en toda la app, incluso si tienes foto de perfil. Puedes guardar
-        hasta{' '}
+      <p className="text-on-surface-muted text-sm">
+        El logo equipado se muestra como avatar en toda la app, incluso si tienes foto de perfil. Puedes guardar hasta{' '}
         {MAX_PERSONAL_LOGOS} logos personales (máx. 2MB cada uno).
       </p>
 
@@ -84,14 +83,14 @@ export function SettingsLogosPanel() {
       />
 
       {ownedShopLogos.length > 0 && (
-        <div className="space-y-3 border-t border-surface-border pt-4">
+        <div className="border-surface-border space-y-3 border-t pt-4">
           <h3 className="text-on-surface text-sm font-semibold">Logos de la tienda</h3>
           <div className="grid grid-cols-3 gap-3 sm:grid-cols-4">{ownedShopLogos.map(renderShopLogo)}</div>
         </div>
       )}
 
       {ownedShopLogos.length === 0 && personalLogos.length === 0 && (
-        <p className="text-sm text-on-surface-muted">
+        <p className="text-on-surface-muted text-sm">
           Compra logos en la{' '}
           <a href="/tienda" className="text-app-accent underline-offset-2 hover:underline">
             tienda
@@ -105,7 +104,7 @@ export function SettingsLogosPanel() {
           type="button"
           disabled={processing}
           onClick={() => void handleUnequip()}
-          className="cursor-pointer text-xs text-on-surface-muted underline-offset-2 hover:text-on-surface hover:underline"
+          className="text-on-surface-muted hover:text-on-surface cursor-pointer text-xs underline-offset-2 hover:underline"
         >
           Quitar logo equipado
         </button>

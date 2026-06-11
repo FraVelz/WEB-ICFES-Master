@@ -26,7 +26,11 @@ type SkeletonGridProps = {
   className?: string;
 };
 
-export function SkeletonGrid({ count = 6, columnsClassName = 'grid-cols-2 md:grid-cols-3', className }: SkeletonGridProps) {
+export function SkeletonGrid({
+  count = 6,
+  columnsClassName = 'grid-cols-2 md:grid-cols-3',
+  className,
+}: SkeletonGridProps) {
   return (
     <div className={cn('grid gap-4', columnsClassName, className)} role="status" aria-label="Cargando contenido">
       {Array.from({ length: count }, (_, i) => (

@@ -64,7 +64,11 @@ export const PathNode = ({
       <div className={iconCircleClass}>
         <Icon
           name={isCompleted ? 'check' : icon || 'book'}
-          className={cn(isPending && 'text-on-surface-muted', isCurrent && 'text-white', isCompleted && 'text-green-400')}
+          className={cn(
+            isPending && 'text-on-surface-muted',
+            isCurrent && 'text-white',
+            isCompleted && 'text-green-400'
+          )}
         />
       </div>
 
@@ -79,21 +83,25 @@ export const PathNode = ({
         >
           {title}
         </h4>
-        <p className="truncate text-xs text-on-surface-muted">{description}</p>
+        <p className="text-on-surface-muted truncate text-xs">{description}</p>
       </div>
 
       <div
         className={cn(
           'flex h-8 w-8 shrink-0 items-center justify-center rounded-full',
           isPending && 'bg-on-surface-muted/50 text-on-surface-muted',
-          isCurrent && 'bg-white text-surface-via',
+          isCurrent && 'text-surface-via bg-white',
           isCompleted && 'bg-surface-overlay text-green-400'
         )}
       >
         <Icon
           name={isCompleted ? 'check' : 'play'}
           size="sm"
-          className={cn(isPending && 'text-on-surface-muted', isCurrent && 'text-surface-via', isCompleted && 'text-green-400')}
+          className={cn(
+            isPending && 'text-on-surface-muted',
+            isCurrent && 'text-surface-via',
+            isCompleted && 'text-green-400'
+          )}
         />
       </div>
     </>

@@ -18,9 +18,9 @@ export function SettingsAccountPanel() {
             onClick={handleLogout}
             disabled={loading}
             className={cn(
-              'cursor-pointer rounded-lg bg-surface-overlay px-4 py-2 text-sm font-medium text-white transition-colors',
+              'bg-surface-overlay cursor-pointer rounded-lg px-4 py-2 text-sm font-medium text-white transition-colors',
               'focus-visible:ring-app-accent hover:bg-on-surface-muted focus-visible:ring-2 focus-visible:outline-none',
-              'focus-visible:ring-offset-2 focus-visible:ring-offset-surface-via'
+              'focus-visible:ring-offset-surface-via focus-visible:ring-offset-2'
             )}
           >
             Cerrar

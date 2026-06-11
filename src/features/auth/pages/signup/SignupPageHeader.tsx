@@ -16,7 +16,7 @@ export function SignupPageHeader({ hasOnboardingAnswers }: SignupPageHeaderProps
     <>
       <Link
         href="/login"
-        className="mb-6 inline-flex items-center gap-2 text-on-surface-muted transition-colors hover:text-on-surface-muted"
+        className="text-on-surface-muted hover:text-on-surface-muted mb-6 inline-flex items-center gap-2 transition-colors"
       >
         <Icon name="arrow-left" />
         Volver al login

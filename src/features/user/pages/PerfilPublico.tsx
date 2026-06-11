@@ -113,7 +113,7 @@ export const PerfilPublico = ({ view }: PerfilPublicoProps) => {
                   onClick={() => setReportDialogOpen(true)}
                   className={cn(
                     'border-surface-border bg-surface-elevated cursor-pointer rounded-lg border p-2 transition-colors',
-                    'hover:bg-red-50 dark:border-transparent dark:bg-surface-overlay dark:hover:bg-red-900/30',
+                    'dark:bg-surface-overlay hover:bg-red-50 dark:border-transparent dark:hover:bg-red-900/30',
                     reportAcknowledged
                       ? 'text-red-600 dark:text-red-500'
                       : 'text-on-surface-muted hover:text-red-600 dark:hover:text-red-400'

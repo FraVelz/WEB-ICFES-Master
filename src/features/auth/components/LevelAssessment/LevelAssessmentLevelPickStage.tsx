@@ -28,12 +28,12 @@ export function LevelAssessmentLevelPickStage({
 }: LevelAssessmentLevelPickStageProps) {
   return (
     <OnboardingLayout>
-      <div className="sticky top-0 z-30 border-b border-surface-border bg-surface-via/95 shadow-lg backdrop-blur-md">
+      <div className="border-surface-border bg-surface-via/95 sticky top-0 z-30 border-b shadow-lg backdrop-blur-md">
         <div className="flex h-16 items-center px-6">
           <button
             type="button"
             onClick={onBack}
-            className="cursor-pointer rounded-lg p-2 transition-all duration-200 hover:bg-surface-overlay"
+            className="hover:bg-surface-overlay cursor-pointer rounded-lg p-2 transition-all duration-200"
             title="Volver atrás"
           >
             <Icon name="chevron-left" className="text-app-accent text-xl" />

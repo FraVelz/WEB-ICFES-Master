@@ -28,8 +28,8 @@ export const AreasSection = () => {
             >
               <div
                 className={cn(
-                  'h-full cursor-pointer rounded-xl border border-surface-border p-8 transition-all duration-300',
-                  'hover:scale-105 hover:border-on-surface-muted hover:shadow-lg hover:shadow-surface-elevated/50',
+                  'border-surface-border h-full cursor-pointer rounded-xl border p-8 transition-all duration-300',
+                  'hover:border-on-surface-muted hover:shadow-surface-elevated/50 hover:scale-105 hover:shadow-lg',
                   `bg-linear-to-br ${area.gradient}`
                 )}
               >

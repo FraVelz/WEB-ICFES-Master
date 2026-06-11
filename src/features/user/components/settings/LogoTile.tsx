@@ -29,13 +29,13 @@ export function LogoTile({ name, image, color, equipped, processing, onSelect, o
           'group relative cursor-pointer rounded-2xl p-1 transition-all',
           'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:ring-offset-2',
           'focus-visible:ring-offset-surface-via focus-visible:outline-none',
-          equipped ? 'ring-app-accent ring-2 ring-offset-2 ring-offset-surface-via' : 'hover:scale-105'
+          equipped ? 'ring-app-accent ring-offset-surface-via ring-2 ring-offset-2' : 'hover:scale-105'
         )}
       >
         <div
           className={cn(
             'relative h-16 w-16 rounded-full p-0.5 shadow-md',
-            color ? `bg-linear-to-br ${color}` : 'from-app-ring/40 bg-linear-to-br to-surface-border'
+            color ? `bg-linear-to-br ${color}` : 'from-app-ring/40 to-surface-border bg-linear-to-br'
           )}
         >
           <div className="relative h-full w-full overflow-hidden rounded-full bg-white">
@@ -50,14 +50,14 @@ export function LogoTile({ name, image, color, equipped, processing, onSelect, o
           <span
             className={cn(
               'bg-app-accent absolute -top-1 -right-1 flex h-5 w-5 items-center justify-center',
-              'rounded-full text-surface-via'
+              'text-surface-via rounded-full'
             )}
           >
             <Icon name="check" size="sm" />
           </span>
         )}
       </button>
-      <p className="line-clamp-1 max-w-[88px] text-center text-xs text-on-surface-muted">{name}</p>
+      <p className="text-on-surface-muted line-clamp-1 max-w-[88px] text-center text-xs">{name}</p>
       {onDelete ? (
         <button
           type="button"
@@ -68,7 +68,7 @@ export function LogoTile({ name, image, color, equipped, processing, onSelect, o
           Eliminar
         </button>
       ) : (
-        <span className="text-[10px] text-on-surface-muted">{equipped ? 'Equipado' : 'Toca para equipar'}</span>
+        <span className="text-on-surface-muted text-[10px]">{equipped ? 'Equipado' : 'Toca para equipar'}</span>
       )}
     </div>
   );

@@ -48,7 +48,7 @@ export const ForgotPasswordPage = () => {
         {/* Back Link */}
         <Link
           href="/login"
-          className="mb-8 inline-flex items-center gap-2 text-on-surface-muted transition-colors hover:text-on-surface-muted"
+          className="text-on-surface-muted hover:text-on-surface-muted mb-8 inline-flex items-center gap-2 transition-colors"
         >
           <Icon name="arrow-left" />
           Volver al login
@@ -73,7 +73,7 @@ export const ForgotPasswordPage = () => {
               {EMAIL_MESSAGES.forgotPasswordPage.emailLabel}
             </label>
             <div className="relative">
-              <Icon name="envelope" className="absolute top-1/2 left-4 -translate-y-1/2 text-on-surface-muted" />
+              <Icon name="envelope" className="text-on-surface-muted absolute top-1/2 left-4 -translate-y-1/2" />
               <input
                 id="email"
                 type="email"
@@ -81,7 +81,7 @@ export const ForgotPasswordPage = () => {
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder={EMAIL_MESSAGES.forgotPasswordPage.emailPlaceholder}
                 className={cn(
-                  'w-full rounded-lg border border-surface-border bg-surface-overlay/50 py-3 pr-4 pl-10 transition-all',
+                  'border-surface-border bg-surface-overlay/50 w-full rounded-lg border py-3 pr-4 pl-10 transition-all',
                   'focus:border-app-ring focus:ring-app-ring/30 focus:ring-2 focus:outline-none'
                 )}
                 required

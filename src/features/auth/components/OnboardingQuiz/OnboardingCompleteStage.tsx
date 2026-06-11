@@ -33,7 +33,7 @@ export function OnboardingCompleteStage({ onContinue }: OnboardingCompleteStageP
           >
             ¡Perfecto!
           </h2>
-          <p className="text-lg text-on-surface-muted">
+          <p className="text-on-surface-muted text-lg">
             Hemos entendido tus necesidades. Ahora crearemos tu cuenta personalizada con un plan adaptado a ti.
           </p>
         </div>

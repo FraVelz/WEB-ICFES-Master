@@ -100,7 +100,7 @@ export function LessonQuizPanel({
         isCard &&
           cn(
             'max-h-[calc(95vh-5rem)] w-full max-w-lg overflow-hidden rounded-t-2xl',
-            'border-t border-surface-border bg-surface-elevated shadow-2xl lg:max-h-[90vh] lg:rounded-2xl lg:border'
+            'border-surface-border bg-surface-elevated border-t shadow-2xl lg:max-h-[90vh] lg:rounded-2xl lg:border'
           ),
         className
       )}

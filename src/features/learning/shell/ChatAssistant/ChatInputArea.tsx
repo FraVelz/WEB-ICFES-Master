@@ -29,9 +29,9 @@ export function ChatInputArea({
   );
 
   return (
-    <div className="min-w-0 border-t border-surface-border/50 bg-surface-elevated/50 p-3 sm:p-4">
+    <div className="border-surface-border/50 bg-surface-elevated/50 min-w-0 border-t p-3 sm:p-4">
       {anonQuotaReached ? (
-        <p className="text-center text-sm text-on-surface-muted">
+        <p className="text-on-surface-muted text-center text-sm">
           Has usado las {CHAT_ANON_LIMIT} preguntas gratis.{' '}
           <Link href="/login" className={loginLinkClass}>
             Inicia sesión
@@ -50,7 +50,7 @@ export function ChatInputArea({
             placeholder="Escribe tu pregunta..."
             disabled={isTyping}
             className={cn(
-              'min-w-0 flex-1 rounded-xl border border-surface-border bg-surface-overlay px-3 py-2.5 text-sm',
+              'border-surface-border bg-surface-overlay min-w-0 flex-1 rounded-xl border px-3 py-2.5 text-sm',
               'text-white sm:px-4 sm:py-3 sm:text-base',
               'focus:border-app-ring placeholder-on-surface-muted transition-all focus:ring-2',
               'focus:ring-app-ring/30 focus:outline-none disabled:opacity-60'
@@ -67,7 +67,7 @@ export function ChatInputArea({
               'hover:from-app-accent-strong transition-all hover:to-blue-700',
               'disabled:cursor-not-allowed disabled:opacity-50',
               'focus-visible:ring-2 focus-visible:ring-white focus-visible:outline-none',
-              'focus-visible:ring-offset-2 focus-visible:ring-offset-surface-elevated'
+              'focus-visible:ring-offset-surface-elevated focus-visible:ring-offset-2'
             )}
           >
             <Icon name="paper-plane" />

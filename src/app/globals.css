@@ -100,12 +100,7 @@ html:not(.dark)
     [class*='bg-linear-to-r']
   ).text-white,
 html:not(.dark)
-  :is(
-    [class*='from-cta-'],
-    [class*='bg-linear-to-br'],
-    [class*='bg-linear-to-r'],
-    [class~='bg-app-accent']
-  )
+  :is([class*='from-cta-'], [class*='bg-linear-to-br'], [class*='bg-linear-to-r'], [class~='bg-app-accent'])
   .text-white {
   color: #ffffff;
 }

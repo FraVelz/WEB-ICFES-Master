@@ -62,7 +62,7 @@ export function DesktopSidebarFooter({
       >
         <div
           className={cn(
-            'relative h-10 w-10 shrink-0 overflow-hidden rounded-full border-2 bg-surface-overlay',
+            'bg-surface-overlay relative h-10 w-10 shrink-0 overflow-hidden rounded-full border-2',
             isProfileActive ? 'border-app-accent' : 'border-app-ring/30'
           )}
         >
@@ -99,7 +99,7 @@ export function DesktopSidebarFooter({
           <span className="font-medium whitespace-nowrap">
             Configuración
             {isLockedInDemo('/configuracion') && (
-              <Icon name="lock" size="sm" className="ml-1.5 inline text-on-surface-muted" />
+              <Icon name="lock" size="sm" className="text-on-surface-muted ml-1.5 inline" />
             )}
           </span>
         )}

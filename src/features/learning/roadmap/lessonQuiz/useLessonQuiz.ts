@@ -166,8 +166,7 @@ export function useLessonQuiz({
     setGradeError(null);
   };
 
-  const countCorrectAnswers = () =>
-    Object.keys(answers).filter((k) => answers[k] === revealedAnswers[k]).length;
+  const countCorrectAnswers = () => Object.keys(answers).filter((k) => answers[k] === revealedAnswers[k]).length;
 
   const questionsWithRevealedAnswers = displayQuestions.map((q) => ({
     ...q,

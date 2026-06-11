@@ -18,21 +18,28 @@ export function SettingsDeleteModal() {
   const titleId = useId();
   const confirmId = useId();
 
-  useDialogA11y(showDeleteModal, () => {
-    setShowDeleteModal(false);
-    setDeleteConfirmation('');
-  }, dialogRef);
+  useDialogA11y(
+    showDeleteModal,
+    () => {
+      setShowDeleteModal(false);
+      setDeleteConfirmation('');
+    },
+    dialogRef
+  );
 
   if (!showDeleteModal) return null;
 
   return (
-    <div className="fixed inset-0 z-60 flex items-center justify-center bg-black/80 p-4 backdrop-blur-sm" role="presentation">
+    <div
+      className="fixed inset-0 z-60 flex items-center justify-center bg-black/80 p-4 backdrop-blur-sm"
+      role="presentation"
+    >
       <div
         ref={dialogRef}
         role="dialog"
         aria-modal="true"
         aria-labelledby={titleId}
-        className="animate-zoom-in w-full max-w-md rounded-2xl border border-surface-border bg-surface-elevated p-6 shadow-2xl motion-reduce:animate-none"
+        className="animate-zoom-in border-surface-border bg-surface-elevated w-full max-w-md rounded-2xl border p-6 shadow-2xl motion-reduce:animate-none"
       >
         <div
           className={cn(
@@ -42,14 +49,16 @@ export function SettingsDeleteModal() {
         >
           <Icon name="warning" className="text-xl" />
         </div>
-        <h2 id={titleId} className="mb-2 text-center text-xl font-bold text-white">Zona de Peligro</h2>
-        <p className="mb-6 text-center text-sm text-on-surface-muted">
+        <h2 id={titleId} className="mb-2 text-center text-xl font-bold text-white">
+          Zona de Peligro
+        </h2>
+        <p className="text-on-surface-muted mb-6 text-center text-sm">
           Estas acciones son irreversibles. Por favor confirma tu intención.
         </p>
 
         <div className="space-y-4">
-          <div className="rounded-xl border border-surface-border bg-surface-via p-4">
-            <p className="mb-2 text-sm font-medium text-on-surface-muted">
+          <div className="border-surface-border bg-surface-via rounded-xl border p-4">
+            <p className="text-on-surface-muted mb-2 text-sm font-medium">
               Escribe{' '}
               <span className="font-bold text-white">
                 &quot;{deleteConfirmation === 'BORRAR TODO' ? 'BORRAR TODO' : 'BORRAR MI CUENTA'}&quot;
@@ -62,7 +71,7 @@ export function SettingsDeleteModal() {
               aria-label="Confirmación de borrado"
               onChange={(e) => setDeleteConfirmation(e.target.value)}
               className={cn(
-                'w-full rounded-lg border border-surface-border bg-surface-elevated px-3 py-2 text-sm',
+                'border-surface-border bg-surface-elevated w-full rounded-lg border px-3 py-2 text-sm',
                 'text-white outline-none focus:border-red-500'
               )}
               placeholder="Confirmación..."
@@ -77,9 +86,9 @@ export function SettingsDeleteModal() {
                 setDeleteConfirmation('');
               }}
               className={cn(
-                'flex-1 cursor-pointer rounded-lg bg-surface-overlay py-2.5 font-medium text-white transition-colors',
+                'bg-surface-overlay flex-1 cursor-pointer rounded-lg py-2.5 font-medium text-white transition-colors',
                 'focus-visible:ring-app-accent hover:bg-on-surface-muted focus-visible:ring-2 focus-visible:outline-none',
-                'focus-visible:ring-offset-2 focus-visible:ring-offset-surface-elevated'
+                'focus-visible:ring-offset-surface-elevated focus-visible:ring-offset-2'
               )}
             >
               Cancelar

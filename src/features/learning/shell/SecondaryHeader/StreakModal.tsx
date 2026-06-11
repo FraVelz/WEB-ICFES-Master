@@ -58,10 +58,10 @@ export const StreakModal = ({ isOpen, onClose, streakData, anchorRef }: StreakMo
     >
       {isBottomSheet && <RoadmapBottomSheetHandle />}
       <div className="p-4">
-        <div className="mb-4 flex items-center justify-between border-b border-surface-border pb-3">
+        <div className="border-surface-border mb-4 flex items-center justify-between border-b pb-3">
           <h2
             id="streak-modal-title"
-            className="flex items-center gap-2 text-sm font-bold tracking-wider text-on-surface-muted uppercase"
+            className="text-on-surface-muted flex items-center gap-2 text-sm font-bold tracking-wider uppercase"
           >
             <Icon name="fire" className="text-orange-400" />
             Mi Racha
@@ -71,7 +71,7 @@ export const StreakModal = ({ isOpen, onClose, streakData, anchorRef }: StreakMo
             onClick={onClose}
             aria-label="Cerrar"
             className={cn(
-              'cursor-pointer rounded-lg p-1 text-on-surface-muted transition-colors hover:text-white',
+              'text-on-surface-muted cursor-pointer rounded-lg p-1 transition-colors hover:text-white',
               'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:ring-offset-2',
               'focus-visible:outline-none',
               'focus-visible:ring-offset-surface-elevated'
@@ -82,19 +82,19 @@ export const StreakModal = ({ isOpen, onClose, streakData, anchorRef }: StreakMo
         </div>
 
         <div className="mb-6 grid grid-cols-2 gap-4">
-          <div className="rounded-xl border border-surface-border bg-surface-overlay/50 p-4 text-center">
+          <div className="border-surface-border bg-surface-overlay/50 rounded-xl border p-4 text-center">
             <div className="mb-1 text-3xl font-bold text-orange-500">{currentStreak}</div>
-            <div className="text-xs font-medium text-on-surface-muted uppercase">Racha Actual</div>
+            <div className="text-on-surface-muted text-xs font-medium uppercase">Racha Actual</div>
           </div>
-          <div className="rounded-xl border border-surface-border bg-surface-overlay/50 p-4 text-center">
+          <div className="border-surface-border bg-surface-overlay/50 rounded-xl border p-4 text-center">
             <div className="mb-1 text-3xl font-bold text-yellow-500">{longestStreak}</div>
-            <div className="text-xs font-medium text-on-surface-muted uppercase">Mejor Racha</div>
+            <div className="text-on-surface-muted text-xs font-medium uppercase">Mejor Racha</div>
           </div>
         </div>
 
         <StreakCalendar streakHistory={streakHistory} />
 
-        <p className="mt-4 text-center text-xs text-on-surface-muted">¡Practica cada día para mantener tu racha!</p>
+        <p className="text-on-surface-muted mt-4 text-center text-xs">¡Practica cada día para mantener tu racha!</p>
       </div>
     </div>
   );

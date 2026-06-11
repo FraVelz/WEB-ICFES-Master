@@ -11,7 +11,14 @@ type EmptyStateProps = {
   className?: string;
 };
 
-export function EmptyState({ icon = 'clipboard-list', title, description, actionLabel, actionHref, className }: EmptyStateProps) {
+export function EmptyState({
+  icon = 'clipboard-list',
+  title,
+  description,
+  actionLabel,
+  actionHref,
+  className,
+}: EmptyStateProps) {
   return (
     <div
       className={cn(
@@ -27,7 +34,7 @@ export function EmptyState({ icon = 'clipboard-list', title, description, action
           href={actionHref}
           className={cn(
             'bg-app-ring/15 text-app-accent hover:bg-app-ring/25 inline-flex rounded-xl px-4 py-2 text-sm font-semibold',
-            'transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-app-accent'
+            'focus-visible:ring-app-accent transition-colors focus-visible:ring-2 focus-visible:outline-none'
           )}
         >
           {actionLabel}

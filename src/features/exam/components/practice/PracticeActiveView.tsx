@@ -81,7 +81,7 @@ export function PracticeActiveView({
                   'text-white transition-all duration-300 hover:from-green-600 hover:to-emerald-600',
                   'cursor-pointer hover:shadow-lg hover:shadow-green-500/50',
                   'focus-visible:ring-2 focus-visible:ring-white focus-visible:outline-none',
-                  'focus-visible:ring-offset-2 focus-visible:ring-offset-surface-via'
+                  'focus-visible:ring-offset-surface-via focus-visible:ring-offset-2'
                 )}
               >
                 Finalizar Examen

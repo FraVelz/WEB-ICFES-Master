@@ -14,7 +14,12 @@ export async function loadLessonQuizQuestions(lessonId: string) {
   const sb = createServerSupabaseClient();
   if (!sb) return null;
 
-  const { data, error } = await sb.from(TABLE).select('id, content').eq('id', lessonId).eq('published', true).maybeSingle();
+  const { data, error } = await sb
+    .from(TABLE)
+    .select('id, content')
+    .eq('id', lessonId)
+    .eq('published', true)
+    .maybeSingle();
 
   if (error) throw new Error(`Error leyendo lección: ${error.message}`);
   if (!data) return null;

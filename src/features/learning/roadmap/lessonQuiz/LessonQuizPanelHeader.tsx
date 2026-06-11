@@ -17,7 +17,7 @@ export function LessonQuizPanelHeader({
   return (
     <div
       className={cn(
-        'shrink-0 border-b border-surface-border bg-surface-overlay/50',
+        'border-surface-border bg-surface-overlay/50 shrink-0 border-b',
         isCard ? 'p-3.5 lg:p-6' : 'rounded-t-2xl p-4 sm:p-5'
       )}
     >
@@ -27,16 +27,16 @@ export function LessonQuizPanelHeader({
           Prueba de Conocimiento
         </h3>
       </div>
-      <p className="mt-1.5 line-clamp-2 text-center text-xs text-on-surface-muted lg:text-sm">{lessonTitle}</p>
+      <p className="text-on-surface-muted mt-1.5 line-clamp-2 text-center text-xs lg:text-sm">{lessonTitle}</p>
       {totalQuestions > 1 && (
         <div className="mt-2.5 flex items-center justify-center gap-2">
-          <div className="h-1.5 max-w-[120px] flex-1 overflow-hidden rounded-full bg-on-surface-muted/50">
+          <div className="bg-on-surface-muted/50 h-1.5 max-w-[120px] flex-1 overflow-hidden rounded-full">
             <div
               className="h-full rounded-full bg-blue-500 transition-all duration-300"
               style={{ width: `${((currentQuestionIndex + 1) / totalQuestions) * 100}%` }}
             />
           </div>
-          <span className="text-xs font-medium whitespace-nowrap text-on-surface-muted">
+          <span className="text-on-surface-muted text-xs font-medium whitespace-nowrap">
             {currentQuestionIndex + 1}/{totalQuestions}
           </span>
         </div>

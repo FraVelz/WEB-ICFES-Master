@@ -57,13 +57,13 @@ export function PersonalLogosGrid({
           <div
             key={`empty-${index}`}
             className={cn(
-              'flex flex-col items-center gap-2 rounded-2xl border border-dashed border-surface-border',
+              'border-surface-border flex flex-col items-center gap-2 rounded-2xl border border-dashed',
               'bg-surface-elevated/40 p-3'
             )}
           >
             <div
               className={cn(
-                'flex h-16 w-16 items-center justify-center rounded-full border border-surface-border',
+                'border-surface-border flex h-16 w-16 items-center justify-center rounded-full border',
                 'bg-surface-overlay/80 text-on-surface-muted'
               )}
             >
@@ -87,7 +87,7 @@ export function PersonalLogosGrid({
                   disabled={!userId}
                   onClick={onUseProfilePhoto}
                   className={cn(
-                    'cursor-pointer rounded-lg bg-surface-overlay px-2 py-1.5 text-[11px] font-semibold',
+                    'bg-surface-overlay cursor-pointer rounded-lg px-2 py-1.5 text-[11px] font-semibold',
                     'text-on-surface-muted hover:bg-on-surface-muted'
                   )}
                 >

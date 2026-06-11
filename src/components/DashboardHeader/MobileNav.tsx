@@ -117,7 +117,7 @@ export function MobileNav({ menuOpen, onToggleMenu, onCloseMenu }: MobileNavProp
               'bg-surface-elevated/98 backdrop-blur-xl lg:hidden'
             )}
           >
-            <div className="flex flex-col divide-y divide-surface-border/50">
+            <div className="divide-surface-border/50 flex flex-col divide-y">
               {mobileMenuOptions.map((option: NavOption) => {
                 const isLocked = isLockedInDemo(option.path);
                 const isActive = isNavOptionActive(pathname, option);

@@ -6,8 +6,7 @@ export default function Page() {
     <ProtectedPage
       authGateTitle="Configuración solo con cuenta"
       authGateMessage={
-        'Ajustes de cuenta, privacidad y datos personales están disponibles tras iniciar sesión o ' +
-        'registrarte.'
+        'Ajustes de cuenta, privacidad y datos personales están disponibles tras iniciar sesión o ' + 'registrarte.'
       }
     >
       <UserSettingsPage />

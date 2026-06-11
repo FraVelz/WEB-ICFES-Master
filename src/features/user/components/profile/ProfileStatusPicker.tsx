@@ -36,7 +36,7 @@ export function ProfileStatusPicker() {
         <div className="relative">
           <div
             className={cn(
-              'h-24 w-24 overflow-hidden rounded-full border-4 bg-surface-overlay',
+              'bg-surface-overlay h-24 w-24 overflow-hidden rounded-full border-4',
               hasVip ? VIP_AVATAR_BORDER_CLASS : 'border-surface-border'
             )}
           >
@@ -46,7 +46,7 @@ export function ProfileStatusPicker() {
             <span
               className={cn(
                 'absolute -top-1 -right-1 flex h-9 w-9 items-center justify-center rounded-full',
-                'border-2 border-on-surface-muted bg-surface-overlay text-xl shadow-md'
+                'border-on-surface-muted bg-surface-overlay border-2 text-xl shadow-md'
               )}
             >
               {statusReaction.emoji}

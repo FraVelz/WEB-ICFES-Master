@@ -28,9 +28,7 @@ export function PracticeExamHeader({
 }: PracticeExamHeaderProps) {
   return (
     <div
-      className={cn(
-        'sticky top-0 z-40 border-b border-surface-border bg-surface-elevated/95 py-4 backdrop-blur-md'
-      )}
+      className={cn('border-surface-border bg-surface-elevated/95 sticky top-0 z-40 border-b py-4 backdrop-blur-md')}
     >
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6">
         <div>
@@ -42,7 +40,7 @@ export function PracticeExamHeader({
           >
             {areaName}
           </div>
-          <p className="text-sm text-on-surface-muted">{subtitle}</p>
+          <p className="text-on-surface-muted text-sm">{subtitle}</p>
         </div>
 
         {showTimer && timeRemaining != null && (
@@ -52,10 +50,10 @@ export function PracticeExamHeader({
         <Link
           href="/"
           className={cn(
-            'hidden rounded-lg border border-surface-border bg-surface-overlay px-4 py-2 text-sm',
-            'text-on-surface transition-all duration-300 hover:bg-surface-border',
+            'border-surface-border bg-surface-overlay hidden rounded-lg border px-4 py-2 text-sm',
+            'text-on-surface hover:bg-surface-border transition-all duration-300',
             'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:outline-none',
-            'focus-visible:ring-offset-2 focus-visible:ring-offset-surface-via md:block'
+            'focus-visible:ring-offset-surface-via focus-visible:ring-offset-2 md:block'
           )}
         >
           Salir
@@ -68,9 +66,9 @@ export function PracticeExamHeader({
             aria-expanded={mobileMenuOpen}
             aria-label={mobileMenuOpen ? 'Cerrar menú' : 'Menú de examen'}
             className={cn(
-              'rounded-lg p-2 text-on-surface transition-colors hover:bg-surface-overlay',
+              'text-on-surface hover:bg-surface-overlay rounded-lg p-2 transition-colors',
               'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:outline-none',
-              'focus-visible:ring-offset-2 focus-visible:ring-offset-surface-via'
+              'focus-visible:ring-offset-surface-via focus-visible:ring-offset-2'
             )}
           >
             <Icon name="ellipsis-vertical" size="xl" className="text-xl" />
@@ -79,7 +77,7 @@ export function PracticeExamHeader({
           {mobileMenuOpen && (
             <div
               className={cn(
-                'fixed top-20 right-4 z-50 w-48 overflow-hidden rounded-lg border border-surface-border',
+                'border-surface-border fixed top-20 right-4 z-50 w-48 overflow-hidden rounded-lg border',
                 'bg-surface-elevated shadow-xl'
               )}
             >
@@ -88,8 +86,8 @@ export function PracticeExamHeader({
                   type="button"
                   onClick={onShowAnswerSheet}
                   className={cn(
-                    'flex w-full items-center gap-3 border-b border-surface-border px-4 py-3 text-on-surface',
-                    'transition-colors hover:bg-surface-overlay focus-visible:ring-2 focus-visible:outline-none',
+                    'border-surface-border text-on-surface flex w-full items-center gap-3 border-b px-4 py-3',
+                    'hover:bg-surface-overlay transition-colors focus-visible:ring-2 focus-visible:outline-none',
                     'focus-visible:ring-app-accent focus-visible:ring-inset'
                   )}
                 >
@@ -100,9 +98,9 @@ export function PracticeExamHeader({
               <Link
                 href="/"
                 className={cn(
-                  'flex items-center gap-3 px-4 py-3 text-on-surface transition-colors hover:bg-surface-overlay',
+                  'text-on-surface hover:bg-surface-overlay flex items-center gap-3 px-4 py-3 transition-colors',
                   'focus-visible:ring-app-accent rounded-lg focus-visible:ring-2 focus-visible:outline-none',
-                  'focus-visible:ring-offset-2 focus-visible:ring-offset-surface-via'
+                  'focus-visible:ring-offset-surface-via focus-visible:ring-offset-2'
                 )}
               >
                 <Icon name="arrow-right-from-bracket" size="sm" className="text-sm" />

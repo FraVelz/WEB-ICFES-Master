@@ -50,8 +50,8 @@ export const AreasModal = ({ isOpen, onClose, onSelectArea, currentArea, anchorR
     >
       {isBottomSheet && <RoadmapBottomSheetHandle />}
       <div className="p-4">
-        <div className="mb-3 flex items-center justify-between border-b border-surface-border pb-2">
-          <h3 id="areas-modal-title" className="text-sm font-bold tracking-wider text-on-surface-muted uppercase">
+        <div className="border-surface-border mb-3 flex items-center justify-between border-b pb-2">
+          <h3 id="areas-modal-title" className="text-on-surface-muted text-sm font-bold tracking-wider uppercase">
             Mis Cursos
           </h3>
           <button
@@ -59,9 +59,9 @@ export const AreasModal = ({ isOpen, onClose, onSelectArea, currentArea, anchorR
             onClick={onClose}
             aria-label="Cerrar"
             className={cn(
-              'cursor-pointer rounded-lg p-1 text-on-surface-muted transition-colors hover:text-white',
+              'text-on-surface-muted cursor-pointer rounded-lg p-1 transition-colors hover:text-white',
               'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:outline-none',
-              'focus-visible:ring-offset-2 focus-visible:ring-offset-surface-elevated'
+              'focus-visible:ring-offset-surface-elevated focus-visible:ring-offset-2'
             )}
           >
             <Icon name="times" />
@@ -80,7 +80,7 @@ export const AreasModal = ({ isOpen, onClose, onSelectArea, currentArea, anchorR
               className={cn(
                 'flex w-full cursor-pointer items-center gap-3 rounded-xl px-4 py-3 transition-all',
                 'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:outline-none',
-                'focus-visible:ring-offset-2 focus-visible:ring-offset-surface-via',
+                'focus-visible:ring-offset-surface-via focus-visible:ring-offset-2',
                 currentArea === areaKey
                   ? ['bg-linear-to-r text-white shadow-lg', areaData.color]
                   : 'bg-surface-overlay/50 text-on-surface-muted hover:bg-surface-overlay'

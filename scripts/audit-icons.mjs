@@ -105,15 +105,15 @@ function auditPathJoins(content, fileLabel) {
 
     const joined = parts.join('');
     if (/\d[a-zA-Z]/.test(joined)) {
-      issues.push(
-        `${fileLabel} ${exportName}: concatenated \`d\` likely corrupt (digit+letter merge in path data)`,
-      );
+      issues.push(`${fileLabel} ${exportName}: concatenated \`d\` likely corrupt (digit+letter merge in path data)`);
     }
   }
   return issues;
 }
 
-const lucideKeys = sourceKeys.filter((k) => iconSourcesContent.includes(`'${k}': 'lucide:`) || iconSourcesContent.includes(`${k}: 'lucide:`));
+const lucideKeys = sourceKeys.filter(
+  (k) => iconSourcesContent.includes(`'${k}': 'lucide:`) || iconSourcesContent.includes(`${k}: 'lucide:`)
+);
 const iconPathsDir = path.join(root, 'src/shared/components/Icon/iconPaths');
 for (const file of fs.readdirSync(iconPathsDir)) {
   if (!file.endsWith('.tsx')) continue;

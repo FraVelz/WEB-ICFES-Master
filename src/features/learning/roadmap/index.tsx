@@ -86,7 +86,7 @@ export const LearningRoadmap = () => {
       )}
 
       {!loading && !pathError && activeSections.length === 0 && (
-        <div className="mx-auto max-w-md rounded-2xl border border-surface-border/60 bg-surface-elevated/40 px-4 py-8 text-center">
+        <div className="border-surface-border/60 bg-surface-elevated/40 mx-auto max-w-md rounded-2xl border px-4 py-8 text-center">
           <p className="text-sm font-semibold text-white">No hay lecciones en esta fase</p>
           <p className="text-on-surface-muted mt-2 text-xs">
             Prueba otra área o fase, o vuelve más tarde cuando se publique contenido nuevo.

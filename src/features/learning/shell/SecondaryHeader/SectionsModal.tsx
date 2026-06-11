@@ -60,8 +60,8 @@ export const SectionsModal = ({
     >
       {isBottomSheet && <RoadmapBottomSheetHandle />}
       <div className="p-4">
-        <div className="mb-3 flex items-center justify-between border-b border-surface-border pb-2">
-          <h3 id="sections-modal-title" className="text-sm font-bold tracking-wider text-on-surface-muted uppercase">
+        <div className="border-surface-border mb-3 flex items-center justify-between border-b pb-2">
+          <h3 id="sections-modal-title" className="text-on-surface-muted text-sm font-bold tracking-wider uppercase">
             Fases del curso
           </h3>
           <button
@@ -69,7 +69,7 @@ export const SectionsModal = ({
             onClick={onClose}
             aria-label="Cerrar"
             className={cn(
-              'cursor-pointer rounded-lg p-1 text-on-surface-muted transition-colors hover:text-white',
+              'text-on-surface-muted cursor-pointer rounded-lg p-1 transition-colors hover:text-white',
               'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:outline-none',
               'focus-visible:ring-offset-2',
               'focus-visible:ring-offset-surface-elevated'
@@ -93,7 +93,7 @@ export const SectionsModal = ({
                 className={cn(
                   'flex w-full cursor-pointer flex-col items-start gap-1 rounded-xl px-4 py-3 text-left transition-all',
                   'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:outline-none',
-              'focus-visible:ring-offset-2',
+                  'focus-visible:ring-offset-2',
                   'focus-visible:ring-offset-surface-via',
                   isActive
                     ? ['bg-linear-to-r text-white shadow-lg', areaColorClass]

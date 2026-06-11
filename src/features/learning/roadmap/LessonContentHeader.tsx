@@ -22,9 +22,9 @@ export function LessonContentHeader({
 }: LessonContentHeaderProps) {
   return (
     <>
-      <div className="shrink-0 border-b border-surface-border/80 bg-surface-elevated/90 backdrop-blur-md">
+      <div className="border-surface-border/80 bg-surface-elevated/90 shrink-0 border-b backdrop-blur-md">
         {breadcrumbItems && breadcrumbItems.length > 0 && (
-          <div className={cn(sectionInnerClass, 'border-b border-surface-border/50 py-2')}>
+          <div className={cn(sectionInnerClass, 'border-surface-border/50 border-b py-2')}>
             <BreadcrumbNav items={breadcrumbItems} />
           </div>
         )}
@@ -32,8 +32,8 @@ export function LessonContentHeader({
           <Link
             href={backHref}
             className={cn(
-              '-ml-1 flex min-w-[44px] cursor-pointer items-center gap-2 rounded-xl p-2 text-on-surface-muted',
-              'transition-colors hover:bg-surface-overlay hover:text-white focus-visible:outline-none',
+              'text-on-surface-muted -ml-1 flex min-w-[44px] cursor-pointer items-center gap-2 rounded-xl p-2',
+              'hover:bg-surface-overlay transition-colors hover:text-white focus-visible:outline-none',
               'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:ring-offset-2',
               'focus-visible:ring-offset-surface-elevated'
             )}
@@ -48,7 +48,7 @@ export function LessonContentHeader({
         </div>
       </div>
 
-      <div className="h-1.5 shrink-0 bg-surface-overlay/80">
+      <div className="bg-surface-overlay/80 h-1.5 shrink-0">
         <div
           className={cn('h-full bg-linear-to-r transition-all duration-300 ease-out', gradientClass)}
           style={{ width: `${progress}%` }}

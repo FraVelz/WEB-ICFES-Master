@@ -33,7 +33,7 @@ export const ResultsAnalysis = ({
   const backLabel = returnTo === '/ruta-aprendizaje' ? 'Volver a la Ruta' : 'Volver al Inicio';
   return (
     <div className="space-y-6">
-      <div className="rounded-3xl border border-surface-border bg-surface-elevated/80 p-12 shadow-2xl backdrop-blur-sm">
+      <div className="border-surface-border bg-surface-elevated/80 rounded-3xl border p-12 shadow-2xl backdrop-blur-sm">
         <div className="mb-12 text-center">
           <h1
             className={cn(
@@ -51,13 +51,13 @@ export const ResultsAnalysis = ({
           >
             {percentage}%
           </div>
-          <p className="mb-2 text-xl text-on-surface-muted">Calificación Final</p>
-          <p className="text-lg text-on-surface-muted">
+          <p className="text-on-surface-muted mb-2 text-xl">Calificación Final</p>
+          <p className="text-on-surface-muted text-lg">
             {correctCount} de {questions.length} respuestas correctas
           </p>
         </div>
 
-        <div className="mb-12 h-3 overflow-hidden rounded-full bg-surface-overlay">
+        <div className="bg-surface-overlay mb-12 h-3 overflow-hidden rounded-full">
           <div
             className="to-app-ring h-full bg-linear-to-r from-blue-500 transition-all duration-700"
             style={{ width: `${percentage}%` }}
@@ -72,7 +72,7 @@ export const ResultsAnalysis = ({
               'cursor-pointer rounded-xl bg-linear-to-r from-blue-600 to-blue-700 px-8 py-3 font-semibold',
               'text-white transition-all duration-300 hover:scale-105 hover:from-blue-700',
               'hover:to-blue-800 hover:shadow-lg focus-visible:ring-2 focus-visible:outline-none',
-              'focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-surface-via'
+              'focus-visible:ring-offset-surface-via focus-visible:ring-white focus-visible:ring-offset-2'
             )}
           >
             Intentar de Nuevo
@@ -83,7 +83,7 @@ export const ResultsAnalysis = ({
               'cursor-pointer rounded-xl bg-linear-to-r from-purple-600 to-purple-700 px-8 py-3',
               'font-semibold text-white transition-all duration-300 hover:scale-105 hover:from-purple-700',
               'hover:to-purple-800 hover:shadow-lg focus-visible:ring-2 focus-visible:outline-none',
-              'focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-surface-via'
+              'focus-visible:ring-offset-surface-via focus-visible:ring-white focus-visible:ring-offset-2'
             )}
           >
             {backLabel}
@@ -92,7 +92,7 @@ export const ResultsAnalysis = ({
       </div>
 
       <div className="space-y-6">
-        <h2 className="mb-8 text-2xl font-bold text-on-surface">Análisis Detallado</h2>
+        <h2 className="text-on-surface mb-8 text-2xl font-bold">Análisis Detallado</h2>
         {results.map((result, idx) => {
           const isCorrect = result.correct;
 
@@ -100,8 +100,8 @@ export const ResultsAnalysis = ({
             <div
               key={result.question.id}
               className={cn(
-                'rounded-xl border border-surface-border bg-surface-elevated/80 p-6 shadow-lg',
-                'backdrop-blur-md transition-all duration-300 hover:border-surface-border/80 hover:shadow-xl'
+                'border-surface-border bg-surface-elevated/80 rounded-xl border p-6 shadow-lg',
+                'hover:border-surface-border/80 backdrop-blur-md transition-all duration-300 hover:shadow-xl'
               )}
             >
               <div className="mb-6">
@@ -118,7 +118,7 @@ export const ResultsAnalysis = ({
                   </div>
                   <div className="flex-1">
                     <div className="mb-2 flex items-center justify-between">
-                      <p className="text-lg leading-relaxed font-semibold text-on-surface">Pregunta {idx + 1}</p>
+                      <p className="text-on-surface text-lg leading-relaxed font-semibold">Pregunta {idx + 1}</p>
                       <span
                         className={cn(
                           'rounded-lg px-3 py-1 text-xs font-bold',
@@ -130,7 +130,7 @@ export const ResultsAnalysis = ({
                         {isCorrect ? 'Correcta' : 'Incorrecta'}
                       </span>
                     </div>
-                    <p className="text-lg leading-relaxed font-semibold text-on-surface">{result.question.text}</p>
+                    <p className="text-on-surface text-lg leading-relaxed font-semibold">{result.question.text}</p>
                   </div>
                 </div>
               </div>

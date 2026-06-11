@@ -80,14 +80,14 @@ export function ShopItemModalActions({
           'focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:outline-none',
           'focus-visible:ring-offset-surface-via',
           processing
-            ? 'cursor-wait bg-on-surface-muted text-on-surface-muted'
+            ? 'bg-on-surface-muted text-on-surface-muted cursor-wait'
             : canAfford
               ? cn(
                   'transform cursor-pointer bg-linear-to-r from-yellow-500 to-orange-500 text-black shadow-lg',
                   'shadow-orange-500/20 hover:-translate-y-0.5 hover:from-yellow-400 hover:to-orange-400',
                   'hover:shadow-orange-500/40'
                 )
-              : 'cursor-not-allowed bg-surface-overlay text-on-surface-muted'
+              : 'bg-surface-overlay text-on-surface-muted cursor-not-allowed'
         )}
       >
         {processing ? (

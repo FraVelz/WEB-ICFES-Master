@@ -32,7 +32,7 @@ export function SettingsProfilePanel() {
         <div className="group relative mb-4 inline-block">
           <div
             className={cn(
-              'relative h-32 w-32 overflow-hidden rounded-full border-4 border-surface-border',
+              'border-surface-border relative h-32 w-32 overflow-hidden rounded-full border-4',
               'bg-surface-elevated shadow-2xl'
             )}
           >
@@ -44,10 +44,10 @@ export function SettingsProfilePanel() {
             aria-label="Cambiar foto de perfil"
             className={cn(
               'absolute right-0 bottom-0 flex h-10 w-10 cursor-pointer items-center justify-center',
-              'bg-app-ring rounded-full border-4 border-surface-elevated text-white shadow-lg',
+              'bg-app-ring border-surface-elevated rounded-full border-4 text-white shadow-lg',
               'hover:bg-hub-orb transition-transform hover:scale-110',
               'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:outline-none',
-              'focus-visible:ring-offset-2 focus-visible:ring-offset-surface-via'
+              'focus-visible:ring-offset-surface-via focus-visible:ring-offset-2'
             )}
           >
             <Icon name="camera" className="text-sm" />
@@ -57,7 +57,10 @@ export function SettingsProfilePanel() {
 
         <div className="space-y-4">
           <div className="text-left">
-            <label htmlFor={usernameId} className="mb-1 ml-1 block text-xs font-bold tracking-wider text-on-surface-muted uppercase">
+            <label
+              htmlFor={usernameId}
+              className="text-on-surface-muted mb-1 ml-1 block text-xs font-bold tracking-wider uppercase"
+            >
               Nombre de Usuario
             </label>
             <div className="flex gap-2">
@@ -67,7 +70,7 @@ export function SettingsProfilePanel() {
                 value={username}
                 onChange={(e) => setUsername(e.target.value.slice(0, 30))}
                 className={cn(
-                  'flex-1 rounded-lg border border-surface-border bg-surface-via px-3 py-2 text-sm text-on-surface',
+                  'border-surface-border bg-surface-via text-on-surface flex-1 rounded-lg border px-3 py-2 text-sm',
                   'focus:border-app-ring focus:ring-app-ring transition-all outline-none focus:ring-1'
                 )}
                 placeholder="Tu nombre"
@@ -78,10 +81,10 @@ export function SettingsProfilePanel() {
                 disabled={loading}
                 aria-label="Guardar nombre de usuario"
                 className={cn(
-                  'cursor-pointer rounded-lg bg-surface-elevated px-3 py-2 text-on-surface-muted transition-colors',
+                  'bg-surface-elevated text-on-surface-muted cursor-pointer rounded-lg px-3 py-2 transition-colors',
                   'hover:bg-app-ring/20 hover:text-app-accent',
                   'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:outline-none',
-                  'focus-visible:ring-offset-2 focus-visible:ring-offset-surface-via'
+                  'focus-visible:ring-offset-surface-via focus-visible:ring-offset-2'
                 )}
               >
                 <Icon name="check" />
@@ -90,14 +93,19 @@ export function SettingsProfilePanel() {
           </div>
 
           <div className="text-left">
-            <label htmlFor={bioId} className="mb-1 ml-1 block text-xs font-bold tracking-wider text-on-surface-muted uppercase">Bio</label>
+            <label
+              htmlFor={bioId}
+              className="text-on-surface-muted mb-1 ml-1 block text-xs font-bold tracking-wider uppercase"
+            >
+              Bio
+            </label>
             <div className="relative">
               <textarea
                 id={bioId}
                 value={bio}
                 onChange={(e) => setBio(e.target.value.slice(0, 150))}
                 className={cn(
-                  'h-24 w-full resize-none rounded-lg border border-surface-border bg-surface-via px-3 py-2 text-sm',
+                  'border-surface-border bg-surface-via h-24 w-full resize-none rounded-lg border px-3 py-2 text-sm',
                   'focus:border-app-ring focus:ring-app-ring text-on-surface transition-all outline-none focus:ring-1'
                 )}
                 placeholder="Cuéntanos sobre ti..."
@@ -109,15 +117,15 @@ export function SettingsProfilePanel() {
                 aria-label="Guardar biografía"
                 className={cn(
                   'absolute right-2 bottom-2 flex h-8 w-8 cursor-pointer items-center justify-center',
-                  'hover:bg-app-ring/20 rounded-md bg-surface-elevated text-xs text-on-surface-muted transition-colors',
+                  'hover:bg-app-ring/20 bg-surface-elevated text-on-surface-muted rounded-md text-xs transition-colors',
                   'hover:text-app-accent focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:outline-none',
-                  'focus-visible:ring-offset-2 focus-visible:ring-offset-surface-via'
+                  'focus-visible:ring-offset-surface-via focus-visible:ring-offset-2'
                 )}
               >
                 <Icon name="check" />
               </button>
             </div>
-            <p className="mt-1 text-right text-xs text-on-surface-muted">{bio.length}/150</p>
+            <p className="text-on-surface-muted mt-1 text-right text-xs">{bio.length}/150</p>
           </div>
 
           {user?.profileImage && (

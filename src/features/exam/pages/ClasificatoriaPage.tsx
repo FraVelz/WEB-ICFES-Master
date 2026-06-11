@@ -125,7 +125,7 @@ export const ClasificatoriaPage = () => {
           <div
             className={cn(
               'border-surface-border bg-surface-elevated/60 text-on-surface-muted mb-6 rounded-2xl border',
-              'px-4 py-3 text-center text-sm dark:border-surface-border dark:bg-surface-elevated/60'
+              'dark:border-surface-border dark:bg-surface-elevated/60 px-4 py-3 text-center text-sm'
             )}
           >
             No participas en la liga {currentRankInfo.label}. Estás en{' '}
@@ -141,7 +141,7 @@ export const ClasificatoriaPage = () => {
           <div className="rounded-2xl border border-red-500/20 bg-red-500/10 py-12 text-center">
             <Icon name="exclamation-triangle" size="3xl" className="mx-auto mb-4 text-red-400" />
             <h3 className="mb-2 text-xl font-bold text-white">Error al cargar</h3>
-            <p className="px-4 text-on-surface-muted">
+            <p className="text-on-surface-muted px-4">
               {error?.message?.includes('index') || error?.message?.includes('function')
                 ? 'Ejecuta la migración de ligas en Supabase y recarga el esquema (NOTIFY pgrst).'
                 : error.message || 'Hubo un problema al cargar la clasificación.'}

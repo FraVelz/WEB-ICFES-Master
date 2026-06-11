@@ -419,13 +419,13 @@ los helpers ya usados en los hooks.
 
 Políticas que deben existir en el proyecto Supabase para que la app sea segura con **anon key** en el cliente:
 
-| Tabla | Lectura | Escritura |
-| ----- | ------- | --------- |
-| `users` | `auth.uid() = id` | Solo fila propia |
-| `user_gamification` | `auth.uid() = user_id` | Solo fila propia; sin `UPDATE` arbitrario de `xp` desde cliente |
-| `learning_content` | Contenido publicado para autenticados | Solo service role / admin |
-| `exam_questions` | Columnas públicas sin `correct_answer` | Solo service role / admin |
-| `profile_reports` | No listar ajenos | `INSERT` con `reporter_id = auth.uid()` |
+| Tabla               | Lectura                                | Escritura                                                       |
+| ------------------- | -------------------------------------- | --------------------------------------------------------------- |
+| `users`             | `auth.uid() = id`                      | Solo fila propia                                                |
+| `user_gamification` | `auth.uid() = user_id`                 | Solo fila propia; sin `UPDATE` arbitrario de `xp` desde cliente |
+| `learning_content`  | Contenido publicado para autenticados  | Solo service role / admin                                       |
+| `exam_questions`    | Columnas públicas sin `correct_answer` | Solo service role / admin                                       |
+| `profile_reports`   | No listar ajenos                       | `INSERT` con `reporter_id = auth.uid()`                         |
 
 **Route Handlers sensibles** (quiz grade, exam grade) deben usar **service role** o validar JWT y no confiar en el body del cliente para recompensas. Ver `gamificationServerEconomy.ts`.
 

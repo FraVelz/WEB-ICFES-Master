@@ -26,18 +26,23 @@ export function LessonMascotBubble({ text, mascotSrc, bubbleBorder, className }:
         <div
           className={cn(
             'absolute -top-2 left-1/2 h-0 w-0 -translate-x-1/2 border-[10px]',
-            'border-transparent border-b-on-surface-muted sm:hidden'
+            'border-b-on-surface-muted border-transparent sm:hidden'
           )}
           aria-hidden
         />
         <div
           className={cn(
             'absolute top-8 -left-2 hidden h-0 w-0 sm:block',
-            'border-[10px] border-transparent border-r-on-surface-muted'
+            'border-r-on-surface-muted border-[10px] border-transparent'
           )}
           aria-hidden
         />
-        <div className={cn('rounded-2xl border-2 bg-surface-overlay/95 p-4 shadow-xl backdrop-blur-sm sm:p-5', bubbleBorder)}>
+        <div
+          className={cn(
+            'bg-surface-overlay/95 rounded-2xl border-2 p-4 shadow-xl backdrop-blur-sm sm:p-5',
+            bubbleBorder
+          )}
+        >
           <p className="text-center text-base leading-relaxed font-semibold text-white sm:text-left sm:text-lg">
             {text}
           </p>

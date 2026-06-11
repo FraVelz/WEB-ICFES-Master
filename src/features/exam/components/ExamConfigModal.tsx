@@ -35,24 +35,25 @@ export const ExamConfigModal = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm" aria-hidden="true">
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm"
+      aria-hidden="true"
+    >
       <div
         ref={dialogRef}
         role="dialog"
         aria-modal="true"
         aria-labelledby="exam-config-title"
-        className={cn(
-          'w-full max-w-md rounded-2xl border border-surface-border bg-surface-elevated p-8 shadow-2xl'
-        )}
+        className={cn('border-surface-border bg-surface-elevated w-full max-w-md rounded-2xl border p-8 shadow-2xl')}
       >
-        <h2 id="exam-config-title" className="mb-2 text-3xl font-bold text-on-surface">
+        <h2 id="exam-config-title" className="text-on-surface mb-2 text-3xl font-bold">
           Configurar Examen
         </h2>
-        <p className="mb-8 text-on-surface-muted">{area}</p>
+        <p className="text-on-surface-muted mb-8">{area}</p>
 
         <div className="space-y-6">
           <div>
-            <label className="mb-3 block font-semibold text-on-surface">Número de preguntas</label>
+            <label className="text-on-surface mb-3 block font-semibold">Número de preguntas</label>
             <div className="flex items-center gap-4">
               <input
                 type="range"
@@ -61,16 +62,16 @@ export const ExamConfigModal = ({
                 value={numQuestions}
                 onChange={(e) => setNumQuestions(Number(e.target.value))}
                 className={cn(
-                  'accent-app-accent h-2 flex-1 cursor-pointer appearance-none rounded-lg bg-surface-overlay',
+                  'accent-app-accent bg-surface-overlay h-2 flex-1 cursor-pointer appearance-none rounded-lg',
                   'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:outline-none',
-                  'focus-visible:ring-offset-2 focus-visible:ring-offset-surface-via'
+                  'focus-visible:ring-offset-surface-via focus-visible:ring-offset-2'
                 )}
               />
               <span className="bg-app-ring/20 text-app-accent-strong rounded-lg px-4 py-1 text-lg font-semibold">
                 {numQuestions}
               </span>
             </div>
-            <p className="mt-2 text-xs text-on-surface-muted">Disponibles: {maxQuestions} preguntas</p>
+            <p className="text-on-surface-muted mt-2 text-xs">Disponibles: {maxQuestions} preguntas</p>
           </div>
 
           <div>
@@ -85,13 +86,13 @@ export const ExamConfigModal = ({
                   'focus-visible:ring-offset-surface-via'
                 )}
               />
-              <span className="font-semibold text-on-surface">Usar temporizador</span>
+              <span className="text-on-surface font-semibold">Usar temporizador</span>
             </label>
           </div>
 
           {useTimer && (
             <div>
-              <label className="mb-3 block font-semibold text-on-surface">Minutos por pregunta</label>
+              <label className="text-on-surface mb-3 block font-semibold">Minutos por pregunta</label>
               <div className="flex items-center gap-4">
                 <input
                   type="range"
@@ -100,9 +101,9 @@ export const ExamConfigModal = ({
                   value={timePerQuestion}
                   onChange={(e) => setTimePerQuestion(Number(e.target.value))}
                   className={cn(
-                    'accent-app-accent h-2 flex-1 cursor-pointer appearance-none rounded-lg bg-surface-overlay',
+                    'accent-app-accent bg-surface-overlay h-2 flex-1 cursor-pointer appearance-none rounded-lg',
                     'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:outline-none',
-                    'focus-visible:ring-offset-2 focus-visible:ring-offset-surface-via'
+                    'focus-visible:ring-offset-surface-via focus-visible:ring-offset-2'
                   )}
                 />
                 <span className="bg-app-ring/20 text-app-accent-strong rounded-lg px-4 py-1 font-semibold">
@@ -124,12 +125,12 @@ export const ExamConfigModal = ({
                   'focus-visible:ring-offset-surface-via'
                 )}
               />
-              <span className="font-semibold text-on-surface">Mostrar explicaciones</span>
+              <span className="text-on-surface font-semibold">Mostrar explicaciones</span>
             </label>
           </div>
 
-          <div className="mt-8 rounded-lg border border-surface-border bg-surface-overlay/50 p-4">
-            <p className="text-sm text-on-surface-muted">
+          <div className="border-surface-border bg-surface-overlay/50 mt-8 rounded-lg border p-4">
+            <p className="text-on-surface-muted text-sm">
               Tiempo total estimado:{' '}
               <span className="text-app-accent-strong font-semibold">
                 {useTimer ? `${numQuestions * timePerQuestion}` : 'Sin límite'} minutos
@@ -142,10 +143,10 @@ export const ExamConfigModal = ({
               type="button"
               onClick={() => window.history.back()}
               className={cn(
-                'flex-1 rounded-lg border border-surface-border bg-surface-overlay px-6 py-3 text-center font-semibold',
-                'cursor-pointer text-on-surface transition-all duration-300 hover:bg-surface-border',
+                'border-surface-border bg-surface-overlay flex-1 rounded-lg border px-6 py-3 text-center font-semibold',
+                'text-on-surface hover:bg-surface-border cursor-pointer transition-all duration-300',
                 'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:outline-none',
-                'focus-visible:ring-offset-2 focus-visible:ring-offset-surface-via'
+                'focus-visible:ring-offset-surface-via focus-visible:ring-offset-2'
               )}
             >
               Cancelar
@@ -158,7 +159,7 @@ export const ExamConfigModal = ({
                 'hover:from-app-accent-strong text-white transition-all duration-300 hover:to-blue-600',
                 'hover:shadow-app-ring/50 cursor-pointer hover:shadow-lg',
                 'focus-visible:ring-2 focus-visible:ring-white focus-visible:outline-none',
-                'focus-visible:ring-offset-2 focus-visible:ring-offset-surface-via'
+                'focus-visible:ring-offset-surface-via focus-visible:ring-offset-2'
               )}
             >
               Comenzar

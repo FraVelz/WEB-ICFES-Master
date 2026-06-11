@@ -404,13 +404,13 @@ helpers used by hooks are the usual entry points.
 
 Policies required in Supabase so the app stays safe with the **anon key** on the client:
 
-| Table | Read | Write |
-| ----- | ---- | ----- |
-| `users` | `auth.uid() = id` | Own row only |
-| `user_gamification` | `auth.uid() = user_id` | Own row only; no arbitrary client `xp` updates |
-| `learning_content` | Published content for authenticated users | Service role / admin only |
-| `exam_questions` | Public columns without `correct_answer` | Service role / admin only |
-| `profile_reports` | No listing others' rows | `INSERT` with `reporter_id = auth.uid()` |
+| Table               | Read                                      | Write                                          |
+| ------------------- | ----------------------------------------- | ---------------------------------------------- |
+| `users`             | `auth.uid() = id`                         | Own row only                                   |
+| `user_gamification` | `auth.uid() = user_id`                    | Own row only; no arbitrary client `xp` updates |
+| `learning_content`  | Published content for authenticated users | Service role / admin only                      |
+| `exam_questions`    | Public columns without `correct_answer`   | Service role / admin only                      |
+| `profile_reports`   | No listing others' rows                   | `INSERT` with `reporter_id = auth.uid()`       |
 
 Sensitive **Route Handlers** (quiz grade, exam grade) must use **service role** or validate JWT and never trust client reward payloads. See `gamificationServerEconomy.ts`.
 

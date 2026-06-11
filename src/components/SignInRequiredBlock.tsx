@@ -15,8 +15,7 @@ interface SignInRequiredBlockProps {
 
 export default function SignInRequiredBlock({
   title = 'Crea una cuenta para continuar',
-  message =
-    'Esta sección solo está disponible para usuarios registrados. Inicia sesión o crea una cuenta gratuita ' +
+  message = 'Esta sección solo está disponible para usuarios registrados. Inicia sesión o crea una cuenta gratuita ' +
     'para acceder.',
 }: SignInRequiredBlockProps) {
   const [isLeaving, setIsLeaving] = useState(false);
@@ -77,7 +76,7 @@ export default function SignInRequiredBlock({
               'bg-app-ring/10 text-app-accent px-6 py-3 font-semibold transition-all duration-300',
               'hover:border-app-ring/60 hover:bg-app-ring/20',
               'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:outline-none',
-              'focus-visible:ring-offset-2 focus-visible:ring-offset-surface',
+              'focus-visible:ring-offset-surface focus-visible:ring-offset-2',
               isLeaving && 'pointer-events-none opacity-50'
             )}
           >
@@ -93,7 +92,7 @@ export default function SignInRequiredBlock({
               'border-surface-border bg-surface-elevated text-on-surface-muted px-6 py-3 font-semibold transition-all',
               'hover:border-app-ring/50 hover:text-on-surface duration-300 disabled:cursor-wait disabled:opacity-60',
               'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:outline-none',
-              'focus-visible:ring-offset-2 focus-visible:ring-offset-surface'
+              'focus-visible:ring-offset-surface focus-visible:ring-offset-2'
             )}
           >
             {isLeaving ? (

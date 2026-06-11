@@ -34,7 +34,9 @@ export function DonationCardForm() {
   return (
     <form onSubmit={handlePayment} className="animate-fade-in-up space-y-4">
       <div>
-        <label htmlFor={cardNumberId} className="mb-1 block text-xs font-medium text-gray-400">Número de Tarjeta</label>
+        <label htmlFor={cardNumberId} className="mb-1 block text-xs font-medium text-gray-400">
+          Número de Tarjeta
+        </label>
         <div className="relative">
           <input
             id={cardNumberId}
@@ -54,7 +56,9 @@ export function DonationCardForm() {
 
       <div className="grid grid-cols-2 gap-3">
         <div>
-          <label htmlFor={expiryMonthId} className="mb-1 block text-xs font-medium text-gray-400">Vencimiento</label>
+          <label htmlFor={expiryMonthId} className="mb-1 block text-xs font-medium text-gray-400">
+            Vencimiento
+          </label>
           <div className="flex gap-2">
             <input
               id={expiryMonthId}
@@ -86,7 +90,9 @@ export function DonationCardForm() {
           </div>
         </div>
         <div>
-          <label htmlFor={cvvId} className="mb-1 block text-xs font-medium text-gray-400">CVC</label>
+          <label htmlFor={cvvId} className="mb-1 block text-xs font-medium text-gray-400">
+            CVC
+          </label>
           <div className="relative">
             <input
               id={cvvId}
@@ -106,7 +112,9 @@ export function DonationCardForm() {
       </div>
 
       <div>
-        <label htmlFor={cardHolderId} className="mb-1 block text-xs font-medium text-gray-400">Nombre en la Tarjeta</label>
+        <label htmlFor={cardHolderId} className="mb-1 block text-xs font-medium text-gray-400">
+          Nombre en la Tarjeta
+        </label>
         <input
           id={cardHolderId}
           type="text"

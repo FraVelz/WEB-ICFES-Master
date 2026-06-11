@@ -81,8 +81,8 @@ export function ProfileAchievementsSection({
               'border-surface-border bg-surface-via/60 text-on-surface mt-4 flex w-full cursor-pointer items-center',
               'hover:bg-surface-via justify-center gap-2 rounded-xl border px-4 py-2.5 text-sm font-semibold',
               'focus-visible:ring-app-accent transition-colors focus-visible:ring-2 focus-visible:ring-offset-2',
-              'focus-visible:ring-offset-surface focus-visible:outline-none dark:border-surface-border',
-              'md:mt-3 dark:bg-surface-overlay/60 dark:hover:bg-surface-overlay'
+              'focus-visible:ring-offset-surface dark:border-surface-border focus-visible:outline-none',
+              'dark:bg-surface-overlay/60 dark:hover:bg-surface-overlay md:mt-3'
             )}
           >
             <Icon name={detailsOpen ? 'chevron-up' : 'info-circle'} size="sm" />

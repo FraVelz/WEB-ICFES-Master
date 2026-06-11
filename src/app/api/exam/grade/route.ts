@@ -16,7 +16,10 @@ export async function POST(request: NextRequest) {
     const rate = checkRateLimit(rateKey, limit, 60_000);
 
     if (!rate.allowed) {
-      return NextResponse.json({ error: 'Demasiadas solicitudes de calificación. Espera un momento.' }, { status: 429 });
+      return NextResponse.json(
+        { error: 'Demasiadas solicitudes de calificación. Espera un momento.' },
+        { status: 429 }
+      );
     }
 
     const body = (await request.json()) as { answers?: Record<string, string> };

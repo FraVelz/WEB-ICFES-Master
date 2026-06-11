@@ -22,17 +22,17 @@ export function PracticeMobileAnswerSheet({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4 backdrop-blur-sm md:hidden">
-      <div className="max-h-[80vh] w-full max-w-md overflow-y-auto rounded-xl border border-surface-border bg-surface-elevated">
-        <div className="sticky top-0 flex items-center justify-between border-b border-surface-border bg-surface-via p-4">
-          <h3 className="font-bold text-on-surface">Hoja de Respuestas</h3>
+      <div className="border-surface-border bg-surface-elevated max-h-[80vh] w-full max-w-md overflow-y-auto rounded-xl border">
+        <div className="border-surface-border bg-surface-via sticky top-0 flex items-center justify-between border-b p-4">
+          <h3 className="text-on-surface font-bold">Hoja de Respuestas</h3>
           <button
             type="button"
             onClick={onClose}
             aria-label="Cerrar hoja de respuestas"
             className={cn(
-              'rounded-lg px-3 py-2 text-on-surface-muted transition-colors hover:bg-surface-overlay hover:text-on-surface',
+              'text-on-surface-muted hover:bg-surface-overlay hover:text-on-surface rounded-lg px-3 py-2 transition-colors',
               'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:outline-none',
-              'focus-visible:ring-offset-2 focus-visible:ring-offset-surface-via'
+              'focus-visible:ring-offset-surface-via focus-visible:ring-offset-2'
             )}
           >
             <Icon name="x-mark" size="lg" />

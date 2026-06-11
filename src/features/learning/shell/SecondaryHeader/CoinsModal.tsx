@@ -36,13 +36,16 @@ export const CoinsModal = ({ isOpen, onClose, coins = 0 }: CoinsModalProps) => {
         aria-modal="true"
         aria-labelledby="coins-modal-title"
         className={cn(
-          'absolute top-full right-0 z-50 w-full rounded-b-2xl border-x border-b border-surface-border',
+          'border-surface-border absolute top-full right-0 z-50 w-full rounded-b-2xl border-x border-b',
           'bg-surface-elevated shadow-2xl sm:w-80'
         )}
       >
         <div className="p-4">
-          <div className="mb-4 flex items-center justify-between border-b border-surface-border pb-3">
-            <h2 id="coins-modal-title" className="flex items-center gap-2 text-sm font-bold tracking-wider text-on-surface-muted uppercase">
+          <div className="border-surface-border mb-4 flex items-center justify-between border-b pb-3">
+            <h2
+              id="coins-modal-title"
+              className="text-on-surface-muted flex items-center gap-2 text-sm font-bold tracking-wider uppercase"
+            >
               <Icon name="coins" className="text-yellow-400" />
               Mis Monedas
             </h2>
@@ -51,7 +54,7 @@ export const CoinsModal = ({ isOpen, onClose, coins = 0 }: CoinsModalProps) => {
               onClick={onClose}
               aria-label="Cerrar"
               className={cn(
-                'cursor-pointer rounded-lg p-1 text-on-surface-muted transition-colors hover:text-white',
+                'text-on-surface-muted cursor-pointer rounded-lg p-1 transition-colors hover:text-white',
                 'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:outline-none',
                 'focus-visible:ring-offset-2',
                 'focus-visible:ring-offset-surface-elevated'
@@ -61,9 +64,9 @@ export const CoinsModal = ({ isOpen, onClose, coins = 0 }: CoinsModalProps) => {
             </button>
           </div>
 
-          <div className="rounded-xl border border-surface-border bg-surface-overlay/50 p-4 text-center">
+          <div className="border-surface-border bg-surface-overlay/50 rounded-xl border p-4 text-center">
             <div className="mb-1 text-4xl font-bold text-yellow-400">{coins}</div>
-            <div className="text-sm font-medium text-on-surface-muted">Monedas disponibles</div>
+            <div className="text-on-surface-muted text-sm font-medium">Monedas disponibles</div>
           </div>
         </div>
       </div>

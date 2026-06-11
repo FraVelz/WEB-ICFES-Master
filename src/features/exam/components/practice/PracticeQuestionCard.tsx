@@ -23,8 +23,8 @@ export function PracticeQuestionCard({
     <div
       id={`question-${index}`}
       className={cn(
-        'rounded-xl border border-surface-border bg-surface-elevated/80 p-6 shadow-lg',
-        'backdrop-blur-md transition-all duration-300 hover:border-surface-border/80 hover:shadow-xl'
+        'border-surface-border bg-surface-elevated/80 rounded-xl border p-6 shadow-lg',
+        'hover:border-surface-border/80 backdrop-blur-md transition-all duration-300 hover:shadow-xl'
       )}
     >
       <div className="mb-6">
@@ -38,8 +38,8 @@ export function PracticeQuestionCard({
             {index + 1}
           </div>
           <div className="flex-1">
-            <p className="text-lg leading-relaxed font-semibold text-on-surface">{question.text}</p>
-            <p className="mt-2 text-xs text-on-surface-muted">
+            <p className="text-on-surface text-lg leading-relaxed font-semibold">{question.text}</p>
+            <p className="text-on-surface-muted mt-2 text-xs">
               Dificultad: <span className="text-app-accent font-medium">{question.difficulty}</span>
             </p>
           </div>
@@ -57,7 +57,7 @@ export function PracticeQuestionCard({
               className={cn(
                 'w-full rounded-lg border-2 p-4 text-left transition-all duration-300',
                 'focus-visible:z-10 focus-visible:ring-2 focus-visible:outline-none',
-                'focus-visible:ring-app-accent focus-visible:ring-offset-2 focus-visible:ring-offset-surface-via',
+                'focus-visible:ring-app-accent focus-visible:ring-offset-surface-via focus-visible:ring-offset-2',
                 isSelected
                   ? 'border-app-accent bg-app-ring/20 text-app-accent-strong'
                   : 'border-surface-border bg-surface-overlay/40 text-on-surface hover:border-app-accent/50 hover:bg-app-ring/10'
@@ -84,7 +84,7 @@ export function PracticeQuestionCard({
       {showResults && examConfig.showExplanations && answer && (
         <div className="mt-6 ml-14 rounded-lg border border-blue-500/30 bg-blue-500/10 p-4">
           <p className="mb-2 text-xs font-semibold text-blue-600 dark:text-blue-300">EXPLICACIÓN:</p>
-          <p className="text-sm text-on-surface-muted">{question.explanation}</p>
+          <p className="text-on-surface-muted text-sm">{question.explanation}</p>
         </div>
       )}
     </div>

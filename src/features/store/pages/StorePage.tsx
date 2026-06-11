@@ -52,11 +52,7 @@ export function StorePage() {
         {showStoreLoading ? (
           <SkeletonGrid count={6} columnsClassName="grid-cols-2 md:grid-cols-3" />
         ) : error ? (
-          <EmptyState
-            icon="exclamation-triangle"
-            title="No se pudo cargar la tienda"
-            description={error}
-          />
+          <EmptyState icon="exclamation-triangle" title="No se pudo cargar la tienda" description={error} />
         ) : (
           <>
             {isDoubleXpActive && <StoreDoubleXpBanner remainingMs={doubleXpRemainingMs} />}

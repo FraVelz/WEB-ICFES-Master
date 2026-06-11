@@ -17,8 +17,8 @@ export const FeaturesSection = () => {
           <div
             key={idx}
             className={cn(
-              'group rounded-xl border border-surface-border p-8 transition-all duration-300',
-              'hover:scale-105 hover:border-on-surface-muted hover:shadow-lg',
+              'group border-surface-border rounded-xl border p-8 transition-all duration-300',
+              'hover:border-on-surface-muted hover:scale-105 hover:shadow-lg',
               `bg-linear-to-br ${feature.color}`
             )}
           >

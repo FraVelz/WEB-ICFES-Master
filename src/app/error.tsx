@@ -37,7 +37,7 @@ export default function ErrorPage({ error, reset }: ErrorPageProps) {
             href="/"
             className={cn(
               'border-surface-border text-on-surface rounded-lg border px-6 py-3 font-semibold',
-              'no-underline transition-colors hover:bg-surface-elevated'
+              'hover:bg-surface-elevated no-underline transition-colors'
             )}
           >
             Ir al inicio

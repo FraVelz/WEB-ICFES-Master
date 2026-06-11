@@ -149,10 +149,7 @@ function generateExportJsx(exportName, elements, mode, source) {
   if (lines.length === 0) {
     throw new Error(`No elements for ${exportName}`);
   }
-  const body =
-    lines.length === 1
-      ? lines[0]
-      : `(\n  <>\n    ${lines.join('\n    ')}\n  </>\n)`;
+  const body = lines.length === 1 ? lines[0] : `(\n  <>\n    ${lines.join('\n    ')}\n  </>\n)`;
   const single = lines.length === 1;
   const comment = `/** ${source} (icons0) */`;
   if (single) {

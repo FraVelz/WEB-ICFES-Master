@@ -102,8 +102,7 @@ export function ImportanciaValidacionPanel() {
           </ul>
           <p className="text-on-surface-muted leading-relaxed">
             Puedes complementar esa ruta con <strong className="text-app-accent font-semibold">ICFES Master</strong>,
-            nuestra web gratuita para practicar por área y hacer simulacros. La plataforma está pensada para
-            ayudarte a{' '}
+            nuestra web gratuita para practicar por área y hacer simulacros. La plataforma está pensada para ayudarte a{' '}
             <strong className="text-on-surface font-semibold">subir tu puntaje ICFES, desde 0 hasta 500 puntos</strong>,
             según tu nivel de partida, el tiempo que dediques y la constancia con la que estudies —útil si retomas
             contenidos después de años sin verlos en un aula.

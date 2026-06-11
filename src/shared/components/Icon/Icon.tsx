@@ -43,7 +43,7 @@ export function Icon({ name, className = '', size = 'md' }: IconProps) {
       strokeWidth={isStroke ? 1.5 : undefined}
       strokeLinecap="round"
       strokeLinejoin="round"
-      className={cn('inline-block shrink-0 flex-none', className)}
+      className={cn('inline-block flex-none shrink-0', className)}
       width={dimension}
       height={dimension}
       style={{ minWidth: dimension, minHeight: dimension }}

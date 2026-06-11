@@ -36,7 +36,7 @@ export function LessonContentSection({
       <div className="mb-4 flex justify-center sm:mb-6">
         <span
           className={cn(
-            'rounded-full bg-surface-overlay/80 px-3 py-1 text-xs font-semibold tracking-wider',
+            'bg-surface-overlay/80 rounded-full px-3 py-1 text-xs font-semibold tracking-wider',
             'text-on-surface-muted uppercase'
           )}
         >
@@ -45,7 +45,7 @@ export function LessonContentSection({
       </div>
 
       {hasSections ? (
-        <div className="rounded-2xl border border-surface-border/60 bg-surface-elevated/30 p-4 sm:p-6 md:p-8">
+        <div className="border-surface-border/60 bg-surface-elevated/30 rounded-2xl border p-4 sm:p-6 md:p-8">
           <LessonMarkdownBody content={markdownContent} />
         </div>
       ) : (

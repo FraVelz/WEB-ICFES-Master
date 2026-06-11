@@ -72,7 +72,7 @@ export function DesktopSidebar({ className, sidebarExpanded, onToggleSidebar }: 
           type="button"
           onClick={onToggleSidebar}
           className={cn(
-            'flex h-8 w-8 shrink-0 cursor-pointer items-center justify-center rounded-lg text-on-surface-muted',
+            'text-on-surface-muted flex h-8 w-8 shrink-0 cursor-pointer items-center justify-center rounded-lg',
             'hover:text-app-accent transition-colors hover:bg-white/10',
             FOCUS_RING,
             sidebarExpanded ? 'absolute top-1/2 right-2 -translate-y-1/2' : 'mt-3'
@@ -100,7 +100,7 @@ export function DesktopSidebar({ className, sidebarExpanded, onToggleSidebar }: 
           />
         ))}
 
-        <div className={cn('my-2 border-t border-surface-border/50', sidebarExpanded ? 'mx-2' : 'mx-0')} />
+        <div className={cn('border-surface-border/50 my-2 border-t', sidebarExpanded ? 'mx-2' : 'mx-0')} />
 
         {secondaryNavOptions.map((option) => (
           <SidebarNavLink

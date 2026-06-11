@@ -49,9 +49,7 @@ export const PracticePage = () => {
   }
 
   if (questionsError) {
-    return (
-      <div className={errorBoxClass}>{questionsError}</div>
-    );
+    return <div className={errorBoxClass}>{questionsError}</div>;
   }
 
   const phaseSkipBanner = isPhaseSkipMode ? (
@@ -60,8 +58,7 @@ export const PracticePage = () => {
         'mx-auto mb-6 max-w-lg rounded-2xl border border-amber-500/30 bg-amber-500/10 px-4 py-3 text-sm text-amber-900 dark:text-amber-100'
       )}
     >
-      Examen para saltar{' '}
-      <span className="font-semibold">{phaseSkipPhaseTitle ?? 'esta fase'}</span>. Necesitas al menos{' '}
+      Examen para saltar <span className="font-semibold">{phaseSkipPhaseTitle ?? 'esta fase'}</span>. Necesitas al menos{' '}
       <span className="font-semibold">{phaseSkipPassPercent}%</span> de aciertos para superar esta fase.
     </div>
   ) : null;
@@ -77,9 +74,7 @@ export const PracticePage = () => {
 
   if (isFinished || showResults) {
     if (gradingError) {
-      return (
-        <div className={errorBoxClass}>{gradingError}</div>
-      );
+      return <div className={errorBoxClass}>{gradingError}</div>;
     }
 
     if (results.length === 0) {

@@ -48,12 +48,12 @@ export function LeaguePlayerRow({
           : cn(style.bg, 'border-surface-border/80 hover:border-surface-border hover:bg-surface-overlay/50')
       )}
     >
-      <div className="w-6 shrink-0 text-center text-sm font-bold text-on-surface-muted">{position}</div>
+      <div className="text-on-surface-muted w-6 shrink-0 text-center text-sm font-bold">{position}</div>
 
       <div className="relative shrink-0">
         <div
           className={cn(
-            'relative h-11 w-11 overflow-hidden rounded-full border-2 bg-surface-overlay',
+            'bg-surface-overlay relative h-11 w-11 overflow-hidden rounded-full border-2',
             isVip ? VIP_AVATAR_BORDER_CLASS : 'border-surface-border'
           )}
         >
@@ -63,7 +63,7 @@ export function LeaguePlayerRow({
           <span
             className={cn(
               'absolute -top-1 -right-1 flex h-6 w-6 items-center justify-center rounded-full',
-              'border-2 border-on-surface-muted bg-surface-overlay text-sm'
+              'border-on-surface-muted bg-surface-overlay border-2 text-sm'
             )}
             title={statusReaction.label}
           >

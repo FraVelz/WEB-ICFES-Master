@@ -28,12 +28,15 @@ export function BreadcrumbNav({ items, className }: BreadcrumbNavProps) {
               {item.href && !isLast ? (
                 <Link
                   href={item.href}
-                  className="text-app-accent hover:text-app-accent-muted transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-app-accent rounded"
+                  className="text-app-accent hover:text-app-accent-muted focus-visible:ring-app-accent rounded transition-colors focus-visible:ring-2 focus-visible:outline-none"
                 >
                   {item.label}
                 </Link>
               ) : (
-                <span className={cn(isLast && 'text-on-surface font-medium')} aria-current={isLast ? 'page' : undefined}>
+                <span
+                  className={cn(isLast && 'text-on-surface font-medium')}
+                  aria-current={isLast ? 'page' : undefined}
+                >
                   {item.label}
                 </span>
               )}

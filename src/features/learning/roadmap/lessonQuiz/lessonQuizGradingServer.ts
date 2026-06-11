@@ -1,5 +1,9 @@
 import { loadLessonQuizQuestions } from '@/services/supabase/LearningSupabaseServer';
-import { addCoinsServer, addXpServer, hasRewardReason } from '@/services/supabase/gamification/gamificationServerEconomy';
+import {
+  addCoinsServer,
+  addXpServer,
+  hasRewardReason,
+} from '@/services/supabase/gamification/gamificationServerEconomy';
 
 export type LessonQuizGradeResult = {
   questionId: string;
@@ -29,9 +33,7 @@ export async function gradeLessonQuizAnswers(
       };
     });
 
-  const allCorrect =
-    lesson.questions.length > 0 &&
-    lesson.questions.every((q) => answers[q.id] === q.correctAnswer);
+  const allCorrect = lesson.questions.length > 0 && lesson.questions.every((q) => answers[q.id] === q.correctAnswer);
 
   return { results, allCorrect };
 }

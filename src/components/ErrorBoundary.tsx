@@ -40,7 +40,7 @@ export class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoun
           )}
           role="alert"
         >
-          <Icon name="exclamation-triangle" size="2xl" className="text-red-400 mx-auto mb-4" />
+          <Icon name="exclamation-triangle" size="2xl" className="mx-auto mb-4 text-red-400" />
           <h2 className="text-on-surface mb-2 text-lg font-semibold">{this.props.title ?? 'Algo salió mal'}</h2>
           <p className="text-on-surface-muted mb-6 text-sm">
             Ocurrió un error inesperado en esta sección. Puedes reintentar o volver atrás.
@@ -49,8 +49,8 @@ export class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoun
             type="button"
             onClick={this.handleRetry}
             className={cn(
-              'bg-app-ring text-white cursor-pointer rounded-xl px-5 py-2.5 text-sm font-semibold',
-              'hover:bg-hub-orb transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-app-accent'
+              'bg-app-ring cursor-pointer rounded-xl px-5 py-2.5 text-sm font-semibold text-white',
+              'hover:bg-hub-orb focus-visible:ring-app-accent transition-colors focus-visible:ring-2 focus-visible:outline-none'
             )}
           >
             Reintentar

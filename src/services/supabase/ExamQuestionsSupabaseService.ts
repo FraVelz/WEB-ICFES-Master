@@ -9,8 +9,7 @@ import { supabase } from '@/config/supabase';
 const TABLE = 'exam_questions';
 
 /** Columnas expuestas al cliente (sin respuesta correcta). */
-const PUBLIC_COLUMNS =
-  'id, area, text, options, explanation, difficulty, published, order_index' as const;
+const PUBLIC_COLUMNS = 'id, area, text, options, explanation, difficulty, published, order_index' as const;
 
 /** Columnas para calificación server-side. */
 const GRADING_COLUMNS = `${PUBLIC_COLUMNS}, correct_answer` as const;

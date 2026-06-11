@@ -25,7 +25,7 @@ export function ProfileStoreHighlights({
     <div
       className={cn(
         'border-surface-border bg-surface-elevated/80 rounded-2xl border p-6',
-        'shadow-sm dark:border-surface-border dark:bg-surface-elevated/50'
+        'dark:border-surface-border dark:bg-surface-elevated/50 shadow-sm'
       )}
     >
       <h2 className="text-on-surface mb-6 flex items-center gap-3 text-xl font-bold">

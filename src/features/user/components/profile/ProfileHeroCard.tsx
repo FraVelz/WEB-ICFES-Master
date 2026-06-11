@@ -80,7 +80,7 @@ export function ProfileHeroCard({
                   : 'border-app-ring/40 shadow-app-ring/15 dark:border-app-ring/30'
             )}
           >
-            <div className="bg-surface-elevated relative h-full w-full overflow-hidden rounded-full dark:bg-surface-overlay">
+            <div className="bg-surface-elevated dark:bg-surface-overlay relative h-full w-full overflow-hidden rounded-full">
               <AvatarImage src={profileImage} alt={name} className="rounded-full" />
             </div>
           </div>
@@ -147,7 +147,7 @@ export function ProfileHeroCard({
             <div
               className={cn(
                 'border-surface-border bg-surface-via h-4 overflow-hidden rounded-full border',
-                'shadow-inner dark:border-surface-border dark:bg-surface-overlay'
+                'dark:border-surface-border dark:bg-surface-overlay shadow-inner'
               )}
             >
               <div

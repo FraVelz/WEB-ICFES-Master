@@ -70,7 +70,7 @@ export const AchievementsList = ({ achievements = [] }: AchievementsListProps) =
                 'flex shrink-0 cursor-pointer items-center gap-2 rounded-full border px-3.5 py-2',
                 'text-sm font-semibold whitespace-nowrap transition-all duration-300 sm:px-4',
                 'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:outline-none',
-                'focus-visible:ring-offset-2 focus-visible:ring-offset-surface-via',
+                'focus-visible:ring-offset-surface-via focus-visible:ring-offset-2',
                 activeCategory === key
                   ? 'border-app-ring bg-app-ring/20 text-app-accent shadow-app-ring/20 shadow-lg'
                   : cn(
@@ -111,7 +111,7 @@ export const AchievementsList = ({ achievements = [] }: AchievementsListProps) =
                 isCompleted
                   ? cn(
                       'border-cyan-700/45 bg-white shadow-sm hover:border-cyan-800',
-                      'dark:border-amber-500/35 dark:bg-surface-overlay/80 dark:shadow-none',
+                      'dark:bg-surface-overlay/80 dark:border-amber-500/35 dark:shadow-none',
                       'dark:hover:border-amber-500/55'
                     )
                   : isIncomplete
@@ -142,9 +142,7 @@ export const AchievementsList = ({ achievements = [] }: AchievementsListProps) =
                     {isCompleted && (
                       <Icon name="check" className="mt-0.5 shrink-0 text-sm text-cyan-800 dark:text-amber-400" />
                     )}
-                    {isIncomplete && (
-                      <Icon name="lock" className="mt-0.5 shrink-0 text-sm text-on-surface-muted" />
-                    )}
+                    {isIncomplete && <Icon name="lock" className="text-on-surface-muted mt-0.5 shrink-0 text-sm" />}
                   </div>
                 </div>
               </div>
@@ -152,7 +150,7 @@ export const AchievementsList = ({ achievements = [] }: AchievementsListProps) =
               <p
                 className={cn(
                   'line-clamp-3 text-sm leading-relaxed',
-                  isCompleted ? 'text-cyan-800/80 dark:text-on-surface-muted' : 'text-on-surface-muted'
+                  isCompleted ? 'dark:text-on-surface-muted text-cyan-800/80' : 'text-on-surface-muted'
                 )}
               >
                 {achievement.description}
@@ -161,11 +159,15 @@ export const AchievementsList = ({ achievements = [] }: AchievementsListProps) =
               <div className="mt-auto space-y-2">
                 <div className="flex items-center justify-between gap-3 text-xs font-medium sm:text-sm">
                   <span
-                    className={isCompleted ? 'font-semibold text-cyan-800 dark:text-amber-400' : 'text-app-accent-strong'}
+                    className={
+                      isCompleted ? 'font-semibold text-cyan-800 dark:text-amber-400' : 'text-app-accent-strong'
+                    }
                   >
                     {isCompleted ? '¡Completado!' : `${achievement.progress ?? 0} / ${achievement.target ?? 0}`}
                   </span>
-                  <span className={isCompleted ? 'text-cyan-700/75 dark:text-on-surface-muted' : 'text-on-surface-muted'}>
+                  <span
+                    className={isCompleted ? 'dark:text-on-surface-muted text-cyan-700/75' : 'text-on-surface-muted'}
+                  >
                     +{achievement.xpReward ?? 0} XP
                   </span>
                 </div>
@@ -177,7 +179,7 @@ export const AchievementsList = ({ achievements = [] }: AchievementsListProps) =
                   aria-label={`Progreso de ${achievement.title}`}
                   className={cn(
                     'h-2 w-full overflow-hidden rounded-full',
-                    isCompleted ? 'bg-cyan-100 dark:bg-surface-via' : 'bg-surface-via'
+                    isCompleted ? 'dark:bg-surface-via bg-cyan-100' : 'bg-surface-via'
                   )}
                 >
                   <div

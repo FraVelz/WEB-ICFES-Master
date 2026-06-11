@@ -7,9 +7,7 @@ export type IconGalleryEntry = {
 };
 
 /** Sorted list for the dev icon gallery and audits. */
-export const ICON_GALLERY_ENTRIES: IconGalleryEntry[] = (
-  Object.keys(ICONS) as (keyof typeof ICONS)[]
-)
+export const ICON_GALLERY_ENTRIES: IconGalleryEntry[] = (Object.keys(ICONS) as (keyof typeof ICONS)[])
   .sort()
   .map((name) => ({
     name,

@@ -19,11 +19,11 @@ export const AnswerSheet = ({
   return (
     <div
       className={cn(
-        'sticky top-6 h-fit rounded-xl border border-surface-border bg-surface-elevated/90',
+        'border-surface-border bg-surface-elevated/90 sticky top-6 h-fit rounded-xl border',
         'p-4 shadow-2xl backdrop-blur-md'
       )}
     >
-      <h3 className="mb-4 flex items-center gap-2 text-sm font-bold text-on-surface">
+      <h3 className="text-on-surface mb-4 flex items-center gap-2 text-sm font-bold">
         <span
           className={cn(
             'from-cta-from to-cta-progress-end flex h-8 w-8 items-center justify-center',
@@ -62,7 +62,7 @@ export const AnswerSheet = ({
                         'bg-linear-to-r from-green-500 to-emerald-500 text-white',
                         'hover:shadow-lg hover:shadow-green-500/50 focus-visible:ring-white'
                       )
-                    : 'focus-visible:ring-app-accent border border-surface-border bg-surface-overlay/50 text-on-surface-muted hover:bg-surface-overlay'
+                    : 'focus-visible:ring-app-accent border-surface-border bg-surface-overlay/50 text-on-surface-muted hover:bg-surface-overlay border'
               )}
             >
               {isAnswered ? <span className="text-xs">{answer}</span> : <span>{questionNum}</span>}
@@ -71,9 +71,9 @@ export const AnswerSheet = ({
         })}
       </div>
 
-      <div className="mt-6 space-y-2 text-xs text-on-surface-muted">
+      <div className="text-on-surface-muted mt-6 space-y-2 text-xs">
         <div className="flex items-center gap-2">
-          <div className="h-4 w-4 rounded border border-surface-border bg-surface-overlay/50" />
+          <div className="border-surface-border bg-surface-overlay/50 h-4 w-4 rounded border" />
           <span>No respondidas</span>
         </div>
         <div className="flex items-center gap-2">

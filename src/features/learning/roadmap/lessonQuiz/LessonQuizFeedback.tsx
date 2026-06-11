@@ -55,11 +55,11 @@ export function LessonQuizFeedback({ isCorrect, isLastQuestion, rewards, already
       )}
 
       {isCorrect && alreadyCompleted && !rewards && isLastQuestion && (
-        <p className="mt-2 text-xs text-on-surface-muted lg:text-sm">Ya has completado esta lección anteriormente.</p>
+        <p className="text-on-surface-muted mt-2 text-xs lg:text-sm">Ya has completado esta lección anteriormente.</p>
       )}
 
       {!isCorrect && (
-        <p className="mt-2 px-2 text-xs leading-relaxed text-on-surface-muted lg:text-sm">
+        <p className="text-on-surface-muted mt-2 px-2 text-xs leading-relaxed lg:text-sm">
           {isLastQuestion ? 'Inténtalo de nuevo para ganar tus recompensas.' : 'Continúa con la siguiente pregunta.'}
         </p>
       )}

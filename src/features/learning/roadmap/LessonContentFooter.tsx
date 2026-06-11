@@ -25,14 +25,14 @@ export function LessonContentFooter({
   );
 
   return (
-    <div className="shrink-0 border-t border-surface-border/80 bg-surface-via/95 backdrop-blur-md">
+    <div className="border-surface-border/80 bg-surface-via/95 shrink-0 border-t backdrop-blur-md">
       <div className={cn(sectionInnerClass, 'flex items-center justify-between gap-2 py-3 sm:gap-4 sm:py-4')}>
         {prevHref ? (
           <Link
             href={prevHref}
             className={cn(
               navButtonBase,
-              'border border-surface-border bg-surface-overlay/80 px-3 py-2.5 text-on-surface-muted',
+              'border-surface-border bg-surface-overlay/80 text-on-surface-muted border px-3 py-2.5',
               'hover:bg-on-surface-muted/80 hover:text-white'
             )}
           >
@@ -43,7 +43,7 @@ export function LessonContentFooter({
           <span className="min-w-[44px]" />
         )}
 
-        <span className="text-xs text-on-surface-muted sm:text-sm">{stepLabel}</span>
+        <span className="text-on-surface-muted text-xs sm:text-sm">{stepLabel}</span>
 
         {nextHref ? (
           <Link
@@ -51,7 +51,7 @@ export function LessonContentFooter({
             className={cn(
               navButtonBase,
               'bg-linear-to-r px-3 py-2.5 text-white shadow-lg hover:opacity-95',
-              'focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-surface-via',
+              'focus-visible:ring-offset-surface-via focus-visible:ring-2 focus-visible:ring-white',
               gradientClass
             )}
           >

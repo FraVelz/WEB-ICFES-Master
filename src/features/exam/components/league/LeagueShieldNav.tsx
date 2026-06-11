@@ -79,7 +79,7 @@ export function LeagueShieldNav({ selectedRank, myLeagueRank, onSelect }: League
               className={cn(
                 'group flex shrink-0 flex-col items-center gap-1.5 transition-transform focus-visible:outline-none',
                 'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:outline-none',
-                'focus-visible:ring-offset-2 focus-visible:ring-offset-surface-via',
+                'focus-visible:ring-offset-surface-via focus-visible:ring-offset-2',
                 isSelected ? 'scale-110' : 'scale-95 opacity-80 hover:scale-100 hover:opacity-100'
               )}
               aria-pressed={isSelected}

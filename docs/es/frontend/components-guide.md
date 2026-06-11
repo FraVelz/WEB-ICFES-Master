@@ -54,7 +54,7 @@ export function AreaHighlightCard({
       type="button"
       onClick={onClick}
       className={cn(
-        'hover:border-app-ring/40 w-full rounded-xl border border-surface-border bg-surface-elevated/50 p-4 text-left',
+        'hover:border-app-ring/40 border-surface-border bg-surface-elevated/50 w-full rounded-xl border p-4 text-left',
         className
       )}
     >
@@ -62,7 +62,7 @@ export function AreaHighlightCard({
         <Icon name={iconName} className="text-app-accent text-3xl" />
         <div>
           <h3 className="font-bold text-white">{title}</h3>
-          <p className="mt-1 text-sm text-on-surface-muted">{description}</p>
+          <p className="text-on-surface-muted mt-1 text-sm">{description}</p>
           <p className="text-app-accent mt-2 text-xs">{questionsCount} preguntas</p>
         </div>
       </div>

@@ -90,9 +90,9 @@ async function fetchViaPublicRpc(userId: string): Promise<PublicProfilePayload |
       console.error(
         overloadConflict
           ? 'get_public_profile overload (uuid/text): ejecuta ' +
-            'supabase/migrations/20260610160000_fix_get_public_profile_overload.sql'
+              'supabase/migrations/20260610160000_fix_get_public_profile_overload.sql'
           : 'public profile RPC missing: ejecuta supabase/migrations/20260609120000_public_profile_rpc.sql ' +
-            'y NOTIFY pgrst'
+              'y NOTIFY pgrst'
       );
       return null;
     }

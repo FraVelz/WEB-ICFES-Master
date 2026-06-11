@@ -43,7 +43,10 @@ export async function addXpServer(
 
   const { error } = await sb
     .from(GAMIFICATION_TABLE)
-    .upsert({ user_id: userId, xp: newXP, xp_history: xpHistory, updated_at: new Date().toISOString() }, { onConflict: 'user_id' });
+    .upsert(
+      { user_id: userId, xp: newXP, xp_history: xpHistory, updated_at: new Date().toISOString() },
+      { onConflict: 'user_id' }
+    );
 
   if (error) throw new Error(`Error añadiendo XP: ${error.message}`);
 
@@ -77,12 +80,15 @@ export async function addCoinsServer(
     { date: new Date().toISOString(), amount, reason, type: 'earn' },
   ];
 
-  const { error } = await sb
-    .from(GAMIFICATION_TABLE)
-    .upsert(
-      { user_id: userId, total_coins: newTotalCoins, coins_history: coinsHistory, updated_at: new Date().toISOString() },
-      { onConflict: 'user_id' }
-    );
+  const { error } = await sb.from(GAMIFICATION_TABLE).upsert(
+    {
+      user_id: userId,
+      total_coins: newTotalCoins,
+      coins_history: coinsHistory,
+      updated_at: new Date().toISOString(),
+    },
+    { onConflict: 'user_id' }
+  );
 
   if (error) throw new Error(`Error añadiendo monedas: ${error.message}`);
 

@@ -49,7 +49,7 @@ export function LecturaSectionShell({ sectionId, children }: LecturaSectionShell
           className={cn(
             'inline-flex cursor-pointer items-center gap-2 rounded-xl px-5 py-3 text-sm font-semibold transition-all',
             'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:outline-none',
-            'focus-visible:ring-offset-2 focus-visible:ring-offset-surface',
+            'focus-visible:ring-offset-surface focus-visible:ring-offset-2',
             read
               ? cn(
                   'border-surface-border bg-surface-elevated text-on-surface-muted border',
