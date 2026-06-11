@@ -19,9 +19,7 @@ const Component = () => {
         isActive && 'h-screen overflow-hidden'
       )}
     >
-      <div className="mx-auto max-w-7xl">
-        <LearningRoadmap />
-      </div>
+      <LearningRoadmap />
     </div>
   );
 };
