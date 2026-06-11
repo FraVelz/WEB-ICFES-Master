@@ -130,7 +130,7 @@ export function RoadmapStatsBar({
           </span>
         </Link>
 
-        <ThemeToggle compact />
+        <ThemeToggle compact className="hidden lg:inline-flex" />
       </div>
     </div>
   );
