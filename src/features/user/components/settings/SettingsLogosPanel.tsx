@@ -62,8 +62,9 @@ export function SettingsLogosPanel() {
       ) : null}
 
       <p className="text-sm text-slate-400">
-        El logo equipado se muestra como avatar en toda la app, incluso si tienes foto de perfil.
-        Puedes guardar hasta {MAX_PERSONAL_LOGOS} logos personales (máx. 2MB cada uno).
+        El logo equipado se muestra como avatar en toda la app, incluso si tienes foto de perfil. Puedes guardar
+        hasta{' '}
+        {MAX_PERSONAL_LOGOS} logos personales (máx. 2MB cada uno).
       </p>
 
       <PersonalLogosGrid

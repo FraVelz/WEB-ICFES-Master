@@ -17,7 +17,7 @@ export function ChatLauncher({ isOpen, onToggle }: ChatLauncherProps) {
         'border-app-accent/50 from-cta-from to-cta-to rounded-full border-2 bg-linear-to-r',
         'shadow-app-ring/30 text-white shadow-lg transition-all duration-300 hover:scale-110',
         'hover:shadow-app-ring/50 focus-visible:ring-app-accent focus-visible:ring-2',
-        'focus-visible:outline-none focus-visible:ring-offset-4 focus-visible:ring-offset-slate-950'
+        'focus-visible:ring-offset-4 focus-visible:ring-offset-slate-950 focus-visible:outline-none'
       )}
       aria-label={isOpen ? 'Cerrar asistente de chat' : 'Abrir asistente de chat'}
     >

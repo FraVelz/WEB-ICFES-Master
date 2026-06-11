@@ -26,7 +26,8 @@ export const FAQSection = () => {
               type="button"
               onClick={() => setExpandedFaq(expandedFaq === idx ? null : idx)}
               className={cn(
-                'hover:bg-surface-border/30 flex w-full cursor-pointer items-center justify-between gap-3 p-6 transition-colors',
+                'hover:bg-surface-border/30 flex w-full cursor-pointer items-center justify-between',
+                'gap-3 p-6 transition-colors',
                 'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:outline-none focus-visible:ring-inset'
               )}
             >

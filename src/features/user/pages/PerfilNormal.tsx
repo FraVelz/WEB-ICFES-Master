@@ -19,7 +19,7 @@ import { ProfileStoreHighlights } from '../components/profile/ProfileStoreHighli
 
 const profileActionButtonClass = cn(
   'flex cursor-pointer items-center gap-2 rounded-lg border ' +
-  'border-surface-border bg-surface-elevated p-2 text-sm font-medium',
+    'border-surface-border bg-surface-elevated p-2 text-sm font-medium',
   'text-app-accent-strong transition-colors hover:bg-surface-via',
   'dark:border-transparent dark:bg-slate-800 dark:text-app-accent dark:hover:bg-slate-700'
 );

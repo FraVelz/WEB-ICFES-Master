@@ -25,11 +25,7 @@ export function LessonQuizQuestionPanel({
         </h4>
       )}
 
-      <div
-        role="radiogroup"
-        aria-label="Opciones de respuesta"
-        className="space-y-2 lg:space-y-3"
-      >
+      <div role="radiogroup" aria-label="Opciones de respuesta" className="space-y-2 lg:space-y-3">
         {question.options.map((option, index) => (
           <button
             key={option.id}
@@ -51,13 +47,17 @@ export function LessonQuizQuestionPanel({
                     : 'border-slate-700/50 bg-slate-800/30 text-slate-500 opacity-60'
                 : selectedOption === option.id
                   ? 'scale-[1.02] border-blue-500 bg-blue-500/15 text-blue-300 shadow-lg shadow-blue-500/10'
-                  : 'border-slate-700/50 bg-slate-800/50 text-slate-200 hover:border-slate-600 hover:bg-slate-800/70 active:scale-[0.98] active:bg-slate-700'
+                  : cn(
+                      'border-slate-700/50 bg-slate-800/50 text-slate-200',
+                      'hover:border-slate-600 hover:bg-slate-800/70 active:scale-[0.98] active:bg-slate-700'
+                    )
             )}
           >
             <div className="flex items-start gap-3">
               <div
                 className={cn(
-                  'mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-xs font-bold lg:h-7 lg:w-7 lg:text-sm',
+                  'mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-xs font-bold',
+                  'lg:h-7 lg:w-7 lg:text-sm',
                   isSubmitted
                     ? option.id === question.correctAnswer
                       ? 'bg-lesson-sci-glow-a/20 border border-green-500/30 text-green-400'

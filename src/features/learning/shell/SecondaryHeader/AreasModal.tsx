@@ -6,10 +6,7 @@ import { Icon } from '@/shared/components/Icon';
 import { ModalOverlay } from '@/shared/components/ModalOverlay';
 import { AREA_INFO } from '@/shared/constants';
 import { useGSAPModalEntrance } from '@/hooks/useGSAPModalEntrance';
-import {
-  getRoadmapPanelClassName,
-  useAnchoredDropdownStyle,
-} from './useAnchoredDropdownStyle';
+import { getRoadmapPanelClassName, useAnchoredDropdownStyle } from './useAnchoredDropdownStyle';
 import { RoadmapBottomSheetHandle } from './RoadmapBottomSheetHandle';
 import type { RefObject } from 'react';
 
@@ -60,8 +57,8 @@ export const AreasModal = ({ isOpen, onClose, onSelectArea, currentArea, anchorR
             aria-label="Cerrar"
             className={cn(
               'cursor-pointer rounded-lg p-1 text-slate-500 transition-colors hover:text-white',
-              'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none',
-              'focus-visible:ring-offset-slate-900'
+              'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:outline-none',
+              'focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900'
             )}
           >
             <Icon name="times" />
@@ -79,8 +76,8 @@ export const AreasModal = ({ isOpen, onClose, onSelectArea, currentArea, anchorR
               }}
               className={cn(
                 'flex w-full cursor-pointer items-center gap-3 rounded-xl px-4 py-3 transition-all',
-                'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none',
-                'focus-visible:ring-offset-slate-950',
+                'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:outline-none',
+                'focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950',
                 currentArea === areaKey
                   ? ['bg-linear-to-r text-white shadow-lg', areaData.color]
                   : 'bg-slate-800/50 text-slate-300 hover:bg-slate-800'

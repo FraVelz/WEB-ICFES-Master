@@ -12,10 +12,7 @@ export async function getShopInventory(userId: string): Promise<ShopInventorySta
   };
 }
 
-export async function saveShopInventory(
-  userId: string,
-  state: ShopInventoryState
-): Promise<ShopInventoryState> {
+export async function saveShopInventory(userId: string, state: ShopInventoryState): Promise<ShopInventoryState> {
   await getOrCreate(userId);
   const sb = ensureSupabase();
   const payload = {
@@ -46,15 +43,11 @@ export async function addShopItem(userId: string, itemId: string): Promise<ShopI
   });
 }
 
-export async function setEquippedLogo(
-  userId: string,
-  logoId: string | null
-): Promise<ShopInventoryState> {
+export async function setEquippedLogo(userId: string, logoId: string | null): Promise<ShopInventoryState> {
   const profile = await getOrCreate(userId);
   if (logoId) {
     const ownsShopLogo = isLogoShopItem(logoId) && profile.shopInventory.includes(logoId);
-    const ownsPersonalLogo =
-      isPersonalLogoId(logoId) && profile.personalLogos.some((logo) => logo.id === logoId);
+    const ownsPersonalLogo = isPersonalLogoId(logoId) && profile.personalLogos.some((logo) => logo.id === logoId);
     if (!ownsShopLogo && !ownsPersonalLogo) {
       throw new Error('No tienes este logo en tu inventario');
     }

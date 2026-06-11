@@ -15,11 +15,6 @@ export function ModalOverlay({ onClose, className, active = true }: ModalOverlay
   useDialogA11y(active, onClose);
 
   return (
-    <div
-      className={cn('fixed inset-0 z-40', className)}
-      onClick={onClose}
-      aria-hidden="true"
-      role="presentation"
-    />
+    <div className={cn('fixed inset-0 z-40', className)} onClick={onClose} aria-hidden="true" role="presentation" />
   );
 }

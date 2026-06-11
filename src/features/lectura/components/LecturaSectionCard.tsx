@@ -29,12 +29,22 @@ export function LecturaSectionCard({ section, isRead }: LecturaSectionCardProps)
             {section.title}
           </h2>
           {isRead ? (
-            <span className="inline-flex items-center gap-1 rounded-full bg-emerald-500/10 px-2 py-0.5 text-xs font-semibold text-emerald-400">
+            <span
+              className={cn(
+                'inline-flex items-center gap-1 rounded-full bg-emerald-500/10 px-2 py-0.5',
+                'text-xs font-semibold text-emerald-400'
+              )}
+            >
               <Icon name="check-circle" className="text-sm" />
               Leído
             </span>
           ) : (
-            <span className="border-on-surface-muted/40 text-on-surface-muted inline-flex items-center gap-1 rounded-full border px-2 py-0.5 text-xs font-medium">
+            <span
+              className={cn(
+                'border-on-surface-muted/40 text-on-surface-muted inline-flex items-center gap-1',
+                'rounded-full border px-2 py-0.5 text-xs font-medium'
+              )}
+            >
               <span className="h-1.5 w-1.5 rounded-full bg-current opacity-60" aria-hidden />
               Pendiente
             </span>

@@ -1,8 +1,6 @@
 import type { GradedExamAnswer } from '@/features/exam/services/examGradingServer';
 
-export async function fetchGradedExamResults(
-  answers: Record<string, string>
-): Promise<GradedExamAnswer[]> {
+export async function fetchGradedExamResults(answers: Record<string, string>): Promise<GradedExamAnswer[]> {
   const response = await fetch('/api/exam/grade/', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },

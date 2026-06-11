@@ -67,7 +67,8 @@ export const SectionsModal = ({
             aria-label="Cerrar"
             className={cn(
               'cursor-pointer rounded-lg p-1 text-slate-500 transition-colors hover:text-white',
-              'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none',
+              'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:outline-none',
+              'focus-visible:ring-offset-2',
               'focus-visible:ring-offset-slate-900'
             )}
           >
@@ -88,7 +89,8 @@ export const SectionsModal = ({
                 }}
                 className={cn(
                   'flex w-full cursor-pointer flex-col items-start gap-1 rounded-xl px-4 py-3 text-left transition-all',
-                  'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none',
+                  'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:outline-none',
+              'focus-visible:ring-offset-2',
                   'focus-visible:ring-offset-slate-950',
                   isActive
                     ? ['bg-linear-to-r text-white shadow-lg', areaColorClass]

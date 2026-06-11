@@ -29,9 +29,7 @@ export function resolveSafeInternalRedirect(next: string | null | undefined): st
   }
 
   const pathOnly = trimmed.split('?')[0]?.split('#')[0] ?? trimmed;
-  const allowed = ALLOWED_PREFIXES.some(
-    (prefix) => pathOnly === prefix || pathOnly.startsWith(`${prefix}/`)
-  );
+  const allowed = ALLOWED_PREFIXES.some((prefix) => pathOnly === prefix || pathOnly.startsWith(`${prefix}/`));
 
   return allowed ? trimmed : AUTH_DEFAULT_REDIRECT;
 }

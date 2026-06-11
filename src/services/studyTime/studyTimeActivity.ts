@@ -1,19 +1,8 @@
 import { DEMO_USER_ID } from '@/services/demo/demoCoins';
 import { syncAchievementsFromGameplay } from '@/services/achievements/achievementProgressService';
-import {
-  ACTIVITY_THROTTLE_MS,
-  IDLE_MS,
-  type StudyTimeState,
-} from './studyTimeTypes';
-import {
-  maybeSyncAchievements,
-  notifyStudyTimeUpdated,
-  syncStudyTimeRemote,
-} from './studyTimeRemote';
-import {
-  applySessionProgress,
-  closeSession,
-} from './studyTimeSession';
+import { ACTIVITY_THROTTLE_MS, IDLE_MS, type StudyTimeState } from './studyTimeTypes';
+import { maybeSyncAchievements, notifyStudyTimeUpdated, syncStudyTimeRemote } from './studyTimeRemote';
+import { applySessionProgress, closeSession } from './studyTimeSession';
 import { getStudyTimeStats } from './studyTimeStats';
 import {
   loadStudyTimeState,

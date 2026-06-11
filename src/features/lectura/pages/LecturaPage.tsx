@@ -14,8 +14,8 @@ export function LecturaPage() {
     <div className="relative z-10 mx-auto max-w-3xl space-y-6">
       <header className="space-y-2">
         <p className="text-on-surface-muted max-w-2xl leading-relaxed">
-          Material informativo de solo lectura sobre el ICFES, el bachillerato y cómo prepararte. Elige una sección
-          para explorar.
+          Material informativo de solo lectura sobre el ICFES, el bachillerato y cómo prepararte. Elige una sección para
+          explorar.
         </p>
         {readCount > 0 && (
           <p className="text-on-surface-muted text-sm">

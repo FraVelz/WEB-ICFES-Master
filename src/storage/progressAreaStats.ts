@@ -1,11 +1,6 @@
 import type { AreaStatItem } from './progressStorageTypes';
 
-const AREA_LABELS = [
-  'Matemáticas',
-  'Lectura Crítica',
-  'Ciencias Naturales',
-  'Sociales y Ciudadanas',
-] as const;
+const AREA_LABELS = ['Matemáticas', 'Lectura Crítica', 'Ciencias Naturales', 'Sociales y Ciudadanas'] as const;
 
 type AreaKey = 'matematicas' | 'lenguaje' | 'ciencias' | 'sociales';
 
@@ -48,9 +43,10 @@ export function buildDefaultAreaStats(): Record<string, AreaStatItem> {
   return buildAreaStats(createEmptyAreaTotals());
 }
 
-export function pickBestAndWeakAreas(
-  areaStats: Record<string, AreaStatItem>
-): { bestArea: AreaStatItem | null; weakArea: AreaStatItem | null } {
+export function pickBestAndWeakAreas(areaStats: Record<string, AreaStatItem>): {
+  bestArea: AreaStatItem | null;
+  weakArea: AreaStatItem | null;
+} {
   const areas = Object.values(areaStats).filter((area) => area.total > 0);
   if (areas.length === 0) return { bestArea: null, weakArea: null };
   const bestArea = areas.reduce<AreaStatItem>(

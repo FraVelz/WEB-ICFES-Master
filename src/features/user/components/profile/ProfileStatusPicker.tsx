@@ -44,10 +44,11 @@ export function ProfileStatusPicker() {
           </div>
           {statusReaction && (
             <span
-            className={cn(
-              "absolute -top-1 -right-1 flex h-9 w-9 items-center justify-center rounded-full",
-              "border-2 border-slate-900 bg-slate-800 text-xl shadow-md"
-            )}>
+              className={cn(
+                'absolute -top-1 -right-1 flex h-9 w-9 items-center justify-center rounded-full',
+                'border-2 border-slate-900 bg-slate-800 text-xl shadow-md'
+              )}
+            >
               {statusReaction.emoji}
             </span>
           )}

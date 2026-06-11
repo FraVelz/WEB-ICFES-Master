@@ -34,22 +34,13 @@ export function LessonMarkdownBody({ content }: LessonMarkdownBodyProps) {
           <h3 className="mt-3 mb-2 text-base font-bold text-slate-200 sm:mt-4 sm:text-lg" {...props} />
         ),
         p: ({ ...props }) => (
-          <p
-            className="mb-3 text-sm leading-relaxed text-slate-300 sm:mb-4 sm:text-base md:text-lg"
-            {...props}
-          />
+          <p className="mb-3 text-sm leading-relaxed text-slate-300 sm:mb-4 sm:text-base md:text-lg" {...props} />
         ),
         ul: ({ ...props }) => (
-          <ul
-            className="mb-3 list-inside list-disc space-y-1.5 text-slate-300 sm:mb-4 sm:space-y-2"
-            {...props}
-          />
+          <ul className="mb-3 list-inside list-disc space-y-1.5 text-slate-300 sm:mb-4 sm:space-y-2" {...props} />
         ),
         ol: ({ ...props }) => (
-          <ol
-            className="mb-3 list-inside list-decimal space-y-1.5 text-slate-300 sm:mb-4 sm:space-y-2"
-            {...props}
-          />
+          <ol className="mb-3 list-inside list-decimal space-y-1.5 text-slate-300 sm:mb-4 sm:space-y-2" {...props} />
         ),
         li: ({ ...props }) => <li className="ml-3 sm:ml-4" {...props} />,
         blockquote: ({ ...props }) => (
@@ -65,10 +56,7 @@ export function LessonMarkdownBody({ content }: LessonMarkdownBodyProps) {
           const isInline = !className?.includes('language-');
           const codeContent = Array.isArray(children) ? children.join('') : (children ?? '');
           return isInline ? (
-            <code
-              className="rounded bg-slate-800 px-1.5 py-0.5 font-mono text-xs text-pink-400 sm:text-sm"
-              {...props}
-            >
+            <code className="rounded bg-slate-800 px-1.5 py-0.5 font-mono text-xs text-pink-400 sm:text-sm" {...props}>
               {codeContent}
             </code>
           ) : (

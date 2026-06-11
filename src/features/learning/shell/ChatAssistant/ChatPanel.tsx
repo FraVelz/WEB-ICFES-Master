@@ -83,8 +83,8 @@ export function ChatPanel({
           onClick={onClose}
           className={cn(
             'cursor-pointer rounded-lg p-2 text-slate-400 transition-colors hover:bg-white/10',
-            'hover:text-white focus-visible:ring-app-accent focus-visible:ring-2',
-            'focus-visible:ring-offset-2 focus-visible:outline-none focus-visible:ring-offset-slate-900'
+            'focus-visible:ring-app-accent hover:text-white focus-visible:ring-2',
+            'focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900 focus-visible:outline-none'
           )}
           aria-label="Cerrar chat"
         >

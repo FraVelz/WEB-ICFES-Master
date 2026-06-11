@@ -28,10 +28,11 @@ export function SettingsProfilePanel() {
 
         <div className="group relative mb-4 inline-block">
           <div
-          className={cn(
-            "relative h-32 w-32 overflow-hidden rounded-full border-4 border-slate-800",
-            "bg-slate-800 shadow-2xl"
-          )}>
+            className={cn(
+              'relative h-32 w-32 overflow-hidden rounded-full border-4 border-slate-800',
+              'bg-slate-800 shadow-2xl'
+            )}
+          >
             <AvatarImage src={avatarSrc} alt="Profile" />
           </div>
           <button
@@ -119,10 +120,10 @@ export function SettingsProfilePanel() {
               type="button"
               onClick={handleRemoveProfileImage}
               className={cn(
-                "cursor-pointer text-xs text-red-400 underline-offset-2 hover:text-red-300",
-                "hover:underline focus-visible:rounded focus-visible:ring-2",
-                "focus-visible:ring-red-400 focus-visible:ring-offset-2",
-                "focus-visible:ring-offset-slate-950 focus-visible:outline-none"
+                'cursor-pointer text-xs text-red-400 underline-offset-2 hover:text-red-300',
+                'hover:underline focus-visible:rounded focus-visible:ring-2',
+                'focus-visible:ring-red-400 focus-visible:ring-offset-2',
+                'focus-visible:ring-offset-slate-950 focus-visible:outline-none'
               )}
             >
               Eliminar foto de perfil

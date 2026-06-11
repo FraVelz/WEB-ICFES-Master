@@ -42,7 +42,5 @@ export function closeSession(state: StudyTimeState, now: number): StudyTimeState
 }
 
 export function isSessionActive(state: StudyTimeState, now: number): boolean {
-  return Boolean(
-    state.sessionStartedAt && state.lastActivityAt && now - state.lastActivityAt <= IDLE_MS
-  );
+  return Boolean(state.sessionStartedAt && state.lastActivityAt && now - state.lastActivityAt <= IDLE_MS);
 }

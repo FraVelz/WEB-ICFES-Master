@@ -19,7 +19,6 @@ export const ccVisaIcon = (
   />
 );
 
-
 export const ccMastercardIcon = (
   <path
     fill="currentColor"
@@ -35,7 +34,6 @@ export const ccMastercardIcon = (
     }
   />
 );
-
 
 export const ccAmexIcon = (
   <path
@@ -100,7 +98,6 @@ export const ccAmexIcon = (
   />
 );
 
-
 export const magicIcon = (
   <path
     d={
@@ -113,9 +110,9 @@ export const magicIcon = (
       '21.75l-.394-1.183a2.25 2.25 0 0 0-1.423-1.423L13.5 18.75l1.183-.394a2.25' +
       '2.25 0 0 0 1.423-1.423l.394-1.183l.394 1.183a2.25 2.25 0 0 0 1.423' +
       '1.423l1.183.394l-1.183.394a2.25 2.25 0 0 0-1.423 1.423'
-    } />
+    }
+  />
 );
-
 
 export const barChartIcon = (
   <path
@@ -127,9 +124,9 @@ export const barChartIcon = (
       '1-1.125-1.125zm6.75-4.5c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504' +
       '21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 0' +
       '1-1.125-1.125z'
-    } />
+    }
+  />
 );
-
 
 export const thLargeIcon = (
   <path
@@ -141,9 +138,9 @@ export const thLargeIcon = (
       '6v2.25A2.25 2.25 0 0 1 18 10.5h-2.25a2.25 2.25 0 0 1-2.25-2.25zm0 9.75a2.25' +
       '2.25 0 0 1 2.25-2.25H18a2.25 2.25 0 0 1 2.25 2.25V18A2.25 2.25 0 0 1 18' +
       '20.25h-2.25A2.25 2.25 0 0 1 13.5 18z'
-    } />
+    }
+  />
 );
-
 
 export const usersIcon = (
   <path
@@ -154,9 +151,9 @@ export const usersIcon = (
       '8.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0 1' +
       '11.964-3.07M12 6.375a3.375 3.375 0 1 1-6.75 0a3.375 3.375 0 0 1 6.75 0m8.25' +
       '2.25a2.625 2.625 0 1 1-5.25 0a2.625 2.625 0 0 1 5.25 0'
-    } />
+    }
+  />
 );
-
 
 export const flagIcon = (
   <path
@@ -164,18 +161,15 @@ export const flagIcon = (
       'M3 3v1.5M3 21v-6m0 0l2.77-.693a9 9 0 0 1 6.208.682l.108.054a9 9 0 0 0' +
       '6.086.71l3.114-.732a48.5 48.5 0 0 1-.005-10.499l-3.11.732a9 9 0 0' +
       '1-6.085-.711l-.108-.054a9 9 0 0 0-6.208-.682L3 4.5M3 15V4.5'
-    } />
+    }
+  />
 );
-
 
 export const brainIcon = (
   <>
     <path
       fill="currentColor"
-    d={
-      'M12 18V5m3 8a4.17 4.17 0 0 1-3-4a4.17 4.17 0 0 1-3 4m8.598-6.5A3 3 0 1 0 12' +
-      '5a3 3 0 1 0-5.598 1.5'
-    }
+      d={'M12 18V5m3 8a4.17 4.17 0 0 1-3-4a4.17 4.17 0 0 1-3 4m8.598-6.5A3 3 0 1 0 12' + '5a3 3 0 1 0-5.598 1.5'}
     />
     <path fill="currentColor" d="M17.997 5.125a4 4 0 0 1 2.526 5.77" />
     <path fill="currentColor" d="M18 18a4 4 0 0 0 2-7.464" />
@@ -184,5 +178,3 @@ export const brainIcon = (
     <path fill="currentColor" d="M6.003 5.125a4 4 0 0 0-2.526 5.77" />
   </>
 );
-
-

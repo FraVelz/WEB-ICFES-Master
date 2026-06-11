@@ -44,7 +44,12 @@ export const ResultsAnalysis = ({
           >
             ¡Examen Completado!
           </h1>
-          <div className="to-app-accent mb-4 bg-linear-to-r from-blue-400 bg-clip-text text-7xl font-black text-transparent">
+          <div
+            className={cn(
+              'to-app-accent mb-4 bg-linear-to-r from-blue-400 bg-clip-text',
+              'text-7xl font-black text-transparent'
+            )}
+          >
             {percentage}%
           </div>
           <p className="mb-2 text-xl text-gray-300">Calificación Final</p>

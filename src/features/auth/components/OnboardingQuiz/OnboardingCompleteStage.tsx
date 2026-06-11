@@ -10,10 +10,11 @@ export function OnboardingCompleteStage({ onContinue }: OnboardingCompleteStageP
   return (
     <OnboardingLayout className="items-center justify-center">
       <div
-      className={cn(
-        "mx-auto flex w-full max-w-md flex-1 flex-col items-center justify-center",
-        "space-y-8 px-6 py-12 text-center"
-      )}>
+        className={cn(
+          'mx-auto flex w-full max-w-md flex-1 flex-col items-center justify-center',
+          'space-y-8 px-6 py-12 text-center'
+        )}
+      >
         <div
           className={cn(
             'mx-auto inline-flex h-24 w-24 items-center justify-center rounded-full bg-linear-to-r',
@@ -25,10 +26,11 @@ export function OnboardingCompleteStage({ onContinue }: OnboardingCompleteStageP
 
         <div className="space-y-4">
           <h2
-          className={cn(
-            "from-cta-text-start via-cta-text-via to-cta-text-end bg-linear-to-r",
-            "bg-clip-text text-3xl font-black text-transparent md:text-4xl"
-          )}>
+            className={cn(
+              'from-cta-text-start via-cta-text-via to-cta-text-end bg-linear-to-r',
+              'bg-clip-text text-3xl font-black text-transparent md:text-4xl'
+            )}
+          >
             ¡Perfecto!
           </h2>
           <p className="text-lg text-slate-300">

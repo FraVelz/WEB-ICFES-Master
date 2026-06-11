@@ -43,9 +43,7 @@ async function loadQuestionsByIds(ids: string[]): Promise<ExamQuestion[]> {
   }
 }
 
-export async function gradeExamAnswers(
-  answers: Record<string, string>
-): Promise<GradedExamAnswer[]> {
+export async function gradeExamAnswers(answers: Record<string, string>): Promise<GradedExamAnswer[]> {
   const ids = Object.keys(answers);
   const questions = await loadQuestionsByIds(ids);
 

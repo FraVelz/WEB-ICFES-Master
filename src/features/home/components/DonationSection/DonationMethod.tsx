@@ -39,7 +39,8 @@ export const DonationMethod = () => {
             <button
               onClick={() => handleAmountSelect('custom')}
               className={cn(
-                'h-full w-full cursor-pointer rounded-xl border px-2 py-3 text-sm font-semibold transition-all duration-200',
+                'h-full w-full cursor-pointer rounded-xl border px-2 py-3 text-sm font-semibold',
+                'transition-all duration-200',
                 selectedAmount === 'custom'
                   ? 'border-purple-500 bg-purple-600 text-white shadow-lg shadow-purple-500/20'
                   : 'border-white/10 bg-white/5 text-gray-300 hover:border-white/20 hover:bg-white/10'

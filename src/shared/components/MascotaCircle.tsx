@@ -53,7 +53,8 @@ export const MascotaCircle = ({
       <div
         className={cn(
           circleClass,
-          'flex items-center justify-center overflow-hidden rounded-full bg-linear-to-br from-slate-800 to-slate-900 shadow-lg',
+          'flex items-center justify-center overflow-hidden rounded-full bg-linear-to-br',
+          'from-slate-800 to-slate-900 shadow-lg',
           circleClassName
         )}
       >

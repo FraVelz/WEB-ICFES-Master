@@ -48,10 +48,13 @@ export function LecturaSectionShell({ sectionId, children }: LecturaSectionShell
           onClick={handleActionAndReturn}
           className={cn(
             'inline-flex cursor-pointer items-center gap-2 rounded-xl px-5 py-3 text-sm font-semibold transition-all',
-            'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none',
-            'focus-visible:ring-offset-surface',
+            'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:outline-none',
+            'focus-visible:ring-offset-2 focus-visible:ring-offset-surface',
             read
-              ? 'border-surface-border bg-surface-elevated text-on-surface-muted hover:text-on-surface hover:bg-surface-elevated/80 border'
+              ? cn(
+                  'border-surface-border bg-surface-elevated text-on-surface-muted border',
+                  'hover:text-on-surface hover:bg-surface-elevated/80'
+                )
               : 'bg-app-accent shadow-app-accent/20 text-white shadow-lg hover:brightness-110'
           )}
         >

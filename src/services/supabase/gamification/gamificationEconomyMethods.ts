@@ -4,11 +4,7 @@ import type { GamificationProfile } from './gamificationTypes';
 import { ensureSupabase, GAMIFICATION_TABLE, mapFromDb } from './gamificationMappers';
 import { getByUserId, getOrCreate } from './gamificationProfileMethods';
 
-export async function addXP(
-  userId: string,
-  points: number,
-  reason = 'activity'
-): Promise<GamificationProfile> {
+export async function addXP(userId: string, points: number, reason = 'activity'): Promise<GamificationProfile> {
   const profile = await getOrCreate(userId);
   const multiplier = isDoubleXpActive(profile.doubleXpExpiresAt) ? 2 : 1;
   const awardedPoints = points * multiplier;
@@ -51,11 +47,7 @@ export async function addXP(
   return (await getByUserId(userId)) ?? mapFromDb(data as Record<string, unknown>)!;
 }
 
-export async function addCoins(
-  userId: string,
-  amount: number,
-  reason = 'reward'
-): Promise<GamificationProfile> {
+export async function addCoins(userId: string, amount: number, reason = 'reward'): Promise<GamificationProfile> {
   const profile = await getOrCreate(userId);
   const newTotalCoins = (profile.totalCoins || 0) + amount;
   const coinsHistory = [
@@ -79,11 +71,7 @@ export async function addCoins(
   return mapFromDb(data as Record<string, unknown>)!;
 }
 
-export async function spendCoins(
-  userId: string,
-  amount: number,
-  item = 'purchase'
-): Promise<GamificationProfile> {
+export async function spendCoins(userId: string, amount: number, item = 'purchase'): Promise<GamificationProfile> {
   const profile = await getOrCreate(userId);
   const available = (profile.totalCoins || 0) - (profile.spentCoins || 0);
   if (available < amount) throw new Error('Monedas insuficientes');
@@ -100,12 +88,7 @@ export async function spendCoins(
     updated_at: new Date().toISOString(),
   };
   const sb = ensureSupabase();
-  const { data, error } = await sb
-    .from(GAMIFICATION_TABLE)
-    .update(payload)
-    .eq('user_id', userId)
-    .select()
-    .single();
+  const { data, error } = await sb.from(GAMIFICATION_TABLE).update(payload).eq('user_id', userId).select().single();
   if (error) throw new Error(`Error gastando monedas: ${error.message}`);
   return mapFromDb(data as Record<string, unknown>)!;
 }

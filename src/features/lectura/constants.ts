@@ -27,7 +27,8 @@ export const LECTURA_SECTIONS: LecturaSectionMeta[] = [
     path: '/importancia',
     title: 'Importancia',
     description:
-      'Por qué terminar el bachillerato y prepararte para el Saber 11° o la Prueba de Validación abre opciones reales en empleo, ingresos y proyectos de vida.',
+      'Por qué terminar el bachillerato y prepararte para el Saber 11° o la Prueba de Validación abre ' +
+      'opciones reales en empleo, ingresos y proyectos de vida.',
     icon: 'info-circle',
     iconClassName: 'text-app-accent text-xl',
     iconWrapClassName: 'bg-app-ring/10',

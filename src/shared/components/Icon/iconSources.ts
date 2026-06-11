@@ -109,4 +109,3 @@ export const ICON_SOURCES = {
   droplet: 'lucide:droplet',
   handshake: 'heroicons:hand-raised',
 } as const;
-

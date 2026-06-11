@@ -41,7 +41,10 @@ export const LessonPreview = ({ isOpen, onClose, lesson, onStart }: LessonPrevie
       {/* Content */}
       <div
         ref={contentRef}
-        className="relative mb-20 w-screen max-w-md border-t border-slate-700 bg-slate-900 p-6 shadow-2xl sm:rounded-2xl sm:border"
+        className={cn(
+          'relative mb-20 w-screen max-w-md border-t border-slate-700 bg-slate-900 p-6 shadow-2xl',
+          'sm:rounded-2xl sm:border'
+        )}
       >
         {/* Close Button */}
         <button
@@ -65,11 +68,21 @@ export const LessonPreview = ({ isOpen, onClose, lesson, onStart }: LessonPrevie
 
         {/* Rewards */}
         <div className="mb-8 flex justify-center gap-4">
-          <div className="flex min-w-[100px] flex-col items-center rounded-xl border border-slate-700 bg-slate-800/50 p-3">
+          <div
+            className={cn(
+              'flex min-w-[100px] flex-col items-center rounded-xl border border-slate-700',
+              'bg-slate-800/50 p-3'
+            )}
+          >
             <span className="text-lg font-bold text-orange-400">+{lesson?.xp ?? 0}</span>
             <span className="text-xs tracking-wider text-slate-500 uppercase">XP</span>
           </div>
-          <div className="flex min-w-[100px] flex-col items-center rounded-xl border border-slate-700 bg-slate-800/50 p-3">
+          <div
+            className={cn(
+              'flex min-w-[100px] flex-col items-center rounded-xl border border-slate-700',
+              'bg-slate-800/50 p-3'
+            )}
+          >
             <span className="text-lg font-bold text-yellow-400">+{lesson?.coins ?? 0}</span>
             <span className="text-xs tracking-wider text-slate-500 uppercase">Monedas</span>
           </div>

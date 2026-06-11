@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useMemo } from 'react';
+import { cn } from '@/utils/cn';
 import { useRouter } from 'next/navigation';
 import { LoadingState } from '@/shared/components/LoadingState';
 import { useDashboardShellOptional } from '@/features/dashboard/shell';
@@ -45,15 +46,18 @@ export function LessonStepPage({ lessonId, stepSlug }: LessonStepPageProps) {
 
   if (error || !lesson) {
     return (
-      <div className="mx-auto max-w-lg rounded-2xl border border-red-500/30 bg-red-950/20 px-4 py-6 text-center text-sm text-red-200">
+      <div
+        className={cn(
+          'mx-auto max-w-lg rounded-2xl border border-red-500/30 bg-red-950/20 px-4 py-6',
+          'text-center text-sm text-red-200'
+        )}
+      >
         {error ?? 'Lección no disponible.'}
       </div>
     );
   }
 
-  const lessonArea = normalizeRoadmapAreaId(
-    typeof lesson.area === 'string' ? lesson.area : undefined
-  );
+  const lessonArea = normalizeRoadmapAreaId(typeof lesson.area === 'string' ? lesson.area : undefined);
   const lessonPhase = normalizeLessonPhase(lesson.phase);
   const sectionId = shell?.currentSectionId ?? phaseToSectionId(lessonPhase);
 

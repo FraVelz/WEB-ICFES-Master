@@ -17,10 +17,7 @@ import type { PathSection, PathNodeData } from '@/features/learning/roadmap/Area
 
 export type { PathSection, PathNodeData };
 
-const SECTION_META: Record<
-  LearningPhaseSectionId,
-  { title: string; description: string }
-> = {
+const SECTION_META: Record<LearningPhaseSectionId, { title: string; description: string }> = {
   facil: {
     title: 'Nivel Básico – Fundamentos',
     description: 'Domina los conceptos esenciales',
@@ -62,9 +59,7 @@ export const useLearningPath = (areaId: string | undefined, options: UseLearning
       ]);
 
       const activePhase = sectionIdToPhase(sectionId);
-      const sectionIds = loadAllPhases
-        ? LEARNING_PHASE_SECTION_IDS
-        : [phaseToSectionId(activePhase)];
+      const sectionIds = loadAllPhases ? LEARNING_PHASE_SECTION_IDS : [phaseToSectionId(activePhase)];
 
       const groupedSections: PathSection[] = sectionIds.map((id) => ({
         id,

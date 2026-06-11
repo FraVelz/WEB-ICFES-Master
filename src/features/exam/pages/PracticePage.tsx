@@ -9,6 +9,9 @@ import { usePracticeExam } from '@/features/exam/hooks/usePracticeExam';
 import { LoadingState } from '@/shared/components/LoadingState';
 import { LEARNING_PHASES_PATH } from '@/features/learning/data/competencyPhases';
 
+const errorBoxClass =
+  'mx-auto max-w-lg rounded-xl border border-red-500/30 bg-red-950/30 px-4 py-6 text-center text-sm text-red-200';
+
 export const PracticePage = () => {
   const {
     areaInfo,
@@ -47,9 +50,7 @@ export const PracticePage = () => {
 
   if (questionsError) {
     return (
-      <div className="mx-auto max-w-lg rounded-xl border border-red-500/30 bg-red-950/30 px-4 py-6 text-center text-sm text-red-200">
-        {questionsError}
-      </div>
+      <div className={errorBoxClass}>{questionsError}</div>
     );
   }
 
@@ -59,9 +60,9 @@ export const PracticePage = () => {
         'mx-auto mb-6 max-w-lg rounded-2xl border border-amber-500/30 bg-amber-500/10 px-4 py-3 text-sm text-amber-100'
       )}
     >
-      Examen para saltar <span className="font-semibold">{phaseSkipPhaseTitle ?? 'esta fase'}</span>. Necesitas al
-      menos <span className="font-semibold">{phaseSkipPassPercent}%</span> de aciertos para desbloquear la siguiente
-      etapa.
+      Examen para saltar{' '}
+      <span className="font-semibold">{phaseSkipPhaseTitle ?? 'esta fase'}</span>. Necesitas al menos{' '}
+      <span className="font-semibold">{phaseSkipPassPercent}%</span> de aciertos para desbloquear la siguiente etapa.
     </div>
   ) : null;
 
@@ -77,9 +78,7 @@ export const PracticePage = () => {
   if (isFinished || showResults) {
     if (gradingError) {
       return (
-        <div className="mx-auto max-w-lg rounded-xl border border-red-500/30 bg-red-950/30 px-4 py-6 text-center text-sm text-red-200">
-          {gradingError}
-        </div>
+        <div className={errorBoxClass}>{gradingError}</div>
       );
     }
 
@@ -91,14 +90,20 @@ export const PracticePage = () => {
       <>
         {phaseSkipPassed && (
           <div className="relative z-20 mx-auto max-w-3xl px-6 pt-6">
-            <div className="rounded-2xl border border-green-500/30 bg-green-500/10 px-4 py-4 text-center text-green-100">
+            <div
+              className={cn(
+                'rounded-2xl border border-green-500/30 bg-green-500/10 px-4 py-4',
+                'text-center text-green-100'
+              )}
+            >
               <p className="font-semibold">¡Fase superada!</p>
-              <p className="mt-1 text-sm text-green-200/90">
-                Desbloqueaste la siguiente etapa en {areaInfo.name}.
-              </p>
+              <p className="mt-1 text-sm text-green-200/90">Desbloqueaste la siguiente etapa en {areaInfo.name}.</p>
               <Link
                 href={LEARNING_PHASES_PATH}
-                className="mt-3 inline-flex rounded-xl bg-green-600 px-4 py-2 text-sm font-bold text-white hover:bg-green-500"
+                className={cn(
+                  'mt-3 inline-flex rounded-xl bg-green-600 px-4 py-2 text-sm font-bold text-white',
+                  'hover:bg-green-500'
+                )}
               >
                 Volver a fases
               </Link>
@@ -126,21 +131,21 @@ export const PracticePage = () => {
     <>
       {phaseSkipBanner && <div className="relative z-20 px-6 pt-4">{phaseSkipBanner}</div>}
       <PracticeActiveView
-      areaInfo={areaInfo}
-      examConfig={examConfig}
-      questions={questions}
-      answers={answers}
-      showResults={showResults}
-      timeRemaining={timeRemaining}
-      timeColor={timeColor}
-      mobileMenuOpen={mobileMenuOpen}
-      setMobileMenuOpen={setMobileMenuOpen}
-      showAnswerSheetMobile={showAnswerSheetMobile}
-      setShowAnswerSheetMobile={setShowAnswerSheetMobile}
-      onAnswer={handleAnswer}
-      onScrollToQuestion={handleScrollToQuestion}
-      onFinish={() => setShowResults(true)}
-    />
+        areaInfo={areaInfo}
+        examConfig={examConfig}
+        questions={questions}
+        answers={answers}
+        showResults={showResults}
+        timeRemaining={timeRemaining}
+        timeColor={timeColor}
+        mobileMenuOpen={mobileMenuOpen}
+        setMobileMenuOpen={setMobileMenuOpen}
+        showAnswerSheetMobile={showAnswerSheetMobile}
+        setShowAnswerSheetMobile={setShowAnswerSheetMobile}
+        onAnswer={handleAnswer}
+        onScrollToQuestion={handleScrollToQuestion}
+        onFinish={() => setShowResults(true)}
+      />
     </>
   );
 };

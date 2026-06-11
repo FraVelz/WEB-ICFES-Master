@@ -2,9 +2,7 @@ import type { GamificationProfile } from './gamificationTypes';
 import { ensureSupabase, GAMIFICATION_TABLE, mapFromDb } from './gamificationMappers';
 import { getOrCreate } from './gamificationProfileMethods';
 
-export async function getStreak(
-  userId: string
-): Promise<{ dates: string[]; longestStreak: number }> {
+export async function getStreak(userId: string): Promise<{ dates: string[]; longestStreak: number }> {
   const profile = await getOrCreate(userId);
   return {
     dates: profile.streakDates ?? [],

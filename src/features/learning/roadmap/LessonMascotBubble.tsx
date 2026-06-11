@@ -13,7 +13,8 @@ export function LessonMascotBubble({ text, mascotSrc, bubbleBorder, className }:
   return (
     <div
       className={cn(
-        'mx-auto flex w-full max-w-2xl flex-col items-center gap-4 sm:flex-row sm:items-start sm:justify-center sm:gap-5',
+        'mx-auto flex w-full max-w-2xl flex-col items-center gap-4',
+        'sm:flex-row sm:items-start sm:justify-center sm:gap-5',
         className
       )}
     >
@@ -21,7 +22,7 @@ export function LessonMascotBubble({ text, mascotSrc, bubbleBorder, className }:
         <MascotaCircle src={mascotSrc} alt="Mascota" size="md" centered={false} />
       </div>
 
-      <div className="relative w-full min-w-0 max-w-md">
+      <div className="relative w-full max-w-md min-w-0">
         <div
           className={cn(
             'absolute -top-2 left-1/2 h-0 w-0 -translate-x-1/2 border-[10px]',
@@ -36,12 +37,7 @@ export function LessonMascotBubble({ text, mascotSrc, bubbleBorder, className }:
           )}
           aria-hidden
         />
-        <div
-          className={cn(
-            'rounded-2xl border-2 bg-slate-800/95 p-4 shadow-xl backdrop-blur-sm sm:p-5',
-            bubbleBorder
-          )}
-        >
+        <div className={cn('rounded-2xl border-2 bg-slate-800/95 p-4 shadow-xl backdrop-blur-sm sm:p-5', bubbleBorder)}>
           <p className="text-center text-base leading-relaxed font-semibold text-white sm:text-left sm:text-lg">
             {text}
           </p>

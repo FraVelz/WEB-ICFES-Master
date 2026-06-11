@@ -30,11 +30,7 @@ const AREA_MAP = {
 function mapLessonRow(row: Record<string, unknown>) {
   const content = (row.content || {}) as Record<string, unknown>;
   const lessonBody =
-    typeof content.body === 'string'
-      ? content.body
-      : typeof content.content === 'string'
-        ? content.content
-        : undefined;
+    typeof content.body === 'string' ? content.body : typeof content.content === 'string' ? content.content : undefined;
 
   const phase = normalizeLessonPhase(row.phase ?? content.phase ?? content.fase ?? content.difficulty);
 
@@ -63,11 +59,7 @@ const LearningSupabaseService = {
     if (!sb) return [];
     const normalizedArea = (AREA_MAP as Record<string, string>)[area] ?? area.replace(/-/g, '_');
 
-    let query = sb
-      .from(TABLE)
-      .select('*')
-      .eq('area', normalizedArea)
-      .eq('published', true);
+    let query = sb.from(TABLE).select('*').eq('area', normalizedArea).eq('published', true);
 
     if (phase !== undefined) {
       query = query.eq('phase', phase);
@@ -85,12 +77,7 @@ const LearningSupabaseService = {
   async getLesson(lessonId: string) {
     const sb = getSupabase();
     if (!sb) return null;
-    const { data, error } = await sb
-      .from(TABLE)
-      .select('*')
-      .eq('id', lessonId)
-      .eq('published', true)
-      .maybeSingle();
+    const { data, error } = await sb.from(TABLE).select('*').eq('id', lessonId).eq('published', true).maybeSingle();
     if (error) throw new Error(`Error leyendo lección: ${error.message}`);
     if (!data) return null;
     return mapLessonRow(data as Record<string, unknown>);

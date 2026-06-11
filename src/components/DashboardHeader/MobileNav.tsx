@@ -118,7 +118,8 @@ export function MobileNav({ menuOpen, onToggleMenu, onCloseMenu }: MobileNavProp
                     aria-current={isActive ? 'page' : undefined}
                     className={cn(
                       'flex items-center gap-4 px-6 py-4 transition-colors',
-                      'focus-visible:ring-app-accent rounded-lg focus-visible:ring-2 focus-visible:outline-none focus-visible:ring-inset',
+                      'focus-visible:ring-app-accent rounded-lg focus-visible:ring-2',
+                      'focus-visible:outline-none focus-visible:ring-inset',
                       isActive
                         ? 'bg-app-ring/10 border-app-accent text-on-surface border-l-4'
                         : cn('text-on-surface-muted border-l-4 border-transparent', MOBILE_MENU_ITEM_HOVER),

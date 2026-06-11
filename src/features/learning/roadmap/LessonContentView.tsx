@@ -22,12 +22,7 @@ export type LessonContentViewProps = {
 
 const SECTION_INNER = 'mx-auto w-full max-w-6xl px-3 sm:px-4';
 
-export function LessonContentView({
-  lesson,
-  areaId = 'lectura-critica',
-  stepSlug,
-  exitHref,
-}: LessonContentViewProps) {
+export function LessonContentView({ lesson, areaId = 'lectura-critica', stepSlug, exitHref }: LessonContentViewProps) {
   const router = useRouter();
   const stepContentRef = useRef<HTMLDivElement>(null);
   const backHref = exitHref ?? getRoadmapHref();

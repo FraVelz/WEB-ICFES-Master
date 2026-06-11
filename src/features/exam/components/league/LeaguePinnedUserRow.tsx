@@ -60,11 +60,21 @@ export function LeaguePinnedUserRow({
             <AvatarImage src={profileImage ?? undefined} alt={name} />
           </div>
           {statusReaction ? (
-            <span className="absolute -top-1 -right-1 flex h-6 w-6 items-center justify-center rounded-full border-2 border-slate-900 bg-slate-800 text-sm">
+            <span
+              className={cn(
+                'absolute -top-1 -right-1 flex h-6 w-6 items-center justify-center rounded-full',
+                'border-2 border-slate-900 bg-slate-800 text-sm'
+              )}
+            >
               {statusReaction.emoji}
             </span>
           ) : (
-            <span className="absolute -right-0.5 -bottom-0.5 h-2.5 w-2.5 rounded-full border-2 border-slate-900 bg-emerald-500" />
+            <span
+              className={cn(
+                'absolute -right-0.5 -bottom-0.5 h-2.5 w-2.5 rounded-full',
+                'border-2 border-slate-900 bg-emerald-500'
+              )}
+            />
           )}
         </div>
 

@@ -14,7 +14,8 @@ export const WHY_CHOOSE_US = [
   {
     title: 'Retroalimentación Inmediata',
     description:
-      'Explicaciones detalladas para cada respuesta. Entiende por qué es correcta o incorrecta. para los niveles intermedio.',
+      'Explicaciones detalladas para cada respuesta. Entiende por qué es correcta o incorrecta. ' +
+      'para los niveles intermedio.',
     icon: 'lightbulb',
     color: 'from-feature-3-from to-feature-3-to',
   },

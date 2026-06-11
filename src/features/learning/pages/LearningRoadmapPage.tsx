@@ -12,10 +12,7 @@ const Component = () => {
   useDailyStreakOnLearningRoute();
 
   return (
-    <div
-      id="container-main"
-      className={cn('relative min-h-0 p-0', isActive && 'h-screen overflow-hidden')}
-    >
+    <div id="container-main" className={cn('relative min-h-0 p-0', isActive && 'h-screen overflow-hidden')}>
       <LearningRoadmap />
     </div>
   );

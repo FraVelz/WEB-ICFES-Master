@@ -14,7 +14,4 @@ export { mergeAchievementProgressMaps, progressMapsEqual } from './achievementPr
 
 export { awardNewUnlocks, resolveAchievementUserId } from './achievementProgressRewards';
 
-export {
-  reconcileAchievementsWithoutRewards,
-  syncAchievementsFromGameplay,
-} from './achievementProgressSync';
+export { reconcileAchievementsWithoutRewards, syncAchievementsFromGameplay } from './achievementProgressSync';

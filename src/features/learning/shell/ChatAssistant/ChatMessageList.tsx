@@ -12,12 +12,7 @@ type ChatMessageListProps = {
   messagesEndRef: React.RefObject<HTMLDivElement | null>;
 };
 
-export function ChatMessageList({
-  messages,
-  isTyping,
-  isAnonymous,
-  messagesEndRef,
-}: ChatMessageListProps) {
+export function ChatMessageList({ messages, isTyping, isAnonymous, messagesEndRef }: ChatMessageListProps) {
   return (
     <div className="custom-scrollbar min-h-0 flex-1 space-y-4 overflow-y-auto p-3 sm:p-4">
       {messages.length === 0 && (

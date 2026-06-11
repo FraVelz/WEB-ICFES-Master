@@ -136,9 +136,7 @@ export function useLessonQuiz({
       setCompletedQuestions(new Set());
     } else {
       setDisplayQuestions((prev) =>
-        prev.map((question, index) =>
-          index === currentQuestionIndex ? shuffleQuestionOptions(question) : question
-        )
+        prev.map((question, index) => (index === currentQuestionIndex ? shuffleQuestionOptions(question) : question))
       );
       setAnswers((prev) => {
         const next = { ...prev };
@@ -158,8 +156,7 @@ export function useLessonQuiz({
   };
 
   const countCorrectAnswers = () =>
-    Object.keys(answers).filter((k) => answers[k] === displayQuestions.find((q) => q.id === k)?.correctAnswer)
-      .length;
+    Object.keys(answers).filter((k) => answers[k] === displayQuestions.find((q) => q.id === k)?.correctAnswer).length;
 
   return {
     user,

@@ -24,7 +24,12 @@ export const AnswerSheet = ({
       )}
     >
       <h3 className="mb-4 flex items-center gap-2 text-sm font-bold text-white">
-        <span className="from-cta-from to-cta-progress-end flex h-8 w-8 items-center justify-center rounded-lg bg-linear-to-r text-xs font-bold"></span>
+        <span
+          className={cn(
+            'from-cta-from to-cta-progress-end flex h-8 w-8 items-center justify-center',
+            'rounded-lg bg-linear-to-r text-xs font-bold'
+          )}
+        />
         HOJA DE RESPUESTAS
       </h3>
 
@@ -43,12 +48,20 @@ export const AnswerSheet = ({
               key={questionNum}
               onClick={() => onQuestionClick(idx)}
               className={cn(
-                'flex aspect-square items-center justify-center rounded-lg text-xs font-bold transition-all duration-300',
-                'focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-gray-950 focus-visible:outline-none',
+                'flex aspect-square items-center justify-center rounded-lg text-xs font-bold',
+                'transition-all duration-300',
+                'focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none',
+                'focus-visible:ring-offset-gray-950',
                 isCurrent
-                  ? 'bg-app-ring/30 text-app-accent-muted ring-app-accent focus-visible:ring-app-accent-bright scale-110 ring-2'
+                  ? cn(
+                      'bg-app-ring/30 text-app-accent-muted ring-app-accent scale-110 ring-2',
+                      'focus-visible:ring-app-accent-bright'
+                    )
                   : isAnswered
-                    ? 'bg-linear-to-r from-green-500 to-emerald-500 text-white hover:shadow-lg hover:shadow-green-500/50 focus-visible:ring-white'
+                    ? cn(
+                        'bg-linear-to-r from-green-500 to-emerald-500 text-white',
+                        'hover:shadow-lg hover:shadow-green-500/50 focus-visible:ring-white'
+                      )
                     : 'focus-visible:ring-app-accent border border-white/20 bg-white/10 text-gray-400 hover:bg-white/20'
               )}
             >

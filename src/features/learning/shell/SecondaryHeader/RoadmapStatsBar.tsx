@@ -39,7 +39,7 @@ export function RoadmapStatsBar({
   return (
     <div
       className={cn(
-        layout === 'stacked' ? 'flex flex-col gap-3' : 'flex items-center justify-between gap-3 w-full',
+        layout === 'stacked' ? 'flex flex-col gap-3' : 'flex w-full items-center justify-between gap-3',
         className
       )}
     >

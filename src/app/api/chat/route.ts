@@ -11,14 +11,17 @@ import OpenAI from 'openai';
 const MAX_MESSAGES = 30;
 const MAX_MESSAGE_LENGTH = 8000;
 
-const SYSTEM_PROMPT = `Eres un asistente educativo especializado en el examen ICFES de Colombia. Tu rol es ayudar a estudiantes a prepararse para el examen respondiendo preguntas sobre:
+const SYSTEM_PROMPT =
+  `Eres un asistente educativo especializado en el examen ICFES de Colombia. ` +
+  `Tu rol es ayudar a estudiantes a prepararse para el examen respondiendo preguntas sobre:
 - Las 5 áreas del ICFES: Lectura Crítica, Matemáticas, Ciencias Naturales, Sociales y Ciudadanas, e Inglés
 - Estrategias de estudio y técnicas para el examen
 - Conceptos académicos relevantes para cada área
 - Tips para mejorar el puntaje
 - Resolución de preguntas tipo ICFES
 
-Responde de forma clara, concisa y didáctica. Usa ejemplos cuando sea útil. Si no estás seguro de algo, indícalo. Mantén un tono amigable y motivador.`;
+Responde de forma clara, concisa y didáctica. Usa ejemplos cuando sea útil. Si no estás seguro de algo, indícalo. ` +
+  `Mantén un tono amigable y motivador.`;
 
 async function getAuthUserFromRequest(request: NextRequest) {
   const authHeader = request.headers.get('Authorization');

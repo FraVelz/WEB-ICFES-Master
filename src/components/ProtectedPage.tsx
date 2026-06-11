@@ -41,7 +41,12 @@ export default function ProtectedPage({
     return (
       <div className={cn('flex flex-col items-center justify-center', FULL_PAGE_SHELL_CLASS)}>
         <div className="text-center">
-          <div className="border-app-ring/30 border-t-app-ring mx-auto mb-4 h-16 w-16 animate-spin rounded-full border-4" />
+          <div
+            className={cn(
+              'border-app-ring/30 border-t-app-ring mx-auto mb-4 h-16 w-16',
+              'animate-spin rounded-full border-4'
+            )}
+          />
           <p className="text-app-accent text-lg font-semibold">Verificando sesión...</p>
         </div>
       </div>

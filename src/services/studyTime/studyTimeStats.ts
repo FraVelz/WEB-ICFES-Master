@@ -1,9 +1,6 @@
 import { secondsToDisplayMinutes } from '@/services/studyTime/studyTimeUtils';
 import { loadStudyTimeState } from './studyTimeStorage';
-import {
-  currentSessionSeconds,
-  isSessionActive,
-} from './studyTimeSession';
+import { currentSessionSeconds, isSessionActive } from './studyTimeSession';
 import {
   MARATHON_TARGET_MINUTES,
   STUDY_TIME_META_KEY,

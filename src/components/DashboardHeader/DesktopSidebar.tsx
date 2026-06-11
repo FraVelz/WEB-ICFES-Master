@@ -3,21 +3,14 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Icon } from '@/shared/components/Icon';
-import { AvatarImage } from '@/features/user/components/AvatarImage';
 import { isAccountOnlyPath } from '@/features/auth/constants/accountOnlyRoutes';
 import { useUser } from '@/features/user/hooks/useUser';
 import { useResolvedProfileAvatar } from '@/features/user/hooks/useResolvedProfileAvatar';
 import { useUiSessionStore } from '@/store/uiSessionStore';
 import { cn } from '@/utils/cn';
-import {
-  FOCUS_RING,
-  isNavOptionActive,
-  isNavPathActive,
-  mainNavOptions,
-  secondaryNavOptions,
-  SIDEBAR_NAV_HOVER,
-  type NavOption,
-} from './constants';
+import { FOCUS_RING, mainNavOptions, secondaryNavOptions } from './constants';
+import { SidebarNavLink } from './SidebarNavLink';
+import { DesktopSidebarFooter } from './DesktopSidebarFooter';
 
 type DesktopSidebarProps = {
   className?: string;
@@ -25,82 +18,12 @@ type DesktopSidebarProps = {
   onToggleSidebar: () => void;
 };
 
-function SidebarNavLink({
-  option,
-  pathname,
-  sidebarExpanded,
-  isLocked,
-}: {
-  option: NavOption;
-  pathname: string;
-  sidebarExpanded: boolean;
-  isLocked: boolean;
-}) {
-  const isActive = isNavOptionActive(pathname, option);
-  const accent = option.accent ?? 'default';
-
-  return (
-    <Link
-      href={option.path}
-      title={!sidebarExpanded ? option.label : undefined}
-      aria-current={isActive ? 'page' : undefined}
-      className={cn(
-        'group/item relative flex h-12 items-center rounded-xl transition-all duration-300 focus-visible:z-10',
-        sidebarExpanded ? 'gap-3 px-3' : 'justify-center px-0',
-        FOCUS_RING,
-        isActive
-          ? accent === 'orange'
-            ? cn(
-                'bg-orange-500/15 text-orange-400 shadow-lg shadow-orange-500/10',
-                !sidebarExpanded && 'ring-2 ring-orange-400/45'
-              )
-            : cn(
-                'bg-app-ring/15 text-app-accent shadow-app-ring/25 shadow-lg',
-                !sidebarExpanded && 'ring-app-accent/45 ring-2'
-              )
-          : cn(SIDEBAR_NAV_HOVER, 'group-hover/item:scale-[1.02]'),
-        isLocked && 'opacity-70'
-      )}
-    >
-      <Icon
-        name={option.icon}
-        size="lg"
-        className={cn(
-          'shrink-0 transition-all duration-300',
-          !isActive && 'group-hover/item:text-app-accent group-hover/item:scale-110',
-          isActive && !sidebarExpanded && 'scale-110',
-          isActive && 'drop-shadow-[0_0_8px_currentColor]'
-        )}
-      />
-      {sidebarExpanded && (
-        <span className="group-hover/item:text-app-accent font-medium whitespace-nowrap transition-colors">
-          {option.label}
-          {isLocked && <Icon name="lock" size="sm" className="ml-1.5 inline text-slate-500" />}
-        </span>
-      )}
-      {isActive && option.showActiveIndicator !== false && sidebarExpanded && (
-        <div className="bg-app-ring absolute top-1/2 right-0 h-6 w-1 -translate-y-1/2 rounded-l-full" />
-      )}
-      {isActive && !sidebarExpanded && (
-        <span
-          className={cn(
-            'absolute bottom-1 left-1/2 h-1.5 w-1.5 -translate-x-1/2 rounded-full',
-            accent === 'orange' ? 'bg-orange-400' : 'bg-app-accent'
-          )}
-        />
-      )}
-    </Link>
-  );
-}
-
 export function DesktopSidebar({ className, sidebarExpanded, onToggleSidebar }: DesktopSidebarProps) {
   const pathname = usePathname();
   const { user, rank, coinsBalance } = useUser();
   const avatarSrc = useResolvedProfileAvatar(user?.profileImage);
   const demoMode = useUiSessionStore((s) => s.demoMode);
   const isLockedInDemo = (path: string) => demoMode && isAccountOnlyPath(path);
-  const isProfileActive = isNavPathActive(pathname, '/perfil');
-  const isSettingsActive = isNavPathActive(pathname, '/configuracion');
 
   return (
     <header
@@ -189,78 +112,15 @@ export function DesktopSidebar({ className, sidebarExpanded, onToggleSidebar }: 
         ))}
       </nav>
 
-      <div
-        className={cn(
-          'border-app-ring/10 bg-surface-elevated/50 shrink-0 border-t',
-          sidebarExpanded ? 'p-4' : 'px-2 py-4'
-        )}
-      >
-        {sidebarExpanded && (
-          <div className="bg-surface-elevated/80 mb-4 flex h-10 items-center gap-3 rounded-lg border border-amber-500/20 px-3">
-            <Icon name="coins" className="shrink-0 text-amber-400" />
-            <span className="font-bold whitespace-nowrap text-amber-400">{coinsBalance}</span>
-          </div>
-        )}
-
-        <Link
-          href="/perfil"
-          title={!sidebarExpanded ? user?.username || 'Perfil' : undefined}
-          aria-current={isProfileActive ? 'page' : undefined}
-          className={cn(
-            'group/profile flex items-center overflow-hidden rounded-xl p-2 transition-colors',
-            sidebarExpanded ? 'gap-3' : 'justify-center',
-            FOCUS_RING,
-            isProfileActive ? 'bg-app-ring/15 ring-app-accent/45 ring-2' : SIDEBAR_NAV_HOVER,
-            isLockedInDemo('/perfil') && 'opacity-70'
-          )}
-        >
-          <div
-            className={cn(
-              'relative h-10 w-10 shrink-0 overflow-hidden rounded-full border-2 bg-slate-800',
-              isProfileActive ? 'border-app-accent' : 'border-app-ring/30'
-            )}
-          >
-            <AvatarImage src={avatarSrc} alt="Profile" sizes="40px" />
-          </div>
-          {sidebarExpanded && (
-            <span className="min-w-0 overflow-hidden whitespace-nowrap">
-              <p className="text-on-surface max-w-[140px] truncate text-sm font-bold">{user?.username || 'Usuario'}</p>
-              <p className="text-app-accent text-xs">{rank?.name || 'Novato'}</p>
-            </span>
-          )}
-        </Link>
-
-        <Link
-          href="/configuracion"
-          aria-current={isSettingsActive ? 'page' : undefined}
-          className={cn(
-            'mt-2 flex h-10 items-center rounded-xl p-2 transition-colors',
-            sidebarExpanded ? 'gap-3 px-3' : 'justify-center',
-            FOCUS_RING,
-            isSettingsActive
-              ? 'bg-app-ring/15 text-app-accent ring-app-accent/45 ring-2'
-              : cn(SIDEBAR_NAV_HOVER, 'text-slate-500'),
-            isLockedInDemo('/configuracion') && 'opacity-70'
-          )}
-          title={
-            !sidebarExpanded ? (isLockedInDemo('/configuracion') ? 'Requiere cuenta' : 'Configuración') : undefined
-          }
-        >
-          <Icon
-            name="cog"
-            size="lg"
-            className={cn('shrink-0', isSettingsActive && 'drop-shadow-[0_0_8px_currentColor]')}
-          />
-          {sidebarExpanded && (
-            <span className="font-medium whitespace-nowrap">
-              Configuración
-              {isLockedInDemo('/configuracion') && (
-                <Icon name="lock" size="sm" className="ml-1.5 inline text-slate-500" />
-              )}
-            </span>
-          )}
-        </Link>
-      </div>
+      <DesktopSidebarFooter
+        sidebarExpanded={sidebarExpanded}
+        pathname={pathname}
+        username={user?.username}
+        rankName={rank?.name}
+        avatarSrc={avatarSrc}
+        coinsBalance={coinsBalance}
+        isLockedInDemo={isLockedInDemo}
+      />
     </header>
   );
 }

@@ -15,12 +15,27 @@ export default function PrivacidadPage() {
   return (
     <div className={cn('relative px-4 py-12 sm:px-6 lg:px-8', FULL_PAGE_SHELL_CLASS)}>
       <div className="pointer-events-none fixed inset-0 z-0">
-        <div className="bg-lesson-lc-glow-a/20 absolute top-1/3 left-1/4 h-96 w-96 animate-pulse rounded-full blur-3xl" />
+        <div
+          className={cn(
+            'bg-lesson-lc-glow-a/20 absolute top-1/3 left-1/4 h-96 w-96',
+            'animate-pulse rounded-full blur-3xl'
+          )}
+        />
         <div className="absolute right-1/4 bottom-1/3 h-96 w-96 animate-pulse rounded-full bg-purple-500/20 blur-3xl" />
       </div>
 
-      <div className="border-surface-border bg-surface-elevated/90 relative z-10 mx-auto max-w-4xl rounded-2xl border p-4 shadow-sm backdrop-blur-xl sm:p-8">
-        <h1 className="from-cta-text-start mb-4 flex items-center gap-3 bg-linear-to-r to-blue-500 bg-clip-text text-4xl font-bold text-transparent">
+      <div
+        className={cn(
+          'border-surface-border bg-surface-elevated/90 relative z-10 mx-auto max-w-4xl',
+          'rounded-2xl border p-4 shadow-sm backdrop-blur-xl sm:p-8'
+        )}
+      >
+        <h1
+          className={cn(
+            'from-cta-text-start mb-4 flex items-center gap-3 bg-linear-to-r to-blue-500 bg-clip-text',
+            'text-4xl font-bold text-transparent'
+          )}
+        >
           <Icon name="shield-alt" size="2xl" className="text-app-accent shrink-0" />
           Política de Privacidad
         </h1>

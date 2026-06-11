@@ -72,8 +72,7 @@ export function TipsCategoriesSectionsStudy() {
         <TipCard
           title="Aprende de los errores"
           description={
-            'Lee siempre la explicación de las preguntas incorrectas. ' +
-            'Anota el patrón del error para no repetirlo.'
+            'Lee siempre la explicación de las preguntas incorrectas. ' + 'Anota el patrón del error para no repetirlo.'
           }
         />
         <TipCard

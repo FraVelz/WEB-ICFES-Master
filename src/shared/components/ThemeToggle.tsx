@@ -56,7 +56,12 @@ export function ThemeToggle({ className, compact = false, onToggle }: ThemeToggl
       )}
     >
       <div className="flex items-start gap-4">
-        <div className="bg-surface-elevated text-on-surface-muted flex h-10 w-10 shrink-0 items-center justify-center rounded-full">
+        <div
+          className={cn(
+            'bg-surface-elevated text-on-surface-muted flex h-10 w-10 shrink-0',
+            'items-center justify-center rounded-full'
+          )}
+        >
           <Icon name={isDark ? 'sun' : 'moon'} />
         </div>
         <div>

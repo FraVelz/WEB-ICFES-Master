@@ -61,7 +61,10 @@ export function LeaguePlayerRow({
         </div>
         {statusReaction && (
           <span
-            className="absolute -top-1 -right-1 flex h-6 w-6 items-center justify-center rounded-full border-2 border-slate-900 bg-slate-800 text-sm"
+            className={cn(
+              'absolute -top-1 -right-1 flex h-6 w-6 items-center justify-center rounded-full',
+              'border-2 border-slate-900 bg-slate-800 text-sm'
+            )}
             title={statusReaction.label}
           >
             {statusReaction.emoji}
@@ -76,23 +79,21 @@ export function LeaguePlayerRow({
 
       <div className="min-w-0 flex-1">
         <div className="flex items-center gap-1.5">
-          <span
-            className={cn(
-              'truncate text-sm font-bold',
-              isCurrentUser ? 'text-sky-300' : 'text-white'
-            )}
-          >
+          <span className={cn('truncate text-sm font-bold', isCurrentUser ? 'text-sky-300' : 'text-white')}>
             {player.name || player.username || 'Usuario'}
           </span>
           {isVip && (
-            <span className="rounded-full border border-amber-500/30 bg-amber-500/10 px-1.5 py-0.5 text-[9px] font-bold text-amber-400">
+            <span
+              className={cn(
+                'rounded-full border border-amber-500/30 bg-amber-500/10 px-1.5 py-0.5',
+                'text-[9px] font-bold text-amber-400'
+              )}
+            >
               VIP
             </span>
           )}
           {isCurrentUser && (
-            <span className="rounded-full bg-sky-500/20 px-1.5 py-0.5 text-[9px] font-bold text-sky-300">
-              Tú
-            </span>
+            <span className="rounded-full bg-sky-500/20 px-1.5 py-0.5 text-[9px] font-bold text-sky-300">Tú</span>
           )}
         </div>
         <div className={cn('flex items-center gap-1 text-[11px]', style.color)}>

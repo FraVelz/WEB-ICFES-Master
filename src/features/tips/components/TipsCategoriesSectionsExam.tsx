@@ -82,8 +82,7 @@ export function TipsCategoriesSectionsExam() {
         <TipCard
           title="Prepara la logística con anticipación"
           description={
-            'Revisa sede, horario, documentos y transporte el día anterior. ' +
-            'Llegar con tiempo reduce el estrés.'
+            'Revisa sede, horario, documentos y transporte el día anterior. ' + 'Llegar con tiempo reduce el estrés.'
           }
         />
         <TipCard

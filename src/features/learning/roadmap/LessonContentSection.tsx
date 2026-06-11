@@ -49,9 +49,7 @@ export function LessonContentSection({
         </div>
       ) : (
         <div className="rounded-2xl border border-slate-700/60 bg-slate-900/30 p-4 text-center sm:p-6">
-          <p className="text-sm text-slate-400 sm:text-base">
-            No hay contenido disponible para esta lección.
-          </p>
+          <p className="text-sm text-slate-400 sm:text-base">No hay contenido disponible para esta lección.</p>
         </div>
       )}
     </div>

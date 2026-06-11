@@ -30,7 +30,10 @@ export const AchievementsList = ({ achievements = [] }: AchievementsListProps) =
   const getStatusColor = (status: string) => {
     switch (status) {
       case 'completed':
-        return 'border-cyan-700/45 bg-cyan-50 text-cyan-900 dark:border-amber-500/45 dark:bg-amber-500/15 dark:text-amber-300';
+        return (
+          'border-cyan-700/45 bg-cyan-50 text-cyan-900 dark:border-amber-500/45 ' +
+          'dark:bg-amber-500/15 dark:text-amber-300'
+        );
       case 'in_progress':
         return 'text-app-accent border-app-ring/50 bg-app-ring/10';
       default:
@@ -48,7 +51,12 @@ export const AchievementsList = ({ achievements = [] }: AchievementsListProps) =
     <div className="animate-fade-in w-full space-y-6">
       {/* Header & Filters */}
       <div className="space-y-4">
-        <h2 className="from-hub-title-from bg-linear-to-r to-blue-400 bg-clip-text px-1 text-2xl font-bold text-transparent">
+        <h2
+          className={cn(
+            'from-hub-title-from bg-linear-to-r to-blue-400 bg-clip-text px-1',
+            'text-2xl font-bold text-transparent'
+          )}
+        >
           Logros y Metas
         </h2>
 
@@ -60,12 +68,18 @@ export const AchievementsList = ({ achievements = [] }: AchievementsListProps) =
               type="button"
               onClick={() => setActiveCategory(key)}
               className={cn(
-                'flex cursor-pointer items-center gap-2 rounded-full border px-4 py-2 text-sm font-semibold whitespace-nowrap transition-all duration-300',
-                'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none',
+                'flex cursor-pointer items-center gap-2 rounded-full border px-4 py-2',
+                'text-sm font-semibold whitespace-nowrap transition-all duration-300',
+                'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:outline-none',
+                'focus-visible:ring-offset-2',
                 'focus-visible:ring-offset-slate-950',
                 activeCategory === key
                   ? 'border-app-ring bg-app-ring/20 text-app-accent shadow-app-ring/20 shadow-lg'
-                  : 'border-surface-border bg-surface-elevated text-on-surface-muted hover:border-app-ring/40 hover:text-on-surface dark:border-slate-700 dark:bg-slate-800/50 dark:text-slate-400 dark:hover:border-slate-600 dark:hover:bg-slate-800'
+                  : cn(
+                      'border-surface-border bg-surface-elevated text-on-surface-muted',
+                      'hover:border-app-ring/40 hover:text-on-surface dark:border-slate-700',
+                      'dark:bg-slate-800/50 dark:text-slate-400 dark:hover:border-slate-600 dark:hover:bg-slate-800'
+                    )
               )}
             >
               <Icon name={icon} />
@@ -88,7 +102,11 @@ export const AchievementsList = ({ achievements = [] }: AchievementsListProps) =
               className={cn(
                 'group relative overflow-hidden rounded-xl border p-4 transition-all duration-300',
                 isCompleted
-                  ? 'border-cyan-700/45 bg-white shadow-sm hover:border-cyan-800 dark:border-amber-500/35 dark:bg-slate-800/80 dark:shadow-none dark:hover:border-amber-500/55'
+                  ? cn(
+                      'border-cyan-700/45 bg-white shadow-sm hover:border-cyan-800',
+                      'dark:border-amber-500/35 dark:bg-slate-800/80 dark:shadow-none',
+                      'dark:hover:border-amber-500/55'
+                    )
                   : isIncomplete
                     ? 'border-slate-800 bg-slate-900/50 opacity-75'
                     : 'hover:border-app-ring/30 border-slate-700 bg-slate-800/30 hover:bg-slate-800/50'

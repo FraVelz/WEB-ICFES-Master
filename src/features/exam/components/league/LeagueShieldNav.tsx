@@ -78,7 +78,8 @@ export function LeagueShieldNav({ selectedRank, myLeagueRank, onSelect }: League
               onClick={() => onSelect(rank.id)}
               className={cn(
                 'group flex shrink-0 flex-col items-center gap-1.5 transition-transform focus-visible:outline-none',
-                'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950',
+                'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:outline-none',
+                'focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950',
                 isSelected ? 'scale-110' : 'scale-95 opacity-80 hover:scale-100 hover:opacity-100'
               )}
               aria-pressed={isSelected}
@@ -86,7 +87,8 @@ export function LeagueShieldNav({ selectedRank, myLeagueRank, onSelect }: League
             >
               <div
                 className={cn(
-                  'relative flex items-center justify-center rounded-b-[40%] rounded-t-lg border-2 bg-linear-to-b shadow-md',
+                  'relative flex items-center justify-center rounded-t-lg rounded-b-[40%]',
+                  'border-2 bg-linear-to-b shadow-md',
                   gradient,
                   isSelected ? 'h-16 w-14 sm:h-[4.5rem] sm:w-16' : 'h-12 w-10 sm:h-14 sm:w-12',
                   isLocked && 'grayscale'
@@ -102,7 +104,12 @@ export function LeagueShieldNav({ selectedRank, myLeagueRank, onSelect }: League
                   />
                 )}
                 {isMyLeague && !isSelected && (
-                  <span className="absolute -bottom-1 left-1/2 h-1.5 w-1.5 -translate-x-1/2 rounded-full bg-app-accent" />
+                  <span
+                    className={cn(
+                      'bg-app-accent absolute -bottom-1 left-1/2 h-1.5 w-1.5 -translate-x-1/2',
+                      'rounded-full'
+                    )}
+                  />
                 )}
               </div>
               {isSelected && (

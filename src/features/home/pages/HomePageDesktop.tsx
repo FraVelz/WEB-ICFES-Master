@@ -117,7 +117,12 @@ const HomePageDesktopComponent = ({ onDemoAccess }: { onDemoAccess: () => void }
         </section>
 
         <section className="relative overflow-hidden py-8 md:py-12">
-          <div className="absolute top-0 right-0 left-0 h-1 bg-linear-to-r from-transparent via-blue-500/50 to-transparent" />
+          <div
+            className={cn(
+              'absolute top-0 right-0 left-0 h-1 bg-linear-to-r',
+              'from-transparent via-blue-500/50 to-transparent'
+            )}
+          />
           <div data-home-reveal className={homeStyles.revealScroll}>
             <AreasSection />
           </div>
@@ -130,7 +135,12 @@ const HomePageDesktopComponent = ({ onDemoAccess }: { onDemoAccess: () => void }
         </section>
 
         <section className="relative overflow-hidden py-12 md:py-16">
-          <div className="absolute top-0 right-0 left-0 h-1 bg-linear-to-r from-transparent via-purple-500/50 to-transparent" />
+          <div
+            className={cn(
+              'absolute top-0 right-0 left-0 h-1 bg-linear-to-r',
+              'from-transparent via-purple-500/50 to-transparent'
+            )}
+          />
           <div data-home-reveal className={homeStyles.revealScroll}>
             <TestimonialsSection />
           </div>
@@ -143,7 +153,12 @@ const HomePageDesktopComponent = ({ onDemoAccess }: { onDemoAccess: () => void }
         </section>
 
         <section className="relative overflow-hidden py-12 md:py-16">
-          <div className="absolute top-0 right-0 left-0 h-1 bg-linear-to-r from-transparent via-blue-500/50 to-transparent" />
+          <div
+            className={cn(
+              'absolute top-0 right-0 left-0 h-1 bg-linear-to-r',
+              'from-transparent via-blue-500/50 to-transparent'
+            )}
+          />
           <div data-home-reveal className={homeStyles.revealScroll}>
             <FinalCTASection />
           </div>

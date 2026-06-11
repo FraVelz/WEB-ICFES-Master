@@ -30,10 +30,7 @@ export function getLessonStepHref(lessonId: string, step: number | 'examen'): st
   return `${LESSON_PATH_PREFIX}/${lessonId}/${slug}`;
 }
 
-export function getLessonStartHref(
-  lessonId: string,
-  options: { hasContent: boolean; hasQuiz: boolean }
-): string {
+export function getLessonStartHref(lessonId: string, options: { hasContent: boolean; hasQuiz: boolean }): string {
   if (options.hasContent) return getLessonStepHref(lessonId, 1);
   if (options.hasQuiz) return getLessonStepHref(lessonId, 'examen');
   return getLessonStepHref(lessonId, 1);
@@ -83,10 +80,7 @@ export function getAdjacentLessonStepHrefs(
 
   const examPosition = contentStepCount;
   return {
-    prev:
-      contentStepCount > 0
-        ? getLessonStepHref(lessonId, contentStepCount)
-        : null,
+    prev: contentStepCount > 0 ? getLessonStepHref(lessonId, contentStepCount) : null,
     next: null,
   };
 }

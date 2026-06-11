@@ -54,7 +54,9 @@ export const LearningRoadmap = () => {
     setSelectedLesson(node);
   };
 
-  const handleStartLesson = (lesson?: PathNodeData | { id?: string; content?: string; questions?: unknown[]; quiz?: unknown } | null) => {
+  const handleStartLesson = (
+    lesson?: PathNodeData | { id?: string; content?: string; questions?: unknown[]; quiz?: unknown } | null
+  ) => {
     setSelectedLesson(null);
     if (!lesson?.id) return;
 

@@ -57,16 +57,15 @@ export function LearningPhasesPage() {
         <Link
           href={areaExamHref}
           className={cn(
-            'border-surface-border bg-surface-elevated/80 flex items-center justify-between gap-3 rounded-2xl border p-4',
+            'border-surface-border bg-surface-elevated/80 flex items-center justify-between gap-3',
+            'rounded-2xl border p-4',
             'transition-colors hover:border-purple-500/40 hover:bg-purple-500/5',
             'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:outline-none'
           )}
         >
           <div className="min-w-0">
             <p className="text-on-surface font-semibold">Examen general</p>
-            <p className="text-on-surface-muted text-sm">
-              Simulacro completo de {currentAreaData.name}
-            </p>
+            <p className="text-on-surface-muted text-sm">Simulacro completo de {currentAreaData.name}</p>
           </div>
           <Icon name="brain" className="shrink-0 text-purple-400" />
         </Link>

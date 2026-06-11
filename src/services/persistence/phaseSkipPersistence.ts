@@ -37,7 +37,11 @@ export function isPhaseSkipped(areaId: string, sectionId: string): boolean {
 }
 
 export function getSkippedSectionIdsForArea(areaId: string): Set<string> {
-  return new Set(readSkips().filter((r) => r.areaId === areaId).map((r) => r.sectionId));
+  return new Set(
+    readSkips()
+      .filter((r) => r.areaId === areaId)
+      .map((r) => r.sectionId)
+  );
 }
 
 export function markPhaseSkipped(areaId: string, sectionId: string, score: number): void {

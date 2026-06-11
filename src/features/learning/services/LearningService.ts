@@ -66,8 +66,7 @@ export const LearningService = {
           (typeof nestedContent === 'string'
             ? nestedContent
             : nestedContent && typeof nestedContent === 'object'
-              ? ((nestedContent as Record<string, unknown>).body ??
-                (nestedContent as Record<string, unknown>).markdown)
+              ? ((nestedContent as Record<string, unknown>).body ?? (nestedContent as Record<string, unknown>).markdown)
               : undefined);
         const contentStr = typeof rawContent === 'string' ? rawContent : '';
         const lessonPhase = normalizeLessonPhase(l.phase ?? l.difficulty);

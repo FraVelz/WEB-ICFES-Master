@@ -48,9 +48,7 @@ export function FullExamHeader({
         </div>
 
         {showTimer && timeRemaining != null && (
-          <div className={cn('font-mono text-2xl font-bold', timeColor)}>
-            {formatTimeExtended(timeRemaining)}
-          </div>
+          <div className={cn('font-mono text-2xl font-bold', timeColor)}>{formatTimeExtended(timeRemaining)}</div>
         )}
 
         {onExit ? (

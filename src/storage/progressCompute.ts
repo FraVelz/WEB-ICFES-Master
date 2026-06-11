@@ -2,11 +2,7 @@ import { calculateCurrentStreak, datesFromAttemptIsoStrings, mergeStreakStates }
 import { loadLocalStreakState } from '@/services/streak/streakLocalStorage';
 import { resolveStreakScopeFromStorage } from '@/services/streak/streakService';
 import { getStoredExams, getStoredPractices } from './progressAttemptRead';
-import {
-  buildAreaStats,
-  createEmptyAreaTotals,
-  pickBestAndWeakAreas,
-} from './progressAreaStats';
+import { buildAreaStats, createEmptyAreaTotals, pickBestAndWeakAreas } from './progressAreaStats';
 import { getDefaultProgress } from './progressDefaults';
 import type { AttemptWithQuestions, ProgressData } from './progressStorageTypes';
 import { STORAGE_KEYS } from './progressStorageTypes';

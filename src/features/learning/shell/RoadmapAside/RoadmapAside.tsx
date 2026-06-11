@@ -175,12 +175,7 @@ export function RoadmapAside({
         anchorRef={areaSelectorRef}
       />
 
-      <StreakModal
-        isOpen={streakOpen}
-        onClose={onCloseModals}
-        streakData={streakData}
-        anchorRef={streakButtonRef}
-      />
+      <StreakModal isOpen={streakOpen} onClose={onCloseModals} streakData={streakData} anchorRef={streakButtonRef} />
     </aside>
   );
 }

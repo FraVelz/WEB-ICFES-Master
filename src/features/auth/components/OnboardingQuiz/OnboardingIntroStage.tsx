@@ -29,10 +29,11 @@ export function OnboardingIntroStage({ message, description, avatarSrc, onBack, 
       <div className="flex flex-1 flex-col items-center justify-center px-6 py-8">
         <MascotaCircle src={avatarSrc} size="large" alt="Zeus - Tu asistente" className="mb-8" />
         <div
-        className={cn(
-          "w-full max-w-2xl rounded-lg border border-slate-700 bg-slate-800/50 p-8",
-          "text-center backdrop-blur-sm"
-        )}>
+          className={cn(
+            'w-full max-w-2xl rounded-lg border border-slate-700 bg-slate-800/50 p-8',
+            'text-center backdrop-blur-sm'
+          )}
+        >
           <h2
             className={cn(
               'from-cta-text-start via-cta-text-via to-cta-text-end mb-2 bg-linear-to-r bg-clip-text text-2xl',

@@ -29,7 +29,10 @@ export const CoinsModal = ({ isOpen, onClose, coins = 0 }: CoinsModalProps) => {
 
       <div
         ref={dropdownRef}
-        className="absolute top-full right-0 z-50 w-full rounded-b-2xl border-x border-b border-slate-700 bg-slate-900 shadow-2xl sm:w-80"
+        className={cn(
+          'absolute top-full right-0 z-50 w-full rounded-b-2xl border-x border-b border-slate-700',
+          'bg-slate-900 shadow-2xl sm:w-80'
+        )}
       >
         <div className="p-4">
           <div className="mb-4 flex items-center justify-between border-b border-slate-800 pb-3">
@@ -43,7 +46,8 @@ export const CoinsModal = ({ isOpen, onClose, coins = 0 }: CoinsModalProps) => {
               aria-label="Cerrar"
               className={cn(
                 'cursor-pointer rounded-lg p-1 text-slate-500 transition-colors hover:text-white',
-                'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none',
+                'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:outline-none',
+                'focus-visible:ring-offset-2',
                 'focus-visible:ring-offset-slate-900'
               )}
             >

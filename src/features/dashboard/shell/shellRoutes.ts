@@ -23,10 +23,7 @@ export function resolveDashboardShellSection(pathname: string): DashboardShellSe
   }
   if (isNavPathActive(pathname, '/logros')) return 'achievements';
   if (isNavPathActive(pathname, '/clasificatoria')) return 'leaderboard';
-  if (
-    isNavPathActive(pathname, '/lectura') ||
-    LECTURA_SUB_PATHS.some((path) => isNavPathActive(pathname, path))
-  ) {
+  if (isNavPathActive(pathname, '/lectura') || LECTURA_SUB_PATHS.some((path) => isNavPathActive(pathname, path))) {
     return 'lectura';
   }
   return 'learning';

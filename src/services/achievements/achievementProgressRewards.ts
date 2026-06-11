@@ -5,10 +5,7 @@ import { addCoinsBalance } from '@/services/persistence/coinsPersistence';
 import { gamificationPersistence } from '@/services/persistence/gamificationPersistence';
 import type { AchievementProgressMap } from './achievementProgressTypes';
 
-async function awardAchievementUnlock(
-  userId: string,
-  achievement: (typeof ACHIEVEMENTS_DATA)[number]
-): Promise<void> {
+async function awardAchievementUnlock(userId: string, achievement: (typeof ACHIEVEMENTS_DATA)[number]): Promise<void> {
   if (achievement.coinsReward > 0) {
     await addCoinsBalance(userId, achievement.coinsReward, `achievement_${achievement.id}`);
   }

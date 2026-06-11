@@ -41,7 +41,8 @@ export const PathNode = ({
   const borderColor = BORDER_COLORS[colorName] ?? BORDER_COLORS.slate;
 
   const cardClass = cn(
-    'group relative flex w-full cursor-pointer items-center gap-4 rounded-2xl border-2 p-4 text-left transition-all duration-200',
+    'group relative flex w-full cursor-pointer items-center gap-4 rounded-2xl border-2 p-4',
+    'text-left transition-all duration-200',
     'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-app-accent focus-visible:ring-offset-2',
     'focus-visible:ring-offset-slate-950',
     isPending && 'border-slate-800 bg-slate-900/40 opacity-70 hover:border-slate-600 hover:opacity-90',
@@ -50,7 +51,8 @@ export const PathNode = ({
   );
 
   const iconCircleClass = cn(
-    'relative flex shrink-0 items-center justify-center rounded-full border-b-4 transition-transform group-hover:scale-105',
+    'relative flex shrink-0 items-center justify-center rounded-full border-b-4',
+    'transition-transform group-hover:scale-105',
     isCheckpoint ? 'h-16 w-16 text-2xl' : 'h-12 w-12 text-lg',
     isPending && 'border-slate-700 bg-slate-800 text-slate-600',
     isCurrent && cn(colorClass, 'border-white/20 text-white shadow-md'),
@@ -62,11 +64,7 @@ export const PathNode = ({
       <div className={iconCircleClass}>
         <Icon
           name={isCompleted ? 'check' : icon || 'book'}
-          className={cn(
-            isPending && 'text-slate-600',
-            isCurrent && 'text-white',
-            isCompleted && 'text-green-400'
-          )}
+          className={cn(isPending && 'text-slate-600', isCurrent && 'text-white', isCompleted && 'text-green-400')}
         />
       </div>
 
@@ -95,23 +93,14 @@ export const PathNode = ({
         <Icon
           name={isCompleted ? 'check' : 'play'}
           size="sm"
-          className={cn(
-            isPending && 'text-slate-500',
-            isCurrent && 'text-slate-900',
-            isCompleted && 'text-green-400'
-          )}
+          className={cn(isPending && 'text-slate-500', isCurrent && 'text-slate-900', isCompleted && 'text-green-400')}
         />
       </div>
     </>
   );
 
   return (
-    <button
-      type="button"
-      onClick={onClick}
-      className={cardClass}
-      aria-current={isCurrent ? 'step' : undefined}
-    >
+    <button type="button" onClick={onClick} className={cardClass} aria-current={isCurrent ? 'step' : undefined}>
       {body}
     </button>
   );

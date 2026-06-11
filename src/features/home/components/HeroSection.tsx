@@ -17,13 +17,22 @@ export const HeroSection = ({ onDemoAccess }: { onDemoAccess: () => void }) => {
   };
 
   return (
-    <section className="focus:ring-app-accent focus:ring-offset-surface flex min-h-dvh scroll-mt-4 items-center justify-center px-6 pt-5 outline-none focus:ring-2 focus:ring-offset-2 sm:scroll-mt-6 sm:pt-20 md:px-8">
+    <section
+      className={cn(
+        'focus:ring-app-accent focus:ring-offset-surface flex min-h-dvh scroll-mt-4',
+        'items-center justify-center px-6 pt-5 outline-none focus:ring-2 focus:ring-offset-2',
+        'sm:scroll-mt-6 sm:pt-20 md:px-8'
+      )}
+    >
       <div className="mx-auto max-w-6xl space-y-8 text-center">
         {/* Badge */}
         <AnimatedReveal
           isVisible
           delay={0}
-          className="border-app-ring/70 bg-surface-elevated dark:border-app-ring/50 dark:bg-app-ring/20 inline-flex items-center gap-2 rounded-full border px-4 py-2 shadow-sm dark:shadow-none"
+          className={cn(
+            'border-app-ring/70 bg-surface-elevated dark:border-app-ring/50 dark:bg-app-ring/20',
+            'inline-flex items-center gap-2 rounded-full border px-4 py-2 shadow-sm dark:shadow-none'
+          )}
         >
           <Icon name="star" className="text-app-accent" />
           <span className="text-app-accent text-sm font-semibold">
@@ -70,7 +79,8 @@ export const HeroSection = ({ onDemoAccess }: { onDemoAccess: () => void }) => {
           <Link
             href="/login"
             className={cn(
-              'border-app-ring bg-surface-elevated flex items-center justify-center gap-2 rounded-lg border-2 px-8 py-4',
+              'border-app-ring bg-surface-elevated flex items-center justify-center gap-2',
+              'rounded-lg border-2 px-8 py-4',
               'hover:border-app-accent text-app-accent text-lg font-bold transition-all duration-300',
               'hover:bg-surface-border/30 hover:shadow-app-ring/30 hover:shadow-lg',
               'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:outline-none',
@@ -84,15 +94,30 @@ export const HeroSection = ({ onDemoAccess }: { onDemoAccess: () => void }) => {
 
         {/* Stats */}
         <AnimatedReveal isVisible delay={0.6} className="mx-auto grid max-w-2xl grid-cols-3 gap-4 pt-8">
-          <div className="border-surface-border bg-surface-elevated dark:bg-surface-elevated/80 rounded-lg border p-2 shadow-sm sm:p-4 dark:shadow-none">
+          <div
+            className={cn(
+              'border-surface-border bg-surface-elevated dark:bg-surface-elevated/80',
+              'rounded-lg border p-2 shadow-sm sm:p-4 dark:shadow-none'
+            )}
+          >
             <p className="text-app-accent text-3xl font-bold">+500</p>
             <p className="text-on-surface-muted mt-1 text-xs font-medium">Preguntas</p>
           </div>
-          <div className="border-surface-border bg-surface-elevated dark:bg-surface-elevated/80 rounded-lg border p-2 shadow-sm sm:p-4 dark:shadow-none">
+          <div
+            className={cn(
+              'border-surface-border bg-surface-elevated dark:bg-surface-elevated/80',
+              'rounded-lg border p-2 shadow-sm sm:p-4 dark:shadow-none'
+            )}
+          >
             <p className="text-3xl font-bold text-indigo-700 dark:text-purple-400">+1</p>
             <p className="text-on-surface-muted mt-1 text-xs font-medium">Estudiantes</p>
           </div>
-          <div className="border-surface-border bg-surface-elevated dark:bg-surface-elevated/80 rounded-lg border p-2 shadow-sm sm:p-4 dark:shadow-none">
+          <div
+            className={cn(
+              'border-surface-border bg-surface-elevated dark:bg-surface-elevated/80',
+              'rounded-lg border p-2 shadow-sm sm:p-4 dark:shadow-none'
+            )}
+          >
             <p className="text-3xl font-bold text-blue-800 dark:text-pink-400">?400</p>
             <p className="text-on-surface-muted mt-1 text-xs font-medium">Puntaje promedio</p>
           </div>

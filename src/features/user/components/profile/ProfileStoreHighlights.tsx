@@ -67,10 +67,11 @@ export function ProfileStoreHighlights({
                     <p className="text-on-surface truncate font-semibold">{item.name}</p>
                     {item.isEquipped && (
                       <span
-                      className={cn(
-                        "border-app-ring/30 bg-app-ring/10 text-app-accent-strong dark:text-app-accent",
-                        "rounded-full border px-2 py-0.5 text-[10px] font-bold"
-                      )}>
+                        className={cn(
+                          'border-app-ring/30 bg-app-ring/10 text-app-accent-strong dark:text-app-accent',
+                          'rounded-full border px-2 py-0.5 text-[10px] font-bold'
+                        )}
+                      >
                         Equipado
                       </span>
                     )}
@@ -92,7 +93,7 @@ export function ProfileStoreHighlights({
                 'mt-4 cursor-pointer rounded-lg border border-amber-500/30 bg-amber-50 px-4 py-2',
                 'text-sm font-semibold text-amber-800 transition-colors',
                 'hover:bg-amber-100 dark:border-yellow-500/30 ' +
-                'dark:bg-yellow-500/10 dark:text-yellow-400 dark:hover:bg-yellow-500/20'
+                  'dark:bg-yellow-500/10 dark:text-yellow-400 dark:hover:bg-yellow-500/20'
               )}
             >
               Ir a la tienda

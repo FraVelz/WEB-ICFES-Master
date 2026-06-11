@@ -6,11 +6,7 @@ import {
   SOCIAL_QUESTIONS,
 } from '@/features/exam/data';
 import { FULL_EXAM_ROUTE_AREAS } from '@/features/exam/data/examAreas';
-import {
-  toPublicExamQuestion,
-  type ExamQuestion,
-  type ExamQuestionPublic,
-} from '@/features/exam/types/question';
+import { toPublicExamQuestion, type ExamQuestion, type ExamQuestionPublic } from '@/features/exam/types/question';
 import ExamQuestionsSupabaseService from '@/services/supabase/ExamQuestionsSupabaseService';
 
 const STATIC_BY_ROUTE: Record<string, ExamQuestion[]> = {

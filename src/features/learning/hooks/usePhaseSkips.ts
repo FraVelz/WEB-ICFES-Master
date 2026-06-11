@@ -8,9 +8,7 @@ import {
 } from '@/services/persistence/phaseSkipPersistence';
 
 export function usePhaseSkips(areaId?: string) {
-  const [skips, setSkips] = useState<PhaseSkipRecord[]>(() =>
-    typeof window === 'undefined' ? [] : getPhaseSkips()
-  );
+  const [skips, setSkips] = useState<PhaseSkipRecord[]>(() => (typeof window === 'undefined' ? [] : getPhaseSkips()));
 
   useEffect(() => {
     const refresh = () => setSkips(getPhaseSkips());

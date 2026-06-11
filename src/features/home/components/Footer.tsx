@@ -1,12 +1,26 @@
+import { cn } from '@/utils/cn';
+
+const footerLinkFocus =
+  'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none';
+
 export const Footer = () => {
   return (
     <footer className="border-surface-border bg-surface-elevated/80 w-full border-t px-4 py-8 backdrop-blur-sm">
-      <div className="text-on-surface-muted mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 text-sm md:flex-row">
+      <div
+        className={cn(
+          'text-on-surface-muted mx-auto flex max-w-7xl flex-col items-center justify-between gap-4',
+          'text-sm md:flex-row'
+        )}
+      >
         <div className="flex items-center gap-2">
           <span>Contacto:</span>
           <a
             href="mailto:fravelz@proton.me"
-            className="text-app-accent hover:text-app-accent-muted focus-visible:ring-app-accent focus-visible:ring-offset-surface transition-colors focus-visible:rounded focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none"
+            className={cn(
+              'text-app-accent hover:text-app-accent-muted transition-colors focus-visible:rounded',
+              footerLinkFocus,
+              'focus-visible:ring-offset-surface'
+            )}
           >
             fravelz@proton.me
           </a>
@@ -15,13 +29,21 @@ export const Footer = () => {
         <div className="flex items-center gap-6">
           <a
             href="/privacidad"
-            className="focus-visible:ring-app-accent hover:text-on-surface focus-visible:ring-offset-surface rounded transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none"
+            className={cn(
+              'hover:text-on-surface rounded transition-colors',
+              footerLinkFocus,
+              'focus-visible:ring-offset-surface'
+            )}
           >
             Política de Privacidad
           </a>
           <a
             href="/terminos"
-            className="focus-visible:ring-app-accent hover:text-on-surface focus-visible:ring-offset-surface rounded transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none"
+            className={cn(
+              'hover:text-on-surface rounded transition-colors',
+              footerLinkFocus,
+              'focus-visible:ring-offset-surface'
+            )}
           >
             Términos y Condiciones
           </a>

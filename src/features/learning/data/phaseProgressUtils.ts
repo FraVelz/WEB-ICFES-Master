@@ -17,11 +17,7 @@ export function getSectionProgress(section: PathSection | undefined): {
   return { completed, total, percent };
 }
 
-function isPhaseDone(
-  section: PathSection | undefined,
-  skippedSectionIds: Set<string>,
-  sectionId: string
-): boolean {
+function isPhaseDone(section: PathSection | undefined, skippedSectionIds: Set<string>, sectionId: string): boolean {
   if (skippedSectionIds.has(sectionId)) return true;
   const { percent } = getSectionProgress(section);
   return percent >= 100 && (section?.nodes.length ?? 0) > 0;
@@ -48,9 +44,7 @@ export function resolvePhaseStatuses(
       const prevIndex = phase.order - 2;
       const prevPhase = phases[prevIndex];
       const prevSection = prevPhase ? sections.find((s) => s.id === prevPhase.sectionId) : undefined;
-      const prevDone =
-        !prevPhase ||
-        isPhaseDone(prevSection, skippedSectionIds, prevPhase.sectionId);
+      const prevDone = !prevPhase || isPhaseDone(prevSection, skippedSectionIds, prevPhase.sectionId);
 
       if (prevDone || phase.order === 1) {
         statuses.set(phase.id, 'active');

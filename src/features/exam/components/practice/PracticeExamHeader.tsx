@@ -77,7 +77,12 @@ export function PracticeExamHeader({
           </button>
 
           {mobileMenuOpen && (
-            <div className="fixed top-20 right-4 z-50 w-48 overflow-hidden rounded-lg border border-white/20 bg-gray-800 shadow-xl">
+            <div
+              className={cn(
+                'fixed top-20 right-4 z-50 w-48 overflow-hidden rounded-lg border border-white/20',
+                'bg-gray-800 shadow-xl'
+              )}
+            >
               {onShowAnswerSheet && (
                 <button
                   type="button"

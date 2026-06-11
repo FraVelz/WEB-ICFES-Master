@@ -80,12 +80,12 @@ function DashboardShellInner({ children }: { children: ReactNode }) {
         Móvil: columna única a ancho completo; aside oculto.
       */}
       <div className="mx-auto flex w-full flex-1 flex-col lg:max-w-[calc(48rem+22rem)] lg:flex-row lg:justify-center">
-        <div className="relative flex min-w-0 flex-1 flex-col lg:max-w-3xl lg:w-full lg:flex-none">
+        <div className="relative flex min-w-0 flex-1 flex-col lg:w-full lg:max-w-3xl lg:flex-none">
           <div className="sticky top-0 z-40 hidden lg:block lg:pt-5">
             <DashboardShellBanner className="rounded-2xl" />
           </div>
 
-          <div className="relative flex-1 px-0 pt-4 pb-24 lg:px-0 lg:pb-8 lg:pt-6">{children}</div>
+          <div className="relative flex-1 px-0 pt-4 pb-24 lg:px-0 lg:pt-6 lg:pb-8">{children}</div>
         </div>
 
         <DashboardShellAside />

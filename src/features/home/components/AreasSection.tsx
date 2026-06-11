@@ -55,7 +55,12 @@ export const AreasSection = () => {
                     <span className="rounded-full bg-white/20 px-3 py-1 text-sm font-semibold">{area.dificultad}</span>
                   </div>
 
-                  <div className="flex items-center gap-2 font-bold text-white transition-all duration-300 group-hover:gap-4">
+                  <div
+                    className={cn(
+                      'flex items-center gap-2 font-bold text-white transition-all duration-300',
+                      'group-hover:gap-4'
+                    )}
+                  >
                     Empezar
                     <Icon name="arrow-right" className="shrink-0 transition-transform group-hover:translate-x-2" />
                   </div>
@@ -67,7 +72,12 @@ export const AreasSection = () => {
       </div>
 
       <div className="mt-16">
-        <div className="rounded-xl border-2 border-red-500/50 bg-linear-to-r from-red-600/20 to-pink-600/20 p-8 text-center">
+        <div
+          className={cn(
+            'rounded-xl border-2 border-red-500/50 bg-linear-to-r from-red-600/20 to-pink-600/20',
+            'p-8 text-center'
+          )}
+        >
           <h3 className="mb-4 flex items-center justify-center gap-2 text-3xl font-bold text-white">
             <Icon name="fire" className="shrink-0 text-red-400" />
             ¿Listo para el Desafío Real?

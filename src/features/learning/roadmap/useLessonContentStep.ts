@@ -2,11 +2,7 @@
 
 import { useMemo } from 'react';
 import { splitLessonContent, extractSectionTitle, stripFirstHeadingIfDuplicate } from '../utils/splitLessonContent';
-import {
-  getAdjacentLessonStepHrefs,
-  getLessonStepLabel,
-  parseLessonStepSlug,
-} from '../utils/lessonRoutes';
+import { getAdjacentLessonStepHrefs, getLessonStepLabel, parseLessonStepSlug } from '../utils/lessonRoutes';
 import type { LessonQuizModalProps } from './lessonQuiz/quizTypes';
 
 export type LessonContentLesson = {
@@ -38,8 +34,7 @@ export function useLessonContentStep(lesson: LessonContentLesson, stepSlug: stri
   const showQuiz = parsedStep?.kind === 'examen';
   const currentSection = parsedStep?.kind === 'content' ? parsedStep.index : sections.length;
   const totalSteps = sections.length + (canShowQuiz ? 1 : 0);
-  const progress =
-    totalSteps > 0 ? ((showQuiz ? totalSteps : currentSection + 1) / totalSteps) * 100 : 0;
+  const progress = totalSteps > 0 ? ((showQuiz ? totalSteps : currentSection + 1) / totalSteps) * 100 : 0;
 
   const mascotDialogue = useMemo(() => {
     if (showQuiz) return lesson?.title || 'Examen';
@@ -57,14 +52,10 @@ export function useLessonContentStep(lesson: LessonContentLesson, stepSlug: stri
     ? getAdjacentLessonStepHrefs(lessonId, parsedStep, sections.length, canShowQuiz)
     : { prev: null, next: null };
 
-  const stepLabel = parsedStep
-    ? getLessonStepLabel(parsedStep, sections.length, canShowQuiz)
-    : '1 / 1';
+  const stepLabel = parsedStep ? getLessonStepLabel(parsedStep, sections.length, canShowQuiz) : '1 / 1';
 
   const quizProps = {
-    questions: Array.isArray(lesson?.questions)
-      ? (lesson.questions as LessonQuizModalProps['questions'])
-      : undefined,
+    questions: Array.isArray(lesson?.questions) ? (lesson.questions as LessonQuizModalProps['questions']) : undefined,
     quiz:
       lesson?.quiz && typeof lesson.quiz === 'object'
         ? ({

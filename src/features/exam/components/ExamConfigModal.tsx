@@ -32,7 +32,12 @@ export const ExamConfigModal = ({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm">
-      <div className="w-full max-w-md rounded-2xl border border-white/10 bg-linear-to-br from-gray-800 via-gray-900 to-gray-950 p-8 shadow-2xl">
+      <div
+        className={cn(
+          'w-full max-w-md rounded-2xl border border-white/10 bg-linear-to-br from-gray-800',
+          'via-gray-900 to-gray-950 p-8 shadow-2xl'
+        )}
+      >
         <h2 className="mb-2 text-3xl font-bold text-white">Configurar Examen</h2>
         <p className="mb-8 text-gray-400">{area}</p>
 

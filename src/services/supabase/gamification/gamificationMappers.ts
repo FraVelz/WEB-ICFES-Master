@@ -31,8 +31,7 @@ export function parsePersonalLogos(value: unknown): PersonalLogo[] {
 export function mapFromDb(row: Record<string, unknown> | null): GamificationProfile | null {
   if (!row || typeof row !== 'object') return null;
   const equippedLogoId = typeof row.equipped_logo_id === 'string' ? row.equipped_logo_id : null;
-  const doubleXpExpiresAt =
-    typeof row.double_xp_expires_at === 'string' ? row.double_xp_expires_at : null;
+  const doubleXpExpiresAt = typeof row.double_xp_expires_at === 'string' ? row.double_xp_expires_at : null;
   const leagueRank = typeof row.league_rank === 'string' ? row.league_rank : 'novato';
   const leagueGroupId = typeof row.league_group_id === 'string' ? row.league_group_id : null;
   const weeklyXpWeek = typeof row.weekly_xp_week === 'string' ? row.weekly_xp_week : null;

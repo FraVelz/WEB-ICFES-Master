@@ -27,7 +27,7 @@ export function SettingsSupportPanel() {
           onClick={() => setSupportMode('response')}
           className={cn(
             'flex flex-1 cursor-pointer flex-col items-center justify-center ' +
-            'gap-1.5 rounded-lg px-4 py-3 text-sm font-medium transition-all',
+              'gap-1.5 rounded-lg px-4 py-3 text-sm font-medium transition-all',
             'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:outline-none focus-visible:ring-inset',
             supportMode === 'response'
               ? 'bg-surface-elevated text-on-surface shadow-sm'
@@ -42,7 +42,7 @@ export function SettingsSupportPanel() {
           onClick={() => setSupportMode('report')}
           className={cn(
             'flex flex-1 cursor-pointer flex-col items-center justify-center ' +
-            'gap-1.5 rounded-lg px-4 py-3 text-sm font-medium transition-all',
+              'gap-1.5 rounded-lg px-4 py-3 text-sm font-medium transition-all',
             'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:outline-none focus-visible:ring-inset',
             supportMode === 'report'
               ? 'bg-surface-elevated text-on-surface shadow-sm'
@@ -62,8 +62,8 @@ export function SettingsSupportPanel() {
               value={supportCategory}
               onChange={(e) => setSupportCategory(e.target.value)}
               className={cn(
-                "focus:border-app-ring w-full rounded-lg border border-slate-800 bg-slate-950",
-                "px-3 py-2.5 text-sm text-white outline-none"
+                'focus:border-app-ring w-full rounded-lg border border-slate-800 bg-slate-950',
+                'px-3 py-2.5 text-sm text-white outline-none'
               )}
             >
               <option value="technical">Error técnico</option>
@@ -81,8 +81,8 @@ export function SettingsSupportPanel() {
                 onChange={(e) => setSupportEmail(e.target.value)}
                 required
                 className={cn(
-                  "focus:border-app-ring w-full rounded-lg border border-slate-800 bg-slate-950",
-                  "px-3 py-2.5 text-sm text-white outline-none"
+                  'focus:border-app-ring w-full rounded-lg border border-slate-800 bg-slate-950',
+                  'px-3 py-2.5 text-sm text-white outline-none'
                 )}
                 placeholder="tu@email.com"
               />

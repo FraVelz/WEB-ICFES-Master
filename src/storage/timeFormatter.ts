@@ -4,7 +4,10 @@ export const formatTimeExtended = (seconds: number): string => {
   const secs = seconds % 60;
 
   if (hours > 0) {
-    return `${hours.toString().padStart(2, '0')}:${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+    const hh = hours.toString().padStart(2, '0');
+    const mm = mins.toString().padStart(2, '0');
+    const ss = secs.toString().padStart(2, '0');
+    return `${hh}:${mm}:${ss}`;
   }
   return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
 };

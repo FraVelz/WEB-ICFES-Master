@@ -9,7 +9,9 @@ export const FAQS = [
   },
   {
     q: '¿Puedo acceder desde el móvil?',
-    a: 'Claro, la plataforma es completamente responsive. Estudia donde quieras, cuando quieras. Incluye una App movil.',
+    a:
+      'Claro, la plataforma es completamente responsive. Estudia donde quieras, cuando quieras. ' +
+      'Incluye una App movil.',
   },
   {
     q: '¿Hay garantía de mejorar mi puntaje?',

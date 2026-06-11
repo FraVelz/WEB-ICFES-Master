@@ -90,10 +90,6 @@ export {
   type PhaseSkipRecord,
 } from './phaseSkipPersistence';
 
-export {
-  PROFILE_STATUS_CHANGE_EVENT,
-  getProfileStatusId,
-  setProfileStatusId,
-} from './profileStatusPersistence';
+export { PROFILE_STATUS_CHANGE_EVENT, getProfileStatusId, setProfileStatusId } from './profileStatusPersistence';
 
 export { formatTimeExtended } from '@/storage/timeFormatter';

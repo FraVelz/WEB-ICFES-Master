@@ -3,10 +3,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { saveFullExam } from '@/services/persistence';
 import { fetchQuestionsForFullExam } from '@/features/exam/services/QuestionService';
-import {
-  fetchGradedExamResults,
-  gradedToExamQuestion,
-} from '@/features/exam/services/examGradingClient';
+import { fetchGradedExamResults, gradedToExamQuestion } from '@/features/exam/services/examGradingClient';
 import type { GradedExamAnswer } from '@/features/exam/services/examGradingServer';
 import type { ExamQuestion, ExamQuestionPublic } from '@/features/exam/types/question';
 import type { ExamConfig } from '@/features/exam/types';
@@ -41,8 +38,7 @@ export function useFullExam() {
       })
       .catch((error: unknown) => {
         if (!active) return;
-        const message =
-          error instanceof Error ? error.message : 'No se pudieron cargar las preguntas.';
+        const message = error instanceof Error ? error.message : 'No se pudieron cargar las preguntas.';
         setQuestionsError(message);
         setAllQuestions([]);
       })

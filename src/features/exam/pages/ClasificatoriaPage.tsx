@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect, useMemo } from 'react';
+import { cn } from '@/utils/cn';
 import { useRouter } from 'next/navigation';
 import { Icon } from '@/shared/components/Icon';
 import { LoadingState } from '@/shared/components/LoadingState';
@@ -101,11 +102,7 @@ export const ClasificatoriaPage = () => {
 
   return (
     <div className="relative z-10 mx-auto flex min-h-[70dvh] max-w-2xl flex-col px-0 pb-4">
-      <LeagueShieldNav
-        selectedRank={selectedRank}
-        myLeagueRank={myLeagueRank}
-        onSelect={setSelectedRank}
-      />
+      <LeagueShieldNav selectedRank={selectedRank} myLeagueRank={myLeagueRank} onSelect={setSelectedRank} />
 
       {isViewingOwnLeague ? (
         needsJoinCta ? (
@@ -125,7 +122,12 @@ export const ClasificatoriaPage = () => {
         )
       ) : (
         !leagueLoading && (
-          <div className="border-surface-border bg-surface-elevated/60 text-on-surface-muted mb-6 rounded-2xl border px-4 py-3 text-center text-sm dark:border-slate-700 dark:bg-slate-900/60">
+          <div
+            className={cn(
+              'border-surface-border bg-surface-elevated/60 text-on-surface-muted mb-6 rounded-2xl border',
+              'px-4 py-3 text-center text-sm dark:border-slate-700 dark:bg-slate-900/60'
+            )}
+          >
             No participas en la liga {currentRankInfo.label}. Estás en{' '}
             <span className="text-on-surface font-semibold">{getRankInfo(myLeagueRank).label}</span>.
           </div>
