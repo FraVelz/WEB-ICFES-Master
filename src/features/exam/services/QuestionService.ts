@@ -1,7 +1,11 @@
 import type { ExamQuestionPublic } from '@/features/exam/types/question';
+import { getApiAuthHeaders } from '@/utils/apiClientAuth';
 
 async function fetchPublicQuestions(params: URLSearchParams): Promise<ExamQuestionPublic[]> {
-  const response = await fetch(`/api/exam/questions/?${params.toString()}`);
+  const response = await fetch(`/api/exam/questions/?${params.toString()}`, {
+    headers: await getApiAuthHeaders(),
+    credentials: 'same-origin',
+  });
   const data = (await response.json()) as { questions?: ExamQuestionPublic[]; error?: string };
 
   if (!response.ok) {

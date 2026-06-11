@@ -21,11 +21,9 @@ export async function POST(request: NextRequest) {
       lessonId?: string;
       answers?: Record<string, string>;
       awardRewards?: boolean;
-      lessonXp?: number;
-      lessonCoins?: number;
     };
 
-    const { lessonId, answers, awardRewards, lessonXp, lessonCoins } = body;
+    const { lessonId, answers, awardRewards } = body;
 
     if (!lessonId || typeof lessonId !== 'string') {
       return NextResponse.json({ error: 'Se requiere lessonId' }, { status: 400 });
@@ -37,9 +35,10 @@ export async function POST(request: NextRequest) {
 
     const { results, allCorrect } = await gradeLessonQuizAnswers(lessonId, answers);
 
-    let rewards: { xp: number; coins: number } | undefined;
+    let rewards: { xp: number; coins: number; alreadyAwarded?: boolean } | undefined;
     if (awardRewards && allCorrect) {
-      rewards = await awardLessonQuizRewards(user.id, lessonId, lessonXp, lessonCoins);
+      const awarded = await awardLessonQuizRewards(user.id, lessonId);
+      rewards = awarded;
     }
 
     return NextResponse.json({ results, allCorrect, rewards });

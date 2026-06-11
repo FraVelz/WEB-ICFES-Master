@@ -1,6 +1,5 @@
 import { loadLessonQuizQuestions } from '@/services/supabase/LearningSupabaseServer';
-import { gamificationPersistence } from '@/services/persistence/gamificationPersistence';
-import { addCoinsBalance } from '@/services/persistence/coinsPersistence';
+import { addCoinsServer, addXpServer, hasRewardReason } from '@/services/supabase/gamification/gamificationServerEconomy';
 
 export type LessonQuizGradeResult = {
   questionId: string;
@@ -39,16 +38,26 @@ export async function gradeLessonQuizAnswers(
 
 export async function awardLessonQuizRewards(
   userId: string,
-  lessonId: string,
-  lessonXp?: number,
-  lessonCoins?: number
-): Promise<{ xp: number; coins: number }> {
+  lessonId: string
+): Promise<{ xp: number; coins: number; alreadyAwarded: boolean }> {
+  const reason = `lesson_quiz_${lessonId}`;
+
+  if (await hasRewardReason(userId, reason)) {
+    return { xp: 0, coins: 0, alreadyAwarded: true };
+  }
+
   const lesson = await loadLessonQuizQuestions(lessonId);
-  const xp = lessonXp ?? lesson?.rewards?.xp ?? 500;
-  const coins = lessonCoins ?? lesson?.rewards?.coins ?? 250;
+  const xp = lesson?.rewards?.xp ?? 500;
+  const coins = lesson?.rewards?.coins ?? 250;
 
-  await gamificationPersistence.addXP(userId, xp, `lesson_quiz_${lessonId}`);
-  await addCoinsBalance(userId, coins, `lesson_quiz_${lessonId}`);
+  const [xpResult, coinsResult] = await Promise.all([
+    addXpServer(userId, xp, reason),
+    addCoinsServer(userId, coins, reason),
+  ]);
 
-  return { xp, coins };
+  return {
+    xp: xpResult.awarded ? xp : 0,
+    coins: coinsResult.awarded ? coins : 0,
+    alreadyAwarded: !xpResult.awarded && !coinsResult.awarded,
+  };
 }

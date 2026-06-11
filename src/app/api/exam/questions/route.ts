@@ -3,11 +3,18 @@ import {
   fetchPublicQuestionsByRouteArea,
   fetchPublicQuestionsForFullExam,
 } from '@/features/exam/services/examQuestionsServer';
+import { getAuthUserFromRequest, hasApiAccess } from '@/utils/apiAuth';
 import { checkRateLimit, getClientIp } from '@/utils/rateLimit';
 
 export async function GET(request: NextRequest) {
+  const user = await getAuthUserFromRequest(request);
+  if (!hasApiAccess(request, user)) {
+    return NextResponse.json({ error: 'Debes iniciar sesión para acceder a las preguntas' }, { status: 401 });
+  }
+
   const ip = getClientIp(request);
-  const rate = checkRateLimit(`exam-questions:${ip}`, 60, 60_000);
+  const rateKey = user ? `exam-questions:${user.id}` : `exam-questions:demo:${ip}`;
+  const rate = checkRateLimit(rateKey, 60, 60_000);
 
   if (!rate.allowed) {
     return NextResponse.json({ error: 'Demasiadas solicitudes. Intenta de nuevo en un momento.' }, { status: 429 });

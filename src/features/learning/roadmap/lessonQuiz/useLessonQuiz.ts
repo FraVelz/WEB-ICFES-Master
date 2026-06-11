@@ -89,8 +89,6 @@ export function useLessonQuiz({
 
       const gradeResult = await fetchLessonQuizGrade(lessonId, updatedAnswers, {
         awardRewards: shouldAward,
-        lessonXp,
-        lessonCoins,
       });
 
       const questionResult = gradeResult.results.find((r) => r.questionId === currentQuestion.id);
