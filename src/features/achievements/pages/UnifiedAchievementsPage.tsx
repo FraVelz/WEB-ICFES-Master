@@ -4,7 +4,7 @@ import React from 'react';
 import { useAuth } from '@/features/auth/context/AuthContext';
 import { useGamification, useGamificationScope } from '@/hooks/gamification';
 import { AchievementsList } from '../components/AchievementsList';
-import { LoadingState } from '@/shared/components/LoadingState';
+import { SkeletonGrid } from '@/shared/components/SkeletonCard';
 
 export const UnifiedAchievementsPage = () => {
   const { loading: authLoading } = useAuth();
@@ -14,7 +14,7 @@ export const UnifiedAchievementsPage = () => {
   const showLoading = authLoading || (loading && achievements.length === 0);
 
   if (showLoading) {
-    return <LoadingState label="Cargando logros..." layout="section" />;
+    return <SkeletonGrid count={6} columnsClassName="grid-cols-1 sm:grid-cols-2 lg:grid-cols-3" />;
   }
 
   return (

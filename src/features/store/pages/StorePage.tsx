@@ -1,8 +1,10 @@
 'use client';
 
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useState } from 'react';
 import { cn } from '@/utils/cn';
-import { Icon, LoadingState } from '@/shared/components';
+import { Icon } from '@/shared/components';
+import { SkeletonGrid } from '@/shared/components/SkeletonCard';
+import { useToast } from '@/shared/components/Toast/ToastProvider';
 import { PAGE_SHELL_CLASS } from '@/shared/constants/pageShell';
 import { MAX_STREAK_SHIELDS, STREAK_SHIELD_ITEM_ID } from '../constants/streakShield';
 import { useDoubleXpTimer } from '../hooks/useDoubleXpTimer';
@@ -10,11 +12,11 @@ import { useShop } from '../hooks/useShop';
 import { ShopItemCard } from '../components/ShopItemCard';
 import { ShopItemModal } from '../components/ShopItemModal';
 import type { ShopItem } from '../data/shopItems';
-import { STORE_FILTERS, type StoreToast as StoreToastState } from './storePageConstants';
+import { STORE_FILTERS } from './storePageConstants';
 import { StoreDoubleXpBanner } from './StoreDoubleXpBanner';
 import { StorePageHeader } from './StorePageHeader';
-import { StoreToast } from './StoreToast';
 import { useStorePageHandlers } from './useStorePageHandlers';
+import { EmptyState } from '@/shared/components/EmptyState';
 
 export function StorePage() {
   const shop = useShop();
@@ -22,20 +24,7 @@ export function StorePage() {
   const { remainingMs: doubleXpRemainingMs, isActive: isDoubleXpActive } = useDoubleXpTimer();
   const [selectedItem, setSelectedItem] = useState<ShopItem | null>(null);
   const [filter, setFilter] = useState<string>('all');
-  const [toast, setToast] = useState<StoreToastState | null>(null);
-  const toastTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-
-  const showToast = useCallback((message: string, type: StoreToastState['type'] = 'success') => {
-    if (toastTimerRef.current) clearTimeout(toastTimerRef.current);
-    setToast({ message, type });
-    toastTimerRef.current = setTimeout(() => setToast(null), 3500);
-  }, []);
-
-  useEffect(() => {
-    return () => {
-      if (toastTimerRef.current) clearTimeout(toastTimerRef.current);
-    };
-  }, []);
+  const { showToast } = useToast();
 
   const { handleBuy, handleCardClick, handleEquip, handleUnequip } = useStorePageHandlers(
     shop,
@@ -49,8 +38,6 @@ export function StorePage() {
 
   return (
     <div className={cn(PAGE_SHELL_CLASS, 'flex min-h-dvh flex-col pb-0')}>
-      {toast && <StoreToast toast={toast} onDismiss={() => setToast(null)} />}
-
       <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
         <div className="from-app-ring/10 absolute top-0 left-0 h-96 w-full bg-linear-to-b to-transparent" />
         <div className="absolute right-0 bottom-0 h-96 w-96 rounded-full bg-yellow-500/5 blur-3xl" />
@@ -60,17 +47,13 @@ export function StorePage() {
 
       <div className="relative z-10 container mx-auto max-w-5xl flex-1 space-y-6 px-4 py-6 lg:py-8">
         {showStoreLoading ? (
-          <LoadingState label="Cargando tienda..." layout="section" />
+          <SkeletonGrid count={6} columnsClassName="grid-cols-2 md:grid-cols-3" />
         ) : error ? (
-          <div
-            className={cn(
-              'border-surface-border bg-surface-elevated/40 rounded-3xl border border-dashed py-16 text-center'
-            )}
-          >
-            <Icon name="exclamation-triangle" size="2xl" className="mb-4 text-red-400" />
-            <p className="text-on-surface mb-2 text-lg font-semibold">No se pudo cargar la tienda</p>
-            <p className="text-on-surface-muted mx-auto max-w-md text-sm">{error}</p>
-          </div>
+          <EmptyState
+            icon="exclamation-triangle"
+            title="No se pudo cargar la tienda"
+            description={error}
+          />
         ) : (
           <>
             {isDoubleXpActive && <StoreDoubleXpBanner remainingMs={doubleXpRemainingMs} />}

@@ -15,8 +15,6 @@ import { SettingsDeleteModal } from '@/features/user/components/settings/Setting
 import { PAGE_SHELL_CLASS } from '@/shared/constants/pageShell';
 
 function UserSettingsContent() {
-  const { message, messageType } = useUserSettingsContext();
-
   return (
     <div className={PAGE_SHELL_CLASS}>
       <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
@@ -41,23 +39,6 @@ function UserSettingsContent() {
         </div>
 
         <div className="mx-auto max-w-6xl px-4 py-8">
-          {message && (
-            <div
-              className={cn(
-                'animate-fade-in-up fixed top-20 right-4 z-50 ' +
-                  'max-w-sm rounded-xl border p-4 shadow-xl backdrop-blur-md',
-                messageType === 'success'
-                  ? 'border-green-500/30 bg-green-500/10 text-green-400'
-                  : 'border-red-500/30 bg-red-500/10 text-red-400'
-              )}
-            >
-              <div className="flex items-center gap-3">
-                <Icon name={messageType === 'success' ? 'check-circle' : 'warning'} />
-                <p className="text-sm font-medium">{message}</p>
-              </div>
-            </div>
-          )}
-
           <div className="grid grid-cols-1 gap-8 lg:grid-cols-12">
             <div className="space-y-6 lg:col-span-4">
               <SettingsProfilePanel />

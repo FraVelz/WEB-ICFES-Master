@@ -3,14 +3,14 @@
 import { useState, useRef, useEffect } from 'react';
 import { useUser } from '@/features/user/hooks/useUser';
 import { useUserData } from '@/features/user/hooks/useUserData';
+import { useToast } from '@/shared/components/Toast/ToastProvider';
 
 export function useUserSettingsState() {
   const { user, refreshUser } = useUser();
   const { user: userData, updateUsername, updateBio, updateProfileImage, refresh } = useUserData();
 
+  const { showToast } = useToast();
   const fileInputRef = useRef<HTMLInputElement | null>(null);
-  const [message, setMessage] = useState('');
-  const [messageType, setMessageType] = useState<'success' | 'error'>('success');
   const [loading, setLoading] = useState(false);
   const [username, setUsername] = useState('');
   const [bio, setBio] = useState('');
@@ -31,9 +31,7 @@ export function useUserSettingsState() {
   }, [user?.bio, userData?.bio]);
 
   const showMessage = (msg: string, type: 'success' | 'error' = 'success') => {
-    setMessage(msg);
-    setMessageType(type);
-    setTimeout(() => setMessage(''), 3000);
+    showToast(msg, type);
   };
 
   return {
@@ -45,8 +43,6 @@ export function useUserSettingsState() {
     updateProfileImage,
     refresh,
     fileInputRef,
-    message,
-    messageType,
     loading,
     setLoading,
     username,

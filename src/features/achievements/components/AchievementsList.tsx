@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { cn } from '@/utils/cn';
 import { Icon } from '@/shared/components/Icon';
+import { EmptyState } from '@/shared/components/EmptyState';
 import { ACHIEVEMENT_CATEGORIES } from '@/shared/constants/achievementsData';
 
 export interface AchievementItem {
@@ -37,7 +38,7 @@ export const AchievementsList = ({ achievements = [] }: AchievementsListProps) =
       case 'in_progress':
         return 'text-app-accent border-app-ring/50 bg-app-ring/10';
       default:
-        return 'text-slate-500 border-slate-700 bg-slate-800/50';
+        return 'text-on-surface-muted border-surface-border bg-surface-elevated/60';
     }
   };
 
@@ -90,14 +91,13 @@ export const AchievementsList = ({ achievements = [] }: AchievementsListProps) =
       </div>
 
       {filteredAchievements.length === 0 ? (
-        <div
-          className="border-surface-border bg-surface-elevated text-on-surface-muted rounded-xl border p-8 text-center"
-          role="status"
-        >
-          <Icon name="trophy" className="mx-auto mb-3 text-3xl opacity-50" aria-hidden />
-          <p className="font-semibold text-on-surface">No hay logros en esta categoría</p>
-          <p className="mt-1 text-sm">Prueba otra categoría o sigue estudiando para desbloquear metas.</p>
-        </div>
+        <EmptyState
+          icon="trophy"
+          title="No hay logros en esta categoría"
+          description="Prueba otra categoría o sigue estudiando para desbloquear metas."
+          actionLabel="Ir a estudiar"
+          actionHref="/ruta-aprendizaje"
+        />
       ) : null}
 
       {/* Achievements Grid */}

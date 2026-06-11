@@ -57,6 +57,10 @@ export function LessonContentView({ lesson, areaId = 'lectura-critica', stepSlug
         progress={progress}
         gradientClass={gradientClass}
         sectionInnerClass={SECTION_INNER}
+        breadcrumbItems={[
+          { label: 'Ruta de aprendizaje', href: backHref },
+          { label: lesson.title ?? 'Lección' },
+        ]}
       />
 
       <div
