@@ -6,6 +6,9 @@ import { hasVipBadge } from '@/features/store/constants/vipBadge';
 import { buildProfileStoreHighlights, type ProfileStoreHighlight } from '@/features/user/utils/profileStoreHighlights';
 import type { ImageSource } from '@/assets';
 import { resolveProfileAvatarSrc } from '@/features/user/utils/resolveProfileAvatar';
+import type { ProfileLeagueDisplay } from '@/features/user/components/profile/profileLeagueTypes';
+import { EMPTY_PROFILE_LEAGUE } from '@/features/user/components/profile/profileLeagueTypes';
+import { leagueFromPayload } from './publicProfileLeague';
 import type { PublicProfilePayload } from './publicProfileServer';
 
 export type PublicProfileErrorCode = 'invalid_id' | 'not_found' | 'unavailable' | 'server' | 'network' | null;
@@ -59,6 +62,7 @@ export type PublicProfileViewState = {
   coursesProgress: Record<string, unknown>;
   hasVipBadge: boolean;
   storeHighlights: ProfileStoreHighlight[];
+  league: ProfileLeagueDisplay;
 };
 
 const EMPTY_VIEW: Omit<PublicProfileViewState, 'userId' | 'errorCode' | 'exists'> = {
@@ -83,6 +87,7 @@ const EMPTY_VIEW: Omit<PublicProfileViewState, 'userId' | 'errorCode' | 'exists'
   coursesProgress: {},
   hasVipBadge: false,
   storeHighlights: [],
+  league: EMPTY_PROFILE_LEAGUE,
 };
 
 export function buildPublicProfileViewState(
@@ -135,5 +140,6 @@ export function buildPublicProfileViewState(
     coursesProgress: {},
     hasVipBadge: hasVipBadge(shopInventory),
     storeHighlights: buildProfileStoreHighlights(shopInventory, equippedLogoId),
+    league: leagueFromPayload(payload.gamification.league),
   };
 }

@@ -31,9 +31,12 @@ type ProfileHeroCardProps = {
 
 const profileActionButtonClass = cn(
   'cursor-pointer rounded-lg border border-surface-border bg-surface-elevated p-2',
-  'text-on-surface-muted transition-colors',
-  'hover:bg-surface-via hover:text-on-surface',
-  'dark:border-transparent dark:bg-surface-overlay dark:hover:bg-on-surface-muted dark:hover:text-white'
+  'text-app-accent-strong transition-colors duration-200',
+  'hover:border-app-ring/30 hover:bg-surface-via',
+  'dark:border-surface-border/40 dark:bg-surface-overlay/60 dark:text-app-accent',
+  'dark:hover:border-app-ring/35 dark:hover:bg-app-ring/15 dark:hover:text-app-accent-bright',
+  'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:outline-none',
+  'focus-visible:ring-offset-2 focus-visible:ring-offset-surface-elevated'
 );
 
 export function ProfileHeroCard({

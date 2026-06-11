@@ -1,6 +1,7 @@
 import { createClient, type SupabaseClient } from '@supabase/supabase-js';
 import { createSupabaseClient } from '@/config/supabaseClient';
 import { readStudyTimeRemoteMeta } from '@/services/studyTime/studyTimeService';
+import { buildPublicLeagueSnapshot, type PublicProfileLeaguePayload } from './publicProfileLeague';
 
 export type PublicProfilePayload = {
   profile: {
@@ -17,6 +18,7 @@ export type PublicProfilePayload = {
     studyTimeMinutes: number;
     equippedLogoId?: string | null;
     shopInventory?: string[];
+    league?: PublicProfileLeaguePayload;
   };
 };
 
@@ -42,13 +44,15 @@ async function fetchViaServiceRole(userId: string): Promise<PublicProfilePayload
 
   const { data: gamification } = await sb
     .from('user_gamification')
-    .select('xp, achievements, equipped_logo_id, shop_inventory')
+    .select('xp, achievements, equipped_logo_id, shop_inventory, league_rank, weekly_xp, league_group_id')
     .eq('user_id', userId)
     .maybeSingle();
 
   const shopInventory = Array.isArray(gamification?.shop_inventory)
     ? gamification.shop_inventory.filter((entry): entry is string => typeof entry === 'string')
     : [];
+
+  const league = await buildPublicLeagueSnapshot(sb, userId, gamification);
 
   return {
     profile: {
@@ -65,6 +69,7 @@ async function fetchViaServiceRole(userId: string): Promise<PublicProfilePayload
       studyTimeMinutes: readStudyTimeRemoteMeta(gamification?.achievements).totalMinutes,
       equippedLogoId: gamification?.equipped_logo_id ?? null,
       shopInventory,
+      league,
     },
   };
 }
@@ -119,6 +124,37 @@ async function fetchViaPublicRpc(userId: string): Promise<PublicProfilePayload |
         readStudyTimeRemoteMeta(payload.gamification?.achievements).totalMinutes,
       equippedLogoId: payload.gamification?.equippedLogoId ?? null,
       shopInventory,
+      league: payload.gamification?.league,
+    },
+  };
+}
+
+async function enrichLeagueGamification(userId: string, payload: PublicProfilePayload): Promise<PublicProfilePayload> {
+  if (payload.gamification.league) {
+    return payload;
+  }
+
+  const sb = createServiceClient();
+  if (!sb) return payload;
+
+  const { data: gamification } = await sb
+    .from('user_gamification')
+    .select('league_rank, weekly_xp, league_group_id')
+    .eq('user_id', userId)
+    .maybeSingle();
+
+  const league = await buildPublicLeagueSnapshot(sb, userId, gamification);
+  const hasLeagueData = league.inGroup || league.weeklyXp > 0 || league.leagueRank !== 'novato';
+
+  if (!hasLeagueData) {
+    return payload;
+  }
+
+  return {
+    ...payload,
+    gamification: {
+      ...payload.gamification,
+      league,
     },
   };
 }
@@ -155,6 +191,11 @@ async function enrichShopGamification(userId: string, payload: PublicProfilePayl
   };
 }
 
+async function enrichPublicGamification(userId: string, payload: PublicProfilePayload): Promise<PublicProfilePayload> {
+  const withLeague = await enrichLeagueGamification(userId, payload);
+  return enrichShopGamification(userId, withLeague);
+}
+
 /** Consulta perfil público sin sesión del visitante (service role o RPC anónima). */
 export async function fetchPublicProfile(userId: string): Promise<PublicProfilePayload | null> {
   // 1) Service role (local / server con SUPABASE_SERVICE_ROLE_KEY): datos completos
@@ -165,11 +206,11 @@ export async function fetchPublicProfile(userId: string): Promise<PublicProfileP
     console.error('public profile service role:', err);
   }
 
-  // 2) RPC anónima (producción); enriquecer shop si la RPC aún no incluye inventario
+  // 2) RPC anónima (producción); enriquecer shop/liga si la RPC aún no los incluye
   try {
     const viaRpc = await fetchViaPublicRpc(userId);
     if (viaRpc) {
-      return enrichShopGamification(userId, viaRpc);
+      return enrichPublicGamification(userId, viaRpc);
     }
   } catch (err) {
     console.error('public profile RPC failed:', err);

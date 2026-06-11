@@ -6,9 +6,11 @@ import { PAGE_SHELL_CLASS } from '@/shared/constants/pageShell';
 export function ProfilePageLayout({
   children,
   glowVariant = 'default',
+  showThemeControl = true,
 }: {
   children: ReactNode;
   glowVariant?: 'default' | 'public';
+  showThemeControl?: boolean;
 }) {
   return (
     <div className={PAGE_SHELL_CLASS}>
@@ -46,7 +48,7 @@ export function ProfilePageLayout({
         )}
       </div>
       <div className="relative z-10 container mx-auto max-w-6xl px-4 py-8">
-        <PageThemeControl />
+        {showThemeControl ? <PageThemeControl /> : null}
         {children}
       </div>
     </div>

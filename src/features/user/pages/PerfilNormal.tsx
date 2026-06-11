@@ -15,13 +15,19 @@ import { ProfileHeroCard } from '../components/profile/ProfileHeroCard';
 import { ProfileCoursesSection } from '../components/profile/ProfileCoursesSection';
 import { ProfileStatsSection } from '../components/profile/ProfileStatsSection';
 import { ProfileAchievementsSection } from '../components/profile/ProfileAchievementsSection';
+import { ProfileLeagueSection } from '../components/profile/ProfileLeagueSection';
 import { ProfileStoreHighlights } from '../components/profile/ProfileStoreHighlights';
+import { mapMyLeagueToDisplay } from '../components/profile/profileLeagueTypes';
+import { useMyLeague } from '@/hooks/gamification/useMyLeague';
 
 const profileActionButtonClass = cn(
-  'flex cursor-pointer items-center gap-2 rounded-lg border ' +
-    'border-surface-border bg-surface-elevated p-2 text-sm font-medium',
-  'text-app-accent-strong transition-colors hover:bg-surface-via',
-  'dark:border-transparent dark:bg-surface-overlay dark:text-app-accent dark:hover:bg-on-surface-muted'
+  'flex cursor-pointer items-center gap-2 rounded-lg border border-surface-border',
+  'bg-surface-elevated p-2 text-sm font-medium text-app-accent-strong transition-colors duration-200',
+  'hover:border-app-ring/30 hover:bg-surface-via',
+  'dark:border-surface-border/40 dark:bg-surface-overlay/60 dark:text-app-accent',
+  'dark:hover:border-app-ring/35 dark:hover:bg-app-ring/15 dark:hover:text-app-accent-bright',
+  'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:outline-none',
+  'focus-visible:ring-offset-2 focus-visible:ring-offset-surface-elevated'
 );
 
 export const PerfilNormal = () => {
@@ -44,6 +50,9 @@ export const PerfilNormal = () => {
   const displayProfileImage = useResolvedProfileAvatar(profileImage);
   const isVip = useVipBadge();
   const { inventory, equippedLogoId } = useShop();
+  const { leagueState, leagueRank, loading: leagueLoading, resetMs } = useMyLeague();
+
+  const leagueDisplay = useMemo(() => mapMyLeagueToDisplay(leagueState, leagueRank), [leagueState, leagueRank]);
 
   const storeHighlights = useMemo(
     () => buildProfileStoreHighlights(inventory, equippedLogoId),
@@ -65,7 +74,7 @@ export const PerfilNormal = () => {
   }
 
   return (
-    <ProfilePageLayout>
+    <ProfilePageLayout showThemeControl={false}>
       <ProfileHeroCard
         profileImage={displayProfileImage}
         name={name}
@@ -104,7 +113,13 @@ export const PerfilNormal = () => {
             studyTimeMinutes={studyTimeMinutes}
           />
         </div>
-        <div className="lg:col-span-1">
+        <div className="space-y-8 lg:col-span-1">
+          <ProfileLeagueSection
+            league={leagueDisplay}
+            loading={leagueLoading}
+            showCta
+            resetMs={resetMs}
+          />
           <ProfileAchievementsSection
             achievements={achievements}
             loading={gamificationLoading}

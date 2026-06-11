@@ -15,15 +15,22 @@ import { ProfileHeroCard } from '../components/profile/ProfileHeroCard';
 import { ProfileCoursesSection } from '../components/profile/ProfileCoursesSection';
 import { ProfileStatsSection } from '../components/profile/ProfileStatsSection';
 import { ProfileAchievementsSection } from '../components/profile/ProfileAchievementsSection';
+import { ProfileLeagueSection } from '../components/profile/ProfileLeagueSection';
 import { ProfileStoreHighlights } from '../components/profile/ProfileStoreHighlights';
+import { useMyLeague } from '@/hooks/gamification/useMyLeague';
+import { mapMyLeagueToDisplay } from '../components/profile/profileLeagueTypes';
 import { PublicProfileChrome } from '../components/profile/PublicProfileChrome';
 import { PublicProfileGate } from '../components/profile/PublicProfileGate';
 import { ReportUserDialog } from '../components/ReportUserDialog';
 
 const profileActionButtonClass = cn(
   'flex cursor-pointer items-center gap-2 rounded-lg border border-surface-border bg-surface-elevated p-2',
-  'text-sm font-medium text-app-accent-strong transition-colors hover:bg-surface-via',
-  'dark:border-transparent dark:bg-surface-overlay dark:text-app-accent dark:hover:bg-on-surface-muted'
+  'text-sm font-medium text-app-accent-strong transition-colors duration-200',
+  'hover:border-app-ring/30 hover:bg-surface-via',
+  'dark:border-surface-border/40 dark:bg-surface-overlay/60 dark:text-app-accent',
+  'dark:hover:border-app-ring/35 dark:hover:bg-app-ring/15 dark:hover:text-app-accent-bright',
+  'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:outline-none',
+  'focus-visible:ring-offset-2 focus-visible:ring-offset-surface-elevated'
 );
 
 type PerfilPublicoProps = {
@@ -46,9 +53,15 @@ export const PerfilPublico = ({ view }: PerfilPublicoProps) => {
     coursesProgress,
     hasVipBadge,
     storeHighlights,
+    league,
   } = view;
 
   const isOwnProfile = Boolean(authUser?.uid && userId === authUser.uid);
+  const { leagueState, leagueRank, loading: ownLeagueLoading, resetMs } = useMyLeague();
+  const ownLeagueDisplay = useMemo(
+    () => mapMyLeagueToDisplay(leagueState, leagueRank),
+    [leagueState, leagueRank]
+  );
   const ownVip = useVipBadge();
   const { inventory, equippedLogoId } = useShop();
   const [copied, setCopied] = useState(false);
@@ -62,6 +75,9 @@ export const PerfilPublico = ({ view }: PerfilPublicoProps) => {
   }, [storeHighlights, isOwnProfile, inventory, equippedLogoId]);
 
   const displayVip = hasVipBadge || (isOwnProfile && (ownVip || checkVipBadge(inventory)));
+
+  const leagueDisplay = isOwnProfile ? ownLeagueDisplay : league;
+  const leagueLoading = isOwnProfile && ownLeagueLoading;
 
   const handleShare = () => {
     navigator.clipboard.writeText(window.location.href).then(() => {
@@ -148,7 +164,13 @@ export const PerfilPublico = ({ view }: PerfilPublicoProps) => {
               emptyMessage="Este usuario aún no ha iniciado cursos."
             />
           </div>
-          <div className="lg:col-span-1">
+          <div className="space-y-8 lg:col-span-1">
+            <ProfileLeagueSection
+              league={leagueDisplay}
+              loading={leagueLoading}
+              showCta={isOwnProfile}
+              resetMs={isOwnProfile ? resetMs : undefined}
+            />
             <ProfileAchievementsSection achievements={achievements} />
           </div>
         </div>

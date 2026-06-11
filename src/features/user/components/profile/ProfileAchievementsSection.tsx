@@ -29,7 +29,8 @@ export function ProfileAchievementsSection({
   return (
     <div
       className={cn(
-        'border-surface-border bg-surface-elevated/80 sticky top-24 rounded-2xl border p-6 shadow-sm',
+        'border-surface-border bg-surface-elevated/80 rounded-2xl border p-6 shadow-sm',
+        'lg:sticky lg:top-24',
         'dark:border-surface-border dark:bg-surface-elevated/50'
       )}
     >
