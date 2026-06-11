@@ -87,9 +87,9 @@ export const LearningRoadmap = () => {
 
       {!loading && !pathError && activeSections.length === 0 && (
         <div className="mx-auto max-w-md rounded-2xl border border-slate-700/60 bg-slate-900/40 px-4 py-8 text-center">
-          <p className="text-sm font-semibold text-white">No hay lecciones en esta etapa</p>
+          <p className="text-sm font-semibold text-white">No hay lecciones en esta fase</p>
           <p className="text-on-surface-muted mt-2 text-xs">
-            Prueba otra área o etapa, o vuelve más tarde cuando se publique contenido nuevo.
+            Prueba otra área o fase, o vuelve más tarde cuando se publique contenido nuevo.
           </p>
         </div>
       )}

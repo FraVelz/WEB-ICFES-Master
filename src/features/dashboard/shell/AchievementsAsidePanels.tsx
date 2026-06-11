@@ -29,7 +29,7 @@ export function AchievementsAsidePanels() {
 
       <AsideCard title="Consejo" icon="lightbulb">
         <p className="text-on-surface-muted text-sm leading-relaxed">
-          Prioriza logros de racha y de etapa: mantener constancia suele dar más XP que intentar todo de una vez.
+          Prioriza logros de racha y de fase: mantener constancia suele dar más XP que intentar todo de una vez.
         </p>
       </AsideCard>
 

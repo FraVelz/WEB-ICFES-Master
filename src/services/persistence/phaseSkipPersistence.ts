@@ -1,4 +1,4 @@
-/** Porcentaje mínimo en el examen de salto para desbloquear la siguiente fase. */
+/** Porcentaje mínimo en el examen de salto para superar una fase bloqueada. */
 export const PHASE_SKIP_PASS_PERCENT = 70;
 
 export type PhaseSkipRecord = {

@@ -40,7 +40,7 @@ export const SHELL_SECTION_META: Record<
 > = {
   learning: {
     title: 'Ruta de aprendizaje',
-    subtitle: 'Tu camino por etapas',
+    subtitle: 'Tu camino por fases',
     gradient: 'from-blue-600 to-indigo-700',
     icon: 'graduation-cap',
   },

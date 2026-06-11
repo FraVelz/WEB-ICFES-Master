@@ -11,7 +11,7 @@ export function getStageNumber(sectionId: string): number {
 }
 
 export function getStageLabel(sectionId: string): string {
-  return `Etapa ${getStageNumber(sectionId)}, Sección 1`;
+  return `Fase ${getStageNumber(sectionId)}`;
 }
 
 /** Primera sección con lecciones disponibles; si no hay, la primera cargada. */

@@ -121,13 +121,13 @@ export function RoadmapAside({
         <AsideCard title="Tiempo de estudio" icon="clock">
           <p className="text-on-surface text-3xl font-bold">{formatStudyTime(sectionProgress.studyTimeMinutes)}</p>
           <p className="text-on-surface-muted mt-1 text-sm">
-            {currentSection ? getStageLabel(currentSection.id) : 'Etapa actual'}
+            {currentSection ? getStageLabel(currentSection.id) : 'Fase actual'}
           </p>
           <p className="text-on-surface-muted/80 mt-3 text-xs italic">Plantilla — datos reales próximamente</p>
         </AsideCard>
 
         <AsideCard
-          title="Progreso de la etapa"
+          title="Progreso de la fase"
           icon="chart-line"
           action={
             <span className="text-on-surface-muted text-xs font-semibold">
@@ -143,7 +143,7 @@ export function RoadmapAside({
           </div>
           <p className="text-on-surface-muted mt-3 text-sm">
             {progressPercent}% de lecciones completadas en{' '}
-            <span className="text-on-surface font-medium">{currentSection?.title ?? 'esta etapa'}</span>
+            <span className="text-on-surface font-medium">{currentSection?.title ?? 'esta fase'}</span>
           </p>
         </AsideCard>
 

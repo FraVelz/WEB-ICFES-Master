@@ -43,7 +43,7 @@ export function PhaseStageCard({
     >
       <div className="flex items-start justify-between gap-3">
         <div className="min-w-0">
-          <p className="text-on-surface-muted text-xs font-bold tracking-wide uppercase">Etapa {phase.order}</p>
+          <p className="text-on-surface-muted text-xs font-bold tracking-wide uppercase">Fase {phase.order}</p>
           <h2 className="text-on-surface text-lg font-bold">{phase.title}</h2>
           <p className="text-on-surface-muted text-sm">{phase.subtitle}</p>
         </div>
@@ -63,22 +63,26 @@ export function PhaseStageCard({
         {skippedByExam ? 'Fase superada con examen' : `${lessonCount} lecciones · ${isLocked ? '0' : progressPercent}%`}
       </p>
 
-      {isActive && areaFocus && <p className="text-on-surface-muted mt-3 text-sm leading-relaxed">{areaFocus}</p>}
+      {(isActive || isLocked) && areaFocus && (
+        <p className="text-on-surface-muted mt-3 text-sm leading-relaxed">{areaFocus}</p>
+      )}
 
-      {!isLocked && (
+      {(!isLocked || (!isCompleted && skipExamHref)) && (
         <div className="mt-4 flex flex-col gap-2">
-          <Link
-            href={roadmapHref}
-            className={cn(
-              'bg-app-accent inline-flex w-full items-center justify-center rounded-xl px-4 py-2.5',
-              'text-sm font-bold text-white',
-              'transition-colors hover:brightness-110',
-              'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:outline-none'
-            )}
-          >
-            {isCompleted ? 'Repasar' : 'Continuar'}
-          </Link>
-          {isActive && !isCompleted && skipExamHref && (
+          {!isLocked && (
+            <Link
+              href={roadmapHref}
+              className={cn(
+                'bg-app-accent inline-flex w-full items-center justify-center rounded-xl px-4 py-2.5',
+                'text-sm font-bold text-white',
+                'transition-colors hover:brightness-110',
+                'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:outline-none'
+              )}
+            >
+              {isCompleted ? 'Repasar' : 'Continuar'}
+            </Link>
+          )}
+          {!isCompleted && skipExamHref && (isActive || isLocked) && (
             <Link
               href={skipExamHref}
               className={cn(

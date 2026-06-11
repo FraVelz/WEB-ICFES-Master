@@ -34,7 +34,7 @@ export const SectionStageBanner = ({
           <button
             type="button"
             onClick={onPrevSection}
-            aria-label="Etapa anterior"
+            aria-label="Fase anterior"
             className={cn(
               'flex h-9 w-9 shrink-0 items-center justify-center rounded-lg text-white/90 transition-colors',
               'hover:bg-white/15 focus-visible:ring-2 focus-visible:ring-white/50 focus-visible:outline-none'
@@ -60,7 +60,7 @@ export const SectionStageBanner = ({
             <button
               type="button"
               onClick={onNextSection}
-              aria-label="Siguiente etapa"
+              aria-label="Siguiente fase"
               className={cn(
                 'flex h-9 w-9 items-center justify-center rounded-lg text-white/90 transition-colors',
                 'hover:bg-white/15 focus-visible:ring-2 focus-visible:ring-white/50 focus-visible:outline-none'

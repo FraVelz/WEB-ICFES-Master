@@ -62,7 +62,7 @@ export const PracticePage = () => {
     >
       Examen para saltar{' '}
       <span className="font-semibold">{phaseSkipPhaseTitle ?? 'esta fase'}</span>. Necesitas al menos{' '}
-      <span className="font-semibold">{phaseSkipPassPercent}%</span> de aciertos para desbloquear la siguiente etapa.
+      <span className="font-semibold">{phaseSkipPassPercent}%</span> de aciertos para superar esta fase.
     </div>
   ) : null;
 
@@ -97,7 +97,7 @@ export const PracticePage = () => {
               )}
             >
               <p className="font-semibold">¡Fase superada!</p>
-              <p className="mt-1 text-sm text-green-200/90">Desbloqueaste la siguiente etapa en {areaInfo.name}.</p>
+              <p className="mt-1 text-sm text-green-200/90">Superaste la fase en {areaInfo.name}.</p>
               <Link
                 href={LEARNING_PHASES_PATH}
                 className={cn(
