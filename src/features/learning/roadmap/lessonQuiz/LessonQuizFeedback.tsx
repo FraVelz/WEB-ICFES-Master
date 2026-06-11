@@ -12,7 +12,7 @@ export function LessonQuizFeedback({ isCorrect, isLastQuestion, rewards, already
   return (
     <div
       className={cn(
-        'mb-3 rounded-xl border-2 p-3.5 text-center lg:mb-6 lg:rounded-xl lg:p-4',
+        'mt-4 rounded-xl border-2 p-3.5 text-center lg:mt-5 lg:rounded-xl lg:p-4',
         isCorrect
           ? 'border-green-500/30 bg-linear-to-br from-green-500/15 to-green-600/5 shadow-lg shadow-green-500/5'
           : 'border-red-500/30 bg-linear-to-br from-red-500/15 to-red-600/5 shadow-lg shadow-red-500/5'

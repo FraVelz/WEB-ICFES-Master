@@ -80,14 +80,14 @@ export function LessonQuizQuestionPanel({
       </div>
 
       {isSubmitted && question.explanation && (
-        <div className="mt-3 rounded-r-lg border-l-4 border-blue-500 bg-blue-500/10 p-3.5 lg:mt-4 lg:rounded-xl lg:p-4">
-          <p className="text-xs leading-relaxed text-blue-200 lg:text-sm">
-            <strong className="mb-1.5 flex items-center gap-1.5 text-blue-300">
+        <div className="mt-4 rounded-xl border border-blue-500/30 bg-blue-500/10 p-3.5 lg:mt-5 lg:p-4">
+          <div className="space-y-2 text-xs leading-relaxed text-blue-200 lg:text-sm">
+            <p className="flex items-center gap-1.5 font-semibold text-blue-300">
               <Icon name="lightbulb" size="sm" />
               Explicación:
-            </strong>
-            <span className="block">{question.explanation}</span>
-          </p>
+            </p>
+            <p>{question.explanation}</p>
+          </div>
         </div>
       )}
     </div>

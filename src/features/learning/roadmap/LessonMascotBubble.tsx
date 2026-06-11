@@ -11,17 +11,28 @@ type LessonMascotBubbleProps = {
 
 export function LessonMascotBubble({ text, mascotSrc, bubbleBorder, className }: LessonMascotBubbleProps) {
   return (
-    <div className={cn('sm:items-flex-start flex flex-col items-center gap-4 sm:flex-row sm:justify-center sm:gap-6', className)}>
-      <div className="shrink-0 sm:order-2" style={{ animation: 'float 3s ease-in-out infinite' }}>
+    <div
+      className={cn(
+        'mx-auto flex w-full max-w-2xl flex-col items-center gap-4 sm:flex-row sm:items-start sm:justify-center sm:gap-5',
+        className
+      )}
+    >
+      <div className="shrink-0" style={{ animation: 'float 3s ease-in-out infinite' }}>
         <MascotaCircle src={mascotSrc} alt="Mascota" size="md" centered={false} />
       </div>
 
-      <div className="relative w-full max-w-sm sm:order-1 sm:max-w-md sm:flex-1">
+      <div className="relative w-full min-w-0 max-w-md">
         <div
           className={cn(
-            'absolute top-full left-1/2 h-0 w-0 -translate-x-1/2 -translate-y-px border-[10px]',
-            'border-transparent border-t-slate-800 sm:top-1/2 sm:right-auto sm:left-full',
-            'sm:translate-x-0 sm:-translate-y-1/2 sm:border-t-transparent sm:border-r-slate-800'
+            'absolute -top-2 left-1/2 h-0 w-0 -translate-x-1/2 border-[10px]',
+            'border-transparent border-b-slate-800 sm:hidden'
+          )}
+          aria-hidden
+        />
+        <div
+          className={cn(
+            'absolute top-8 -left-2 hidden h-0 w-0 sm:block',
+            'border-[10px] border-transparent border-r-slate-800'
           )}
           aria-hidden
         />

@@ -7,6 +7,7 @@ import { Icon } from '@/shared/components/Icon';
 import { getStageLabel } from '@/features/learning/shell/SecondaryHeader/sectionStageUtils';
 import type { PathNodeData, PathSection } from '@/features/learning/roadmap/AreaPath';
 import { getPracticaHrefForRoadmapArea } from '@/shared/constants';
+import { ProfileStatusPicker } from '@/features/user/components/profile/ProfileStatusPicker';
 import { AsideCard } from './AsideCard';
 import { useDashboardShell } from './DashboardShellContext';
 
@@ -154,11 +155,8 @@ export function LeaderboardAsidePanels() {
 
   return (
     <>
-      <AsideCard title="Liga semanal" icon="trophy">
-        <p className="text-on-surface-muted text-sm leading-relaxed">
-          Compite en grupos de estudiantes. Los mejores ascienden de liga cada lunes.
-        </p>
-        <p className="text-on-surface-muted/80 mt-3 text-xs italic">Detalle de tu grupo en el panel central.</p>
+      <AsideCard title="Tu perfil" icon="user" className="border-slate-700/60 dark:bg-slate-900/80">
+        <ProfileStatusPicker />
       </AsideCard>
 
       <AsideCard title="Tu energía" icon="fire">

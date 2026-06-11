@@ -9,6 +9,7 @@ import {
   markLessonAsCompleted,
 } from '@/services/persistence';
 import { normalizeQuizQuestions } from './normalizeQuizQuestions';
+import { shuffleQuestionOptions, shuffleQuizQuestions } from './shuffleQuizQuestions';
 import type { LessonQuizModalProps } from './quizTypes';
 
 export function useLessonQuiz({
@@ -30,9 +31,11 @@ export function useLessonQuiz({
   const [answers, setAnswers] = useState<Record<string, string>>({});
   const [completedQuestions, setCompletedQuestions] = useState<Set<string>>(new Set());
 
-  const normalizedQuestions = useMemo(() => normalizeQuizQuestions(questions, quiz), [questions, quiz]);
-  const currentQuestion = normalizedQuestions[currentQuestionIndex];
-  const totalQuestions = normalizedQuestions.length;
+  const baseQuestions = useMemo(() => normalizeQuizQuestions(questions, quiz), [questions, quiz]);
+  const [displayQuestions, setDisplayQuestions] = useState<typeof baseQuestions>([]);
+
+  const currentQuestion = displayQuestions[currentQuestionIndex];
+  const totalQuestions = displayQuestions.length;
   const isLastQuestion = currentQuestionIndex === totalQuestions - 1;
   const allQuestionsAnswered = completedQuestions.size === totalQuestions;
 
@@ -49,6 +52,7 @@ export function useLessonQuiz({
   useEffect(() => {
     if (isOpen && user && lessonId) checkCompletionStatus();
     if (isOpen) {
+      setDisplayQuestions(shuffleQuizQuestions(baseQuestions));
       setCurrentQuestionIndex(0);
       setSelectedOption(null);
       setIsSubmitted(false);
@@ -57,7 +61,7 @@ export function useLessonQuiz({
       setAnswers({});
       setCompletedQuestions(new Set());
     }
-  }, [isOpen, user, lessonId, checkCompletionStatus]);
+  }, [isOpen, user, lessonId, checkCompletionStatus, baseQuestions]);
 
   useEffect(() => {
     if (!currentQuestion) return;
@@ -90,8 +94,8 @@ export function useLessonQuiz({
     setAnswers(updatedAnswers);
     setCompletedQuestions((prev) => new Set([...prev, currentQuestion.id]));
 
-    const allAnswered = normalizedQuestions.every((q) => updatedAnswers[q.id] != null);
-    const allCorrect = normalizedQuestions.every((q) => updatedAnswers[q.id] === q.correctAnswer);
+    const allAnswered = displayQuestions.every((q) => updatedAnswers[q.id] != null);
+    const allCorrect = displayQuestions.every((q) => updatedAnswers[q.id] === q.correctAnswer);
 
     const shouldAward =
       !alreadyCompleted && user?.uid && allCorrect && (totalQuestions === 1 || (isLastQuestion && allAnswered));
@@ -122,18 +126,45 @@ export function useLessonQuiz({
   };
 
   const handleRetry = () => {
+    const failedQuestionId = currentQuestion?.id;
+    const shouldReshuffleAll = totalQuestions === 1 || currentQuestionIndex === 0 || isLastQuestion;
+
+    if (shouldReshuffleAll) {
+      setDisplayQuestions(shuffleQuizQuestions(baseQuestions));
+      setCurrentQuestionIndex(0);
+      setAnswers({});
+      setCompletedQuestions(new Set());
+    } else {
+      setDisplayQuestions((prev) =>
+        prev.map((question, index) =>
+          index === currentQuestionIndex ? shuffleQuestionOptions(question) : question
+        )
+      );
+      setAnswers((prev) => {
+        const next = { ...prev };
+        if (failedQuestionId) delete next[failedQuestionId];
+        return next;
+      });
+      setCompletedQuestions((prev) => {
+        const next = new Set(prev);
+        if (failedQuestionId) next.delete(failedQuestionId);
+        return next;
+      });
+    }
+
     setIsSubmitted(false);
     setSelectedOption(null);
+    setIsCorrect(false);
   };
 
   const countCorrectAnswers = () =>
-    Object.keys(answers).filter((k) => answers[k] === normalizedQuestions.find((q) => q.id === k)?.correctAnswer)
+    Object.keys(answers).filter((k) => answers[k] === displayQuestions.find((q) => q.id === k)?.correctAnswer)
       .length;
 
   return {
     user,
     currentQuestion,
-    normalizedQuestions,
+    normalizedQuestions: displayQuestions,
     totalQuestions,
     currentQuestionIndex,
     selectedOption,
