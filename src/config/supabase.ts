@@ -1,16 +1,17 @@
 /**
- * Cliente Supabase para el frontend
- * Usa anon key para operaciones del cliente (RLS aplica)
- * Solo se crea cuando las variables de entorno están definidas (evita errores en build/SSR)
+ * Cliente Supabase para el frontend (cookies vía @supabase/ssr; compatible con middleware).
+ * RLS aplica con la sesión del usuario.
  */
-import { createSupabaseClient } from './supabaseClient';
+import { createBrowserClient } from '@supabase/ssr';
+import type { SupabaseClient } from '@supabase/supabase-js';
 
 export { createServerSupabaseClient, createSupabaseClient, getSupabaseEnv } from './supabaseClient';
 
-export const supabase = createSupabaseClient({
-  auth: {
-    persistSession: true,
-    autoRefreshToken: true,
-    detectSessionInUrl: true,
-  },
-});
+function createBrowserSupabase(): SupabaseClient | null {
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
+  const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '';
+  if (!url || !key) return null;
+  return createBrowserClient(url, key);
+}
+
+export const supabase = createBrowserSupabase();

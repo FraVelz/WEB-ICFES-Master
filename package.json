@@ -24,6 +24,7 @@
   "dependencies": {
     "@aws-sdk/client-s3": "^3.758.0",
     "@gsap/react": "^2.1.2",
+    "@supabase/ssr": "^0.6.1",
     "@supabase/supabase-js": "^2.107.0",
     "@vercel/analytics": "^2.0.1",
     "@vercel/speed-insights": "^2.0.0",
