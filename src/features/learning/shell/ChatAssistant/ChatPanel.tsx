@@ -1,5 +1,7 @@
+import { useRef } from 'react';
 import { cn } from '@/utils/cn';
 import { Icon } from '@/shared/components/Icon';
+import { useDialogA11y } from '@/shared/hooks/useDialogA11y';
 import { useGSAPModalEntrance } from '@/hooks/useGSAPModalEntrance';
 import { ChatInputArea } from './ChatInputArea';
 import { ChatMessageList } from './ChatMessageList';
@@ -36,11 +38,14 @@ export function ChatPanel({
   onKeyDown,
   onSend,
 }: ChatPanelProps) {
+  const dialogRef = useRef<HTMLDivElement>(null);
   const chatPanelRef = useGSAPModalEntrance({
     isOpen,
     type: 'slideUp',
     duration: 0.3,
   });
+
+  useDialogA11y(isOpen, onClose, dialogRef);
 
   const statusText = isAnonymous
     ? anonQuotaReached
@@ -48,9 +53,19 @@ export function ChatPanel({
       : `${anonRemaining} pregunta${anonRemaining !== 1 ? 's' : ''} gratis sin cuenta`
     : 'Responde tus dudas';
 
+  if (!isOpen) return null;
+
   return (
     <div
-      ref={chatPanelRef}
+      ref={(node) => {
+        dialogRef.current = node;
+        if (chatPanelRef && typeof chatPanelRef === 'object' && 'current' in chatPanelRef) {
+          chatPanelRef.current = node;
+        }
+      }}
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="chat-panel-title"
       className={cn(
         'fixed z-50 flex h-[min(500px,70vh)] flex-col overflow-hidden rounded-2xl',
         'border-app-ring/30 shadow-app-ring/20 border bg-slate-900/98 shadow-2xl backdrop-blur-xl',
@@ -74,7 +89,7 @@ export function ChatPanel({
             <Icon name="robot" className="text-white" />
           </div>
           <div>
-            <h3 className="font-bold text-white">Asistente ICFES</h3>
+            <h3 id="chat-panel-title" className="font-bold text-white">Asistente ICFES</h3>
             <p className="text-app-accent-muted/80 text-xs">{statusText}</p>
           </div>
         </div>

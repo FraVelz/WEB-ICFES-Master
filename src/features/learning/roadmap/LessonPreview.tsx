@@ -1,9 +1,10 @@
 'use client';
 
 import { cn } from '@/utils/cn';
-import React from 'react';
+import { useRef } from 'react';
 import { Icon } from '@/shared/components/Icon';
-import { useGSAPModalEntrance } from '@/hooks/useGSAPModalEntrance';
+import { ModalOverlay } from '@/shared/components/ModalOverlay';
+import { useDialogA11y } from '@/shared/hooks/useDialogA11y';
 
 export interface LessonPreviewProps {
   isOpen: boolean;
@@ -20,30 +21,24 @@ export interface LessonPreviewProps {
 }
 
 export const LessonPreview = ({ isOpen, onClose, lesson, onStart }: LessonPreviewProps) => {
-  const backdropRef = useGSAPModalEntrance({
-    isOpen,
-    type: 'fade',
-    duration: 0.2,
-  });
-  const contentRef = useGSAPModalEntrance({
-    isOpen,
-    type: 'slideUp',
-    duration: 0.3,
-  });
+  const dialogRef = useRef<HTMLDivElement>(null);
+
+  useDialogA11y(isOpen, onClose, dialogRef);
 
   if (!isOpen || !lesson) return null;
 
   return (
     <div className="fixed inset-0 z-50 flex items-end justify-center sm:items-center">
-      {/* Backdrop */}
-      <div ref={backdropRef} className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={onClose} />
+      <ModalOverlay onClose={onClose} className="bg-black/60 backdrop-blur-sm" />
 
-      {/* Content */}
       <div
-        ref={contentRef}
+        ref={dialogRef}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="lesson-preview-title"
         className={cn(
-          'relative mb-20 w-screen max-w-md border-t border-slate-700 bg-slate-900 p-6 shadow-2xl',
-          'sm:rounded-2xl sm:border'
+          'animate-fade-in-up relative mb-20 w-screen max-w-md border-t border-slate-700 bg-slate-900 p-6 shadow-2xl',
+          'motion-reduce:animate-none sm:rounded-2xl sm:border'
         )}
       >
         {/* Close Button */}
@@ -62,7 +57,9 @@ export const LessonPreview = ({ isOpen, onClose, lesson, onStart }: LessonPrevie
 
         {/* Header */}
         <div className="mb-6 text-center">
-          <h3 className="mr-8 mb-2 text-xl font-bold text-white">{lesson.title}</h3>
+          <h3 id="lesson-preview-title" className="mr-8 mb-2 text-xl font-bold text-white">
+            {lesson.title}
+          </h3>
           <p className="text-sm text-slate-400">{lesson.description}</p>
         </div>
 

@@ -10,6 +10,12 @@ type ModalOverlayProps = {
 /** Backdrop clickeable para cerrar modales. El focus trap vive en el panel `role="dialog"`. */
 export function ModalOverlay({ onClose, className }: ModalOverlayProps) {
   return (
-    <div className={cn('fixed inset-0 z-40', className)} onClick={onClose} aria-hidden="true" role="presentation" />
+    <button
+      type="button"
+      tabIndex={-1}
+      className={cn('fixed inset-0 z-40 cursor-default border-0 bg-transparent p-0', className)}
+      onClick={onClose}
+      aria-label="Cerrar"
+    />
   );
 }

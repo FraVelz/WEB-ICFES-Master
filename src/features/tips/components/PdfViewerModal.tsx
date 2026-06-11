@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from 'react';
 import { Icon } from '@/shared/components/Icon';
+import { useDialogA11y } from '@/shared/hooks/useDialogA11y';
 import { cn } from '@/utils/cn';
 
 type PdfViewerModalProps = {
@@ -26,7 +27,10 @@ const iconButtonClass = cn(
 );
 
 export function PdfViewerModal({ isOpen, title, url, onClose }: PdfViewerModalProps) {
+  const dialogRef = useRef<HTMLDivElement>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
+
+  useDialogA11y(isOpen, onClose, dialogRef);
 
   useEffect(() => {
     if (!isOpen) return;
@@ -68,6 +72,7 @@ export function PdfViewerModal({ isOpen, title, url, onClose }: PdfViewerModalPr
       />
 
       <div
+        ref={dialogRef}
         className={cn(
           'border-surface-border bg-surface-elevated relative z-10 flex h-[92dvh] w-full flex-col',
           'rounded-t-2xl border shadow-2xl sm:h-[85dvh] sm:max-w-5xl sm:rounded-2xl'

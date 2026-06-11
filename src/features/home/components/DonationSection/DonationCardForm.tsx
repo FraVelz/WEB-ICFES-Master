@@ -1,3 +1,4 @@
+import { useId } from 'react';
 import { cn } from '@/utils/cn';
 import { Icon } from '@/shared/components/Icon';
 import { useDonationContext } from './DonationContext';
@@ -14,6 +15,11 @@ export function DonationCardForm() {
     currentAmount,
     handlePayment,
   } = useDonationContext();
+  const cardNumberId = useId();
+  const expiryMonthId = useId();
+  const expiryYearId = useId();
+  const cvvId = useId();
+  const cardHolderId = useId();
 
   if (paymentSuccess) {
     return (
@@ -28,9 +34,10 @@ export function DonationCardForm() {
   return (
     <form onSubmit={handlePayment} className="animate-fade-in-up space-y-4">
       <div>
-        <label className="mb-1 block text-xs font-medium text-gray-400">Número de Tarjeta</label>
+        <label htmlFor={cardNumberId} className="mb-1 block text-xs font-medium text-gray-400">Número de Tarjeta</label>
         <div className="relative">
           <input
+            id={cardNumberId}
             type="text"
             placeholder="0000 0000 0000 0000"
             value={cardData.cardNumber}
@@ -47,11 +54,13 @@ export function DonationCardForm() {
 
       <div className="grid grid-cols-2 gap-3">
         <div>
-          <label className="mb-1 block text-xs font-medium text-gray-400">Vencimiento</label>
+          <label htmlFor={expiryMonthId} className="mb-1 block text-xs font-medium text-gray-400">Vencimiento</label>
           <div className="flex gap-2">
             <input
+              id={expiryMonthId}
               type="text"
               placeholder="MM"
+              aria-label="Mes de vencimiento"
               value={cardData.expiryMonth}
               onChange={(e) => handleExpiryChange('month', e.target.value)}
               className={cn(
@@ -64,6 +73,7 @@ export function DonationCardForm() {
             <input
               type="text"
               placeholder="AA"
+              aria-label="Año de vencimiento"
               value={cardData.expiryYear}
               onChange={(e) => handleExpiryChange('year', e.target.value)}
               className={cn(
@@ -76,9 +86,10 @@ export function DonationCardForm() {
           </div>
         </div>
         <div>
-          <label className="mb-1 block text-xs font-medium text-gray-400">CVC</label>
+          <label htmlFor={cvvId} className="mb-1 block text-xs font-medium text-gray-400">CVC</label>
           <div className="relative">
             <input
+              id={cvvId}
               type="text"
               placeholder="123"
               value={cardData.cvv}
@@ -95,8 +106,9 @@ export function DonationCardForm() {
       </div>
 
       <div>
-        <label className="mb-1 block text-xs font-medium text-gray-400">Nombre en la Tarjeta</label>
+        <label htmlFor={cardHolderId} className="mb-1 block text-xs font-medium text-gray-400">Nombre en la Tarjeta</label>
         <input
+          id={cardHolderId}
           type="text"
           placeholder="COMO APARECE EN LA TARJETA"
           value={cardData.cardHolder}
