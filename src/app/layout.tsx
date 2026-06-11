@@ -6,11 +6,13 @@ import './globals.css';
 import Providers from '@/components/Providers';
 import { VercelMetrics } from '@/components/VercelMetrics';
 import { BRAND_IMAGES } from '@/assets';
+import { getSiteUrl } from '@/config/site';
 import { THEME_STORAGE_KEY } from '@/features/theme/themeStorage';
 
 const themeInitScript = `(function(){try{var t=localStorage.getItem('${THEME_STORAGE_KEY}');var d=t!=='light';document.documentElement.classList.toggle('dark',d);document.documentElement.style.colorScheme=d?'dark':'light';}catch(e){}})();`;
 
 export const metadata: Metadata = {
+  metadataBase: new URL(getSiteUrl()),
   title: {
     default: 'ICFES Master | Domina el ICFES desde cero',
     template: '%s | ICFES Master',
@@ -31,9 +33,6 @@ export const metadata: Metadata = {
   authors: [{ name: 'ICFES Master' }],
   creator: 'ICFES Master',
   publisher: 'ICFES Master',
-  alternates: {
-    canonical: '/',
-  },
   robots: {
     index: true,
     follow: true,

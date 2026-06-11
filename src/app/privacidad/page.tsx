@@ -3,9 +3,12 @@ import Link from 'next/link';
 import { Icon } from '@/shared/components/Icon';
 import { FULL_PAGE_SHELL_CLASS } from '@/shared/constants/pageShell';
 
-export const metadata = {
-  title: 'Política de Privacidad - ICFES Master',
-  description: 'Política de privacidad de ICFES Master',
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: { absolute: 'Política de Privacidad | ICFES Master' },
+  description: 'Política de privacidad y tratamiento de datos en ICFES Master.',
+  alternates: { canonical: '/privacidad/' },
 };
 
 export default function PrivacidadPage() {

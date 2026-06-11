@@ -3,9 +3,12 @@ import Link from 'next/link';
 import { Icon } from '@/shared/components/Icon';
 import { FULL_PAGE_SHELL_CLASS } from '@/shared/constants/pageShell';
 
-export const metadata = {
-  title: 'Términos y Condiciones - ICFES Master',
-  description: 'Términos y condiciones de ICFES Master',
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: { absolute: 'Términos y Condiciones | ICFES Master' },
+  description: 'Términos y condiciones de uso de ICFES Master.',
+  alternates: { canonical: '/terminos/' },
 };
 
 export default function TerminosPage() {

@@ -1,3 +1,9 @@
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  robots: { index: false, follow: false },
+};
+
 export default function AuthLayout({ children }: { children: React.ReactNode }) {
   return (
     <div className="from-surface via-surface-via to-surface text-on-surface relative flex h-dvh flex-col bg-linear-to-b">

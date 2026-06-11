@@ -1,6 +1,11 @@
+import type { Metadata } from 'next';
 import React from 'react';
 
 import { LevelAssessmentGate } from '@/components/LevelAssessmentGate';
+
+export const metadata: Metadata = {
+  robots: { index: false, follow: false },
+};
 import { DashboardLayoutChrome } from '@/features/dashboard/shell/DashboardLayoutChrome';
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {

@@ -1,6 +1,12 @@
+import type { Metadata } from 'next';
 import { cn } from '@/utils/cn';
 import Link from 'next/link';
 import { FULL_PAGE_SHELL_CLASS } from '@/shared/constants/pageShell';
+
+export const metadata: Metadata = {
+  title: 'Página no encontrada',
+  robots: { index: false, follow: false },
+};
 
 export default function NotFound() {
   return (
