@@ -2,7 +2,7 @@
 
 export const ccVisaIcon = (
   <path
-    fill="currentColor"
+    fill="currentColor" stroke="none"
     d={
       'M9.112 8.262L5.97 15.758H3.92L2.374' +
       '9.775c-.094-.368-.175-.503-.461-.658C1.447 8.864.677 8.627 0' +
@@ -21,7 +21,7 @@ export const ccVisaIcon = (
 
 export const ccMastercardIcon = (
   <path
-    fill="currentColor"
+    fill="currentColor" stroke="none"
     d={
       'M11.343 18.031q.088.074.181.146a7.4 7.4 0 0 1-4.107 1.238a7.416 7.416 0 1 1' +
       '4.104-13.593c-.06.051-.12.098-.165.15A7.96 7.96 0 0 0 8.595 12a8 8 0 0 0' +
@@ -37,7 +37,7 @@ export const ccMastercardIcon = (
 
 export const ccAmexIcon = (
   <path
-    fill="currentColor"
+    fill="currentColor" stroke="none"
     d={
       'M16.015 14.378c0-.32-.135-.496-.344-.622c-.21-.12-.464-.135-.81-.135h-1.543v' +
       '2.82h.675v-1.027h.72c.24 0' +
@@ -168,13 +168,13 @@ export const flagIcon = (
 export const brainIcon = (
   <>
     <path
-      fill="currentColor"
+      fill="currentColor" stroke="none"
       d={'M12 18V5m3 8a4.17 4.17 0 0 1-3-4a4.17 4.17 0 0 1-3 4m8.598-6.5A3 3 0 1 0 12' + '5a3 3 0 1 0-5.598 1.5'}
     />
-    <path fill="currentColor" d="M17.997 5.125a4 4 0 0 1 2.526 5.77" />
-    <path fill="currentColor" d="M18 18a4 4 0 0 0 2-7.464" />
-    <path fill="currentColor" d="M19.967 17.483A4 4 0 1 1 12 18a4 4 0 1 1-7.967-.517" />
-    <path fill="currentColor" d="M6 18a4 4 0 0 1-2-7.464" />
-    <path fill="currentColor" d="M6.003 5.125a4 4 0 0 0-2.526 5.77" />
+    <path fill="currentColor" stroke="none" d="M17.997 5.125a4 4 0 0 1 2.526 5.77" />
+    <path fill="currentColor" stroke="none" d="M18 18a4 4 0 0 0 2-7.464" />
+    <path fill="currentColor" stroke="none" d="M19.967 17.483A4 4 0 1 1 12 18a4 4 0 1 1-7.967-.517" />
+    <path fill="currentColor" stroke="none" d="M6 18a4 4 0 0 1-2-7.464" />
+    <path fill="currentColor" stroke="none" d="M6.003 5.125a4 4 0 0 0-2.526 5.77" />
   </>
 );

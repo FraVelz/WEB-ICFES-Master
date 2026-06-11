@@ -60,7 +60,7 @@ export const calculatorIcon = (
 export const cameraIcon = (
   <>
     <path
-      fill="currentColor"
+      fill="currentColor" stroke="none"
       d={
         'M6.827 6.175A2.31 2.31 0 0 1 5.186 7.23q-.57.08-1.134.175C2.999 7.58 2.25' +
         '8.507 2.25 9.574V18a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75' +
@@ -69,7 +69,7 @@ export const cameraIcon = (
         '0a2.19 2.19 0 0 0-1.736 1.039z'
       }
     />
-    <path fill="currentColor" d="M16.5 12.75a4.5 4.5 0 1 1-9 0a4.5 4.5 0 0 1 9 0m2.25-2.25h.008v.008h-.008z" />
+    <path fill="currentColor" stroke="none" d="M16.5 12.75a4.5 4.5 0 1 1-9 0a4.5 4.5 0 0 1 9 0m2.25-2.25h.008v.008h-.008z" />
   </>
 );
 

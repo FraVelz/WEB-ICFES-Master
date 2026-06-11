@@ -3,7 +3,7 @@
 export const cogIcon = (
   <>
     <path
-      fill="currentColor"
+      fill="currentColor" stroke="none"
       d={
         'M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213' +
         '1.281c.063.374.313.686.645.87q.11.06.22.127c.325.196.72.257' +
@@ -24,7 +24,7 @@ export const cogIcon = (
         '1.076-.124q.108-.066.22-.128c.332-.183.582-.495.644-.869z'
       }
     />
-    <path fill="currentColor" d="M15 12a3 3 0 1 1-6 0a3 3 0 0 1 6 0" />
+    <path fill="currentColor" stroke="none" d="M15 12a3 3 0 1 1-6 0a3 3 0 0 1 6 0" />
   </>
 );
 
@@ -109,14 +109,14 @@ export const exclamationTriangleIcon = (
 export const eyeIcon = (
   <>
     <path
-      fill="currentColor"
+      fill="currentColor" stroke="none"
       d={
         'M2.036 12.322a1 1 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573' +
         '3.007 9.963 7.178c.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12' +
         '19.5c-4.638 0-8.573-3.007-9.963-7.178'
       }
     />
-    <path fill="currentColor" d="M15 12a3 3 0 1 1-6 0a3 3 0 0 1 6 0" />
+    <path fill="currentColor" stroke="none" d="M15 12a3 3 0 1 1-6 0a3 3 0 0 1 6 0" />
   </>
 );
 
@@ -146,14 +146,14 @@ export const filterIcon = (
 export const fireIcon = (
   <>
     <path
-      fill="currentColor"
+      fill="currentColor" stroke="none"
       d={
         'M15.362 5.214A8.252 8.252 0 0 1 12 21A8.25 8.25 0 0 1 6.038 7.047A8.3 8.3 0' +
         '0 0 9 9.601a8.98 8.98 0 0 1 3.361-6.867a8.2 8.2 0 0 0 3 2.48'
       }
     />
     <path
-      fill="currentColor"
+      fill="currentColor" stroke="none"
       d={'M12 18a3.75 3.75 0 0 0 .495-7.468a6 6 0 0 0-1.925 3.547a6 6 0 0' + '1-2.133-1.001A3.75 3.75 0 0 0 12 18'}
     />
   </>

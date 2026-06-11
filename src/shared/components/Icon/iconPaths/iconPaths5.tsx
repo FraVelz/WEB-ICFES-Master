@@ -131,7 +131,7 @@ export const bullseyeIcon = (
 
 export const googleIcon = (
   <path
-    fill="currentColor"
+    fill="currentColor" stroke="none"
     d={
       'M12.48 10.92v3.28h7.84c-.24 1.84-.853 3.187-1.787 4.133c-1.147 1.147-2.933' +
       '2.4-6.053 2.4c-4.827 0-8.6-3.893-8.6-8.72s3.773-8.72 8.6-8.72c2.6 0 4.507' +
@@ -144,7 +144,7 @@ export const googleIcon = (
 
 export const bitcoinIcon = (
   <path
-    fill="currentColor"
+    fill="currentColor" stroke="none"
     d={
       'M23.638 14.904c-1.602 6.43-8.113 10.34-14.542 8.736C2.67 22.05-1.244' +
       '15.525.362 9.105C1.962 2.67 8.475-1.243 14.9.358c6.43 1.605 10.342 8.115' +
@@ -165,7 +165,7 @@ export const bitcoinIcon = (
 
 export const paypalIcon = (
   <path
-    fill="currentColor"
+    fill="currentColor" stroke="none"
     d={
       'M15.607 4.653H8.941L6.645 19.251H1.82L4.862 0h7.995c3.754 0 6.375 2.294' +
       '6.473 5.513c-.648-.478-2.105-.86-3.722-.86m6.57 5.546c0 3.41-3.01' +

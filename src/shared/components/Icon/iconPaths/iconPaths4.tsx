@@ -1,19 +1,24 @@
 /** SVG path nodes for Icon registry. */
 
+/** heroicons:play-solid (icons0) — relleno para CTAs; el outline se deforma con stroke en paths cerrados. */
 export const playIcon = (
   <path
+    fill="currentColor"
+    stroke="none"
+    fillRule="evenodd"
+    clipRule="evenodd"
     d={
-      'M5.25 5.653c0-.856.917-1.398 1.667-.986l11.54 6.347a1.125 1.125 0 0 1 0' +
-      '1.972l-11.54 6.347a1.125 1.125 0 0 1-1.667-.986z'
+      'M4.5 5.653c0-1.427 1.529-2.33 2.779-1.643l11.54 6.347c1.295.712 1.295 2.573 0' +
+      '3.286L7.28 19.99c-1.25.687-2.779-.217-2.779-1.643z'
     }
   />
 );
 
 export const playCircleIcon = (
   <>
-    <path fill="currentColor" d="M21 12a9 9 0 1 1-18 0a9 9 0 0 1 18 0" />
+    <path fill="currentColor" stroke="none" d="M21 12a9 9 0 1 1-18 0a9 9 0 0 1 18 0" />
     <path
-      fill="currentColor"
+      fill="currentColor" stroke="none"
       d={
         'M15.91 11.672a.375.375 0 0 1 0 .656l-5.603 3.113a.375.375 0 0' + '1-.557-.328V8.887c0-.286.307-.466.557-.327z'
       }
@@ -132,20 +137,23 @@ export const spinnerIcon = (
 
 export const squareRootVariableIcon = (
   <>
-    <path fill="currentColor" d="M7 12h2l2 5l2-10h4" />
+    <path fill="currentColor" stroke="none" d="M7 12h2l2 5l2-10h4" />
     <rect width="18" height="18" x="3" y="3" rx="2" />
   </>
 );
 
+/** heroicons:star-solid (icons0) */
 export const starIcon = (
   <path
+    fill="currentColor"
+    stroke="none"
+    fillRule="evenodd"
+    clipRule="evenodd"
     d={
-      'M11.48 3.499a.562.562 0 0 1 1.04 0l2.125 5.111a.56.56 0 0 0' +
-      '.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.56.56 0 0' +
-      '0-.182.557l1.285 5.385a.562.562 0 0 1-.84.61l-4.725-2.885a.56.56 0 0 0-.586' +
-      '0L6.982 20.54a.562.562 0 0 1-.84-.61l1.285-5.386a.56.56 0 0' +
-      '0-.182-.557l-4.204-3.602a.562.562 0 0 1 .321-.988l5.518-.442a.56.56 0 0 0' +
-      '.475-.345z'
+      'M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.006l5.404.434c1.164.093 1.636' +
+      '1.545.749 2.305l-4.117 3.527l1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12' +
+      '18.354L7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273l-4.117-3.527c-.887' +
+      '-.76-.415-2.212.749-2.305l5.404-.434z'
     }
   />
 );
