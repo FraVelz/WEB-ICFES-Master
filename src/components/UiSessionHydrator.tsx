@@ -23,6 +23,7 @@ export function UiSessionHydrator() {
       const effectiveDemoMode = session?.user ? false : demoMode;
       if (effectiveDemoMode) {
         ensureDemoCoinsMinimum();
+        void fetch(`${window.location.origin}/api/demo/session/`, { method: 'POST' }).catch(() => {});
       }
       hydrateUiSession({ demoMode: effectiveDemoMode });
       if (session?.user && demoMode) {

@@ -8,6 +8,13 @@ import { supabase } from '@/config/supabase';
 
 const TABLE = 'exam_questions';
 
+/** Columnas expuestas al cliente (sin respuesta correcta). */
+const PUBLIC_COLUMNS =
+  'id, area, text, options, explanation, difficulty, published, order_index' as const;
+
+/** Columnas para calificación server-side. */
+const GRADING_COLUMNS = `${PUBLIC_COLUMNS}, correct_answer` as const;
+
 export interface ExamQuestionRow {
   id: string;
   area: string;
@@ -32,7 +39,7 @@ function rowToExamQuestion(row: ExamQuestionRow): ExamQuestion {
     id: row.id,
     text: row.text,
     options,
-    correctAnswer: row.correct_answer,
+    correctAnswer: row.correct_answer ?? '',
     explanation: row.explanation ?? undefined,
     difficulty: row.difficulty ?? undefined,
   };
@@ -48,7 +55,7 @@ const ExamQuestionsSupabaseService = {
 
     const { data, error } = await sb
       .from(TABLE)
-      .select('*')
+      .select(PUBLIC_COLUMNS)
       .eq('area', dbArea)
       .eq('published', true)
       .order('order_index', { ascending: true });
@@ -66,7 +73,17 @@ const ExamQuestionsSupabaseService = {
     const sb = getSupabase();
     if (!sb || ids.length === 0) return [];
 
-    const { data, error } = await sb.from(TABLE).select('*').in('id', ids).eq('published', true);
+    const { data, error } = await sb.from(TABLE).select(PUBLIC_COLUMNS).in('id', ids).eq('published', true);
+
+    if (error) throw new Error(`Error leyendo exam_questions: ${error.message}`);
+    return ((data ?? []) as ExamQuestionRow[]).map(rowToExamQuestion);
+  },
+
+  async getByIdsForGrading(ids: string[]): Promise<ExamQuestion[]> {
+    const sb = getSupabase();
+    if (!sb || ids.length === 0) return [];
+
+    const { data, error } = await sb.from(TABLE).select(GRADING_COLUMNS).in('id', ids).eq('published', true);
 
     if (error) throw new Error(`Error leyendo exam_questions: ${error.message}`);
     return ((data ?? []) as ExamQuestionRow[]).map(rowToExamQuestion);
@@ -78,7 +95,7 @@ const ExamQuestionsSupabaseService = {
 
     const { data, error } = await sb
       .from(TABLE)
-      .select('*')
+      .select(PUBLIC_COLUMNS)
       .eq('published', true)
       .order('area', { ascending: true })
       .order('order_index', { ascending: true });

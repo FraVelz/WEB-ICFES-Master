@@ -2,12 +2,8 @@
 
 import { useState, useEffect, useCallback, useMemo } from 'react';
 import { useAuth } from '@/features/auth/context/AuthContext';
-import {
-  addCoinsBalance,
-  gamificationPersistence,
-  getCompletedLessons,
-  markLessonAsCompleted,
-} from '@/services/persistence';
+import { getCompletedLessons, markLessonAsCompleted } from '@/services/persistence';
+import { fetchLessonQuizGrade } from './lessonQuizClient';
 import { normalizeQuizQuestions } from './normalizeQuizQuestions';
 import { shuffleQuestionOptions, shuffleQuizQuestions } from './shuffleQuizQuestions';
 import type { LessonQuizModalProps } from './quizTypes';
@@ -29,7 +25,9 @@ export function useLessonQuiz({
   const [alreadyCompleted, setAlreadyCompleted] = useState(false);
   const [rewards, setRewards] = useState<{ xp: number; coins: number } | null>(null);
   const [answers, setAnswers] = useState<Record<string, string>>({});
+  const [revealedAnswers, setRevealedAnswers] = useState<Record<string, string>>({});
   const [completedQuestions, setCompletedQuestions] = useState<Set<string>>(new Set());
+  const [gradeError, setGradeError] = useState<string | null>(null);
 
   const baseQuestions = useMemo(() => normalizeQuizQuestions(questions, quiz), [questions, quiz]);
   const [displayQuestions, setDisplayQuestions] = useState<typeof baseQuestions>([]);
@@ -59,7 +57,9 @@ export function useLessonQuiz({
       setIsCorrect(false);
       setRewards(null);
       setAnswers({});
+      setRevealedAnswers({});
       setCompletedQuestions(new Set());
+      setGradeError(null);
     }
   }, [isOpen, user, lessonId, checkCompletionStatus, baseQuestions]);
 
@@ -69,44 +69,50 @@ export function useLessonQuiz({
     const isCompleted = completedQuestions.has(currentQuestion.id);
     setSelectedOption(savedAnswer || null);
     setIsSubmitted(isCompleted);
-    setIsCorrect(savedAnswer === currentQuestion.correctAnswer);
-  }, [currentQuestionIndex, currentQuestion, answers, completedQuestions]);
-
-  const awardRewards = async () => {
-    if (!user?.uid) return;
-    const xpAmount = lessonXp ?? quiz?.rewards?.xp ?? 500;
-    const coinsAmount = lessonCoins ?? quiz?.rewards?.coins ?? 250;
-    await gamificationPersistence.addXP(user.uid, xpAmount, `lesson_quiz_${lessonId}`);
-    await addCoinsBalance(user.uid, coinsAmount, `lesson_quiz_${lessonId ?? 'unknown'}`);
-    if (lessonId) markLessonAsCompleted(user.uid, lessonId);
-    setRewards({ xp: xpAmount, coins: coinsAmount });
-    setAlreadyCompleted(true);
-  };
+    if (isCompleted && revealedAnswers[currentQuestion.id]) {
+      setIsCorrect(savedAnswer === revealedAnswers[currentQuestion.id]);
+    }
+  }, [currentQuestionIndex, currentQuestion, answers, completedQuestions, revealedAnswers]);
 
   const handleSubmit = async () => {
-    if (!selectedOption || loading || !currentQuestion) return;
-
-    const correct = selectedOption === currentQuestion.correctAnswer;
-    setIsCorrect(correct);
-    setIsSubmitted(true);
-
-    const updatedAnswers = { ...answers, [currentQuestion.id]: selectedOption };
-    setAnswers(updatedAnswers);
-    setCompletedQuestions((prev) => new Set([...prev, currentQuestion.id]));
-
-    const allAnswered = displayQuestions.every((q) => updatedAnswers[q.id] != null);
-    const allCorrect = displayQuestions.every((q) => updatedAnswers[q.id] === q.correctAnswer);
-
-    const shouldAward =
-      !alreadyCompleted && user?.uid && allCorrect && (totalQuestions === 1 || (isLastQuestion && allAnswered));
-
-    if (!shouldAward) return;
+    if (!selectedOption || loading || !currentQuestion || !lessonId) return;
 
     setLoading(true);
+    setGradeError(null);
+
     try {
-      await awardRewards();
+      const updatedAnswers = { ...answers, [currentQuestion.id]: selectedOption };
+      const allAnswered = displayQuestions.every((q) => updatedAnswers[q.id] != null);
+      const shouldAward = Boolean(
+        !alreadyCompleted && user?.uid && (totalQuestions === 1 || (isLastQuestion && allAnswered))
+      );
+
+      const gradeResult = await fetchLessonQuizGrade(lessonId, updatedAnswers, {
+        awardRewards: shouldAward,
+        lessonXp,
+        lessonCoins,
+      });
+
+      const questionResult = gradeResult.results.find((r) => r.questionId === currentQuestion.id);
+      const correct = questionResult?.correct ?? false;
+      const revealed = questionResult?.correctAnswer ?? '';
+
+      setIsCorrect(correct);
+      setIsSubmitted(true);
+      setAnswers(updatedAnswers);
+      setRevealedAnswers((prev) => ({ ...prev, [currentQuestion.id]: revealed }));
+      setCompletedQuestions((prev) => new Set([...prev, currentQuestion.id]));
+
+      if (gradeResult.rewards) {
+        setRewards(gradeResult.rewards);
+        setAlreadyCompleted(true);
+        markLessonAsCompleted(user!.uid, lessonId);
+      } else if (shouldAward && gradeResult.allCorrect) {
+        setAlreadyCompleted(true);
+        markLessonAsCompleted(user!.uid, lessonId);
+      }
     } catch (err) {
-      console.error('Error otorgando recompensas del quiz:', err);
+      setGradeError(err instanceof Error ? err.message : 'No se pudo calificar la respuesta');
     } finally {
       setLoading(false);
     }
@@ -133,12 +139,18 @@ export function useLessonQuiz({
       setDisplayQuestions(shuffleQuizQuestions(baseQuestions));
       setCurrentQuestionIndex(0);
       setAnswers({});
+      setRevealedAnswers({});
       setCompletedQuestions(new Set());
     } else {
       setDisplayQuestions((prev) =>
         prev.map((question, index) => (index === currentQuestionIndex ? shuffleQuestionOptions(question) : question))
       );
       setAnswers((prev) => {
+        const next = { ...prev };
+        if (failedQuestionId) delete next[failedQuestionId];
+        return next;
+      });
+      setRevealedAnswers((prev) => {
         const next = { ...prev };
         if (failedQuestionId) delete next[failedQuestionId];
         return next;
@@ -153,15 +165,23 @@ export function useLessonQuiz({
     setIsSubmitted(false);
     setSelectedOption(null);
     setIsCorrect(false);
+    setGradeError(null);
   };
 
   const countCorrectAnswers = () =>
-    Object.keys(answers).filter((k) => answers[k] === displayQuestions.find((q) => q.id === k)?.correctAnswer).length;
+    Object.keys(answers).filter((k) => answers[k] === revealedAnswers[k]).length;
+
+  const questionsWithRevealedAnswers = displayQuestions.map((q) => ({
+    ...q,
+    correctAnswer: revealedAnswers[q.id] ?? q.correctAnswer,
+  }));
 
   return {
     user,
-    currentQuestion,
-    normalizedQuestions: displayQuestions,
+    currentQuestion: currentQuestion
+      ? { ...currentQuestion, correctAnswer: revealedAnswers[currentQuestion.id] ?? '' }
+      : currentQuestion,
+    normalizedQuestions: questionsWithRevealedAnswers,
     totalQuestions,
     currentQuestionIndex,
     selectedOption,
@@ -174,6 +194,7 @@ export function useLessonQuiz({
     answers,
     isLastQuestion,
     allQuestionsAnswered,
+    gradeError,
     handleSubmit,
     handleNextQuestion,
     handlePreviousQuestion,

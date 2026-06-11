@@ -1,8 +1,24 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { gradeExamAnswers } from '@/features/exam/services/examGradingServer';
+import { getAuthUserFromRequest, hasApiAccess } from '@/utils/apiAuth';
+import { checkRateLimit, getClientIp } from '@/utils/rateLimit';
 
 export async function POST(request: NextRequest) {
   try {
+    const user = await getAuthUserFromRequest(request);
+    if (!hasApiAccess(request, user)) {
+      return NextResponse.json({ error: 'Debes iniciar sesión o usar el modo demo oficial' }, { status: 401 });
+    }
+
+    const ip = getClientIp(request);
+    const rateKey = user ? `exam-grade:user:${user.id}` : `exam-grade:demo:${ip}`;
+    const limit = user ? 30 : 10;
+    const rate = checkRateLimit(rateKey, limit, 60_000);
+
+    if (!rate.allowed) {
+      return NextResponse.json({ error: 'Demasiadas solicitudes de calificación. Espera un momento.' }, { status: 429 });
+    }
+
     const body = (await request.json()) as { answers?: Record<string, string> };
     const answers = body.answers;
 
@@ -12,6 +28,12 @@ export async function POST(request: NextRequest) {
 
     if (Object.keys(answers).length > 200) {
       return NextResponse.json({ error: 'Demasiadas respuestas en una sola petición' }, { status: 400 });
+    }
+
+    for (const value of Object.values(answers)) {
+      if (typeof value !== 'string' || value.length > 8) {
+        return NextResponse.json({ error: 'Formato de respuesta inválido' }, { status: 400 });
+      }
     }
 
     const results = await gradeExamAnswers(answers);

@@ -31,15 +31,11 @@ function mapQuestion(q: QuizQuestionInput, index: number, idPrefix: string): Nor
         ? q.correctAnswer
         : null;
 
-  let correctAnswer: string;
+  let correctAnswer = '';
   if (correctAnswerIndex !== null && options[correctAnswerIndex]) {
     correctAnswer = options[correctAnswerIndex].id;
   } else if (q.correctAnswer && typeof q.correctAnswer === 'string') {
     correctAnswer = q.correctAnswer;
-  } else if (options.length > 0) {
-    correctAnswer = options[0].id;
-  } else {
-    correctAnswer = 'a';
   }
 
   return {
@@ -63,7 +59,7 @@ export function normalizeQuizQuestions(questions?: QuizQuestionInput[], quiz?: Q
 
   if (quiz) {
     const options = normalizeOptions(quiz.options);
-    const correctAnswer = quiz.correctAnswer ?? options[0]?.id ?? 'a';
+    const correctAnswer = quiz.correctAnswer ?? '';
     return [
       {
         id: 'quiz_1',

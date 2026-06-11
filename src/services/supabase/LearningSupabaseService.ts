@@ -7,6 +7,7 @@ import {
   phaseToSectionId,
   type LearningPhaseNumber,
 } from '@/features/learning/constants/learningPhases';
+import { stripQuizAnswersFromContent } from '@/utils/stripQuizAnswers';
 
 const TABLE = 'learning_content';
 
@@ -28,7 +29,7 @@ const AREA_MAP = {
 };
 
 function mapLessonRow(row: Record<string, unknown>) {
-  const content = (row.content || {}) as Record<string, unknown>;
+  const content = stripQuizAnswersFromContent((row.content || {}) as Record<string, unknown>);
   const lessonBody =
     typeof content.body === 'string' ? content.body : typeof content.content === 'string' ? content.content : undefined;
 

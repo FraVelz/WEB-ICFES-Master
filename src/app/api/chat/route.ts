@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createServerSupabaseClient } from '@/config/supabaseClient';
+import { checkRateLimit, getClientIp } from '@/utils/rateLimit';
 import {
   CHAT_ANON_COOKIE,
   CHAT_ANON_LIMIT,
@@ -48,9 +49,9 @@ function parseCountCookie(request: NextRequest, name: string): number {
 
 function sanitizeClientMessages(messages: Array<{ role: string; content: string }>) {
   return messages
-    .filter((m) => m.role === 'user' || m.role === 'assistant')
+    .filter((m) => m.role === 'user')
     .map((m) => ({
-      role: m.role as 'user' | 'assistant',
+      role: 'user' as const,
       content: typeof m.content === 'string' ? m.content : String(m.content ?? ''),
     }));
 }
@@ -106,7 +107,15 @@ export async function POST(request: NextRequest) {
       }
     }
 
-    const { isLoggedIn, anonUsed, authUsed } = await resolveChatAccess(request);
+    const { isLoggedIn, anonUsed, authUsed, authUser } = await resolveChatAccess(request);
+
+    const ip = getClientIp(request);
+    const rateKey = authUser ? `chat:user:${authUser.id}` : `chat:anon:${ip}`;
+    const rate = checkRateLimit(rateKey, isLoggedIn ? 40 : 8, 60_000);
+
+    if (!rate.allowed) {
+      return NextResponse.json({ error: 'Demasiadas solicitudes al asistente. Espera un momento.' }, { status: 429 });
+    }
 
     if (!isLoggedIn && anonUsed >= CHAT_ANON_LIMIT) {
       return NextResponse.json(
