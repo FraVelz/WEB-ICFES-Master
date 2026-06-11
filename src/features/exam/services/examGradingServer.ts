@@ -1,6 +1,7 @@
 import { FULL_EXAM_ROUTE_AREAS } from '@/features/exam/data/examAreas';
 import type { ExamQuestion } from '@/features/exam/types/question';
 import { loadQuestionsByIdsForGrading } from '@/features/exam/services/examQuestionsServer';
+import { isAnswerCorrect } from '@/features/exam/utils/answerKey';
 
 export type GradedExamAnswer = {
   questionId: string;
@@ -20,7 +21,7 @@ export async function gradeExamAnswers(answers: Record<string, string>): Promise
     const userAnswer = answers[question.id] ?? '';
     return {
       questionId: question.id,
-      correct: userAnswer === question.correctAnswer,
+      correct: isAnswerCorrect(userAnswer, question.correctAnswer, question.options),
       userAnswer,
       correctAnswer: question.correctAnswer,
       explanation: question.explanation,

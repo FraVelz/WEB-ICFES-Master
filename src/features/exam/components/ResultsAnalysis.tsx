@@ -2,6 +2,7 @@ import { cn } from '@/utils/cn';
 import Link from 'next/link';
 import type { ExamQuestion } from '@/features/exam/types/question';
 import type { ExamConfig } from '@/features/exam/types';
+import { findQuestionOption, formatAnswerLabel } from '@/features/exam/utils/answerKey';
 
 interface ResultItem {
   question: ExamQuestion;
@@ -95,6 +96,8 @@ export const ResultsAnalysis = ({
         <h2 className="text-on-surface mb-8 text-2xl font-bold">Análisis Detallado</h2>
         {results.map((result, idx) => {
           const isCorrect = result.correct;
+          const userOption = findQuestionOption(result.question.options, result.userAnswer);
+          const correctOption = findQuestionOption(result.question.options, result.question.correctAnswer);
 
           return (
             <div
@@ -141,8 +144,10 @@ export const ResultsAnalysis = ({
                   <div className="border-app-ring/30 bg-app-ring/10 rounded-lg border p-3">
                     {result.userAnswer ? (
                       <p className="text-on-surface">
-                        <span className="text-app-accent-strong font-bold">{result.userAnswer}.</span>{' '}
-                        {result.question.options.find((o) => o.letter === result.userAnswer)?.text}
+                        <span className="text-app-accent-strong font-bold">
+                          {formatAnswerLabel(result.userAnswer, result.question.options)}.
+                        </span>{' '}
+                        {userOption?.text}
                       </p>
                     ) : (
                       <p className="text-on-surface-muted italic">Sin responder</p>
@@ -156,9 +161,9 @@ export const ResultsAnalysis = ({
                     <div className="rounded-lg border border-green-500/30 bg-green-500/10 p-3">
                       <p className="text-on-surface">
                         <span className="font-bold text-green-700 dark:text-green-300">
-                          {result.question.correctAnswer}.
+                          {formatAnswerLabel(result.question.correctAnswer, result.question.options)}.
                         </span>{' '}
-                        {result.question.options.find((o) => o.letter === result.question.correctAnswer)?.text}
+                        {correctOption?.text}
                       </p>
                     </div>
                   </div>

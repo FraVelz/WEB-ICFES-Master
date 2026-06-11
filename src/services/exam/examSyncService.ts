@@ -8,6 +8,7 @@ import ProgressSupabaseService from '@/services/supabase/ProgressSupabaseService
 import { isDemoUserId } from '@/services/demo/demoCoins';
 import { isSupabaseConfigured } from '@/services/persistence/supabaseConfigured';
 import type { AreaStatItem, AttemptWithQuestions, ProgressData } from '@/storage/progressStorage';
+import { isAnswerCorrect } from '@/features/exam/utils/answerKey';
 
 const AREA_BUCKETS: Record<string, { key: string; icon: string; color: string }> = {
   Matemáticas: { key: 'matematicas', icon: 'calculator', color: 'from-yellow-500 to-yellow-600' },
@@ -55,7 +56,7 @@ function accumulateQuestionStats(
     totalQuestions += 1;
     if (areaBuckets[areaLabel]) areaBuckets[areaLabel].total += 1;
 
-    if (answers[question.id] === question.correctAnswer) {
+    if (isAnswerCorrect(answers[question.id] ?? '', question.correctAnswer ?? '')) {
       totalCorrect += 1;
       if (areaBuckets[areaLabel]) areaBuckets[areaLabel].correct += 1;
     }

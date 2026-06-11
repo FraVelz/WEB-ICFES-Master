@@ -6,6 +6,7 @@ import { buildAreaStats, createEmptyAreaTotals, pickBestAndWeakAreas } from './p
 import { getDefaultProgress } from './progressDefaults';
 import type { AttemptWithQuestions, ProgressData } from './progressStorageTypes';
 import { PROGRESS_UPDATED_EVENT, STORAGE_KEYS } from './progressStorageTypes';
+import { isAnswerCorrect } from '@/features/exam/utils/answerKey';
 
 interface AttemptQuestion {
   id: string;
@@ -28,7 +29,7 @@ function aggregateAttempts(allAttempts: AttemptWithQuestions[]): {
       const areaLabel = question.areaLabel || 'Desconocido';
       totalQuestions++;
       if (areaTotals[areaLabel]) areaTotals[areaLabel].total++;
-      if (answers[question.id] === question.correctAnswer) {
+      if (isAnswerCorrect(answers[question.id] ?? '', question.correctAnswer)) {
         totalCorrect++;
         if (areaTotals[areaLabel]) areaTotals[areaLabel].correct++;
       }
