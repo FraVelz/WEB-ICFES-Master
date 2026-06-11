@@ -1,28 +1,24 @@
 'use client';
 
-import { cn } from '@/utils/cn';
 import dynamic from 'next/dynamic';
+import { useRouter } from 'next/navigation';
 import React, { useMemo, useState } from 'react';
 import { useDashboardShell } from '@/features/dashboard/shell';
+import { getLessonStartHref } from '@/features/learning/utils/lessonRoutes';
+import { splitLessonContent } from '@/features/learning/utils/splitLessonContent';
 
 import { AreaPath } from './AreaPath';
 
 const LessonPreview = dynamic(() => import('./LessonPreview').then((m) => ({ default: m.LessonPreview })), {
   ssr: false,
 });
-const LessonContentModal = dynamic(
-  () => import('./LessonContentModal').then((m) => ({ default: m.LessonContentModal })),
-  { ssr: false }
-);
 
 import { LoadingState } from '@/shared/components/LoadingState';
 
-/**
- * Camino de lecciones (columna central). Header, stats y aside viven en DashboardShell.
- */
 import type { PathNodeData } from './AreaPath';
 
 export const LearningRoadmap = () => {
+  const router = useRouter();
   const {
     currentArea,
     currentSectionId,
@@ -32,7 +28,6 @@ export const LearningRoadmap = () => {
   } = useDashboardShell();
 
   const [selectedLesson, setSelectedLesson] = useState<PathNodeData | null>(null);
-  const [viewingLesson, setViewingLesson] = useState<PathNodeData | null>(null);
 
   const areaColorClass = currentAreaData?.color ?? 'from-blue-500 to-blue-600';
 
@@ -58,13 +53,21 @@ export const LearningRoadmap = () => {
     setSelectedLesson(node);
   };
 
-  const handleStartLesson = (lesson?: PathNodeData | { id?: string } | null) => {
+  const handleStartLesson = (lesson?: PathNodeData | { id?: string; content?: string; questions?: unknown[]; quiz?: unknown } | null) => {
     setSelectedLesson(null);
-    setViewingLesson(lesson as PathNodeData | null);
+    if (!lesson?.id) return;
+
+    const contentStr = typeof lesson.content === 'string' ? lesson.content : '';
+    const sections = splitLessonContent(contentStr);
+    const hasContent = sections.length > 0;
+    const hasQuestions = lesson.questions && Array.isArray(lesson.questions) && lesson.questions.length > 0;
+    const hasQuiz = Boolean(hasQuestions || (lesson.quiz && typeof lesson.quiz === 'object'));
+
+    router.push(getLessonStartHref(lesson.id, { hasContent, hasQuiz }));
   };
 
   return (
-    <div className={cn('relative', viewingLesson ? 'h-dvh overflow-hidden' : 'min-h-0')}>
+    <div className="relative min-h-0">
       {loading && <LoadingState label="Cargando ruta..." layout="section" />}
 
       {!loading && (
@@ -82,13 +85,6 @@ export const LearningRoadmap = () => {
         onClose={() => setSelectedLesson(null)}
         lesson={selectedLesson}
         onStart={handleStartLesson}
-      />
-
-      <LessonContentModal
-        isOpen={!!viewingLesson}
-        onClose={() => setViewingLesson(null)}
-        lesson={viewingLesson}
-        areaId={currentArea}
       />
     </div>
   );

@@ -17,6 +17,6 @@ export function getStageLabel(sectionId: string): string {
 /** Primera sección con lecciones disponibles; si no hay, la primera cargada. */
 export function pickDefaultSectionId(sections: PathSection[]): string | undefined {
   if (sections.length === 0) return undefined;
-  const withAvailable = sections.find((s) => s.nodes.some((n) => n.status === 'available'));
-  return withAvailable?.id ?? sections[0]?.id;
+  const withCurrent = sections.find((s) => s.nodes.some((n) => n.status === 'current'));
+  return withCurrent?.id ?? sections[0]?.id;
 }

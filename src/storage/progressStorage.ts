@@ -45,6 +45,8 @@ export interface AttemptWithQuestions {
   date?: string;
 }
 
+export const LESSON_COMPLETED_EVENT = 'icfes_lesson_completed';
+
 const STORAGE_KEYS = {
   EXAMS: 'icfes_exams',
   PRACTICE: 'icfes_practice',
@@ -62,6 +64,9 @@ export const markLessonAsCompleted = (_userId: string, lessonId: string): void =
   if (!completed.includes(lessonId)) completed.push(lessonId);
   localStorage.setItem(STORAGE_KEYS.COMPLETED_LESSONS, JSON.stringify(completed));
   void syncAchievementsAfterGameplay();
+  if (typeof window !== 'undefined') {
+    window.dispatchEvent(new Event(LESSON_COMPLETED_EVENT));
+  }
 };
 
 function syncAchievementsAfterGameplay(): void {

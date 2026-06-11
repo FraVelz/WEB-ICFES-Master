@@ -5,14 +5,18 @@ import { cn } from '@/utils/cn';
 import { Icon } from '@/shared/components/Icon';
 import { LoadingState } from '@/shared/components/LoadingState';
 import type { AreaId } from '@/shared/constants';
+import { getPracticaHrefForRoadmapArea } from '@/shared/constants';
 import { useDashboardShell } from '@/features/dashboard/shell';
-import { COMPETENCY_PHASES } from '../data/competencyPhases';
+import { COMPETENCY_PHASES, getPhaseSkipExamHref } from '../data/competencyPhases';
 import { getSectionProgress, resolvePhaseStatuses } from '../data/phaseProgressUtils';
 import { PhaseStageCard } from '../components/phases/PhaseStageCard';
+import { usePhaseSkips } from '../hooks/usePhaseSkips';
 
 export function LearningPhasesPage() {
   const { currentArea, currentAreaData, sections, pathLoading } = useDashboardShell();
-  const phaseStatuses = resolvePhaseStatuses(COMPETENCY_PHASES, sections);
+  const { skippedSectionIds } = usePhaseSkips(currentArea);
+  const phaseStatuses = resolvePhaseStatuses(COMPETENCY_PHASES, sections, skippedSectionIds);
+  const areaExamHref = getPracticaHrefForRoadmapArea(currentArea);
 
   if (pathLoading) {
     return <LoadingState label="Cargando fases..." layout="section" />;
@@ -29,36 +33,44 @@ export function LearningPhasesPage() {
         {COMPETENCY_PHASES.map((phase) => {
           const section = sections.find((s) => s.id === phase.sectionId);
           const { percent } = getSectionProgress(section);
+          const status = phaseStatuses.get(phase.id) ?? 'upcoming';
+          const skippedByExam = skippedSectionIds.has(phase.sectionId);
 
           return (
             <li key={phase.id}>
               <PhaseStageCard
                 phase={phase}
-                status={phaseStatuses.get(phase.id) ?? 'upcoming'}
-                progressPercent={percent}
+                status={status}
+                progressPercent={skippedByExam ? 100 : percent}
                 lessonCount={section?.nodes.length ?? 0}
                 areaFocus={phase.areaFocus[currentArea as AreaId]}
                 sectionId={phase.sectionId}
+                skipExamHref={getPhaseSkipExamHref(currentArea, phase.sectionId)}
+                skippedByExam={skippedByExam}
               />
             </li>
           );
         })}
       </ul>
 
-      <Link
-        href="/examen-completo"
-        className={cn(
-          'border-surface-border bg-surface-elevated/80 flex items-center justify-between gap-3 rounded-2xl border p-4',
-          'transition-colors hover:border-purple-500/40 hover:bg-purple-500/5',
-          'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:outline-none'
-        )}
-      >
-        <div className="min-w-0">
-          <p className="text-on-surface font-semibold">Examen general</p>
-          <p className="text-on-surface-muted text-sm">Simulacro completo de todas las áreas</p>
-        </div>
-        <Icon name="brain" className="text-purple-400 shrink-0" />
-      </Link>
+      {areaExamHref ? (
+        <Link
+          href={areaExamHref}
+          className={cn(
+            'border-surface-border bg-surface-elevated/80 flex items-center justify-between gap-3 rounded-2xl border p-4',
+            'transition-colors hover:border-purple-500/40 hover:bg-purple-500/5',
+            'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:outline-none'
+          )}
+        >
+          <div className="min-w-0">
+            <p className="text-on-surface font-semibold">Examen general</p>
+            <p className="text-on-surface-muted text-sm">
+              Simulacro completo de {currentAreaData.name}
+            </p>
+          </div>
+          <Icon name="brain" className="shrink-0 text-purple-400" />
+        </Link>
+      ) : null}
     </div>
   );
 }

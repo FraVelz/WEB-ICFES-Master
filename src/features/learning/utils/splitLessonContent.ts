@@ -21,7 +21,8 @@ export function splitLessonContent(content: string): string[] {
 /**
  * Primer encabezado ## / ### del apartado (título del globo de la mascota).
  */
-export function extractSectionTitle(section: string): string {
+export function extractSectionTitle(section: string | undefined): string {
+  if (!section || typeof section !== 'string') return '';
   const match = section.match(/#{2,3}\s+(.+?)(?:\n|$)/);
   return match ? match[1].trim() : '';
 }
@@ -29,7 +30,8 @@ export function extractSectionTitle(section: string): string {
 /**
  * Quita el primer encabezado si repite el título del globo (evita duplicar en pantalla).
  */
-export function stripFirstHeadingIfDuplicate(section: string, bubbleTitle: string): string {
+export function stripFirstHeadingIfDuplicate(section: string | undefined, bubbleTitle: string): string {
+  if (!section || typeof section !== 'string') return '';
   if (!bubbleTitle || !section.trim()) return section;
   const match = section.match(/^(#{2,3}\s+.+?)(?:\n\n|\n|$)/);
   if (!match) return section;

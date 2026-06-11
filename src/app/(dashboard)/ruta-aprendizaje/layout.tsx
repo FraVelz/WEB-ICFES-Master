@@ -1,10 +1,5 @@
-import { ChatAssistant } from '@/features/learning/shell/ChatAssistant/ChatAssistant';
+import { RutaAprendizajeChrome } from './RutaAprendizajeChrome';
 
 export default function RutaAprendizajeLayout({ children }: { children: React.ReactNode }) {
-  return (
-    <>
-      {children}
-      <ChatAssistant />
-    </>
-  );
+  return <RutaAprendizajeChrome>{children}</RutaAprendizajeChrome>;
 }

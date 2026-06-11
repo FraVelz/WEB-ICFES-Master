@@ -331,3 +331,17 @@ html:not(.dark) :where(.rounded-2xl, .rounded-xl, .rounded-lg).border.border-sur
   color: white;
   background-color: color-mix(in oklab, var(--color-app-ring) 55%, transparent);
 }
+
+@keyframes lesson-current-glow {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 color-mix(in oklab, var(--color-app-accent) 0%, transparent);
+  }
+  50% {
+    box-shadow: 0 0 12px 2px color-mix(in oklab, var(--color-app-accent) 35%, transparent);
+  }
+}
+
+.lesson-current-glow {
+  animation: lesson-current-glow 2.5s ease-in-out infinite;
+}

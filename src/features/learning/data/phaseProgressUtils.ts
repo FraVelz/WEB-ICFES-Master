@@ -17,9 +17,20 @@ export function getSectionProgress(section: PathSection | undefined): {
   return { completed, total, percent };
 }
 
+function isPhaseDone(
+  section: PathSection | undefined,
+  skippedSectionIds: Set<string>,
+  sectionId: string
+): boolean {
+  if (skippedSectionIds.has(sectionId)) return true;
+  const { percent } = getSectionProgress(section);
+  return percent >= 100 && (section?.nodes.length ?? 0) > 0;
+}
+
 export function resolvePhaseStatuses(
   phases: CompetencyPhase[],
-  sections: PathSection[]
+  sections: PathSection[],
+  skippedSectionIds: Set<string> = new Set()
 ): Map<string, PhaseCardStatus> {
   const statuses = new Map<string, PhaseCardStatus>();
   let foundActive = false;
@@ -28,7 +39,7 @@ export function resolvePhaseStatuses(
     const section = sections.find((s) => s.id === phase.sectionId);
     const { percent } = getSectionProgress(section);
 
-    if (percent >= 100 && section && section.nodes.length > 0) {
+    if (isPhaseDone(section, skippedSectionIds, phase.sectionId)) {
       statuses.set(phase.id, 'completed');
       continue;
     }
@@ -38,7 +49,8 @@ export function resolvePhaseStatuses(
       const prevPhase = phases[prevIndex];
       const prevSection = prevPhase ? sections.find((s) => s.id === prevPhase.sectionId) : undefined;
       const prevDone =
-        !prevPhase || (getSectionProgress(prevSection).percent >= 100 && (prevSection?.nodes.length ?? 0) > 0);
+        !prevPhase ||
+        isPhaseDone(prevSection, skippedSectionIds, prevPhase.sectionId);
 
       if (prevDone || phase.order === 1) {
         statuses.set(phase.id, 'active');

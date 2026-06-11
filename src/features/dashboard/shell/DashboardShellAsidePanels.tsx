@@ -6,6 +6,7 @@ import { cn } from '@/utils/cn';
 import { Icon } from '@/shared/components/Icon';
 import { getStageLabel } from '@/features/learning/shell/SecondaryHeader/sectionStageUtils';
 import type { PathNodeData, PathSection } from '@/features/learning/roadmap/AreaPath';
+import { getPracticaHrefForRoadmapArea } from '@/shared/constants';
 import { AsideCard } from './AsideCard';
 import { useDashboardShell } from './DashboardShellContext';
 
@@ -28,8 +29,9 @@ function computeSectionProgress(section: PathSection | undefined) {
 }
 
 export function LearningAsidePanels() {
-  const { currentSection, currentStreak, coins } = useDashboardShell();
+  const { currentArea, currentAreaData, currentSection, currentStreak, coins } = useDashboardShell();
   const sectionProgress = useMemo(() => computeSectionProgress(currentSection), [currentSection]);
+  const areaExamHref = getPracticaHrefForRoadmapArea(currentArea);
 
   return (
     <>
@@ -80,6 +82,24 @@ export function LearningAsidePanels() {
           </li>
         </ul>
       </AsideCard>
+
+      {areaExamHref ? (
+        <AsideCard title="Simulacro" icon="brain">
+          <p className="text-on-surface-muted mb-3 text-xs leading-relaxed">
+            Simulacro de {currentAreaData.name}
+          </p>
+          <Link
+            href={areaExamHref}
+            className={cn(
+              'inline-flex w-full items-center justify-center gap-2 rounded-xl border px-4 py-2.5 text-sm font-bold',
+              'border-purple-500/40 text-purple-300 transition-colors hover:bg-purple-500/10',
+              'focus-visible:ring-purple-400 focus-visible:ring-2 focus-visible:outline-none'
+            )}
+          >
+            Examen general
+          </Link>
+        </AsideCard>
+      ) : null}
     </>
   );
 }
@@ -129,7 +149,8 @@ export function AchievementsAsidePanels() {
 }
 
 export function LeaderboardAsidePanels() {
-  const { currentStreak, coins } = useDashboardShell();
+  const { currentArea, currentAreaData, currentStreak, coins } = useDashboardShell();
+  const areaExamHref = getPracticaHrefForRoadmapArea(currentArea);
 
   return (
     <>
@@ -153,18 +174,23 @@ export function LeaderboardAsidePanels() {
         </ul>
       </AsideCard>
 
-      <AsideCard title="Simulacro" icon="brain">
-        <Link
-          href="/examen-completo"
-          className={cn(
-            'inline-flex w-full items-center justify-center gap-2 rounded-xl border px-4 py-2.5 text-sm font-bold',
-            'border-purple-500/40 text-purple-300 transition-colors hover:bg-purple-500/10',
-            'focus-visible:ring-purple-400 focus-visible:ring-2 focus-visible:outline-none'
-          )}
-        >
-          Examen general
-        </Link>
-      </AsideCard>
+      {areaExamHref ? (
+        <AsideCard title="Simulacro" icon="brain">
+          <p className="text-on-surface-muted mb-3 text-xs leading-relaxed">
+            Simulacro de {currentAreaData.name}
+          </p>
+          <Link
+            href={areaExamHref}
+            className={cn(
+              'inline-flex w-full items-center justify-center gap-2 rounded-xl border px-4 py-2.5 text-sm font-bold',
+              'border-purple-500/40 text-purple-300 transition-colors hover:bg-purple-500/10',
+              'focus-visible:ring-purple-400 focus-visible:ring-2 focus-visible:outline-none'
+            )}
+          >
+            Examen general
+          </Link>
+        </AsideCard>
+      ) : null}
     </>
   );
 }

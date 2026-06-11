@@ -99,3 +99,8 @@ export function getRoadmapHref(sectionId?: string): string {
   if (!sectionId) return LEARNING_ROADMAP_PATH;
   return `${LEARNING_ROADMAP_PATH}?etapa=${sectionId}`;
 }
+
+/** Examen de práctica para saltar una fase (`?saltar-fase=facil|intermedio|dificil`). */
+export function getPhaseSkipExamHref(areaId: string, sectionId: string): string {
+  return `/practica/${areaId}?saltar-fase=${sectionId}`;
+}

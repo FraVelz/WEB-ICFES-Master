@@ -1,4 +1,5 @@
 import { isNavPathActive, LECTURA_SUB_PATHS, type NavOption } from '@/components/DashboardHeader/constants';
+import { isLessonRoute } from '@/features/learning/utils/lessonRoutes';
 
 export type DashboardShellSection = 'learning' | 'achievements' | 'leaderboard' | 'lectura';
 
@@ -12,6 +13,7 @@ const SHELL_PREFIXES = [
 ] as const;
 
 export function isDashboardShellRoute(pathname: string): boolean {
+  if (isLessonRoute(pathname)) return false;
   return SHELL_PREFIXES.some((prefix) => isNavPathActive(pathname, prefix));
 }
 

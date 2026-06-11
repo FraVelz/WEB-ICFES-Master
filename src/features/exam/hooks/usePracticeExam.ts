@@ -1,8 +1,13 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import { useParams } from 'next/navigation';
-import { savePractice } from '@/services/persistence';
+import { useState, useEffect, useRef } from 'react';
+import { useParams, useSearchParams } from 'next/navigation';
+import {
+  markPhaseSkipped,
+  PHASE_SKIP_PASS_PERCENT,
+  savePractice,
+} from '@/services/persistence';
+import { getCompetencyPhaseBySectionId } from '@/features/learning/data/competencyPhases';
 import { fetchQuestionsByRouteArea } from '@/features/exam/services/QuestionService';
 import type { ExamQuestion } from '@/features/exam/types/question';
 import type { ExamConfig } from '@/features/exam/types';
@@ -10,7 +15,15 @@ import { AREA_INFO as SHARED_AREA_INFO } from '@/shared/constants/areaInfo';
 
 export function usePracticeExam() {
   const { area } = useParams<{ area: string }>();
+  const searchParams = useSearchParams();
   const areaStr = Array.isArray(area) ? area[0] : (area ?? '');
+  const phaseSkipSectionId = searchParams.get('saltar-fase');
+  const isPhaseSkipMode = Boolean(phaseSkipSectionId);
+  const phaseSkipPhase = phaseSkipSectionId
+    ? getCompetencyPhaseBySectionId(phaseSkipSectionId)
+    : undefined;
+  const phaseSkipAppliedRef = useRef(false);
+  const [phaseSkipPassed, setPhaseSkipPassed] = useState(false);
   const shared = SHARED_AREA_INFO[areaStr as keyof typeof SHARED_AREA_INFO];
   const areaInfo = shared
     ? { name: shared.name, color: shared.color }
@@ -104,8 +117,29 @@ export function usePracticeExam() {
         config: examConfig,
         completedAt: new Date().toISOString(),
       });
+
+      if (
+        isPhaseSkipMode &&
+        phaseSkipSectionId &&
+        percentage >= PHASE_SKIP_PASS_PERCENT &&
+        !phaseSkipAppliedRef.current
+      ) {
+        phaseSkipAppliedRef.current = true;
+        markPhaseSkipped(areaStr, phaseSkipSectionId, percentage);
+        setPhaseSkipPassed(true);
+      }
     }
-  }, [isFinished, showResults, questions, answers, examConfig, areaStr, areaInfo.name]);
+  }, [
+    isFinished,
+    showResults,
+    questions,
+    answers,
+    examConfig,
+    areaStr,
+    areaInfo.name,
+    isPhaseSkipMode,
+    phaseSkipSectionId,
+  ]);
 
   const resetExam = () => {
     setExamConfig(null);
@@ -115,6 +149,8 @@ export function usePracticeExam() {
     setTimeRemaining(null);
     setMobileMenuOpen(false);
     setShowAnswerSheetMobile(false);
+    phaseSkipAppliedRef.current = false;
+    setPhaseSkipPassed(false);
   };
 
   const results =
@@ -138,6 +174,11 @@ export function usePracticeExam() {
 
   return {
     areaInfo,
+    isPhaseSkipMode,
+    phaseSkipSectionId,
+    phaseSkipPhaseTitle: phaseSkipPhase?.title,
+    phaseSkipPassed,
+    phaseSkipPassPercent: PHASE_SKIP_PASS_PERCENT,
     allQuestions,
     loadingQuestions,
     questionsError,

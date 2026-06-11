@@ -1,12 +1,14 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { LearningService } from '../services/LearningService';
 import { useAuth } from '@/features/auth/context/AuthContext';
+import { LESSON_COMPLETED_EVENT } from '@/services/persistence';
 import {
   LEARNING_PHASE_SECTION_IDS,
   phaseToSectionId,
   sectionIdToPhase,
   type LearningPhaseSectionId,
 } from '@/features/learning/constants/learningPhases';
+import { applyLessonStatusesToNodes } from '@/features/learning/utils/lessonPathStatus';
 
 /**
  * Learning-path state: maps Supabase/local lessons into UI "sections".
@@ -49,64 +51,73 @@ export const useLearningPath = (areaId: string | undefined, options: UseLearning
 
   const phaseFilter = loadAllPhases ? undefined : sectionIdToPhase(sectionId);
 
-  useEffect(() => {
-    const fetchPath = async () => {
-      if (!areaId) return;
+  const fetchPath = useCallback(async () => {
+    if (!areaId) return;
 
-      setLoading(true);
-      try {
-        const [lessons, progress] = await Promise.all([
-          LearningService.getLearningPath(areaId, phaseFilter),
-          user ? LearningService.getUserProgress(user.uid, areaId) : Promise.resolve(null),
-        ]);
+    setLoading(true);
+    try {
+      const [lessons, progress] = await Promise.all([
+        LearningService.getLearningPath(areaId, phaseFilter),
+        user ? LearningService.getUserProgress(user.uid, areaId) : Promise.resolve(null),
+      ]);
 
-        const activePhase = sectionIdToPhase(sectionId);
-        const sectionIds = loadAllPhases
-          ? LEARNING_PHASE_SECTION_IDS
-          : [phaseToSectionId(activePhase)];
+      const activePhase = sectionIdToPhase(sectionId);
+      const sectionIds = loadAllPhases
+        ? LEARNING_PHASE_SECTION_IDS
+        : [phaseToSectionId(activePhase)];
 
-        const groupedSections: PathSection[] = sectionIds.map((id) => ({
-          id,
-          ...SECTION_META[id],
-          nodes: [],
-        }));
+      const groupedSections: PathSection[] = sectionIds.map((id) => ({
+        id,
+        ...SECTION_META[id],
+        nodes: [],
+      }));
 
-        const completedIds = (progress as { completedLessons?: string[] } | null)?.completedLessons ?? [];
+      const completedIds = (progress as { completedLessons?: string[] } | null)?.completedLessons ?? [];
 
-        lessons.forEach((lesson) => {
-          const sectionIdForLesson = phaseToSectionId(lesson.phase);
-          const section = groupedSections.find((s) => s.id === sectionIdForLesson);
-          if (!section) return;
+      lessons.forEach((lesson) => {
+        const sectionIdForLesson = phaseToSectionId(lesson.phase);
+        const section = groupedSections.find((s) => s.id === sectionIdForLesson);
+        if (!section) return;
 
-          const isCompleted = completedIds.includes(lesson.id ?? '');
-          const status = isCompleted ? 'completed' : 'available';
-          const xp = lesson.rewards?.xp || lesson.xp || 0;
-          const coins = lesson.rewards?.coins || lesson.coins || 0;
+        const xp = lesson.rewards?.xp || lesson.xp || 0;
+        const coins = lesson.rewards?.coins || lesson.coins || 0;
 
-          section.nodes.push({
-            ...lesson,
-            id: lesson.id ?? '',
-            title: (lesson as { title?: string }).title,
-            description: (lesson as { description?: string }).description,
-            xp,
-            coins,
-            type: 'lesson',
-            status,
-          } as PathNodeData);
-        });
+        section.nodes.push({
+          ...lesson,
+          id: lesson.id ?? '',
+          title: (lesson as { title?: string }).title,
+          description: (lesson as { description?: string }).description,
+          xp,
+          coins,
+          type: 'lesson',
+        } as PathNodeData);
+      });
 
-        const activeSections = groupedSections.filter((s) => s.nodes.length > 0);
-        setSections(loadAllPhases ? groupedSections : activeSections.length > 0 ? activeSections : groupedSections);
-      } catch (err) {
-        console.error(err);
-        setError('Error al cargar la ruta de aprendizaje');
-      } finally {
-        setLoading(false);
+      const completedSet = new Set(completedIds);
+      for (const section of groupedSections) {
+        section.nodes = applyLessonStatusesToNodes(section.nodes, completedSet);
       }
-    };
 
-    fetchPath();
-  }, [areaId, user, phaseFilter, loadAllPhases]);
+      const activeSections = groupedSections.filter((s) => s.nodes.length > 0);
+      setSections(loadAllPhases ? groupedSections : activeSections.length > 0 ? activeSections : groupedSections);
+      setError(null);
+    } catch (err) {
+      console.error(err);
+      setError('Error al cargar la ruta de aprendizaje');
+    } finally {
+      setLoading(false);
+    }
+  }, [areaId, user, phaseFilter, loadAllPhases, sectionId]);
+
+  useEffect(() => {
+    void fetchPath();
+  }, [fetchPath]);
+
+  useEffect(() => {
+    const refresh = () => void fetchPath();
+    window.addEventListener(LESSON_COMPLETED_EVENT, refresh);
+    return () => window.removeEventListener(LESSON_COMPLETED_EVENT, refresh);
+  }, [fetchPath]);
 
   return { sections, loading, error };
 };

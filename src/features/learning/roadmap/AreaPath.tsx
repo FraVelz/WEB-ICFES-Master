@@ -1,5 +1,6 @@
 import React from 'react';
 import { cn } from '@/utils/cn';
+import type { LessonPathStatus } from '@/features/learning/utils/lessonPathStatus';
 import { PathNode } from './PathNode';
 
 // Area → icon name
@@ -17,6 +18,7 @@ export interface PathNodeData {
   title?: string;
   description?: string;
   type?: string;
+  status?: LessonPathStatus;
   [key: string]: unknown;
 }
 

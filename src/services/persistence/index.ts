@@ -74,9 +74,20 @@ export {
   saveFullExam,
   getCompletedLessons,
   markLessonAsCompleted,
+  LESSON_COMPLETED_EVENT,
   clearAllData,
   type ProgressData,
   type AttemptWithQuestions,
 } from '@/storage/progressStorage';
+
+export {
+  PHASE_SKIP_PASS_PERCENT,
+  PHASE_SKIP_UPDATED_EVENT,
+  getPhaseSkips,
+  isPhaseSkipped,
+  getSkippedSectionIdsForArea,
+  markPhaseSkipped,
+  type PhaseSkipRecord,
+} from './phaseSkipPersistence';
 
 export { formatTimeExtended } from '@/storage/timeFormatter';

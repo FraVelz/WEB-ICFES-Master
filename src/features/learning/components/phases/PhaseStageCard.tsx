@@ -14,6 +14,8 @@ type PhaseStageCardProps = {
   lessonCount: number;
   areaFocus?: string;
   sectionId: string;
+  skipExamHref?: string;
+  skippedByExam?: boolean;
 };
 
 export function PhaseStageCard({
@@ -23,6 +25,8 @@ export function PhaseStageCard({
   lessonCount,
   areaFocus,
   sectionId,
+  skipExamHref,
+  skippedByExam = false,
 }: PhaseStageCardProps) {
   const isCompleted = status === 'completed';
   const isActive = status === 'active';
@@ -56,7 +60,9 @@ export function PhaseStageCard({
         />
       </div>
       <p className="text-on-surface-muted mt-1 text-xs">
-        {lessonCount} lecciones · {isLocked ? '0' : progressPercent}%
+        {skippedByExam
+          ? 'Fase superada con examen'
+          : `${lessonCount} lecciones · ${isLocked ? '0' : progressPercent}%`}
       </p>
 
       {isActive && areaFocus && (
@@ -64,16 +70,31 @@ export function PhaseStageCard({
       )}
 
       {!isLocked && (
-        <Link
-          href={roadmapHref}
-          className={cn(
-            'bg-app-accent mt-4 inline-flex w-full items-center justify-center rounded-xl px-4 py-2.5 text-sm font-bold text-white',
-            'transition-colors hover:brightness-110',
-            'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:outline-none'
+        <div className="mt-4 flex flex-col gap-2">
+          <Link
+            href={roadmapHref}
+            className={cn(
+              'bg-app-accent inline-flex w-full items-center justify-center rounded-xl px-4 py-2.5 text-sm font-bold text-white',
+              'transition-colors hover:brightness-110',
+              'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:outline-none'
+            )}
+          >
+            {isCompleted ? 'Repasar' : 'Continuar'}
+          </Link>
+          {isActive && !isCompleted && skipExamHref && (
+            <Link
+              href={skipExamHref}
+              className={cn(
+                'border-surface-border text-on-surface-muted inline-flex w-full items-center justify-center gap-2 rounded-xl border px-4 py-2.5 text-sm font-semibold',
+                'transition-colors hover:border-amber-500/40 hover:bg-amber-500/10 hover:text-amber-200',
+                'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:outline-none'
+              )}
+            >
+              <Icon name="bolt" className="text-amber-400" />
+              Saltar fase con examen
+            </Link>
           )}
-        >
-          {isCompleted ? 'Repasar' : 'Continuar'}
-        </Link>
+        </div>
       )}
     </article>
   );
