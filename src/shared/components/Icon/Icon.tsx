@@ -2,6 +2,7 @@
 
 import { cn } from '@/utils/cn';
 import { ICONS } from './icons';
+import { getIconRenderMode } from './iconRenderMode';
 
 const SIZES = {
   sm: 16,
@@ -31,13 +32,15 @@ export function Icon({ name, className = '', size = 'md' }: IconProps) {
     return null;
   }
 
+  const isStroke = getIconRenderMode(name) === 'stroke';
+
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 24 24"
       fill="none"
-      stroke="currentColor"
-      strokeWidth={1.5}
+      stroke={isStroke ? 'currentColor' : 'none'}
+      strokeWidth={isStroke ? 1.5 : undefined}
       strokeLinecap="round"
       strokeLinejoin="round"
       className={cn('inline-block shrink-0 flex-none', className)}

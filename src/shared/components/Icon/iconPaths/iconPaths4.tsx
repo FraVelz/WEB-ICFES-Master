@@ -135,10 +135,11 @@ export const spinnerIcon = (
   />
 );
 
+/** lucide:square-radical (icons0) — stroke paths. */
 export const squareRootVariableIcon = (
   <>
-    <path fill="currentColor" stroke="none" d="M7 12h2l2 5l2-10h4" />
-    <rect width="18" height="18" x="3" y="3" rx="2" />
+    <path d="M7 12h2l2 5l2-10h4" />
+    <rect width="18" height="18" x="3" y="3" rx="2" fill="none" />
   </>
 );
 
