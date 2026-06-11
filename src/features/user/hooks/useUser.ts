@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import type { UserProfile, UserRank } from '@/features/user/types/userProfile.types';
 import { getPerformanceRank } from '@/features/user/utils/performanceRank';
+import { PROGRESS_UPDATED_EVENT } from '@/storage/progressStorageTypes';
 import { getDemoProfile } from '@/services/demo/demoProfile';
 import {
   getCoinsBalance,
@@ -81,6 +82,12 @@ export const useUser = () => {
     setIsLoading(true);
     void loadUserData();
   }, [loadUserData]);
+
+  useEffect(() => {
+    const refreshRank = () => setRank(getPerformanceRank());
+    window.addEventListener(PROGRESS_UPDATED_EVENT, refreshRank);
+    return () => window.removeEventListener(PROGRESS_UPDATED_EVENT, refreshRank);
+  }, []);
 
   useEffect(() => {
     const onCoinsChanged = (event: Event) => {

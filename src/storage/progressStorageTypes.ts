@@ -33,6 +33,7 @@ export interface AttemptWithQuestions {
 }
 
 export const LESSON_COMPLETED_EVENT = 'icfes_lesson_completed';
+export const PROGRESS_UPDATED_EVENT = 'icfes_progress_updated';
 
 export const STORAGE_KEYS = {
   EXAMS: 'icfes_exams',

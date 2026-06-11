@@ -5,7 +5,7 @@
  */
 
 export type { AreaStatItem, AttemptWithQuestions, ProgressData } from './progressStorageTypes';
-export { LESSON_COMPLETED_EVENT } from './progressStorageTypes';
+export { LESSON_COMPLETED_EVENT, PROGRESS_UPDATED_EVENT } from './progressStorageTypes';
 export { syncAchievementsAfterGameplay } from './progressAchievementSync';
 export { getCompletedLessons, markLessonAsCompleted } from './progressLessonStorage';
 export { getStoredExams, getStoredPractices } from './progressAttemptRead';

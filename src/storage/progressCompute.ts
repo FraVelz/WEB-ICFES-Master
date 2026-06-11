@@ -5,7 +5,7 @@ import { getStoredExams, getStoredPractices } from './progressAttemptRead';
 import { buildAreaStats, createEmptyAreaTotals, pickBestAndWeakAreas } from './progressAreaStats';
 import { getDefaultProgress } from './progressDefaults';
 import type { AttemptWithQuestions, ProgressData } from './progressStorageTypes';
-import { STORAGE_KEYS } from './progressStorageTypes';
+import { PROGRESS_UPDATED_EVENT, STORAGE_KEYS } from './progressStorageTypes';
 
 interface AttemptQuestion {
   id: string;
@@ -75,5 +75,8 @@ export const updateProgress = (): ProgressData => {
   };
 
   localStorage.setItem(STORAGE_KEYS.PROGRESS, JSON.stringify(progress));
+  if (typeof window !== 'undefined') {
+    window.dispatchEvent(new Event(PROGRESS_UPDATED_EVENT));
+  }
   return progress;
 };
