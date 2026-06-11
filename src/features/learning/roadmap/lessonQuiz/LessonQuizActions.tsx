@@ -14,6 +14,8 @@ type LessonQuizActionsProps = {
   onSubmit: () => void;
   onRetry: () => void;
   onNext: () => void;
+  className?: string;
+  innerClassName?: string;
 };
 
 export function LessonQuizActions({
@@ -29,9 +31,10 @@ export function LessonQuizActions({
   onSubmit,
   onRetry,
   onNext,
+  className,
+  innerClassName,
 }: LessonQuizActionsProps) {
-  return (
-    <div className="shrink-0 border-t border-slate-800 bg-slate-900/95 p-3 pt-2 backdrop-blur-sm lg:p-6 lg:pt-0">
+  const buttons = (
       <div className="flex gap-2 lg:gap-3">
         {currentQuestionIndex > 0 && (
           <button
@@ -115,6 +118,16 @@ export function LessonQuizActions({
           </>
         )}
       </div>
+  );
+
+  return (
+    <div
+      className={cn(
+        'shrink-0 border-t border-slate-800 bg-slate-900/95 p-3 pt-2 backdrop-blur-sm lg:p-6 lg:pt-0',
+        className
+      )}
+    >
+      {innerClassName ? <div className={innerClassName}>{buttons}</div> : buttons}
     </div>
   );
 }

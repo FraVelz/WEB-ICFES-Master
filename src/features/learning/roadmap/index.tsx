@@ -6,7 +6,6 @@ import React, { useMemo, useState } from 'react';
 import { useDashboardShell } from '@/features/dashboard/shell';
 
 import { AreaPath } from './AreaPath';
-import { LessonAreaLinks } from './LessonAreaLinks';
 
 const LessonPreview = dynamic(() => import('./LessonPreview').then((m) => ({ default: m.LessonPreview })), {
   ssr: false,
@@ -66,8 +65,6 @@ export const LearningRoadmap = () => {
 
   return (
     <div className={cn('relative', viewingLesson ? 'h-dvh overflow-hidden' : 'min-h-0')}>
-      <LessonAreaLinks roadmapAreaId={currentArea} className="mb-6" />
-
       {loading && <LoadingState label="Cargando ruta..." layout="section" />}
 
       {!loading && (

@@ -1,17 +1,13 @@
 'use client';
 
 import { cn } from '@/utils/cn';
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import ReactMarkdown from 'react-markdown';
 import { Icon } from '@/shared/components/Icon';
 import { MASCOT_IMAGES } from '@/assets';
-import { MascotaCircle } from '@/shared/components/MascotaCircle';
-import dynamic from 'next/dynamic';
+import { LessonMascotBubble } from './LessonMascotBubble';
+import { LessonQuizPanel } from './lessonQuiz/LessonQuizPanel';
 import type { LessonQuizModalProps } from './lessonQuiz/quizTypes';
-
-const LessonQuizModal = dynamic(() => import('./LessonQuizModal').then((m) => ({ default: m.LessonQuizModal })), {
-  ssr: false,
-});
 import { useGSAPModalEntrance } from '@/hooks/useGSAPModalEntrance';
 import { splitLessonContent, extractSectionTitle, stripFirstHeadingIfDuplicate } from '../utils/splitLessonContent';
 import { getAreaInfo } from '@/shared/constants';
@@ -58,7 +54,6 @@ export const LessonContentModal = ({
   lesson,
   areaId = 'lectura-critica',
 }: LessonContentModalProps) => {
-  const [isQuizOpen, setIsQuizOpen] = useState(false);
   const [currentSection, setCurrentSection] = useState(0);
 
   const modalRef = useGSAPModalEntrance({
@@ -72,20 +67,19 @@ export const LessonContentModal = ({
   const canShowQuiz: boolean = Boolean(hasQuestions || hasQuiz);
 
   const contentStr = typeof lesson?.content === 'string' ? lesson.content : '';
-  const hasContent = contentStr.trim().length > 0;
 
   const sections = useMemo(() => splitLessonContent(contentStr), [contentStr]);
 
-  const totalSteps = sections.length + (hasContent && canShowQuiz ? 1 : 0);
-  const isExamStep = currentSection === sections.length && totalSteps > sections.length;
+  const totalSteps = sections.length + (canShowQuiz ? 1 : 0);
+  const isExamStep = canShowQuiz && currentSection >= sections.length;
+  const showQuiz = isExamStep;
   const progress = totalSteps > 0 ? ((currentSection + 1) / totalSteps) * 100 : 0;
 
   const mascotDialogue = useMemo(() => {
-    if (isExamStep) return '¿Listo para ponerte a prueba?';
     if (sections.length === 0) return lesson?.title || '';
     const sectionTitle = extractSectionTitle(sections[currentSection]);
     return sectionTitle || lesson?.title || '¡Vamos a aprender!';
-  }, [isExamStep, sections, currentSection, lesson?.title]);
+  }, [sections, currentSection, lesson?.title]);
 
   const handleNext = () => {
     if (currentSection < totalSteps - 1) {
@@ -101,9 +95,44 @@ export const LessonContentModal = ({
 
   const resetSection = () => setCurrentSection(0);
 
+  useEffect(() => {
+    if (!isOpen) {
+      setCurrentSection(0);
+      return;
+    }
+
+    const previousBodyOverflow = document.body.style.overflow;
+    const previousHtmlOverflow = document.documentElement.style.overflow;
+    document.body.style.overflow = 'hidden';
+    document.documentElement.style.overflow = 'hidden';
+
+    return () => {
+      document.body.style.overflow = previousBodyOverflow;
+      document.documentElement.style.overflow = previousHtmlOverflow;
+    };
+  }, [isOpen]);
+
+  const quizProps = {
+    questions: Array.isArray(lesson?.questions)
+      ? (lesson.questions as LessonQuizModalProps['questions'])
+      : undefined,
+    quiz:
+      lesson?.quiz && typeof lesson.quiz === 'object'
+        ? ({
+            ...(lesson.quiz as object),
+            questions: lesson.questions,
+            rewards: lesson.rewards,
+          } as LessonQuizModalProps['quiz'])
+        : undefined,
+    lessonId: lesson?.id,
+    lessonTitle: lesson?.title,
+    lessonXp: lesson?.xp,
+    lessonCoins: lesson?.coins,
+  };
+
   if (!isOpen || !lesson) return null;
 
-  const mascotSrc = isExamStep ? MASCOT_IMAGES.celebrando2 : MASCOT_IMAGES.logo;
+  const mascotSrc = MASCOT_IMAGES.logo;
   const gradientClass = getAreaColor(areaId);
   const bubbleBorder = getBubbleBorderColor(areaId);
 
@@ -112,34 +141,33 @@ export const LessonContentModal = ({
       ? stripFirstHeadingIfDuplicate(sections[currentSection], mascotDialogue)
       : (sections[currentSection] ?? '');
 
+  const sectionInnerClass = 'mx-auto w-full max-w-6xl px-3 sm:px-4';
+
   return (
-    <div ref={modalRef} className="fixed inset-0 z-60 flex h-full w-full flex-col bg-slate-950">
-      {/* Compact header */}
-      <div
-        className={cn(
-          'flex shrink-0 items-center justify-between border-b border-slate-800/80 bg-slate-900/90',
-          'px-3 py-2.5 backdrop-blur-md sm:px-4 sm:py-3'
-        )}
-      >
-        <button
-          type="button"
-          onClick={onClose}
-          className={cn(
-            '-ml-1 flex min-w-[44px] cursor-pointer items-center gap-2 rounded-xl p-2 text-slate-400',
-            'transition-colors hover:bg-slate-800 hover:text-white focus-visible:outline-none',
-            'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900'
-          )}
-        >
-          <Icon name="arrow-left" className="text-lg" />
-          <span className="hidden text-sm font-medium sm:inline">Salir</span>
-        </button>
-        <h2 className="flex-1 truncate px-2 text-center text-sm font-bold text-white sm:px-4 sm:text-base">
-          {lesson.title}
-        </h2>
-        <div className="w-14 sm:w-20" />
+    <div ref={modalRef} className="fixed inset-0 z-60 flex flex-col overflow-hidden bg-slate-950">
+      {/* Header — fondo ancho completo; contenido limitado */}
+      <div className="shrink-0 border-b border-slate-800/80 bg-slate-900/90 backdrop-blur-md">
+        <div className={cn(sectionInnerClass, 'flex items-center justify-between py-2.5 sm:py-3')}>
+          <button
+            type="button"
+            onClick={onClose}
+            className={cn(
+              '-ml-1 flex min-w-[44px] cursor-pointer items-center gap-2 rounded-xl p-2 text-slate-400',
+              'transition-colors hover:bg-slate-800 hover:text-white focus-visible:outline-none',
+              'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900'
+            )}
+          >
+            <Icon name="arrow-left" className="text-lg" />
+            <span className="hidden text-sm font-medium sm:inline">Salir</span>
+          </button>
+          <h2 className="flex-1 truncate px-2 text-center text-sm font-bold text-white sm:px-4 sm:text-base">
+            {lesson.title}
+          </h2>
+          <div className="w-14 sm:w-20" />
+        </div>
       </div>
 
-      {/* Progress bar */}
+      {/* Progress bar — ancho completo */}
       <div className="h-1.5 shrink-0 bg-slate-800/80">
         <div
           className={cn('h-full bg-linear-to-r transition-all duration-300 ease-out', gradientClass)}
@@ -148,91 +176,48 @@ export const LessonContentModal = ({
       </div>
 
       {/* Main body */}
-      <div className="min-h-0 flex-1 overflow-x-hidden overflow-y-auto scroll-smooth">
-        <div className="mx-auto max-w-2xl px-3 py-4 pb-28 sm:px-6 sm:py-6">
-          {/* Duolingo-style: mascot + speech bubble */}
-          <div className="sm:items-flex-start mb-6 flex flex-col items-center gap-4 sm:mb-8 sm:flex-row sm:justify-center sm:gap-6">
-            {/* Floating mascot */}
-            <div className="shrink-0 sm:order-2" style={{ animation: 'float 3s ease-in-out infinite' }}>
-              <MascotaCircle src={mascotSrc} alt="Mascota" size="md" centered={false} />
-            </div>
+      <div
+        className={cn(
+          'min-h-0 flex-1',
+          showQuiz ? 'flex flex-col overflow-hidden' : 'overflow-x-hidden overflow-y-auto overscroll-contain scroll-smooth'
+        )}
+      >
+        {showQuiz ? (
+          <LessonQuizPanel
+            active={showQuiz}
+            variant="inline"
+            bubbleBorder={bubbleBorder}
+            contentClassName={cn(sectionInnerClass, 'py-4 sm:py-6')}
+            footerInnerClassName={cn(sectionInnerClass, 'py-3 sm:py-4')}
+            onCancel={() => {
+              if (sections.length > 0) {
+                setCurrentSection(sections.length - 1);
+              } else {
+                onClose();
+              }
+            }}
+            onComplete={() => {
+              resetSection();
+              onClose();
+            }}
+            {...quizProps}
+          />
+        ) : (
+        <div className={cn(sectionInnerClass, 'py-4 sm:py-6')}>
+          <LessonMascotBubble
+            className="mb-6 sm:mb-8"
+            text={mascotDialogue}
+            mascotSrc={mascotSrc}
+            bubbleBorder={bubbleBorder}
+          />
 
-            {/* Speech bubble (title / subtitle) */}
-            <div className="relative w-full max-w-sm sm:order-1 sm:max-w-md sm:flex-1">
-              {/* Bubble tail: bottom on mobile, right on desktop */}
-              <div
-                className={cn(
-                  'absolute top-full left-1/2 h-0 w-0 -translate-x-1/2 -translate-y-px border-[10px]',
-                  'border-transparent border-t-slate-800 sm:top-1/2 sm:right-auto sm:left-full',
-                  'sm:translate-x-0 sm:-translate-y-1/2 sm:border-t-transparent sm:border-r-slate-800'
-                )}
-                aria-hidden
-              />
-              <div
-                className={cn(
-                  'rounded-2xl border-2 bg-slate-800/95 p-4 shadow-xl backdrop-blur-sm sm:p-5',
-                  bubbleBorder
-                )}
-              >
-                <p className="text-center text-base leading-relaxed font-semibold text-white sm:text-left sm:text-lg">
-                  {mascotDialogue}
-                </p>
-              </div>
-            </div>
-          </div>
-
-          {/* Section indicator */}
           <div className="mb-4 flex justify-center sm:mb-6">
             <span className="rounded-full bg-slate-800/80 px-3 py-1 text-xs font-semibold tracking-wider text-slate-400 uppercase">
-              {isExamStep ? 'Examen' : `${currentSection + 1} de ${sections.length}`}
+              {`${currentSection + 1} de ${sections.length}`}
             </span>
           </div>
 
-          {/* Section body or quick exam block */}
-          {isExamStep ? (
-            <div className="rounded-2xl border border-slate-700/80 bg-slate-900/50 p-4 sm:p-6 md:p-8">
-              <p className="mb-4 text-slate-400 sm:mb-6">
-                {canShowQuiz ? (
-                  <>
-                    Completa{' '}
-                    {hasQuestions
-                      ? `las ${(lesson?.questions ?? []).length} pregunta${(lesson?.questions ?? []).length > 1 ? 's' : ''}`
-                      : 'el examen rápido'}
-                    , para finalizar esta lección y ganar{' '}
-                    <span className="font-bold text-blue-400">
-                      {lesson.xp || (lesson?.quiz as { rewards?: { xp?: number } } | undefined)?.rewards?.xp || 10} XP
-                    </span>{' '}
-                    y{' '}
-                    <span className="font-bold text-yellow-400">
-                      {lesson.coins ||
-                        (lesson?.quiz as { rewards?: { coins?: number } } | undefined)?.rewards?.coins ||
-                        5}{' '}
-                      monedas
-                    </span>
-                    .
-                  </>
-                ) : (
-                  <>
-                    Completa el examen rápido para finalizar esta lección y ganar{' '}
-                    <span className="font-bold text-blue-400">{lesson.xp || 10} XP</span> y{' '}
-                    <span className="font-bold text-yellow-400">{lesson.coins || 5} monedas</span>.
-                  </>
-                )}
-              </p>
-              <button
-                type="button"
-                onClick={() => setIsQuizOpen(true)}
-                className={cn(
-                  'w-full transform cursor-pointer rounded-xl bg-linear-to-r px-6 py-3.5 font-bold text-white shadow-lg transition-all hover:scale-[1.02] active:scale-[0.98] sm:w-auto sm:min-w-[200px] sm:px-8 sm:py-4',
-                  'focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:outline-none',
-                  'focus-visible:ring-offset-slate-900',
-                  gradientClass
-                )}
-              >
-                Realizar Prueba
-              </button>
-            </div>
-          ) : sections.length > 0 ? (
+          {sections.length > 0 ? (
             <div className="rounded-2xl border border-slate-700/60 bg-slate-900/30 p-4 sm:p-6 md:p-8">
               <ReactMarkdown
                 components={{
@@ -318,91 +303,57 @@ export const LessonContentModal = ({
           ) : (
             <div className="rounded-2xl border border-slate-700/60 bg-slate-900/30 p-4 text-center sm:p-6">
               <p className="text-sm text-slate-400 sm:text-base">No hay contenido disponible para esta lección.</p>
-              {canShowQuiz && (
-                <button
-                  type="button"
-                  onClick={() => setIsQuizOpen(true)}
-                  className={cn(
-                    'mt-4 rounded-xl bg-blue-600 px-5 py-2.5 font-bold text-white hover:bg-blue-500 sm:px-6 sm:py-3',
-                    'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none',
-                    'focus-visible:ring-offset-slate-900'
-                  )}
-                >
-                  Ir al examen
-                </button>
-              )}
             </div>
           )}
         </div>
-      </div>
-
-      {/* Prev / next — responsive */}
-      <div
-        className={cn(
-          'fixed right-0 bottom-0 left-0 flex shrink-0 items-center justify-between gap-2 border-t',
-          'border-slate-800/80 bg-slate-950/95 px-3 py-3 backdrop-blur-md sm:gap-4 sm:px-4 sm:py-4'
         )}
-      >
-        <button
-          type="button"
-          onClick={handlePrev}
-          disabled={currentSection === 0}
-          className={cn(
-            'flex min-w-[44px] cursor-pointer items-center justify-center gap-1.5 rounded-xl border',
-            'border-slate-700 bg-slate-800/80 px-3 py-2.5 font-medium text-slate-300 transition-all',
-            'hover:bg-slate-700/80 hover:text-white disabled:cursor-not-allowed disabled:opacity-40',
-            'disabled:hover:bg-slate-800/80 disabled:hover:text-slate-300 sm:gap-2 sm:px-4 sm:py-3',
-            'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none',
-            'focus-visible:ring-offset-slate-950'
-          )}
-        >
-          <Icon name="arrow-left" className="text-sm" />
-          <span className="hidden text-sm sm:inline">Anterior</span>
-        </button>
-        <span className="text-xs text-slate-500 sm:text-sm">
-          {currentSection + 1} / {totalSteps || 1}
-        </span>
-        <button
-          type="button"
-          onClick={handleNext}
-          disabled={currentSection >= totalSteps - 1}
-          className={cn(
-            'flex min-w-[44px] cursor-pointer items-center justify-center gap-1.5 rounded-xl bg-linear-to-r px-3 py-2.5 font-medium text-white shadow-lg transition-all hover:opacity-95 disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:opacity-40 sm:gap-2 sm:px-4 sm:py-3',
-            'focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:outline-none',
-            'focus-visible:ring-offset-slate-950',
-            gradientClass
-          )}
-        >
-          <span className="hidden text-sm sm:inline">Siguiente</span>
-          <Icon name="arrow-right" className="text-sm" />
-        </button>
       </div>
 
-      <LessonQuizModal
-        isOpen={isQuizOpen}
-        onClose={() => setIsQuizOpen(false)}
-        onComplete={() => {
-          setIsQuizOpen(false);
-          resetSection();
-          onClose();
-        }}
-        questions={
-          Array.isArray(lesson?.questions) ? (lesson.questions as LessonQuizModalProps['questions']) : undefined
-        }
-        quiz={
-          lesson?.quiz && typeof lesson.quiz === 'object'
-            ? ({
-                ...(lesson.quiz as object),
-                questions: lesson.questions,
-                rewards: lesson.rewards,
-              } as LessonQuizModalProps['quiz'])
-            : undefined
-        }
-        lessonId={lesson?.id}
-        lessonTitle={lesson?.title}
-        lessonXp={lesson?.xp}
-        lessonCoins={lesson?.coins}
-      />
+      {/* Prev / next — fondo ancho completo; contenido limitado */}
+      {!showQuiz && (
+        <div className="shrink-0 border-t border-slate-800/80 bg-slate-950/95 backdrop-blur-md">
+          <div
+            className={cn(
+              sectionInnerClass,
+              'flex items-center justify-between gap-2 py-3 sm:gap-4 sm:py-4'
+            )}
+          >
+            <button
+              type="button"
+              onClick={handlePrev}
+              disabled={currentSection === 0}
+              className={cn(
+                'flex min-w-[44px] cursor-pointer items-center justify-center gap-1.5 rounded-xl border',
+                'border-slate-700 bg-slate-800/80 px-3 py-2.5 font-medium text-slate-300 transition-all',
+                'hover:bg-slate-700/80 hover:text-white disabled:cursor-not-allowed disabled:opacity-40',
+                'disabled:hover:bg-slate-800/80 disabled:hover:text-slate-300 sm:gap-2 sm:px-4 sm:py-3',
+                'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none',
+                'focus-visible:ring-offset-slate-950'
+              )}
+            >
+              <Icon name="arrow-left" className="text-sm" />
+              <span className="hidden text-sm sm:inline">Anterior</span>
+            </button>
+            <span className="text-xs text-slate-500 sm:text-sm">
+              {currentSection + 1} / {totalSteps || 1}
+            </span>
+            <button
+              type="button"
+              onClick={handleNext}
+              disabled={currentSection >= totalSteps - 1}
+              className={cn(
+                'flex min-w-[44px] cursor-pointer items-center justify-center gap-1.5 rounded-xl bg-linear-to-r px-3 py-2.5 font-medium text-white shadow-lg transition-all hover:opacity-95 disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:opacity-40 sm:gap-2 sm:px-4 sm:py-3',
+                'focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:outline-none',
+                'focus-visible:ring-offset-slate-950',
+                gradientClass
+              )}
+            >
+              <span className="hidden text-sm sm:inline">Siguiente</span>
+              <Icon name="arrow-right" className="text-sm" />
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

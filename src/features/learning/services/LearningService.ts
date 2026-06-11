@@ -1,5 +1,10 @@
 import { BASICO_TOPICS, INTERMEDIO_TOPICS } from '../data/roadmapData';
 import { getStaticRoadmapDataKey } from '@/features/learning/constants/roadmapAreaKeys';
+import {
+  normalizeLessonPhase,
+  phaseToSectionId,
+  type LearningPhaseNumber,
+} from '@/features/learning/constants/learningPhases';
 import { getCompletedLessons } from '@/services/persistence';
 import LearningSupabaseService from '@/services/supabase/LearningSupabaseService';
 
@@ -21,6 +26,7 @@ export interface LearningPathLesson {
   id: string;
   title?: unknown;
   order: number;
+  phase: LearningPhaseNumber;
   difficulty: string;
   rewards: { xp?: number; coins?: number };
   duration?: unknown;
@@ -32,12 +38,23 @@ export interface LearningPathLesson {
   coins?: number;
 }
 
+function mapStaticLesson(
+  partial: Omit<LearningPathLesson, 'phase' | 'difficulty'> & { phase?: LearningPhaseNumber }
+): LearningPathLesson {
+  const phase = partial.phase ?? 1;
+  return {
+    ...partial,
+    phase,
+    difficulty: phaseToSectionId(phase),
+  };
+}
+
 /**
  * Learning data: Supabase when configured, otherwise static roadmap JSON
  */
 export const LearningService = {
-  getLearningPath: async (areaId: string): Promise<LearningPathLesson[]> => {
-    const lessons = await LearningSupabaseService.getLessonsByArea(areaId);
+  getLearningPath: async (areaId: string, phase?: LearningPhaseNumber): Promise<LearningPathLesson[]> => {
+    const lessons = await LearningSupabaseService.getLessonsByArea(areaId, phase);
     if (lessons?.length > 0) {
       return lessons.map((lesson, i) => {
         const l = lesson as Record<string, unknown>;
@@ -49,53 +66,58 @@ export const LearningService = {
           (typeof nestedContent === 'string'
             ? nestedContent
             : nestedContent && typeof nestedContent === 'object'
-              ? ((nestedContent as Record<string, unknown>).body ?? (nestedContent as Record<string, unknown>).markdown)
+              ? ((nestedContent as Record<string, unknown>).body ??
+                (nestedContent as Record<string, unknown>).markdown)
               : undefined);
         const contentStr = typeof rawContent === 'string' ? rawContent : '';
-        return {
+        const lessonPhase = normalizeLessonPhase(l.phase ?? l.difficulty);
+        return mapStaticLesson({
           id: String(l.id ?? `${areaId}_${i}`),
           title: l.title,
           order: i,
-          difficulty: String(l.difficulty || 'facil'),
+          phase: lessonPhase,
           rewards: (quiz.rewards as { xp?: number; coins?: number }) || { xp: 50, coins: 25 },
           duration: l.duration,
           content: contentStr,
           questions: l.questions,
           quiz: l.quiz,
-        } satisfies LearningPathLesson;
+        });
       });
     }
 
     const key = getStaticRoadmapDataKey(areaId);
     const basics = (BASICO_TOPICS as Record<string, TopicItem[]>)[key] ?? [];
     const intermedio = (INTERMEDIO_TOPICS as Record<string, IntermedioTopic>)[key];
-    return [
-      ...basics.map(
-        (t: TopicItem, i: number) =>
-          ({
-            id: `${key}_basico_${i}`,
-            title: t.title,
-            order: i,
-            difficulty: 'facil',
-            rewards: { xp: 50, coins: 25 },
-            duration: t.duration,
-            content: t.content,
-          }) satisfies LearningPathLesson
+
+    const staticLessons: LearningPathLesson[] = [
+      ...basics.map((t: TopicItem, i: number) =>
+        mapStaticLesson({
+          id: `${key}_basico_${i}`,
+          title: t.title,
+          order: i,
+          phase: 1,
+          rewards: { xp: 50, coins: 25 },
+          duration: t.duration,
+          content: t.content,
+        })
       ),
       ...(intermedio
         ? [
-            {
+            mapStaticLesson({
               id: `${key}_intermedio`,
               title: intermedio.title,
               order: basics.length,
-              difficulty: 'intermedio',
+              phase: 2,
               rewards: { xp: 100, coins: 50 },
               description: intermedio.description,
               questions: intermedio.questions,
-            } satisfies LearningPathLesson,
+            }),
           ]
         : []),
     ];
+
+    if (phase === undefined) return staticLessons;
+    return staticLessons.filter((lesson) => lesson.phase === phase);
   },
 
   getUserProgress: async (_userId: string, _areaId: string) => {

@@ -1,5 +1,8 @@
+/** Línea horizontal Markdown que separa pantallas de la lección. */
+const SECTION_DIVIDER = /(?:\r?\n)\s*---\s*(?:\r?\n)/;
+
 /**
- * Split markdown into navigable chunks (pairs of ## / ### headings, Duolingo-style).
+ * Divide el markdown en pantallas usando `---` en una línea propia (regla horizontal).
  */
 export function splitLessonContent(content: string): string[] {
   if (!content || typeof content !== 'string') return [];
@@ -7,30 +10,24 @@ export function splitLessonContent(content: string): string[] {
   const trimmed = content.trim();
   if (!trimmed) return [];
 
-  // Split on ## or ### headings
-  const parts = trimmed.split(/\n(?=#{2,3}\s)/);
+  const sections = trimmed
+    .split(SECTION_DIVIDER)
+    .map((part) => part.trim())
+    .filter(Boolean);
 
-  if (parts.length <= 1) return [trimmed];
-
-  // Pair consecutive blocks: one section = two headings
-  const sections: string[] = [];
-  for (let i = 0; i < parts.length; i += 2) {
-    const pair = parts.slice(i, i + 2);
-    sections.push(pair.join('\n\n'));
-  }
-  return sections;
+  return sections.length > 0 ? sections : [trimmed];
 }
 
 /**
- * First ##/### heading in a chunk (mascot bubble title).
+ * Primer encabezado ## / ### del apartado (título del globo de la mascota).
  */
 export function extractSectionTitle(section: string): string {
-  const match = section.match(/^#{2,3}\s+(.+?)(?:\n|$)/);
+  const match = section.match(/#{2,3}\s+(.+?)(?:\n|$)/);
   return match ? match[1].trim() : '';
 }
 
 /**
- * Strip the first heading when it duplicates the bubble title (avoid duplicate headings on screen).
+ * Quita el primer encabezado si repite el título del globo (evita duplicar en pantalla).
  */
 export function stripFirstHeadingIfDuplicate(section: string, bubbleTitle: string): string {
   if (!bubbleTitle || !section.trim()) return section;

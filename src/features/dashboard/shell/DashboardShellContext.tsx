@@ -124,7 +124,10 @@ export function DashboardShellProvider({ children }: { children: ReactNode }) {
     loading: statsLoading,
   } = useGamification(streakScope);
 
-  const { sections, loading: pathLoading } = useLearningPath(isLearningShell ? currentArea : undefined);
+  const { sections, loading: pathLoading } = useLearningPath(isLearningShell ? currentArea : undefined, {
+    loadAllPhases: isPhasesRoute,
+    sectionId: isPhasesRoute ? undefined : currentSectionId,
+  });
 
   const currentAreaData = getAreaInfo(currentArea);
   const currentSection = sections.find((s) => s.id === currentSectionId);

@@ -8,15 +8,13 @@ import type { AreaId } from '@/shared/constants';
 import { useDashboardShell } from '@/features/dashboard/shell';
 import { COMPETENCY_PHASES } from '../data/competencyPhases';
 import { getSectionProgress, resolvePhaseStatuses } from '../data/phaseProgressUtils';
-import { useLearningPath } from '../hooks/useLearningPath';
 import { PhaseStageCard } from '../components/phases/PhaseStageCard';
 
 export function LearningPhasesPage() {
-  const { currentArea, currentAreaData, pathLoading } = useDashboardShell();
-  const { sections, loading } = useLearningPath(currentArea);
+  const { currentArea, currentAreaData, sections, pathLoading } = useDashboardShell();
   const phaseStatuses = resolvePhaseStatuses(COMPETENCY_PHASES, sections);
 
-  if (loading || pathLoading) {
+  if (pathLoading) {
     return <LoadingState label="Cargando fases..." layout="section" />;
   }
 

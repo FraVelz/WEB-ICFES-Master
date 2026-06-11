@@ -7,6 +7,7 @@ type LessonQuizQuestionPanelProps = {
   selectedOption: string | null;
   isSubmitted: boolean;
   onSelectOption: (id: string) => void;
+  hideQuestionTitle?: boolean;
 };
 
 export function LessonQuizQuestionPanel({
@@ -14,12 +15,15 @@ export function LessonQuizQuestionPanel({
   selectedOption,
   isSubmitted,
   onSelectOption,
+  hideQuestionTitle = false,
 }: LessonQuizQuestionPanelProps) {
   return (
-    <div className="mb-3 lg:mb-6">
-      <h4 className="mb-3 px-0.5 text-base leading-relaxed font-semibold text-white lg:mb-4 lg:text-lg">
-        {question.question}
-      </h4>
+    <div className={hideQuestionTitle ? '' : 'mb-3 lg:mb-6'}>
+      {!hideQuestionTitle && (
+        <h4 className="mb-3 px-0.5 text-base leading-relaxed font-semibold text-white lg:mb-4 lg:text-lg">
+          {question.question}
+        </h4>
+      )}
 
       <div className="space-y-2 lg:space-y-3">
         {question.options.map((option, index) => (

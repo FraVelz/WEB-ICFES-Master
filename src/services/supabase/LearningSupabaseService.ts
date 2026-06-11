@@ -2,6 +2,11 @@
  * LearningSupabaseService - Obtener contenido de aprendizaje desde Supabase
  */
 import { supabase } from '@/config/supabase';
+import {
+  normalizeLessonPhase,
+  phaseToSectionId,
+  type LearningPhaseNumber,
+} from '@/features/learning/constants/learningPhases';
 
 const TABLE = 'learning_content';
 
@@ -22,68 +27,68 @@ const AREA_MAP = {
   ingles: 'ingles',
 };
 
+function mapLessonRow(row: Record<string, unknown>) {
+  const content = (row.content || {}) as Record<string, unknown>;
+  const lessonBody =
+    typeof content.body === 'string'
+      ? content.body
+      : typeof content.content === 'string'
+        ? content.content
+        : undefined;
+
+  const phase = normalizeLessonPhase(row.phase ?? content.phase ?? content.fase ?? content.difficulty);
+
+  return {
+    ...content,
+    id: row.id,
+    area: row.area,
+    phase,
+    title: (content.title as string) || row.id,
+    summary: content.summary,
+    body: lessonBody,
+    questions: content.questions || [],
+    quiz: content.quiz,
+    type: content.type || 'lesson',
+    order: row.order_index ?? 0,
+    difficulty: phaseToSectionId(phase),
+  };
+}
+
 const LearningSupabaseService = {
   /**
-   * Obtener lecciones por área desde learning_content
+   * Lecciones por área. Si `phase` está definido, solo esa fase (1, 2 o 3).
    */
-  async getLessonsByArea(area: string): Promise<Record<string, unknown>[]> {
+  async getLessonsByArea(area: string, phase?: LearningPhaseNumber): Promise<Record<string, unknown>[]> {
     const sb = getSupabase();
     if (!sb) return [];
     const normalizedArea = (AREA_MAP as Record<string, string>)[area] ?? area.replace(/-/g, '_');
-    const { data, error } = await sb
+
+    let query = sb
       .from(TABLE)
       .select('*')
       .eq('area', normalizedArea)
-      .eq('published', true)
-      .order('order_index', { ascending: true });
+      .eq('published', true);
+
+    if (phase !== undefined) {
+      query = query.eq('phase', phase);
+    }
+
+    const { data, error } = await query.order('order_index', { ascending: true });
 
     if (error) throw new Error(`Error leyendo learning_content: ${error.message}`);
 
     if (!data || data.length === 0) return [];
 
-    return data.map((row) => {
-      const content = (row.content || {}) as Record<string, unknown>;
-      const lessonBody =
-        typeof content.body === 'string'
-          ? content.body
-          : typeof content.content === 'string'
-            ? content.content
-            : undefined;
-
-      return {
-        ...content,
-        id: row.id,
-        area: row.area,
-        title: (content.title as string) || row.id,
-        summary: content.summary,
-        body: lessonBody,
-        questions: content.questions || [],
-        quiz: content.quiz,
-        type: content.type || 'lesson',
-        order: row.order_index ?? 0,
-      };
-    });
+    return data.map((row) => mapLessonRow(row as Record<string, unknown>));
   },
 
-  /**
-   * Obtener una lección por ID
-   */
   async getLesson(lessonId: string) {
     const sb = getSupabase();
     if (!sb) return null;
     const { data, error } = await sb.from(TABLE).select('*').eq('id', lessonId).maybeSingle();
     if (error) throw new Error(`Error leyendo lección: ${error.message}`);
     if (!data) return null;
-    const content = data.content || {};
-    return {
-      id: data.id,
-      area: data.area,
-      title: content.title || data.id,
-      summary: content.summary,
-      questions: content.questions || [],
-      quiz: content.quiz,
-      ...content,
-    };
+    return mapLessonRow(data as Record<string, unknown>);
   },
 };
 
