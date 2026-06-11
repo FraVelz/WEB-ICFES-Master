@@ -13,3 +13,11 @@ export interface ExamQuestion {
   difficulty?: string;
   showExplanations?: boolean;
 }
+
+/** Pregunta enviada al cliente durante el examen (sin respuesta correcta). */
+export type ExamQuestionPublic = Omit<ExamQuestion, 'correctAnswer'>;
+
+export function toPublicExamQuestion(question: ExamQuestion): ExamQuestionPublic {
+  const { correctAnswer: _removed, ...publicQuestion } = question;
+  return publicQuestion;
+}

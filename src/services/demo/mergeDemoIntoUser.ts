@@ -10,6 +10,10 @@ import {
 } from '@/features/auth/utils/skillLevelStorage';
 import { reconcileAchievementsWithoutRewards } from '@/services/achievements/achievementProgressService';
 import { DEMO_COINS_MIN } from '@/services/demo/demoCoins';
+import {
+  DEMO_MIGRATION_MAX_EXTRA_COINS,
+  DEMO_MIGRATION_MAX_XP,
+} from '@/shared/constants/demoMigrationLimits';
 import { getDemoTotalXP } from '@/services/demo/demoGamification';
 import { STARTING_COINS_BALANCE } from '@/shared/constants/gamification';
 import { gamificationPersistence } from '@/services/persistence/gamificationPersistence';
@@ -87,7 +91,10 @@ async function migrateGamificationBalances(userId: string): Promise<void> {
   if (coinsRaw != null) {
     const demoCoins = Math.max(0, Number.parseInt(coinsRaw, 10) || 0);
     // Solo migrar monedas ganadas por encima del saldo inicial (la cuenta ya arranca con STARTING_COINS_BALANCE).
-    const extraCoins = Math.max(0, demoCoins - DEMO_COINS_MIN);
+    const extraCoins = Math.min(
+      DEMO_MIGRATION_MAX_EXTRA_COINS,
+      Math.max(0, demoCoins - DEMO_COINS_MIN)
+    );
     if (extraCoins > 0) {
       try {
         await gamificationPersistence.addCoins(userId, extraCoins, 'demo_migration');
@@ -105,7 +112,7 @@ async function migrateGamificationBalances(userId: string): Promise<void> {
   }
 
   if (localStorage.getItem(DEMO_GAMIFICATION_KEY) != null) {
-    const xp = getDemoTotalXP();
+    const xp = Math.min(DEMO_MIGRATION_MAX_XP, getDemoTotalXP());
     if (xp > 0) {
       try {
         await gamificationPersistence.addXP(userId, xp, 'demo_migration');

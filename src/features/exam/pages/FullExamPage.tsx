@@ -1,6 +1,6 @@
 'use client';
 import { cn } from '@/utils/cn';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { ExamConfigModal } from '@/features/exam/components';
 import { AnswerSheet } from '@/features/exam/components';
@@ -8,7 +8,12 @@ import { ResultsAnalysis } from '@/features/exam/components';
 import { formatTimeExtended } from '@/services/persistence';
 import { saveFullExam } from '@/services/persistence';
 import { fetchQuestionsForFullExam } from '@/features/exam/services/QuestionService';
-import type { ExamQuestion } from '@/features/exam/types/question';
+import {
+  fetchGradedExamResults,
+  gradedToExamQuestion,
+} from '@/features/exam/services/examGradingClient';
+import type { GradedExamAnswer } from '@/features/exam/services/examGradingServer';
+import type { ExamQuestion, ExamQuestionPublic } from '@/features/exam/types/question';
 import type { ExamConfig } from '@/features/exam/types';
 import { LoadingState } from '@/shared/components/LoadingState';
 
@@ -17,15 +22,18 @@ import { AREA_INFO } from '@/shared/constants';
 export const FullExamPage = () => {
   const areaInfo = AREA_INFO['examen-completo'];
 
-  const [allQuestions, setAllQuestions] = useState<ExamQuestion[]>([]);
+  const [allQuestions, setAllQuestions] = useState<ExamQuestionPublic[]>([]);
   const [loadingQuestions, setLoadingQuestions] = useState(true);
   const [questionsError, setQuestionsError] = useState<string | null>(null);
   const [examConfig, setExamConfig] = useState<ExamConfig | null>(null);
-  const [questions, setQuestions] = useState<ExamQuestion[]>([]);
+  const [questions, setQuestions] = useState<ExamQuestionPublic[]>([]);
   const [answers, setAnswers] = useState<Record<string, string>>({});
   const [showResults, setShowResults] = useState(false);
   const [timeRemaining, setTimeRemaining] = useState<number | null>(null);
   const [isFinished, setIsFinished] = useState(false);
+  const [gradedResults, setGradedResults] = useState<GradedExamAnswer[] | null>(null);
+  const [gradingError, setGradingError] = useState<string | null>(null);
+  const gradingStartedRef = useRef(false);
 
   useEffect(() => {
     let active = true;
@@ -56,6 +64,9 @@ export const FullExamPage = () => {
     const selectedQuestions = allQuestions.slice(0, config.numQuestions);
     setQuestions(selectedQuestions);
     setExamConfig(config);
+    setGradedResults(null);
+    setGradingError(null);
+    gradingStartedRef.current = false;
 
     if (config.useTimer) {
       setTimeRemaining(config.numQuestions * (config.timePerQuestion ?? 2) * 60);
@@ -90,32 +101,65 @@ export const FullExamPage = () => {
     questionElement?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
 
-  // Persist full exam on finish
   useEffect(() => {
-    if (isFinished || showResults) {
-      if (questions.length > 0) {
-        const results = questions.map((q) => ({
-          question: q,
-          correct: answers[q.id] === q.correctAnswer,
-          userAnswer: answers[q.id],
-        }));
+    if (!(isFinished || showResults) || questions.length === 0) return;
+    if (gradingStartedRef.current) return;
 
+    gradingStartedRef.current = true;
+    let active = true;
+
+    void fetchGradedExamResults(answers)
+      .then((results) => {
+        if (!active) return;
+        setGradedResults(results);
+        setGradingError(null);
+
+        const fullQuestions: ExamQuestion[] = results.map(gradedToExamQuestion);
         const correctCount = results.filter((r) => r.correct).length;
-        const percentage = Math.round((correctCount / questions.length) * 100);
+        const percentage = Math.round((correctCount / results.length) * 100);
 
         saveFullExam({
           examType: 'full-exam',
-          questions,
+          questions: fullQuestions,
           answers,
           correctCount,
           percentage,
-          totalQuestions: questions.length,
+          totalQuestions: results.length,
           config: examConfig,
           completedAt: new Date().toISOString(),
         });
-      }
-    }
+      })
+      .catch((error: unknown) => {
+        if (!active) return;
+        gradingStartedRef.current = false;
+        setGradingError(error instanceof Error ? error.message : 'Error al calificar el examen');
+      });
+
+    return () => {
+      active = false;
+    };
   }, [isFinished, showResults, questions, answers, examConfig]);
+
+  const results =
+    gradedResults?.map((graded) => ({
+      question: gradedToExamQuestion(graded),
+      correct: graded.correct,
+      userAnswer: graded.userAnswer,
+    })) ?? [];
+
+  const correctCount = results.filter((r) => r.correct).length;
+  const percentage = results.length > 0 ? Math.round((correctCount / results.length) * 100) : 0;
+
+  const resetExam = () => {
+    setExamConfig(null);
+    setAnswers({});
+    setShowResults(false);
+    setIsFinished(false);
+    setTimeRemaining(null);
+    setGradedResults(null);
+    setGradingError(null);
+    gradingStartedRef.current = false;
+  };
 
   if (loadingQuestions) {
     return <LoadingState label="Cargando preguntas…" layout="section" />;
@@ -141,14 +185,17 @@ export const FullExamPage = () => {
   }
 
   if (isFinished || showResults) {
-    const results = questions.map((q) => ({
-      question: q,
-      correct: answers[q.id] === q.correctAnswer,
-      userAnswer: answers[q.id],
-    }));
+    if (gradingError) {
+      return (
+        <div className="mx-auto max-w-lg rounded-xl border border-red-500/30 bg-red-950/30 px-4 py-6 text-center text-sm text-red-200">
+          {gradingError}
+        </div>
+      );
+    }
 
-    const correctCount = results.filter((r) => r.correct).length;
-    const percentage = Math.round((correctCount / questions.length) * 100);
+    if (!gradedResults) {
+      return <LoadingState label="Calificando examen…" layout="section" />;
+    }
 
     return (
       <div className="min-h-dvh bg-linear-to-br from-gray-900 via-slate-900 to-gray-900 text-white">
@@ -158,7 +205,6 @@ export const FullExamPage = () => {
         </div>
 
         <div className="relative z-10">
-          {/* Header */}
           <div
             className={cn(
               'sticky top-0 z-40 border-b border-white/10 bg-linear-to-b from-gray-900 via-gray-900',
@@ -192,28 +238,20 @@ export const FullExamPage = () => {
             </div>
           </div>
 
-          {/* Main Content */}
           <div className="mx-auto max-w-7xl px-6 py-8">
             <div className="grid grid-cols-1 gap-6 lg:grid-cols-4">
-              {/* Results Column */}
               <div className="lg:col-span-3">
                 <ResultsAnalysis
                   results={results}
-                  questions={questions}
+                  questions={results.map((r) => r.question)}
                   percentage={percentage}
                   correctCount={correctCount}
                   areaInfo={areaInfo}
                   examConfig={examConfig}
-                  onRetry={() => {
-                    setExamConfig(null);
-                    setAnswers({});
-                    setShowResults(false);
-                    setIsFinished(false);
-                  }}
+                  onRetry={resetExam}
                 />
               </div>
 
-              {/* Answer Sheet Sidebar */}
               <div>
                 <AnswerSheet
                   totalQuestions={questions.length}
@@ -244,7 +282,6 @@ export const FullExamPage = () => {
       </div>
 
       <div className="relative z-10">
-        {/* Header */}
         <div
           className={cn(
             'sticky top-0 z-40 border-b border-white/10 bg-linear-to-b from-gray-900 via-gray-900',
@@ -281,10 +318,8 @@ export const FullExamPage = () => {
           </div>
         </div>
 
-        {/* Main Content */}
         <div className="mx-auto max-w-7xl px-6 py-8">
           <div className="grid grid-cols-1 gap-6 lg:grid-cols-4">
-            {/* Questions Column */}
             <div className="space-y-6 lg:col-span-3">
               {questions.map((question, index) => (
                 <div
@@ -296,7 +331,6 @@ export const FullExamPage = () => {
                     'hover:border-white/20 hover:shadow-xl'
                   )}
                 >
-                  {/* Question Number and Title */}
                   <div className="mb-6">
                     <div className="flex items-start gap-4">
                       <div
@@ -316,7 +350,6 @@ export const FullExamPage = () => {
                     </div>
                   </div>
 
-                  {/* Answer Options */}
                   <div className="ml-14 space-y-3">
                     {question.options.map((option) => {
                       const isSelected = answers[question.id] === option.letter;
@@ -350,18 +383,9 @@ export const FullExamPage = () => {
                       );
                     })}
                   </div>
-
-                  {/* Explanation - Only shown after exam finishes */}
-                  {showResults && examConfig?.showExplanations && answers[question.id] && (
-                    <div className="mt-6 ml-14 rounded-lg border border-blue-500/30 bg-blue-500/10 p-4">
-                      <p className="mb-2 text-xs font-semibold text-blue-300">EXPLICACIÓN:</p>
-                      <p className="text-sm text-gray-200">{question.explanation}</p>
-                    </div>
-                  )}
                 </div>
               ))}
 
-              {/* Final Button */}
               <div className="flex justify-center pt-8">
                 <button
                   type="button"
@@ -379,7 +403,6 @@ export const FullExamPage = () => {
               </div>
             </div>
 
-            {/* Answer Sheet Sidebar */}
             <div>
               <AnswerSheet
                 totalQuestions={questions.length}

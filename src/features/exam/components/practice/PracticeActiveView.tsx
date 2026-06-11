@@ -2,13 +2,13 @@ import { cn } from '@/utils/cn';
 import { Icon } from '@/shared/components/Icon';
 import { AnswerSheet } from '@/features/exam/components';
 import type { ExamConfig } from '@/features/exam/types';
-import type { ExamQuestion } from '@/features/exam/types/question';
+import type { ExamQuestionPublic } from '@/features/exam/types/question';
 import { PracticeExamHeader } from './PracticeExamHeader';
 
 type PracticeActiveViewProps = {
   areaInfo: { name: string; color: string };
   examConfig: ExamConfig;
-  questions: ExamQuestion[];
+  questions: ExamQuestionPublic[];
   answers: Record<string, string>;
   showResults: boolean;
   timeRemaining: number | null;

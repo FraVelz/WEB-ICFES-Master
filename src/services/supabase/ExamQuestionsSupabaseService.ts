@@ -62,6 +62,16 @@ const ExamQuestionsSupabaseService = {
     return results.flat();
   },
 
+  async getByIds(ids: string[]): Promise<ExamQuestion[]> {
+    const sb = getSupabase();
+    if (!sb || ids.length === 0) return [];
+
+    const { data, error } = await sb.from(TABLE).select('*').in('id', ids).eq('published', true);
+
+    if (error) throw new Error(`Error leyendo exam_questions: ${error.message}`);
+    return ((data ?? []) as ExamQuestionRow[]).map(rowToExamQuestion);
+  },
+
   async getAllPublished(): Promise<ExamQuestion[]> {
     const sb = getSupabase();
     if (!sb) return [];

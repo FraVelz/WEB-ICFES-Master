@@ -4,6 +4,7 @@ import { cn } from '@/utils/cn';
 import { useState, useRef, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import ReactMarkdown from 'react-markdown';
+import rehypeSanitize from 'rehype-sanitize';
 import { supabase } from '@/config/supabase';
 import { useAuth } from '@/features/auth/context/AuthContext';
 import { Icon } from '@/shared/components/Icon';
@@ -260,7 +261,7 @@ export const ChatAssistant = () => {
                         '[&_li]:ml-4 [&_ol]:my-2 [&_p]:my-1 [&_strong]:font-semibold [&_ul]:my-2'
                       )}
                     >
-                      <ReactMarkdown>{msg.content}</ReactMarkdown>
+                      <ReactMarkdown rehypePlugins={[rehypeSanitize]}>{msg.content}</ReactMarkdown>
                     </div>
                   ) : (
                     <p className="text-sm leading-relaxed text-white">{msg.content}</p>

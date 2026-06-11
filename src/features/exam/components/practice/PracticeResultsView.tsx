@@ -1,12 +1,12 @@
 import { AnswerSheet, ResultsAnalysis } from '@/features/exam/components';
 import type { ExamConfig } from '@/features/exam/types';
-import type { ExamQuestion } from '@/features/exam/types/question';
+import type { ExamQuestion, ExamQuestionPublic } from '@/features/exam/types/question';
 import { PracticeExamHeader } from './PracticeExamHeader';
 
 type PracticeResultsViewProps = {
   areaInfo: { name: string; color: string };
   examConfig: ExamConfig;
-  questions: ExamQuestion[];
+  questions: ExamQuestionPublic[];
   answers: Record<string, string>;
   results: { question: ExamQuestion; correct: boolean; userAnswer: string }[];
   correctCount: number;
@@ -52,7 +52,7 @@ export function PracticeResultsView({
             <div className="lg:col-span-3">
               <ResultsAnalysis
                 results={results}
-                questions={questions}
+                questions={results.map((r) => r.question)}
                 percentage={percentage}
                 correctCount={correctCount}
                 areaInfo={areaInfo}

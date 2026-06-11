@@ -19,6 +19,7 @@ export const PracticePage = () => {
     allQuestions,
     loadingQuestions,
     questionsError,
+    gradingError,
     examConfig,
     questions,
     answers,
@@ -74,6 +75,18 @@ export const PracticePage = () => {
   }
 
   if (isFinished || showResults) {
+    if (gradingError) {
+      return (
+        <div className="mx-auto max-w-lg rounded-xl border border-red-500/30 bg-red-950/30 px-4 py-6 text-center text-sm text-red-200">
+          {gradingError}
+        </div>
+      );
+    }
+
+    if (results.length === 0) {
+      return <LoadingState label="Calificando examen…" layout="section" />;
+    }
+
     return (
       <>
         {phaseSkipPassed && (

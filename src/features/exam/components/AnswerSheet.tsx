@@ -1,12 +1,12 @@
 import { cn } from '@/utils/cn';
-import type { ExamQuestion } from '@/features/exam/types/question';
+import type { ExamQuestionPublic } from '@/features/exam/types/question';
 
 interface AnswerSheetProps {
   totalQuestions: number;
   answers: Record<string, string>;
   currentQuestion: number;
   onQuestionClick: (index: number) => void;
-  questions?: ExamQuestion[];
+  questions?: ExamQuestionPublic[];
 }
 
 export const AnswerSheet = ({

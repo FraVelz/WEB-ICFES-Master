@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useEffect, useMemo, useRef } from 'react';
 import ReactMarkdown from 'react-markdown';
+import rehypeSanitize from 'rehype-sanitize';
 import { cn } from '@/utils/cn';
 import { Icon } from '@/shared/components/Icon';
 import { MASCOT_IMAGES } from '@/assets';
@@ -20,6 +21,7 @@ import {
 } from '../utils/lessonRoutes';
 import { getAreaInfo } from '@/shared/constants';
 import { getRoadmapHref } from '../data/competencyPhases';
+import { isSafeHref } from '@/shared/utils/safeHref';
 
 const getAreaColor = (areaId: string) => {
   const color = getAreaInfo(areaId).color ?? '';
@@ -207,6 +209,7 @@ export function LessonContentView({
             {sections.length > 0 ? (
               <div className="rounded-2xl border border-slate-700/60 bg-slate-900/30 p-4 sm:p-6 md:p-8">
                 <ReactMarkdown
+                  rehypePlugins={[rehypeSanitize]}
                   components={{
                     h1: ({ ...props }) => (
                       <h1 className="mt-0 mb-3 text-xl font-bold text-white sm:text-2xl md:text-3xl" {...props} />
@@ -266,12 +269,20 @@ export function LessonContentView({
                         </div>
                       );
                     },
-                    a: ({ ...props }) => (
-                      <a
-                        className="focus-visible:ring-app-accent rounded-sm text-blue-400 underline decoration-blue-400/30 hover:text-blue-300 hover:decoration-blue-300 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950 focus-visible:outline-none"
-                        {...props}
-                      />
-                    ),
+                    a: ({ href, children, ...props }) =>
+                      isSafeHref(href) ? (
+                        <a
+                          href={href}
+                          className="focus-visible:ring-app-accent rounded-sm text-blue-400 underline decoration-blue-400/30 hover:text-blue-300 hover:decoration-blue-300 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950 focus-visible:outline-none"
+                          rel="noopener noreferrer"
+                          target={href?.startsWith('http') ? '_blank' : undefined}
+                          {...props}
+                        >
+                          {children}
+                        </a>
+                      ) : (
+                        <span className="text-slate-400">{children}</span>
+                      ),
                     img: ({ alt, ...rest }) => (
                       // eslint-disable-next-line @next/next/no-img-element -- markdown lesson assets have unknown dimensions
                       <img

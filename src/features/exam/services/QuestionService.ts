@@ -6,7 +6,11 @@ import {
   SOCIAL_QUESTIONS,
 } from '@/features/exam/data';
 import { FULL_EXAM_ROUTE_AREAS } from '@/features/exam/data/examAreas';
-import type { ExamQuestion } from '@/features/exam/types/question';
+import {
+  toPublicExamQuestion,
+  type ExamQuestion,
+  type ExamQuestionPublic,
+} from '@/features/exam/types/question';
 import ExamQuestionsSupabaseService from '@/services/supabase/ExamQuestionsSupabaseService';
 
 const STATIC_BY_ROUTE: Record<string, ExamQuestion[]> = {
@@ -25,28 +29,32 @@ function getStaticForFullExam(): ExamQuestion[] {
   return FULL_EXAM_ROUTE_AREAS.flatMap((area) => getStaticByRouteArea(area));
 }
 
-export async function fetchQuestionsByRouteArea(routeArea: string): Promise<ExamQuestion[]> {
+function toPublicList(questions: ExamQuestion[]): ExamQuestionPublic[] {
+  return questions.map(toPublicExamQuestion);
+}
+
+export async function fetchQuestionsByRouteArea(routeArea: string): Promise<ExamQuestionPublic[]> {
   const fallback = getStaticByRouteArea(routeArea);
 
   try {
     const fromDb = await ExamQuestionsSupabaseService.getByRouteArea(routeArea);
-    if (fromDb.length > 0) return fromDb;
+    if (fromDb.length > 0) return toPublicList(fromDb);
   } catch (error) {
     console.warn('[QuestionService] Supabase fallback for area', routeArea, error);
   }
 
-  return fallback;
+  return toPublicList(fallback);
 }
 
-export async function fetchQuestionsForFullExam(): Promise<ExamQuestion[]> {
+export async function fetchQuestionsForFullExam(): Promise<ExamQuestionPublic[]> {
   const fallback = getStaticForFullExam();
 
   try {
     const fromDb = await ExamQuestionsSupabaseService.getByRouteAreas([...FULL_EXAM_ROUTE_AREAS]);
-    if (fromDb.length > 0) return fromDb;
+    if (fromDb.length > 0) return toPublicList(fromDb);
   } catch (error) {
     console.warn('[QuestionService] Supabase fallback for full exam', error);
   }
 
-  return fallback;
+  return toPublicList(fallback);
 }

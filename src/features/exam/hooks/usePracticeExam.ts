@@ -9,7 +9,12 @@ import {
 } from '@/services/persistence';
 import { getCompetencyPhaseBySectionId } from '@/features/learning/data/competencyPhases';
 import { fetchQuestionsByRouteArea } from '@/features/exam/services/QuestionService';
-import type { ExamQuestion } from '@/features/exam/types/question';
+import {
+  fetchGradedExamResults,
+  gradedToExamQuestion,
+} from '@/features/exam/services/examGradingClient';
+import type { GradedExamAnswer } from '@/features/exam/services/examGradingServer';
+import type { ExamQuestion, ExamQuestionPublic } from '@/features/exam/types/question';
 import type { ExamConfig } from '@/features/exam/types';
 import { AREA_INFO as SHARED_AREA_INFO } from '@/shared/constants/areaInfo';
 
@@ -29,17 +34,20 @@ export function usePracticeExam() {
     ? { name: shared.name, color: shared.color }
     : { name: SHARED_AREA_INFO['examen-completo'].name, color: SHARED_AREA_INFO['examen-completo'].color };
 
-  const [allQuestions, setAllQuestions] = useState<ExamQuestion[]>([]);
+  const [allQuestions, setAllQuestions] = useState<ExamQuestionPublic[]>([]);
   const [loadingQuestions, setLoadingQuestions] = useState(true);
   const [questionsError, setQuestionsError] = useState<string | null>(null);
   const [examConfig, setExamConfig] = useState<ExamConfig | null>(null);
-  const [questions, setQuestions] = useState<ExamQuestion[]>([]);
+  const [questions, setQuestions] = useState<ExamQuestionPublic[]>([]);
   const [answers, setAnswers] = useState<Record<string, string>>({});
   const [showResults, setShowResults] = useState(false);
   const [timeRemaining, setTimeRemaining] = useState<number | null>(null);
   const [isFinished, setIsFinished] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [showAnswerSheetMobile, setShowAnswerSheetMobile] = useState(false);
+  const [gradedResults, setGradedResults] = useState<GradedExamAnswer[] | null>(null);
+  const [gradingError, setGradingError] = useState<string | null>(null);
+  const gradingStartedRef = useRef(false);
 
   useEffect(() => {
     let active = true;
@@ -70,6 +78,9 @@ export function usePracticeExam() {
     const selectedQuestions = allQuestions.slice(0, config.numQuestions);
     setQuestions(selectedQuestions);
     setExamConfig(config);
+    setGradedResults(null);
+    setGradingError(null);
+    gradingStartedRef.current = false;
     if (config.useTimer) {
       setTimeRemaining(config.numQuestions * (config.timePerQuestion ?? 2) * 60);
     }
@@ -98,37 +109,54 @@ export function usePracticeExam() {
   };
 
   useEffect(() => {
-    if ((isFinished || showResults) && questions.length > 0) {
-      const results = questions.map((q) => ({
-        question: q,
-        correct: answers[q.id] === q.correctAnswer,
-        userAnswer: answers[q.id],
-      }));
-      const correctCount = results.filter((r) => r.correct).length;
-      const percentage = Math.round((correctCount / questions.length) * 100);
-      savePractice({
-        practiceArea: areaStr,
-        areaName: areaInfo.name,
-        questions,
-        answers,
-        correctCount,
-        percentage,
-        totalQuestions: questions.length,
-        config: examConfig,
-        completedAt: new Date().toISOString(),
+    if (!(isFinished || showResults) || questions.length === 0) return;
+    if (gradingStartedRef.current) return;
+
+    gradingStartedRef.current = true;
+    let active = true;
+
+    void fetchGradedExamResults(answers)
+      .then((results) => {
+        if (!active) return;
+        setGradedResults(results);
+        setGradingError(null);
+
+        const fullQuestions: ExamQuestion[] = results.map(gradedToExamQuestion);
+        const correctCount = results.filter((r) => r.correct).length;
+        const percentage = Math.round((correctCount / results.length) * 100);
+
+        savePractice({
+          practiceArea: areaStr,
+          areaName: areaInfo.name,
+          questions: fullQuestions,
+          answers,
+          correctCount,
+          percentage,
+          totalQuestions: results.length,
+          config: examConfig,
+          completedAt: new Date().toISOString(),
+        });
+
+        if (
+          isPhaseSkipMode &&
+          phaseSkipSectionId &&
+          percentage >= PHASE_SKIP_PASS_PERCENT &&
+          !phaseSkipAppliedRef.current
+        ) {
+          phaseSkipAppliedRef.current = true;
+          markPhaseSkipped(areaStr, phaseSkipSectionId, percentage);
+          setPhaseSkipPassed(true);
+        }
+      })
+      .catch((error: unknown) => {
+        if (!active) return;
+        gradingStartedRef.current = false;
+        setGradingError(error instanceof Error ? error.message : 'Error al calificar el examen');
       });
 
-      if (
-        isPhaseSkipMode &&
-        phaseSkipSectionId &&
-        percentage >= PHASE_SKIP_PASS_PERCENT &&
-        !phaseSkipAppliedRef.current
-      ) {
-        phaseSkipAppliedRef.current = true;
-        markPhaseSkipped(areaStr, phaseSkipSectionId, percentage);
-        setPhaseSkipPassed(true);
-      }
-    }
+    return () => {
+      active = false;
+    };
   }, [
     isFinished,
     showResults,
@@ -149,21 +177,22 @@ export function usePracticeExam() {
     setTimeRemaining(null);
     setMobileMenuOpen(false);
     setShowAnswerSheetMobile(false);
+    setGradedResults(null);
+    setGradingError(null);
+    gradingStartedRef.current = false;
     phaseSkipAppliedRef.current = false;
     setPhaseSkipPassed(false);
   };
 
   const results =
-    questions.length > 0
-      ? questions.map((q) => ({
-          question: q,
-          correct: answers[q.id] === q.correctAnswer,
-          userAnswer: answers[q.id] ?? '',
-        }))
-      : [];
+    gradedResults?.map((graded) => ({
+      question: gradedToExamQuestion(graded),
+      correct: graded.correct,
+      userAnswer: graded.userAnswer,
+    })) ?? [];
 
   const correctCount = results.filter((r) => r.correct).length;
-  const percentage = questions.length > 0 ? Math.round((correctCount / questions.length) * 100) : 0;
+  const percentage = results.length > 0 ? Math.round((correctCount / results.length) * 100) : 0;
 
   const timeColor =
     timeRemaining !== null && timeRemaining < 300
@@ -182,6 +211,7 @@ export function usePracticeExam() {
     allQuestions,
     loadingQuestions,
     questionsError,
+    gradingError,
     examConfig,
     questions,
     answers,
