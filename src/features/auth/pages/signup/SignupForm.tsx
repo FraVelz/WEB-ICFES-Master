@@ -95,17 +95,19 @@ export function SignupForm({
             onChange={onChange}
             placeholder="••••••••"
             className={cn(SIGNUP_INPUT_CLASS, 'py-3 pr-12 pl-10')}
+            aria-describedby="password-rules"
             required
           />
           <button
             type="button"
             onClick={onTogglePassword}
+            aria-label={showPassword ? 'Ocultar contraseña' : 'Mostrar contraseña'}
             className="absolute top-1/2 right-4 -translate-y-1/2 text-slate-400 hover:text-slate-300"
           >
-            <Icon name={showPassword ? 'eye-slash' : 'eye'} />
+            <Icon name={showPassword ? 'eye-slash' : 'eye'} aria-hidden />
           </button>
         </div>
-        <div className="mt-3 space-y-2 text-xs">
+        <div id="password-rules" className="mt-3 space-y-2 text-xs" aria-live="polite">
           <PasswordRule met={validations.minLength} label="Al menos 6 caracteres" />
           <PasswordRule met={validations.hasNumber} label="Contiene un número" />
           <PasswordRule met={validations.hasUppercase} label="Contiene una mayúscula" />
@@ -131,23 +133,24 @@ export function SignupForm({
           <button
             type="button"
             onClick={onToggleConfirmPassword}
+            aria-label={showConfirmPassword ? 'Ocultar confirmación de contraseña' : 'Mostrar confirmación de contraseña'}
             className="absolute top-1/2 right-4 -translate-y-1/2 text-slate-400 hover:text-slate-300"
           >
-            <Icon name={showConfirmPassword ? 'eye-slash' : 'eye'} />
+            <Icon name={showConfirmPassword ? 'eye-slash' : 'eye'} aria-hidden />
           </button>
         </div>
       </div>
 
       {successMessage ? (
-        <div className="flex items-start gap-3 rounded-lg border border-green-500/50 bg-green-500/20 p-4">
-          <Icon name="check-circle" className="mt-0.5 shrink-0 text-green-400" />
+        <div role="status" className="flex items-start gap-3 rounded-lg border border-green-500/50 bg-green-500/20 p-4">
+          <Icon name="check-circle" className="mt-0.5 shrink-0 text-green-400" aria-hidden />
           <p className="text-sm text-green-300">{successMessage}</p>
         </div>
       ) : null}
 
       {error ? (
-        <div className="flex items-start gap-3 rounded-lg border border-red-500/50 bg-red-500/20 p-4">
-          <Icon name="exclamation-circle" className="mt-0.5 shrink-0 text-red-400" />
+        <div role="alert" className="flex items-start gap-3 rounded-lg border border-red-500/50 bg-red-500/20 p-4">
+          <Icon name="exclamation-circle" className="mt-0.5 shrink-0 text-red-400" aria-hidden />
           <p className="text-sm text-red-400">{error}</p>
         </div>
       ) : null}

@@ -13,6 +13,7 @@ export type RoadmapStatsBarProps = {
   coins: number;
   loading?: boolean;
   areasOpen?: boolean;
+  streakOpen?: boolean;
   onToggleAreas: () => void;
   onToggleStreak: () => void;
   layout?: 'inline' | 'stacked';
@@ -27,6 +28,7 @@ export function RoadmapStatsBar({
   coins,
   loading = false,
   areasOpen = false,
+  streakOpen = false,
   onToggleAreas,
   onToggleStreak,
   layout = 'inline',
@@ -94,6 +96,8 @@ export function RoadmapStatsBar({
             layout === 'stacked' && 'flex-1 justify-center'
           )}
           title="Ver información de racha"
+          aria-expanded={streakOpen}
+          aria-haspopup="dialog"
         >
           <Icon
             name="fire"

@@ -41,6 +41,7 @@ function DashboardShellMobileHeader() {
           coins={coins}
           loading={statsLoading}
           areasOpen={activeModal === 'areas'}
+          streakOpen={activeModal === 'streak'}
           onToggleAreas={() => setDesktopModal(activeModal === 'areas' ? null : 'areas')}
           onToggleStreak={() => setDesktopModal(activeModal === 'streak' ? null : 'streak')}
           areaSelectorRef={areaSelectorRef}

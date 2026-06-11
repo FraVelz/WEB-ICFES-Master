@@ -89,6 +89,7 @@ export const SecondaryHeader = ({
           coins={coins}
           loading={loading}
           areasOpen={activeModal === 'areas'}
+          streakOpen={activeModal === 'streak'}
           onToggleAreas={() => setActiveModal(activeModal === 'areas' ? null : 'areas')}
           onToggleStreak={() => setActiveModal(activeModal === 'streak' ? null : 'streak')}
           areaSelectorRef={areaSelectorRef}

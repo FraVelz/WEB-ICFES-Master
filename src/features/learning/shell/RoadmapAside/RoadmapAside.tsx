@@ -110,6 +110,7 @@ export function RoadmapAside({
           coins={coins}
           loading={statsLoading}
           areasOpen={areasOpen}
+          streakOpen={streakOpen}
           onToggleAreas={onToggleAreas}
           onToggleStreak={onToggleStreak}
           layout="stacked"

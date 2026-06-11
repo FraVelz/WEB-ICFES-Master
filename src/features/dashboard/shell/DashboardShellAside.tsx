@@ -35,6 +35,7 @@ export function DashboardShellAside() {
           coins={coins}
           loading={statsLoading}
           areasOpen={desktopModal === 'areas'}
+          streakOpen={desktopModal === 'streak'}
           onToggleAreas={() => setDesktopModal(desktopModal === 'areas' ? null : 'areas')}
           onToggleStreak={() => setDesktopModal(desktopModal === 'streak' ? null : 'streak')}
           layout="stacked"

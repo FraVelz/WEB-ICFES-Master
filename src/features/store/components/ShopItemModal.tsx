@@ -10,6 +10,7 @@ import type { ShopItem } from '../data/shopItems';
 import { formatCountdown } from '../utils/formatCountdown';
 import { ShopItemPreview } from './ShopItemPreview';
 import { ShopItemModalActions } from './ShopItemModalActions';
+import { useDialogA11y } from '@/shared/hooks/useDialogA11y';
 
 export type ShopItemModalPurchase = {
   processing: boolean;
@@ -45,8 +46,10 @@ export const ShopItemModal = ({
 }: ShopItemModalProps) => {
   const isDoubleXpActive = item?.id === DOUBLE_XP_ITEM_ID && doubleXpRemainingMs > 0;
   const isStreakShieldFull = item?.id === STREAK_SHIELD_ITEM_ID && streakShieldCount >= MAX_STREAK_SHIELDS;
-  const overlayRef = useRef(null);
-  const contentRef = useRef(null);
+  const overlayRef = useRef<HTMLDivElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
+
+  useDialogA11y(isOpen, onClose, contentRef);
 
   useEffect(() => {
     if (!isOpen || !overlayRef.current || !contentRef.current) return;
@@ -67,6 +70,9 @@ export const ShopItemModal = ({
     >
       <div
         ref={contentRef}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="shop-item-title"
         className="relative w-full max-w-md overflow-hidden rounded-3xl border border-slate-700 bg-slate-900 shadow-2xl"
       >
         <button
@@ -91,7 +97,9 @@ export const ShopItemModal = ({
         </div>
 
         <div className="px-8 pt-12 pb-8 text-center">
-          <h2 className="mb-2 text-2xl font-bold text-white">{item.name}</h2>
+          <h2 id="shop-item-title" className="mb-2 text-2xl font-bold text-white">
+            {item.name}
+          </h2>
           <div
             className={cn(
               'mb-4 inline-block rounded-full bg-slate-800 px-3 py-1 text-xs font-bold',

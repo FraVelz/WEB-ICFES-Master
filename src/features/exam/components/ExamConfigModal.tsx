@@ -1,7 +1,8 @@
 'use client';
 import { cn } from '@/utils/cn';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import type { ExamConfig } from '@/features/exam/types';
+import { useDialogA11y } from '@/shared/hooks/useDialogA11y';
 
 interface ExamConfigModalProps {
   area: string;
@@ -20,6 +21,9 @@ export const ExamConfigModal = ({
   const [useTimer, setUseTimer] = useState(true);
   const [timePerQuestion, setTimePerQuestion] = useState(2);
   const [showExplanations, setShowExplanations] = useState(true);
+  const dialogRef = useRef<HTMLDivElement>(null);
+
+  useDialogA11y(true, () => window.history.back(), dialogRef);
 
   const handleStart = () => {
     onStart({
@@ -31,14 +35,20 @@ export const ExamConfigModal = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm" aria-hidden="true">
       <div
+        ref={dialogRef}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="exam-config-title"
         className={cn(
           'w-full max-w-md rounded-2xl border border-white/10 bg-linear-to-br from-gray-800',
           'via-gray-900 to-gray-950 p-8 shadow-2xl'
         )}
       >
-        <h2 className="mb-2 text-3xl font-bold text-white">Configurar Examen</h2>
+        <h2 id="exam-config-title" className="mb-2 text-3xl font-bold text-white">
+          Configurar Examen
+        </h2>
         <p className="mb-8 text-gray-400">{area}</p>
 
         <div className="space-y-6">

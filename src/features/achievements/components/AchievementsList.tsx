@@ -89,6 +89,17 @@ export const AchievementsList = ({ achievements = [] }: AchievementsListProps) =
         </div>
       </div>
 
+      {filteredAchievements.length === 0 ? (
+        <div
+          className="border-surface-border bg-surface-elevated text-on-surface-muted rounded-xl border p-8 text-center"
+          role="status"
+        >
+          <Icon name="trophy" className="mx-auto mb-3 text-3xl opacity-50" aria-hidden />
+          <p className="font-semibold text-on-surface">No hay logros en esta categoría</p>
+          <p className="mt-1 text-sm">Prueba otra categoría o sigue estudiando para desbloquear metas.</p>
+        </div>
+      ) : null}
+
       {/* Achievements Grid */}
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {filteredAchievements.map((achievement: AchievementItem) => {
@@ -160,6 +171,11 @@ export const AchievementsList = ({ achievements = [] }: AchievementsListProps) =
                       </span>
                     </div>
                     <div
+                      role="progressbar"
+                      aria-valuenow={Math.round(percent)}
+                      aria-valuemin={0}
+                      aria-valuemax={100}
+                      aria-label={`Progreso de ${achievement.title}`}
                       className={cn(
                         'h-1.5 w-full overflow-hidden rounded-full',
                         isCompleted ? 'bg-cyan-100 dark:bg-slate-950' : 'bg-slate-950'

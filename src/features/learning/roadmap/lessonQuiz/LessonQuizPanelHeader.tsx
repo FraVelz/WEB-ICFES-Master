@@ -23,7 +23,9 @@ export function LessonQuizPanelHeader({
     >
       <div className="mb-1 flex items-center justify-center gap-2">
         <Icon name="trophy" size="lg" className="text-base text-yellow-400 lg:text-lg" />
-        <h3 className="text-center text-base font-bold text-white lg:text-xl">Prueba de Conocimiento</h3>
+        <h3 id="lesson-quiz-title" className="text-center text-base font-bold text-white lg:text-xl">
+          Prueba de Conocimiento
+        </h3>
       </div>
       <p className="mt-1.5 line-clamp-2 text-center text-xs text-slate-400 lg:text-sm">{lessonTitle}</p>
       {totalQuestions > 1 && (

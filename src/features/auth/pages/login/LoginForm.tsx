@@ -96,16 +96,20 @@ export function LoginForm({
             <button
               type="button"
               onClick={onTogglePassword}
+              aria-label={showPassword ? 'Ocultar contraseña' : 'Mostrar contraseña'}
               className="text-on-surface-muted hover:text-on-surface absolute top-1/2 right-4 -translate-y-1/2"
             >
-              <Icon name={showPassword ? 'eye-slash' : 'eye'} />
+              <Icon name={showPassword ? 'eye-slash' : 'eye'} aria-hidden />
             </button>
           </div>
         </div>
 
         {error ? (
-          <div className="flex items-start gap-3 rounded-lg border border-red-500/50 bg-red-500/20 p-4">
-            <Icon name="exclamation-circle" className="mt-0.5 shrink-0 text-red-400" />
+          <div
+            role="alert"
+            className="flex items-start gap-3 rounded-lg border border-red-500/50 bg-red-500/20 p-4"
+          >
+            <Icon name="exclamation-circle" className="mt-0.5 shrink-0 text-red-400" aria-hidden />
             <p className="text-sm text-red-400">{error}</p>
           </div>
         ) : null}
