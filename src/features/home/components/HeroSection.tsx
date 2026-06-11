@@ -118,7 +118,7 @@ export const HeroSection = ({ onDemoAccess }: { onDemoAccess: () => void }) => {
               'rounded-lg border p-2 shadow-sm sm:p-4 dark:shadow-none'
             )}
           >
-            <p className="text-3xl font-bold text-blue-800 dark:text-pink-400">?400</p>
+            <p className="text-3xl font-bold text-blue-800 dark:text-pink-400">+400</p>
             <p className="text-on-surface-muted mt-1 text-xs font-medium">Puntaje promedio</p>
           </div>
         </AnimatedReveal>
