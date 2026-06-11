@@ -7,7 +7,11 @@ import { ModalOverlay } from '@/shared/components/ModalOverlay';
 import { useDialogA11y } from '@/shared/hooks/useDialogA11y';
 import { AREA_INFO } from '@/shared/constants';
 import { useGSAPModalEntrance } from '@/hooks/useGSAPModalEntrance';
-import { getRoadmapPanelClassName, useAnchoredDropdownStyle } from './useAnchoredDropdownStyle';
+import {
+  getRoadmapPanelClassName,
+  ROADMAP_SHEET_OVERLAY_Z_CLASS,
+  useAnchoredDropdownStyle,
+} from './useAnchoredDropdownStyle';
 import { RoadmapBottomSheetHandle } from './RoadmapBottomSheetHandle';
 import type { RefObject } from 'react';
 
@@ -108,7 +112,7 @@ export const AreasModal = ({ isOpen, onClose, onSelectArea, currentArea, anchorR
   if (usePortal && typeof document !== 'undefined') {
     return createPortal(
       <>
-        <ModalOverlay onClose={onClose} />
+        <ModalOverlay onClose={onClose} className={usePortal ? ROADMAP_SHEET_OVERLAY_Z_CLASS : undefined} />
         {panel}
       </>,
       document.body
@@ -117,7 +121,7 @@ export const AreasModal = ({ isOpen, onClose, onSelectArea, currentArea, anchorR
 
   return (
     <>
-      <ModalOverlay onClose={onClose} />
+      <ModalOverlay onClose={onClose} className={usePortal ? ROADMAP_SHEET_OVERLAY_Z_CLASS : undefined} />
       {panel}
     </>
   );

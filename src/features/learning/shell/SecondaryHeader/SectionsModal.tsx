@@ -6,7 +6,11 @@ import { Icon } from '@/shared/components/Icon';
 import { ModalOverlay } from '@/shared/components/ModalOverlay';
 import { useDialogA11y } from '@/shared/hooks/useDialogA11y';
 import { useGSAPModalEntrance } from '@/hooks/useGSAPModalEntrance';
-import { getRoadmapPanelClassName, useAnchoredDropdownStyle } from './useAnchoredDropdownStyle';
+import {
+  getRoadmapPanelClassName,
+  ROADMAP_SHEET_OVERLAY_Z_CLASS,
+  useAnchoredDropdownStyle,
+} from './useAnchoredDropdownStyle';
 import { RoadmapBottomSheetHandle } from './RoadmapBottomSheetHandle';
 import type { PathSection } from '@/features/learning/roadmap/AreaPath';
 import { getStageLabel } from './sectionStageUtils';
@@ -123,7 +127,7 @@ export const SectionsModal = ({
   if (usePortal && typeof document !== 'undefined') {
     return createPortal(
       <>
-        <ModalOverlay onClose={onClose} />
+        <ModalOverlay onClose={onClose} className={usePortal ? ROADMAP_SHEET_OVERLAY_Z_CLASS : undefined} />
         {panel}
       </>,
       document.body
@@ -132,7 +136,7 @@ export const SectionsModal = ({
 
   return (
     <>
-      <ModalOverlay onClose={onClose} />
+      <ModalOverlay onClose={onClose} className={usePortal ? ROADMAP_SHEET_OVERLAY_Z_CLASS : undefined} />
       {panel}
     </>
   );

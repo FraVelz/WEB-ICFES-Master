@@ -26,6 +26,10 @@ export type AnchoredPanelStyle = {
   isBottomSheet: boolean;
 };
 
+/** Por encima del FAB del chat (`z-90`) y del nav móvil (`z-40`–`z-50`). */
+export const ROADMAP_SHEET_Z_INDEX = 95;
+export const ROADMAP_SHEET_OVERLAY_Z_CLASS = 'z-94';
+
 const BOTTOM_SHEET_STYLE: CSSProperties = {
   position: 'fixed',
   left: 0,
@@ -33,7 +37,7 @@ const BOTTOM_SHEET_STYLE: CSSProperties = {
   bottom: 0,
   width: '100%',
   maxHeight: 'min(85vh, 32rem)',
-  zIndex: 50,
+  zIndex: ROADMAP_SHEET_Z_INDEX,
 };
 
 export function useAnchoredDropdownStyle(
@@ -78,7 +82,7 @@ export function useAnchoredDropdownStyle(
           top: rect.bottom + offset,
           left,
           width,
-          zIndex: 50,
+          zIndex: ROADMAP_SHEET_Z_INDEX,
         },
         isBottomSheet: false,
       });
