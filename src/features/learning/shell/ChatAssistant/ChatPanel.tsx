@@ -1,6 +1,8 @@
-import { useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { cn } from '@/utils/cn';
 import { Icon } from '@/shared/components/Icon';
+import { ModalOverlay } from '@/shared/components/ModalOverlay';
 import { useDialogA11y } from '@/shared/hooks/useDialogA11y';
 import { useGSAPModalEntrance } from '@/hooks/useGSAPModalEntrance';
 import { ChatInputArea } from './ChatInputArea';
@@ -38,6 +40,7 @@ export function ChatPanel({
   onKeyDown,
   onSend,
 }: ChatPanelProps) {
+  const [mounted, setMounted] = useState(false);
   const dialogRef = useRef<HTMLDivElement>(null);
   const chatPanelRef = useGSAPModalEntrance({
     isOpen,
@@ -45,7 +48,11 @@ export function ChatPanel({
     duration: 0.3,
   });
 
-  useDialogA11y(isOpen, onClose, dialogRef);
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  useDialogA11y(isOpen, onClose, dialogRef, { lockScroll: false });
 
   const statusText = isAnonymous
     ? anonQuotaReached
@@ -53,76 +60,83 @@ export function ChatPanel({
       : `${anonRemaining} pregunta${anonRemaining !== 1 ? 's' : ''} gratis sin cuenta`
     : 'Responde tus dudas';
 
-  if (!isOpen) return null;
+  if (!mounted || !isOpen) return null;
 
-  return (
-    <div
-      ref={(node) => {
-        dialogRef.current = node;
-        if (chatPanelRef && typeof chatPanelRef === 'object' && 'current' in chatPanelRef) {
-          chatPanelRef.current = node;
-        }
-      }}
-      role="dialog"
-      aria-modal="true"
-      aria-labelledby="chat-panel-title"
-      className={cn(
-        'fixed z-50 flex h-[min(500px,70vh)] flex-col overflow-hidden rounded-2xl',
-        'border-app-ring/30 shadow-app-ring/20 border bg-surface-elevated/98 shadow-2xl backdrop-blur-xl',
-        'right-3 bottom-24 left-3 w-auto',
-        'sm:right-6 sm:left-auto sm:w-[min(400px,calc(100vw-3rem))]'
-      )}
-    >
+  return createPortal(
+    <>
+      <ModalOverlay onClose={onClose} className="z-90 bg-black/25 backdrop-blur-[1px]" />
+
       <div
+        ref={(node) => {
+          dialogRef.current = node;
+          if (chatPanelRef && typeof chatPanelRef === 'object' && 'current' in chatPanelRef) {
+            chatPanelRef.current = node;
+          }
+        }}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="chat-panel-title"
         className={cn(
-          'border-app-ring/20 from-app-accent-strong/30 flex items-center justify-between',
-          'border-b bg-linear-to-r to-blue-600/30 px-4 py-3'
+          'fixed z-100 flex h-[min(500px,70vh)] flex-col overflow-hidden rounded-2xl',
+          'border-app-ring/30 shadow-app-ring/20 border bg-surface-elevated/98 shadow-2xl backdrop-blur-xl',
+          'right-3 bottom-24 left-3 w-auto',
+          'sm:right-6 sm:left-auto sm:w-[min(400px,calc(100vw-3rem))]'
         )}
       >
-        <div className="flex items-center gap-3">
-          <div
-            className={cn(
-              'from-cta-from to-cta-to flex h-10 w-10 items-center justify-center',
-              'rounded-full bg-linear-to-r'
-            )}
-          >
-            <Icon name="robot" className="text-white" />
-          </div>
-          <div>
-            <h3 id="chat-panel-title" className="text-on-surface font-bold">Asistente ICFES</h3>
-            <p className="text-app-accent-muted/80 text-xs">{statusText}</p>
-          </div>
-        </div>
-        <button
-          type="button"
-          onClick={onClose}
+        <div
           className={cn(
-            'text-on-surface-muted cursor-pointer rounded-lg p-2 transition-colors hover:bg-surface/10',
-            'focus-visible:ring-app-accent hover:text-on-surface focus-visible:ring-2',
-            'focus-visible:ring-offset-2 focus-visible:ring-offset-surface-elevated focus-visible:outline-none'
+            'border-app-ring/20 from-app-accent-strong/30 flex items-center justify-between',
+            'border-b bg-linear-to-r to-blue-600/30 px-4 py-3'
           )}
-          aria-label="Cerrar chat"
         >
-          <Icon name="times" size="lg" />
-        </button>
+          <div className="flex items-center gap-3">
+            <div
+              className={cn(
+                'from-cta-from to-cta-to flex h-10 w-10 items-center justify-center',
+                'rounded-full bg-linear-to-r'
+              )}
+            >
+              <Icon name="robot" className="text-white" />
+            </div>
+            <div>
+              <h3 id="chat-panel-title" className="text-on-surface font-bold">
+                Asistente ICFES
+              </h3>
+              <p className="text-app-accent-muted/80 text-xs">{statusText}</p>
+            </div>
+          </div>
+          <button
+            type="button"
+            onClick={onClose}
+            className={cn(
+              'text-on-surface-muted cursor-pointer rounded-lg p-2 transition-colors hover:bg-surface/10',
+              'focus-visible:ring-app-accent hover:text-on-surface focus-visible:ring-2',
+              'focus-visible:ring-offset-2 focus-visible:ring-offset-surface-elevated focus-visible:outline-none'
+            )}
+            aria-label="Cerrar chat"
+          >
+            <Icon name="times" size="lg" />
+          </button>
+        </div>
+
+        <ChatMessageList
+          messages={messages}
+          isTyping={isTyping}
+          isAnonymous={isAnonymous}
+          messagesEndRef={messagesEndRef}
+        />
+
+        <ChatInputArea
+          anonQuotaReached={anonQuotaReached}
+          inputValue={inputValue}
+          isTyping={isTyping}
+          inputRef={inputRef}
+          onInputChange={onInputChange}
+          onKeyDown={onKeyDown}
+          onSend={onSend}
+        />
       </div>
-
-      <ChatMessageList
-        messages={messages}
-        isTyping={isTyping}
-        isAnonymous={isAnonymous}
-        messagesEndRef={messagesEndRef}
-      />
-
-      <ChatInputArea
-        anonQuotaReached={anonQuotaReached}
-        inputValue={inputValue}
-        isTyping={isTyping}
-        inputRef={inputRef}
-        onInputChange={onInputChange}
-        onKeyDown={onKeyDown}
-        onSend={onSend}
-      />
-    </div>
+    </>,
+    document.body
   );
 }

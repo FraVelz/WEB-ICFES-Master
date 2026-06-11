@@ -38,7 +38,7 @@ export function AchievementsAsidePanels() {
           href="/ruta-aprendizaje"
           className={cn(
             'inline-flex w-full items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-sm font-bold',
-            'bg-app-accent text-white transition-colors hover:brightness-110',
+            'bg-app-accent text-app-on-accent transition-colors hover:brightness-110',
             'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:outline-none'
           )}
         >

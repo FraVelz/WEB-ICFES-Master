@@ -5,21 +5,33 @@ import { useEffect, type RefObject } from 'react';
 const FOCUSABLE_SELECTOR =
   'button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
 
+type DialogA11yOptions = {
+  /** Bloquea scroll del documento mientras el diálogo está abierto (por defecto true). */
+  lockScroll?: boolean;
+};
+
 /** Escape, scroll lock, focus trap y restauración de foco para diálogos. */
 export function useDialogA11y(
   isOpen: boolean,
   onClose: () => void,
-  containerRef?: RefObject<HTMLElement | null>
+  containerRef?: RefObject<HTMLElement | null>,
+  options?: DialogA11yOptions
 ) {
+  const lockScroll = options?.lockScroll ?? true;
+
   useEffect(() => {
     if (!isOpen) return;
 
     const previousActive = document.activeElement as HTMLElement | null;
     const previousOverflow = document.body.style.overflow;
-    document.body.style.overflow = 'hidden';
+    if (lockScroll) {
+      document.body.style.overflow = 'hidden';
+    }
 
     const getFocusable = () => {
-      const root = containerRef?.current ?? document.body;
+      const root = containerRef?.current ?? (containerRef === undefined ? document.body : null);
+      if (!root) return [];
+
       return Array.from(root.querySelectorAll<HTMLElement>(FOCUSABLE_SELECTOR)).filter(
         (el) => el.offsetParent !== null || el === document.activeElement
       );
@@ -50,15 +62,29 @@ export function useDialogA11y(
 
     document.addEventListener('keydown', onKeyDown);
 
-    requestAnimationFrame(() => {
+    const focusFirst = () => {
       const focusable = getFocusable();
       focusable[0]?.focus();
-    });
+    };
+
+    const rafIds: number[] = [];
+    if (containerRef) {
+      rafIds.push(
+        requestAnimationFrame(() => {
+          rafIds.push(requestAnimationFrame(focusFirst));
+        })
+      );
+    } else {
+      rafIds.push(requestAnimationFrame(focusFirst));
+    }
 
     return () => {
-      document.body.style.overflow = previousOverflow;
+      rafIds.forEach((id) => cancelAnimationFrame(id));
+      if (lockScroll) {
+        document.body.style.overflow = previousOverflow;
+      }
       document.removeEventListener('keydown', onKeyDown);
       previousActive?.focus?.();
     };
-  }, [isOpen, onClose, containerRef]);
+  }, [isOpen, onClose, containerRef, lockScroll]);
 }

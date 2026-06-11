@@ -14,13 +14,17 @@ export const UnifiedAchievementsPage = () => {
   const showLoading = authLoading || (loading && achievements.length === 0);
 
   if (showLoading) {
-    return <SkeletonGrid count={6} columnsClassName="grid-cols-1 sm:grid-cols-2 lg:grid-cols-3" />;
+    return (
+      <div className="px-4 sm:px-6">
+        <SkeletonGrid count={6} columnsClassName="grid-cols-1 md:grid-cols-2" />
+      </div>
+    );
   }
 
   return (
-    <div className="relative z-10 mx-auto max-w-4xl space-y-6">
+    <div className="relative z-10 w-full space-y-6 px-4 pb-4 sm:space-y-8 sm:px-6 sm:pb-6">
       <header className="space-y-1">
-        <p className="text-on-surface-muted text-sm">
+        <p className="text-on-surface-muted text-sm sm:text-base">
           Nivel {level} · {completedCount} de {achievements.length} logros
         </p>
       </header>

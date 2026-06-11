@@ -1,5 +1,6 @@
 'use client';
 
+import { useCallback } from 'react';
 import { ChatLauncher } from './ChatLauncher';
 import { ChatPanel } from './ChatPanel';
 import { useChatAssistant } from './useChatAssistant';
@@ -21,12 +22,15 @@ export function ChatAssistant() {
     handleKeyDown,
   } = useChatAssistant();
 
+  const handleOpen = useCallback(() => setIsOpen(true), [setIsOpen]);
+  const handleClose = useCallback(() => setIsOpen(false), [setIsOpen]);
+
   return (
     <>
-      <ChatLauncher isOpen={isOpen} onToggle={() => setIsOpen((open) => !open)} />
+      {!isOpen && <ChatLauncher onOpen={handleOpen} />}
       <ChatPanel
         isOpen={isOpen}
-        onClose={() => setIsOpen(false)}
+        onClose={handleClose}
         messages={messages}
         isTyping={isTyping}
         isAnonymous={isAnonymous}
