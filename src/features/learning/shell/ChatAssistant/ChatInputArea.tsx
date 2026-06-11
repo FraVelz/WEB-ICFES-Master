@@ -46,6 +46,7 @@ export function ChatInputArea({
             value={inputValue}
             onChange={(e) => onInputChange(e.target.value)}
             onKeyDown={onKeyDown}
+            aria-label="Escribe tu pregunta al asistente"
             placeholder="Escribe tu pregunta..."
             disabled={isTyping}
             className={cn(

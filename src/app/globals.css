@@ -345,3 +345,10 @@ html:not(.dark) :where(.rounded-2xl, .rounded-xl, .rounded-lg).border.border-sur
 .lesson-current-glow {
   animation: lesson-current-glow 2.5s ease-in-out infinite;
 }
+
+@media (prefers-reduced-motion: reduce) {
+  .lesson-current-glow,
+  .animate-pulse {
+    animation: none !important;
+  }
+}

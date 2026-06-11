@@ -1,6 +1,7 @@
 /** GSAP entrance presets for modals */
 import { useRef, useEffect } from 'react';
 import { gsap } from '@/lib/gsap';
+import { prefersReducedMotion } from '@/utils/prefersReducedMotion';
 
 type ModalEntranceType = 'fade' | 'slideUp' | 'slideDown' | 'slideFromTop';
 
@@ -35,6 +36,11 @@ export const useGSAPModalEntrance = ({ isOpen, type = 'fade', duration }: UseGSA
   useEffect(() => {
     const el = ref.current;
     if (!el || !isOpen) return;
+
+    if (prefersReducedMotion()) {
+      gsap.set(el, { opacity: 1, y: 0 });
+      return;
+    }
 
     const preset = PRESETS[type];
     const toVars = { ...preset.to, duration: duration ?? preset.to.duration };

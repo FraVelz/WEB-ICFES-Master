@@ -1,3 +1,4 @@
+import { useId } from 'react';
 import { cn } from '@/utils/cn';
 import { Icon } from '@/shared/components/Icon';
 import { useUserSettingsContext } from '@/features/user/context/UserSettingsContext';
@@ -15,6 +16,9 @@ export function SettingsSupportPanel() {
     setSupportEmail,
     handleSupportSubmit,
   } = useUserSettingsContext();
+  const categoryId = useId();
+  const emailId = useId();
+  const messageId = useId();
 
   return (
     <SettingsSection title="Ayuda y Soporte" icon="headset">
@@ -57,8 +61,9 @@ export function SettingsSupportPanel() {
       <form onSubmit={handleSupportSubmit} className="space-y-4">
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           <div>
-            <label className="mb-1 block text-xs font-bold text-slate-500 uppercase">Categoría</label>
+            <label htmlFor={categoryId} className="mb-1 block text-xs font-bold text-slate-500 uppercase">Categoría</label>
             <select
+              id={categoryId}
               value={supportCategory}
               onChange={(e) => setSupportCategory(e.target.value)}
               className={cn(
@@ -74,8 +79,9 @@ export function SettingsSupportPanel() {
           </div>
           {supportMode === 'response' && (
             <div>
-              <label className="mb-1 block text-xs font-bold text-slate-500 uppercase">Email de contacto</label>
+              <label htmlFor={emailId} className="mb-1 block text-xs font-bold text-slate-500 uppercase">Email de contacto</label>
               <input
+                id={emailId}
                 type="email"
                 value={supportEmail}
                 onChange={(e) => setSupportEmail(e.target.value)}
@@ -91,8 +97,9 @@ export function SettingsSupportPanel() {
         </div>
 
         <div>
-          <label className="mb-1 block text-xs font-bold text-slate-500 uppercase">Mensaje</label>
+          <label htmlFor={messageId} className="mb-1 block text-xs font-bold text-slate-500 uppercase">Mensaje</label>
           <textarea
+            id={messageId}
             value={supportMessage}
             onChange={(e) => setSupportMessage(e.target.value)}
             required

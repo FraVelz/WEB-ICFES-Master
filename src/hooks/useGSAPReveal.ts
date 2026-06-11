@@ -1,6 +1,7 @@
 /** GSAP reveal when element becomes visible (e.g. with IntersectionObserver) */
 import { useRef, useEffect } from 'react';
 import { gsap } from '@/lib/gsap';
+import { prefersReducedMotion } from '@/utils/prefersReducedMotion';
 
 interface UseGSAPRevealOptions {
   delay?: number;
@@ -16,6 +17,11 @@ export const useGSAPReveal = (isVisible: boolean, options: UseGSAPRevealOptions 
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
+
+    if (prefersReducedMotion()) {
+      gsap.set(el, { opacity: isVisible ? 1 : 0, y: isVisible ? 0 : y });
+      return;
+    }
 
     if (isVisible) {
       gsap.fromTo(

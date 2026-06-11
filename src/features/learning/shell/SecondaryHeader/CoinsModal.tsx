@@ -3,6 +3,7 @@
 import { cn } from '@/utils/cn';
 import { Icon } from '@/shared/components/Icon';
 import { ModalOverlay } from '@/shared/components/ModalOverlay';
+import { useDialogA11y } from '@/shared/hooks/useDialogA11y';
 import { useGSAPModalEntrance } from '@/hooks/useGSAPModalEntrance';
 
 export interface CoinsModalProps {
@@ -21,6 +22,8 @@ export const CoinsModal = ({ isOpen, onClose, coins = 0 }: CoinsModalProps) => {
     duration: 0.2,
   });
 
+  useDialogA11y(isOpen, onClose, dropdownRef);
+
   if (!isOpen) return null;
 
   return (
@@ -29,6 +32,9 @@ export const CoinsModal = ({ isOpen, onClose, coins = 0 }: CoinsModalProps) => {
 
       <div
         ref={dropdownRef}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="coins-modal-title"
         className={cn(
           'absolute top-full right-0 z-50 w-full rounded-b-2xl border-x border-b border-slate-700',
           'bg-slate-900 shadow-2xl sm:w-80'
@@ -36,7 +42,7 @@ export const CoinsModal = ({ isOpen, onClose, coins = 0 }: CoinsModalProps) => {
       >
         <div className="p-4">
           <div className="mb-4 flex items-center justify-between border-b border-slate-800 pb-3">
-            <h2 className="flex items-center gap-2 text-sm font-bold tracking-wider text-slate-400 uppercase">
+            <h2 id="coins-modal-title" className="flex items-center gap-2 text-sm font-bold tracking-wider text-slate-400 uppercase">
               <Icon name="coins" className="text-yellow-400" />
               Mis Monedas
             </h2>

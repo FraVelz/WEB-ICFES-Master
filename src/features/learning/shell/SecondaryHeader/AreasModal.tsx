@@ -4,6 +4,7 @@ import { createPortal } from 'react-dom';
 import { cn } from '@/utils/cn';
 import { Icon } from '@/shared/components/Icon';
 import { ModalOverlay } from '@/shared/components/ModalOverlay';
+import { useDialogA11y } from '@/shared/hooks/useDialogA11y';
 import { AREA_INFO } from '@/shared/constants';
 import { useGSAPModalEntrance } from '@/hooks/useGSAPModalEntrance';
 import { getRoadmapPanelClassName, useAnchoredDropdownStyle } from './useAnchoredDropdownStyle';
@@ -30,6 +31,8 @@ export const AreasModal = ({ isOpen, onClose, onSelectArea, currentArea, anchorR
     type: isBottomSheet ? 'slideUp' : 'slideFromTop',
     duration: isBottomSheet ? 0.3 : 0.2,
   });
+
+  useDialogA11y(isOpen, onClose, dropdownRef);
 
   if (!isOpen) return null;
 

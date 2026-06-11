@@ -1,5 +1,7 @@
+import { useId, useRef } from 'react';
 import { cn } from '@/utils/cn';
 import { Icon } from '@/shared/components/Icon';
+import { useDialogA11y } from '@/shared/hooks/useDialogA11y';
 import { useUserSettingsContext } from '@/features/user/context/UserSettingsContext';
 
 export function SettingsDeleteModal() {
@@ -12,12 +14,26 @@ export function SettingsDeleteModal() {
     handleClearAllData,
     handleDeleteAccount,
   } = useUserSettingsContext();
+  const dialogRef = useRef<HTMLDivElement>(null);
+  const titleId = useId();
+  const confirmId = useId();
+
+  useDialogA11y(showDeleteModal, () => {
+    setShowDeleteModal(false);
+    setDeleteConfirmation('');
+  }, dialogRef);
 
   if (!showDeleteModal) return null;
 
   return (
-    <div className="fixed inset-0 z-60 flex items-center justify-center bg-black/80 p-4 backdrop-blur-sm">
-      <div className="animate-zoom-in w-full max-w-md rounded-2xl border border-slate-800 bg-slate-900 p-6 shadow-2xl">
+    <div className="fixed inset-0 z-60 flex items-center justify-center bg-black/80 p-4 backdrop-blur-sm" role="presentation">
+      <div
+        ref={dialogRef}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby={titleId}
+        className="animate-zoom-in w-full max-w-md rounded-2xl border border-slate-800 bg-slate-900 p-6 shadow-2xl motion-reduce:animate-none"
+      >
         <div
           className={cn(
             'mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full',
@@ -26,7 +42,7 @@ export function SettingsDeleteModal() {
         >
           <Icon name="warning" className="text-xl" />
         </div>
-        <h2 className="mb-2 text-center text-xl font-bold text-white">Zona de Peligro</h2>
+        <h2 id={titleId} className="mb-2 text-center text-xl font-bold text-white">Zona de Peligro</h2>
         <p className="mb-6 text-center text-sm text-slate-400">
           Estas acciones son irreversibles. Por favor confirma tu intención.
         </p>
@@ -40,8 +56,10 @@ export function SettingsDeleteModal() {
               </span>
             </p>
             <input
+              id={confirmId}
               type="text"
               value={deleteConfirmation}
+              aria-label="Confirmación de borrado"
               onChange={(e) => setDeleteConfirmation(e.target.value)}
               className={cn(
                 'w-full rounded-lg border border-slate-700 bg-slate-900 px-3 py-2 text-sm',

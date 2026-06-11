@@ -84,6 +84,7 @@ export function DesktopSidebar({ className, sidebarExpanded, onToggleSidebar }: 
       </div>
 
       <nav
+        aria-label="Navegación principal"
         className={cn(
           'custom-scrollbar flex min-h-0 flex-1 flex-col gap-2 overflow-x-hidden overflow-y-auto py-6',
           sidebarExpanded ? 'px-3' : 'px-2'

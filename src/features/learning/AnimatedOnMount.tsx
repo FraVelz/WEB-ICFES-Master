@@ -2,6 +2,7 @@
 
 import { useRef, useEffect } from 'react';
 import { gsap } from '@/lib/gsap';
+import { prefersReducedMotion } from '@/utils/prefersReducedMotion';
 
 interface AnimatedOnMountProps extends React.HTMLAttributes<HTMLDivElement> {
   delay?: number;
@@ -23,6 +24,11 @@ export const AnimatedOnMount = ({
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
+
+    if (prefersReducedMotion()) {
+      gsap.set(el, { opacity: 1, y: 0 });
+      return;
+    }
 
     gsap.fromTo(
       el,

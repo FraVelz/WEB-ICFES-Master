@@ -19,7 +19,7 @@ export function SidebarNavLink({ option, pathname, sidebarExpanded, isLocked }: 
   return (
     <Link
       href={option.path}
-      title={!sidebarExpanded ? option.label : undefined}
+      aria-label={!sidebarExpanded ? option.label : undefined}
       aria-current={isActive ? 'page' : undefined}
       className={cn(
         'group/item relative flex h-12 items-center rounded-xl transition-all duration-300 focus-visible:z-10',

@@ -2,8 +2,10 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { useRef } from 'react';
 import { Icon } from '@/shared/components/Icon';
 import { ModalOverlay } from '@/shared/components/ModalOverlay';
+import { useDialogA11y } from '@/shared/hooks/useDialogA11y';
 import { isAccountOnlyPath } from '@/features/auth/constants/accountOnlyRoutes';
 import { useUiSessionStore } from '@/store/uiSessionStore';
 import { cn } from '@/utils/cn';
@@ -26,8 +28,11 @@ type MobileNavProps = {
 };
 
 export function MobileNav({ menuOpen, onToggleMenu, onCloseMenu }: MobileNavProps) {
+  const menuRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
   const demoMode = useUiSessionStore((s) => s.demoMode);
+
+  useDialogA11y(menuOpen, onCloseMenu, menuRef);
   const isLockedInDemo = (path: string) => demoMode && isAccountOnlyPath(path);
   const isOverflowRouteActive = mobileMenuOptions.some((option) => isNavOptionActive(pathname, option));
 
@@ -38,6 +43,7 @@ export function MobileNav({ menuOpen, onToggleMenu, onCloseMenu }: MobileNavProp
   return (
     <>
       <nav
+        aria-label="Navegación principal"
         className={cn(
           'custom-scrollbar sticky bottom-0 z-40 shrink-0 border-t lg:hidden',
           'border-app-ring/20 bg-linear-to-t',
@@ -102,6 +108,10 @@ export function MobileNav({ menuOpen, onToggleMenu, onCloseMenu }: MobileNavProp
         <>
           <ModalOverlay onClose={onCloseMenu} className="lg:hidden" />
           <div
+            ref={menuRef}
+            role="dialog"
+            aria-modal="true"
+            aria-label="Más opciones de navegación"
             className={cn(
               'border-app-ring/30 fixed right-0 bottom-20 left-0 z-50 h-fit w-screen border-t',
               'bg-surface-elevated/98 backdrop-blur-xl lg:hidden'

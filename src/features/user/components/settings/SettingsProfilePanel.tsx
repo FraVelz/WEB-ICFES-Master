@@ -1,3 +1,4 @@
+import { useId } from 'react';
 import { cn } from '@/utils/cn';
 import { Icon } from '@/shared/components/Icon';
 import { AvatarImage } from '@/features/user/components/AvatarImage';
@@ -20,6 +21,8 @@ export function SettingsProfilePanel() {
     handleRemoveProfileImage,
   } = useUserSettingsContext();
   const avatarSrc = useResolvedProfileAvatar(user?.profileImage);
+  const usernameId = useId();
+  const bioId = useId();
 
   return (
     <div className="lg:sticky lg:top-24">
@@ -54,11 +57,12 @@ export function SettingsProfilePanel() {
 
         <div className="space-y-4">
           <div className="text-left">
-            <label className="mb-1 ml-1 block text-xs font-bold tracking-wider text-slate-500 uppercase">
+            <label htmlFor={usernameId} className="mb-1 ml-1 block text-xs font-bold tracking-wider text-slate-500 uppercase">
               Nombre de Usuario
             </label>
             <div className="flex gap-2">
               <input
+                id={usernameId}
                 type="text"
                 value={username}
                 onChange={(e) => setUsername(e.target.value.slice(0, 30))}
@@ -86,9 +90,10 @@ export function SettingsProfilePanel() {
           </div>
 
           <div className="text-left">
-            <label className="mb-1 ml-1 block text-xs font-bold tracking-wider text-slate-500 uppercase">Bio</label>
+            <label htmlFor={bioId} className="mb-1 ml-1 block text-xs font-bold tracking-wider text-slate-500 uppercase">Bio</label>
             <div className="relative">
               <textarea
+                id={bioId}
                 value={bio}
                 onChange={(e) => setBio(e.target.value.slice(0, 150))}
                 className={cn(

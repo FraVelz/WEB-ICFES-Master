@@ -5,6 +5,7 @@ import { createPortal } from 'react-dom';
 import { cn } from '@/utils/cn';
 import { Icon } from '@/shared/components/Icon';
 import { ModalOverlay } from '@/shared/components/ModalOverlay';
+import { useDialogA11y } from '@/shared/hooks/useDialogA11y';
 import { useGSAPModalEntrance } from '@/hooks/useGSAPModalEntrance';
 import { getRoadmapPanelClassName, useAnchoredDropdownStyle } from './useAnchoredDropdownStyle';
 import { RoadmapBottomSheetHandle } from './RoadmapBottomSheetHandle';
@@ -37,6 +38,8 @@ export const StreakModal = ({ isOpen, onClose, streakData, anchorRef }: StreakMo
     type: isBottomSheet ? 'slideUp' : 'slideFromTop',
     duration: isBottomSheet ? 0.3 : 0.2,
   });
+
+  useDialogA11y(isOpen, onClose, dropdownRef);
 
   const { currentStreak = 0, longestStreak = 0, streakHistory = [] } = streakData || {};
 

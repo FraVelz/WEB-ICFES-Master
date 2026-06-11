@@ -1,6 +1,7 @@
 'use client';
 
-import { useId } from 'react';
+import { useId, useRef } from 'react';
+import { useDialogA11y } from '@/shared/hooks/useDialogA11y';
 import { useRouter } from 'next/navigation';
 import { cn } from '@/utils/cn';
 import { Icon } from '@/shared/components/Icon';
@@ -29,8 +30,11 @@ export function ReportUserDialog({
   onSuccess,
 }: ReportUserDialogProps) {
   const router = useRouter();
+  const dialogRef = useRef<HTMLDivElement>(null);
   const titleId = useId();
   const descId = useId();
+
+  useDialogA11y(isOpen, onClose, dialogRef);
 
   const { cancelRef, reason, setReason, details, setDetails, submitting, error, success, handleSubmit } =
     useReportUserDialog({
@@ -55,6 +59,7 @@ export function ReportUserDialog({
       role="presentation"
     >
       <div
+        ref={dialogRef}
         role="dialog"
         aria-modal="true"
         aria-labelledby={titleId}

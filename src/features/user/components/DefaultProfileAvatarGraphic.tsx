@@ -11,8 +11,7 @@ export function DefaultProfileAvatarGraphic({ className }: DefaultProfileAvatarG
       viewBox="0 0 128 128"
       xmlns="http://www.w3.org/2000/svg"
       className={cn('h-full w-full', className)}
-      role="img"
-      aria-hidden
+      aria-hidden="true"
     >
       <circle cx="64" cy="64" r="64" className="fill-surface-elevated" />
       <circle cx="64" cy="48" r="18" className="fill-on-surface-muted/50" />
