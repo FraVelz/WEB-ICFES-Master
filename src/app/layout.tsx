@@ -5,7 +5,6 @@ import './globals.css';
 
 import Providers from '@/components/Providers';
 import { VercelMetrics } from '@/components/VercelMetrics';
-import { BRAND_IMAGES } from '@/assets';
 import { getSiteUrl } from '@/config/site';
 import { THEME_STORAGE_KEY } from '@/features/theme/themeStorage';
 
@@ -54,20 +53,11 @@ export const metadata: Metadata = {
     title: 'Domina el ICFES desde Cero | ICFES Master',
     description: 'La plataforma #1 para preparar el ICFES: +500 preguntas, simulacros reales y aprendizaje guiado.',
     url: '/',
-    images: [
-      {
-        url: BRAND_IMAGES.screenshot.src,
-        width: BRAND_IMAGES.screenshot.width,
-        height: BRAND_IMAGES.screenshot.height,
-        alt: 'ICFES Master - Domina el ICFES desde Cero',
-      },
-    ],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Domina el ICFES desde Cero | ICFES Master',
     description: 'Prepárate con simulacros y preguntas reales para lograr un gran puntaje en el ICFES.',
-    images: [BRAND_IMAGES.screenshot.src],
   },
 };
 

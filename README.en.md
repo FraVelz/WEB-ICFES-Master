@@ -5,7 +5,7 @@
 An interactive platform to practice questions and learn topics from the ICFES state exam (Saber 11) in Colombia. Built
 with **feature-based** architecture using Next.js 15, React 19, Tailwind CSS 4, and Supabase.
 
-Static assets (mascot, brand screenshots) live in **`src/assets/`** and are imported from `@/assets` (App Router + `next/image`). The favicon is at **`src/app/favicon.ico`** (Next.js file convention).
+Static assets (mascot, brand screenshots) live in **`src/assets/`** and are imported from `@/assets` (App Router + `next/image`). The favicon is at **`src/app/favicon.ico`** and the Open Graph image at **`src/app/opengraph-image.png`** (Next.js App Router file convention).
 
 > [!NOTE] The goal was to reach many more countries beyond Colombia, but each country handles education differently:
 > questions, topics, and subjects change. There are even countries where the exam is not mandatory or does not exist.
@@ -13,6 +13,8 @@ Static assets (mascot, brand screenshots) live in **`src/assets/`** and are impo
 > [!IMPORTANT] Donations and shop/plans are **still in development**. See [integrations/payments.md](docs/en/integrations/payments.md).
 
 ![Hero section of the ICFES platform - Master the ICFES from Scratch](src/assets/images/screenshot.png)
+
+![ICFES Master Open Graph image for social media previews](src/app/opengraph-image.png)
 
 ---
 
