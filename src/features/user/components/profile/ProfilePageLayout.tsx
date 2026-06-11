@@ -47,12 +47,8 @@ export function ProfilePageLayout({
           </>
         )}
       </div>
-      {showThemeControl ? (
-        <PageThemeControl placement={glowVariant === 'public' ? 'viewport' : 'container'} />
-      ) : null}
-      <div className="relative z-10 container mx-auto max-w-6xl px-4 py-8">
-        {children}
-      </div>
+      {showThemeControl ? <PageThemeControl placement={glowVariant === 'public' ? 'viewport' : 'container'} /> : null}
+      <div className="relative z-10 container mx-auto max-w-6xl px-4 py-8">{children}</div>
     </div>
   );
 }

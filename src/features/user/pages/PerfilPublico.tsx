@@ -61,14 +61,11 @@ export const PerfilPublico = ({ view }: PerfilPublicoProps) => {
 
   const isOwnProfile = Boolean(authUser?.uid && userId === authUser.uid);
   const { leagueState, leagueRank, loading: ownLeagueLoading, resetMs } = useMyLeague();
-  const ownLeagueDisplay = useMemo(
-    () => mapMyLeagueToDisplay(leagueState, leagueRank),
-    [leagueState, leagueRank]
-  );
+  const ownLeagueDisplay = useMemo(() => mapMyLeagueToDisplay(leagueState, leagueRank), [leagueState, leagueRank]);
   const { courseProgress: ownCourseProgress, loading: ownCourseProgressLoading } = useProfileCourseProgress(
-    isOwnProfile ? userId ?? undefined : undefined
+    isOwnProfile ? (userId ?? undefined) : undefined
   );
-  const ownStudyTimeMinutes = useUserProfileStudyTime(isOwnProfile ? userId ?? undefined : undefined);
+  const ownStudyTimeMinutes = useUserProfileStudyTime(isOwnProfile ? (userId ?? undefined) : undefined);
   const ownVip = useVipBadge();
   const { inventory, equippedLogoId } = useShop();
   const [copied, setCopied] = useState(false);

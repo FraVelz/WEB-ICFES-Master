@@ -48,7 +48,7 @@ export function LecturaAsidePanels() {
           href="/ruta-aprendizaje"
           className={cn(
             'inline-flex w-full items-center justify-center gap-2 rounded-xl border px-4 py-2.5 text-sm font-bold',
-            'border-surface-border text-on-surface-muted hover:text-on-surface transition-colors hover:bg-surface-via',
+            'border-surface-border text-on-surface-muted hover:text-on-surface hover:bg-surface-via transition-colors',
             'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:outline-none'
           )}
         >

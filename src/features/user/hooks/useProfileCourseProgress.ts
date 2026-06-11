@@ -12,10 +12,7 @@ import { getMergedAttemptHistory } from '@/services/persistence/examPersistence'
 import { PHASE_SKIP_UPDATED_EVENT } from '@/services/persistence/phaseSkipPersistence';
 import { LESSON_COMPLETED_EVENT } from '@/services/persistence';
 import { buildProfileCourseProgress } from '../services/profileCourseProgressBuild';
-import {
-  EMPTY_PROFILE_COURSE_PROGRESS,
-  type ProfileCourseProgressSnapshot,
-} from '../types/profileCourseProgress';
+import { EMPTY_PROFILE_COURSE_PROGRESS, type ProfileCourseProgressSnapshot } from '../types/profileCourseProgress';
 import type { LocalAttemptRecord } from '@/services/demo/mapLocalAttemptToExamResult';
 
 export function useProfileCourseProgress(userId: string | undefined) {

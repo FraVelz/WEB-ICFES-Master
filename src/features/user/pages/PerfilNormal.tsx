@@ -116,12 +116,7 @@ export const PerfilNormal = () => {
           />
         </div>
         <div className="space-y-8 lg:col-span-1">
-          <ProfileLeagueSection
-            league={leagueDisplay}
-            loading={leagueLoading}
-            showCta
-            resetMs={resetMs}
-          />
+          <ProfileLeagueSection league={leagueDisplay} loading={leagueLoading} showCta resetMs={resetMs} />
           <ProfileAchievementsSection
             achievements={achievements}
             loading={gamificationLoading}

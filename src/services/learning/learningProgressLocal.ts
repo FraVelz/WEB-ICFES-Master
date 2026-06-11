@@ -1,8 +1,5 @@
 import { STORAGE_KEYS } from '@/storage/progressStorageTypes';
-import {
-  getPhaseSkips,
-  type PhaseSkipRecord,
-} from '@/services/persistence/phaseSkipPersistence';
+import { getPhaseSkips, type PhaseSkipRecord } from '@/services/persistence/phaseSkipPersistence';
 import {
   EMPTY_LEARNING_PROGRESS,
   LEARNING_PROGRESS_META_KEY,

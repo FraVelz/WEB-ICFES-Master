@@ -77,7 +77,7 @@ export function ProfileLeagueSection({ league, loading = false, showCta = false,
         {typeof resetMs === 'number' && showCta && (
           <p className="text-app-accent-muted mt-2 text-xs">
             Próximo reset:{' '}
-            <span className="font-mono font-semibold text-app-accent">{formatCountdownToReset(resetMs)}</span>
+            <span className="text-app-accent font-mono font-semibold">{formatCountdownToReset(resetMs)}</span>
           </p>
         )}
       </div>
@@ -107,8 +107,8 @@ export function ProfileLeagueSection({ league, loading = false, showCta = false,
         <Link
           href="/clasificatoria"
           className={cn(
-            'inline-flex w-full items-center justify-center gap-2 rounded-xl border border-app-accent/40',
-            'bg-app-accent/10 px-4 py-2.5 text-sm font-semibold text-app-accent-strong transition-colors',
+            'border-app-accent/40 inline-flex w-full items-center justify-center gap-2 rounded-xl border',
+            'bg-app-accent/10 text-app-accent-strong px-4 py-2.5 text-sm font-semibold transition-colors',
             'hover:border-app-accent/60 hover:bg-app-accent/15',
             'dark:text-app-accent dark:hover:bg-app-accent/20',
             'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none',

@@ -121,9 +121,7 @@ export const LearningService = {
   },
 
   getUserProgress: async (userId: string, _areaId: string) => {
-    const completed = userId
-      ? (await ensureLearningProgressSynced(userId)).completedLessons
-      : getCompletedLessons();
+    const completed = userId ? (await ensureLearningProgressSynced(userId)).completedLessons : getCompletedLessons();
     return { completedLessons: completed, currentLevel: 0, totalXP: 0 };
   },
 };

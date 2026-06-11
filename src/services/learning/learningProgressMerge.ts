@@ -55,9 +55,7 @@ export function learningProgressEqual(a: LearningProgressSnapshot, b: LearningPr
   return skipsA === skipsB;
 }
 
-export function skippedSectionIdsByAreaFromRecords(
-  phaseSkips: PhaseSkipRecord[]
-): Record<string, Set<string>> {
+export function skippedSectionIdsByAreaFromRecords(phaseSkips: PhaseSkipRecord[]): Record<string, Set<string>> {
   const map: Record<string, Set<string>> = {};
   for (const skip of phaseSkips) {
     if (!map[skip.areaId]) map[skip.areaId] = new Set<string>();

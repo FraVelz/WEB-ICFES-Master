@@ -5,10 +5,7 @@ import { applyLessonStatusesToNodes } from '@/features/learning/utils/lessonPath
 import type { PathSection } from '@/features/learning/roadmap/AreaPath';
 import type { LearningPathLesson } from '@/features/learning/services/LearningService';
 import { AREA_INFO, HOME_AREA_IDS, type AreaId } from '@/shared/constants';
-import {
-  resolvePracticeExamMode,
-  type LocalAttemptRecord,
-} from '@/services/demo/mapLocalAttemptToExamResult';
+import { resolvePracticeExamMode, type LocalAttemptRecord } from '@/services/demo/mapLocalAttemptToExamResult';
 import type {
   ProfileAreaCourseSnapshot,
   ProfileCourseProgressSnapshot,
@@ -141,18 +138,14 @@ function buildAreaSnapshot(
   };
 }
 
-function resolveActiveAreaId(
-  areas: ProfileAreaCourseSnapshot[],
-  attempts: LocalAttemptRecord[]
-): AreaId | null {
+function resolveActiveAreaId(areas: ProfileAreaCourseSnapshot[], attempts: LocalAttemptRecord[]): AreaId | null {
   const started = areas.filter((a) => a.hasStarted);
   if (started.length === 0) return null;
 
   const latestPractice = [...attempts]
     .filter((a) => a.type !== 'full-exam' && typeof a.practiceArea === 'string')
     .sort(
-      (a, b) =>
-        new Date(b.date ?? b.completedAt ?? 0).getTime() - new Date(a.date ?? a.completedAt ?? 0).getTime()
+      (a, b) => new Date(b.date ?? b.completedAt ?? 0).getTime() - new Date(a.date ?? a.completedAt ?? 0).getTime()
     )[0];
 
   if (latestPractice?.practiceArea && latestPractice.practiceArea in AREA_INFO) {
@@ -214,8 +207,7 @@ export function buildProfileCourseProgress({
     return buildAreaSnapshot(areaId, sections, skipped, counts);
   });
 
-  const hasAnyActivity =
-    globalExamCount > 0 || totalAreaExamCount > 0 || areas.some((a) => a.hasStarted);
+  const hasAnyActivity = globalExamCount > 0 || totalAreaExamCount > 0 || areas.some((a) => a.hasStarted);
 
   return {
     activeAreaId: resolveActiveAreaId(areas, attempts),

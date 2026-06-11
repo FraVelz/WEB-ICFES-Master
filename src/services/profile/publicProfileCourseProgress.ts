@@ -1,10 +1,7 @@
 import type { SupabaseClient } from '@supabase/supabase-js';
 import { mapExamResultRowToAttempt } from '@/services/exam/examSyncService';
 import { fetchPublishedLessonsByArea } from '@/services/learning/learningContentServer';
-import {
-  readLearningProgressRemoteMeta,
-  skippedSectionIdsByAreaFromRecords,
-} from '@/services/learning';
+import { readLearningProgressRemoteMeta, skippedSectionIdsByAreaFromRecords } from '@/services/learning';
 import { buildProfileCourseProgress } from '@/features/user/services/profileCourseProgressBuild';
 import type { ProfileCourseProgressSnapshot } from '@/features/user/types/profileCourseProgress';
 import { HOME_AREA_IDS, type AreaId } from '@/shared/constants';

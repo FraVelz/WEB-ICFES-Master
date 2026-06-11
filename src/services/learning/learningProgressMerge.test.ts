@@ -18,7 +18,10 @@ describe('learningProgressMerge', () => {
   it('fusiona snapshot local y remoto', () => {
     const merged = mergeLearningProgress(
       { completedLessons: ['l1'], phaseSkips: [] },
-      { completedLessons: ['l2'], phaseSkips: [{ areaId: 'matematicas', sectionId: 'facil', passedAt: '2026-01-01', score: 75 }] }
+      {
+        completedLessons: ['l2'],
+        phaseSkips: [{ areaId: 'matematicas', sectionId: 'facil', passedAt: '2026-01-01', score: 75 }],
+      }
     );
     expect(merged.completedLessons).toEqual(['l1', 'l2']);
     expect(merged.phaseSkips).toHaveLength(1);

@@ -43,10 +43,7 @@ function phaseStatusClass(status: PhaseCardStatus): string {
 function PhaseChip({ order, title, status }: { order: number; title: string; status: PhaseCardStatus }) {
   return (
     <div
-      className={cn(
-        'flex min-w-0 flex-1 flex-col gap-1 rounded-xl border px-3 py-2',
-        phaseStatusClass(status)
-      )}
+      className={cn('flex min-w-0 flex-1 flex-col gap-1 rounded-xl border px-3 py-2', phaseStatusClass(status))}
       title={phaseStatusLabel(status)}
     >
       <div className="flex items-center justify-between gap-2">
@@ -98,9 +95,7 @@ function AreaGeneralExamsPanel({
   courseProgress: ProfileCourseProgressSnapshot;
   activeAreaId: string | null;
 }) {
-  const activeArea = activeAreaId
-    ? courseProgress.areas.find((area) => area.areaId === activeAreaId)
-    : null;
+  const activeArea = activeAreaId ? courseProgress.areas.find((area) => area.areaId === activeAreaId) : null;
 
   const areasWithGeneralExams = HOME_AREA_IDS.map((areaId) =>
     courseProgress.areas.find((area) => area.areaId === areaId)
@@ -222,17 +217,14 @@ export function ProfileCoursesSection({
             ) : null}
 
             <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-              <AreaGeneralExamsPanel
-                courseProgress={courseProgress}
-                activeAreaId={courseProgress.activeAreaId}
-              />
+              <AreaGeneralExamsPanel courseProgress={courseProgress} activeAreaId={courseProgress.activeAreaId} />
               <GlobalExamCounter globalExamCount={courseProgress.globalExamCount} />
             </div>
 
             {!courseProgress.phasesAvailable && courseProgress.hasAnyActivity && (
               <p className="text-on-surface-muted text-xs">
-                Este perfil muestra exámenes registrados; el detalle de fases por lecciones aparece cuando hay
-                progreso sincronizado en la cuenta.
+                Este perfil muestra exámenes registrados; el detalle de fases por lecciones aparece cuando hay progreso
+                sincronizado en la cuenta.
               </p>
             )}
           </>

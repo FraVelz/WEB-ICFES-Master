@@ -3,7 +3,6 @@ import { ThemeProvider } from '@/features/theme/context/ThemeContext';
 import { ToastProvider } from '@/shared/components/Toast/ToastProvider';
 
 import { LearningProgressHydrator } from './LearningProgressHydrator';
-import { LearningProgressHydrator } from './LearningProgressHydrator';
 import { UiSessionHydrator } from './UiSessionHydrator';
 import { StudyTimeTracker } from './StudyTimeTracker';
 

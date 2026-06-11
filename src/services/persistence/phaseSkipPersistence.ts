@@ -46,12 +46,7 @@ export function getSkippedSectionIdsForArea(areaId: string): Set<string> {
   );
 }
 
-export function markPhaseSkipped(
-  userId: string | undefined,
-  areaId: string,
-  sectionId: string,
-  score: number
-): void {
+export function markPhaseSkipped(userId: string | undefined, areaId: string, sectionId: string, score: number): void {
   const records = readSkips().filter((r) => !(r.areaId === areaId && r.sectionId === sectionId));
   records.push({
     areaId,

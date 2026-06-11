@@ -13,10 +13,7 @@ export {
   syncLearningProgressWithRemote,
 } from './learningProgressService';
 
-export {
-  readLearningProgressRemoteMeta,
-  getLocalLearningProgress,
-} from './learningProgressLocal';
+export { readLearningProgressRemoteMeta, getLocalLearningProgress } from './learningProgressLocal';
 
 export { mergeLearningProgress, skippedSectionIdsByAreaFromRecords } from './learningProgressMerge';
 
