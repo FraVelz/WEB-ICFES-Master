@@ -229,9 +229,10 @@ export function ProfileCoursesSection({
               <GlobalExamCounter globalExamCount={courseProgress.globalExamCount} />
             </div>
 
-            {!courseProgress.phasesAvailable && (
+            {!courseProgress.phasesAvailable && courseProgress.hasAnyActivity && (
               <p className="text-on-surface-muted text-xs">
-                El detalle de fases por lecciones solo está disponible en el perfil privado del estudiante.
+                Este perfil muestra exámenes registrados; el detalle de fases por lecciones aparece cuando hay
+                progreso sincronizado en la cuenta.
               </p>
             )}
           </>

@@ -19,3 +19,5 @@ export {
 } from './learningProgressLocal';
 
 export { mergeLearningProgress, skippedSectionIdsByAreaFromRecords } from './learningProgressMerge';
+
+export { fetchPublishedLessonsByArea } from './learningContentServer';

@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { LearningService } from '../services/LearningService';
 import { useAuth } from '@/features/auth/context/AuthContext';
+import { LEARNING_PROGRESS_UPDATED_EVENT } from '@/services/learning';
 import { LESSON_COMPLETED_EVENT } from '@/services/persistence';
 import {
   LEARNING_PHASE_SECTION_IDS,
@@ -111,7 +112,11 @@ export const useLearningPath = (areaId: string | undefined, options: UseLearning
   useEffect(() => {
     const refresh = () => void fetchPath();
     window.addEventListener(LESSON_COMPLETED_EVENT, refresh);
-    return () => window.removeEventListener(LESSON_COMPLETED_EVENT, refresh);
+    window.addEventListener(LEARNING_PROGRESS_UPDATED_EVENT, refresh);
+    return () => {
+      window.removeEventListener(LESSON_COMPLETED_EVENT, refresh);
+      window.removeEventListener(LEARNING_PROGRESS_UPDATED_EVENT, refresh);
+    };
   }, [fetchPath]);
 
   return { sections, loading, error };

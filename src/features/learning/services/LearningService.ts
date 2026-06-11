@@ -5,6 +5,7 @@ import {
   phaseToSectionId,
   type LearningPhaseNumber,
 } from '@/features/learning/constants/learningPhases';
+import { ensureLearningProgressSynced } from '@/services/learning';
 import { getCompletedLessons } from '@/services/persistence';
 import LearningSupabaseService from '@/services/supabase/LearningSupabaseService';
 
@@ -119,8 +120,10 @@ export const LearningService = {
     return staticLessons.filter((lesson) => lesson.phase === phase);
   },
 
-  getUserProgress: async (_userId: string, _areaId: string) => {
-    const completed = getCompletedLessons();
+  getUserProgress: async (userId: string, _areaId: string) => {
+    const completed = userId
+      ? (await ensureLearningProgressSynced(userId)).completedLessons
+      : getCompletedLessons();
     return { completedLessons: completed, currentLevel: 0, totalXP: 0 };
   },
 };
