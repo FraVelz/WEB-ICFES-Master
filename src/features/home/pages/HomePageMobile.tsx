@@ -37,6 +37,8 @@ export const HomePageMobile = () => {
         />
       </div>
 
+      <h1 className="sr-only">Domina el ICFES desde Cero — ICFES Master</h1>
+
       <div className="relative z-10 flex justify-end px-4 pt-4">
         <ThemeToggle compact />
       </div>
@@ -48,7 +50,9 @@ export const HomePageMobile = () => {
           <MascotaCircle src={MASCOT_IMAGES.logo} size="md" />
 
           {/* App Name */}
-          <h1 className="text-on-surface text-3xl font-bold">ICFES Master</h1>
+          <p className="text-on-surface text-3xl font-bold" aria-hidden="true">
+            ICFES Master
+          </p>
 
           {/* Tagline */}
           <p className="text-on-surface-muted max-w-xs text-center text-sm">

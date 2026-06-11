@@ -9,6 +9,17 @@ export const metadata: Metadata = {
   title: { absolute: 'Términos y Condiciones | ICFES Master' },
   description: 'Términos y condiciones de uso de ICFES Master.',
   alternates: { canonical: '/terminos/' },
+  openGraph: {
+    url: '/terminos/',
+    title: 'Términos y Condiciones | ICFES Master',
+    description: 'Términos y condiciones de uso de ICFES Master.',
+    type: 'article',
+  },
+  twitter: {
+    card: 'summary',
+    title: 'Términos y Condiciones | ICFES Master',
+    description: 'Términos y condiciones de uso de ICFES Master.',
+  },
 };
 
 export default function TerminosPage() {

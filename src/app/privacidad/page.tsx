@@ -9,6 +9,17 @@ export const metadata: Metadata = {
   title: { absolute: 'Política de Privacidad | ICFES Master' },
   description: 'Política de privacidad y tratamiento de datos en ICFES Master.',
   alternates: { canonical: '/privacidad/' },
+  openGraph: {
+    url: '/privacidad/',
+    title: 'Política de Privacidad | ICFES Master',
+    description: 'Política de privacidad y tratamiento de datos en ICFES Master.',
+    type: 'article',
+  },
+  twitter: {
+    card: 'summary',
+    title: 'Política de Privacidad | ICFES Master',
+    description: 'Política de privacidad y tratamiento de datos en ICFES Master.',
+  },
 };
 
 export default function PrivacidadPage() {
