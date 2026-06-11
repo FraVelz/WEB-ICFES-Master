@@ -36,7 +36,10 @@ export function IcfesInfographicsSection() {
     <>
       <section aria-labelledby="tips-icfes-infographics" className="space-y-6">
         <div className="flex items-start gap-3">
-          <div className="bg-app-ring/15 text-app-accent flex h-10 w-10 shrink-0 items-center justify-center rounded-xl">
+          <div className={cn(
+              'bg-app-ring/15 text-app-accent flex h-10 w-10 shrink-0 items-center justify-center',
+              'rounded-xl'
+            )}>
             <Icon name="clipboard-list" />
           </div>
           <div>
@@ -52,7 +55,10 @@ export function IcfesInfographicsSection() {
 
         {!storageConfigured && (
           <div
-            className="text-on-surface rounded-2xl border border-amber-500/30 bg-amber-500/10 px-4 py-3 text-sm leading-relaxed"
+            className={cn(
+                'text-on-surface rounded-2xl border border-amber-500/30 bg-amber-500/10 px-4 py-3 text-sm',
+                'leading-relaxed'
+              )}
             role="status"
           >
             Configura R2 en <code className="text-amber-200">.env.local</code>: credenciales del servidor (
@@ -79,7 +85,8 @@ export function IcfesInfographicsSection() {
                       className={cn(
                         'border-surface-border bg-surface-elevated/90 rounded-2xl border p-4 text-left shadow-sm',
                         'transition-all duration-200',
-                        'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none',
+                        'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:ring-offset-2',
+                          'focus-visible:outline-none',
                         'focus-visible:ring-offset-slate-950',
                         'enabled:hover:border-app-ring/50 enabled:hover:bg-surface-elevated enabled:cursor-pointer',
                         'enabled:hover:shadow-app-ring/10 enabled:hover:-translate-y-0.5 enabled:hover:shadow-md',
