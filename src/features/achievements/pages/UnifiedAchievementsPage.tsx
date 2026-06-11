@@ -6,6 +6,7 @@ import { useGamification, useGamificationScope } from '@/hooks/gamification';
 import { AchievementsList } from '../components/AchievementsList';
 import { Icon } from '@/shared/components/Icon';
 import { LoadingState } from '@/shared/components/LoadingState';
+import { PageThemeControl } from '@/components/PageThemeControl';
 
 import { PAGE_SHELL_CLASS } from '@/shared/constants/pageShell';
 
@@ -22,7 +23,8 @@ export const UnifiedAchievementsPage = () => {
 
   return (
     <div className={PAGE_SHELL_CLASS}>
-      <div className="container mx-auto space-y-8 px-4 py-8">
+      <div className="relative z-10 container mx-auto space-y-8 px-4 py-8">
+        <PageThemeControl />
         {/* Stats Header */}
         <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
           <div className="border-surface-border bg-surface-elevated/90 flex items-center gap-4 rounded-2xl border p-6 shadow-sm">

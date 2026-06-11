@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react';
+import { PageThemeControl } from '@/components/PageThemeControl';
 import { PAGE_SHELL_CLASS } from '@/shared/constants/pageShell';
 
 export function ProfilePageLayout({
@@ -23,7 +24,10 @@ export function ProfilePageLayout({
           </>
         )}
       </div>
-      <div className="relative z-10 container mx-auto max-w-6xl px-4 py-8">{children}</div>
+      <div className="relative z-10 container mx-auto max-w-6xl px-4 py-8">
+        <PageThemeControl />
+        {children}
+      </div>
     </div>
   );
 }

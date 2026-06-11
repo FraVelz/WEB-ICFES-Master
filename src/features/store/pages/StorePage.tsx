@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { cn } from '@/utils/cn';
 import { Icon, LoadingState } from '@/shared/components';
+import { ThemeToggle } from '@/shared/components/ThemeToggle';
 import { PAGE_SHELL_CLASS } from '@/shared/constants/pageShell';
 import { DOUBLE_XP_ITEM_ID } from '../constants/doubleXp';
 import { MAX_STREAK_SHIELDS, STREAK_SHIELD_ITEM_ID } from '../constants/streakShield';
@@ -137,7 +138,9 @@ export function StorePage() {
       </div>
 
       <div className="border-surface-border bg-surface-elevated/95 relative z-20 flex shrink-0 items-center justify-between border-b p-4 backdrop-blur-md lg:p-6">
-        <div className="w-10 shrink-0 lg:w-12" aria-hidden />
+        <div className="flex w-10 shrink-0 justify-start lg:w-12">
+          <ThemeToggle compact />
+        </div>
         <div className="flex flex-1 items-center justify-center gap-3">
           <h1 className="text-on-surface text-xl font-bold lg:text-2xl">Tienda</h1>
           <div className="flex items-center gap-2 rounded-full border border-amber-600/35 bg-amber-100 px-3 py-1.5 dark:border-yellow-500/30 dark:bg-yellow-500/10">

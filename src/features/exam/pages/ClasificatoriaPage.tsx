@@ -13,6 +13,7 @@ import { formatCountdownToReset } from '@/services/league/leagueWeekUtils';
 import { AvatarImage } from '@/features/user/components/AvatarImage';
 import { VIP_AVATAR_BORDER_CLASS } from '@/features/store/constants/vipBadge';
 import { PAGE_SHELL_CLASS } from '@/shared/constants/pageShell';
+import { PageThemeControl } from '@/components/PageThemeControl';
 
 export const ClasificatoriaPage = () => {
   const router = useRouter();
@@ -87,6 +88,7 @@ export const ClasificatoriaPage = () => {
       </div>
 
       <div className="relative z-10 container mx-auto max-w-5xl px-4 py-8">
+        <PageThemeControl />
         <div className="mb-8 text-center">
           <h1 className="mb-2 flex items-center justify-center gap-3 text-4xl font-bold">
             <Icon name="trophy" className="text-amber-600 dark:text-yellow-400" />

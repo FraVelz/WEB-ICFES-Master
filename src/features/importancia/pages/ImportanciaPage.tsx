@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { Icon } from '@/shared/components/Icon';
 import { PAGE_SHELL_CLASS } from '@/shared/constants/pageShell';
+import { PageThemeControl } from '@/components/PageThemeControl';
 import { LecturaSectionShell } from '@/features/lectura';
 import { cn } from '@/utils/cn';
 import { ImportanciaGeneralSections } from '../components/ImportanciaGeneralSections';
@@ -24,6 +25,7 @@ export function ImportanciaPage() {
       </div>
 
       <div className="relative z-10 container mx-auto max-w-4xl space-y-10 px-4 py-8">
+        <PageThemeControl />
         <LecturaSectionShell sectionId="importancia">
           <header className="space-y-2">
             <h1 className="text-on-surface flex items-center gap-3 text-3xl font-bold">

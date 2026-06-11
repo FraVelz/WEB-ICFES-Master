@@ -1,7 +1,6 @@
 import React from 'react';
 
 import { DashboardHeader } from '@/components/DashboardHeader';
-import { DashboardThemeControl } from '@/components/DashboardThemeControl';
 import { LevelAssessmentGate } from '@/components/LevelAssessmentGate';
 import { cn } from '@/utils/cn';
 
@@ -9,7 +8,6 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   return (
     <div className="from-surface via-surface-via to-surface text-on-surface relative flex min-h-screen overflow-hidden bg-linear-to-b">
       <LevelAssessmentGate />
-      <DashboardThemeControl />
 
       <div className="flex h-screen w-screen flex-col-reverse lg:flex-row">
         {/* Header - Sidebar */}

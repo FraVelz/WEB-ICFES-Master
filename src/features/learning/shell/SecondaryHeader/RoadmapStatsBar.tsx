@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { cn } from '@/utils/cn';
 import { Icon } from '@/shared/components/Icon';
+import { ThemeToggle } from '@/shared/components/ThemeToggle';
 import { getAreaInfo } from '@/shared/constants';
 import type { RefObject } from 'react';
 
@@ -128,6 +129,8 @@ export function RoadmapStatsBar({
             {coins}
           </span>
         </Link>
+
+        <ThemeToggle compact />
       </div>
     </div>
   );

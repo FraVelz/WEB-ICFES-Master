@@ -2,6 +2,7 @@
 
 import { Icon } from '@/shared/components/Icon';
 import { PAGE_SHELL_CLASS } from '@/shared/constants/pageShell';
+import { PageThemeControl } from '@/components/PageThemeControl';
 import { LecturaSectionCard } from '../components/LecturaSectionCard';
 import { LECTURA_SECTIONS } from '../constants';
 import { useLecturaRead } from '../hooks/useLecturaRead';
@@ -19,6 +20,7 @@ export function LecturaPage() {
       </div>
 
       <div className="relative z-10 container mx-auto max-w-3xl space-y-8 px-4 py-8">
+        <PageThemeControl />
         <header className="space-y-2">
           <h1 className="text-on-surface flex items-center gap-3 text-3xl font-bold">
             <Icon name="book-open" className="text-app-accent" />
