@@ -2,7 +2,7 @@
 
 import { cn } from '@/utils/cn';
 import dynamic from 'next/dynamic';
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { useAuth } from '@/features/auth/context/AuthContext';
 import { useGamification } from '@/hooks/gamification';
 import { useUiSessionStore } from '@/store/uiSessionStore';
@@ -12,10 +12,7 @@ import { AreaPath } from './AreaPath';
 import { LessonAreaLinks } from './LessonAreaLinks';
 import { SecondaryHeader } from '../shell/SecondaryHeader';
 import { SectionStageBanner } from '../shell/SecondaryHeader/SectionStageBanner';
-import { AreasModal } from '../shell/SecondaryHeader/AreasModal';
 import { SectionsModal } from '../shell/SecondaryHeader/SectionsModal';
-import { StreakModal } from '../shell/SecondaryHeader/StreakModal';
-import { CoinsModal } from '../shell/SecondaryHeader/CoinsModal';
 import { RoadmapAside } from '../shell/RoadmapAside';
 import { pickDefaultSectionId } from '../shell/SecondaryHeader/sectionStageUtils';
 
@@ -56,7 +53,8 @@ export const LearningRoadmap = ({ initialArea = 'lectura-critica' }: { initialAr
   const [currentSectionId, setCurrentSectionId] = useState<string | undefined>();
   const [selectedLesson, setSelectedLesson] = useState<PathNodeData | null>(null);
   const [viewingLesson, setViewingLesson] = useState<PathNodeData | null>(null);
-  const [desktopModal, setDesktopModal] = useState<'areas' | 'streak' | 'coins' | 'sections' | null>(null);
+  const [desktopModal, setDesktopModal] = useState<'areas' | 'streak' | 'sections' | null>(null);
+  const sectionBannerRef = useRef<HTMLDivElement>(null);
 
   const { user } = useAuth();
   const demoMode = useUiSessionStore((state) => state.demoMode);
@@ -170,8 +168,24 @@ export const LearningRoadmap = ({ initialArea = 'lectura-critica' }: { initialAr
               hasPrev={currentSectionIndex > 0}
               hasNext={currentSectionIndex < sections.length - 1}
               className="rounded-2xl"
+              bannerRef={sectionBannerRef}
             />
           </div>
+        )}
+
+        {currentSectionId && sections.length > 0 && (
+          <SectionsModal
+            isOpen={desktopModal === 'sections'}
+            onClose={() => setDesktopModal(null)}
+            currentSectionId={currentSectionId}
+            onSelectSection={(id) => {
+              setCurrentSectionId(id);
+              setDesktopModal(null);
+            }}
+            sections={sections}
+            areaColorClass={areaColorClass}
+            anchorRef={sectionBannerRef}
+          />
         )}
 
         <div className="relative flex-1 px-0 pt-4 pb-24 lg:px-6 lg:pb-8 lg:pt-6">{pathContent}</div>
@@ -186,40 +200,13 @@ export const LearningRoadmap = ({ initialArea = 'lectura-critica' }: { initialAr
         coins={coins}
         statsLoading={statsLoading}
         areasOpen={desktopModal === 'areas'}
+        streakOpen={desktopModal === 'streak'}
         onToggleAreas={() => setDesktopModal((m) => (m === 'areas' ? null : 'areas'))}
         onToggleStreak={() => setDesktopModal((m) => (m === 'streak' ? null : 'streak'))}
+        onCloseModals={() => setDesktopModal(null)}
+        onAreaChange={handleAreaChange}
+        streakData={desktopStreakData}
       />
-
-      {/* Modales compartidos en escritorio (el aside no los monta) */}
-      <div className="hidden lg:contents">
-        <AreasModal
-          isOpen={desktopModal === 'areas'}
-          onClose={() => setDesktopModal(null)}
-          currentArea={currentArea}
-          onSelectArea={(area) => {
-            handleAreaChange(area);
-            setDesktopModal(null);
-          }}
-        />
-
-        {currentSectionId && (
-          <SectionsModal
-            isOpen={desktopModal === 'sections'}
-            onClose={() => setDesktopModal(null)}
-            currentSectionId={currentSectionId}
-            onSelectSection={(id) => {
-              setCurrentSectionId(id);
-              setDesktopModal(null);
-            }}
-            sections={sections}
-            areaColorClass={areaColorClass}
-          />
-        )}
-
-        <StreakModal isOpen={desktopModal === 'streak'} onClose={() => setDesktopModal(null)} streakData={desktopStreakData} />
-
-        <CoinsModal isOpen={desktopModal === 'coins'} onClose={() => setDesktopModal(null)} coins={coins} />
-      </div>
 
       <LessonPreview
         isOpen={!!selectedLesson}

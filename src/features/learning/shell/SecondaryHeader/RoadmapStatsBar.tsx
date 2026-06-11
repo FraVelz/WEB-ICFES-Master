@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { cn } from '@/utils/cn';
 import { Icon } from '@/shared/components/Icon';
 import { getAreaInfo } from '@/shared/constants';
+import type { RefObject } from 'react';
 
 export type RoadmapStatsBarProps = {
   currentArea: string;
@@ -13,9 +14,10 @@ export type RoadmapStatsBarProps = {
   areasOpen?: boolean;
   onToggleAreas: () => void;
   onToggleStreak: () => void;
-  /** En el aside de escritorio los stats se alinean en fila compacta. */
   layout?: 'inline' | 'stacked';
   className?: string;
+  areaSelectorRef?: RefObject<HTMLButtonElement | null>;
+  streakButtonRef?: RefObject<HTMLButtonElement | null>;
 };
 
 export function RoadmapStatsBar({
@@ -28,6 +30,8 @@ export function RoadmapStatsBar({
   onToggleStreak,
   layout = 'inline',
   className,
+  areaSelectorRef,
+  streakButtonRef,
 }: RoadmapStatsBarProps) {
   const currentAreaInfo = getAreaInfo(currentArea);
 
@@ -39,6 +43,7 @@ export function RoadmapStatsBar({
       )}
     >
       <button
+        ref={areaSelectorRef}
         type="button"
         onClick={onToggleAreas}
         className={cn(
@@ -77,6 +82,7 @@ export function RoadmapStatsBar({
 
       <div className={cn('flex items-center gap-2', layout === 'stacked' && 'w-full')}>
         <button
+          ref={streakButtonRef}
           type="button"
           onClick={onToggleStreak}
           className={cn(

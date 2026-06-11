@@ -4,6 +4,7 @@ import { cn } from '@/utils/cn';
 import { Icon } from '@/shared/components/Icon';
 import type { PathSection } from '@/features/learning/roadmap/AreaPath';
 import { getStageLabel } from './sectionStageUtils';
+import type { RefObject } from 'react';
 
 export interface SectionStageBannerProps {
   section: PathSection;
@@ -14,6 +15,7 @@ export interface SectionStageBannerProps {
   hasPrev?: boolean;
   hasNext?: boolean;
   className?: string;
+  bannerRef?: RefObject<HTMLDivElement | null>;
 }
 
 export const SectionStageBanner = ({
@@ -25,9 +27,10 @@ export const SectionStageBanner = ({
   hasPrev = false,
   hasNext = false,
   className,
+  bannerRef,
 }: SectionStageBannerProps) => {
   return (
-    <div className={cn('bg-linear-to-r px-4 py-3 shadow-md', areaColorClass, className)}>
+    <div ref={bannerRef} className={cn('bg-linear-to-r px-4 py-3 shadow-md', areaColorClass, className)}>
       <div className="mx-auto flex w-full max-w-xl items-center gap-2">
         {hasPrev && onPrevSection && (
           <button

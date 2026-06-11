@@ -1,10 +1,14 @@
 'use client';
 
+import { useRef } from 'react';
 import { cn } from '@/utils/cn';
 import { Icon } from '@/shared/components/Icon';
 import type { PathSection } from '@/features/learning/roadmap/AreaPath';
 import { getStageLabel } from '../SecondaryHeader/sectionStageUtils';
 import { RoadmapStatsBar } from '../SecondaryHeader/RoadmapStatsBar';
+import { AreasModal } from '../SecondaryHeader/AreasModal';
+import { StreakModal } from '../SecondaryHeader/StreakModal';
+import type { StreakData } from '../SecondaryHeader/StreakModal';
 
 export type SectionProgress = {
   completedLessons: number;
@@ -20,8 +24,12 @@ type RoadmapAsideProps = {
   coins: number;
   statsLoading?: boolean;
   areasOpen?: boolean;
+  streakOpen?: boolean;
   onToggleAreas: () => void;
   onToggleStreak: () => void;
+  onCloseModals: () => void;
+  onAreaChange: (area: string) => void;
+  streakData: StreakData;
   className?: string;
 };
 
@@ -71,10 +79,17 @@ export function RoadmapAside({
   coins,
   statsLoading = false,
   areasOpen = false,
+  streakOpen = false,
   onToggleAreas,
   onToggleStreak,
+  onCloseModals,
+  onAreaChange,
+  streakData,
   className,
 }: RoadmapAsideProps) {
+  const areaSelectorRef = useRef<HTMLButtonElement>(null);
+  const streakButtonRef = useRef<HTMLButtonElement>(null);
+
   const progressPercent =
     sectionProgress.totalLessons > 0
       ? Math.round((sectionProgress.completedLessons / sectionProgress.totalLessons) * 100)
@@ -98,6 +113,8 @@ export function RoadmapAside({
           onToggleAreas={onToggleAreas}
           onToggleStreak={onToggleStreak}
           layout="stacked"
+          areaSelectorRef={areaSelectorRef}
+          streakButtonRef={streakButtonRef}
         />
 
         <AsideCard title="Tiempo de estudio" icon="clock">
@@ -149,6 +166,21 @@ export function RoadmapAside({
           <p className="text-on-surface-muted/80 mt-4 text-xs italic">Plantilla — más métricas próximamente</p>
         </AsideCard>
       </div>
+
+      <AreasModal
+        isOpen={areasOpen}
+        onClose={onCloseModals}
+        currentArea={currentArea}
+        onSelectArea={onAreaChange}
+        anchorRef={areaSelectorRef}
+      />
+
+      <StreakModal
+        isOpen={streakOpen}
+        onClose={onCloseModals}
+        streakData={streakData}
+        anchorRef={streakButtonRef}
+      />
     </aside>
   );
 }

@@ -1,7 +1,7 @@
 'use client';
 
 import { cn } from '@/utils/cn';
-import { useState, useMemo } from 'react';
+import { useRef, useState, useMemo } from 'react';
 import { useAuth } from '@/features/auth/context/AuthContext';
 import { useGamification } from '@/hooks/gamification';
 import { useUiSessionStore } from '@/store/uiSessionStore';
@@ -76,6 +76,10 @@ export const SecondaryHeader = ({
     if (nextSection) onSectionChange(nextSection.id);
   };
 
+  const areaSelectorRef = useRef<HTMLButtonElement>(null);
+  const streakButtonRef = useRef<HTMLButtonElement>(null);
+  const sectionBannerRef = useRef<HTMLDivElement>(null);
+
   return (
     <div className="relative z-50 lg:hidden">
       <div
@@ -92,6 +96,8 @@ export const SecondaryHeader = ({
           areasOpen={activeModal === 'areas'}
           onToggleAreas={() => setActiveModal(activeModal === 'areas' ? null : 'areas')}
           onToggleStreak={() => setActiveModal(activeModal === 'streak' ? null : 'streak')}
+          areaSelectorRef={areaSelectorRef}
+          streakButtonRef={streakButtonRef}
         />
       </div>
 
@@ -104,6 +110,7 @@ export const SecondaryHeader = ({
           onNextSection={() => goToAdjacentSection(1)}
           hasPrev={currentSectionIndex > 0}
           hasNext={currentSectionIndex < sections.length - 1}
+          bannerRef={sectionBannerRef}
         />
       )}
 
@@ -112,6 +119,7 @@ export const SecondaryHeader = ({
         onClose={closeModals}
         currentArea={currentArea}
         onSelectArea={handleSelectArea}
+        anchorRef={areaSelectorRef}
       />
 
       {hasSectionNav && currentSectionId && (
@@ -122,10 +130,16 @@ export const SecondaryHeader = ({
           onSelectSection={handleSelectSection}
           sections={sections}
           areaColorClass={areaColorClass}
+          anchorRef={sectionBannerRef}
         />
       )}
 
-      <StreakModal isOpen={activeModal === 'streak'} onClose={closeModals} streakData={streakData} />
+      <StreakModal
+        isOpen={activeModal === 'streak'}
+        onClose={closeModals}
+        streakData={streakData}
+        anchorRef={streakButtonRef}
+      />
 
       <CoinsModal isOpen={activeModal === 'coins'} onClose={closeModals} coins={coins} />
     </div>

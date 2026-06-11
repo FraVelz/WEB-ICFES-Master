@@ -1,10 +1,12 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, type RefObject } from 'react';
+import { createPortal } from 'react-dom';
 import { cn } from '@/utils/cn';
 import { Icon } from '@/shared/components/Icon';
 import { ModalOverlay } from '@/shared/components/ModalOverlay';
 import { useGSAPModalEntrance } from '@/hooks/useGSAPModalEntrance';
+import { useAnchoredDropdownStyle } from './useAnchoredDropdownStyle';
 
 export interface StreakData {
   currentStreak?: number;
@@ -18,16 +20,23 @@ export interface StreakModalProps {
   isOpen: boolean;
   onClose: () => void;
   streakData?: StreakData | null;
+  anchorRef?: RefObject<HTMLElement | null>;
 }
 
 /**
  * Dropdown que muestra información detallada de la racha con mini-calendario
  */
-export const StreakModal = ({ isOpen, onClose, streakData }: StreakModalProps) => {
+export const StreakModal = ({ isOpen, onClose, streakData, anchorRef }: StreakModalProps) => {
   const dropdownRef = useGSAPModalEntrance({
     isOpen,
     type: 'slideFromTop',
     duration: 0.2,
+  });
+
+  const anchoredStyle = useAnchoredDropdownStyle(isOpen, anchorRef, {
+    align: 'end',
+    minWidth: 280,
+    maxWidth: 320,
   });
 
   const { currentStreak = 0, longestStreak = 0, streakHistory = [] } = streakData || {};
@@ -90,17 +99,16 @@ export const StreakModal = ({ isOpen, onClose, streakData }: StreakModalProps) =
     );
   };
 
-  return (
-    <>
-      <ModalOverlay onClose={onClose} />
-
-      <div
-        ref={dropdownRef}
-        className={cn(
-          'absolute top-full right-0 z-50 w-full rounded-b-2xl border-x border-b border-slate-700 bg-slate-900 shadow-2xl sm:w-80',
-          'lg:fixed lg:top-1/2 lg:right-auto lg:left-1/2 lg:max-h-[85vh] lg:w-[min(100vw-2rem,28rem)] lg:-translate-x-1/2 lg:-translate-y-1/2 lg:overflow-y-auto lg:rounded-2xl lg:border'
-        )}
-      >
+  const panel = (
+    <div
+      ref={dropdownRef}
+      style={anchorRef ? anchoredStyle : undefined}
+      className={cn(
+        'rounded-2xl border border-slate-700 bg-slate-900 shadow-2xl',
+        anchorRef ? 'max-h-[min(70vh,32rem)] overflow-y-auto' : 'absolute top-full right-0 z-50 w-full sm:w-80',
+        !anchorRef && 'rounded-b-2xl border-x border-b'
+      )}
+    >
         <div className="p-4">
           {/* Header */}
           <div className="mb-4 flex items-center justify-between border-b border-slate-800 pb-3">
@@ -208,6 +216,22 @@ export const StreakModal = ({ isOpen, onClose, streakData }: StreakModalProps) =
           <p className="mt-4 text-center text-xs text-slate-500">¡Practica cada día para mantener tu racha!</p>
         </div>
       </div>
+  );
+
+  if (anchorRef && typeof document !== 'undefined') {
+    return createPortal(
+      <>
+        <ModalOverlay onClose={onClose} />
+        {panel}
+      </>,
+      document.body
+    );
+  }
+
+  return (
+    <>
+      <ModalOverlay onClose={onClose} />
+      {panel}
     </>
   );
 };
