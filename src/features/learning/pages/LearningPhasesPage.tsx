@@ -23,7 +23,7 @@ export function LearningPhasesPage() {
   }
 
   return (
-    <div className="space-y-3">
+    <div className="space-y-3 max-sm:px-2">
       <p className="text-on-surface-muted text-sm">
         Recorrido por competencias en <span className="text-on-surface font-medium">{currentAreaData.name}</span>.
         Cambia el área desde el panel lateral.

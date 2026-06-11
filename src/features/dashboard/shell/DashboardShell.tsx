@@ -73,15 +73,15 @@ function DashboardShellMobileHeader() {
 
 function DashboardShellInner({ children }: { children: ReactNode }) {
   return (
-    <div className="bg-surface relative flex min-h-dvh flex-col">
+    <div className="bg-surface relative flex min-h-full flex-col lg:min-h-dvh">
       <DashboardShellMobileHeader />
 
       {/*
         Escritorio (estilo Duolingo): bloque centrado = columna max-w-3xl + aside fijo pegado a su derecha.
         Móvil: columna única a ancho completo; aside oculto.
       */}
-      <div className="mx-auto flex w-full flex-1 flex-col lg:max-w-[calc(48rem+22rem)] lg:flex-row lg:justify-center">
-        <div className="relative flex min-w-0 flex-1 flex-col lg:w-full lg:max-w-3xl lg:flex-none">
+      <div className="mx-auto flex min-h-0 w-full flex-1 flex-col lg:max-w-[calc(48rem+22rem)] lg:flex-row lg:justify-center">
+        <div className="relative flex min-h-0 min-w-0 flex-1 flex-col lg:w-full lg:max-w-3xl lg:flex-none">
           <div className="sticky top-0 z-40 hidden lg:block lg:pt-5">
             <DashboardShellBanner className="rounded-2xl" />
           </div>

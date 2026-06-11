@@ -40,7 +40,7 @@ export function StorePage() {
   const filteredItems = filter === 'all' ? shopItems : shopItems.filter((item) => item.category === filter);
 
   return (
-    <div className={cn(PAGE_SHELL_CLASS, 'flex min-h-dvh flex-col pb-0')}>
+    <div className={cn(PAGE_SHELL_CLASS, 'flex min-h-full flex-col')}>
       <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
         <div className="from-app-ring/10 absolute top-0 left-0 h-96 w-full bg-linear-to-b to-transparent" />
         <div className="absolute right-0 bottom-0 h-96 w-96 rounded-full bg-yellow-500/5 blur-3xl" />

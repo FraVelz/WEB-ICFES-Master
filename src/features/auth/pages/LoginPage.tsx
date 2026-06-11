@@ -48,8 +48,8 @@ export const LoginPage = () => {
   return (
     <div
       className={cn(
-        'from-surface via-surface-via to-surface text-on-surface flex min-h-dvh flex-col',
-        'overflow-hidden bg-linear-to-b px-6'
+        'from-surface via-surface-via to-surface text-on-surface flex min-h-full flex-col',
+        'bg-linear-to-b px-6 py-6'
       )}
     >
       <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
@@ -72,7 +72,7 @@ export const LoginPage = () => {
         <div className="via-surface-border h-px bg-linear-to-r from-transparent to-transparent" />
       </div>
 
-      <div className="relative z-10 flex w-full flex-1 items-center justify-center">
+      <div className="relative z-10 flex w-full flex-1 items-center justify-center py-4">
         <div className="w-full max-w-md">
           <LoginForm
             email={email}

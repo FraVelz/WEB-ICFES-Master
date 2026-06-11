@@ -37,7 +37,7 @@ export const ResetPasswordPage = () => {
 
   if (verifying) {
     return (
-      <div className={cn('flex items-center justify-center overflow-hidden px-6', FULL_PAGE_SHELL_CLASS)}>
+      <div className={cn('flex min-h-full items-center justify-center px-6 py-12', FULL_PAGE_SHELL_CLASS)}>
         <ResetPasswordGlow />
         <div className="relative z-10 text-center">
           <p className="text-on-surface text-xl">Verificando tu enlace de recuperación...</p>
@@ -47,7 +47,7 @@ export const ResetPasswordPage = () => {
   }
 
   return (
-    <div className={cn('flex items-center justify-center overflow-hidden px-6', FULL_PAGE_SHELL_CLASS)}>
+    <div className={cn('flex min-h-full items-center justify-center px-6 py-12', FULL_PAGE_SHELL_CLASS)}>
       <ResetPasswordGlow />
 
       <div className="relative z-10 w-full max-w-md">

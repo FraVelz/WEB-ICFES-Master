@@ -101,7 +101,7 @@ export const ClasificatoriaPage = () => {
   const displayName = user?.displayName || 'Tú';
 
   return (
-    <div className="relative z-10 mx-auto flex min-h-[70dvh] max-w-2xl flex-col px-0 pb-4">
+    <div className="relative z-10 mx-auto flex min-h-[70dvh] max-w-2xl flex-col px-4 pb-4">
       <LeagueShieldNav selectedRank={selectedRank} myLeagueRank={myLeagueRank} onSelect={setSelectedRank} />
 
       {isViewingOwnLeague ? (
