@@ -18,6 +18,13 @@ export function ExamStatsExample() {
 
 Tipos de pregunta: `src/features/exam/types/question.ts`.
 
+## Iconos (`Icon`)
+
+- Componente: `@/shared/components/Icon` con `name`, `size`, `className`.
+- Paths desde [icons0](https://icons0.dev); registro en `src/shared/components/Icon/`.
+- Galería dev: `/dev/icons` — revisar todos los iconos en flex antes de cambios masivos.
+- CI: `pnpm audit:icons` (registry, nombres usados, Lucide sin `fill` incorrecto).
+
 ## Crear un componente de feature (tarjeta de área)
 
 Los átomos genéricos en `shared/atoms/` se eliminaron. Crea el componente en la feature, p. ej.

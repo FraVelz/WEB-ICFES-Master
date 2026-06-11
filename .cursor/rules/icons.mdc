@@ -1,0 +1,32 @@
+---
+description: Icon system — icons0, Icon component, audit, dev gallery
+globs: WEB-ICFES-Master/src/shared/components/Icon/**,WEB-ICFES-Master/src/**/*.tsx
+alwaysApply: false
+---
+
+# Iconos — WEB-ICFES-Master
+
+Usar **`<Icon name="…" />`** desde `@/shared/components/Icon`. No refactor masivo a imports directos sin galería verde.
+
+## Fuente
+
+- Paths desde [icons0](https://icons0.dev); mapa en `iconSources.ts`.
+- Modo stroke vs fill: `iconRenderMode.ts` (Lucide = stroke, Simple Icons / Heroicons solid = fill).
+
+## Añadir un icono
+
+1. Entrada en `iconSources.ts` (prefijo `heroicons:`, `lucide:`, `simple-icons:`).
+2. Path en `iconPaths/iconPathsN.tsx` — **Lucide: paths de trazo sin `fill="currentColor"`**.
+3. Key en `iconMapPartA.ts` o `iconMapPartB.ts`.
+4. Verificar en `/dev/icons` y `pnpm audit:icons`.
+
+## Prohibido
+
+- `fill="currentColor"` en geometría Lucide de trazo.
+- Borrar `width`/`height`/`minWidth`/`minHeight` en px en `Icon.tsx` (flex layout).
+- Codemods que dejen `className="cn(…)"` como string literal.
+
+## Comandos
+
+- `pnpm audit:icons` — registry, uso en código, Lucide mal marcados.
+- Galería dev: `http://localhost:3000/dev/icons`

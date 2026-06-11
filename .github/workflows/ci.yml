@@ -5,6 +5,7 @@ on:
     branches: [main]
     paths:
       - 'src/**'
+      - 'scripts/**'
       - 'package.json'
       - 'pnpm-lock.yaml'
       - 'next.config.*'
@@ -17,6 +18,7 @@ on:
     branches: [main]
     paths:
       - 'src/**'
+      - 'scripts/**'
       - 'package.json'
       - 'pnpm-lock.yaml'
       - 'next.config.*'
@@ -50,6 +52,9 @@ jobs:
 
       - name: Lint
         run: pnpm run lint
+
+      - name: Audit icons
+        run: pnpm run audit:icons
 
       - name: Format check
         run: pnpm run format:check
