@@ -18,7 +18,8 @@
     "lint:md:fix": "markdownlint-cli2 --fix",
     "react:doctor": "react-doctor . --verbose --full",
     "seed:questions": "tsx scripts/seed-exam-questions.ts",
-    "audit:icons": "node scripts/audit-icons.mjs"
+    "audit:icons": "node scripts/audit-icons.mjs",
+    "sync:icons": "node scripts/sync-icon-paths.mjs"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.758.0",

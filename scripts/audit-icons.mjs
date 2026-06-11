@@ -86,11 +86,41 @@ for (const name of usedNames) {
   if (!registrySet.has(name)) errors.push(`Used icon "${name}" not in ICONS registry`);
 }
 
+/** Detect corrupted SVG `d` from unsafe string concatenation across lines. */
+function auditPathJoins(content, fileLabel) {
+  const issues = [];
+  const exportRe = /export const (\w+)/g;
+  let exportMatch;
+  while ((exportMatch = exportRe.exec(content))) {
+    const exportName = exportMatch[1];
+    const start = exportMatch.index;
+    const next = content.indexOf('export const ', start + 1);
+    const chunk = content.slice(start, next === -1 ? content.length : next);
+    if (!chunk.includes("' +")) continue;
+
+    const parts = [...chunk.matchAll(/'([^']*)'/g)]
+      .map((m) => m[1])
+      .filter((p) => /[MmLlHhVvCcSsQqTtAaZz]/.test(p) || /^\d/.test(p) || p.includes('l-') || p.includes('v'));
+    if (parts.length < 2) continue;
+
+    const joined = parts.join('');
+    if (/\d[a-zA-Z]/.test(joined)) {
+      issues.push(
+        `${fileLabel} ${exportName}: concatenated \`d\` likely corrupt (digit+letter merge in path data)`,
+      );
+    }
+  }
+  return issues;
+}
+
 const lucideKeys = sourceKeys.filter((k) => iconSourcesContent.includes(`'${k}': 'lucide:`) || iconSourcesContent.includes(`${k}: 'lucide:`));
 const iconPathsDir = path.join(root, 'src/shared/components/Icon/iconPaths');
 for (const file of fs.readdirSync(iconPathsDir)) {
   if (!file.endsWith('.tsx')) continue;
   const content = fs.readFileSync(path.join(iconPathsDir, file), 'utf8');
+  for (const issue of auditPathJoins(content, file)) {
+    errors.push(issue);
+  }
   for (const key of lucideKeys) {
     const exportName = key.replace(/-([a-z])/g, (_, c) => c.toUpperCase()) + 'Icon';
     const camelKey = key.includes('-')
