@@ -1,165 +1,35 @@
 'use client';
-import { cn } from '@/utils/cn';
-import { useState, useEffect, useRef } from 'react';
-import Link from 'next/link';
+
 import { ExamConfigModal } from '@/features/exam/components';
-import { AnswerSheet } from '@/features/exam/components';
-import { ResultsAnalysis } from '@/features/exam/components';
-import { formatTimeExtended } from '@/services/persistence';
-import { saveFullExam } from '@/services/persistence';
-import { fetchQuestionsForFullExam } from '@/features/exam/services/QuestionService';
-import {
-  fetchGradedExamResults,
-  gradedToExamQuestion,
-} from '@/features/exam/services/examGradingClient';
-import type { GradedExamAnswer } from '@/features/exam/services/examGradingServer';
-import type { ExamQuestion, ExamQuestionPublic } from '@/features/exam/types/question';
-import type { ExamConfig } from '@/features/exam/types';
+import { FullExamActiveView } from '@/features/exam/components/fullExam/FullExamActiveView';
+import { FullExamResultsView } from '@/features/exam/components/fullExam/FullExamResultsView';
+import { useFullExam } from '@/features/exam/hooks/useFullExam';
 import { LoadingState } from '@/shared/components/LoadingState';
 
-import { AREA_INFO } from '@/shared/constants';
-
 export const FullExamPage = () => {
-  const areaInfo = AREA_INFO['examen-completo'];
-
-  const [allQuestions, setAllQuestions] = useState<ExamQuestionPublic[]>([]);
-  const [loadingQuestions, setLoadingQuestions] = useState(true);
-  const [questionsError, setQuestionsError] = useState<string | null>(null);
-  const [examConfig, setExamConfig] = useState<ExamConfig | null>(null);
-  const [questions, setQuestions] = useState<ExamQuestionPublic[]>([]);
-  const [answers, setAnswers] = useState<Record<string, string>>({});
-  const [showResults, setShowResults] = useState(false);
-  const [timeRemaining, setTimeRemaining] = useState<number | null>(null);
-  const [isFinished, setIsFinished] = useState(false);
-  const [gradedResults, setGradedResults] = useState<GradedExamAnswer[] | null>(null);
-  const [gradingError, setGradingError] = useState<string | null>(null);
-  const gradingStartedRef = useRef(false);
-
-  useEffect(() => {
-    let active = true;
-
-    setLoadingQuestions(true);
-    setQuestionsError(null);
-
-    void fetchQuestionsForFullExam()
-      .then((loaded) => {
-        if (!active) return;
-        setAllQuestions(loaded);
-      })
-      .catch((error: unknown) => {
-        if (!active) return;
-        setQuestionsError(error instanceof Error ? error.message : 'No se pudieron cargar las preguntas.');
-        setAllQuestions([]);
-      })
-      .finally(() => {
-        if (active) setLoadingQuestions(false);
-      });
-
-    return () => {
-      active = false;
-    };
-  }, []);
-
-  const handleExamStart = (config: ExamConfig) => {
-    const selectedQuestions = allQuestions.slice(0, config.numQuestions);
-    setQuestions(selectedQuestions);
-    setExamConfig(config);
-    setGradedResults(null);
-    setGradingError(null);
-    gradingStartedRef.current = false;
-
-    if (config.useTimer) {
-      setTimeRemaining(config.numQuestions * (config.timePerQuestion ?? 2) * 60);
-    }
-  };
-
-  useEffect(() => {
-    if (!timeRemaining || timeRemaining <= 0) return;
-
-    const timer = setInterval(() => {
-      setTimeRemaining((prev) => {
-        if (prev === null || prev <= 1) {
-          setIsFinished(true);
-          return 0;
-        }
-        return prev - 1;
-      });
-    }, 1000);
-
-    return () => clearInterval(timer);
-  }, [timeRemaining]);
-
-  const handleAnswer = (questionId: string, answer: string) => {
-    setAnswers((prev) => ({
-      ...prev,
-      [questionId]: answer,
-    }));
-  };
-
-  const handleScrollToQuestion = (index: number) => {
-    const questionElement = document.getElementById(`question-${index}`);
-    questionElement?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  };
-
-  useEffect(() => {
-    if (!(isFinished || showResults) || questions.length === 0) return;
-    if (gradingStartedRef.current) return;
-
-    gradingStartedRef.current = true;
-    let active = true;
-
-    void fetchGradedExamResults(answers)
-      .then((results) => {
-        if (!active) return;
-        setGradedResults(results);
-        setGradingError(null);
-
-        const fullQuestions: ExamQuestion[] = results.map(gradedToExamQuestion);
-        const correctCount = results.filter((r) => r.correct).length;
-        const percentage = Math.round((correctCount / results.length) * 100);
-
-        saveFullExam({
-          examType: 'full-exam',
-          questions: fullQuestions,
-          answers,
-          correctCount,
-          percentage,
-          totalQuestions: results.length,
-          config: examConfig,
-          completedAt: new Date().toISOString(),
-        });
-      })
-      .catch((error: unknown) => {
-        if (!active) return;
-        gradingStartedRef.current = false;
-        setGradingError(error instanceof Error ? error.message : 'Error al calificar el examen');
-      });
-
-    return () => {
-      active = false;
-    };
-  }, [isFinished, showResults, questions, answers, examConfig]);
-
-  const results =
-    gradedResults?.map((graded) => ({
-      question: gradedToExamQuestion(graded),
-      correct: graded.correct,
-      userAnswer: graded.userAnswer,
-    })) ?? [];
-
-  const correctCount = results.filter((r) => r.correct).length;
-  const percentage = results.length > 0 ? Math.round((correctCount / results.length) * 100) : 0;
-
-  const resetExam = () => {
-    setExamConfig(null);
-    setAnswers({});
-    setShowResults(false);
-    setIsFinished(false);
-    setTimeRemaining(null);
-    setGradedResults(null);
-    setGradingError(null);
-    gradingStartedRef.current = false;
-  };
+  const {
+    areaInfo,
+    allQuestions,
+    loadingQuestions,
+    questionsError,
+    gradingError,
+    examConfig,
+    questions,
+    answers,
+    showResults,
+    setShowResults,
+    isFinished,
+    gradedResults,
+    handleExamStart,
+    handleAnswer,
+    handleScrollToQuestion,
+    resetExam,
+    results,
+    correctCount,
+    percentage,
+    timeRemaining,
+    timeColor,
+  } = useFullExam();
 
   if (loadingQuestions) {
     return <LoadingState label="Cargando preguntas…" layout="section" />;
@@ -167,7 +37,12 @@ export const FullExamPage = () => {
 
   if (questionsError) {
     return (
-      <div className="mx-auto max-w-lg rounded-xl border border-red-500/30 bg-red-950/30 px-4 py-6 text-center text-sm text-red-200">
+      <div
+        className={
+          'mx-auto max-w-lg rounded-xl border border-red-500/30 bg-red-950/30 px-4 py-6 ' +
+          'text-center text-sm text-red-200'
+        }
+      >
         {questionsError}
       </div>
     );
@@ -187,7 +62,12 @@ export const FullExamPage = () => {
   if (isFinished || showResults) {
     if (gradingError) {
       return (
-        <div className="mx-auto max-w-lg rounded-xl border border-red-500/30 bg-red-950/30 px-4 py-6 text-center text-sm text-red-200">
+        <div
+          className={
+            'mx-auto max-w-lg rounded-xl border border-red-500/30 bg-red-950/30 px-4 py-6 ' +
+            'text-center text-sm text-red-200'
+          }
+        >
           {gradingError}
         </div>
       );
@@ -198,223 +78,31 @@ export const FullExamPage = () => {
     }
 
     return (
-      <div className="min-h-dvh bg-linear-to-br from-gray-900 via-slate-900 to-gray-900 text-white">
-        <div className="pointer-events-none fixed inset-0 overflow-hidden">
-          <div className="bg-lesson-lc-glow-a/20 absolute top-0 left-1/4 h-96 w-96 animate-pulse rounded-full blur-3xl"></div>
-          <div className="absolute right-1/4 bottom-0 h-96 w-96 animate-pulse rounded-full bg-purple-500/20 blur-3xl"></div>
-        </div>
-
-        <div className="relative z-10">
-          <div
-            className={cn(
-              'sticky top-0 z-40 border-b border-white/10 bg-linear-to-b from-gray-900 via-gray-900',
-              'to-transparent py-4 backdrop-blur-md'
-            )}
-          >
-            <div className="mx-auto flex max-w-7xl items-center justify-between px-6">
-              <div>
-                <div
-                  className={cn(
-                    'mb-2 inline-block rounded-lg px-3 py-1 text-xs font-semibold text-white',
-                    `bg-linear-to-r ${areaInfo.color}`
-                  )}
-                >
-                  {areaInfo.name}
-                </div>
-                <p className="text-sm text-gray-400">Análisis de Resultados</p>
-              </div>
-
-              <button
-                type="button"
-                onClick={() => window.history.back()}
-                className={cn(
-                  'rounded-lg bg-white/10 px-4 py-2 text-sm text-white transition-all duration-300',
-                  'focus-visible:ring-app-accent hover:bg-white/20 focus-visible:ring-2 focus-visible:outline-none',
-                  'focus-visible:ring-offset-2 focus-visible:ring-offset-gray-900'
-                )}
-              >
-                Salir
-              </button>
-            </div>
-          </div>
-
-          <div className="mx-auto max-w-7xl px-6 py-8">
-            <div className="grid grid-cols-1 gap-6 lg:grid-cols-4">
-              <div className="lg:col-span-3">
-                <ResultsAnalysis
-                  results={results}
-                  questions={results.map((r) => r.question)}
-                  percentage={percentage}
-                  correctCount={correctCount}
-                  areaInfo={areaInfo}
-                  examConfig={examConfig}
-                  onRetry={resetExam}
-                />
-              </div>
-
-              <div>
-                <AnswerSheet
-                  totalQuestions={questions.length}
-                  answers={answers}
-                  currentQuestion={0}
-                  onQuestionClick={handleScrollToQuestion}
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      <FullExamResultsView
+        areaInfo={areaInfo}
+        examConfig={examConfig}
+        questions={questions}
+        answers={answers}
+        results={results}
+        correctCount={correctCount}
+        percentage={percentage}
+        onScrollToQuestion={handleScrollToQuestion}
+        onRetry={resetExam}
+      />
     );
   }
 
-  const timeColor =
-    timeRemaining !== null && timeRemaining < 300
-      ? 'text-red-400'
-      : timeRemaining !== null && timeRemaining < 600
-        ? 'text-yellow-400'
-        : 'text-app-accent-muted';
-
   return (
-    <div className="min-h-dvh bg-linear-to-br from-gray-900 via-slate-900 to-gray-900 text-white">
-      <div className="pointer-events-none fixed inset-0 overflow-hidden">
-        <div className="bg-lesson-lc-glow-a/20 absolute top-0 left-1/4 h-96 w-96 animate-pulse rounded-full blur-3xl"></div>
-        <div className="absolute right-1/4 bottom-0 h-96 w-96 animate-pulse rounded-full bg-purple-500/20 blur-3xl"></div>
-      </div>
-
-      <div className="relative z-10">
-        <div
-          className={cn(
-            'sticky top-0 z-40 border-b border-white/10 bg-linear-to-b from-gray-900 via-gray-900',
-            'to-transparent py-4 backdrop-blur-md'
-          )}
-        >
-          <div className="mx-auto flex max-w-7xl items-center justify-between px-6">
-            <div>
-              <div
-                className={cn(
-                  'mb-2 inline-block rounded-lg px-3 py-1 text-xs font-semibold text-white',
-                  `bg-linear-to-r ${areaInfo.color}`
-                )}
-              >
-                {areaInfo.name}
-              </div>
-              <p className="text-sm text-gray-400">Preguntas: {questions.length}</p>
-            </div>
-
-            {examConfig.useTimer && timeRemaining !== null && (
-              <div className={cn('font-mono text-2xl font-bold', timeColor)}>{formatTimeExtended(timeRemaining)}</div>
-            )}
-
-            <Link
-              href="/"
-              className={cn(
-                'rounded-lg bg-white/10 px-4 py-2 text-sm text-white transition-all duration-300',
-                'focus-visible:ring-app-accent hover:bg-white/20 focus-visible:ring-2 focus-visible:outline-none',
-                'focus-visible:ring-offset-2 focus-visible:ring-offset-gray-900'
-              )}
-            >
-              Salir
-            </Link>
-          </div>
-        </div>
-
-        <div className="mx-auto max-w-7xl px-6 py-8">
-          <div className="grid grid-cols-1 gap-6 lg:grid-cols-4">
-            <div className="space-y-6 lg:col-span-3">
-              {questions.map((question, index) => (
-                <div
-                  key={question.id}
-                  id={`question-${index}`}
-                  className={cn(
-                    'rounded-xl border border-white/10 bg-linear-to-br from-gray-800/40 via-gray-900/40',
-                    'to-gray-950/40 p-6 shadow-lg backdrop-blur-md transition-all duration-300',
-                    'hover:border-white/20 hover:shadow-xl'
-                  )}
-                >
-                  <div className="mb-6">
-                    <div className="flex items-start gap-4">
-                      <div
-                        className={cn(
-                          'flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-linear-to-r',
-                          'from-cta-from to-cta-progress-end text-sm font-bold'
-                        )}
-                      >
-                        {index + 1}
-                      </div>
-                      <div className="flex-1">
-                        <p className="text-lg leading-relaxed font-semibold text-white">{question.text}</p>
-                        <p className="mt-2 text-xs text-gray-500">
-                          Dificultad: <span className="text-app-accent-muted">{question.difficulty}</span>
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="ml-14 space-y-3">
-                    {question.options.map((option) => {
-                      const isSelected = answers[question.id] === option.letter;
-
-                      return (
-                        <button
-                          type="button"
-                          key={option.letter}
-                          onClick={() => handleAnswer(question.id, option.letter ?? option.id ?? String(option.text))}
-                          className={cn(
-                            'w-full rounded-lg border-2 p-4 text-left transition-all duration-300',
-                            'focus-visible:z-10 focus-visible:ring-2 focus-visible:outline-none',
-                            'focus-visible:ring-app-accent focus-visible:ring-offset-2 focus-visible:ring-offset-gray-950',
-                            isSelected
-                              ? 'border-app-accent bg-app-ring/20 text-app-on-accent'
-                              : 'hover:border-app-accent/50 hover:bg-app-ring/10 border-white/20 bg-white/5 text-white'
-                          )}
-                        >
-                          <div className="flex items-center gap-3">
-                            <div
-                              className={cn(
-                                'flex h-8 w-8 shrink-0 items-center justify-center rounded-full border-2 text-sm font-bold',
-                                isSelected ? 'border-app-accent bg-app-ring text-white' : 'border-white/30'
-                              )}
-                            >
-                              {option.letter}
-                            </div>
-                            <span>{option.text}</span>
-                          </div>
-                        </button>
-                      );
-                    })}
-                  </div>
-                </div>
-              ))}
-
-              <div className="flex justify-center pt-8">
-                <button
-                  type="button"
-                  onClick={() => setShowResults(true)}
-                  className={cn(
-                    'rounded-xl bg-linear-to-r from-green-500 to-emerald-500 px-12 py-4 text-lg font-bold',
-                    'text-white transition-all duration-300 hover:from-green-600 hover:to-emerald-600',
-                    'cursor-pointer hover:shadow-lg hover:shadow-green-500/50',
-                    'focus-visible:ring-2 focus-visible:ring-white focus-visible:outline-none',
-                    'focus-visible:ring-offset-2 focus-visible:ring-offset-gray-900'
-                  )}
-                >
-                  Finalizar Examen
-                </button>
-              </div>
-            </div>
-
-            <div>
-              <AnswerSheet
-                totalQuestions={questions.length}
-                answers={answers}
-                currentQuestion={0}
-                onQuestionClick={handleScrollToQuestion}
-                questions={questions}
-              />
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+    <FullExamActiveView
+      areaInfo={areaInfo}
+      examConfig={examConfig}
+      questions={questions}
+      answers={answers}
+      timeRemaining={timeRemaining}
+      timeColor={timeColor}
+      onAnswer={handleAnswer}
+      onScrollToQuestion={handleScrollToQuestion}
+      onFinish={() => setShowResults(true)}
+    />
   );
 };
