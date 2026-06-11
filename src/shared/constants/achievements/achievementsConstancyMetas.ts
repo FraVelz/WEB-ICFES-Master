@@ -1,0 +1,32 @@
+export const ACHIEVEMENTS_CONSTANCY_METAS = [
+  {
+    id: 'const_1',
+    category: 'constancia',
+    title: 'Racha de Fuego',
+    description: 'Mantén una racha de 7 días',
+    icon: 'fire',
+    target: 7,
+    xpReward: 200,
+    coinsReward: 100,
+  },
+  {
+    id: 'meta_1',
+    category: 'metas',
+    title: 'Maestro del ICFES',
+    description: 'Alcanza el nivel 5',
+    icon: 'trophy',
+    target: 5,
+    xpReward: 1000,
+    coinsReward: 500,
+  },
+  {
+    id: 'time_1',
+    category: 'constancia',
+    title: 'Maratón de Estudio',
+    description: 'Estudia durante 2 horas seguidas',
+    icon: 'clock',
+    target: 120,
+    xpReward: 150,
+    coinsReward: 75,
+  },
+] as const;
