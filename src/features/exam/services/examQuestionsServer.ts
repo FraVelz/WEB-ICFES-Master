@@ -1,37 +1,20 @@
+import 'server-only';
+
 import {
-  ENGLISH_QUESTIONS,
-  LANGUAGE_QUESTIONS,
-  MATHEMATICS_QUESTIONS,
-  SCIENCE_QUESTIONS,
-  SOCIAL_QUESTIONS,
-} from '@/features/exam/data';
+  getStaticQuestionsByRouteArea,
+  getStaticQuestionsForFullExam,
+} from '@/features/exam/data/examStaticPool.server';
 import { FULL_EXAM_ROUTE_AREAS } from '@/features/exam/data/examAreas';
 import { toPublicExamQuestion, type ExamQuestion, type ExamQuestionPublic } from '@/features/exam/types/question';
 import ExamQuestionsSupabaseService from '@/services/supabase/ExamQuestionsSupabaseService';
 import { getExamQuestionsByIdsForGrading } from '@/services/supabase/ExamQuestionsServerService';
-
-const STATIC_BY_ROUTE: Record<string, ExamQuestion[]> = {
-  'lectura-critica': LANGUAGE_QUESTIONS,
-  matematicas: MATHEMATICS_QUESTIONS,
-  'ciencias-naturales': SCIENCE_QUESTIONS,
-  'sociales-ciudadanas': SOCIAL_QUESTIONS,
-  ingles: ENGLISH_QUESTIONS,
-};
-
-function getStaticByRouteArea(routeArea: string): ExamQuestion[] {
-  return STATIC_BY_ROUTE[routeArea] ?? [];
-}
-
-function getStaticForFullExam(): ExamQuestion[] {
-  return FULL_EXAM_ROUTE_AREAS.flatMap((area) => getStaticByRouteArea(area));
-}
 
 function toPublicList(questions: ExamQuestion[]): ExamQuestionPublic[] {
   return questions.map(toPublicExamQuestion);
 }
 
 export async function fetchPublicQuestionsByRouteArea(routeArea: string): Promise<ExamQuestionPublic[]> {
-  const fallback = getStaticByRouteArea(routeArea);
+  const fallback = getStaticQuestionsByRouteArea(routeArea);
 
   try {
     const fromDb = await ExamQuestionsSupabaseService.getByRouteArea(routeArea);
@@ -44,7 +27,7 @@ export async function fetchPublicQuestionsByRouteArea(routeArea: string): Promis
 }
 
 export async function fetchPublicQuestionsForFullExam(): Promise<ExamQuestionPublic[]> {
-  const fallback = getStaticForFullExam();
+  const fallback = getStaticQuestionsForFullExam();
 
   try {
     const fromDb = await ExamQuestionsSupabaseService.getByRouteAreas([...FULL_EXAM_ROUTE_AREAS]);
@@ -58,7 +41,7 @@ export async function fetchPublicQuestionsForFullExam(): Promise<ExamQuestionPub
 
 export async function loadQuestionsByIdsForGrading(ids: string[]): Promise<ExamQuestion[]> {
   const uniqueIds = [...new Set(ids)];
-  const staticPool = getStaticForFullExam();
+  const staticPool = getStaticQuestionsForFullExam();
   const staticMatches = staticPool.filter((q) => uniqueIds.includes(q.id));
 
   try {

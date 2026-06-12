@@ -109,6 +109,16 @@ export async function POST(request: NextRequest) {
 
     const { isLoggedIn, anonUsed, authUsed, authUser } = await resolveChatAccess(request);
 
+    if (!authUser) {
+      return NextResponse.json(
+        {
+          error: 'Debes iniciar sesión para usar el asistente.',
+          code: 'AUTH_REQUIRED',
+        },
+        { status: 401 }
+      );
+    }
+
     const ip = getClientIp(request);
     const rateKey = authUser ? `chat:user:${authUser.id}` : `chat:anon:${ip}`;
     const rate = await checkRateLimit(rateKey, isLoggedIn ? 40 : 8, 60_000);

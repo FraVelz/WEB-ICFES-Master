@@ -14,8 +14,7 @@ export function ChatAssistant() {
     setInputValue,
     isTyping,
     isAnonymous,
-    anonRemaining,
-    anonQuotaReached,
+    requiresLogin,
     messagesEndRef,
     inputRef,
     handleSend,
@@ -34,8 +33,7 @@ export function ChatAssistant() {
         messages={messages}
         isTyping={isTyping}
         isAnonymous={isAnonymous}
-        anonRemaining={anonRemaining}
-        anonQuotaReached={anonQuotaReached}
+        requiresLogin={requiresLogin}
         inputValue={inputValue}
         onInputChange={setInputValue}
         messagesEndRef={messagesEndRef}

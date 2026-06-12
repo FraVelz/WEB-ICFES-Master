@@ -1,3 +1,5 @@
+import 'server-only';
+
 import type { ExamQuestionDbArea } from '@/features/exam/data/examAreas';
 import {
   LANGUAGE_QUESTIONS,

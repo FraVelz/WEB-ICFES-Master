@@ -6,6 +6,11 @@ import {
 } from '@/services/supabase/gamification/gamificationServerEconomy';
 import { getAuthUserFromRequest } from '@/utils/apiAuth';
 import { checkRateLimit, getClientIp } from '@/utils/rateLimit';
+import {
+  isAllowedCoinsAwardReason,
+  isAllowedSpendCoinsItem,
+  isAllowedXpAwardReason,
+} from '@/shared/constants/gamificationAwardReasons';
 
 const MAX_AWARD = 500;
 const MAX_REASON_LENGTH = 64;
@@ -49,6 +54,14 @@ function validateReason(reason: string): boolean {
   return trimmed.length > 0 && trimmed.length <= MAX_REASON_LENGTH;
 }
 
+function validateXpReason(reason: string): boolean {
+  return validateReason(reason) && isAllowedXpAwardReason(reason);
+}
+
+function validateCoinsReason(reason: string): boolean {
+  return validateReason(reason) && isAllowedCoinsAwardReason(reason);
+}
+
 export async function POST(request: NextRequest) {
   try {
     const user = await getAuthUserFromRequest(request);
@@ -70,7 +83,7 @@ export async function POST(request: NextRequest) {
     const userId = user.id;
 
     if (body.type === 'xp') {
-      if (body.points <= 0 || body.points > MAX_AWARD || !validateReason(body.reason)) {
+      if (body.points <= 0 || body.points > MAX_AWARD || !validateXpReason(body.reason)) {
         return NextResponse.json({ error: 'Parámetros XP inválidos' }, { status: 400 });
       }
       const result = await addXpServerWithMultiplier(userId, body.points, body.reason.trim());
@@ -78,7 +91,7 @@ export async function POST(request: NextRequest) {
     }
 
     if (body.type === 'coins') {
-      if (body.amount <= 0 || body.amount > MAX_AWARD || !validateReason(body.reason)) {
+      if (body.amount <= 0 || body.amount > MAX_AWARD || !validateCoinsReason(body.reason)) {
         return NextResponse.json({ error: 'Parámetros de monedas inválidos' }, { status: 400 });
       }
       const result = await addCoinsServer(userId, body.amount, body.reason.trim());
@@ -89,7 +102,12 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Cantidad inválida' }, { status: 400 });
     }
 
-    const result = await spendCoinsServer(userId, body.amount, body.item);
+    const spendItem = body.item ?? 'purchase';
+    if (!isAllowedSpendCoinsItem(spendItem)) {
+      return NextResponse.json({ error: 'Ítem de compra inválido' }, { status: 400 });
+    }
+
+    const result = await spendCoinsServer(userId, body.amount, spendItem);
     return NextResponse.json(result);
   } catch (error) {
     const message = error instanceof Error ? error.message : 'Error al procesar recompensa';

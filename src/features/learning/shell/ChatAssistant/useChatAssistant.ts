@@ -1,9 +1,8 @@
 'use client';
 
-import { useState, useRef, useEffect, useCallback } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { supabase } from '@/config/supabase';
 import { useAuth } from '@/features/auth/context/AuthContext';
-import { CHAT_ANON_LIMIT } from '@/features/learning/constants/chatAnonQuota';
 import type { ChatMessage } from './chatTypes';
 
 export function useChatAssistant() {
@@ -12,37 +11,11 @@ export function useChatAssistant() {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [inputValue, setInputValue] = useState('');
   const [isTyping, setIsTyping] = useState(false);
-  const [anonUsed, setAnonUsed] = useState(0);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
   const isAnonymous = !user;
-  const anonRemaining = Math.max(0, CHAT_ANON_LIMIT - anonUsed);
-  const anonQuotaReached = isAnonymous && anonUsed >= CHAT_ANON_LIMIT;
-
-  const syncAnonQuota = useCallback(async () => {
-    if (user) {
-      setAnonUsed(0);
-      return;
-    }
-
-    try {
-      const token = supabase && (await supabase.auth.getSession()).data.session?.access_token;
-      const headers: HeadersInit = token ? { Authorization: `Bearer ${token}` } : {};
-      const res = await fetch('/api/chat', { credentials: 'same-origin', headers });
-      if (!res.ok) return;
-      const data = await res.json();
-      if (typeof data.anonUsed === 'number') {
-        setAnonUsed(data.anonUsed);
-      }
-    } catch {
-      // Quota display falls back to 0; POST still enforces the server limit.
-    }
-  }, [user]);
-
-  useEffect(() => {
-    syncAnonQuota();
-  }, [syncAnonQuota]);
+  const requiresLogin = isAnonymous;
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -56,7 +29,7 @@ export function useChatAssistant() {
 
   const handleSend = async () => {
     const trimmed = inputValue.trim();
-    if (!trimmed || anonQuotaReached) return;
+    if (!trimmed || requiresLogin) return;
 
     const userMessage: ChatMessage = {
       id: `user-${Date.now()}`,
@@ -90,14 +63,11 @@ export function useChatAssistant() {
       const data = await res.json();
 
       if (!res.ok) {
-        if (res.status === 429 && typeof data.anonUsed === 'number') {
-          setAnonUsed(data.anonUsed);
-        }
-        throw new Error(data.error || 'Error al obtener respuesta');
-      }
-
-      if (isAnonymous && typeof data.anonUsed === 'number') {
-        setAnonUsed(data.anonUsed);
+        const authRequired = data.code === 'AUTH_REQUIRED' || res.status === 401;
+        const message = authRequired
+          ? 'Debes iniciar sesión para usar el asistente.'
+          : data.error || 'Error al obtener respuesta';
+        throw new Error(message);
       }
 
       const assistantMessage: ChatMessage = {
@@ -110,12 +80,15 @@ export function useChatAssistant() {
     } catch (err) {
       const errText = err instanceof Error ? err.message : 'No se pudo conectar con el asistente';
       const isLimitError = errText.includes('límite') || errText.includes('429');
-      const content = isLimitError
-        ? `${errText} Puedes iniciar sesión para seguir chateando.`
-        : [
-            `Lo siento, ocurrió un error: ${errText}.`,
-            'Verifica que OPENAI_API_KEY esté configurada en .env.local',
-          ].join(' ');
+      const isAuthError = errText.includes('iniciar sesión');
+      const content = isAuthError
+        ? `${errText} Ve a la página de inicio de sesión para continuar.`
+        : isLimitError
+          ? `${errText} Puedes seguir estudiando en la ruta de aprendizaje.`
+          : [
+              `Lo siento, ocurrió un error: ${errText}.`,
+              'Verifica que OPENAI_API_KEY esté configurada en .env.local',
+            ].join(' ');
 
       const errorMessage: ChatMessage = {
         id: `assistant-${Date.now()}`,
@@ -144,8 +117,7 @@ export function useChatAssistant() {
     setInputValue,
     isTyping,
     isAnonymous,
-    anonRemaining,
-    anonQuotaReached,
+    requiresLogin,
     messagesEndRef,
     inputRef,
     handleSend,

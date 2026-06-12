@@ -15,8 +15,7 @@ type ChatPanelProps = {
   messages: ChatMessage[];
   isTyping: boolean;
   isAnonymous: boolean;
-  anonRemaining: number;
-  anonQuotaReached: boolean;
+  requiresLogin: boolean;
   inputValue: string;
   onInputChange: (value: string) => void;
   messagesEndRef: React.RefObject<HTMLDivElement | null>;
@@ -31,8 +30,7 @@ export function ChatPanel({
   messages,
   isTyping,
   isAnonymous,
-  anonRemaining,
-  anonQuotaReached,
+  requiresLogin,
   inputValue,
   onInputChange,
   messagesEndRef,
@@ -54,10 +52,8 @@ export function ChatPanel({
 
   useDialogA11y(isOpen, onClose, dialogRef, { lockScroll: false });
 
-  const statusText = isAnonymous
-    ? anonQuotaReached
-      ? 'Límite de invitado alcanzado'
-      : `${anonRemaining} pregunta${anonRemaining !== 1 ? 's' : ''} gratis sin cuenta`
+  const statusText = requiresLogin
+    ? 'Inicia sesión para usar el asistente'
     : 'Responde tus dudas';
 
   if (!mounted || !isOpen) return null;
@@ -127,7 +123,7 @@ export function ChatPanel({
         />
 
         <ChatInputArea
-          anonQuotaReached={anonQuotaReached}
+          requiresLogin={requiresLogin}
           inputValue={inputValue}
           isTyping={isTyping}
           inputRef={inputRef}

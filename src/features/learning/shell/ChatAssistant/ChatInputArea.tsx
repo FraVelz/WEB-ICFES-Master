@@ -1,10 +1,9 @@
 import Link from 'next/link';
 import { cn } from '@/utils/cn';
 import { Icon } from '@/shared/components/Icon';
-import { CHAT_ANON_LIMIT } from '@/features/learning/constants/chatAnonQuota';
 
 type ChatInputAreaProps = {
-  anonQuotaReached: boolean;
+  requiresLogin: boolean;
   inputValue: string;
   isTyping: boolean;
   inputRef: React.RefObject<HTMLInputElement | null>;
@@ -14,7 +13,7 @@ type ChatInputAreaProps = {
 };
 
 export function ChatInputArea({
-  anonQuotaReached,
+  requiresLogin,
   inputValue,
   isTyping,
   inputRef,
@@ -30,13 +29,17 @@ export function ChatInputArea({
 
   return (
     <div className="border-surface-border/50 bg-surface-elevated/50 min-w-0 border-t p-3 sm:p-4">
-      {anonQuotaReached ? (
+      {requiresLogin ? (
         <p className="text-on-surface-muted text-center text-sm">
-          Has usado las {CHAT_ANON_LIMIT} preguntas gratis.{' '}
+          El asistente requiere una cuenta.{' '}
           <Link href="/login" className={loginLinkClass}>
             Inicia sesión
           </Link>{' '}
-          para seguir.
+          o{' '}
+          <Link href="/signup" className={loginLinkClass}>
+            crea una cuenta
+          </Link>{' '}
+          para chatear.
         </p>
       ) : (
         <div className="flex min-w-0 items-stretch gap-2">
