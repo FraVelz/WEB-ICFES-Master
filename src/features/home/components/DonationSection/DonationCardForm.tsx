@@ -73,6 +73,7 @@ export function DonationCardForm() {
               required
             />
             <input
+              id={expiryYearId}
               type="text"
               placeholder="AA"
               aria-label="Año de vencimiento"

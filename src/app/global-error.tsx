@@ -22,7 +22,7 @@ export default function GlobalError({ error, reset }: GlobalErrorProps) {
           <button
             type="button"
             onClick={reset}
-            className="bg-app-ring hover:bg-hub-orb cursor-pointer rounded-lg px-6 py-3 font-semibold text-white"
+            className="bg-app-ring hover:bg-hub-orb focus-visible:ring-app-accent cursor-pointer rounded-lg px-6 py-3 font-semibold text-white focus-visible:ring-2 focus-visible:outline-none"
           >
             Reintentar
           </button>

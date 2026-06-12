@@ -44,7 +44,14 @@ export function PracticeExamHeader({
         </div>
 
         {showTimer && timeRemaining != null && (
-          <div className={cn('font-mono text-2xl font-bold', timeColor)}>{formatTimeExtended(timeRemaining)}</div>
+          <div
+            aria-live="polite"
+            aria-atomic="true"
+            aria-label="Tiempo restante del examen"
+            className={cn('font-mono text-2xl font-bold tabular-nums', timeColor)}
+          >
+            {formatTimeExtended(timeRemaining)}
+          </div>
         )}
 
         <Link
