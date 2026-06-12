@@ -36,7 +36,8 @@ export function LessonContentFooter({
 
   const navButtonBase = cn(
     'flex min-w-[44px] cursor-pointer items-center justify-center gap-1.5 rounded-xl',
-    'font-medium transition-colors sm:gap-2 sm:px-4 sm:py-3',
+    'font-medium transition-[color,background-color,border-color,box-shadow,transform] duration-200',
+    'sm:gap-2 sm:px-4 sm:py-3',
     'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:ring-offset-2',
     'focus-visible:outline-none focus-visible:ring-offset-surface-via',
     'disabled:cursor-not-allowed disabled:opacity-60'
@@ -65,8 +66,10 @@ export function LessonContentFooter({
             onClick={handlePrev}
             className={cn(
               navButtonBase,
-              'border-surface-border bg-surface-overlay/80 text-on-surface-muted border px-3 py-2.5',
-              'hover:bg-on-surface-muted/80 hover:text-white active:scale-[0.97]'
+              'border-surface-border bg-surface-elevated/90 text-on-surface-muted border px-3 py-2.5 shadow-sm',
+              'hover:border-app-ring/45 hover:bg-surface-overlay hover:text-on-surface hover:shadow-md',
+              'dark:bg-surface-overlay/55 dark:hover:border-app-ring/50 dark:hover:bg-surface-elevated dark:hover:text-on-surface',
+              'active:scale-[0.97]'
             )}
           >
             <Icon name="arrow-left" className="text-sm" />
