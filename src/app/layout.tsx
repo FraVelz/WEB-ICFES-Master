@@ -6,6 +6,7 @@ import './globals.css';
 
 import Providers from '@/components/Providers';
 import { VercelMetrics } from '@/components/VercelMetrics';
+import { ogImageOpenGraph, ogImageTwitter } from '@/config/ogImage';
 import { getSiteUrl } from '@/config/site';
 import { THEME_STORAGE_KEY } from '@/features/theme/themeStorage';
 
@@ -54,11 +55,12 @@ export const metadata: Metadata = {
     title: 'ICFES Master | Domina el ICFES desde cero',
     description: 'La plataforma #1 para preparar el ICFES: +500 preguntas, simulacros reales y aprendizaje guiado.',
     url: '/',
+    ...ogImageOpenGraph,
   },
   twitter: {
-    card: 'summary_large_image',
     title: 'ICFES Master | Domina el ICFES desde cero',
     description: 'Prepárate con simulacros y preguntas reales para lograr un gran puntaje en el ICFES.',
+    ...ogImageTwitter,
   },
 };
 

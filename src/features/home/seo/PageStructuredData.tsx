@@ -1,3 +1,4 @@
+import { CONTENT_LAST_UPDATED } from '@/config/ogImage';
 import { getSiteUrl } from '@/config/site';
 
 export type BreadcrumbItem = {
@@ -18,7 +19,7 @@ export function PageStructuredData({
   description,
   path,
   breadcrumbs,
-  dateModified = '2025-12-16',
+  dateModified = CONTENT_LAST_UPDATED,
 }: PageStructuredDataProps) {
   const siteUrl = getSiteUrl();
   const pageUrl = `${siteUrl}${path.startsWith('/') ? path : `/${path}`}`;

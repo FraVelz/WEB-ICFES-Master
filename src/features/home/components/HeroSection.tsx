@@ -36,7 +36,7 @@ export const HeroSection = ({ onDemoAccess }: { onDemoAccess: () => void }) => {
         >
           <Icon name="star" className="text-app-accent" />
           <span className="text-app-accent text-sm font-semibold">
-            Conviertete en en uno de los primeros estudiantes en alcanzar +400
+            Conviértete en uno de los primeros estudiantes en alcanzar +400
           </span>
         </AnimatedReveal>
 
