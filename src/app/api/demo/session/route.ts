@@ -4,7 +4,7 @@ import { checkRateLimit, getClientIp } from '@/utils/rateLimit';
 
 export async function POST(request: NextRequest) {
   const ip = getClientIp(request);
-  const rate = checkRateLimit(`demo-session:${ip}`, 20, 60_000);
+  const rate = await checkRateLimit(`demo-session:${ip}`, 20, 60_000);
   if (!rate.allowed) {
     return NextResponse.json({ error: 'Demasiadas solicitudes. Intenta de nuevo en un momento.' }, { status: 429 });
   }
@@ -24,7 +24,7 @@ export async function POST(request: NextRequest) {
 
 export async function DELETE(request: NextRequest) {
   const ip = getClientIp(request);
-  const rate = checkRateLimit(`demo-session-delete:${ip}`, 30, 60_000);
+  const rate = await checkRateLimit(`demo-session-delete:${ip}`, 30, 60_000);
   if (!rate.allowed) {
     return NextResponse.json({ error: 'Demasiadas solicitudes. Intenta de nuevo en un momento.' }, { status: 429 });
   }

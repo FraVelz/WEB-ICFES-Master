@@ -3,13 +3,20 @@ import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { computePhaseAchievementMetrics } from './achievementPhaseMetrics';
 import { phaseAchievementId } from '@/shared/constants/achievements/achievementsPhases';
 
-vi.mock('@/features/learning/services/LearningService', () => ({
-  LearningService: {
-    getLearningPath: vi.fn(async (areaId: string) => [
-      { id: `${areaId}-lesson-1`, title: 'L1', order: 0, phase: 1, difficulty: 'facil', rewards: {} },
-      { id: `${areaId}-lesson-2`, title: 'L2', order: 1, phase: 1, difficulty: 'facil', rewards: {} },
-    ]),
-  },
+vi.mock('@/services/learning/learningCatalogCache', () => ({
+  fetchLearningCatalog: vi.fn(async () => ({
+    'lectura-critica': [
+      { id: 'lectura-critica-lesson-1', title: 'L1', order: 0, phase: 1, difficulty: 'facil', rewards: {} },
+      { id: 'lectura-critica-lesson-2', title: 'L2', order: 1, phase: 1, difficulty: 'facil', rewards: {} },
+    ],
+    matematicas: [
+      { id: 'matematicas-lesson-1', title: 'L1', order: 0, phase: 1, difficulty: 'facil', rewards: {} },
+      { id: 'matematicas-lesson-2', title: 'L2', order: 1, phase: 1, difficulty: 'facil', rewards: {} },
+    ],
+    'ciencias-naturales': [],
+    'sociales-ciudadanas': [],
+    ingles: [],
+  })),
 }));
 
 vi.mock('@/services/learning/learningProgressLocal', () => ({

@@ -6,20 +6,16 @@ import type { ExamQuestion } from '@/features/exam/types/question';
 import type { QuestionOption } from '@/features/exam/types/question';
 import { supabase } from '@/config/supabase';
 
-const TABLE = 'exam_questions';
+const PUBLIC_VIEW = 'exam_questions_public';
 
 /** Columnas expuestas al cliente (sin respuesta correcta). */
 const PUBLIC_COLUMNS = 'id, area, text, options, explanation, difficulty, published, order_index' as const;
 
-/** Columnas para calificación server-side. */
-const GRADING_COLUMNS = `${PUBLIC_COLUMNS}, correct_answer` as const;
-
-export interface ExamQuestionRow {
+export interface ExamQuestionPublicRow {
   id: string;
   area: string;
   text: string;
   options: QuestionOption[] | unknown;
-  correct_answer: string;
   explanation: string | null;
   difficulty: string | null;
   published: boolean;
@@ -31,14 +27,14 @@ const getSupabase = () => {
   return supabase;
 };
 
-function rowToExamQuestion(row: ExamQuestionRow): ExamQuestion {
+function rowToPublicExamQuestion(row: ExamQuestionPublicRow): ExamQuestion {
   const options = Array.isArray(row.options) ? (row.options as QuestionOption[]) : [];
 
   return {
     id: row.id,
     text: row.text,
     options,
-    correctAnswer: row.correct_answer ?? '',
+    correctAnswer: '',
     explanation: row.explanation ?? undefined,
     difficulty: row.difficulty ?? undefined,
   };
@@ -53,14 +49,14 @@ const ExamQuestionsSupabaseService = {
     if (!dbArea) return [];
 
     const { data, error } = await sb
-      .from(TABLE)
+      .from(PUBLIC_VIEW)
       .select(PUBLIC_COLUMNS)
       .eq('area', dbArea)
       .eq('published', true)
       .order('order_index', { ascending: true });
 
     if (error) throw new Error(`Error leyendo exam_questions: ${error.message}`);
-    return ((data ?? []) as ExamQuestionRow[]).map(rowToExamQuestion);
+    return ((data ?? []) as ExamQuestionPublicRow[]).map(rowToPublicExamQuestion);
   },
 
   async getByRouteAreas(routeAreas: string[]): Promise<ExamQuestion[]> {
@@ -72,20 +68,10 @@ const ExamQuestionsSupabaseService = {
     const sb = getSupabase();
     if (!sb || ids.length === 0) return [];
 
-    const { data, error } = await sb.from(TABLE).select(PUBLIC_COLUMNS).in('id', ids).eq('published', true);
+    const { data, error } = await sb.from(PUBLIC_VIEW).select(PUBLIC_COLUMNS).in('id', ids).eq('published', true);
 
     if (error) throw new Error(`Error leyendo exam_questions: ${error.message}`);
-    return ((data ?? []) as ExamQuestionRow[]).map(rowToExamQuestion);
-  },
-
-  async getByIdsForGrading(ids: string[]): Promise<ExamQuestion[]> {
-    const sb = getSupabase();
-    if (!sb || ids.length === 0) return [];
-
-    const { data, error } = await sb.from(TABLE).select(GRADING_COLUMNS).in('id', ids).eq('published', true);
-
-    if (error) throw new Error(`Error leyendo exam_questions: ${error.message}`);
-    return ((data ?? []) as ExamQuestionRow[]).map(rowToExamQuestion);
+    return ((data ?? []) as ExamQuestionPublicRow[]).map(rowToPublicExamQuestion);
   },
 
   async getAllPublished(): Promise<ExamQuestion[]> {
@@ -93,14 +79,14 @@ const ExamQuestionsSupabaseService = {
     if (!sb) return [];
 
     const { data, error } = await sb
-      .from(TABLE)
+      .from(PUBLIC_VIEW)
       .select(PUBLIC_COLUMNS)
       .eq('published', true)
       .order('area', { ascending: true })
       .order('order_index', { ascending: true });
 
     if (error) throw new Error(`Error leyendo exam_questions: ${error.message}`);
-    return ((data ?? []) as ExamQuestionRow[]).map(rowToExamQuestion);
+    return ((data ?? []) as ExamQuestionPublicRow[]).map(rowToPublicExamQuestion);
   },
 };
 

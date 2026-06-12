@@ -12,7 +12,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Debes iniciar sesión para calificar el quiz' }, { status: 401 });
     }
 
-    const rate = checkRateLimit(`lesson-quiz:${user.id}`, 40, 60_000);
+    const rate = await checkRateLimit(`lesson-quiz:${user.id}`, 40, 60_000);
     if (!rate.allowed) {
       return NextResponse.json({ error: 'Demasiadas solicitudes. Espera un momento.' }, { status: 429 });
     }

@@ -23,7 +23,7 @@ export async function awardNewUnlocks(
   userId: string,
   previous: AchievementProgressMap,
   next: AchievementProgressMap
-): Promise<void> {
+): Promise<number> {
   const newlyUnlocked = ACHIEVEMENTS_DATA.filter((achievement) => {
     const wasUnlocked = previous[achievement.id]?.unlocked ?? false;
     const isUnlocked = next[achievement.id]?.unlocked ?? false;
@@ -36,6 +36,8 @@ export async function awardNewUnlocks(
     const { emitAchievementUnlocks } = await import('./achievementUnlockEvents');
     emitAchievementUnlocks(newlyUnlocked);
   }
+
+  return newlyUnlocked.length;
 }
 
 export function resolveAchievementUserId(authUserId?: string | null, demoMode?: boolean): string | null {

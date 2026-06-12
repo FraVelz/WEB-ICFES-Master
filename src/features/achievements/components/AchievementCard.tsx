@@ -8,8 +8,8 @@ function getStatusColor(status: string) {
   switch (status) {
     case 'completed':
       return (
-        'border-cyan-700/45 bg-cyan-50 text-cyan-900 dark:border-amber-500/45 ' +
-        'dark:bg-amber-500/15 dark:text-amber-300'
+        'border-app-accent-strong/45 bg-app-accent/10 text-app-accent-darker ' +
+        'dark:border-app-accent/45 dark:bg-app-accent/15 dark:text-app-accent-bright'
       );
     case 'in_progress':
       return 'text-app-accent border-app-ring/50 bg-app-ring/10';
@@ -19,7 +19,7 @@ function getStatusColor(status: string) {
 }
 
 function getProgressBarColor(status: string) {
-  if (status === 'completed') return 'bg-cyan-700 dark:bg-amber-500';
+  if (status === 'completed') return 'bg-app-accent-strong dark:bg-app-accent';
   if (status === 'incomplete') return 'bg-on-surface-muted';
   return 'bg-hub-orb';
 }
@@ -36,9 +36,9 @@ export function AchievementCard({ achievement }: { achievement: AchievementItem 
         'group flex min-w-0 flex-col gap-4 rounded-2xl border p-5 transition-all duration-300 sm:p-6',
         isCompleted
           ? cn(
-              'border-cyan-700/45 bg-white shadow-sm hover:border-cyan-800',
-              'dark:bg-surface-overlay/80 dark:border-amber-500/35 dark:shadow-none',
-              'dark:hover:border-amber-500/55'
+              'border-app-accent-strong/45 bg-surface-elevated shadow-sm hover:border-app-accent-strong',
+              'dark:bg-surface-overlay/80 dark:border-app-accent/35 dark:shadow-none',
+              'dark:hover:border-app-accent/55'
             )
           : isIncomplete
             ? 'border-surface-border bg-surface-elevated/50 opacity-80'
@@ -73,13 +73,13 @@ export function AchievementCard({ achievement }: { achievement: AchievementItem 
             <h4
               className={cn(
                 'line-clamp-2 text-base leading-snug font-bold sm:text-lg',
-                isCompleted ? 'text-cyan-900 dark:text-amber-50' : 'text-on-surface'
+                isCompleted ? 'text-app-accent-darker dark:text-app-accent-bright' : 'text-on-surface'
               )}
             >
               {achievement.title}
             </h4>
             {isCompleted && (
-              <Icon name="check" className="mt-0.5 shrink-0 text-sm text-cyan-800 dark:text-amber-400" />
+              <Icon name="check" className="mt-0.5 shrink-0 text-sm text-app-accent-strong dark:text-app-accent" />
             )}
             {isIncomplete && <Icon name="lock" className="text-on-surface-muted mt-0.5 shrink-0 text-sm" />}
           </div>
@@ -89,7 +89,7 @@ export function AchievementCard({ achievement }: { achievement: AchievementItem 
       <p
         className={cn(
           'line-clamp-3 text-sm leading-relaxed',
-          isCompleted ? 'dark:text-on-surface-muted text-cyan-800/80' : 'text-on-surface-muted'
+          isCompleted ? 'text-app-accent-darker/80 dark:text-on-surface-muted' : 'text-on-surface-muted'
         )}
       >
         {achievement.description}
@@ -98,11 +98,11 @@ export function AchievementCard({ achievement }: { achievement: AchievementItem 
       <div className="mt-auto space-y-2">
         <div className="flex items-center justify-between gap-3 text-xs font-medium sm:text-sm">
           <span
-            className={isCompleted ? 'font-semibold text-cyan-800 dark:text-amber-400' : 'text-app-accent-strong'}
+            className={isCompleted ? 'font-semibold text-app-accent-strong dark:text-app-accent' : 'text-app-accent-strong'}
           >
             {isCompleted ? '¡Completado!' : `${achievement.progress ?? 0} / ${achievement.target ?? 0}`}
           </span>
-          <span className={isCompleted ? 'dark:text-on-surface-muted text-cyan-700/75' : 'text-on-surface-muted'}>
+          <span className={isCompleted ? 'text-app-accent-strong/75 dark:text-on-surface-muted' : 'text-on-surface-muted'}>
             +{achievement.xpReward ?? 0} XP
           </span>
         </div>
@@ -114,7 +114,7 @@ export function AchievementCard({ achievement }: { achievement: AchievementItem 
           aria-label={`Progreso de ${achievement.title}`}
           className={cn(
             'h-2 w-full overflow-hidden rounded-full',
-            isCompleted ? 'dark:bg-surface-via bg-cyan-100' : 'bg-surface-via'
+            isCompleted ? 'bg-app-accent/15 dark:bg-surface-via' : 'bg-surface-via'
           )}
         >
           <div

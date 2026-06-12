@@ -14,7 +14,7 @@ export async function GET(request: NextRequest) {
 
   const ip = getClientIp(request);
   const rateKey = user ? `exam-questions:${user.id}` : `exam-questions:demo:${ip}`;
-  const rate = checkRateLimit(rateKey, 60, 60_000);
+  const rate = await checkRateLimit(rateKey, 60, 60_000);
 
   if (!rate.allowed) {
     return NextResponse.json({ error: 'Demasiadas solicitudes. Intenta de nuevo en un momento.' }, { status: 429 });

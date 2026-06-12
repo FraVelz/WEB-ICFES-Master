@@ -63,7 +63,7 @@ jobs:
         run: pnpm run test
 
       - name: Audit dependencies
-        run: pnpm audit --audit-level=moderate
+        run: pnpm run audit
 
       - name: Build
         run: pnpm run build

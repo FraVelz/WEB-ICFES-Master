@@ -3,6 +3,7 @@ import { LearningService } from '../services/LearningService';
 import { useAuth } from '@/features/auth/context/AuthContext';
 import { LEARNING_PROGRESS_UPDATED_EVENT } from '@/services/learning';
 import { LESSON_COMPLETED_EVENT } from '@/services/persistence';
+import { debounceFn } from '@/utils/debounceFn';
 import {
   LEARNING_PHASE_SECTION_IDS,
   phaseToSectionId,
@@ -110,7 +111,7 @@ export const useLearningPath = (areaId: string | undefined, options: UseLearning
   }, [fetchPath]);
 
   useEffect(() => {
-    const refresh = () => void fetchPath();
+    const refresh = debounceFn(() => void fetchPath(), 400);
     window.addEventListener(LESSON_COMPLETED_EVENT, refresh);
     window.addEventListener(LEARNING_PROGRESS_UPDATED_EVENT, refresh);
     return () => {

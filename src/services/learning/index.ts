@@ -18,3 +18,9 @@ export { readLearningProgressRemoteMeta, getLocalLearningProgress } from './lear
 export { mergeLearningProgress, skippedSectionIdsByAreaFromRecords } from './learningProgressMerge';
 
 export { fetchPublishedLessonsByArea } from './learningContentServer';
+
+export {
+  fetchLearningCatalog,
+  getLearningPathFromCatalog,
+  invalidateLearningCatalogCache,
+} from './learningCatalogCache';

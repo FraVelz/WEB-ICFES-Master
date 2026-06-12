@@ -1,15 +1,19 @@
 'use client';
 
 import { Suspense, type ReactNode } from 'react';
-import { cn } from '@/utils/cn';
+import { useAuth } from '@/features/auth/context/AuthContext';
+import { GamificationProvider } from '@/hooks/gamification/GamificationContext';
+import { getStreakScope } from '@/services/streak';
+import { useUiSessionStore } from '@/store/uiSessionStore';
 import { LoadingState } from '@/shared/components/LoadingState';
+import { DashboardShellProvider, useDashboardShell } from './DashboardShellContext';
+import { DashboardShellBanner } from './DashboardShellBanner';
+import { DashboardShellAside } from './DashboardShellAside';
+import { cn } from '@/utils/cn';
 import { RoadmapStatsBar } from '@/features/learning/shell/SecondaryHeader/RoadmapStatsBar';
 import { AreasModal } from '@/features/learning/shell/SecondaryHeader/AreasModal';
 import { StreakModal } from '@/features/learning/shell/SecondaryHeader/StreakModal';
 import { CoinsModal } from '@/features/learning/shell/SecondaryHeader/CoinsModal';
-import { DashboardShellProvider, useDashboardShell } from './DashboardShellContext';
-import { DashboardShellBanner } from './DashboardShellBanner';
-import { DashboardShellAside } from './DashboardShellAside';
 
 function DashboardShellMobileHeader() {
   const {
@@ -79,10 +83,6 @@ function DashboardShellInner({ children }: { children: ReactNode }) {
     <div className="bg-surface relative flex min-h-full flex-col lg:min-h-dvh">
       <DashboardShellMobileHeader />
 
-      {/*
-        Escritorio (estilo Duolingo): bloque centrado = columna max-w-3xl + aside fijo pegado a su derecha.
-        Móvil: columna única a ancho completo; aside oculto.
-      */}
       <div
         className={cn(
           'mx-auto flex min-h-0 w-full flex-1 flex-col lg:flex-row lg:justify-center',
@@ -103,12 +103,24 @@ function DashboardShellInner({ children }: { children: ReactNode }) {
   );
 }
 
+function DashboardShellWithGamification({ children }: { children: ReactNode }) {
+  const { user } = useAuth();
+  const demoMode = useUiSessionStore((state) => state.demoMode);
+  const streakScope = getStreakScope(user?.uid, demoMode) ?? undefined;
+
+  return (
+    <GamificationProvider scope={streakScope}>
+      <DashboardShellProvider>{children}</DashboardShellProvider>
+    </GamificationProvider>
+  );
+}
+
 export function DashboardShell({ children }: { children: ReactNode }) {
   return (
     <Suspense fallback={<LoadingState label="Cargando..." layout="section" />}>
-      <DashboardShellProvider>
+      <DashboardShellWithGamification>
         <DashboardShellInner>{children}</DashboardShellInner>
-      </DashboardShellProvider>
+      </DashboardShellWithGamification>
     </Suspense>
   );
 }

@@ -2,6 +2,7 @@ import { cn } from '@/utils/cn';
 import Link from 'next/link';
 import { Icon } from '@/shared/components/Icon';
 import { FULL_PAGE_SHELL_CLASS } from '@/shared/constants/pageShell';
+import { LegalStructuredData } from '@/features/home/seo/PageStructuredData';
 
 import type { Metadata } from 'next';
 
@@ -24,7 +25,13 @@ export const metadata: Metadata = {
 
 export default function TerminosPage() {
   return (
-    <main id="main-content" className={cn('relative px-4 py-12 sm:px-6 lg:px-8', FULL_PAGE_SHELL_CLASS)}>
+    <>
+      <LegalStructuredData
+        title="Términos y Condiciones"
+        description="Términos y condiciones de uso de ICFES Master."
+        path="/terminos/"
+      />
+      <main id="main-content" className={cn('relative px-4 py-12 sm:px-6 lg:px-8', FULL_PAGE_SHELL_CLASS)}>
       <div className="pointer-events-none fixed inset-0 z-0">
         <div
           className={cn(
@@ -179,5 +186,6 @@ export default function TerminosPage() {
         </div>
       </div>
     </main>
+    </>
   );
 }

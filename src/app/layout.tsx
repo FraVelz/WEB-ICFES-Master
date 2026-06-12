@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import Script from 'next/script';
+import { headers } from 'next/headers';
 
 import './globals.css';
 
@@ -61,15 +62,17 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const nonce = (await headers()).get('x-nonce') ?? undefined;
+
   return (
     <html lang="es" suppressHydrationWarning>
       <body className="bg-surface text-on-surface m-0 box-border min-h-dvh p-0 font-sans antialiased">
-        <Script id="theme-init" strategy="beforeInteractive" dangerouslySetInnerHTML={{ __html: themeInitScript }} />
+        <Script id="theme-init" strategy="beforeInteractive" nonce={nonce} dangerouslySetInnerHTML={{ __html: themeInitScript }} />
         <Providers>{children}</Providers>
         <VercelMetrics />
       </body>

@@ -1,7 +1,31 @@
 import { TipCard } from './TipCard';
 import { TipsCategorySection } from './TipsCategorySection';
 
-export function TipsCategoriesSectionsExam() {
+type TipsCategoriesSectionsExamProps = {
+  previewLimit?: number;
+};
+
+export function TipsCategoriesSectionsExam({ previewLimit }: TipsCategoriesSectionsExamProps) {
+  if (previewLimit) {
+    return (
+      <TipsCategorySection
+        id="preparacion"
+        title="Preparación ICFES"
+        description="Estrategias específicas para las pruebas Saber 11."
+        icon="graduation-cap"
+      >
+        <TipCard
+          title="Conoce el formato del examen"
+          description="Familiarízate con el número de preguntas, tiempos y áreas evaluadas."
+        />
+        <TipCard
+          title="Domina el manejo del tiempo en el simulacro"
+          description="Practica con cronómetro. Si una pregunta te bloquea, márcala y sigue."
+        />
+      </TipsCategorySection>
+    );
+  }
+
   return (
     <>
       <TipsCategorySection

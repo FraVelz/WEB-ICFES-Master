@@ -1,7 +1,7 @@
 'use client';
 
 import { useCallback, useEffect, useState } from 'react';
-import { LearningService } from '@/features/learning/services/LearningService';
+import { fetchLearningCatalog } from '@/services/learning/learningCatalogCache';
 import { HOME_AREA_IDS, type AreaId } from '@/shared/constants';
 import {
   ensureLearningProgressSynced,
@@ -11,6 +11,7 @@ import {
 import { getMergedAttemptHistory } from '@/services/persistence/examPersistence';
 import { PHASE_SKIP_UPDATED_EVENT } from '@/services/persistence/phaseSkipPersistence';
 import { LESSON_COMPLETED_EVENT } from '@/services/persistence';
+import { debounceFn } from '@/utils/debounceFn';
 import { buildProfileCourseProgress } from '../services/profileCourseProgressBuild';
 import { EMPTY_PROFILE_COURSE_PROGRESS, type ProfileCourseProgressSnapshot } from '../types/profileCourseProgress';
 import type { LocalAttemptRecord } from '@/services/demo/mapLocalAttemptToExamResult';
@@ -28,25 +29,18 @@ export function useProfileCourseProgress(userId: string | undefined) {
 
     setLoading(true);
     try {
-      const [lessonsByAreaEntries, attempts, learningProgress] = await Promise.all([
-        Promise.all(
-          HOME_AREA_IDS.map(async (areaId) => {
-            const lessons = await LearningService.getLearningPath(areaId);
-            return [areaId, lessons] as const;
-          })
-        ),
+      const [lessonsByArea, attempts, learningProgress] = await Promise.all([
+        fetchLearningCatalog(),
         getMergedAttemptHistory(userId) as Promise<LocalAttemptRecord[]>,
         ensureLearningProgressSynced(userId),
       ]);
-
-      const lessonsByArea = Object.fromEntries(lessonsByAreaEntries) as Partial<
-        Record<AreaId, Awaited<ReturnType<typeof LearningService.getLearningPath>>>
-      >;
 
       const skipMap = skippedSectionIdsByAreaFromRecords(learningProgress.phaseSkips);
       const skippedSectionIdsByArea = Object.fromEntries(
         HOME_AREA_IDS.map((areaId) => [areaId, skipMap[areaId] ?? new Set<string>()])
       ) as Partial<Record<AreaId, Set<string>>>;
+
+      const hasLessonCatalog = HOME_AREA_IDS.some((areaId) => (lessonsByArea[areaId]?.length ?? 0) > 0);
 
       setCourseProgress(
         buildProfileCourseProgress({
@@ -54,7 +48,7 @@ export function useProfileCourseProgress(userId: string | undefined) {
           completedLessonIds: learningProgress.completedLessons,
           skippedSectionIdsByArea,
           attempts,
-          phasesAvailable: true,
+          phasesAvailable: hasLessonCatalog,
         })
       );
     } catch (err) {
@@ -72,7 +66,7 @@ export function useProfileCourseProgress(userId: string | undefined) {
   useEffect(() => {
     if (!userId) return;
 
-    const refresh = () => void load();
+    const refresh = debounceFn(() => void load(), 400);
     window.addEventListener(LESSON_COMPLETED_EVENT, refresh);
     window.addEventListener(PHASE_SKIP_UPDATED_EVENT, refresh);
     window.addEventListener(LEARNING_PROGRESS_UPDATED_EVENT, refresh);

@@ -25,14 +25,14 @@ export async function loadUserProfile(
   email: string | null,
   displayName: string | null
 ): Promise<MappedUser | UserProfile | null> {
-  const profile = await UserSupabaseService.getByUserId(uid);
+  const profile = await UserSupabaseService.getProfileSummary(uid);
   if (!profile) {
     await UserSupabaseService.createUser(uid, {
       email,
       displayName,
       username: displayName,
     });
-    return UserSupabaseService.getByUserId(uid);
+    return UserSupabaseService.getProfileSummary(uid);
   }
   return profile;
 }

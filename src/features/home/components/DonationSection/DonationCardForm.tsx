@@ -3,6 +3,11 @@ import { cn } from '@/utils/cn';
 import { Icon } from '@/shared/components/Icon';
 import { useDonationContext } from './DonationContext';
 
+const inputClass = cn(
+  'rounded-lg border border-surface-border bg-surface-overlay/40 text-sm text-on-surface',
+  'placeholder:text-on-surface-muted/60 transition-colors focus:border-app-accent focus:outline-none'
+);
+
 export function DonationCardForm() {
   const {
     cardData,
@@ -25,8 +30,8 @@ export function DonationCardForm() {
     return (
       <div className="bg-lesson-sci-glow-a/20 rounded-xl border border-green-500/50 p-6 text-center">
         <Icon name="check" className="mb-3 text-4xl text-green-400" />
-        <h5 className="text-lg font-bold text-white">¡Gracias por tu Sprite!</h5>
-        <p className="text-sm text-gray-300">Tu apoyo ha sido recibido.</p>
+        <h5 className="text-lg font-bold text-on-surface">¡Gracias por tu Sprite!</h5>
+        <p className="text-sm text-on-surface-muted">Tu apoyo ha sido recibido.</p>
       </div>
     );
   }
@@ -34,7 +39,7 @@ export function DonationCardForm() {
   return (
     <form onSubmit={handlePayment} className="animate-fade-in-up space-y-4">
       <div>
-        <label htmlFor={cardNumberId} className="mb-1 block text-xs font-medium text-gray-400">
+        <label htmlFor={cardNumberId} className="mb-1 block text-xs font-medium text-on-surface-muted">
           Número de Tarjeta
         </label>
         <div className="relative">
@@ -44,19 +49,16 @@ export function DonationCardForm() {
             placeholder="0000 0000 0000 0000"
             value={cardData.cardNumber}
             onChange={handleCardNumberChange}
-            className={cn(
-              'w-full rounded-lg border border-white/10 bg-black/30 py-2.5 pr-4 pl-10 text-sm text-white',
-              'placeholder-gray-600 transition-colors focus:border-purple-500 focus:outline-none'
-            )}
+            className={cn('w-full py-2.5 pr-4 pl-10', inputClass)}
             required
           />
-          <Icon name="credit-card" className="absolute top-1/2 left-3 -translate-y-1/2 text-gray-500" />
+          <Icon name="credit-card" className="absolute top-1/2 left-3 -translate-y-1/2 text-on-surface-muted" />
         </div>
       </div>
 
       <div className="grid grid-cols-2 gap-3">
         <div>
-          <label htmlFor={expiryMonthId} className="mb-1 block text-xs font-medium text-gray-400">
+          <label htmlFor={expiryMonthId} className="mb-1 block text-xs font-medium text-on-surface-muted">
             Vencimiento
           </label>
           <div className="flex gap-2">
@@ -67,11 +69,7 @@ export function DonationCardForm() {
               aria-label="Mes de vencimiento"
               value={cardData.expiryMonth}
               onChange={(e) => handleExpiryChange('month', e.target.value)}
-              className={cn(
-                'w-full rounded-lg border border-white/10 bg-black/30 px-3 py-2.5 text-center text-sm',
-                'text-white placeholder-gray-600 transition-colors focus:border-purple-500',
-                'focus:outline-none'
-              )}
+              className={cn('w-full px-3 py-2.5 text-center', inputClass)}
               required
             />
             <input
@@ -80,17 +78,13 @@ export function DonationCardForm() {
               aria-label="Año de vencimiento"
               value={cardData.expiryYear}
               onChange={(e) => handleExpiryChange('year', e.target.value)}
-              className={cn(
-                'w-full rounded-lg border border-white/10 bg-black/30 px-3 py-2.5 text-center text-sm',
-                'text-white placeholder-gray-600 transition-colors focus:border-purple-500',
-                'focus:outline-none'
-              )}
+              className={cn('w-full px-3 py-2.5 text-center', inputClass)}
               required
             />
           </div>
         </div>
         <div>
-          <label htmlFor={cvvId} className="mb-1 block text-xs font-medium text-gray-400">
+          <label htmlFor={cvvId} className="mb-1 block text-xs font-medium text-on-surface-muted">
             CVC
           </label>
           <div className="relative">
@@ -100,19 +94,16 @@ export function DonationCardForm() {
               placeholder="123"
               value={cardData.cvv}
               onChange={handleCVVChange}
-              className={cn(
-                'w-full rounded-lg border border-white/10 bg-black/30 py-2.5 pr-8 pl-3 text-sm text-white',
-                'placeholder-gray-600 transition-colors focus:border-purple-500 focus:outline-none'
-              )}
+              className={cn('w-full py-2.5 pr-8 pl-3', inputClass)}
               required
             />
-            <Icon name="lock" className="absolute top-1/2 right-3 -translate-y-1/2 text-xs text-gray-500" />
+            <Icon name="lock" className="absolute top-1/2 right-3 -translate-y-1/2 text-xs text-on-surface-muted" />
           </div>
         </div>
       </div>
 
       <div>
-        <label htmlFor={cardHolderId} className="mb-1 block text-xs font-medium text-gray-400">
+        <label htmlFor={cardHolderId} className="mb-1 block text-xs font-medium text-on-surface-muted">
           Nombre en la Tarjeta
         </label>
         <input
@@ -121,10 +112,7 @@ export function DonationCardForm() {
           placeholder="COMO APARECE EN LA TARJETA"
           value={cardData.cardHolder}
           onChange={(e) => setCardData({ ...cardData, cardHolder: e.target.value.toUpperCase() })}
-          className={cn(
-            'w-full rounded-lg border border-white/10 bg-black/30 px-4 py-2.5 text-sm text-white',
-            'placeholder-gray-600 transition-colors focus:border-purple-500 focus:outline-none'
-          )}
+          className={cn('w-full px-4 py-2.5', inputClass)}
           required
         />
       </div>
@@ -134,9 +122,9 @@ export function DonationCardForm() {
         disabled={isProcessing}
         className={cn(
           'mt-4 flex w-full transform items-center justify-center gap-2 rounded-xl bg-linear-to-r',
-          'from-purple-600 to-purple-700 px-4 py-3 font-bold text-white shadow-lg',
-          'shadow-purple-500/25 transition-all hover:scale-[1.02] hover:from-purple-500',
-          'hover:to-purple-600 disabled:cursor-not-allowed disabled:opacity-50'
+          'from-app-accent-strong to-app-accent-darker px-4 py-3 font-bold text-app-on-accent shadow-lg',
+          'shadow-app-accent/25 transition-all hover:scale-[1.02] hover:from-app-accent hover:to-app-accent-strong',
+          'disabled:cursor-not-allowed disabled:opacity-50'
         )}
       >
         {isProcessing ? (
@@ -152,7 +140,7 @@ export function DonationCardForm() {
         )}
       </button>
 
-      <div className="mt-2 flex justify-center gap-2 text-lg text-gray-500">
+      <div className="mt-2 flex justify-center gap-2 text-lg text-on-surface-muted">
         <Icon name="cc-visa" />
         <Icon name="cc-mastercard" />
         <Icon name="cc-amex" />

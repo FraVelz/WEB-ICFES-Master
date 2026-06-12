@@ -2,6 +2,7 @@ export type {
   AchievementProgressEntry,
   AchievementProgressMap,
   SyncAchievementsOptions,
+  SyncAchievementsResult,
 } from './achievementProgressTypes';
 
 export {

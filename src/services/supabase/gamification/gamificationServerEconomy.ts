@@ -99,3 +99,93 @@ export async function hasRewardReason(userId: string, reason: string): Promise<b
   const { profile } = await getProfileRow(userId);
   return hasHistoryReason(profile?.xpHistory, reason) || hasHistoryReason(profile?.coinsHistory, reason);
 }
+
+/** Gasto de monedas validado en servidor. */
+export async function spendCoinsServer(
+  userId: string,
+  amount: number,
+  item = 'purchase'
+): Promise<{ spent: boolean; balance: number }> {
+  if (amount <= 0) {
+    const { profile } = await getProfileRow(userId);
+    const total = profile?.totalCoins ?? 0;
+    const spent = profile?.spentCoins ?? 0;
+    return { spent: false, balance: total - spent };
+  }
+
+  const { sb, profile } = await getProfileRow(userId);
+  const totalCoins = profile?.totalCoins ?? 0;
+  const spentCoins = profile?.spentCoins ?? 0;
+  const available = totalCoins - spentCoins;
+
+  if (available < amount) {
+    throw new Error('Monedas insuficientes');
+  }
+
+  const newSpent = spentCoins + amount;
+  const coinsHistory = [
+    ...(profile?.coinsHistory ?? []),
+    { date: new Date().toISOString(), amount, item, type: 'spend' },
+  ];
+
+  const { error } = await sb
+    .from(GAMIFICATION_TABLE)
+    .update({
+      spent_coins: newSpent,
+      coins_history: coinsHistory,
+      updated_at: new Date().toISOString(),
+    })
+    .eq('user_id', userId);
+
+  if (error) throw new Error(`Error gastando monedas: ${error.message}`);
+
+  return { spent: true, balance: totalCoins - newSpent };
+}
+
+/** XP con multiplicador doble (tienda) calculado en servidor. */
+export async function addXpServerWithMultiplier(
+  userId: string,
+  basePoints: number,
+  reason: string
+): Promise<{ awarded: boolean; xp: number }> {
+  if (basePoints <= 0) return { awarded: false, xp: 0 };
+
+  const { sb, profile } = await getProfileRow(userId);
+  const currentXp = profile?.xp ?? 0;
+
+  if (hasHistoryReason(profile?.xpHistory, reason)) {
+    return { awarded: false, xp: currentXp };
+  }
+
+  const { isDoubleXpActive } = await import('@/features/store/constants/doubleXp');
+  const multiplier = isDoubleXpActive(profile?.doubleXpExpiresAt) ? 2 : 1;
+  const points = basePoints * multiplier;
+
+  const newXP = currentXp + points;
+  const xpHistory = [
+    ...(profile?.xpHistory ?? []),
+    {
+      date: new Date().toISOString(),
+      points,
+      basePoints,
+      multiplier,
+      reason,
+    },
+  ];
+
+  const { error } = await sb
+    .from(GAMIFICATION_TABLE)
+    .upsert(
+      { user_id: userId, xp: newXP, xp_history: xpHistory, updated_at: new Date().toISOString() },
+      { onConflict: 'user_id' }
+    );
+
+  if (error) throw new Error(`Error añadiendo XP: ${error.message}`);
+
+  if (countsForWeeklyLeagueXp(reason)) {
+    const { error: weeklyError } = await sb.rpc('add_weekly_xp', { p_user_id: userId, p_points: points });
+    if (weeklyError) console.warn('No se pudo sumar XP semanal de liga:', weeklyError.message);
+  }
+
+  return { awarded: true, xp: newXP };
+}

@@ -10,10 +10,6 @@ export const PROTECTED_DASHBOARD_PREFIXES = [
   '/practica',
   '/examen-completo',
   '/evaluacion-nivel',
-  '/importancia',
-  '/consejos',
-  '/informacion',
-  '/lectura',
   '/dev',
 ] as const;
 

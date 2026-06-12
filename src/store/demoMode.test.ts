@@ -63,6 +63,6 @@ describe('demoMode', () => {
     enterDemoModeWithAssessment();
     await vi.waitFor(() => expect(hrefSetter).toHaveBeenCalled());
 
-    expect(hrefSetter).toHaveBeenCalledWith('/ruta-aprendizaje');
+    expect(hrefSetter).toHaveBeenCalledWith('/ruta-al-500');
   });
 });

@@ -14,6 +14,11 @@ function parseSkillLevel(value: unknown): SkillLevel | null {
   return VALID_SKILL_LEVELS.includes(value as SkillLevel) ? (value as SkillLevel) : null;
 }
 
+const PROFILE_SUMMARY_COLUMNS =
+  'id, email, display_name, username, bio, skill_level, level_assessment_completed_at, created_at, updated_at' as const;
+
+const PROFILE_WITH_IMAGE_COLUMNS = `${PROFILE_SUMMARY_COLUMNS}, profile_image` as const;
+
 export interface DbUserRow {
   id: string;
   email?: string | null;
@@ -63,11 +68,23 @@ function ensureSupabase() {
 }
 
 const UserSupabaseService = {
-  async getByUserId(userId: string): Promise<MappedUser | null> {
+  async getProfileSummary(userId: string): Promise<MappedUser | null> {
     const sb = ensureSupabase();
-    const { data, error } = await sb.from(TABLE).select('*').eq('id', userId).maybeSingle();
+    const { data, error } = await sb
+      .from(TABLE)
+      .select(PROFILE_SUMMARY_COLUMNS)
+      .eq('id', userId)
+      .maybeSingle();
     if (error) throw new Error(`Error leyendo usuario: ${error.message}`);
-    return data ? mapFromDb(data as Record<string, unknown>) : null;
+    return data ? mapFromDb(data as unknown as Record<string, unknown>) : null;
+  },
+
+  async getByUserId(userId: string, options?: { includeProfileImage?: boolean }): Promise<MappedUser | null> {
+    const sb = ensureSupabase();
+    const columns: string = options?.includeProfileImage ? PROFILE_WITH_IMAGE_COLUMNS : PROFILE_SUMMARY_COLUMNS;
+    const { data, error } = await sb.from(TABLE).select(columns).eq('id', userId).maybeSingle();
+    if (error) throw new Error(`Error leyendo usuario: ${error.message}`);
+    return data ? mapFromDb(data as unknown as Record<string, unknown>) : null;
   },
 
   async createUser(userId: string, userData: Record<string, unknown>): Promise<MappedUser> {

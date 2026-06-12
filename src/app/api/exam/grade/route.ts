@@ -14,7 +14,7 @@ export async function POST(request: NextRequest) {
     const ip = getClientIp(request);
     const rateKey = user ? `exam-grade:user:${user.id}` : `exam-grade:demo:${ip}`;
     const limit = user ? 30 : 10;
-    const rate = checkRateLimit(rateKey, limit, 60_000);
+    const rate = await checkRateLimit(rateKey, limit, 60_000);
 
     if (!rate.allowed) {
       return NextResponse.json(

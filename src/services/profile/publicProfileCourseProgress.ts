@@ -14,7 +14,7 @@ export async function fetchPublicCourseProgress(
   const [examResult, gamificationResult, lessonsByArea] = await Promise.all([
     sb
       .from('exam_results')
-      .select('id, exam_type, completed_at, correct_answers, score, total_questions, questions')
+      .select('id, exam_type, completed_at, correct_answers, score, total_questions')
       .eq('user_id', userId),
     sb.from('user_gamification').select('achievements').eq('user_id', userId).maybeSingle(),
     fetchPublishedLessonsByArea(sb),

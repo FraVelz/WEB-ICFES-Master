@@ -1,7 +1,31 @@
 import { TipCard } from './TipCard';
 import { TipsCategorySection } from './TipsCategorySection';
 
-export function TipsCategoriesSectionsStudy() {
+type TipsCategoriesSectionsStudyProps = {
+  previewLimit?: number;
+};
+
+export function TipsCategoriesSectionsStudy({ previewLimit }: TipsCategoriesSectionsStudyProps) {
+  if (previewLimit) {
+    return (
+      <TipsCategorySection
+        id="tiempo"
+        title="Gestión del tiempo"
+        description="Organiza tu estudio sin agobiarte ni dejar todo para el final."
+        icon="clock"
+      >
+        <TipCard
+          title="Bloques de 25–45 minutos"
+          description="Estudia en sesiones cortas con descansos de 5–10 minutos. Es más sostenible que maratones de horas."
+        />
+        <TipCard
+          title="Prioriza por área débil"
+          description="Dedica más tiempo a las materias donde obtienes menos aciertos en la plataforma."
+        />
+      </TipsCategorySection>
+    );
+  }
+
   return (
     <>
       <TipsCategorySection

@@ -6,8 +6,10 @@ import {
   type LearningPhaseNumber,
 } from '@/features/learning/constants/learningPhases';
 import { ensureLearningProgressSynced } from '@/services/learning';
+import { getLearningPathFromCatalog } from '@/services/learning/learningCatalogCache';
 import { getCompletedLessons } from '@/services/persistence';
 import LearningSupabaseService from '@/services/supabase/LearningSupabaseService';
+import type { AreaId } from '@/shared/constants';
 
 interface TopicItem {
   title?: string;
@@ -55,6 +57,9 @@ function mapStaticLesson(
  */
 export const LearningService = {
   getLearningPath: async (areaId: string, phase?: LearningPhaseNumber): Promise<LearningPathLesson[]> => {
+    const fromCatalog = await getLearningPathFromCatalog(areaId as AreaId, phase);
+    if (fromCatalog.length > 0) return fromCatalog;
+
     const lessons = await LearningSupabaseService.getLessonsByArea(areaId, phase);
     if (lessons?.length > 0) {
       return lessons.map((lesson, i) => {

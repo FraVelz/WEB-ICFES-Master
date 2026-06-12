@@ -8,6 +8,7 @@ import { cn } from '@/utils/cn';
 import { ImportanciaGeneralSections } from '../components/ImportanciaGeneralSections';
 import { ImportanciaSaber11Panel } from '../components/ImportanciaSaber11Panel';
 import { ImportanciaValidacionPanel } from '../components/ImportanciaValidacionPanel';
+import { useContentVariant } from '@/features/content/components/ContentPageShell';
 
 const internalLinkClass = cn(
   'text-app-accent font-semibold underline underline-offset-2',
@@ -17,6 +18,9 @@ const internalLinkClass = cn(
 );
 
 export function ImportanciaPage() {
+  const variant = useContentVariant();
+  const isFull = variant === 'full';
+
   return (
     <div className={cn(LECTURA_PAGE_SHELL_CLASS, 'max-w-4xl space-y-10')}>
       <LecturaSectionShell sectionId="importancia">
@@ -37,14 +41,16 @@ export function ImportanciaPage() {
 
         <ImportanciaGeneralSections />
 
-        <div className="space-y-4">
-          <h2 className="text-on-surface text-xl font-bold">Elige tu camino</h2>
-          <p className="text-on-surface-muted text-sm leading-relaxed">
-            Despliega el menú que corresponda a tu situación para ver requisitos, áreas y consejos específicos.
-          </p>
-          <ImportanciaSaber11Panel />
-          <ImportanciaValidacionPanel />
-        </div>
+        {isFull ? (
+          <div className="space-y-4">
+            <h2 className="text-on-surface text-xl font-bold">Elige tu camino</h2>
+            <p className="text-on-surface-muted text-sm leading-relaxed">
+              Despliega el menú que corresponda a tu situación para ver requisitos, áreas y consejos específicos.
+            </p>
+            <ImportanciaSaber11Panel />
+            <ImportanciaValidacionPanel />
+          </div>
+        ) : null}
 
         <p className="text-on-surface-muted text-sm leading-relaxed">
           Infografías, tarifas, fechas e inscripción:{' '}

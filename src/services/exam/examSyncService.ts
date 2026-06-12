@@ -146,7 +146,7 @@ export async function syncAttemptToSupabase(userId: string, attempt: LocalAttemp
 export async function rebuildUserProgress(userId: string): Promise<void> {
   if (!isSupabaseConfigured() || isDemoUserId(userId)) return;
 
-  const rows = await ExamSupabaseService.getByUserId(userId);
+  const rows = await ExamSupabaseService.getByUserId(userId, { includeQuestions: true });
   if (rows.length === 0) {
     await ProgressSupabaseService.upsert(userId, {
       totalAttempts: 0,
@@ -197,6 +197,6 @@ export async function rebuildUserProgress(userId: string): Promise<void> {
 
 export async function fetchRemoteAttempts(userId: string): Promise<AttemptWithQuestions[]> {
   if (!isSupabaseConfigured() || isDemoUserId(userId)) return [];
-  const rows = await ExamSupabaseService.getByUserId(userId);
+  const rows = await ExamSupabaseService.getByUserId(userId, { limit: 50 });
   return rows.map((row) => mapExamResultRowToAttempt(row));
 }

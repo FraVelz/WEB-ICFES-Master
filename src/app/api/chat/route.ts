@@ -111,7 +111,7 @@ export async function POST(request: NextRequest) {
 
     const ip = getClientIp(request);
     const rateKey = authUser ? `chat:user:${authUser.id}` : `chat:anon:${ip}`;
-    const rate = checkRateLimit(rateKey, isLoggedIn ? 40 : 8, 60_000);
+    const rate = await checkRateLimit(rateKey, isLoggedIn ? 40 : 8, 60_000);
 
     if (!rate.allowed) {
       return NextResponse.json({ error: 'Demasiadas solicitudes al asistente. Espera un momento.' }, { status: 429 });
@@ -189,12 +189,11 @@ export async function POST(request: NextRequest) {
   } catch (error: unknown) {
     console.error('Error en API chat:', error);
 
-    const err = error as { status?: number; message?: string };
-    if (err?.status && err?.message) {
-      return NextResponse.json({ error: err.message }, { status: typeof err.status === 'number' ? err.status : 500 });
+    const err = error as { status?: number };
+    if (err?.status && typeof err.status === 'number' && err.status >= 400 && err.status < 500) {
+      return NextResponse.json({ error: 'No se pudo procesar la solicitud al asistente.' }, { status: err.status });
     }
 
-    const message = error instanceof Error ? error.message : 'Error al comunicarse con la API de OpenAI';
-    return NextResponse.json({ error: message }, { status: 500 });
+    return NextResponse.json({ error: 'Error al comunicarse con el asistente. Intenta de nuevo.' }, { status: 500 });
   }
 }

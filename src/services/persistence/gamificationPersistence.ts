@@ -1,16 +1,28 @@
 /**
- * Gamificación — Supabase (`user_gamification`).
+ * Gamificación — recompensas vía API (service role) o lectura directa de perfil.
  */
 import GamificationSupabaseService from '@/services/supabase/GamificationSupabaseService';
+import {
+  awardCoinsViaApi,
+  awardXpViaApi,
+  spendCoinsViaApi,
+} from '@/services/gamification/gamificationAwardClient';
 
 export const gamificationPersistence = {
-  addXP: (userId: string, points: number, reason?: string) => GamificationSupabaseService.addXP(userId, points, reason),
+  addXP: async (userId: string, points: number, reason = 'activity') => {
+    await awardXpViaApi(userId, points, reason);
+    return GamificationSupabaseService.getOrCreate(userId);
+  },
 
-  addCoins: (userId: string, amount: number, reason?: string) =>
-    GamificationSupabaseService.addCoins(userId, amount, reason),
+  addCoins: async (userId: string, amount: number, reason = 'reward') => {
+    await awardCoinsViaApi(userId, amount, reason);
+    return GamificationSupabaseService.getOrCreate(userId);
+  },
 
-  spendCoins: (userId: string, amount: number, item?: string) =>
-    GamificationSupabaseService.spendCoins(userId, amount, item),
+  spendCoins: async (userId: string, amount: number, item = 'purchase') => {
+    await spendCoinsViaApi(userId, amount, item);
+    return GamificationSupabaseService.getOrCreate(userId);
+  },
 
   getProfile: (userId: string) => GamificationSupabaseService.getOrCreate(userId),
 };

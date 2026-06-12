@@ -2,10 +2,7 @@
 
 import { createContext, useContext, useMemo, useRef, useState, type ReactNode } from 'react';
 import { usePathname } from 'next/navigation';
-import { useAuth } from '@/features/auth/context/AuthContext';
-import { useGamification } from '@/hooks/gamification';
-import { useUiSessionStore } from '@/store/uiSessionStore';
-import { getStreakScope } from '@/services/streak';
+import { useGamificationContext } from '@/hooks/gamification/GamificationContext';
 import { getAreaInfo } from '@/shared/constants';
 import { resolveDashboardShellSection } from './shellRoutes';
 import { useDashboardShellLearning } from './useDashboardShellLearning';
@@ -24,16 +21,13 @@ export function DashboardShellProvider({ children }: { children: ReactNode }) {
   const areaSelectorRef = useRef<HTMLButtonElement>(null);
   const streakButtonRef = useRef<HTMLButtonElement>(null);
 
-  const { user } = useAuth();
-  const demoMode = useUiSessionStore((state) => state.demoMode);
-  const streakScope = getStreakScope(user?.uid, demoMode) ?? undefined;
   const {
     currentStreak = 0,
     longestStreak = 0,
     coins = 0,
     streak = [],
     loading: statsLoading,
-  } = useGamification(streakScope);
+  } = useGamificationContext();
 
   const currentAreaData = getAreaInfo(learning.currentArea);
 

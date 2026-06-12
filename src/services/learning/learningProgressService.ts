@@ -25,7 +25,7 @@ export function invalidateLearningProgressSync(userId: string): void {
 }
 
 async function fetchRemoteLearningProgress(userId: string): Promise<LearningProgressSnapshot> {
-  const profile = await GamificationSupabaseService.getByUserId(userId);
+  const profile = await GamificationSupabaseService.getAchievementsMetaByUserId(userId);
   return readLearningProgressRemoteMeta(profile?.achievements);
 }
 
@@ -48,7 +48,7 @@ export async function syncLearningProgressWithRemote(userId: string): Promise<Le
   }
 
   try {
-    const profile = await GamificationSupabaseService.getByUserId(userId);
+    const profile = await GamificationSupabaseService.getAchievementsMetaByUserId(userId);
     const achievements =
       typeof profile?.achievements === 'object' &&
       profile?.achievements !== null &&

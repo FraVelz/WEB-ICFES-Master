@@ -17,7 +17,7 @@ export const DonationMethod = () => {
   return (
     <div className="space-y-8 md:col-span-7">
       <div>
-        <label className="mb-3 block text-sm font-medium tracking-wider text-gray-400 uppercase">
+        <label className="mb-3 block text-sm font-medium tracking-wider text-on-surface-muted uppercase">
           1. Elige un monto de apoyo
         </label>
         <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
@@ -28,8 +28,8 @@ export const DonationMethod = () => {
               className={cn(
                 'cursor-pointer rounded-xl border px-2 py-3 text-sm font-semibold transition-all duration-200',
                 selectedAmount === amount
-                  ? 'scale-105 transform border-purple-500 bg-purple-600 text-white shadow-lg shadow-purple-500/20'
-                  : 'border-white/10 bg-white/5 text-gray-300 hover:border-white/20 hover:bg-white/10'
+                  ? 'scale-105 transform border-app-accent bg-app-accent-strong text-app-on-accent shadow-lg shadow-app-accent/20'
+                  : 'border-surface-border bg-surface-elevated/50 text-on-surface-muted hover:border-surface-border hover:bg-surface-overlay/60'
               )}
             >
               ${amount.toLocaleString()}
@@ -42,8 +42,8 @@ export const DonationMethod = () => {
                 'h-full w-full cursor-pointer rounded-xl border px-2 py-3 text-sm font-semibold',
                 'transition-all duration-200',
                 selectedAmount === 'custom'
-                  ? 'border-purple-500 bg-purple-600 text-white shadow-lg shadow-purple-500/20'
-                  : 'border-white/10 bg-white/5 text-gray-300 hover:border-white/20 hover:bg-white/10'
+                  ? 'border-app-accent bg-app-accent-strong text-app-on-accent shadow-lg shadow-app-accent/20'
+                  : 'border-surface-border bg-surface-elevated/50 text-on-surface-muted hover:border-surface-border hover:bg-surface-overlay/60'
               )}
             >
               Otro
@@ -53,16 +53,16 @@ export const DonationMethod = () => {
         {selectedAmount === 'custom' && (
           <div className="animate-fade-in-up mt-3">
             <div className="relative">
-              <span className="absolute top-1/2 left-4 -translate-y-1/2 text-gray-400">$</span>
+              <span className="absolute top-1/2 left-4 -translate-y-1/2 text-on-surface-muted">$</span>
               <input
                 type="text"
                 value={customAmount}
                 onChange={handleCustomAmountChange}
                 placeholder="Ingresa el valor (COP)"
                 className={cn(
-                  'w-full rounded-xl border border-white/10 bg-black/20 py-3 pr-4 pl-8 text-white',
-                  'placeholder-gray-500 transition-all focus:border-purple-500 focus:ring-1',
-                  'focus:ring-purple-500 focus:outline-none'
+                  'w-full rounded-xl border border-surface-border bg-surface-overlay/40 py-3 pr-4 pl-8 text-on-surface',
+                  'placeholder:text-on-surface-muted/60 transition-all focus:border-app-accent focus:ring-1',
+                  'focus:ring-app-accent focus:outline-none'
                 )}
               />
             </div>
@@ -71,7 +71,7 @@ export const DonationMethod = () => {
       </div>
 
       <div>
-        <label className="mb-3 block text-sm font-medium tracking-wider text-gray-400 uppercase">
+        <label className="mb-3 block text-sm font-medium tracking-wider text-on-surface-muted uppercase">
           2. Elige el medio de donación
         </label>
         <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
@@ -82,8 +82,8 @@ export const DonationMethod = () => {
               className={cn(
                 'group relative cursor-pointer rounded-xl border p-4 text-left transition-all duration-200',
                 selectedMethod === method.id
-                  ? 'border-purple-500 bg-white/10 ring-1 ring-purple-500/50'
-                  : 'border-white/10 bg-white/5 hover:border-white/20 hover:bg-white/10',
+                  ? 'border-app-accent bg-surface-overlay/60 ring-1 ring-app-accent/50'
+                  : 'border-surface-border bg-surface-elevated/50 hover:border-surface-border hover:bg-surface-overlay/60',
                 method.highlight && 'sm:col-span-2'
               )}
             >
@@ -101,16 +101,16 @@ export const DonationMethod = () => {
                 <div
                   className={cn(
                     'flex h-10 w-10 items-center justify-center rounded-full',
-                    method.highlight ? 'bg-lesson-sci-glow-a/20 text-green-400' : 'bg-white/10 text-gray-300'
+                    method.highlight ? 'bg-lesson-sci-glow-a/20 text-green-400' : 'bg-surface-overlay/60 text-on-surface-muted'
                   )}
                 >
                   <Icon name={method.icon} className="text-lg" />
                 </div>
                 <div>
-                  <h4 className={cn('font-bold', selectedMethod === method.id ? 'text-white' : 'text-gray-300')}>
+                  <h4 className={cn('font-bold', selectedMethod === method.id ? 'text-on-surface' : 'text-on-surface-muted')}>
                     {method.name}
                   </h4>
-                  <p className="text-xs text-gray-400">{method.info}</p>
+                  <p className="text-xs text-on-surface-muted">{method.info}</p>
                 </div>
               </div>
             </button>

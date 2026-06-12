@@ -7,6 +7,13 @@ import {
   phaseToSectionId,
   type LearningPhaseNumber,
 } from '@/features/learning/constants/learningPhases';
+import type { LearningPathLesson } from '@/features/learning/services/LearningService';
+import type { AreaId } from '@/shared/constants';
+import {
+  groupRoadmapRowsByArea,
+  LEARNING_ROADMAP_COLUMNS,
+  mapRoadmapRowToLesson,
+} from '@/services/learning/learningCatalogMap';
 import { stripQuizAnswersFromContent } from '@/utils/stripQuizAnswers';
 
 const TABLE = 'learning_content';
@@ -28,7 +35,7 @@ const AREA_MAP = {
   ingles: 'ingles',
 };
 
-function mapLessonRow(row: Record<string, unknown>) {
+function mapFullLessonRow(row: Record<string, unknown>) {
   const content = stripQuizAnswersFromContent((row.content || {}) as Record<string, unknown>);
   const lessonBody =
     typeof content.body === 'string' ? content.body : typeof content.content === 'string' ? content.content : undefined;
@@ -52,8 +59,24 @@ function mapLessonRow(row: Record<string, unknown>) {
 }
 
 const LearningSupabaseService = {
+  /** Catálogo ligero (sin body/quiz) — 1 query para todas las áreas. */
+  async fetchPublishedRoadmapCatalog(): Promise<Partial<Record<AreaId, LearningPathLesson[]>>> {
+    const sb = getSupabase();
+    if (!sb) return {};
+
+    const { data, error } = await sb
+      .from(TABLE)
+      .select(LEARNING_ROADMAP_COLUMNS)
+      .eq('published', true)
+      .order('order_index', { ascending: true });
+
+    if (error) throw new Error(`Error leyendo learning_content: ${error.message}`);
+    return groupRoadmapRowsByArea((data ?? []) as Record<string, unknown>[]);
+  },
+
   /**
-   * Lecciones por área. Si `phase` está definido, solo esa fase (1, 2 o 3).
+   * Lecciones por área con contenido completo (vista de lección).
+   * Preferir `fetchPublishedRoadmapCatalog` para roadmap/perfil/logros.
    */
   async getLessonsByArea(area: string, phase?: LearningPhaseNumber): Promise<Record<string, unknown>[]> {
     const sb = getSupabase();
@@ -72,7 +95,7 @@ const LearningSupabaseService = {
 
     if (!data || data.length === 0) return [];
 
-    return data.map((row) => mapLessonRow(row as Record<string, unknown>));
+    return data.map((row) => mapFullLessonRow(row as Record<string, unknown>));
   },
 
   async getLesson(lessonId: string) {
@@ -81,8 +104,21 @@ const LearningSupabaseService = {
     const { data, error } = await sb.from(TABLE).select('*').eq('id', lessonId).eq('published', true).maybeSingle();
     if (error) throw new Error(`Error leyendo lección: ${error.message}`);
     if (!data) return null;
-    return mapLessonRow(data as Record<string, unknown>);
+    return mapFullLessonRow(data as Record<string, unknown>);
   },
+
+  /** Roadmap ligero filtrado por área (sin query extra si el caller ya tiene el catálogo). */
+  filterRoadmapCatalog(
+    catalog: Partial<Record<AreaId, LearningPathLesson[]>>,
+    areaId: AreaId,
+    phase?: LearningPhaseNumber
+  ): LearningPathLesson[] {
+    const lessons = catalog[areaId] ?? [];
+    if (phase === undefined) return [...lessons];
+    return lessons.filter((lesson) => lesson.phase === phase);
+  },
+
+  mapRoadmapRowToLesson,
 };
 
 export default LearningSupabaseService;

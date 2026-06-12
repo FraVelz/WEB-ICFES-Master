@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { cn } from '@/utils/cn';
 import { Icon } from '@/shared/components/Icon';
-import { useGamification, useGamificationScope } from '@/hooks/gamification';
+import { useGamificationContext } from '@/hooks/gamification/GamificationContext';
 import { getAchievementChainSummary } from '@/shared/constants/achievements/achievementChainDisplay';
 import { getLevelInfo } from '@/services/gamification/gamificationUtils';
 import { AsideCard } from './AsideCard';
@@ -11,8 +11,7 @@ import { useDashboardShell } from './DashboardShellContext';
 
 export function AchievementsAsidePanels() {
   const { currentStreak, coins } = useDashboardShell();
-  const gamificationScope = useGamificationScope();
-  const { achievements, completedCount, totalXP, level, longestStreak, loading } = useGamification(gamificationScope);
+  const { achievements, completedCount, totalXP, level, longestStreak, loading } = useGamificationContext();
   const levelInfo = getLevelInfo(totalXP);
   const summary = getAchievementChainSummary(achievements);
 

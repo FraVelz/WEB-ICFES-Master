@@ -14,12 +14,16 @@ import {
 import { saveStudyTimeState } from './studyTimeService';
 
 vi.mock('@/services/achievements/achievementProgressService', () => ({
-  syncAchievementsFromGameplay: vi.fn(async () => ({})),
+  syncAchievementsFromGameplay: vi.fn(async () => ({
+    progress: {},
+    progressChanged: false,
+    hadNewUnlocks: false,
+  })),
 }));
 
 vi.mock('@/services/supabase/GamificationSupabaseService', () => ({
   default: {
-    getByUserId: vi.fn(async () => null),
+    getAchievementsMetaByUserId: vi.fn(async () => null),
     updateAchievements: vi.fn(async () => ({})),
   },
 }));

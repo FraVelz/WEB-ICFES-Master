@@ -6,8 +6,12 @@ import { LECTURA_PAGE_SHELL_CLASS } from '@/features/lectura/constants';
 import { cn } from '@/utils/cn';
 import { IcfesInfographicsSection } from '@/features/tips/components/IcfesInfographicsSection';
 import { IcfesOfficialLinksSection } from '../components/IcfesOfficialLinksSection';
+import { useContentVariant } from '@/features/content/components/ContentPageShell';
 
 export function InformacionPage() {
+  const variant = useContentVariant();
+  const isFull = variant === 'full';
+
   return (
     <div className={cn(LECTURA_PAGE_SHELL_CLASS, 'max-w-4xl space-y-10')}>
       <LecturaSectionShell sectionId="informacion">
@@ -22,7 +26,7 @@ export function InformacionPage() {
           </p>
         </header>
 
-        <IcfesInfographicsSection />
+        {isFull ? <IcfesInfographicsSection /> : null}
 
         <IcfesOfficialLinksSection />
       </LecturaSectionShell>

@@ -1,0 +1,99 @@
+import { supabase } from '@/config/supabase';
+import { isSupabaseConfigured } from '@/services/persistence/supabaseConfigured';
+import type { LearningPathLesson } from '@/features/learning/services/LearningService';
+import type { LearningPhaseNumber } from '@/features/learning/constants/learningPhases';
+import type { AreaId } from '@/shared/constants';
+import LearningSupabaseService from '@/services/supabase/LearningSupabaseService';
+
+const CACHE_STORAGE_KEY = 'icfes_learning_catalog_v1';
+const CACHE_TTL_MS = 20 * 60 * 1000;
+
+type CatalogCachePayload = {
+  fetchedAt: number;
+  lessonsByArea: Partial<Record<AreaId, LearningPathLesson[]>>;
+};
+
+let memoryCache: CatalogCachePayload | null = null;
+
+function readSessionCache(): CatalogCachePayload | null {
+  if (typeof window === 'undefined') return null;
+  try {
+    const raw = sessionStorage.getItem(CACHE_STORAGE_KEY);
+    if (!raw) return null;
+    const parsed = JSON.parse(raw) as CatalogCachePayload;
+    if (!parsed?.fetchedAt || !parsed.lessonsByArea) return null;
+    if (Date.now() - parsed.fetchedAt > CACHE_TTL_MS) return null;
+    return parsed;
+  } catch {
+    return null;
+  }
+}
+
+function writeSessionCache(payload: CatalogCachePayload): void {
+  if (typeof window === 'undefined') return;
+  try {
+    sessionStorage.setItem(CACHE_STORAGE_KEY, JSON.stringify(payload));
+  } catch {
+    // quota exceeded — memory cache sigue válido
+  }
+}
+
+function isCacheFresh(cache: CatalogCachePayload | null): cache is CatalogCachePayload {
+  return Boolean(cache && Date.now() - cache.fetchedAt <= CACHE_TTL_MS);
+}
+
+let fetchInFlight: Promise<Partial<Record<AreaId, LearningPathLesson[]>>> | null = null;
+
+async function fetchCatalogFromSupabase(): Promise<Partial<Record<AreaId, LearningPathLesson[]>>> {
+  if (!isSupabaseConfigured() || !supabase) return {};
+  return LearningSupabaseService.fetchPublishedRoadmapCatalog();
+}
+
+/** Invalida cache en memoria y sessionStorage (p. ej. tras publicar contenido en admin). */
+export function invalidateLearningCatalogCache(): void {
+  memoryCache = null;
+  fetchInFlight = null;
+  if (typeof window !== 'undefined') {
+    try {
+      sessionStorage.removeItem(CACHE_STORAGE_KEY);
+    } catch {
+      // ignore
+    }
+  }
+}
+
+/** Catálogo de lecciones agrupado por área — 1 query Supabase, cache 20 min. */
+export async function fetchLearningCatalog(): Promise<Partial<Record<AreaId, LearningPathLesson[]>>> {
+  if (isCacheFresh(memoryCache)) return memoryCache.lessonsByArea;
+
+  const session = readSessionCache();
+  if (isCacheFresh(session)) {
+    memoryCache = session;
+    return session.lessonsByArea;
+  }
+
+  if (fetchInFlight) return fetchInFlight;
+
+  fetchInFlight = fetchCatalogFromSupabase()
+    .then((lessonsByArea) => {
+      const payload: CatalogCachePayload = { fetchedAt: Date.now(), lessonsByArea };
+      memoryCache = payload;
+      writeSessionCache(payload);
+      return lessonsByArea;
+    })
+    .finally(() => {
+      fetchInFlight = null;
+    });
+
+  return fetchInFlight;
+}
+
+export async function getLearningPathFromCatalog(
+  areaId: AreaId,
+  phase?: LearningPhaseNumber
+): Promise<LearningPathLesson[]> {
+  const catalog = await fetchLearningCatalog();
+  const lessons = catalog[areaId] ?? [];
+  if (phase === undefined) return [...lessons];
+  return lessons.filter((lesson) => lesson.phase === phase);
+}

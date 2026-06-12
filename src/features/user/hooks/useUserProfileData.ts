@@ -66,7 +66,7 @@ export function useUserProfileData(uid: string | undefined) {
       }
 
       try {
-        const profile = await UserSupabaseService.getByUserId(uid);
+        const profile = await UserSupabaseService.getByUserId(uid, { includeProfileImage: true });
         if (cancelled) return;
 
         if (!profile) {

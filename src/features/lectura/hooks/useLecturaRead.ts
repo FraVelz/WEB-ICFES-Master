@@ -3,8 +3,8 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useAuth } from '@/features/auth/context/AuthContext';
 import { syncAchievementsFromGameplay } from '@/services/achievements/achievementProgressService';
+import { notifyGamificationUpdatedIfNeeded } from '@/services/achievements/gamificationUpdatedEvents';
 import { resolveCoinsUserId } from '@/services/demo/demoCoins';
-import { STREAK_UPDATED_EVENT } from '@/services/streak';
 import { useUiSessionStore } from '@/store/uiSessionStore';
 import type { LecturaSectionId } from '../constants';
 import {
@@ -15,10 +15,8 @@ import {
 } from '../services/lecturaReadPersistence';
 
 function syncAchievementsAfterLecturaRead(scopeId: string): void {
-  void syncAchievementsFromGameplay(scopeId).then(() => {
-    if (typeof window !== 'undefined') {
-      window.dispatchEvent(new Event(STREAK_UPDATED_EVENT));
-    }
+  void syncAchievementsFromGameplay(scopeId).then(({ progressChanged, hadNewUnlocks }) => {
+    notifyGamificationUpdatedIfNeeded({ progressChanged, hadNewUnlocks });
   });
 }
 

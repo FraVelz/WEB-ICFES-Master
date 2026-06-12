@@ -11,7 +11,9 @@ import {
   readAchievementProgress,
   writeAchievementProgress,
 } from './achievementProgressStorage';
-import type { AchievementProgressMap, SyncAchievementsOptions } from './achievementProgressTypes';
+import type { AchievementProgressMap, SyncAchievementsOptions, SyncAchievementsResult } from './achievementProgressTypes';
+
+const syncInFlight = new Map<string, Promise<SyncAchievementsResult>>();
 
 async function loadRemoteAchievementProgress(userId: string): Promise<AchievementProgressMap> {
   if (isDemoUserId(userId) || !isSupabaseConfigured()) return {};
@@ -61,17 +63,17 @@ export async function reconcileAchievementsWithoutRewards(
   return merged;
 }
 
-export async function syncAchievementsFromGameplay(
+async function runSyncAchievementsFromGameplay(
   userId: string,
   options: SyncAchievementsOptions = {}
-): Promise<AchievementProgressMap> {
+): Promise<SyncAchievementsResult> {
   const remote = options.remoteAchievements ?? (await loadRemoteAchievementProgress(userId));
   const local = readAchievementProgress(userId);
   const previous = mergeAchievementProgressMaps(remote, local);
   const computed = await computeAchievementProgressFromGameplay(userId, options);
   const next = mergeAchievementProgressMaps(previous, computed);
 
-  await awardNewUnlocks(userId, previous, next);
+  const hadNewUnlocks = (await awardNewUnlocks(userId, previous, next)) > 0;
 
   const progressChanged = !progressMapsEqual(previous, next);
 
@@ -80,5 +82,19 @@ export async function syncAchievementsFromGameplay(
   }
   writeAchievementProgress(userId, next);
 
-  return next;
+  return { progress: next, progressChanged, hadNewUnlocks };
+}
+
+export async function syncAchievementsFromGameplay(
+  userId: string,
+  options: SyncAchievementsOptions = {}
+): Promise<SyncAchievementsResult> {
+  const inFlight = syncInFlight.get(userId);
+  if (inFlight) return inFlight;
+
+  const promise = runSyncAchievementsFromGameplay(userId, options).finally(() => {
+    syncInFlight.delete(userId);
+  });
+  syncInFlight.set(userId, promise);
+  return promise;
 }

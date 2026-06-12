@@ -6,6 +6,7 @@ import { LecturaSectionShell, LECTURA_CONSEJOS_ACCENT } from '@/features/lectura
 import { LECTURA_PAGE_SHELL_CLASS } from '@/features/lectura/constants';
 import { cn } from '@/utils/cn';
 import { TipsCategoriesSections } from '../components/TipsCategoriesSections';
+import { useContentVariant } from '@/features/content/components/ContentPageShell';
 
 const internalLinkClass = cn(
   'text-app-accent font-semibold underline underline-offset-2',
@@ -15,6 +16,8 @@ const internalLinkClass = cn(
 );
 
 export function TipsPage() {
+  const variant = useContentVariant();
+
   return (
     <div className={cn(LECTURA_PAGE_SHELL_CLASS, 'max-w-4xl space-y-10')}>
       <LecturaSectionShell sectionId="consejos">
@@ -29,7 +32,7 @@ export function TipsPage() {
           </p>
         </header>
 
-        <TipsCategoriesSections />
+        <TipsCategoriesSections variant={variant} />
 
         <p className="text-on-surface-muted text-sm leading-relaxed">
           Las infografías oficiales del Saber 11° y los enlaces al sitio del ICFES están en{' '}

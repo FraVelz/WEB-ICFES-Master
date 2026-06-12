@@ -12,6 +12,9 @@ export type { GamificationProfile, ShopInventoryState } from './gamification/gam
 
 const GamificationSupabaseService = {
   getByUserId: profile.getByUserId,
+  getAchievementsMetaByUserId: profile.getAchievementsMetaByUserId,
+  getEconomyByUserId: profile.getEconomyByUserId,
+  getStreakByUserId: profile.getStreakByUserId,
   getOrCreate: profile.getOrCreate,
   addXP: economy.addXP,
   addCoins: economy.addCoins,

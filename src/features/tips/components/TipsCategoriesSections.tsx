@@ -1,11 +1,18 @@
 import { TipsCategoriesSectionsExam } from './TipsCategoriesSectionsExam';
 import { TipsCategoriesSectionsStudy } from './TipsCategoriesSectionsStudy';
+import type { ContentVariant } from '@/features/content/components/ContentPageShell';
 
-export function TipsCategoriesSections() {
+type TipsCategoriesSectionsProps = {
+  variant?: ContentVariant;
+};
+
+export function TipsCategoriesSections({ variant = 'full' }: TipsCategoriesSectionsProps) {
+  const previewLimit = variant === 'public' ? 2 : undefined;
+
   return (
     <>
-      <TipsCategoriesSectionsStudy />
-      <TipsCategoriesSectionsExam />
+      <TipsCategoriesSectionsStudy previewLimit={previewLimit} />
+      <TipsCategoriesSectionsExam previewLimit={previewLimit} />
     </>
   );
 }

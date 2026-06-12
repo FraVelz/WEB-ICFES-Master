@@ -83,12 +83,13 @@ export const useGamification = (scope: StreakScope | undefined) => {
       setLongestStreak(metrics.longestStreak);
 
       if (achievementUserId) {
-        achProgress = await syncAchievementsFromGameplay(achievementUserId, {
+        const { progress: syncedProgress } = await syncAchievementsFromGameplay(achievementUserId, {
           remoteAchievements: profile ? normalizeAchievementsRecord(profile.achievements) : undefined,
           userLevel: profile ? calculateLevel(profile.xp ?? 0) : undefined,
           currentStreak: metrics.currentStreak,
           longestStreak: metrics.longestStreak,
         });
+        achProgress = syncedProgress;
       }
 
       if (accountUserId) {

@@ -5,10 +5,12 @@ import { LecturaSectionCard } from '../components/LecturaSectionCard';
 import { LECTURA_PAGE_SHELL_CLASS, LECTURA_SECTIONS } from '../constants';
 import { cn } from '@/utils/cn';
 import { useLecturaRead } from '../hooks/useLecturaRead';
+import { useContentVariant } from '@/features/content/components/ContentPageShell';
 
 export function LecturaPage() {
+  const variant = useContentVariant();
   const { isRead, readSections } = useLecturaRead();
-  const readCount = readSections.length;
+  const readCount = variant === 'full' ? readSections.length : 0;
   const totalCount = LECTURA_SECTIONS.length;
 
   return (
@@ -28,7 +30,11 @@ export function LecturaPage() {
 
       <nav className="space-y-3" aria-label="Secciones de lectura">
         {LECTURA_SECTIONS.map((section) => (
-          <LecturaSectionCard key={section.id} section={section} isRead={isRead(section.id)} />
+          <LecturaSectionCard
+            key={section.id}
+            section={section}
+            isRead={variant === 'full' ? isRead(section.id) : false}
+          />
         ))}
       </nav>
     </div>

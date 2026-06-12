@@ -1,5 +1,6 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import { fetchPublicProfile } from '@/services/profile/publicProfileServer';
+import { checkRateLimit, getClientIp } from '@/utils/rateLimit';
 
 export const runtime = 'nodejs';
 
@@ -9,7 +10,13 @@ type RouteContext = {
   params: Promise<{ userId: string }>;
 };
 
-export async function GET(_request: Request, context: RouteContext) {
+export async function GET(request: NextRequest, context: RouteContext) {
+  const ip = getClientIp(request);
+  const rate = await checkRateLimit(`profile-public:${ip}`, 30, 60_000);
+  if (!rate.allowed) {
+    return NextResponse.json({ error: 'too_many_requests' }, { status: 429 });
+  }
+
   const { userId } = await context.params;
 
   if (!userId || !UUID_REGEX.test(userId)) {

@@ -2,15 +2,14 @@
 
 import React, { useMemo } from 'react';
 import { useAuth } from '@/features/auth/context/AuthContext';
-import { useGamification, useGamificationScope } from '@/hooks/gamification';
+import { useGamificationContext } from '@/hooks/gamification/GamificationContext';
 import { getAchievementChainSummary } from '@/shared/constants/achievements/achievementChainDisplay';
 import { AchievementsList } from '../components/AchievementsList';
 import { SkeletonGrid } from '@/shared/components/SkeletonCard';
 
 export const UnifiedAchievementsPage = () => {
   const { loading: authLoading } = useAuth();
-  const scope = useGamificationScope();
-  const { achievements, loading, level } = useGamification(scope);
+  const { achievements, loading, level } = useGamificationContext();
   const summary = useMemo(() => getAchievementChainSummary(achievements), [achievements]);
 
   const showLoading = authLoading || (loading && achievements.length === 0);

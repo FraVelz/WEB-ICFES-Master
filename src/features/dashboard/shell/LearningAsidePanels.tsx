@@ -4,7 +4,7 @@ import { useMemo } from 'react';
 import Link from 'next/link';
 import { cn } from '@/utils/cn';
 import { useAuth } from '@/features/auth/context/AuthContext';
-import { useGamification, useGamificationScope } from '@/hooks/gamification';
+import { useGamificationContext } from '@/hooks/gamification/GamificationContext';
 import { getStageLabel } from '@/features/learning/shell/SecondaryHeader/sectionStageUtils';
 import { getPracticaHrefForRoadmapArea } from '@/shared/constants';
 import { resolveStudyTimeUserId } from '@/services/studyTime';
@@ -20,8 +20,7 @@ export function LearningAsidePanels() {
   const demoMode = useUiSessionStore((state) => state.demoMode);
   const studyUserId = resolveStudyTimeUserId(user?.uid, demoMode);
   const studyStats = useStudyTimeStats(studyUserId);
-  const gamificationScope = useGamificationScope();
-  const { totalXP, level, longestStreak } = useGamification(gamificationScope);
+  const { totalXP, level, longestStreak } = useGamificationContext();
 
   const sectionProgress = useMemo(() => computeSectionProgress(currentSection), [currentSection]);
   const nextLesson = useMemo(() => findNextLesson(currentSection), [currentSection]);

@@ -1,5 +1,6 @@
 import { DEMO_USER_ID } from '@/services/demo/demoCoins';
 import { syncAchievementsFromGameplay } from '@/services/achievements/achievementProgressService';
+import { notifyGamificationUpdatedIfNeeded } from '@/services/achievements/gamificationUpdatedEvents';
 import { ACTIVITY_THROTTLE_MS, IDLE_MS, type StudyTimeState } from './studyTimeTypes';
 import { maybeSyncAchievements, notifyStudyTimeUpdated, syncStudyTimeRemote } from './studyTimeRemote';
 import { applySessionProgress, closeSession } from './studyTimeSession';
@@ -38,6 +39,7 @@ export async function processStudyTimeActivity(userId: string, now = Date.now())
 
   saveStudyTimeState(userId, state);
   notifyStudyTimeUpdated();
+  // Solo sincroniza remoto si se supera récord de sesión (evita egress cada 10 s).
   await maybeSyncAchievements(userId, previousLongest);
 }
 
@@ -53,7 +55,8 @@ export async function finalizeStudyTimeSession(userId: string, now = Date.now())
   await syncStudyTimeRemote(userId, stats);
 
   if (stats.longestSessionMinutes > previousLongest) {
-    await syncAchievementsFromGameplay(userId);
+    const { progressChanged, hadNewUnlocks } = await syncAchievementsFromGameplay(userId);
+    notifyGamificationUpdatedIfNeeded({ progressChanged, hadNewUnlocks });
   }
 }
 

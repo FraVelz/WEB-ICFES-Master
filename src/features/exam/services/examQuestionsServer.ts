@@ -8,6 +8,7 @@ import {
 import { FULL_EXAM_ROUTE_AREAS } from '@/features/exam/data/examAreas';
 import { toPublicExamQuestion, type ExamQuestion, type ExamQuestionPublic } from '@/features/exam/types/question';
 import ExamQuestionsSupabaseService from '@/services/supabase/ExamQuestionsSupabaseService';
+import { getExamQuestionsByIdsForGrading } from '@/services/supabase/ExamQuestionsServerService';
 
 const STATIC_BY_ROUTE: Record<string, ExamQuestion[]> = {
   'lectura-critica': LANGUAGE_QUESTIONS,
@@ -61,7 +62,7 @@ export async function loadQuestionsByIdsForGrading(ids: string[]): Promise<ExamQ
   const staticMatches = staticPool.filter((q) => uniqueIds.includes(q.id));
 
   try {
-    const fromDb = await ExamQuestionsSupabaseService.getByIdsForGrading(uniqueIds);
+    const fromDb = await getExamQuestionsByIdsForGrading(uniqueIds);
     const merged = new Map<string, ExamQuestion>();
     for (const question of [...staticMatches, ...fromDb]) {
       merged.set(question.id, question);

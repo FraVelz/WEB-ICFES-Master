@@ -64,6 +64,10 @@ vi.mock('@/services/studyTime/studyTimeService', () => ({
   STUDY_TIME_META_KEY: '_studyTime',
 }));
 
+vi.mock('@/services/learning/learningCatalogCache', () => ({
+  fetchLearningCatalog: vi.fn(async () => ({})),
+}));
+
 describe('achievementProgressService', () => {
   const storage = new Map<string, string>();
 

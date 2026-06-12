@@ -15,3 +15,9 @@ export type SyncAchievementsOptions = {
   currentStreak?: number;
   longestStreak?: number;
 };
+
+export type SyncAchievementsResult = {
+  progress: AchievementProgressMap;
+  progressChanged: boolean;
+  hadNewUnlocks: boolean;
+};
