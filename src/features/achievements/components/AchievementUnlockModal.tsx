@@ -5,6 +5,7 @@ import { cn } from '@/utils/cn';
 import { Icon } from '@/shared/components/Icon';
 import { useDialogA11y } from '@/shared/hooks/useDialogA11y';
 import { gsap } from '@/lib/gsap';
+import { prefersReducedMotion } from '@/utils/prefersReducedMotion';
 import { ACHIEVEMENT_CATEGORIES, type AchievementCategoryKey } from '@/shared/constants/achievements/achievementCategories';
 import type { AchievementUnlockPayload } from '@/services/achievements/achievementUnlockEvents';
 
@@ -33,6 +34,13 @@ export function AchievementUnlockModal({
 
   useEffect(() => {
     if (!isOpen || !overlayRef.current || !contentRef.current) return;
+
+    if (prefersReducedMotion()) {
+      gsap.set(overlayRef.current, { opacity: 1 });
+      gsap.set(contentRef.current, { opacity: 1, scale: 1, y: 0 });
+      return;
+    }
+
     gsap.fromTo(overlayRef.current, { opacity: 0 }, { opacity: 1, duration: 0.2 });
     gsap.fromTo(
       contentRef.current,

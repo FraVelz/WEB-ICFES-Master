@@ -8,6 +8,7 @@ type EmptyStateProps = {
   description?: string;
   actionLabel?: string;
   actionHref?: string;
+  onAction?: () => void;
   className?: string;
 };
 
@@ -17,6 +18,7 @@ export function EmptyState({
   description,
   actionLabel,
   actionHref,
+  onAction,
   className,
 }: EmptyStateProps) {
   return (
@@ -39,6 +41,18 @@ export function EmptyState({
         >
           {actionLabel}
         </Link>
+      )}
+      {actionLabel && onAction && !actionHref && (
+        <button
+          type="button"
+          onClick={onAction}
+          className={cn(
+            'bg-app-ring/15 text-app-accent hover:bg-app-ring/25 inline-flex cursor-pointer rounded-xl px-4 py-2 text-sm font-semibold',
+            'focus-visible:ring-app-accent transition-colors focus-visible:ring-2 focus-visible:outline-none'
+          )}
+        >
+          {actionLabel}
+        </button>
       )}
     </div>
   );

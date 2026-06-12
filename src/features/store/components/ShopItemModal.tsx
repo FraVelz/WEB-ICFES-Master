@@ -4,6 +4,7 @@ import { cn } from '@/utils/cn';
 import React, { useEffect, useRef } from 'react';
 import { Icon } from '@/shared/components/Icon';
 import { gsap } from '@/lib/gsap';
+import { prefersReducedMotion } from '@/utils/prefersReducedMotion';
 import { DOUBLE_XP_ITEM_ID } from '../constants/doubleXp';
 import { MAX_STREAK_SHIELDS, STREAK_SHIELD_ITEM_ID } from '../constants/streakShield';
 import type { ShopItem } from '../data/shopItems';
@@ -53,6 +54,13 @@ export const ShopItemModal = ({
 
   useEffect(() => {
     if (!isOpen || !overlayRef.current || !contentRef.current) return;
+
+    if (prefersReducedMotion()) {
+      gsap.set(overlayRef.current, { opacity: 1 });
+      gsap.set(contentRef.current, { opacity: 1, scale: 1 });
+      return;
+    }
+
     gsap.fromTo(overlayRef.current, { opacity: 0 }, { opacity: 1, duration: 0.2 });
     gsap.fromTo(
       contentRef.current,

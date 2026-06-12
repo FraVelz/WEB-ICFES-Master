@@ -7,11 +7,25 @@ import { PracticeResultsView } from '@/features/exam/components/practice/Practic
 import { PracticeActiveView } from '@/features/exam/components/practice/PracticeActiveView';
 import { usePracticeExam } from '@/features/exam/hooks/usePracticeExam';
 import { LoadingState } from '@/shared/components/LoadingState';
+import { EmptyState } from '@/shared/components/EmptyState';
 import { LEARNING_PHASES_PATH } from '@/features/learning/data/competencyPhases';
 import { RouteTo500ContextBanner } from '@/features/learning/components/routeTo500/RouteTo500ContextBanner';
+import { BreadcrumbNav } from '@/shared/components/BreadcrumbNav';
 
-const errorBoxClass =
-  'mx-auto max-w-lg rounded-xl border border-red-500/30 bg-red-500/10 px-4 py-6 text-center text-sm text-red-800 dark:text-red-200';
+const errorBoxClass = 'mx-auto max-w-lg px-4';
+
+function PracticeErrorState({ message, onRetry }: { message: string; onRetry?: () => void }) {
+  return (
+    <EmptyState
+      icon="exclamation-circle"
+      title="Error en la práctica"
+      description={message}
+      actionLabel={onRetry ? 'Reintentar' : undefined}
+      onAction={onRetry}
+      className={errorBoxClass}
+    />
+  );
+}
 
 export const PracticePage = () => {
   const {
@@ -50,7 +64,7 @@ export const PracticePage = () => {
   }
 
   if (questionsError) {
-    return <div className={errorBoxClass}>{questionsError}</div>;
+    return <PracticeErrorState message={questionsError} onRetry={() => window.location.reload()} />;
   }
 
   const phaseSkipBanner = isPhaseSkipMode ? (
@@ -71,6 +85,13 @@ export const PracticePage = () => {
   if (!examConfig) {
     return (
       <div className="px-4 pt-6">
+        <BreadcrumbNav
+          className="mb-4"
+          items={[
+            { label: 'Aprendizaje', href: '/ruta-aprendizaje/' },
+            { label: `Práctica ${areaInfo.name}` },
+          ]}
+        />
         {phaseSkipBanner}
         {routeBanner}
         <ExamConfigModal area={areaInfo.name} totalQuestions={allQuestions.length} onStart={handleExamStart} />
@@ -80,7 +101,7 @@ export const PracticePage = () => {
 
   if (isFinished || showResults) {
     if (gradingError) {
-      return <div className={errorBoxClass}>{gradingError}</div>;
+      return <PracticeErrorState message={gradingError} onRetry={resetExam} />;
     }
 
     if (results.length === 0) {

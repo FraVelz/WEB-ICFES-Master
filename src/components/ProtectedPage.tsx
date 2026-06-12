@@ -47,7 +47,11 @@ export default function ProtectedPage({
   }
 
   if (!hasAccess) {
-    return null;
+    return (
+      <div className={cn('flex flex-col items-center justify-center', FULL_PAGE_SHELL_CLASS)}>
+        <LoadingState label="Redirigiendo al inicio de sesión..." layout="fill" />
+      </div>
+    );
   }
 
   if (blockDemoContent && demoMode) {

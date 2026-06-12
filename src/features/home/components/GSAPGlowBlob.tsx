@@ -2,6 +2,7 @@
 
 import { useRef, useEffect } from 'react';
 import { gsap } from '@/lib/gsap';
+import { prefersReducedMotion } from '@/utils/prefersReducedMotion';
 
 interface GSAPGlowBlobProps {
   className?: string;
@@ -14,7 +15,7 @@ export const GSAPGlowBlob = ({ className = '', delay = 0 }: GSAPGlowBlobProps) =
 
   useEffect(() => {
     const el = ref.current;
-    if (!el) return;
+    if (!el || prefersReducedMotion()) return;
 
     const tl = gsap.timeline({ repeat: -1, delay });
     tl.to(el, { opacity: 0.5, duration: 2, ease: 'sine.inOut' });

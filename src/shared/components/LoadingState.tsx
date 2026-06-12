@@ -21,7 +21,7 @@ export function LoadingState({ label = 'Cargando...', layout = 'section', classN
   return (
     <div className={cn(layoutClasses[layout], className)} role="status" aria-live="polite" aria-busy="true">
       <div className="flex flex-col items-center gap-4 text-center">
-        <Icon name="spinner" size="2xl" className="text-app-accent animate-spin" aria-hidden />
+        <Icon name="spinner" size="2xl" className="text-app-accent animate-spin motion-reduce:animate-none" aria-hidden />
         <p className="text-on-surface-muted">{label}</p>
       </div>
     </div>

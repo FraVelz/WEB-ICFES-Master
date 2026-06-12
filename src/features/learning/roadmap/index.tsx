@@ -14,6 +14,7 @@ const LessonPreview = dynamic(() => import('./LessonPreview').then((m) => ({ def
 });
 
 import { LoadingState } from '@/shared/components/LoadingState';
+import { EmptyState } from '@/shared/components/EmptyState';
 
 import type { PathNodeData } from './AreaPath';
 
@@ -74,24 +75,25 @@ export const LearningRoadmap = () => {
       {loading && <LoadingState label="Cargando ruta..." layout="section" />}
 
       {!loading && pathError && (
-        <div
-          role="alert"
-          className="mx-auto mb-6 max-w-md rounded-2xl border border-red-500/30 bg-red-950/30 px-4 py-5 text-center"
-        >
-          <p className="text-sm font-semibold text-red-200">{pathError}</p>
-          <p className="text-on-surface-muted mt-2 text-xs">
-            Comprueba tu conexión o recarga la página. Si persiste, revisa la configuración de Supabase.
-          </p>
-        </div>
+        <EmptyState
+          icon="exclamation-circle"
+          title="No se pudo cargar la ruta"
+          description={pathError}
+          actionLabel="Reintentar"
+          onAction={() => window.location.reload()}
+          className="mx-auto max-w-md px-4"
+        />
       )}
 
       {!loading && !pathError && activeSections.length === 0 && (
-        <div className="border-surface-border/60 bg-surface-elevated/40 mx-auto max-w-md rounded-2xl border px-4 py-8 text-center">
-          <p className="text-sm font-semibold text-white">No hay lecciones en esta fase</p>
-          <p className="text-on-surface-muted mt-2 text-xs">
-            Prueba otra área o fase, o vuelve más tarde cuando se publique contenido nuevo.
-          </p>
-        </div>
+        <EmptyState
+          icon="book-open"
+          title="No hay lecciones en esta fase"
+          description="Prueba otra área o fase, o vuelve más tarde cuando se publique contenido nuevo."
+          actionLabel="Ver fases"
+          actionHref="/fases/"
+          className="mx-auto max-w-md px-4"
+        />
       )}
 
       {!loading && !pathError && activeSections.length > 0 && (

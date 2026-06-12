@@ -1,9 +1,11 @@
 import Link from 'next/link';
 import { cn } from '@/utils/cn';
 import { Icon } from '@/shared/components/Icon';
+import { BreadcrumbNav } from '@/shared/components/BreadcrumbNav';
 
 type LessonContentHeaderProps = {
   title?: string;
+  stepLabel?: string;
   backHref: string;
   progress: number;
   gradientClass: string;
@@ -12,14 +14,24 @@ type LessonContentHeaderProps = {
 
 export function LessonContentHeader({
   title,
+  stepLabel,
   backHref,
   progress,
   gradientClass,
   sectionInnerClass,
 }: LessonContentHeaderProps) {
+  const breadcrumbItems = [
+    { label: 'Aprendizaje', href: backHref },
+    ...(title ? [{ label: title }] : []),
+    ...(stepLabel ? [{ label: stepLabel }] : []),
+  ];
+
   return (
     <>
       <div className="border-surface-border/80 bg-surface-elevated/90 shrink-0 border-b backdrop-blur-md">
+        <div className={cn(sectionInnerClass, 'hidden py-2 sm:block')}>
+          <BreadcrumbNav items={breadcrumbItems} />
+        </div>
         <div className={cn(sectionInnerClass, 'flex items-center justify-between py-2.5 sm:py-3')}>
           <Link
             href={backHref}
