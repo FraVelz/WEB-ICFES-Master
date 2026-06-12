@@ -7,7 +7,7 @@ import './globals.css';
 import Providers from '@/components/Providers';
 import { VercelMetrics } from '@/components/VercelMetrics';
 import { ogImageOpenGraph, ogImageTwitter } from '@/config/ogImage';
-import { getSiteUrl } from '@/config/site';
+import { getSiteUrl, getTwitterSite } from '@/config/site';
 import { THEME_STORAGE_KEY } from '@/features/theme/themeStorage';
 
 const themeInitScript =
@@ -60,6 +60,7 @@ export const metadata: Metadata = {
   twitter: {
     title: 'ICFES Master | Domina el ICFES desde cero',
     description: 'Prepárate con simulacros y preguntas reales para lograr un gran puntaje en el ICFES.',
+    ...(getTwitterSite() ? { site: getTwitterSite() } : {}),
     ...ogImageTwitter,
   },
 };

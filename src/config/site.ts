@@ -19,3 +19,10 @@ export function getSiteUrl(): string {
 
   return DEFAULT_SITE_URL;
 }
+
+/** Handle de Twitter/X para twitter:site (opcional). Ej: @icfesmaster */
+export function getTwitterSite(): string | undefined {
+  const handle = process.env.NEXT_PUBLIC_TWITTER_SITE?.trim();
+  if (!handle) return undefined;
+  return handle.startsWith('@') ? handle : `@${handle}`;
+}

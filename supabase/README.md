@@ -4,7 +4,16 @@ Este directorio versiona el esquema SQL del proyecto Supabase compartido por **W
 
 ## Estado actual
 
-Las políticas RLS y migraciones viven hoy en el panel de Supabase (remoto). Este repo incluye la carpeta como punto de partida para versionar cambios.
+Las políticas RLS y migraciones viven en el proyecto Supabase remoto **`web-icfes-master`**. Este repo versiona SQL nuevo en `supabase/migrations/`.
+
+Migraciones conocidas en remoto (2026-06-12):
+
+- `20260612180453` — `split_learning_lesson_body_sections`
+- `20260612203057` — `consolidate_lesson_content_dividers`
+- `20260612221613` — `rls_baseline`
+- `20260612180000` — `league_rank_config_rls_and_lock_admin_rpc` (también en repo)
+
+Estado post-remediación: [`docs/es/auditoria/04-remediation-status.md`](../docs/es/auditoria/04-remediation-status.md).
 
 ## Checklist RLS
 
