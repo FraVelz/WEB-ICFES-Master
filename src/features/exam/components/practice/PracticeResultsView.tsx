@@ -40,6 +40,7 @@ export function PracticeResultsView({
         subtitle="Análisis de Resultados"
         mobileMenuOpen={mobileMenuOpen}
         onToggleMobileMenu={() => setMobileMenuOpen(!mobileMenuOpen)}
+        onCloseMobileMenu={() => setMobileMenuOpen(false)}
         onShowAnswerSheet={() => setMobileMenuOpen(false)}
       />
 

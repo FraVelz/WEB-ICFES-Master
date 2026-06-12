@@ -1,4 +1,5 @@
 import { cn } from '@/utils/cn';
+import { ExamAnswerOptions } from '@/features/exam/components/ExamAnswerOptions';
 import type { ExamConfig } from '@/features/exam/types';
 import type { ExamQuestionPublic } from '@/features/exam/types/question';
 
@@ -46,39 +47,17 @@ export function PracticeQuestionCard({
         </div>
       </div>
 
-      <div className="ml-14 space-y-3">
-        {question.options.map((option) => {
-          const isSelected = answer === option.letter;
-          return (
-            <button
-              type="button"
-              key={option.letter}
-              onClick={() => onAnswer(question.id, option.letter ?? option.id)}
-              className={cn(
-                'w-full rounded-lg border-2 p-4 text-left transition-all duration-300',
-                'focus-visible:z-10 focus-visible:ring-2 focus-visible:outline-none',
-                'focus-visible:ring-app-accent focus-visible:ring-offset-surface-via focus-visible:ring-offset-2',
-                isSelected
-                  ? 'border-app-accent bg-app-ring/20 text-app-accent-strong'
-                  : 'border-surface-border bg-surface-overlay/40 text-on-surface hover:border-app-accent/50 hover:bg-app-ring/10'
-              )}
-            >
-              <div className="flex items-center gap-3">
-                <div
-                  className={cn(
-                    'flex h-8 w-8 shrink-0 items-center justify-center rounded-full border-2 text-sm font-bold',
-                    isSelected
-                      ? 'border-app-accent bg-app-ring text-white'
-                      : 'border-surface-border text-on-surface-muted'
-                  )}
-                >
-                  {option.letter}
-                </div>
-                <span>{option.text}</span>
-              </div>
-            </button>
-          );
-        })}
+      <div className="ml-14">
+        <ExamAnswerOptions
+          questionId={question.id}
+          questionNumber={index + 1}
+          options={question.options}
+          selectedAnswer={answer}
+          onSelect={onAnswer}
+          selectedClassName="border-app-accent bg-app-ring/20 text-app-accent-strong"
+          unselectedClassName="border-surface-border bg-surface-overlay/40 text-on-surface hover:border-app-accent/50 hover:bg-app-ring/10"
+          optionClassName="focus-visible:ring-offset-surface-via"
+        />
       </div>
 
       {showResults && examConfig.showExplanations && answer && (

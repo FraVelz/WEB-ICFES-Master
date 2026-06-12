@@ -4,6 +4,7 @@ import type { ExamConfig } from '@/features/exam/types';
 import type { ExamQuestionPublic } from '@/features/exam/types/question';
 import { FullExamHeader } from './FullExamHeader';
 import { FullExamShell } from './FullExamShell';
+import { ExamAnswerOptions } from '@/features/exam/components/ExamAnswerOptions';
 
 type FullExamActiveViewProps = {
   areaInfo: { name: string; color: string };
@@ -39,7 +40,7 @@ export function FullExamActiveView({
         showTimer={examConfig.useTimer}
       />
 
-      <div className="mx-auto max-w-7xl px-6 py-8">
+      <div className="mx-auto max-w-7xl px-6 py-8 pb-[max(1.5rem,env(safe-area-inset-bottom))]">
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-4">
           <div className="space-y-6 lg:col-span-3">
             {questions.map((question, index) => (
@@ -71,44 +72,17 @@ export function FullExamActiveView({
                   </div>
                 </div>
 
-                <div className="ml-14 space-y-3">
-                  {question.options.map((option) => {
-                    const isSelected = answers[question.id] === option.letter;
-                    const optionKey = option.letter ?? option.id ?? String(option.text);
-
-                    return (
-                      <button
-                        type="button"
-                        key={optionKey}
-                        onClick={() => onAnswer(question.id, optionKey)}
-                        className={cn(
-                          'w-full rounded-lg border-2 p-4 text-left transition-all duration-300',
-                          'focus-visible:z-10 focus-visible:ring-2 focus-visible:outline-none',
-                          'focus-visible:ring-app-accent focus-visible:ring-offset-2',
-                          'focus-visible:ring-offset-gray-950',
-                          isSelected
-                            ? 'border-app-accent bg-app-ring/20 text-app-on-accent'
-                            : [
-                                'hover:border-app-accent/50 hover:bg-app-ring/10',
-                                'border-white/20 bg-white/5 text-white',
-                              ].join(' ')
-                        )}
-                      >
-                        <div className="flex items-center gap-3">
-                          <div
-                            className={cn(
-                              'flex h-8 w-8 shrink-0 items-center justify-center rounded-full',
-                              'border-2 text-sm font-bold',
-                              isSelected ? 'border-app-accent bg-app-ring text-white' : 'border-white/30'
-                            )}
-                          >
-                            {option.letter}
-                          </div>
-                          <span>{option.text}</span>
-                        </div>
-                      </button>
-                    );
-                  })}
+                <div className="ml-14">
+                  <ExamAnswerOptions
+                    questionId={question.id}
+                    questionNumber={index + 1}
+                    options={question.options}
+                    selectedAnswer={answers[question.id]}
+                    onSelect={onAnswer}
+                    selectedClassName="border-app-accent bg-app-ring/20 text-app-on-accent"
+                    unselectedClassName="hover:border-app-accent/50 hover:bg-app-ring/10 border-white/20 bg-white/5 text-white"
+                    optionClassName="focus-visible:ring-offset-gray-950"
+                  />
                 </div>
               </div>
             ))}

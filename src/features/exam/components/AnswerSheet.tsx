@@ -42,11 +42,17 @@ export const AnswerSheet = ({
           const isAnswered = answer !== undefined;
           const isCurrent = currentQuestion === idx;
 
+          const label = isAnswered
+            ? `Pregunta ${questionNum}, respondida: ${answer}${isCurrent ? ', actual' : ''}`
+            : `Pregunta ${questionNum}, sin responder${isCurrent ? ', actual' : ''}`;
+
           return (
             <button
               type="button"
               key={questionNum}
               onClick={() => onQuestionClick(idx)}
+              aria-label={label}
+              aria-current={isCurrent ? 'true' : undefined}
               className={cn(
                 'flex aspect-square items-center justify-center rounded-lg text-xs font-bold',
                 'transition-all duration-300',
