@@ -10,6 +10,7 @@ import {
 
 export const ROUTE_TO_500_PATH = '/ruta-al-500';
 export const GLOBAL_EXAM_PATH = '/examen-completo';
+export const LECTURA_INDEX_PATH = '/lectura';
 
 export type JourneyStepKind = 'learning' | 'practice-area' | 'practice-global';
 
@@ -93,10 +94,11 @@ const EXAM_STEPS: JourneyStep[] = [
     id: 'examen-global',
     order: 5,
     title: 'Simulacro global e interiorización',
-    subtitle: 'Simulacro integral',
+    subtitle: 'Simulacro integral y lectura guiada',
     summary:
-      'Completa todos los pasos anteriores. La lectura crítica atraviesa todas las áreas y condiciona tu ' +
-      'desempeño global en el Saber 11°.',
+      'Completa todos los pasos anteriores con el simulacro global y lee todos los apartados de Lectura ' +
+      '(Importancia, Información, Consejos y esta ruta): contexto del ICFES, estrategia de estudio y el día ' +
+      'del Saber 11°. La lectura crítica atraviesa todas las áreas y condiciona tu desempeño global.',
     performanceLevels: 'Consolidación',
     indicativeScoreLabel: '~ 400 – 500 pts',
     kind: 'practice-global',

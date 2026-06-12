@@ -7,6 +7,7 @@ import { getAreaInfo } from '@/shared/constants';
 import {
   getAreaSimulacroPhaseCopy,
   getJourneyStepHref,
+  LECTURA_INDEX_PATH,
   type JourneyStep,
 } from '@/features/learning/data/routeTo500';
 
@@ -75,25 +76,40 @@ export function RouteTo500StepCard({
           </p>
         )}
         {showCta && href ? (
-          <Link
-            href={href}
-            className={cn(
-              'inline-flex items-center justify-center rounded-lg px-3 py-1.5 text-xs font-bold text-white',
-              step.accent === 'accent' && 'bg-app-accent hover:brightness-110',
-              step.accent === 'amber' && 'bg-linear-to-r from-amber-600 to-orange-600 hover:brightness-110',
-              step.accent === 'purple' && 'bg-linear-to-r from-purple-600 to-indigo-600 hover:brightness-110',
-              'focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none',
-              step.accent === 'accent' && 'focus-visible:ring-app-accent',
-              step.accent === 'amber' && 'focus-visible:ring-amber-400',
-              step.accent === 'purple' && 'focus-visible:ring-purple-400'
-            )}
-          >
-            {step.kind === 'learning'
-              ? 'Ir a aprendizaje'
-              : step.kind === 'practice-area'
-                ? `Simulacro de ${getAreaInfo(areaId).name}`
-                : 'Simulacro global'}
-          </Link>
+          <div className="flex flex-col gap-2 sm:flex-row sm:flex-wrap">
+            <Link
+              href={href}
+              className={cn(
+                'inline-flex items-center justify-center rounded-lg px-3 py-1.5 text-xs font-bold text-white',
+                step.accent === 'accent' && 'bg-app-accent hover:brightness-110',
+                step.accent === 'amber' && 'bg-linear-to-r from-amber-600 to-orange-600 hover:brightness-110',
+                step.accent === 'purple' && 'bg-linear-to-r from-purple-600 to-indigo-600 hover:brightness-110',
+                'focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none',
+                step.accent === 'accent' && 'focus-visible:ring-app-accent',
+                step.accent === 'amber' && 'focus-visible:ring-amber-400',
+                step.accent === 'purple' && 'focus-visible:ring-purple-400',
+                step.id === 'examen-global' && 'sm:flex-1'
+              )}
+            >
+              {step.kind === 'learning'
+                ? 'Ir a aprendizaje'
+                : step.kind === 'practice-area'
+                  ? `Simulacro de ${getAreaInfo(areaId).name}`
+                  : 'Simulacro global'}
+            </Link>
+            {step.id === 'examen-global' ? (
+              <Link
+                href={LECTURA_INDEX_PATH}
+                className={cn(
+                  'inline-flex items-center justify-center rounded-lg border px-3 py-1.5 text-xs font-bold',
+                  'border-purple-400/40 text-purple-200 hover:bg-purple-500/10',
+                  'focus-visible:ring-2 focus-visible:ring-purple-400 focus-visible:outline-none sm:flex-1'
+                )}
+              >
+                Ver apartados de lectura
+              </Link>
+            ) : null}
+          </div>
         ) : null}
       </div>
     </li>

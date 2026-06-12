@@ -15,6 +15,7 @@ import {
   JOURNEY_TIPS,
   ROUTE_TO_500_DISCLAIMER,
   ROUTE_TO_500_STEPS,
+  LECTURA_INDEX_PATH,
   getJourneyStepById,
   getJourneyStepHref,
   getRecommendedStepHref,
@@ -193,6 +194,16 @@ export function RouteTo500Page() {
             )}
           >
             Simulacro global
+          </Link>
+          <Link
+            href={LECTURA_INDEX_PATH}
+            className={cn(
+              'border-surface-border text-on-surface-muted inline-flex flex-1 items-center justify-center rounded-xl border',
+              'px-4 py-2.5 text-sm font-semibold transition-colors hover:border-purple-500/40 hover:text-purple-300',
+              'focus-visible:ring-2 focus-visible:ring-purple-400 focus-visible:outline-none'
+            )}
+          >
+            Apartados de lectura
           </Link>
         </div>
       </LecturaSectionShell>
