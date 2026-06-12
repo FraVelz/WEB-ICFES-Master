@@ -1,6 +1,11 @@
-import Link from 'next/link';
+'use client';
+
+import { useRef } from 'react';
 import { cn } from '@/utils/cn';
 import { Icon } from '@/shared/components/Icon';
+import { gsap } from '@/lib/gsap';
+
+export type LessonNavDirection = 'prev' | 'next';
 
 type LessonContentFooterProps = {
   prevHref: string | null;
@@ -8,7 +13,14 @@ type LessonContentFooterProps = {
   stepLabel: string;
   gradientClass: string;
   sectionInnerClass: string;
+  onNavigate: (href: string, direction: LessonNavDirection) => void;
+  navigating?: boolean;
 };
+
+function playButtonTap(el: HTMLElement | null) {
+  if (!el) return;
+  gsap.fromTo(el, { scale: 1 }, { scale: 0.92, duration: 0.09, yoyo: true, repeat: 1, ease: 'power2.out' });
+}
 
 export function LessonContentFooter({
   prevHref,
@@ -16,29 +28,50 @@ export function LessonContentFooter({
   stepLabel,
   gradientClass,
   sectionInnerClass,
+  onNavigate,
+  navigating = false,
 }: LessonContentFooterProps) {
+  const prevRef = useRef<HTMLButtonElement>(null);
+  const nextRef = useRef<HTMLButtonElement>(null);
+
   const navButtonBase = cn(
     'flex min-w-[44px] cursor-pointer items-center justify-center gap-1.5 rounded-xl',
-    'font-medium transition-all sm:gap-2 sm:px-4 sm:py-3',
+    'font-medium transition-colors sm:gap-2 sm:px-4 sm:py-3',
     'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:ring-offset-2',
-    'focus-visible:outline-none focus-visible:ring-offset-surface-via'
+    'focus-visible:outline-none focus-visible:ring-offset-surface-via',
+    'disabled:cursor-not-allowed disabled:opacity-60'
   );
+
+  const handlePrev = () => {
+    if (!prevHref || navigating) return;
+    playButtonTap(prevRef.current);
+    onNavigate(prevHref, 'prev');
+  };
+
+  const handleNext = () => {
+    if (!nextHref || navigating) return;
+    playButtonTap(nextRef.current);
+    onNavigate(nextHref, 'next');
+  };
 
   return (
     <div className="border-surface-border/80 bg-surface-via/95 shrink-0 border-t backdrop-blur-md">
       <div className={cn(sectionInnerClass, 'flex items-center justify-between gap-2 py-3 sm:gap-4 sm:py-4')}>
         {prevHref ? (
-          <Link
-            href={prevHref}
+          <button
+            ref={prevRef}
+            type="button"
+            disabled={navigating}
+            onClick={handlePrev}
             className={cn(
               navButtonBase,
               'border-surface-border bg-surface-overlay/80 text-on-surface-muted border px-3 py-2.5',
-              'hover:bg-on-surface-muted/80 hover:text-white'
+              'hover:bg-on-surface-muted/80 hover:text-white active:scale-[0.97]'
             )}
           >
             <Icon name="arrow-left" className="text-sm" />
             <span className="hidden text-sm sm:inline">Anterior</span>
-          </Link>
+          </button>
         ) : (
           <span className="min-w-[44px]" />
         )}
@@ -46,18 +79,21 @@ export function LessonContentFooter({
         <span className="text-on-surface-muted text-xs sm:text-sm">{stepLabel}</span>
 
         {nextHref ? (
-          <Link
-            href={nextHref}
+          <button
+            ref={nextRef}
+            type="button"
+            disabled={navigating}
+            onClick={handleNext}
             className={cn(
               navButtonBase,
-              'bg-linear-to-r px-3 py-2.5 text-white shadow-lg hover:opacity-95',
+              'bg-linear-to-r px-3 py-2.5 text-white shadow-lg hover:opacity-95 active:scale-[0.97]',
               'focus-visible:ring-offset-surface-via focus-visible:ring-2 focus-visible:ring-white',
               gradientClass
             )}
           >
             <span className="hidden text-sm sm:inline">Siguiente</span>
             <Icon name="arrow-right" className="text-sm" />
-          </Link>
+          </button>
         ) : (
           <span className="min-w-[44px]" />
         )}

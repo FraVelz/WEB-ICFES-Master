@@ -5,12 +5,11 @@ import type { PathNodeData } from '@/features/learning/roadmap/AreaPath';
 import { useDashboardShellOptional } from '@/features/dashboard/shell';
 import LearningSupabaseService from '@/services/supabase/LearningSupabaseService';
 
+const fetchedLessonCache = new Map<string, PathNodeData>();
+
 export function useLessonFromRoute(lessonId: string | undefined) {
   const shell = useDashboardShellOptional();
   const sections = shell?.sections ?? [];
-  const [fetchedLesson, setFetchedLesson] = useState<PathNodeData | null>(null);
-  const [loading, setLoading] = useState(Boolean(lessonId));
-  const [error, setError] = useState<string | null>(null);
 
   const lessonFromSections = useMemo(() => {
     if (!lessonId) return null;
@@ -21,6 +20,17 @@ export function useLessonFromRoute(lessonId: string | undefined) {
     return null;
   }, [sections, lessonId]);
 
+  const [fetchedLesson, setFetchedLesson] = useState<PathNodeData | null>(() =>
+    lessonId ? (fetchedLessonCache.get(lessonId) ?? null) : null
+  );
+  const [loading, setLoading] = useState(() => {
+    if (!lessonId) return false;
+    if (lessonFromSections) return false;
+    if (fetchedLessonCache.has(lessonId)) return false;
+    return true;
+  });
+  const [error, setError] = useState<string | null>(null);
+
   useEffect(() => {
     if (!lessonId) {
       setLoading(false);
@@ -28,7 +38,16 @@ export function useLessonFromRoute(lessonId: string | undefined) {
     }
 
     if (lessonFromSections) {
+      fetchedLessonCache.set(lessonId, lessonFromSections);
       setFetchedLesson(null);
+      setLoading(false);
+      setError(null);
+      return;
+    }
+
+    const cached = fetchedLessonCache.get(lessonId);
+    if (cached) {
+      setFetchedLesson(cached);
       setLoading(false);
       setError(null);
       return;
@@ -54,7 +73,7 @@ export function useLessonFromRoute(lessonId: string | undefined) {
           (typeof data.content === 'object' && data.content
             ? (data.content as Record<string, unknown>).body
             : undefined);
-        setFetchedLesson({
+        const lesson = {
           ...data,
           id: String(data.id ?? lessonId),
           title: data.title as string | undefined,
@@ -65,7 +84,9 @@ export function useLessonFromRoute(lessonId: string | undefined) {
           questions: data.questions,
           quiz: data.quiz,
           type: 'lesson',
-        } as PathNodeData);
+        } as PathNodeData;
+        fetchedLessonCache.set(lessonId, lesson);
+        setFetchedLesson(lesson);
       })
       .catch(() => {
         if (!active) return;

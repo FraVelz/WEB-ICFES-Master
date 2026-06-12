@@ -7,6 +7,14 @@ export function isLessonRoute(pathname: string): boolean {
   return pathname.startsWith(`${LESSON_PATH_PREFIX}/`);
 }
 
+/** Extrae el slug del paso desde la URL de lección (`1`, `2`, `examen`, …). */
+export function getLessonStepSlugFromPathname(pathname: string, lessonId: string): string | null {
+  const prefix = `${LESSON_PATH_PREFIX}/${lessonId}/`;
+  if (!pathname.startsWith(prefix)) return null;
+  const slug = pathname.slice(prefix.length).split('/')[0]?.trim();
+  return slug || null;
+}
+
 const SUPABASE_AREA_TO_ROADMAP: Record<string, AreaId> = {
   lectura_critica: 'lectura-critica',
   ciencias_naturales: 'ciencias-naturales',

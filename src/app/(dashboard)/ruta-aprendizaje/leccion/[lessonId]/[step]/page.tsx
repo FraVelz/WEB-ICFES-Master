@@ -1,20 +1,4 @@
-import ProtectedPage from '@/components/ProtectedPage';
-import { LessonStepPage } from '@/features/learning/pages/LessonStepPage';
-import { Suspense } from 'react';
-import { LoadingState } from '@/shared/components/LoadingState';
-
-type PageProps = {
-  params: Promise<{ lessonId: string; step: string }>;
-};
-
-export default async function Page({ params }: PageProps) {
-  const { lessonId, step } = await params;
-
-  return (
-    <ProtectedPage blockDemoContent={false}>
-      <Suspense fallback={<LoadingState label="Cargando lección..." layout="section" />}>
-        <LessonStepPage lessonId={lessonId} stepSlug={step} />
-      </Suspense>
-    </ProtectedPage>
-  );
+/** El contenido de la lección vive en LessonRouteLayout; esta página solo define la ruta del paso. */
+export default function LessonStepRoutePage() {
+  return null;
 }

@@ -1,12 +1,12 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { useEffect, useRef } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { cn } from '@/utils/cn';
 import { gsap } from '@/lib/gsap';
 import { getRoadmapHref } from '../data/competencyPhases';
 import { getLessonStepHref } from '../utils/lessonRoutes';
-import { LessonContentFooter } from './LessonContentFooter';
+import { LessonContentFooter, type LessonNavDirection } from './LessonContentFooter';
 import { LessonContentHeader } from './LessonContentHeader';
 import { LessonContentSection } from './LessonContentSection';
 import { LessonQuizPanel } from './lessonQuiz/LessonQuizPanel';
@@ -21,10 +21,16 @@ export type LessonContentViewProps = {
 };
 
 const SECTION_INNER = 'mx-auto w-full max-w-6xl px-3 sm:px-4';
+const STEP_EXIT_MS = 0.14;
+const STEP_ENTER_MS = 0.18;
 
 export function LessonContentView({ lesson, areaId = 'lectura-critica', stepSlug, exitHref }: LessonContentViewProps) {
   const router = useRouter();
   const stepContentRef = useRef<HTMLDivElement>(null);
+  const transitionDirectionRef = useRef<LessonNavDirection | null>(null);
+  const isAnimatingRef = useRef(false);
+  const isFirstStepRef = useRef(true);
+  const [navigating, setNavigating] = useState(false);
   const backHref = exitHref ?? getRoadmapHref();
   const gradientClass = getAreaColor(areaId);
   const bubbleBorder = getBubbleBorderColor(areaId);
@@ -44,10 +50,68 @@ export function LessonContentView({ lesson, areaId = 'lectura-critica', stepSlug
   } = useLessonContentStep(lesson, stepSlug);
 
   useEffect(() => {
+    if (prevHref) router.prefetch(prevHref);
+    if (nextHref) router.prefetch(nextHref);
+  }, [prevHref, nextHref, router]);
+
+  const animateStepEnter = useCallback(() => {
     const el = stepContentRef.current;
     if (!el) return;
-    gsap.fromTo(el, { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.28, ease: 'power2.out' });
-  }, [stepSlug]);
+
+    const direction = transitionDirectionRef.current;
+    const xIn = direction === 'next' ? 28 : direction === 'prev' ? -28 : 0;
+
+    gsap.fromTo(
+      el,
+      { opacity: 0, x: xIn, y: direction ? 0 : 14 },
+      {
+        opacity: 1,
+        x: 0,
+        y: 0,
+        duration: direction ? STEP_ENTER_MS : 0.22,
+        ease: 'power2.out',
+        clearProps: 'transform',
+      }
+    );
+
+    transitionDirectionRef.current = null;
+  }, []);
+
+  useEffect(() => {
+    if (isFirstStepRef.current) {
+      isFirstStepRef.current = false;
+      animateStepEnter();
+      return;
+    }
+    stepContentRef.current?.scrollTo({ top: 0 });
+    animateStepEnter();
+  }, [stepSlug, animateStepEnter]);
+
+  const handleNavigate = useCallback(
+    (href: string, direction: LessonNavDirection) => {
+      const el = stepContentRef.current;
+      if (!el || isAnimatingRef.current) return;
+
+      isAnimatingRef.current = true;
+      setNavigating(true);
+      transitionDirectionRef.current = direction;
+
+      const xOut = direction === 'next' ? -28 : 28;
+
+      gsap.to(el, {
+        opacity: 0,
+        x: xOut,
+        duration: STEP_EXIT_MS,
+        ease: 'power2.in',
+        onComplete: () => {
+          router.push(href);
+          isAnimatingRef.current = false;
+          setNavigating(false);
+        },
+      });
+    },
+    [router]
+  );
 
   return (
     <div className="bg-surface-via fixed inset-0 z-50 flex h-dvh flex-col overflow-hidden">
@@ -57,13 +121,12 @@ export function LessonContentView({ lesson, areaId = 'lectura-critica', stepSlug
         progress={progress}
         gradientClass={gradientClass}
         sectionInnerClass={SECTION_INNER}
-        breadcrumbItems={[{ label: 'Ruta de aprendizaje', href: backHref }, { label: lesson.title ?? 'Lección' }]}
       />
 
       <div
         ref={stepContentRef}
         className={cn(
-          'min-h-0 flex-1',
+          'min-h-0 flex-1 will-change-transform',
           showQuiz
             ? 'flex flex-col overflow-hidden'
             : 'overflow-x-hidden overflow-y-auto overscroll-contain scroll-smooth'
@@ -105,6 +168,8 @@ export function LessonContentView({ lesson, areaId = 'lectura-critica', stepSlug
           stepLabel={stepLabel}
           gradientClass={gradientClass}
           sectionInnerClass={SECTION_INNER}
+          onNavigate={handleNavigate}
+          navigating={navigating}
         />
       )}
     </div>
