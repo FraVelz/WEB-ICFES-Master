@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 
 /** Matches `src/app/opengraph-image.png` + `opengraph-image.alt.txt`. */
 export const OG_IMAGE = {
-  url: '/opengraph-image',
+  url: '/opengraph-image.png',
   width: 1200,
   height: 630,
   alt: 'ICFES Master — Domina el ICFES desde Cero. Mascota Zeus con birrete y libro.',
