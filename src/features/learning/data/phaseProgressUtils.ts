@@ -23,6 +23,8 @@ function isPhaseDone(section: PathSection | undefined, skippedSectionIds: Set<st
   return percent >= 100 && (section?.nodes.length ?? 0) > 0;
 }
 
+export { isPhaseDone };
+
 export function resolvePhaseStatuses(
   phases: CompetencyPhase[],
   sections: PathSection[],

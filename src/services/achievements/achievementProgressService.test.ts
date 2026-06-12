@@ -131,14 +131,31 @@ describe('achievementProgressService', () => {
   });
 
   it('desbloquea logros de lectura al marcar secciones como leídas', async () => {
-    vi.mocked(loadLecturaReadSections).mockReturnValue(['importancia', 'consejos']);
+    vi.mocked(loadLecturaReadSections).mockReturnValue(['ruta-al-500', 'importancia', 'consejos']);
 
     await syncAchievementsFromGameplay(DEMO_USER_ID);
 
     const saved = readAchievementProgress(DEMO_USER_ID);
+    expect(saved.read_ruta_al_500?.unlocked).toBe(true);
     expect(saved.read_importancia?.unlocked).toBe(true);
     expect(saved.read_consejos?.unlocked).toBe(true);
     expect(saved.read_informacion?.unlocked).toBe(false);
     expect(vi.mocked(addCoinsBalance)).toHaveBeenCalled();
+  });
+
+  it('desbloquea hitos de racha según la mejor racha histórica', async () => {
+    const { loadStreakState } = await import('@/services/streak');
+    vi.mocked(loadStreakState).mockResolvedValue({
+      dates: Array.from({ length: 30 }, (_, index) => `2026-05-${String(index + 1).padStart(2, '0')}`),
+      longestStreak: 30,
+    });
+
+    await syncAchievementsFromGameplay(DEMO_USER_ID);
+
+    const saved = readAchievementProgress(DEMO_USER_ID);
+    expect(saved.const_1?.unlocked).toBe(true);
+    expect(saved.const_30?.unlocked).toBe(true);
+    expect(saved.const_180?.unlocked).toBe(false);
+    expect(saved.const_365?.unlocked).toBe(false);
   });
 });

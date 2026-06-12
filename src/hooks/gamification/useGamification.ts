@@ -87,6 +87,7 @@ export const useGamification = (scope: StreakScope | undefined) => {
           remoteAchievements: profile ? normalizeAchievementsRecord(profile.achievements) : undefined,
           userLevel: profile ? calculateLevel(profile.xp ?? 0) : undefined,
           currentStreak: metrics.currentStreak,
+          longestStreak: metrics.longestStreak,
         });
       }
 
@@ -101,8 +102,8 @@ export const useGamification = (scope: StreakScope | undefined) => {
         applyMergedAchievements(achProgress);
       }
 
-      if (accountUserId && metrics.currentStreak > 0) {
-        void syncStreakAchievement(accountUserId, metrics.currentStreak, lastSyncedStreak);
+      if (accountUserId && metrics.longestStreak > 0) {
+        void syncStreakAchievement(accountUserId, metrics.longestStreak, lastSyncedStreak);
       }
     } catch (err) {
       console.error('Error loading gamification:', err);

@@ -2,6 +2,7 @@ export const ACHIEVEMENTS_STUDY_PERFORMANCE = [
   {
     id: 'study_1',
     category: 'estudio',
+    group: 'estudio_general',
     title: 'Primeros Pasos',
     description: 'Completa tus primeras 5 lecciones',
     icon: 'book',
@@ -12,6 +13,7 @@ export const ACHIEVEMENTS_STUDY_PERFORMANCE = [
   {
     id: 'study_2',
     category: 'estudio',
+    group: 'estudio_general',
     title: 'Estudiante Dedicado',
     description: 'Completa 20 lecciones',
     icon: 'graduation-cap',
@@ -22,6 +24,7 @@ export const ACHIEVEMENTS_STUDY_PERFORMANCE = [
   {
     id: 'practice_1',
     category: 'rendimiento',
+    group: 'rendimiento_practica',
     title: 'Primera Práctica',
     description: 'Completa tu primera sesión de práctica por área',
     icon: 'bolt',
@@ -32,6 +35,7 @@ export const ACHIEVEMENTS_STUDY_PERFORMANCE = [
   {
     id: 'practice_5',
     category: 'rendimiento',
+    group: 'rendimiento_practica',
     title: 'Practicante Constante',
     description: 'Completa 5 sesiones de práctica',
     icon: 'chart-line',
@@ -42,6 +46,7 @@ export const ACHIEVEMENTS_STUDY_PERFORMANCE = [
   {
     id: 'perf_1',
     category: 'rendimiento',
+    group: 'rendimiento_resultados',
     title: 'Mente Brillante',
     description: 'Obtén 100% en un examen o práctica',
     icon: 'brain',
@@ -52,6 +57,7 @@ export const ACHIEVEMENTS_STUDY_PERFORMANCE = [
   {
     id: 'exam_1',
     category: 'rendimiento',
+    group: 'rendimiento_simulacro',
     title: 'Simulacro Completo',
     description: 'Finaliza tu primer simulacro ICFES completo',
     icon: 'clipboard-list',

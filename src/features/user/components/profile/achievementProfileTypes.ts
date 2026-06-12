@@ -1,11 +1,9 @@
-export type ProfileAchievement = {
-  id: string;
+import { sortAchievementsForDisplay, type AchievementDisplayItem } from '@/shared/constants/achievements/achievementGrouping';
+
+export type ProfileAchievement = AchievementDisplayItem & {
   title: string;
-  description?: string;
   icon: string;
   status: string;
-  progress?: number;
-  target?: number;
 };
 
 export const ACHIEVEMENT_STATUS_ORDER: Record<string, number> = {
@@ -15,9 +13,7 @@ export const ACHIEVEMENT_STATUS_ORDER: Record<string, number> = {
 };
 
 export function sortAchievementsForProfile(achievements: ProfileAchievement[]): ProfileAchievement[] {
-  return [...achievements].sort(
-    (a, b) => (ACHIEVEMENT_STATUS_ORDER[a.status] ?? 3) - (ACHIEVEMENT_STATUS_ORDER[b.status] ?? 3)
-  );
+  return sortAchievementsForDisplay(achievements) as ProfileAchievement[];
 }
 
 export function achievementTileClass(status: string): string {

@@ -1,7 +1,19 @@
 export const ACHIEVEMENTS_LECTURA = [
   {
+    id: 'read_ruta_al_500',
+    category: 'lectura',
+    group: 'lectura_guias',
+    title: 'Ruta al 500 leída',
+    description: 'Marca como leída la guía Ruta al 500 en Lectura',
+    icon: 'map',
+    target: 1,
+    xpReward: 50,
+    coinsReward: 25,
+  },
+  {
     id: 'read_importancia',
     category: 'lectura',
+    group: 'lectura_guias',
     title: 'Importancia leída',
     description: 'Marca como leída la sección Importancia en Lectura',
     icon: 'info-circle',
@@ -12,6 +24,7 @@ export const ACHIEVEMENTS_LECTURA = [
   {
     id: 'read_informacion',
     category: 'lectura',
+    group: 'lectura_guias',
     title: 'Información leída',
     description: 'Marca como leída la sección Información en Lectura',
     icon: 'clipboard-list',
@@ -22,6 +35,7 @@ export const ACHIEVEMENTS_LECTURA = [
   {
     id: 'read_consejos',
     category: 'lectura',
+    group: 'lectura_guias',
     title: 'Consejos leídos',
     description: 'Marca como leída la sección Consejos en Lectura',
     icon: 'lightbulb',

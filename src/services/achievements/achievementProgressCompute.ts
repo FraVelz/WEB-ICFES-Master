@@ -7,6 +7,7 @@ import { getStreakMetrics, loadStreakState, type StreakScope } from '@/services/
 import { getCompletedLessons, getStoredExams, getStoredPractices } from '@/storage/progressStorage';
 import { loadLecturaReadSections } from '@/features/lectura/services/lecturaReadPersistence';
 import { getStudyTimeStats } from '@/services/studyTime/studyTimeService';
+import { computePhaseAchievementMetrics } from './achievementPhaseMetrics';
 import type { AchievementProgressMap, SyncAchievementsOptions } from './achievementProgressTypes';
 
 function toStreakScope(userId: string): StreakScope {
@@ -30,31 +31,44 @@ async function readLevel(userId: string): Promise<number> {
   }
 }
 
+function streakProgress(longestStreak: number): Record<string, number> {
+  return {
+    const_1: longestStreak,
+    const_30: longestStreak,
+    const_180: longestStreak,
+    const_365: longestStreak,
+  };
+}
+
 function buildProgressFromGameplay(
   completedLessons: number,
   practiceCount: number,
   examCount: number,
   perfectCount: number,
-  currentStreak: number,
+  longestStreak: number,
   level: number,
   readImportancia: number,
   readInformacion: number,
   readConsejos: number,
-  longestStudySessionMinutes: number
+  readRutaAl500: number,
+  longestStudySessionMinutes: number,
+  phaseMetrics: Record<string, number>
 ): AchievementProgressMap {
   const metrics: Record<string, number> = {
     study_1: completedLessons,
     study_2: completedLessons,
     perf_1: perfectCount,
-    const_1: currentStreak,
+    ...streakProgress(longestStreak),
     meta_1: level,
     practice_1: practiceCount,
     practice_5: practiceCount,
     exam_1: examCount,
     time_1: longestStudySessionMinutes,
+    read_ruta_al_500: readRutaAl500,
     read_importancia: readImportancia,
     read_informacion: readInformacion,
     read_consejos: readConsejos,
+    ...phaseMetrics,
   };
 
   const next: AchievementProgressMap = {};
@@ -74,26 +88,34 @@ function buildProgressFromGameplay(
 
 export async function computeAchievementProgressFromGameplay(
   userId: string,
-  options: Pick<SyncAchievementsOptions, 'userLevel' | 'currentStreak'> = {}
+  options: Pick<SyncAchievementsOptions, 'userLevel' | 'currentStreak' | 'longestStreak'> = {}
 ): Promise<AchievementProgressMap> {
   const scope = toStreakScope(userId);
-  const currentStreak = options.currentStreak ?? getStreakMetrics(await loadStreakState(scope)).currentStreak;
+  const streakMetrics = getStreakMetrics(await loadStreakState(scope));
+  const longestStreak = Math.max(
+    streakMetrics.longestStreak,
+    options.longestStreak ?? 0,
+    options.currentStreak ?? 0
+  );
   const level = options.userLevel ?? (await readLevel(userId));
   const readSections = loadLecturaReadSections(userId);
   const studyTime = getStudyTimeStats(userId);
   const practices = getStoredPractices() as Array<Record<string, unknown>>;
   const exams = getStoredExams() as Array<Record<string, unknown>>;
+  const phaseMetrics = await computePhaseAchievementMetrics();
 
   return buildProgressFromGameplay(
     getCompletedLessons().length,
     practices.length,
     exams.length,
     countPerfectAttempts(practices) + countPerfectAttempts(exams),
-    currentStreak,
+    longestStreak,
     level,
     readSections.includes('importancia') ? 1 : 0,
     readSections.includes('informacion') ? 1 : 0,
     readSections.includes('consejos') ? 1 : 0,
-    studyTime.longestSessionMinutes
+    readSections.includes('ruta-al-500') ? 1 : 0,
+    studyTime.longestSessionMinutes,
+    phaseMetrics
   );
 }

@@ -1,4 +1,5 @@
 import { ACHIEVEMENTS_DATA } from '@/shared/constants/achievementsData';
+import { achievementToUnlockPayload, emitAchievementUnlock } from '@/services/achievements/achievementUnlockEvents';
 import { gamificationPersistence } from '@/services/persistence';
 import { addCoinsBalance } from '@/services/persistence/coinsPersistence';
 import { isDemoUserId } from '@/services/demo/demoCoins';
@@ -43,6 +44,7 @@ export async function updateAchievementProgressForUser(
     if (unlocked) {
       await addCoinsBalance(userId, ach.coinsReward || 0, 'achievement');
       addDemoXP(ach.xpReward || 0);
+      emitAchievementUnlock(achievementToUnlockPayload(ach));
     }
     onReload();
     return;
@@ -65,6 +67,7 @@ export async function updateAchievementProgressForUser(
 
   if (unlocked) {
     await gamificationPersistence.addCoins(accountUserId, ach.coinsReward || 0, 'achievement');
+    emitAchievementUnlock(achievementToUnlockPayload(ach));
   }
   await gamificationPersistence.addXP(accountUserId, unlocked ? ach.xpReward || 0 : 0, 'achievement');
   await GamificationSupabaseService.updateAchievements(accountUserId, achProgress);

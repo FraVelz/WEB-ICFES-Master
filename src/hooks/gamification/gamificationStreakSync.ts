@@ -1,7 +1,9 @@
 import { ACHIEVEMENTS_DATA } from '@/shared/constants/achievementsData';
+import { STREAK_ACHIEVEMENT_IDS } from '@/shared/constants/achievements/achievementsConstancyMetas';
+import { achievementToUnlockPayload, emitAchievementUnlock } from '@/services/achievements/achievementUnlockEvents';
 import { gamificationPersistence } from '@/services/persistence';
 import GamificationSupabaseService from '@/services/supabase/GamificationSupabaseService';
-import { STREAK_ACHIEVEMENT_ID, type AchievementProgressRecord } from './gamificationTypes';
+import type { AchievementProgressRecord } from './gamificationTypes';
 
 function parseAchievements(raw: unknown): AchievementProgressRecord {
   if (typeof raw === 'object' && raw !== null && !Array.isArray(raw)) {
@@ -12,35 +14,42 @@ function parseAchievements(raw: unknown): AchievementProgressRecord {
 
 export async function syncStreakAchievement(
   userId: string,
-  streakValue: number,
+  longestStreak: number,
   lastSyncedStreak: { current: number }
 ): Promise<void> {
-  if (streakValue <= lastSyncedStreak.current) return;
-
-  const ach = ACHIEVEMENTS_DATA.find((a) => a.id === STREAK_ACHIEVEMENT_ID);
-  if (!ach) return;
+  if (longestStreak <= lastSyncedStreak.current) return;
 
   const profile = await gamificationPersistence.getProfile(userId);
   const achProgress = parseAchievements(profile?.achievements);
-  const current = achProgress[STREAK_ACHIEVEMENT_ID]?.current ?? 0;
+  let changed = false;
 
-  if (streakValue <= current) {
-    lastSyncedStreak.current = streakValue;
+  for (const achievementId of STREAK_ACHIEVEMENT_IDS) {
+    const ach = ACHIEVEMENTS_DATA.find((item) => item.id === achievementId);
+    if (!ach) continue;
+
+    const current = achProgress[achievementId]?.current ?? 0;
+    const nextCurrent = Math.min(longestStreak, ach.target);
+    if (nextCurrent <= current) continue;
+
+    achProgress[achievementId] = {
+      current: nextCurrent,
+      unlocked: nextCurrent >= ach.target,
+      unlockedAt: nextCurrent >= ach.target ? new Date().toISOString() : null,
+    };
+    changed = true;
+
+    if (nextCurrent >= ach.target) {
+      await gamificationPersistence.addCoins(userId, ach.coinsReward || 0, 'achievement');
+      await gamificationPersistence.addXP(userId, ach.xpReward || 0, 'achievement');
+      emitAchievementUnlock(achievementToUnlockPayload(ach));
+    }
+  }
+
+  if (!changed) {
+    lastSyncedStreak.current = longestStreak;
     return;
   }
 
-  achProgress[STREAK_ACHIEVEMENT_ID] = {
-    current: streakValue,
-    unlocked: streakValue >= ach.target,
-    unlockedAt: streakValue >= ach.target ? new Date().toISOString() : null,
-  };
-
   await GamificationSupabaseService.updateAchievements(userId, achProgress);
-
-  if (streakValue >= ach.target) {
-    await gamificationPersistence.addCoins(userId, ach.coinsReward || 0, 'achievement');
-    await gamificationPersistence.addXP(userId, ach.xpReward || 0, 'achievement');
-  }
-
-  lastSyncedStreak.current = streakValue;
+  lastSyncedStreak.current = longestStreak;
 }

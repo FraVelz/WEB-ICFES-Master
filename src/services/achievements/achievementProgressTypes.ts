@@ -13,4 +13,5 @@ export type SyncAchievementsOptions = {
   userLevel?: number;
   /** Evita recargar racha dentro del sync si el caller ya la tiene. */
   currentStreak?: number;
+  longestStreak?: number;
 };

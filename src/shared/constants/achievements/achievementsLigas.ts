@@ -2,6 +2,7 @@ export const ACHIEVEMENTS_LIGAS = [
   {
     id: 'league_explorador',
     category: 'ligas',
+    group: 'ligas_clasificatoria',
     title: 'Liga Explorador',
     description: 'Ascendiste a la liga Explorador en la clasificatoria',
     icon: 'map',
@@ -12,6 +13,7 @@ export const ACHIEVEMENTS_LIGAS = [
   {
     id: 'league_aprendiz',
     category: 'ligas',
+    group: 'ligas_clasificatoria',
     title: 'Liga Aprendiz',
     description: 'Ascendiste a la liga Aprendiz en la clasificatoria',
     icon: 'book-open',
@@ -22,6 +24,7 @@ export const ACHIEVEMENTS_LIGAS = [
   {
     id: 'league_competente',
     category: 'ligas',
+    group: 'ligas_clasificatoria',
     title: 'Liga Competente',
     description: 'Ascendiste a la liga Competente en la clasificatoria',
     icon: 'lightbulb',
@@ -32,6 +35,7 @@ export const ACHIEVEMENTS_LIGAS = [
   {
     id: 'league_avanzado',
     category: 'ligas',
+    group: 'ligas_clasificatoria',
     title: 'Liga Avanzado',
     description: 'Ascendiste a la liga Avanzado en la clasificatoria',
     icon: 'bolt',
@@ -42,6 +46,7 @@ export const ACHIEVEMENTS_LIGAS = [
   {
     id: 'league_experto',
     category: 'ligas',
+    group: 'ligas_clasificatoria',
     title: 'Liga Experto',
     description: 'Ascendiste a la liga Experto en la clasificatoria',
     icon: 'fire',
@@ -52,6 +57,7 @@ export const ACHIEVEMENTS_LIGAS = [
   {
     id: 'league_maestro',
     category: 'ligas',
+    group: 'ligas_clasificatoria',
     title: 'Liga Maestro',
     description: 'Llegaste a la liga Maestro, el nivel más alto',
     icon: 'crown',

@@ -31,6 +31,11 @@ export async function awardNewUnlocks(
   });
 
   await Promise.all(newlyUnlocked.map((achievement) => awardAchievementUnlock(userId, achievement)));
+
+  if (newlyUnlocked.length > 0) {
+    const { emitAchievementUnlocks } = await import('./achievementUnlockEvents');
+    emitAchievementUnlocks(newlyUnlocked);
+  }
 }
 
 export function resolveAchievementUserId(authUserId?: string | null, demoMode?: boolean): string | null {
