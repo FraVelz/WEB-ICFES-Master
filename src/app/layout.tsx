@@ -50,13 +50,13 @@ export const metadata: Metadata = {
     type: 'website',
     locale: 'es_CO',
     siteName: 'ICFES Master',
-    title: 'Domina el ICFES desde Cero | ICFES Master',
+    title: 'ICFES Master | Domina el ICFES desde cero',
     description: 'La plataforma #1 para preparar el ICFES: +500 preguntas, simulacros reales y aprendizaje guiado.',
     url: '/',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Domina el ICFES desde Cero | ICFES Master',
+    title: 'ICFES Master | Domina el ICFES desde cero',
     description: 'Prepárate con simulacros y preguntas reales para lograr un gran puntaje en el ICFES.',
   },
 };

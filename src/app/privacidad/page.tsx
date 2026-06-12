@@ -16,7 +16,7 @@ export const metadata: Metadata = {
     type: 'article',
   },
   twitter: {
-    card: 'summary',
+    card: 'summary_large_image',
     title: 'Política de Privacidad | ICFES Master',
     description: 'Política de privacidad y tratamiento de datos en ICFES Master.',
   },

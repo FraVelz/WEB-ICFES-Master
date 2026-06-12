@@ -16,7 +16,7 @@ export const metadata: Metadata = {
     type: 'article',
   },
   twitter: {
-    card: 'summary',
+    card: 'summary_large_image',
     title: 'Términos y Condiciones | ICFES Master',
     description: 'Términos y condiciones de uso de ICFES Master.',
   },

@@ -6,7 +6,7 @@ export const metadata: Metadata = {
   alternates: { canonical: '/' },
   openGraph: {
     url: '/',
-    title: 'Domina el ICFES desde Cero | ICFES Master',
+    title: 'ICFES Master | Domina el ICFES desde cero',
     description:
       'Prepárate para el ICFES con +500 preguntas, simulacros reales, gamificación y una ruta de aprendizaje guiada.',
   },

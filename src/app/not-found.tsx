@@ -5,12 +5,13 @@ import { FULL_PAGE_SHELL_CLASS } from '@/shared/constants/pageShell';
 
 export const metadata: Metadata = {
   title: 'Página no encontrada',
+  description: 'La página que buscas no existe o ha sido movida en ICFES Master.',
   robots: { index: false, follow: false },
 };
 
 export default function NotFound() {
   return (
-    <div className={cn('flex flex-col items-center justify-center p-4', FULL_PAGE_SHELL_CLASS)}>
+    <main id="main-content" className={cn('flex flex-col items-center justify-center p-4', FULL_PAGE_SHELL_CLASS)}>
       <div className="max-w-md text-center">
         <h1 className="text-app-accent/80 mb-4 text-8xl leading-none font-bold">404</h1>
         <h2 className="text-on-surface mb-2 text-2xl font-semibold">Página no encontrada</h2>
@@ -25,6 +26,6 @@ export default function NotFound() {
           Volver al inicio
         </Link>
       </div>
-    </div>
+    </main>
   );
 }
