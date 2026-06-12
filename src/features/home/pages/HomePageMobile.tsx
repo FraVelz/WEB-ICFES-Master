@@ -20,19 +20,19 @@ export const HomePageMobile = () => {
         <div
           className={cn(
             'bg-ambient-a/15 dark:bg-ambient-a/30 absolute top-1/3 left-1/4',
-            'h-48 w-48 animate-pulse rounded-full blur-2xl'
+            'h-48 w-48 animate-pulse rounded-full blur-2xl motion-reduce:animate-none'
           )}
         />
         <div
           className={cn(
             'bg-ambient-b/12 dark:bg-ambient-b/30 absolute right-1/4 bottom-1/3',
-            'h-48 w-48 animate-pulse rounded-full blur-2xl'
+            'h-48 w-48 animate-pulse rounded-full blur-2xl motion-reduce:animate-none'
           )}
         />
         <div
           className={cn(
             'bg-ambient-c/8 dark:bg-ambient-c/20 absolute top-2/3 left-3/4',
-            'h-32 w-32 animate-pulse rounded-full blur-2xl'
+            'h-32 w-32 animate-pulse rounded-full blur-2xl motion-reduce:animate-none'
           )}
         />
       </div>
@@ -47,7 +47,7 @@ export const HomePageMobile = () => {
       <div className="relative z-10 flex flex-1 items-center justify-center">
         <div className="flex flex-col items-center justify-center gap-4 px-6">
           {/* Logo */}
-          <MascotaCircle src={MASCOT_IMAGES.logo} size="md" />
+          <MascotaCircle src={MASCOT_IMAGES.logo} size="md" alt="Mascota de ICFES Master" />
 
           {/* App Name */}
           <p className="text-on-surface text-3xl font-bold" aria-hidden="true">

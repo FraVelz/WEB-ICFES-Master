@@ -101,7 +101,7 @@ export function LessonMarkdownBody({ content }: LessonMarkdownBodyProps) {
         img: ({ alt, ...rest }) => (
           // eslint-disable-next-line @next/next/no-img-element -- markdown lesson assets have unknown dimensions
           <img
-            alt={typeof alt === 'string' ? alt : ''}
+            alt={typeof alt === 'string' && alt.trim() ? alt : 'Ilustración de la lección'}
             className="border-surface-border my-3 h-auto max-w-full rounded-xl border shadow-lg sm:my-4"
             {...rest}
           />

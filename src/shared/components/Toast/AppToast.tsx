@@ -21,7 +21,7 @@ export function AppToast({ toast, onDismiss }: AppToastProps) {
       role="status"
       aria-live="polite"
       className={cn(
-        'animate-fade-in-up fixed top-20 right-4 z-[60] max-w-sm rounded-xl border p-4 shadow-xl backdrop-blur-md',
+        'animate-fade-in-up motion-reduce:animate-none fixed top-20 right-4 z-[60] max-w-sm rounded-xl border p-4 shadow-xl backdrop-blur-md',
         toast.type === 'success'
           ? cn(
               'border-green-600/30 bg-green-100 text-green-900 dark:border-green-500/30',
