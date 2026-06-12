@@ -59,7 +59,7 @@ const LEARNING_STEPS: JourneyStep[] = COMPETENCY_PHASES.map((phase) => {
   const performanceLevels =
     phase.order === 1 ? 'ND 1–2' : phase.order === 2 ? 'ND 2–3' : 'ND 3–4';
   const indicativeScoreLabel =
-    phase.order === 1 ? '~ 0 – 250 pts' : phase.order === 2 ? '~ 250 – 350 pts' : '~ 350 – 400 pts';
+    phase.order === 1 ? '~ 0 – 250 pts' : phase.order === 2 ? '~ 250 – 300 pts' : '~ 300 – 350 pts';
 
   return {
     id: phase.id,
@@ -85,7 +85,7 @@ const EXAM_STEPS: JourneyStep[] = [
     summary:
       'Simulacro completo de cada área para consolidar las tres fases anteriores antes del examen integral.',
     performanceLevels: 'Transferencia',
-    indicativeScoreLabel: '~ 400 – 450 pts',
+    indicativeScoreLabel: '~ 350 – 400 pts',
     kind: 'practice-area',
     accent: 'amber',
   },
@@ -98,7 +98,7 @@ const EXAM_STEPS: JourneyStep[] = [
       'Completa todos los pasos anteriores. La lectura crítica atraviesa todas las áreas y condiciona tu ' +
       'desempeño global en el Saber 11°.',
     performanceLevels: 'Consolidación',
-    indicativeScoreLabel: '~ 450 – 500 pts',
+    indicativeScoreLabel: '~ 400 – 500 pts',
     kind: 'practice-global',
     accent: 'purple',
   },
