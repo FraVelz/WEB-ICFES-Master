@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { gradeExamAnswers } from '@/features/exam/services/examGradingServer';
-import { getAuthUserFromRequest, hasApiAccess } from '@/utils/apiAuth';
+import { sanitizeGradedResultsForDemo } from '@/features/exam/utils/sanitizeGradedResults';
+import { getAuthUserFromRequest, hasApiAccess, isDemoOnlyAccess } from '@/utils/apiAuth';
 import { checkRateLimit, getClientIp } from '@/utils/rateLimit';
 
 export async function POST(request: NextRequest) {
@@ -40,8 +41,9 @@ export async function POST(request: NextRequest) {
     }
 
     const results = await gradeExamAnswers(answers);
+    const payload = isDemoOnlyAccess(request, user) ? sanitizeGradedResultsForDemo(results) : results;
 
-    return NextResponse.json({ results });
+    return NextResponse.json({ results: payload });
   } catch (error) {
     console.error('[api/exam/grade]', error);
     return NextResponse.json({ error: 'No se pudo calificar el examen' }, { status: 500 });

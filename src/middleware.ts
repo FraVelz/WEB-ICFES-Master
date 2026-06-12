@@ -35,7 +35,9 @@ export async function middleware(request: NextRequest) {
 
   const supabase = createMiddlewareSupabaseClient(request, response);
   if (!supabase) {
-    return response;
+    const loginUrl = new URL('/login/', request.url);
+    loginUrl.searchParams.set('redirect', pathname);
+    return NextResponse.redirect(loginUrl);
   }
 
   const {

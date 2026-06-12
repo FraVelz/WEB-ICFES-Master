@@ -28,3 +28,7 @@ export function hasDemoSession(request: NextRequest): boolean {
 export function hasApiAccess(request: NextRequest, user: User | null): boolean {
   return Boolean(user) || hasDemoSession(request);
 }
+
+export function isDemoOnlyAccess(request: NextRequest, user: User | null): boolean {
+  return !user && hasDemoSession(request);
+}
