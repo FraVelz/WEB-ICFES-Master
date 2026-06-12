@@ -1,8 +1,9 @@
 'use client';
 
 import { cn } from '@/utils/cn';
+import { deferAfterPointer } from '@/utils/deferAfterPointer';
 import { createPortal } from 'react-dom';
-import { useRef } from 'react';
+import { useCallback, useRef } from 'react';
 import { Icon } from '@/shared/components/Icon';
 import { ModalOverlay } from '@/shared/components/ModalOverlay';
 import { useDialogA11y } from '@/shared/hooks/useDialogA11y';
@@ -28,14 +29,15 @@ export interface LessonPreviewProps {
 
 export const LessonPreview = ({ isOpen, onClose, lesson, onStart }: LessonPreviewProps) => {
   const dialogRef = useRef<HTMLDivElement>(null);
+  const close = useCallback(() => deferAfterPointer(onClose), [onClose]);
 
-  useDialogA11y(isOpen, onClose, dialogRef);
+  useDialogA11y(isOpen, close, dialogRef);
 
   if (!isOpen || !lesson) return null;
 
   const sheet = (
     <>
-      <ModalOverlay onClose={onClose} className={cn(ROADMAP_SHEET_OVERLAY_Z_CLASS, 'bg-black/60 backdrop-blur-sm')} />
+      <ModalOverlay onClose={close} className={cn(ROADMAP_SHEET_OVERLAY_Z_CLASS, 'bg-black/60 backdrop-blur-sm')} />
 
       <div
         className="pointer-events-none fixed inset-0 flex items-end justify-center sm:items-center"
@@ -58,7 +60,7 @@ export const LessonPreview = ({ isOpen, onClose, lesson, onStart }: LessonPrevie
 
           <button
             type="button"
-            onClick={onClose}
+            onClick={close}
             aria-label="Cerrar vista previa"
             className={cn(
               'text-on-surface-muted absolute top-4 right-4 cursor-pointer rounded-lg p-2 transition-colors',
@@ -99,7 +101,7 @@ export const LessonPreview = ({ isOpen, onClose, lesson, onStart }: LessonPrevie
 
           <button
             type="button"
-            onClick={() => onStart(lesson)}
+            onClick={() => deferAfterPointer(() => onStart(lesson))}
             className={cn(
               'flex w-full cursor-pointer items-center justify-center gap-2 rounded-xl bg-green-500 py-4',
               'text-surface-via font-bold shadow-lg shadow-green-500/20 transition-all hover:bg-green-400',
