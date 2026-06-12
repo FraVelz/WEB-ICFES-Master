@@ -2,6 +2,8 @@ import { Icon } from '@/shared/components/Icon';
 import { formatStudyTime } from '@/services/studyTime';
 import { cn } from '@/utils/cn';
 
+import { getAchievementChainSummary } from '@/shared/constants/achievements/achievementChainDisplay';
+
 type Achievement = { id: string; status: string };
 
 type ProfileStatsSectionProps = {
@@ -24,7 +26,7 @@ export function ProfileStatsSection({
   studyTimeMinutes = 0,
   title = 'Estadísticas Rápidas',
 }: ProfileStatsSectionProps) {
-  const completed = achievements.filter((a) => a.status === 'completed').length;
+  const completed = getAchievementChainSummary(achievements).completedTiers;
 
   return (
     <div

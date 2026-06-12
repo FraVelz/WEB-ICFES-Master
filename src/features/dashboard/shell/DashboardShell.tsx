@@ -72,6 +72,9 @@ function DashboardShellMobileHeader() {
 }
 
 function DashboardShellInner({ children }: { children: ReactNode }) {
+  const { shellSection } = useDashboardShell();
+  const hideAside = shellSection === 'achievements';
+
   return (
     <div className="bg-surface relative flex min-h-full flex-col lg:min-h-dvh">
       <DashboardShellMobileHeader />
@@ -80,7 +83,12 @@ function DashboardShellInner({ children }: { children: ReactNode }) {
         Escritorio (estilo Duolingo): bloque centrado = columna max-w-3xl + aside fijo pegado a su derecha.
         Móvil: columna única a ancho completo; aside oculto.
       */}
-      <div className="mx-auto flex min-h-0 w-full flex-1 flex-col lg:max-w-[calc(48rem+22rem)] lg:flex-row lg:justify-center">
+      <div
+        className={cn(
+          'mx-auto flex min-h-0 w-full flex-1 flex-col lg:flex-row lg:justify-center',
+          hideAside ? 'lg:max-w-3xl' : 'lg:max-w-[calc(48rem+22rem)]'
+        )}
+      >
         <div className="relative flex min-h-0 min-w-0 flex-1 flex-col lg:w-full lg:max-w-3xl lg:flex-none">
           <div className="sticky top-0 z-40 hidden lg:block lg:pt-5">
             <DashboardShellBanner className="rounded-2xl" />
@@ -89,7 +97,7 @@ function DashboardShellInner({ children }: { children: ReactNode }) {
           <div className="relative flex-1 px-0 pt-4 pb-24 lg:px-0 lg:pt-6 lg:pb-8">{children}</div>
         </div>
 
-        <DashboardShellAside />
+        {!hideAside && <DashboardShellAside />}
       </div>
     </div>
   );

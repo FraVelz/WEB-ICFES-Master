@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { cn } from '@/utils/cn';
 import { Icon } from '@/shared/components/Icon';
 import { useGamification, useGamificationScope } from '@/hooks/gamification';
+import { getAchievementChainSummary } from '@/shared/constants/achievements/achievementChainDisplay';
 import { getLevelInfo } from '@/services/gamification/gamificationUtils';
 import { AsideCard } from './AsideCard';
 import { useDashboardShell } from './DashboardShellContext';
@@ -13,7 +14,7 @@ export function AchievementsAsidePanels() {
   const gamificationScope = useGamificationScope();
   const { achievements, completedCount, totalXP, level, longestStreak, loading } = useGamification(gamificationScope);
   const levelInfo = getLevelInfo(totalXP);
-  const inProgressCount = achievements.filter((a) => a.status === 'in_progress').length;
+  const summary = getAchievementChainSummary(achievements);
 
   return (
     <>
@@ -27,12 +28,12 @@ export function AchievementsAsidePanels() {
           <li className="flex justify-between gap-2">
             <span>Logros desbloqueados</span>
             <span className="text-on-surface font-semibold">
-              {loading ? '…' : `${completedCount}/${achievements.length}`}
+              {loading ? '…' : `${completedCount}/${summary.totalTiers}`}
             </span>
           </li>
           <li className="flex justify-between gap-2">
-            <span>En progreso</span>
-            <span className="text-on-surface font-semibold">{loading ? '…' : inProgressCount}</span>
+            <span>Metas en progreso</span>
+            <span className="text-on-surface font-semibold">{loading ? '…' : summary.inProgressChains}</span>
           </li>
           <li className="flex justify-between gap-2">
             <span>Racha</span>
@@ -51,8 +52,8 @@ export function AchievementsAsidePanels() {
 
       <AsideCard title="Consejo" icon="lightbulb">
         <p className="text-on-surface-muted text-sm leading-relaxed">
-          {inProgressCount > 0
-            ? `Tienes ${inProgressCount} logro${inProgressCount === 1 ? '' : 's'} en camino. Completa lecciones y simulacros para desbloquearlos.`
+          {summary.inProgressChains > 0
+            ? `Tienes ${summary.inProgressChains} meta${summary.inProgressChains === 1 ? '' : 's'} en camino. Completa lecciones y simulacros para subir de nivel.`
             : 'Prioriza logros de racha y de fase: mantener constancia suele dar más XP que intentar todo de una vez.'}
         </p>
       </AsideCard>

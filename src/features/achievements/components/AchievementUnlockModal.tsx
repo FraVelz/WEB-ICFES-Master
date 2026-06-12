@@ -44,6 +44,8 @@ export function AchievementUnlockModal({
   if (!isOpen || !achievement) return null;
 
   const categoryLabel = getCategoryLabel(achievement.category);
+  const isChained = (achievement.tierCount ?? 1) > 1;
+  const displayTitle = isChained ? (achievement.chainTitle ?? achievement.title) : achievement.title;
 
   return (
     <div
@@ -89,8 +91,15 @@ export function AchievementUnlockModal({
           </span>
 
           <h2 id="achievement-unlock-title" className="text-on-surface text-2xl font-bold">
-            {achievement.title}
+            {displayTitle}
           </h2>
+
+          {isChained && achievement.tierLevel != null && (
+            <p className="text-on-surface-muted mt-2 text-xs font-bold tracking-wider uppercase">
+              Nivel {achievement.tierLevel}
+              {achievement.tierCount != null ? ` de ${achievement.tierCount}` : ''}
+            </p>
+          )}
 
           <p id="achievement-unlock-description" className="text-on-surface-muted mt-3 text-sm leading-relaxed">
             {achievement.description}

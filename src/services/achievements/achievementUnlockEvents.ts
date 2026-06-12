@@ -1,4 +1,5 @@
 import { ACHIEVEMENTS_DATA } from '@/shared/constants/achievementsData';
+import { getAchievementChainMetaForTier } from '@/shared/constants/achievements/achievementChains';
 
 export type AchievementUnlockPayload = {
   id: string;
@@ -8,6 +9,9 @@ export type AchievementUnlockPayload = {
   xpReward: number;
   coinsReward: number;
   category: string;
+  chainTitle?: string;
+  tierLevel?: number;
+  tierCount?: number;
 };
 
 export const ACHIEVEMENT_UNLOCK_EVENT = 'icfes:achievement-unlock';
@@ -15,6 +19,8 @@ export const ACHIEVEMENT_UNLOCK_EVENT = 'icfes:achievement-unlock';
 type AchievementDefinition = (typeof ACHIEVEMENTS_DATA)[number];
 
 export function achievementToUnlockPayload(achievement: AchievementDefinition): AchievementUnlockPayload {
+  const chainMeta = getAchievementChainMetaForTier(achievement.id);
+
   return {
     id: achievement.id,
     title: achievement.title,
@@ -23,6 +29,9 @@ export function achievementToUnlockPayload(achievement: AchievementDefinition): 
     xpReward: achievement.xpReward,
     coinsReward: achievement.coinsReward,
     category: achievement.category,
+    chainTitle: chainMeta?.chainTitle,
+    tierLevel: chainMeta?.tierLevel,
+    tierCount: chainMeta?.tierCount,
   };
 }
 

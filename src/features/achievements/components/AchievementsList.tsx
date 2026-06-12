@@ -4,7 +4,10 @@ import React, { useMemo, useState } from 'react';
 import { cn } from '@/utils/cn';
 import { EmptyState } from '@/shared/components/EmptyState';
 import type { AchievementCategoryKey } from '@/shared/constants/achievements/achievementCategories';
-import { organizeAchievementsForDisplay } from '@/shared/constants/achievements/achievementGrouping';
+import {
+  organizeChainViewsForDisplay,
+  resolveAchievementChainViews,
+} from '@/shared/constants/achievements/achievementChainDisplay';
 import { AchievementCategoryFilter } from './AchievementCategoryFilter';
 import { AchievementsOrganizedSections } from './AchievementsOrganizedSections';
 
@@ -19,6 +22,9 @@ export interface AchievementItem {
   description?: string;
   icon?: string;
   xpReward?: number;
+  chainTitle?: string;
+  tierLevel?: number;
+  tierCount?: number;
 }
 
 export interface AchievementsListProps {
@@ -28,9 +34,14 @@ export interface AchievementsListProps {
 export const AchievementsList = ({ achievements = [] }: AchievementsListProps) => {
   const [activeCategory, setActiveCategory] = useState<AchievementCategoryKey | 'all'>('all');
 
+  const chainViews = useMemo(
+    () => resolveAchievementChainViews(achievements, 'logros'),
+    [achievements]
+  );
+
   const sections = useMemo(
-    () => organizeAchievementsForDisplay(achievements, activeCategory),
-    [achievements, activeCategory]
+    () => organizeChainViewsForDisplay(chainViews, activeCategory),
+    [chainViews, activeCategory]
   );
 
   const visibleCount = sections.reduce((sum, section) => sum + section.totalCount, 0);
@@ -59,7 +70,12 @@ export const AchievementsList = ({ achievements = [] }: AchievementsListProps) =
           actionHref="/ruta-aprendizaje"
         />
       ) : (
-        <AchievementsOrganizedSections achievements={achievements} activeCategory={activeCategory} />
+        <AchievementsOrganizedSections
+          achievements={achievements}
+          activeCategory={activeCategory}
+          variant="list"
+          displayMode="logros"
+        />
       )}
     </div>
   );

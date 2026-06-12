@@ -27,6 +27,7 @@ function getProgressBarColor(status: string) {
 export function AchievementCard({ achievement }: { achievement: AchievementItem }) {
   const isCompleted = achievement.status === 'completed';
   const isIncomplete = achievement.status === 'incomplete';
+  const showTierBadge = (achievement.tierCount ?? 1) > 1;
   const percent = Math.min(100, Math.max(0, ((achievement.progress ?? 0) / (achievement.target ?? 1)) * 100));
 
   return (
@@ -45,13 +46,26 @@ export function AchievementCard({ achievement }: { achievement: AchievementItem 
       )}
     >
       <div className="flex min-w-0 items-start gap-3 sm:gap-4">
-        <div
-          className={cn(
-            'flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border sm:h-14 sm:w-14',
-            getStatusColor(achievement.status ?? 'incomplete')
+        <div className="relative shrink-0">
+          <div
+            className={cn(
+              'flex h-12 w-12 items-center justify-center rounded-xl border sm:h-14 sm:w-14',
+              getStatusColor(achievement.status ?? 'incomplete')
+            )}
+          >
+            <Icon name={achievement.icon ?? 'trophy'} className="text-xl sm:text-2xl" />
+          </div>
+          {showTierBadge && (
+            <span
+              className={cn(
+                'absolute inset-x-0 bottom-0 translate-y-1/2 rounded-md px-1 py-0.5 text-center',
+                'bg-surface-elevated text-[9px] font-bold tracking-wide uppercase',
+                'border-surface-border border shadow-sm dark:bg-surface-overlay'
+              )}
+            >
+              Nivel {achievement.tierLevel}
+            </span>
           )}
-        >
-          <Icon name={achievement.icon ?? 'trophy'} className="text-xl sm:text-2xl" />
         </div>
 
         <div className="min-w-0 flex-1">

@@ -1,7 +1,10 @@
 'use client';
 
+import { useMemo } from 'react';
 import { cn } from '@/utils/cn';
 import { Icon } from '@/shared/components/Icon';
+import { resolveAchievementChainViews } from '@/shared/constants/achievements/achievementChainDisplay';
+import { AchievementChainRow } from '@/features/achievements/components/AchievementChainRow';
 import { achievementTileClass, type ProfileAchievement } from './achievementProfileTypes';
 
 function AchievementStatusLabel({ status }: { status: string }) {
@@ -14,21 +17,60 @@ function AchievementStatusLabel({ status }: { status: string }) {
   return <span className="text-on-surface-muted text-xs font-medium">Bloqueado</span>;
 }
 
+type ProfileAchievementTilesProps = {
+  achievements: ProfileAchievement[];
+  mode?: 'logros' | 'profile';
+};
+
+/** Vista compacta de logros en cadena para perfil u otros paneles. */
+export function ProfileAchievementChainList({
+  achievements,
+  mode = 'profile',
+}: ProfileAchievementTilesProps) {
+  const chainViews = useMemo(() => resolveAchievementChainViews(achievements, mode), [achievements, mode]);
+
+  if (chainViews.length === 0) return null;
+
+  return (
+    <div
+      className={cn(
+        'border-surface-border bg-surface-elevated/40 divide-surface-border overflow-hidden rounded-2xl border divide-y',
+        'dark:bg-surface-elevated/25'
+      )}
+    >
+      {chainViews.map((achievement) => (
+        <AchievementChainRow key={achievement.chainId} achievement={achievement} />
+      ))}
+    </div>
+  );
+}
+
 export function AchievementGridTile({ achievement }: { achievement: ProfileAchievement }) {
-  const isUnlocked = achievement.status === 'completed';
-  const iconName = typeof achievement.icon === 'string' ? achievement.icon : 'star';
+  const chainView = useMemo(
+    () => resolveAchievementChainViews([achievement], 'logros')[0] ?? null,
+    [achievement]
+  );
+  const display = chainView ?? achievement;
+  const isUnlocked = display.status === 'completed';
+  const iconName = typeof display.icon === 'string' ? display.icon : 'star';
+  const showTierBadge = (display.tierCount ?? 1) > 1;
 
   return (
     <div className="group relative">
       <div
         className={cn(
           'relative flex aspect-square flex-col items-center justify-center rounded-xl border p-2 transition-all',
-          achievementTileClass(achievement.status),
+          achievementTileClass(display.status ?? 'incomplete'),
           'md:cursor-help'
         )}
-        aria-label={achievement.title}
+        aria-label={display.chainTitle ?? display.title}
       >
         <Icon name={iconName} className="mb-1 text-2xl" />
+        {showTierBadge && (
+          <span className="text-on-surface-muted absolute bottom-1 text-[9px] font-bold uppercase">
+            N{display.tierLevel}
+          </span>
+        )}
         {isUnlocked && (
           <Icon
             name="star"
@@ -48,12 +90,12 @@ export function AchievementGridTile({ achievement }: { achievement: ProfileAchie
           'max-md:hidden'
         )}
       >
-        <p className="text-on-surface text-sm font-semibold">{achievement.title}</p>
-        {achievement.description && (
-          <p className="text-on-surface-muted mt-1 text-xs leading-relaxed">{achievement.description}</p>
+        <p className="text-on-surface text-sm font-semibold">{display.chainTitle ?? display.title}</p>
+        {display.description && (
+          <p className="text-on-surface-muted mt-1 text-xs leading-relaxed">{display.description}</p>
         )}
         <div className="mt-2">
-          <AchievementStatusLabel status={achievement.status} />
+          <AchievementStatusLabel status={display.status ?? 'incomplete'} />
         </div>
       </div>
     </div>
@@ -61,6 +103,19 @@ export function AchievementGridTile({ achievement }: { achievement: ProfileAchie
 }
 
 export function AchievementDetailRow({ achievement }: { achievement: ProfileAchievement }) {
+  const chainView = useMemo(
+    () => resolveAchievementChainViews([achievement], 'logros')[0] ?? null,
+    [achievement]
+  );
+
+  if (chainView) {
+    return (
+      <li>
+        <AchievementChainRow achievement={chainView} />
+      </li>
+    );
+  }
+
   const iconName = typeof achievement.icon === 'string' ? achievement.icon : 'star';
   const showProgress =
     achievement.status === 'in_progress' &&

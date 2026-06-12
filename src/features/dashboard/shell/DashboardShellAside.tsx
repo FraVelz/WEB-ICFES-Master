@@ -9,6 +9,7 @@ import { DashboardShellAsidePanels } from './DashboardShellAsidePanels';
 
 export function DashboardShellAside() {
   const {
+    shellSection,
     currentArea,
     currentStreak,
     coins,
@@ -20,6 +21,10 @@ export function DashboardShellAside() {
     areaSelectorRef,
     streakButtonRef,
   } = useDashboardShell();
+
+  if (shellSection === 'achievements') {
+    return null;
+  }
 
   return (
     <aside

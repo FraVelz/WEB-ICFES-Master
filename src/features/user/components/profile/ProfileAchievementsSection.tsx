@@ -6,11 +6,14 @@ import { Icon } from '@/shared/components/Icon';
 import { LoadingState } from '@/shared/components/LoadingState';
 import { EmptyState } from '@/shared/components/EmptyState';
 import type { AchievementCategoryKey } from '@/shared/constants/achievements/achievementCategories';
-import { organizeAchievementsForDisplay } from '@/shared/constants/achievements/achievementGrouping';
+import {
+  getAchievementChainSummary,
+  organizeChainViewsForDisplay,
+  resolveAchievementChainViews,
+} from '@/shared/constants/achievements/achievementChainDisplay';
 import { AchievementCategoryFilter } from '@/features/achievements/components/AchievementCategoryFilter';
 import { AchievementsOrganizedSections } from '@/features/achievements/components/AchievementsOrganizedSections';
 import type { ProfileAchievement } from './achievementProfileTypes';
-import { filterProfileVisibleAchievements } from './achievementProfileTypes';
 
 type ProfileAchievementsSectionProps = {
   achievements: ProfileAchievement[];
@@ -27,19 +30,19 @@ export function ProfileAchievementsSection({
 }: ProfileAchievementsSectionProps) {
   const [activeCategory, setActiveCategory] = useState<AchievementCategoryKey | 'all'>('all');
 
-  const visibleAchievements = useMemo(
-    () => filterProfileVisibleAchievements(achievements),
+  const profileChainViews = useMemo(
+    () => resolveAchievementChainViews(achievements, 'profile'),
     [achievements]
   );
 
+  const summary = useMemo(() => getAchievementChainSummary(achievements), [achievements]);
+
   const sections = useMemo(
-    () => organizeAchievementsForDisplay(visibleAchievements, activeCategory),
-    [visibleAchievements, activeCategory]
+    () => organizeChainViewsForDisplay(profileChainViews, activeCategory),
+    [profileChainViews, activeCategory]
   );
 
   const visibleCount = sections.reduce((sum, section) => sum + section.totalCount, 0);
-  const completedCount = achievements.filter((achievement) => achievement.status === 'completed').length;
-  const inProgressCount = achievements.filter((achievement) => achievement.status === 'in_progress').length;
   const showSectionLoading = loading && achievements.length === 0;
 
   return (
@@ -57,8 +60,8 @@ export function ProfileAchievementsSection({
           </h2>
           {achievements.length > 0 && (
             <p className="text-on-surface-muted mt-1 text-sm">
-              {completedCount} de {achievements.length} desbloqueados
-              {inProgressCount > 0 ? ` · ${inProgressCount} en progreso` : ''}
+              {summary.completedTiers} de {summary.totalTiers} escalones desbloqueados
+              {summary.inProgressChains > 0 ? ` · ${summary.inProgressChains} metas en progreso` : ''}
             </p>
           )}
         </div>
@@ -76,7 +79,7 @@ export function ProfileAchievementsSection({
         )}
       </div>
 
-      {achievements.length > 0 && visibleAchievements.length > 0 && (
+      {achievements.length > 0 && profileChainViews.length > 0 && (
         <div className="mb-6">
           <AchievementCategoryFilter activeCategory={activeCategory} onCategoryChange={setActiveCategory} />
         </div>
@@ -86,13 +89,15 @@ export function ProfileAchievementsSection({
 
       {!showSectionLoading && visibleCount > 0 && (
         <AchievementsOrganizedSections
-          achievements={visibleAchievements}
+          achievements={achievements}
           activeCategory={activeCategory}
           density="compact"
+          variant="list"
+          displayMode="profile"
         />
       )}
 
-      {!showSectionLoading && achievements.length > 0 && visibleAchievements.length === 0 && (
+      {!showSectionLoading && achievements.length > 0 && profileChainViews.length === 0 && (
         <EmptyState
           icon="trophy"
           title="Sin logros en progreso"
@@ -105,7 +110,7 @@ export function ProfileAchievementsSection({
         />
       )}
 
-      {!showSectionLoading && visibleAchievements.length > 0 && visibleCount === 0 && (
+      {!showSectionLoading && profileChainViews.length > 0 && visibleCount === 0 && (
         <EmptyState
           icon="trophy"
           title="Nada en esta categoría"
