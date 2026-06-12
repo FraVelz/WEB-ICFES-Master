@@ -1,6 +1,7 @@
 /** Rutas del dashboard que requieren sesión (cuenta o demo). */
 export const PROTECTED_DASHBOARD_PREFIXES = [
   '/ruta-aprendizaje',
+  '/ruta-al-500',
   '/fases',
   '/clasificatoria',
   '/logros',

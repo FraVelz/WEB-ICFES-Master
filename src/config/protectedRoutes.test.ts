@@ -4,6 +4,7 @@ import { isProtectedDashboardPath } from './protectedRoutes';
 describe('isProtectedDashboardPath', () => {
   it('protects dashboard routes', () => {
     expect(isProtectedDashboardPath('/ruta-aprendizaje/')).toBe(true);
+    expect(isProtectedDashboardPath('/ruta-al-500/')).toBe(true);
     expect(isProtectedDashboardPath('/logros')).toBe(true);
     expect(isProtectedDashboardPath('/tienda/')).toBe(true);
   });

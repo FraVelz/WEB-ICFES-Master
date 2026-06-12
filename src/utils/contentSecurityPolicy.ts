@@ -1,8 +1,10 @@
 const isProd = process.env.NODE_ENV === 'production';
 
+const VERCEL_ANALYTICS_SCRIPT = 'https://va.vercel-scripts.com';
+
 export function buildContentSecurityPolicy(nonce: string): string {
   const scriptSrc = isProd
-    ? `script-src 'self' 'nonce-${nonce}'`
+    ? `script-src 'self' 'nonce-${nonce}' ${VERCEL_ANALYTICS_SCRIPT}`
     : "script-src 'self' 'unsafe-inline' 'unsafe-eval'";
 
   return [

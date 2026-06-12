@@ -1,7 +1,8 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import { findIcfesInfographicById } from '@/features/tips/components/icfesInfographicItems';
 import { fetchR2Object, R2ObjectNotFoundError } from '@/services/r2/r2Client';
 import { isR2ServerConfigured } from '@/services/r2/r2Config';
+import { checkRateLimit, getClientIp } from '@/utils/rateLimit';
 
 export const runtime = 'nodejs';
 
@@ -13,7 +14,13 @@ function isDev(): boolean {
   return process.env.NODE_ENV !== 'production';
 }
 
-export async function GET(_request: Request, context: RouteContext) {
+export async function GET(request: NextRequest, context: RouteContext) {
+  const ip = getClientIp(request);
+  const rate = await checkRateLimit(`r2-infographic:${ip}`, 40, 60_000);
+  if (!rate.allowed) {
+    return NextResponse.json({ error: 'Demasiadas solicitudes. Intenta de nuevo en un momento.' }, { status: 429 });
+  }
+
   const { id } = await context.params;
   const infographic = findIcfesInfographicById(id);
 
