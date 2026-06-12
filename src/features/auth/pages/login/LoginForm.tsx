@@ -65,9 +65,11 @@ export function LoginForm({
               value={email}
               onChange={(e) => onEmailChange(e.target.value)}
               placeholder="tu@email.com"
+              aria-invalid={Boolean(error)}
+              aria-describedby={error ? 'login-form-error' : undefined}
               className={cn(
                 'border-surface-border bg-surface-elevated/50 text-on-surface w-full rounded-lg border py-3 pr-4 pl-10',
-                'focus:border-app-ring focus:ring-app-ring/30 transition-all focus:ring-2 focus:outline-none'
+                'focus-visible:border-app-ring focus-visible:ring-app-ring/30 transition-all focus-visible:ring-2 focus-visible:outline-none'
               )}
               required
             />
@@ -86,10 +88,12 @@ export function LoginForm({
               value={password}
               onChange={(e) => onPasswordChange(e.target.value)}
               placeholder="••••••••"
+              aria-invalid={Boolean(error)}
+              aria-describedby={error ? 'login-form-error' : undefined}
               className={cn(
                 'border-surface-border bg-surface-elevated/50 text-on-surface w-full rounded-lg',
                 'border py-3 pr-12 pl-10',
-                'focus:border-app-ring focus:ring-app-ring/30 transition-all focus:ring-2 focus:outline-none'
+                'focus-visible:border-app-ring focus-visible:ring-app-ring/30 transition-all focus-visible:ring-2 focus-visible:outline-none'
               )}
               required
             />
@@ -105,7 +109,11 @@ export function LoginForm({
         </div>
 
         {error ? (
-          <div role="alert" className="flex items-start gap-3 rounded-lg border border-red-500/50 bg-red-500/20 p-4">
+          <div
+            id="login-form-error"
+            role="alert"
+            className="flex items-start gap-3 rounded-lg border border-red-500/50 bg-red-500/20 p-4"
+          >
             <Icon name="exclamation-circle" className="mt-0.5 shrink-0 text-red-400" aria-hidden />
             <p className="text-sm text-red-400">{error}</p>
           </div>

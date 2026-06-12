@@ -34,22 +34,8 @@ export function PdfViewerModal({ isOpen, title, url, onClose }: PdfViewerModalPr
 
   useEffect(() => {
     if (!isOpen) return;
-
     closeButtonRef.current?.focus();
-
-    const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') onClose();
-    };
-
-    document.addEventListener('keydown', onKeyDown);
-    const previousOverflow = document.body.style.overflow;
-    document.body.style.overflow = 'hidden';
-
-    return () => {
-      document.removeEventListener('keydown', onKeyDown);
-      document.body.style.overflow = previousOverflow;
-    };
-  }, [isOpen, onClose]);
+  }, [isOpen]);
 
   if (!isOpen) return null;
 
@@ -59,9 +45,6 @@ export function PdfViewerModal({ isOpen, title, url, onClose }: PdfViewerModalPr
         'fixed inset-0 z-50 flex items-end justify-center bg-black/70 p-0 backdrop-blur-sm',
         'sm:items-center sm:p-4'
       )}
-      role="dialog"
-      aria-modal="true"
-      aria-labelledby="pdf-viewer-title"
     >
       <button
         type="button"
@@ -73,6 +56,9 @@ export function PdfViewerModal({ isOpen, title, url, onClose }: PdfViewerModalPr
 
       <div
         ref={dialogRef}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="pdf-viewer-title"
         className={cn(
           'border-surface-border bg-surface-elevated relative z-10 flex h-[92dvh] w-full flex-col',
           'rounded-t-2xl border shadow-2xl sm:h-[85dvh] sm:max-w-5xl sm:rounded-2xl'

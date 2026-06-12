@@ -56,6 +56,8 @@ export function SignupForm({
             value={formData.displayName}
             onChange={onChange}
             placeholder="Juan Pérez"
+            aria-invalid={Boolean(error)}
+            aria-describedby={error ? 'signup-form-error' : undefined}
             className={cn(SIGNUP_INPUT_CLASS, 'py-3 pr-4 pl-10')}
             required
           />
@@ -75,6 +77,8 @@ export function SignupForm({
             value={formData.email}
             onChange={onChange}
             placeholder="tu@email.com"
+            aria-invalid={Boolean(error)}
+            aria-describedby={error ? 'signup-form-error' : undefined}
             className={cn(SIGNUP_INPUT_CLASS, 'py-3 pr-4 pl-10')}
             required
           />
@@ -151,7 +155,11 @@ export function SignupForm({
       ) : null}
 
       {error ? (
-        <div role="alert" className="flex items-start gap-3 rounded-lg border border-red-500/50 bg-red-500/20 p-4">
+        <div
+          id="signup-form-error"
+          role="alert"
+          className="flex items-start gap-3 rounded-lg border border-red-500/50 bg-red-500/20 p-4"
+        >
           <Icon name="exclamation-circle" className="mt-0.5 shrink-0 text-red-400" aria-hidden />
           <p className="text-sm text-red-400">{error}</p>
         </div>

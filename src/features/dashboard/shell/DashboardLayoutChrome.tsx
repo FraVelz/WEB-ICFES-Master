@@ -15,6 +15,9 @@ export function DashboardLayoutChrome({ children }: { children: ReactNode }) {
   if (isFullscreenLesson) {
     return (
       <>
+        <a href="#main-content" className="skip-link">
+          Saltar al contenido
+        </a>
         <main id="main-content" className="relative min-h-dvh w-full flex-1 overflow-hidden">
           <DashboardShellGate>{children}</DashboardShellGate>
         </main>
@@ -25,6 +28,9 @@ export function DashboardLayoutChrome({ children }: { children: ReactNode }) {
 
   return (
     <>
+      <a href="#main-content" className="skip-link">
+        Saltar al contenido
+      </a>
       <div
         className={cn(
           'flex h-dvh max-h-dvh w-full flex-col overflow-hidden',

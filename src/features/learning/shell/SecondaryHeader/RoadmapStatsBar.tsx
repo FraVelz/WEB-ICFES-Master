@@ -56,6 +56,7 @@ export function RoadmapStatsBar({
           layout === 'stacked' && 'w-full'
         )}
         title={`Área: ${currentAreaInfo.name}`}
+        aria-label={`Seleccionar área: ${currentAreaInfo.name}`}
         aria-expanded={areasOpen}
         aria-haspopup="dialog"
       >
@@ -96,6 +97,7 @@ export function RoadmapStatsBar({
             layout === 'stacked' && 'flex-1 justify-center'
           )}
           title="Ver información de racha"
+          aria-label={`Ver información de racha: ${currentStreak} días`}
           aria-expanded={streakOpen}
           aria-haspopup="dialog"
         >
@@ -127,6 +129,7 @@ export function RoadmapStatsBar({
             layout === 'stacked' && 'flex-1 justify-center'
           )}
           title="Ir a la tienda"
+          aria-label={`Ir a la tienda, ${coins} monedas`}
         >
           <Icon name="coins" className="text-sm text-yellow-500" />
           <span className={cn('text-sm font-bold text-yellow-500', loading && 'animate-pulse opacity-60')}>

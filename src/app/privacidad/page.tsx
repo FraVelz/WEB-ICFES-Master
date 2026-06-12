@@ -24,7 +24,7 @@ export const metadata: Metadata = {
 
 export default function PrivacidadPage() {
   return (
-    <div className={cn('relative px-4 py-12 sm:px-6 lg:px-8', FULL_PAGE_SHELL_CLASS)}>
+    <main id="main-content" className={cn('relative px-4 py-12 sm:px-6 lg:px-8', FULL_PAGE_SHELL_CLASS)}>
       <div className="pointer-events-none fixed inset-0 z-0">
         <div
           className={cn(
@@ -181,6 +181,6 @@ export default function PrivacidadPage() {
           </div>
         </div>
       </div>
-    </div>
+    </main>
   );
 }

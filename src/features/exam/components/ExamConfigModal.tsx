@@ -35,10 +35,7 @@ export const ExamConfigModal = ({
   };
 
   return (
-    <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm"
-      aria-hidden="true"
-    >
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm">
       <div
         ref={dialogRef}
         role="dialog"
@@ -53,14 +50,18 @@ export const ExamConfigModal = ({
 
         <div className="space-y-6">
           <div>
-            <label className="text-on-surface mb-3 block font-semibold">Número de preguntas</label>
+            <label htmlFor="exam-num-questions" className="text-on-surface mb-3 block font-semibold">
+              Número de preguntas
+            </label>
             <div className="flex items-center gap-4">
               <input
+                id="exam-num-questions"
                 type="range"
                 min="1"
                 max={maxQuestions}
                 value={numQuestions}
                 onChange={(e) => setNumQuestions(Number(e.target.value))}
+                aria-valuetext={`${numQuestions} preguntas`}
                 className={cn(
                   'accent-app-accent bg-surface-overlay h-2 flex-1 cursor-pointer appearance-none rounded-lg',
                   'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:outline-none',
@@ -92,14 +93,18 @@ export const ExamConfigModal = ({
 
           {useTimer && (
             <div>
-              <label className="text-on-surface mb-3 block font-semibold">Minutos por pregunta</label>
+              <label htmlFor="exam-time-per-question" className="text-on-surface mb-3 block font-semibold">
+                Minutos por pregunta
+              </label>
               <div className="flex items-center gap-4">
                 <input
+                  id="exam-time-per-question"
                   type="range"
                   min="1"
                   max="10"
                   value={timePerQuestion}
                   onChange={(e) => setTimePerQuestion(Number(e.target.value))}
+                  aria-valuetext={`${timePerQuestion} minutos por pregunta`}
                   className={cn(
                     'accent-app-accent bg-surface-overlay h-2 flex-1 cursor-pointer appearance-none rounded-lg',
                     'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:outline-none',

@@ -62,6 +62,7 @@ export function ResetPasswordForm({
           <button
             type="button"
             onClick={onTogglePassword}
+            aria-label={showPassword ? 'Ocultar contraseña' : 'Mostrar contraseña'}
             className="text-on-surface-muted hover:text-on-surface-muted absolute top-1/2 right-4 -translate-y-1/2"
           >
             <Icon name={showPassword ? 'eye-slash' : 'eye'} />
@@ -86,6 +87,9 @@ export function ResetPasswordForm({
           <button
             type="button"
             onClick={onToggleConfirmPassword}
+            aria-label={
+              showConfirmPassword ? 'Ocultar confirmación de contraseña' : 'Mostrar confirmación de contraseña'
+            }
             className="text-on-surface-muted hover:text-on-surface-muted absolute top-1/2 right-4 -translate-y-1/2"
           >
             <Icon name={showConfirmPassword ? 'eye-slash' : 'eye'} />

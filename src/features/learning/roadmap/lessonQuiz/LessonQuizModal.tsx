@@ -35,7 +35,6 @@ export function LessonQuizModal({
         'fixed inset-0 z-70 flex items-end justify-center bg-black/80 p-0 pb-20 backdrop-blur-sm',
         'lg:items-center lg:p-4 lg:pb-4'
       )}
-      aria-hidden="true"
     >
       <div
         ref={dialogRef}
