@@ -38,6 +38,13 @@ export function DonationCardForm() {
 
   return (
     <form onSubmit={handlePayment} className="animate-fade-in-up space-y-4">
+      <p
+        className="rounded-lg border border-amber-500/30 bg-amber-500/10 px-3 py-2 text-xs leading-relaxed text-amber-200"
+        role="note"
+      >
+        Simulación visual: este formulario no envía datos de tarjeta ni realiza cobros. Para donar de verdad, elige
+        Nequi, transferencia o PayPal.
+      </p>
       <div>
         <label htmlFor={cardNumberId} className="mb-1 block text-xs font-medium text-on-surface-muted">
           Número de Tarjeta

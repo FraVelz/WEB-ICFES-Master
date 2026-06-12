@@ -3,10 +3,10 @@ export const paymentMethods = [
     id: 'sprite',
     name: 'Invítame una Sprite',
     icon: 'droplet',
-    info: 'Tarjeta Débito / Crédito',
+    info: 'Simulación (no cobra)',
     type: 'card',
     highlight: true,
-    description: 'Usa tu tarjeta para invitar una Sprite al creador de forma segura.',
+    description: 'Vista previa del flujo de pago. No procesa tarjetas reales — usa Nequi, transferencia o PayPal.',
   },
   {
     id: 'nequi',

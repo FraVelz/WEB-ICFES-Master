@@ -63,7 +63,7 @@ export default function PrivacidadPage() {
         <p className="text-on-surface-muted mb-8">
           <strong className="text-on-surface">ICFES Master</strong>
         </p>
-        <p className="text-on-surface-muted mb-8 text-sm">Última actualización: 16 de diciembre de 2025</p>
+        <p className="text-on-surface-muted mb-8 text-sm">Última actualización: 12 de junio de 2026</p>
 
         <div className="space-y-6">
           <p className="text-on-surface leading-relaxed">
@@ -82,14 +82,14 @@ export default function PrivacidadPage() {
               <li>Correo electrónico</li>
               <li>Nombre asociado a la cuenta de Google (si se usa ese método de registro)</li>
               <li>Apodo o nombre de usuario</li>
-              <li>Información de autenticación (modo local en dispositivo)</li>
+              <li>Información de autenticación gestionada por Supabase (cuenta con email o Google)</li>
             </ul>
             <div className="border-app-ring/40 bg-app-ring/10 mb-6 rounded-lg border p-4">
               <p className="text-on-surface">
                 <strong className="text-app-accent-strong">
-                  ICFES Master almacena datos localmente en tu dispositivo.
+                  Con cuenta, tu progreso y perfil se sincronizan en la nube (Supabase).
                 </strong>{' '}
-                En futuras versiones se implementará sincronización en la nube.
+                El modo demo guarda datos solo en tu navegador hasta que crees una cuenta o cierres la sesión demo.
               </p>
             </div>
             <h3 className="text-app-accent mt-6 mb-3 text-xl font-semibold">b) Información de uso y progreso</h3>
@@ -126,7 +126,14 @@ export default function PrivacidadPage() {
             <h2 className="text-app-accent mt-8 mb-4 text-2xl font-bold">3. Servicios de terceros</h2>
             <ul className="text-on-surface-muted mb-6 list-inside list-disc space-y-2">
               <li>
-                <strong>LocalStorage del navegador</strong>: datos del usuario, progreso y preferencias
+                <strong>Supabase</strong>: autenticación, perfil, progreso, gamificación y contenido de aprendizaje
+              </li>
+              <li>
+                <strong>OpenAI</strong>: asistente educativo del chat (solo el texto de tus mensajes, con límites de
+                uso)
+              </li>
+              <li>
+                <strong>LocalStorage del navegador</strong>: preferencias, modo demo y caché local cuando aplica
               </li>
               <li>
                 <strong>Vercel Web Analytics</strong>: análisis agregado del uso de la plataforma

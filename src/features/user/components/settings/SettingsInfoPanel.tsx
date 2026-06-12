@@ -11,7 +11,7 @@ export function SettingsInfoPanel() {
             Cloud Sync
           </h3>
           <p className="text-on-surface-muted text-xs leading-relaxed">
-            Tus datos se guardan localmente en tu dispositivo. En el futuro se sincronizarán con la nube.
+            Con cuenta, tu progreso se sincroniza en Supabase. El modo demo guarda datos solo en este navegador.
           </p>
         </div>
         <div className="border-surface-border bg-surface-via/50 rounded-xl border p-4">
