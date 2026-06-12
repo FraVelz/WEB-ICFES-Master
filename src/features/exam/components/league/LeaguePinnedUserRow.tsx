@@ -26,12 +26,6 @@ export function LeaguePinnedUserRow({
   onClick,
 }: LeaguePinnedUserRowProps) {
   const statusReaction = getProfileStatusReaction(statusId);
-  const initials = name
-    .split(' ')
-    .map((part) => part[0])
-    .join('')
-    .slice(0, 2)
-    .toUpperCase();
 
   return (
     <div className="pointer-events-none sticky bottom-0 z-20 -mx-1 px-1 pt-3 pb-1">
@@ -78,8 +72,8 @@ export function LeaguePinnedUserRow({
           )}
         </div>
 
-        <div className="min-w-0 flex-1 truncate text-left">
-          <span className="text-sm font-bold text-white">{initials || name}</span>
+        <div className="min-w-0 flex-1 text-left">
+          <span className="truncate text-sm font-bold text-white">{name}</span>
         </div>
 
         <div className="text-on-surface-muted shrink-0 text-right text-sm font-bold">{weeklyXp} XP</div>

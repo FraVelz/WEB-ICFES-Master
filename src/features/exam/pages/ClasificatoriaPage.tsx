@@ -98,7 +98,8 @@ export const ClasificatoriaPage = () => {
     [leaderboardData, user?.uid]
   );
 
-  const displayName = user?.displayName || 'Tú';
+  const displayName =
+    currentUserInList?.name || currentUserInList?.username || user?.displayName || 'Tú';
 
   return (
     <div className="relative z-10 mx-auto flex min-h-[70dvh] max-w-2xl flex-col px-4 pb-4">
