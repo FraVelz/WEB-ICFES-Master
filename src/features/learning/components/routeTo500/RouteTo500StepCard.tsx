@@ -3,7 +3,12 @@
 import Link from 'next/link';
 import { cn } from '@/utils/cn';
 import type { AreaId } from '@/shared/constants';
-import { getJourneyStepHref, type JourneyStep } from '@/features/learning/data/routeTo500';
+import { getAreaInfo } from '@/shared/constants';
+import {
+  getAreaSimulacroPhaseCopy,
+  getJourneyStepHref,
+  type JourneyStep,
+} from '@/features/learning/data/routeTo500';
 
 const ACCENT_STYLES = {
   accent: {
@@ -35,6 +40,9 @@ export function RouteTo500StepCard({
 }: RouteTo500StepCardProps) {
   const styles = ACCENT_STYLES[step.accent];
   const href = getJourneyStepHref(step, areaId);
+  const areaSimulacroCopy = step.id === 'examen-materia' ? getAreaSimulacroPhaseCopy(areaId) : null;
+  const title = areaSimulacroCopy?.title ?? step.title;
+  const summary = areaSimulacroCopy?.summary ?? step.summary;
 
   return (
     <li
@@ -54,12 +62,12 @@ export function RouteTo500StepCard({
       </span>
       <div className="min-w-0 flex-1 space-y-2">
         <div className="flex flex-wrap items-baseline gap-x-2 gap-y-0.5">
-          <p className="text-on-surface text-sm font-semibold">{step.title}</p>
+          <p className="text-on-surface text-sm font-semibold">{title}</p>
           <span className={cn('text-xs font-bold tracking-wide', styles.score)}>{step.indicativeScoreLabel}</span>
         </div>
         {!compact && <p className="text-on-surface-muted text-xs font-medium">{step.subtitle}</p>}
         <p className={cn('text-on-surface-muted leading-relaxed', compact ? 'text-xs sm:text-sm' : 'text-sm')}>
-          {step.summary}
+          {summary}
         </p>
         {!compact && (
           <p className="text-on-surface-muted text-xs">
@@ -80,7 +88,11 @@ export function RouteTo500StepCard({
               step.accent === 'purple' && 'focus-visible:ring-purple-400'
             )}
           >
-            {step.kind === 'learning' ? 'Ir a aprendizaje' : step.kind === 'practice-area' ? 'Examen por materia' : 'Examen global'}
+            {step.kind === 'learning'
+              ? 'Ir a aprendizaje'
+              : step.kind === 'practice-area'
+                ? `Simulacro de ${getAreaInfo(areaId).name}`
+                : 'Simulacro global'}
           </Link>
         ) : null}
       </div>

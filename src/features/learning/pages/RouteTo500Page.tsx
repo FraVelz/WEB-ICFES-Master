@@ -5,6 +5,7 @@ import { cn } from '@/utils/cn';
 import { Icon } from '@/shared/components/Icon';
 import { useDashboardShellOptional } from '@/features/dashboard/shell';
 import type { AreaId } from '@/shared/constants';
+import { getAreaInfo } from '@/shared/constants';
 import { LecturaSectionShell } from '@/features/lectura/components/LecturaSectionShell';
 import { LECTURA_PAGE_SHELL_CLASS } from '@/features/lectura/constants';
 import { RouteTo500AreaMatrix } from '@/features/learning/components/routeTo500/RouteTo500AreaMatrix';
@@ -33,6 +34,7 @@ export function RouteTo500Page() {
   const recommendedHref = level ? getRecommendedStepHref(level, areaId) : null;
   const recommendedStep = stepId ? getJourneyStepById(stepId) : null;
   const assessmentHref = buildLevelAssessmentUrl(demoMode && !user ? 'demo' : 'account');
+  const areaName = getAreaInfo(areaId).name;
 
   return (
     <div className={cn(LECTURA_PAGE_SHELL_CLASS, 'max-w-3xl space-y-6')}>
@@ -180,7 +182,7 @@ export function RouteTo500Page() {
               'focus-visible:ring-2 focus-visible:ring-amber-400 focus-visible:outline-none'
             )}
           >
-            Examen por materia
+            Simulacro de {areaName}
           </Link>
           <Link
             href={getJourneyStepHref(ROUTE_TO_500_STEPS[4], areaId) ?? '/examen-completo'}
@@ -190,7 +192,7 @@ export function RouteTo500Page() {
               'focus-visible:ring-2 focus-visible:ring-purple-400 focus-visible:outline-none'
             )}
           >
-            Examen global
+            Simulacro global
           </Link>
         </div>
       </LecturaSectionShell>

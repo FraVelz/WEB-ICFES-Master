@@ -1,6 +1,6 @@
 import type { SkillLevel } from '@/features/auth/types/skillLevel';
 import type { AreaId } from '@/shared/constants';
-import { getPracticaHrefForRoadmapArea } from '@/shared/constants';
+import { getAreaInfo, getPracticaHrefForRoadmapArea } from '@/shared/constants';
 import {
   COMPETENCY_PHASES,
   JOURNEY_TIPS,
@@ -80,10 +80,10 @@ const EXAM_STEPS: JourneyStep[] = [
   {
     id: 'examen-materia',
     order: 4,
-    title: 'Examen general por materia',
+    title: 'Simulacro general por materia',
     subtitle: 'Consolidación por área',
     summary:
-      'Simulacro completo de cada área para consolidar las tres fases anteriores antes del examen integral.',
+      'Simulacro completo de cada área para consolidar las tres fases anteriores antes del simulacro integral.',
     performanceLevels: 'Transferencia',
     indicativeScoreLabel: '~ 350 – 400 pts',
     kind: 'practice-area',
@@ -92,7 +92,7 @@ const EXAM_STEPS: JourneyStep[] = [
   {
     id: 'examen-global',
     order: 5,
-    title: 'Examen global e interiorización',
+    title: 'Simulacro global e interiorización',
     subtitle: 'Simulacro integral',
     summary:
       'Completa todos los pasos anteriores. La lectura crítica atraviesa todas las áreas y condiciona tu ' +
@@ -103,6 +103,25 @@ const EXAM_STEPS: JourneyStep[] = [
     accent: 'purple',
   },
 ];
+
+export function getAreaSimulacroPhaseTitle(areaName: string): string {
+  return `Simulacro general de ${areaName}`;
+}
+
+export function getAreaSimulacroPhaseSummary(areaName: string): string {
+  return (
+    `Simulacro completo de ${areaName} para consolidar las tres fases anteriores ` +
+    'antes del simulacro integral.'
+  );
+}
+
+export function getAreaSimulacroPhaseCopy(areaId: AreaId): { title: string; summary: string } {
+  const areaName = getAreaInfo(areaId).name;
+  return {
+    title: getAreaSimulacroPhaseTitle(areaName),
+    summary: getAreaSimulacroPhaseSummary(areaName),
+  };
+}
 
 export const ROUTE_TO_500_STEPS: JourneyStep[] = [...LEARNING_STEPS, ...EXAM_STEPS];
 
@@ -117,7 +136,7 @@ export const SKILL_LEVEL_RECOMMENDATION_COPY: Record<SkillLevel, string> = {
   intermediate:
     'Según tu evaluación, puedes entrar en Relación (ND 2–3). Repasa Cimentación si los simulacros te lo piden.',
   advanced:
-    'Según tu evaluación, puedes avanzar a Maestría (ND 3–4) o usar el examen para saltar fases si ya dominas el contenido.',
+    'Según tu evaluación, puedes avanzar a Maestría (ND 3–4) o usar un simulacro para saltar fases si ya dominas el contenido.',
 };
 
 export function getJourneyStepById(stepId: JourneyStepId): JourneyStep | undefined {

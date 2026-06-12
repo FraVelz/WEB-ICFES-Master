@@ -65,7 +65,7 @@ export function PhaseStageCard({
         />
       </div>
       <p className="text-on-surface-muted mt-1 text-xs">
-        {skippedByExam ? 'Fase superada con examen' : `${lessonCount} lecciones · ${isLocked ? '0' : progressPercent}%`}
+        {skippedByExam ? 'Fase superada con simulacro' : `${lessonCount} lecciones · ${isLocked ? '0' : progressPercent}%`}
       </p>
 
       {(isActive || isLocked) && areaFocus && (
@@ -98,7 +98,7 @@ export function PhaseStageCard({
               )}
             >
               <Icon name="bolt" className="text-amber-400" />
-              Saltar fase con examen
+              Saltar fase con simulacro
             </Link>
           )}
         </div>

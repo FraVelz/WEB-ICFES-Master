@@ -1,16 +1,20 @@
 import Link from 'next/link';
 import { cn } from '@/utils/cn';
 import { Icon } from '@/shared/components/Icon';
-import { ROUTE_TO_500_PATH, getJourneyStepById } from '@/features/learning/data/routeTo500';
+import { ROUTE_TO_500_PATH, getAreaSimulacroPhaseTitle, getJourneyStepById } from '@/features/learning/data/routeTo500';
 
 type RouteTo500ContextBannerProps = {
   stepId: 'examen-materia' | 'examen-global';
+  areaName?: string;
   className?: string;
 };
 
-export function RouteTo500ContextBanner({ stepId, className }: RouteTo500ContextBannerProps) {
+export function RouteTo500ContextBanner({ stepId, areaName, className }: RouteTo500ContextBannerProps) {
   const step = getJourneyStepById(stepId);
   if (!step) return null;
+
+  const stepTitle =
+    stepId === 'examen-materia' && areaName ? getAreaSimulacroPhaseTitle(areaName) : step.title;
 
   return (
     <div
@@ -23,7 +27,7 @@ export function RouteTo500ContextBanner({ stepId, className }: RouteTo500Context
       )}
     >
       <p>
-        <span className="font-semibold">Paso {step.order} de tu ruta al 500:</span> {step.title}.{' '}
+        <span className="font-semibold">Paso {step.order} de tu ruta al 500:</span> {stepTitle}.{' '}
         {stepId === 'examen-materia'
           ? 'Consolida las tres fases de aprendizaje en esta área.'
           : 'Simulacro integral tras practicar por materias.'}

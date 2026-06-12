@@ -111,7 +111,7 @@ export function LearningAsidePanels() {
               'focus-visible:ring-2 focus-visible:ring-purple-400 focus-visible:outline-none'
             )}
           >
-            Examen general
+            Simulacro general
           </Link>
         </AsideCard>
       ) : null}
