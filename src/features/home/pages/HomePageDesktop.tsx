@@ -12,6 +12,7 @@ import { GSAPGlowBlob } from '@/features/home/components/GSAPGlowBlob';
 import {
   HeroSection,
   AreasSection,
+  RouteTo500TeaserSection,
   FeaturesSection,
   TestimonialsSection,
   FAQSection,
@@ -125,6 +126,12 @@ const HomePageDesktopComponent = ({ onDemoAccess }: { onDemoAccess: () => void }
           />
           <div data-home-reveal className={homeStyles.revealScroll}>
             <AreasSection />
+          </div>
+        </section>
+
+        <section className="relative overflow-hidden py-12 md:py-16">
+          <div data-home-reveal className={homeStyles.revealScroll}>
+            <RouteTo500TeaserSection />
           </div>
         </section>
 

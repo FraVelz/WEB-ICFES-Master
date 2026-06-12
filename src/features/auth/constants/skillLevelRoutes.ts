@@ -7,9 +7,9 @@ export const SKILL_LEVEL_DESTINATIONS: Record<
   { path: string; title: string; description: string; icon: string }
 > = {
   basics: {
-    path: '/ruta-aprendizaje',
+    path: '/ruta-al-500',
     title: 'Estoy aprendiendo las bases',
-    description: 'Aún construyo fundamentos y prefiero empezar con lecciones guiadas paso a paso.',
+    description: 'Aún construyo fundamentos. Empieza por la Ruta al 500 y la fase de Cimentación (ND 1–2).',
     icon: 'book',
   },
   intermediate: {

@@ -35,6 +35,16 @@ export function LecturaAsidePanels() {
 
       <AsideCard title="Explorar lectura" icon="graduation-cap">
         <Link
+          href="/ruta-al-500"
+          className={cn(
+            'inline-flex w-full items-center justify-center gap-2 rounded-xl border px-4 py-2.5 text-sm font-bold',
+            'border-surface-border text-on-surface-muted mb-2 transition-colors hover:text-on-surface hover:bg-surface-via',
+            'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:outline-none'
+          )}
+        >
+          Ruta al 500
+        </Link>
+        <Link
           href="/lectura"
           className={cn(
             'inline-flex w-full items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-sm font-bold',

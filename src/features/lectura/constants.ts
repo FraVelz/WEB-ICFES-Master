@@ -1,4 +1,4 @@
-export type LecturaSectionId = 'importancia' | 'informacion' | 'consejos';
+export type LecturaSectionId = 'importancia' | 'informacion' | 'consejos' | 'ruta-al-500';
 
 /** El dashboard shell usa `px-0` en móvil; las rutas de lectura aportan su propio margen lateral. */
 export const LECTURA_PAGE_SHELL_CLASS = 'relative z-10 mx-auto w-full px-4 sm:px-5 lg:px-0';
@@ -25,6 +25,18 @@ export type LecturaSectionMeta = {
 };
 
 export const LECTURA_SECTIONS: LecturaSectionMeta[] = [
+  {
+    id: 'ruta-al-500',
+    path: '/ruta-al-500',
+    title: 'Ruta al 500',
+    description:
+      'Cómo avanzar por competencias ICFES: fases de aprendizaje, simulacros y la diferencia entre puntaje, ND y progreso en la app.',
+    icon: 'map',
+    iconClassName: 'text-app-accent text-xl',
+    iconWrapClassName: 'bg-app-ring/10',
+    hoverTitleClassName: 'group-hover:text-app-accent',
+    hoverChevronClassName: 'group-hover:text-app-accent',
+  },
   {
     id: 'importancia',
     path: '/importancia',

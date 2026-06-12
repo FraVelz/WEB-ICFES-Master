@@ -1,7 +1,8 @@
 export const WHY_CHOOSE_US = [
   {
     title: 'Desde Cero hasta Experto',
-    description: 'Contenido estructurado en niveles: básico, intermedio y avanzado.',
+    description:
+      'Recorrido por competencias ICFES en cinco pasos: Cimentación, Relación, Maestría, simulacros por área y examen global.',
     icon: 'rocket',
     color: 'from-feature-1-from to-feature-1-to',
   },

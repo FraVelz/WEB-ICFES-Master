@@ -16,6 +16,7 @@ type PhaseStageCardProps = {
   sectionId: string;
   skipExamHref?: string;
   skippedByExam?: boolean;
+  performanceLevels?: string;
 };
 
 export function PhaseStageCard({
@@ -27,6 +28,7 @@ export function PhaseStageCard({
   sectionId,
   skipExamHref,
   skippedByExam = false,
+  performanceLevels,
 }: PhaseStageCardProps) {
   const isCompleted = status === 'completed';
   const isActive = status === 'active';
@@ -46,6 +48,9 @@ export function PhaseStageCard({
           <p className="text-on-surface-muted text-xs font-bold tracking-wide uppercase">Fase {phase.order}</p>
           <h2 className="text-on-surface text-lg font-bold">{phase.title}</h2>
           <p className="text-on-surface-muted text-sm">{phase.subtitle}</p>
+          {performanceLevels ? (
+            <p className="text-app-accent mt-1 text-xs font-semibold">Marco ICFES: {performanceLevels}</p>
+          ) : null}
         </div>
         {isCompleted && <Icon name="check-circle" className="shrink-0 text-green-500" />}
       </div>

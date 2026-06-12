@@ -2,7 +2,7 @@ import type { LecturaSectionId } from '../constants';
 
 export const LECTURA_READ_CHANGE_EVENT = 'icfes:lectura-read-change';
 
-const ALL_SECTION_IDS: LecturaSectionId[] = ['importancia', 'informacion', 'consejos'];
+const ALL_SECTION_IDS: LecturaSectionId[] = ['ruta-al-500', 'importancia', 'informacion', 'consejos'];
 
 function storageKey(scopeId: string): string {
   return `icfes_lectura_read_${scopeId}`;

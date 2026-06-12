@@ -8,9 +8,18 @@ import type { AreaId } from '@/shared/constants';
 import { getPracticaHrefForRoadmapArea } from '@/shared/constants';
 import { useDashboardShell } from '@/features/dashboard/shell';
 import { COMPETENCY_PHASES, getPhaseSkipExamHref } from '../data/competencyPhases';
+import {
+  GLOBAL_EXAM_PATH,
+  ROUTE_TO_500_PATH,
+  getJourneyStepById,
+  getJourneyStepForCompetencyPhase,
+} from '../data/routeTo500';
 import { getSectionProgress, resolvePhaseStatuses } from '../data/phaseProgressUtils';
 import { PhaseStageCard } from '../components/phases/PhaseStageCard';
 import { usePhaseSkips } from '../hooks/usePhaseSkips';
+
+const areaExamStep = getJourneyStepById('examen-materia');
+const globalExamStep = getJourneyStepById('examen-global');
 
 export function LearningPhasesPage() {
   const { currentArea, currentAreaData, sections, pathLoading } = useDashboardShell();
@@ -18,16 +27,28 @@ export function LearningPhasesPage() {
   const phaseStatuses = resolvePhaseStatuses(COMPETENCY_PHASES, sections, skippedSectionIds);
   const areaExamHref = getPracticaHrefForRoadmapArea(currentArea);
 
-  if (pathLoading) {
+  if (pathLoading && sections.length === 0) {
     return <LoadingState label="Cargando fases..." layout="section" />;
   }
 
   return (
     <div className="space-y-3 max-sm:px-2">
-      <p className="text-on-surface-muted text-sm">
-        Recorrido por competencias en <span className="text-on-surface font-medium">{currentAreaData.name}</span>.
-        Cambia el área desde el panel lateral.
-      </p>
+      <div className="space-y-2">
+        <p className="text-on-surface-muted text-sm">
+          Recorrido por competencias en <span className="text-on-surface font-medium">{currentAreaData.name}</span>.
+          Cambia el área desde el panel lateral.
+        </p>
+        <Link
+          href={ROUTE_TO_500_PATH}
+          className={cn(
+            'text-app-accent inline-flex items-center gap-1 text-sm font-semibold underline-offset-2 hover:underline',
+            'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:outline-none'
+          )}
+        >
+          <Icon name="map" className="text-xs" />
+          ¿Por qué estas fases? Ver ruta al 500
+        </Link>
+      </div>
 
       <ul className="space-y-3">
         {COMPETENCY_PHASES.map((phase) => {
@@ -35,6 +56,7 @@ export function LearningPhasesPage() {
           const { percent } = getSectionProgress(section);
           const status = phaseStatuses.get(phase.id) ?? 'upcoming';
           const skippedByExam = skippedSectionIds.has(phase.sectionId);
+          const journeyStep = getJourneyStepForCompetencyPhase(phase.id);
 
           return (
             <li key={phase.id}>
@@ -47,27 +69,50 @@ export function LearningPhasesPage() {
                 sectionId={phase.sectionId}
                 skipExamHref={getPhaseSkipExamHref(currentArea, phase.sectionId)}
                 skippedByExam={skippedByExam}
+                performanceLevels={journeyStep?.performanceLevels}
               />
             </li>
           );
         })}
       </ul>
 
-      {areaExamHref ? (
+      {areaExamHref && areaExamStep ? (
         <Link
           href={areaExamHref}
           className={cn(
-            'border-surface-border bg-surface-elevated/80 flex items-center justify-between gap-3',
+            'border-surface-border bg-surface-elevated/80 flex items-start justify-between gap-3',
+            'rounded-2xl border p-4',
+            'transition-colors hover:border-amber-500/40 hover:bg-amber-500/5',
+            'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:outline-none'
+          )}
+        >
+          <div className="min-w-0 space-y-1">
+            <p className="text-on-surface-muted text-xs font-bold tracking-wide uppercase">Paso 4</p>
+            <p className="text-on-surface font-semibold">{areaExamStep.title}</p>
+            <p className="text-on-surface-muted text-sm">{areaExamStep.summary}</p>
+            <p className="text-amber-300 text-xs font-semibold">{areaExamStep.indicativeScoreLabel}</p>
+          </div>
+          <Icon name="clipboard-list" className="mt-1 shrink-0 text-amber-400" />
+        </Link>
+      ) : null}
+
+      {globalExamStep ? (
+        <Link
+          href={GLOBAL_EXAM_PATH}
+          className={cn(
+            'border-surface-border bg-surface-elevated/80 flex items-start justify-between gap-3',
             'rounded-2xl border p-4',
             'transition-colors hover:border-purple-500/40 hover:bg-purple-500/5',
             'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:outline-none'
           )}
         >
-          <div className="min-w-0">
-            <p className="text-on-surface font-semibold">Examen general</p>
-            <p className="text-on-surface-muted text-sm">Simulacro completo de {currentAreaData.name}</p>
+          <div className="min-w-0 space-y-1">
+            <p className="text-on-surface-muted text-xs font-bold tracking-wide uppercase">Paso 5</p>
+            <p className="text-on-surface font-semibold">{globalExamStep.title}</p>
+            <p className="text-on-surface-muted text-sm">{globalExamStep.summary}</p>
+            <p className="text-purple-300 text-xs font-semibold">{globalExamStep.indicativeScoreLabel}</p>
           </div>
-          <Icon name="brain" className="shrink-0 text-purple-400" />
+          <Icon name="brain" className="mt-1 shrink-0 text-purple-400" />
         </Link>
       ) : null}
     </div>

@@ -31,6 +31,12 @@ Estas son las **URLs** del proyecto.
 | `/clasificatoria/`   | Clasificación / ranking           |
 | `/configuracion/`    | Configuración                     |
 | `/examen-completo/`  | Simulacro completo                |
+| `/ruta-al-500/`      | Ruta pedagógica al puntaje 500    |
+| `/lectura/`          | Material informativo ICFES        |
+| `/importancia/`      | Importancia del bachiller         |
+| `/informacion/`      | Infografías y enlaces oficiales   |
+| `/consejos/`         | Consejos de estudio y examen      |
+| `/fases/`            | Fases de competencias por área    |
 
 ## Perfil público (sin layout de auth)
 

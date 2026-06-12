@@ -31,6 +31,12 @@ These are the application **URLs**.
 | `/clasificatoria/`   | Ranking                       |
 | `/configuracion/`    | Settings                      |
 | `/examen-completo/`  | Full mock exam                |
+| `/ruta-al-500/`      | Route to 500 — learning journey |
+| `/lectura/`          | ICFES informational content   |
+| `/importancia/`      | Importance of high school       |
+| `/informacion/`      | Official infographics and links |
+| `/consejos/`         | Study and exam tips             |
+| `/fases/`            | Competency phases by area       |
 
 ## Public profile (no auth layout)
 

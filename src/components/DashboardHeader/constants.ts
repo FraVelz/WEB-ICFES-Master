@@ -36,7 +36,7 @@ export function isNavOptionActive(pathname: string, option: NavOption): boolean 
   return option.activePaths?.some((path) => isNavPathActive(pathname, path)) ?? false;
 }
 
-export const LECTURA_SUB_PATHS = ['/importancia', '/informacion', '/consejos'] as const;
+export const LECTURA_SUB_PATHS = ['/ruta-al-500', '/importancia', '/informacion', '/consejos'] as const;
 
 /** Rutas donde no se muestra la barra de navegación principal en móvil. */
 export const HIDE_MOBILE_MAIN_NAV_PATHS = ['/tienda'] as const;

@@ -5,6 +5,7 @@ import { FullExamActiveView } from '@/features/exam/components/fullExam/FullExam
 import { FullExamResultsView } from '@/features/exam/components/fullExam/FullExamResultsView';
 import { useFullExam } from '@/features/exam/hooks/useFullExam';
 import { LoadingState } from '@/shared/components/LoadingState';
+import { RouteTo500ContextBanner } from '@/features/learning/components/routeTo500/RouteTo500ContextBanner';
 
 export const FullExamPage = () => {
   const {
@@ -50,12 +51,15 @@ export const FullExamPage = () => {
 
   if (!examConfig) {
     return (
-      <ExamConfigModal
-        area={areaInfo.name}
-        totalQuestions={allQuestions.length}
-        onStart={handleExamStart}
-        isFullExam={true}
-      />
+      <div className="px-4 pt-6">
+        <RouteTo500ContextBanner stepId="examen-global" />
+        <ExamConfigModal
+          area={areaInfo.name}
+          totalQuestions={allQuestions.length}
+          onStart={handleExamStart}
+          isFullExam={true}
+        />
+      </div>
     );
   }
 

@@ -5,3 +5,4 @@ export { TestimonialsSection } from './TestimonialsSection';
 export { FAQSection } from './FAQSection';
 export { FinalCTASection } from './FinalCTASection';
 export { DonationSection } from './DonationSection/DonationSection';
+export { RouteTo500TeaserSection } from './RouteTo500TeaserSection';

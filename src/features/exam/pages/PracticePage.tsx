@@ -8,6 +8,7 @@ import { PracticeActiveView } from '@/features/exam/components/practice/Practice
 import { usePracticeExam } from '@/features/exam/hooks/usePracticeExam';
 import { LoadingState } from '@/shared/components/LoadingState';
 import { LEARNING_PHASES_PATH } from '@/features/learning/data/competencyPhases';
+import { RouteTo500ContextBanner } from '@/features/learning/components/routeTo500/RouteTo500ContextBanner';
 
 const errorBoxClass =
   'mx-auto max-w-lg rounded-xl border border-red-500/30 bg-red-500/10 px-4 py-6 text-center text-sm text-red-800 dark:text-red-200';
@@ -63,10 +64,15 @@ export const PracticePage = () => {
     </div>
   ) : null;
 
+  const routeBanner = !isPhaseSkipMode ? (
+    <RouteTo500ContextBanner stepId="examen-materia" className="max-w-lg" />
+  ) : null;
+
   if (!examConfig) {
     return (
       <div className="px-4 pt-6">
         {phaseSkipBanner}
+        {routeBanner}
         <ExamConfigModal area={areaInfo.name} totalQuestions={allQuestions.length} onStart={handleExamStart} />
       </div>
     );
