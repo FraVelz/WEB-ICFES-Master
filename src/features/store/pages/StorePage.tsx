@@ -23,7 +23,7 @@ import { EmptyState } from '@/shared/components/EmptyState';
 
 export function StorePage() {
   const shop = useShop();
-  const { coins, hasItem, isEquipped, loading, error, processing, shopItems, streakShieldCount } = shop;
+  const { coins, hasItem, isEquipped, loading, error, processing, shopItems, streakShieldCount, refreshData } = shop;
   const { remainingMs: doubleXpRemainingMs, isActive: isDoubleXpActive } = useDoubleXpTimer();
   const [selectedItem, setSelectedItem] = useState<ShopItem | null>(null);
   const [filter, setFilter] = useState<string>('all');
@@ -52,7 +52,13 @@ export function StorePage() {
         {showStoreLoading ? (
           <SkeletonGrid count={6} columnsClassName="grid-cols-2 md:grid-cols-3" />
         ) : error ? (
-          <EmptyState icon="exclamation-triangle" title="No se pudo cargar la tienda" description={error} />
+          <EmptyState
+            icon="exclamation-triangle"
+            title="No se pudo cargar la tienda"
+            description={error}
+            actionLabel="Reintentar"
+            onAction={() => void refreshData()}
+          />
         ) : (
           <>
             {isDoubleXpActive && <StoreDoubleXpBanner remainingMs={doubleXpRemainingMs} />}

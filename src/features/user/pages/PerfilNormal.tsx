@@ -4,12 +4,12 @@ import { useMemo, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { cn } from '@/utils/cn';
 import { Icon } from '@/shared/components/Icon';
-import { LoadingState } from '@/shared/components/LoadingState';
 import { useVipBadge } from '@/features/store/hooks/useVipBadge';
 import { useShop } from '@/features/store/hooks/useShop';
 import { useUserProfile } from '../hooks/useUserProfile';
 import { useResolvedProfileAvatar } from '@/features/user/hooks/useResolvedProfileAvatar';
 import { buildProfileStoreHighlights } from '@/features/user/utils/profileStoreHighlights';
+import { ProfilePageSkeleton } from '../components/profile/ProfilePageSkeleton';
 import { ProfilePageLayout } from '../components/profile/ProfilePageLayout';
 import { ProfileMainGrid } from '../components/profile/ProfileMainGrid';
 import { ProfileHeroCard } from '../components/profile/ProfileHeroCard';
@@ -72,7 +72,7 @@ export const PerfilNormal = () => {
   };
 
   if (loading) {
-    return <LoadingState label="Cargando tu perfil..." layout="fill" />;
+    return <ProfilePageSkeleton />;
   }
 
   return (

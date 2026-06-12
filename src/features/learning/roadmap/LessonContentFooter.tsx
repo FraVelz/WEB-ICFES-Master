@@ -4,6 +4,7 @@ import { useRef } from 'react';
 import { cn } from '@/utils/cn';
 import { Icon } from '@/shared/components/Icon';
 import { gsap } from '@/lib/gsap';
+import { prefersReducedMotion } from '@/utils/prefersReducedMotion';
 
 export type LessonNavDirection = 'prev' | 'next';
 
@@ -18,7 +19,7 @@ type LessonContentFooterProps = {
 };
 
 function playButtonTap(el: HTMLElement | null) {
-  if (!el) return;
+  if (!el || prefersReducedMotion()) return;
   gsap.fromTo(el, { scale: 1 }, { scale: 0.92, duration: 0.09, yoyo: true, repeat: 1, ease: 'power2.out' });
 }
 

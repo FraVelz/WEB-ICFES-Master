@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { cn } from '@/utils/cn';
 import { gsap } from '@/lib/gsap';
+import { prefersReducedMotion } from '@/utils/prefersReducedMotion';
 import { getRoadmapHref } from '../data/competencyPhases';
 import { getLessonStepHref } from '../utils/lessonRoutes';
 import { LessonContentFooter, type LessonNavDirection } from './LessonContentFooter';
@@ -58,6 +59,12 @@ export function LessonContentView({ lesson, areaId = 'lectura-critica', stepSlug
     const el = stepContentRef.current;
     if (!el) return;
 
+    if (prefersReducedMotion()) {
+      gsap.set(el, { opacity: 1, x: 0, y: 0 });
+      transitionDirectionRef.current = null;
+      return;
+    }
+
     const direction = transitionDirectionRef.current;
     const xIn = direction === 'next' ? 28 : direction === 'prev' ? -28 : 0;
 
@@ -95,6 +102,13 @@ export function LessonContentView({ lesson, areaId = 'lectura-critica', stepSlug
       isAnimatingRef.current = true;
       setNavigating(true);
       transitionDirectionRef.current = direction;
+
+      if (prefersReducedMotion()) {
+        router.push(href);
+        isAnimatingRef.current = false;
+        setNavigating(false);
+        return;
+      }
 
       const xOut = direction === 'next' ? -28 : 28;
 

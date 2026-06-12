@@ -3,7 +3,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { cn } from '@/utils/cn';
 import { useRouter } from 'next/navigation';
-import { Icon } from '@/shared/components/Icon';
 import { LoadingState } from '@/shared/components/LoadingState';
 import { useAuth } from '@/features/auth/context/AuthContext';
 import { useLeaderboard, type LeaderboardPlayer } from '@/hooks/gamification';
@@ -19,6 +18,7 @@ import { LeagueJoinBanner } from '@/features/exam/components/league/LeagueJoinBa
 import { LeagueSkeletonRows } from '@/features/exam/components/league/LeagueSkeletonRows';
 import { LeaguePlayerRow } from '@/features/exam/components/league/LeaguePlayerRow';
 import { LeaguePinnedUserRow } from '@/features/exam/components/league/LeaguePinnedUserRow';
+import { EmptyState } from '@/shared/components/EmptyState';
 
 export const ClasificatoriaPage = () => {
   const router = useRouter();
@@ -29,7 +29,7 @@ export const ClasificatoriaPage = () => {
   const hasVip = useVipBadge();
 
   const [selectedRank, setSelectedRank] = useState('novato');
-  const { leaderboardData, loading, error, isMyLeague } = useLeaderboard(selectedRank, myLeagueRank);
+  const { leaderboardData, loading, error, isMyLeague, refresh } = useLeaderboard(selectedRank, myLeagueRank);
   const currentRankInfo = getRankInfo(selectedRank);
   const isViewingOwnLeague = isMyLeague && selectedRank === myLeagueRank;
 
@@ -138,15 +138,17 @@ export const ClasificatoriaPage = () => {
         {showLeaderboardLoading ? (
           <LoadingState label="Cargando clasificación..." layout="section" />
         ) : error ? (
-          <div className="rounded-2xl border border-red-500/20 bg-red-500/10 py-12 text-center">
-            <Icon name="exclamation-triangle" size="3xl" className="mx-auto mb-4 text-red-400" />
-            <h3 className="mb-2 text-xl font-bold text-white">Error al cargar</h3>
-            <p className="text-on-surface-muted px-4">
-              {error?.message?.includes('index') || error?.message?.includes('function')
+          <EmptyState
+            icon="exclamation-triangle"
+            title="Error al cargar"
+            description={
+              error?.message?.includes('index') || error?.message?.includes('function')
                 ? 'Ejecuta la migración de ligas en Supabase y recarga el esquema (NOTIFY pgrst).'
-                : error.message || 'Hubo un problema al cargar la clasificación.'}
-            </p>
-          </div>
+                : error.message || 'Hubo un problema al cargar la clasificación.'
+            }
+            actionLabel="Reintentar"
+            onAction={() => void refresh()}
+          />
         ) : isViewingOwnLeague ? (
           <div className="space-y-2">
             {needsJoinCta || leaderboardData.length <= 1 ? (

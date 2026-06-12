@@ -1,6 +1,8 @@
 'use client';
 
+import { useEffect, useRef } from 'react';
 import { cn } from '@/utils/cn';
+import { useToast } from '@/shared/components/Toast/ToastProvider';
 import { LessonQuizActions } from './LessonQuizActions';
 import { LessonQuizPanelBody } from './LessonQuizPanelBody';
 import { LessonQuizPanelHeader } from './LessonQuizPanelHeader';
@@ -33,6 +35,9 @@ export function LessonQuizPanel({
   variant = 'inline',
   bubbleBorder = 'border-blue-400/50',
 }: LessonQuizPanelProps) {
+  const { showToast } = useToast();
+  const lastRewardToastRef = useRef<string | null>(null);
+
   const quizState = useLessonQuiz({
     isOpen: active,
     questions,
@@ -61,6 +66,20 @@ export function LessonQuizPanel({
     handleRetry,
     countCorrectAnswers,
   } = quizState;
+
+  useEffect(() => {
+    if (!active) {
+      lastRewardToastRef.current = null;
+    }
+  }, [active]);
+
+  useEffect(() => {
+    if (!rewards || !isLastQuestion || !isCorrect) return;
+    const key = `${rewards.xp}-${rewards.coins}`;
+    if (lastRewardToastRef.current === key) return;
+    lastRewardToastRef.current = key;
+    showToast(`¡Lección completada! +${rewards.xp} XP y +${rewards.coins} monedas`, 'success');
+  }, [rewards, isLastQuestion, isCorrect, showToast]);
 
   if (!active || !currentQuestion) return null;
 

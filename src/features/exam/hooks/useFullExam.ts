@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { saveFullExam } from '@/services/persistence';
 import { fetchQuestionsForFullExam } from '@/features/exam/services/QuestionService';
 import { fetchGradedExamResults, gradedToExamQuestion } from '@/features/exam/services/examGradingClient';
@@ -23,33 +23,28 @@ export function useFullExam() {
   const [isFinished, setIsFinished] = useState(false);
   const [gradedResults, setGradedResults] = useState<GradedExamAnswer[] | null>(null);
   const [gradingError, setGradingError] = useState<string | null>(null);
+  const [gradingAttempt, setGradingAttempt] = useState(0);
   const gradingStartedRef = useRef(false);
 
-  useEffect(() => {
-    let active = true;
-
+  const loadQuestions = useCallback(async () => {
     setLoadingQuestions(true);
     setQuestionsError(null);
 
-    void fetchQuestionsForFullExam()
-      .then((loaded) => {
-        if (!active) return;
-        setAllQuestions(loaded);
-      })
-      .catch((error: unknown) => {
-        if (!active) return;
-        const message = error instanceof Error ? error.message : 'No se pudieron cargar las preguntas.';
-        setQuestionsError(message);
-        setAllQuestions([]);
-      })
-      .finally(() => {
-        if (active) setLoadingQuestions(false);
-      });
-
-    return () => {
-      active = false;
-    };
+    try {
+      const loaded = await fetchQuestionsForFullExam();
+      setAllQuestions(loaded);
+    } catch (error: unknown) {
+      const message = error instanceof Error ? error.message : 'No se pudieron cargar las preguntas.';
+      setQuestionsError(message);
+      setAllQuestions([]);
+    } finally {
+      setLoadingQuestions(false);
+    }
   }, []);
+
+  useEffect(() => {
+    void loadQuestions();
+  }, [loadQuestions]);
 
   const handleExamStart = (config: ExamConfig) => {
     const selectedQuestions = allQuestions.slice(0, config.numQuestions);
@@ -125,7 +120,16 @@ export function useFullExam() {
     return () => {
       active = false;
     };
-  }, [isFinished, showResults, questions, answers, examConfig]);
+  }, [isFinished, showResults, questions, answers, examConfig, gradingAttempt]);
+
+  const reloadQuestions = loadQuestions;
+
+  const retryGrading = useCallback(() => {
+    gradingStartedRef.current = false;
+    setGradingError(null);
+    setGradedResults(null);
+    setGradingAttempt((attempt) => attempt + 1);
+  }, []);
 
   const resetExam = () => {
     setExamConfig(null);
@@ -161,6 +165,8 @@ export function useFullExam() {
     loadingQuestions,
     questionsError,
     gradingError,
+    reloadQuestions,
+    retryGrading,
     examConfig,
     questions,
     answers,

@@ -5,6 +5,7 @@ import { FullExamActiveView } from '@/features/exam/components/fullExam/FullExam
 import { FullExamResultsView } from '@/features/exam/components/fullExam/FullExamResultsView';
 import { useFullExam } from '@/features/exam/hooks/useFullExam';
 import { LoadingState } from '@/shared/components/LoadingState';
+import { EmptyState } from '@/shared/components/EmptyState';
 import { RouteTo500ContextBanner } from '@/features/learning/components/routeTo500/RouteTo500ContextBanner';
 
 export const FullExamPage = () => {
@@ -14,6 +15,8 @@ export const FullExamPage = () => {
     loadingQuestions,
     questionsError,
     gradingError,
+    reloadQuestions,
+    retryGrading,
     examConfig,
     questions,
     answers,
@@ -38,14 +41,14 @@ export const FullExamPage = () => {
 
   if (questionsError) {
     return (
-      <div
-        className={
-          'mx-auto max-w-lg rounded-xl border border-red-500/30 bg-red-950/30 px-4 py-6 ' +
-          'text-center text-sm text-red-200'
-        }
-      >
-        {questionsError}
-      </div>
+      <EmptyState
+        icon="exclamation-triangle"
+        title="No se pudieron cargar las preguntas"
+        description={questionsError}
+        actionLabel="Reintentar"
+        onAction={() => void reloadQuestions()}
+        className="mx-auto max-w-lg"
+      />
     );
   }
 
@@ -66,14 +69,14 @@ export const FullExamPage = () => {
   if (isFinished || showResults) {
     if (gradingError) {
       return (
-        <div
-          className={
-            'mx-auto max-w-lg rounded-xl border border-red-500/30 bg-red-950/30 px-4 py-6 ' +
-            'text-center text-sm text-red-200'
-          }
-        >
-          {gradingError}
-        </div>
+        <EmptyState
+          icon="exclamation-triangle"
+          title="Error al calificar el examen"
+          description={gradingError}
+          actionLabel="Reintentar"
+          onAction={retryGrading}
+          className="mx-auto max-w-lg"
+        />
       );
     }
 
