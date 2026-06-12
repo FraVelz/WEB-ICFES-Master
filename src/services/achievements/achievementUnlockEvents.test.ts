@@ -1,11 +1,7 @@
 import { describe, expect, it, vi } from 'vitest';
 
 import { ACHIEVEMENTS_DATA } from '@/shared/constants/achievementsData';
-import {
-  ACHIEVEMENT_UNLOCK_EVENT,
-  achievementToUnlockPayload,
-  emitAchievementUnlock,
-} from './achievementUnlockEvents';
+import { ACHIEVEMENT_UNLOCK_EVENT, achievementToUnlockPayload, emitAchievementUnlock } from './achievementUnlockEvents';
 
 describe('achievementUnlockEvents', () => {
   it('emite un evento con el detalle del logro', () => {

@@ -1,7 +1,12 @@
 import Link from 'next/link';
 import { cn } from '@/utils/cn';
 import { Icon } from '@/shared/components/Icon';
-import { ROUTE_TO_500_PATH, getAreaSimulacroPhaseTitle, getJourneyStepById, LECTURA_INDEX_PATH } from '@/features/learning/data/routeTo500';
+import {
+  ROUTE_TO_500_PATH,
+  getAreaSimulacroPhaseTitle,
+  getJourneyStepById,
+  LECTURA_INDEX_PATH,
+} from '@/features/learning/data/routeTo500';
 
 type RouteTo500ContextBannerProps = {
   stepId: 'examen-materia' | 'examen-global';
@@ -13,8 +18,7 @@ export function RouteTo500ContextBanner({ stepId, areaName, className }: RouteTo
   const step = getJourneyStepById(stepId);
   if (!step) return null;
 
-  const stepTitle =
-    stepId === 'examen-materia' && areaName ? getAreaSimulacroPhaseTitle(areaName) : step.title;
+  const stepTitle = stepId === 'examen-materia' && areaName ? getAreaSimulacroPhaseTitle(areaName) : step.title;
 
   return (
     <div

@@ -92,11 +92,7 @@ export async function computeAchievementProgressFromGameplay(
 ): Promise<AchievementProgressMap> {
   const scope = toStreakScope(userId);
   const streakMetrics = getStreakMetrics(await loadStreakState(scope));
-  const longestStreak = Math.max(
-    streakMetrics.longestStreak,
-    options.longestStreak ?? 0,
-    options.currentStreak ?? 0
-  );
+  const longestStreak = Math.max(streakMetrics.longestStreak, options.longestStreak ?? 0, options.currentStreak ?? 0);
   const level = options.userLevel ?? (await readLevel(userId));
   const readSections = loadLecturaReadSections(userId);
   const studyTime = getStudyTimeStats(userId);

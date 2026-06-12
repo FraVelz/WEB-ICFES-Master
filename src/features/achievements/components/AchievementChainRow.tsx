@@ -17,21 +17,13 @@ type AchievementChainRowProps = {
 export function AchievementChainRow({ achievement }: AchievementChainRowProps) {
   const isCompleted = achievement.status === 'completed';
   const isIncomplete = achievement.status === 'incomplete';
-  const percent = Math.min(
-    100,
-    Math.max(0, ((achievement.progress ?? 0) / (achievement.target ?? 1)) * 100)
-  );
+  const percent = Math.min(100, Math.max(0, ((achievement.progress ?? 0) / (achievement.target ?? 1)) * 100));
   const displayTitle =
     achievement.tierCount > 1 ? achievement.chainTitle : (achievement.title ?? achievement.chainTitle);
   const showTierBadge = achievement.tierCount > 1;
 
   return (
-    <article
-      className={cn(
-        'flex gap-4 px-4 py-5 sm:gap-5 sm:px-5 sm:py-6',
-        isIncomplete && 'opacity-75'
-      )}
-    >
+    <article className={cn('flex gap-4 px-4 py-5 sm:gap-5 sm:px-5 sm:py-6', isIncomplete && 'opacity-75')}>
       <div className="relative shrink-0">
         <div
           className={cn(
@@ -80,7 +72,10 @@ export function AchievementChainRow({ achievement }: AchievementChainRowProps) {
           className="bg-surface-via mb-2 h-2.5 w-full overflow-hidden rounded-full"
         >
           <div
-            className={cn('h-full rounded-full transition-all duration-500', getProgressBarColor(achievement.status ?? 'incomplete'))}
+            className={cn(
+              'h-full rounded-full transition-all duration-500',
+              getProgressBarColor(achievement.status ?? 'incomplete')
+            )}
             style={{ width: `${percent}%` }}
           />
         </div>

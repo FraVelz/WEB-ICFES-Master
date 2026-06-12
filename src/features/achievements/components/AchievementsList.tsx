@@ -34,10 +34,7 @@ export interface AchievementsListProps {
 export const AchievementsList = ({ achievements = [] }: AchievementsListProps) => {
   const [activeCategory, setActiveCategory] = useState<AchievementCategoryKey | 'all'>('all');
 
-  const chainViews = useMemo(
-    () => resolveAchievementChainViews(achievements, 'logros'),
-    [achievements]
-  );
+  const chainViews = useMemo(() => resolveAchievementChainViews(achievements, 'logros'), [achievements]);
 
   const sections = useMemo(
     () => organizeChainViewsForDisplay(chainViews, activeCategory),

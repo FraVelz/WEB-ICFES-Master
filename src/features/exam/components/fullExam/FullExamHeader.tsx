@@ -30,7 +30,7 @@ export function FullExamHeader({
   return (
     <div
       className={cn(
-        'sticky top-0 z-40 border-b border-surface-border bg-linear-to-b from-surface-elevated via-surface-elevated',
+        'border-surface-border from-surface-elevated via-surface-elevated sticky top-0 z-40 border-b bg-linear-to-b',
         'to-transparent py-4 backdrop-blur-md'
       )}
     >
@@ -44,7 +44,7 @@ export function FullExamHeader({
           >
             {areaName}
           </div>
-          <p className="text-sm text-on-surface-muted">{subtitle}</p>
+          <p className="text-on-surface-muted text-sm">{subtitle}</p>
         </div>
 
         {showTimer && timeRemaining != null && (

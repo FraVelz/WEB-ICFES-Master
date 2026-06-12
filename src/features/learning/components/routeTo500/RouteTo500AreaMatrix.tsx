@@ -12,7 +12,10 @@ export function RouteTo500AreaMatrix() {
   const [open, setOpen] = useState(false);
 
   return (
-    <section aria-labelledby="route-matrix-title" className="border-surface-border bg-surface-elevated/60 rounded-2xl border">
+    <section
+      aria-labelledby="route-matrix-title"
+      className="border-surface-border bg-surface-elevated/60 rounded-2xl border"
+    >
       <button
         type="button"
         id="route-matrix-title"

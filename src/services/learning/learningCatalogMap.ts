@@ -1,7 +1,4 @@
-import {
-  normalizeLessonPhase,
-  phaseToSectionId,
-} from '@/features/learning/constants/learningPhases';
+import { normalizeLessonPhase, phaseToSectionId } from '@/features/learning/constants/learningPhases';
 import type { LearningPathLesson } from '@/features/learning/services/LearningService';
 import { HOME_AREA_IDS, type AreaId } from '@/shared/constants';
 import { stripQuizAnswersFromContent } from '@/utils/stripQuizAnswers';
@@ -40,9 +37,7 @@ export function mapRoadmapRowToLesson(row: Record<string, unknown>, index: numbe
   };
 }
 
-export function groupRoadmapRowsByArea(
-  rows: Record<string, unknown>[]
-): Partial<Record<AreaId, LearningPathLesson[]>> {
+export function groupRoadmapRowsByArea(rows: Record<string, unknown>[]): Partial<Record<AreaId, LearningPathLesson[]>> {
   const grouped: Partial<Record<AreaId, LearningPathLesson[]>> = Object.fromEntries(
     HOME_AREA_IDS.map((id) => [id, [] as LearningPathLesson[]])
   ) as Partial<Record<AreaId, LearningPathLesson[]>>;

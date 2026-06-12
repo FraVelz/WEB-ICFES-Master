@@ -4,8 +4,7 @@ import { PageStructuredData } from '@/features/home/seo/PageStructuredData';
 
 export const metadata: Metadata = {
   title: 'Información oficial del ICFES',
-  description:
-    'Enlaces e infografías oficiales del Saber 11°: tarifas, fechas, inscripción y requisitos del ICFES.',
+  description: 'Enlaces e infografías oficiales del Saber 11°: tarifas, fechas, inscripción y requisitos del ICFES.',
   alternates: { canonical: '/informacion/' },
   openGraph: {
     url: '/informacion/',

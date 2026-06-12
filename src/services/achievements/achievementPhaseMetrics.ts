@@ -1,9 +1,6 @@
 import { COMPETENCY_PHASES } from '@/features/learning/data/competencyPhases';
 import { isPhaseDone } from '@/features/learning/data/phaseProgressUtils';
-import {
-  buildPathSectionsFromLessons,
-  countExamAttempts,
-} from '@/features/user/services/profileCourseProgressBuild';
+import { buildPathSectionsFromLessons, countExamAttempts } from '@/features/user/services/profileCourseProgressBuild';
 import { fetchLearningCatalog } from '@/services/learning/learningCatalogCache';
 import { getLocalLearningProgress } from '@/services/learning/learningProgressLocal';
 import { skippedSectionIdsByAreaFromRecords } from '@/services/learning';

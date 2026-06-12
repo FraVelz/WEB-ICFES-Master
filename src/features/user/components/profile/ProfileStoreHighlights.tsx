@@ -95,7 +95,9 @@ export function ProfileStoreHighlights({
           })}
         </div>
       ) : (
-        <div className={cn('text-on-surface-muted py-6 text-center', expanded && 'flex flex-1 flex-col justify-center')}>
+        <div
+          className={cn('text-on-surface-muted py-6 text-center', expanded && 'flex flex-1 flex-col justify-center')}
+        >
           <p>{emptyMessage}</p>
           {onGoToStore && (
             <button

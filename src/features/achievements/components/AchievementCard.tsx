@@ -36,7 +36,7 @@ export function AchievementCard({ achievement }: { achievement: AchievementItem 
         'group flex min-w-0 flex-col gap-4 rounded-2xl border p-5 transition-all duration-300 sm:p-6',
         isCompleted
           ? cn(
-              'border-app-accent-strong/45 bg-surface-elevated shadow-sm hover:border-app-accent-strong',
+              'border-app-accent-strong/45 bg-surface-elevated hover:border-app-accent-strong shadow-sm',
               'dark:bg-surface-overlay/80 dark:border-app-accent/35 dark:shadow-none',
               'dark:hover:border-app-accent/55'
             )
@@ -60,7 +60,7 @@ export function AchievementCard({ achievement }: { achievement: AchievementItem 
               className={cn(
                 'absolute inset-x-0 bottom-0 translate-y-1/2 rounded-md px-1 py-0.5 text-center',
                 'bg-surface-elevated text-[9px] font-bold tracking-wide uppercase',
-                'border-surface-border border shadow-sm dark:bg-surface-overlay'
+                'border-surface-border dark:bg-surface-overlay border shadow-sm'
               )}
             >
               Nivel {achievement.tierLevel}
@@ -79,7 +79,7 @@ export function AchievementCard({ achievement }: { achievement: AchievementItem 
               {achievement.title}
             </h4>
             {isCompleted && (
-              <Icon name="check" className="mt-0.5 shrink-0 text-sm text-app-accent-strong dark:text-app-accent" />
+              <Icon name="check" className="text-app-accent-strong dark:text-app-accent mt-0.5 shrink-0 text-sm" />
             )}
             {isIncomplete && <Icon name="lock" className="text-on-surface-muted mt-0.5 shrink-0 text-sm" />}
           </div>
@@ -98,11 +98,15 @@ export function AchievementCard({ achievement }: { achievement: AchievementItem 
       <div className="mt-auto space-y-2">
         <div className="flex items-center justify-between gap-3 text-xs font-medium sm:text-sm">
           <span
-            className={isCompleted ? 'font-semibold text-app-accent-strong dark:text-app-accent' : 'text-app-accent-strong'}
+            className={
+              isCompleted ? 'text-app-accent-strong dark:text-app-accent font-semibold' : 'text-app-accent-strong'
+            }
           >
             {isCompleted ? '¡Completado!' : `${achievement.progress ?? 0} / ${achievement.target ?? 0}`}
           </span>
-          <span className={isCompleted ? 'text-app-accent-strong/75 dark:text-on-surface-muted' : 'text-on-surface-muted'}>
+          <span
+            className={isCompleted ? 'text-app-accent-strong/75 dark:text-on-surface-muted' : 'text-on-surface-muted'}
+          >
             +{achievement.xpReward ?? 0} XP
           </span>
         </div>
@@ -118,7 +122,10 @@ export function AchievementCard({ achievement }: { achievement: AchievementItem 
           )}
         >
           <div
-            className={cn('h-full rounded-full transition-all duration-500', getProgressBarColor(achievement.status ?? 'incomplete'))}
+            className={cn(
+              'h-full rounded-full transition-all duration-500',
+              getProgressBarColor(achievement.status ?? 'incomplete')
+            )}
             style={{ width: `${percent}%` }}
           />
         </div>

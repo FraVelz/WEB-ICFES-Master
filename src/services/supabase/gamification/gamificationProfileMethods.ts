@@ -46,7 +46,9 @@ export async function getEconomyByUserId(userId: string): Promise<GamificationPr
   return data ? mapFromDb(data as Record<string, unknown>) : null;
 }
 
-export async function getStreakByUserId(userId: string): Promise<Pick<GamificationProfile, 'userId' | 'streakDates' | 'longestStreak'> | null> {
+export async function getStreakByUserId(
+  userId: string
+): Promise<Pick<GamificationProfile, 'userId' | 'streakDates' | 'longestStreak'> | null> {
   const sb = ensureSupabase();
   const { data, error } = await sb.from(GAMIFICATION_TABLE).select(STREAK_COLUMNS).eq('user_id', userId).maybeSingle();
   if (error) throw new Error(`Error leyendo racha: ${error.message}`);

@@ -1,4 +1,7 @@
-import { sortAchievementsForDisplay, type AchievementDisplayItem } from '@/shared/constants/achievements/achievementGrouping';
+import {
+  sortAchievementsForDisplay,
+  type AchievementDisplayItem,
+} from '@/shared/constants/achievements/achievementGrouping';
 
 export type ProfileAchievement = AchievementDisplayItem & {
   title: string;

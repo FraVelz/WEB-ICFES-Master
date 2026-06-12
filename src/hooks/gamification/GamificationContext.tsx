@@ -8,13 +8,7 @@ export type GamificationContextValue = ReturnType<typeof useGamification>;
 
 const GamificationContext = createContext<GamificationContextValue | null>(null);
 
-export function GamificationProvider({
-  scope,
-  children,
-}: {
-  scope: StreakScope | undefined;
-  children: ReactNode;
-}) {
+export function GamificationProvider({ scope, children }: { scope: StreakScope | undefined; children: ReactNode }) {
   const value = useGamification(scope);
   return <GamificationContext.Provider value={value}>{children}</GamificationContext.Provider>;
 }

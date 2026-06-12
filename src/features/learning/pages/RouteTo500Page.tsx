@@ -51,9 +51,9 @@ export function RouteTo500Page() {
             <div className="min-w-0">
               <h1 className="text-on-surface text-2xl font-bold sm:text-3xl">Ruta al 500</h1>
               <p className="text-on-surface-muted mt-2 leading-relaxed">
-                El puntaje ICFES no sube de golpe: avanzas por etapas de competencias, no por acumular datos de
-                memoria. Cada paso tiene un marco ICFES (Niveles de desempeño), un rango orientativo de puntaje y un
-                módulo concreto en la app.
+                El puntaje ICFES no sube de golpe: avanzas por etapas de competencias, no por acumular datos de memoria.
+                Cada paso tiene un marco ICFES (Niveles de desempeño), un rango orientativo de puntaje y un módulo
+                concreto en la app.
               </p>
             </div>
           </div>
@@ -89,7 +89,7 @@ export function RouteTo500Page() {
               href={assessmentHref}
               className={cn(
                 'bg-app-accent mt-3 inline-flex rounded-xl px-4 py-2 text-sm font-bold text-white',
-                'hover:brightness-110 focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:outline-none'
+                'focus-visible:ring-app-accent hover:brightness-110 focus-visible:ring-2 focus-visible:outline-none'
               )}
             >
               Evaluación de nivel
@@ -159,7 +159,7 @@ export function RouteTo500Page() {
               href={recommendedHref}
               className={cn(
                 'bg-app-accent inline-flex flex-1 items-center justify-center rounded-xl px-4 py-2.5 text-sm font-bold text-white',
-                'transition-colors hover:brightness-110 focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:outline-none'
+                'focus-visible:ring-app-accent transition-colors hover:brightness-110 focus-visible:ring-2 focus-visible:outline-none'
               )}
             >
               Continuar mi ruta
@@ -169,7 +169,7 @@ export function RouteTo500Page() {
               href={getJourneyStepHref(ROUTE_TO_500_STEPS[0], areaId) ?? '/ruta-aprendizaje'}
               className={cn(
                 'bg-app-accent inline-flex flex-1 items-center justify-center rounded-xl px-4 py-2.5 text-sm font-bold text-white',
-                'transition-colors hover:brightness-110 focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:outline-none'
+                'focus-visible:ring-app-accent transition-colors hover:brightness-110 focus-visible:ring-2 focus-visible:outline-none'
               )}
             >
               Empezar en aprendizaje

@@ -5,8 +5,7 @@ import { supabase } from '@/config/supabase';
 
 const TABLE = 'exam_results';
 
-const LIST_COLUMNS =
-  'id, user_id, exam_type, completed_at, correct_answers, score, total_questions' as const;
+const LIST_COLUMNS = 'id, user_id, exam_type, completed_at, correct_answers, score, total_questions' as const;
 
 export interface ExamFilters {
   type?: string;

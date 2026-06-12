@@ -8,7 +8,12 @@ import type { AreaId } from '@/shared/constants';
 import { getPracticaHrefForRoadmapArea } from '@/shared/constants';
 import { useDashboardShell } from '@/features/dashboard/shell';
 import { COMPETENCY_PHASES, getPhaseSkipExamHref } from '../data/competencyPhases';
-import { ROUTE_TO_500_PATH, getAreaSimulacroPhaseCopy, getJourneyStepById, getJourneyStepForCompetencyPhase } from '../data/routeTo500';
+import {
+  ROUTE_TO_500_PATH,
+  getAreaSimulacroPhaseCopy,
+  getJourneyStepById,
+  getJourneyStepForCompetencyPhase,
+} from '../data/routeTo500';
 import { getSectionProgress, resolvePhaseStatuses } from '../data/phaseProgressUtils';
 import { PhaseStageCard } from '../components/phases/PhaseStageCard';
 import { usePhaseSkips } from '../hooks/usePhaseSkips';
@@ -85,7 +90,7 @@ export function LearningPhasesPage() {
             <p className="text-on-surface-muted text-xs font-bold tracking-wide uppercase">Fase 4</p>
             <p className="text-on-surface font-semibold">{areaSimulacroCopy.title}</p>
             <p className="text-on-surface-muted text-sm">{areaSimulacroCopy.summary}</p>
-            <p className="text-amber-300 text-xs font-semibold">{areaExamStep.indicativeScoreLabel}</p>
+            <p className="text-xs font-semibold text-amber-300">{areaExamStep.indicativeScoreLabel}</p>
           </div>
           <Icon name="clipboard-list" className="mt-1 shrink-0 text-amber-400" />
         </Link>

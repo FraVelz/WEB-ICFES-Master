@@ -8,7 +8,8 @@ import { createServiceRoleClient } from '@/config/supabaseServiceRole';
 
 const TABLE = 'exam_questions';
 
-const GRADING_COLUMNS = 'id, area, text, options, correct_answer, explanation, difficulty, published, order_index' as const;
+const GRADING_COLUMNS =
+  'id, area, text, options, correct_answer, explanation, difficulty, published, order_index' as const;
 
 export interface ExamQuestionRow {
   id: string;
@@ -40,11 +41,7 @@ export async function getExamQuestionsByIdsForGrading(ids: string[]): Promise<Ex
   if (!sb || ids.length === 0) return [];
 
   const uniqueIds = [...new Set(ids)];
-  const { data, error } = await sb
-    .from(TABLE)
-    .select(GRADING_COLUMNS)
-    .in('id', uniqueIds)
-    .eq('published', true);
+  const { data, error } = await sb.from(TABLE).select(GRADING_COLUMNS).in('id', uniqueIds).eq('published', true);
 
   if (error) throw new Error(`Error leyendo exam_questions (grading): ${error.message}`);
   return ((data ?? []) as ExamQuestionRow[]).map(rowToExamQuestion);

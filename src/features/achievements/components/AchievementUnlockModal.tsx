@@ -6,7 +6,10 @@ import { Icon } from '@/shared/components/Icon';
 import { useDialogA11y } from '@/shared/hooks/useDialogA11y';
 import { gsap } from '@/lib/gsap';
 import { prefersReducedMotion } from '@/utils/prefersReducedMotion';
-import { ACHIEVEMENT_CATEGORIES, type AchievementCategoryKey } from '@/shared/constants/achievements/achievementCategories';
+import {
+  ACHIEVEMENT_CATEGORIES,
+  type AchievementCategoryKey,
+} from '@/shared/constants/achievements/achievementCategories';
 import type { AchievementUnlockPayload } from '@/services/achievements/achievementUnlockEvents';
 
 type AchievementUnlockModalProps = {
@@ -21,12 +24,7 @@ function getCategoryLabel(category: string): string {
   return meta?.label ?? 'Logro';
 }
 
-export function AchievementUnlockModal({
-  achievement,
-  isOpen,
-  onClose,
-  queueCount = 0,
-}: AchievementUnlockModalProps) {
+export function AchievementUnlockModal({ achievement, isOpen, onClose, queueCount = 0 }: AchievementUnlockModalProps) {
   const overlayRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
 
@@ -67,11 +65,11 @@ export function AchievementUnlockModal({
         aria-labelledby="achievement-unlock-title"
         aria-describedby="achievement-unlock-description"
         className={cn(
-          'border-amber-500/30 bg-surface-elevated relative w-full max-w-md overflow-hidden rounded-3xl border',
+          'bg-surface-elevated relative w-full max-w-md overflow-hidden rounded-3xl border border-amber-500/30',
           'shadow-2xl shadow-amber-500/10 dark:border-amber-500/25'
         )}
       >
-        <div className="from-amber-500/20 via-app-ring/10 absolute inset-x-0 top-0 h-32 bg-linear-to-b to-transparent" />
+        <div className="via-app-ring/10 absolute inset-x-0 top-0 h-32 bg-linear-to-b from-amber-500/20 to-transparent" />
 
         <div className="relative px-6 pt-8 pb-6 text-center">
           <p className="text-app-accent-strong dark:text-app-accent mb-2 text-xs font-bold tracking-[0.2em] uppercase">

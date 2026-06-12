@@ -53,10 +53,7 @@ export function RouteTo500StepCard({
       )}
     >
       <span
-        className={cn(
-          'flex h-7 w-7 shrink-0 items-center justify-center rounded-lg text-xs font-bold',
-          styles.badge
-        )}
+        className={cn('flex h-7 w-7 shrink-0 items-center justify-center rounded-lg text-xs font-bold', styles.badge)}
         aria-hidden
       >
         {step.order}

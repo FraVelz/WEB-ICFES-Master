@@ -1,12 +1,7 @@
 import type { SkillLevel } from '@/features/auth/types/skillLevel';
 import type { AreaId } from '@/shared/constants';
 import { getAreaInfo, getPracticaHrefForRoadmapArea } from '@/shared/constants';
-import {
-  COMPETENCY_PHASES,
-  JOURNEY_TIPS,
-  type CompetencyPhaseId,
-  getRoadmapHref,
-} from './competencyPhases';
+import { COMPETENCY_PHASES, JOURNEY_TIPS, type CompetencyPhaseId, getRoadmapHref } from './competencyPhases';
 
 export const ROUTE_TO_500_PATH = '/ruta-al-500';
 export const GLOBAL_EXAM_PATH = '/examen-completo';
@@ -14,10 +9,7 @@ export const LECTURA_INDEX_PATH = '/lectura';
 
 export type JourneyStepKind = 'learning' | 'practice-area' | 'practice-global';
 
-export type JourneyStepId =
-  | CompetencyPhaseId
-  | 'examen-materia'
-  | 'examen-global';
+export type JourneyStepId = CompetencyPhaseId | 'examen-materia' | 'examen-global';
 
 export type JourneyStepAccent = 'accent' | 'amber' | 'purple';
 
@@ -57,8 +49,7 @@ export const ROUTE_TO_500_CLARITY_ITEMS = [
 ] as const;
 
 const LEARNING_STEPS: JourneyStep[] = COMPETENCY_PHASES.map((phase) => {
-  const performanceLevels =
-    phase.order === 1 ? 'ND 1–2' : phase.order === 2 ? 'ND 2–3' : 'ND 3–4';
+  const performanceLevels = phase.order === 1 ? 'ND 1–2' : phase.order === 2 ? 'ND 2–3' : 'ND 3–4';
   const indicativeScoreLabel =
     phase.order === 1 ? '~ 0 – 250 pts' : phase.order === 2 ? '~ 250 – 300 pts' : '~ 300 – 350 pts';
 
@@ -83,8 +74,7 @@ const EXAM_STEPS: JourneyStep[] = [
     order: 4,
     title: 'Simulacro general por materia',
     subtitle: 'Consolidación por área',
-    summary:
-      'Simulacro completo de cada área para consolidar las tres fases anteriores antes del simulacro integral.',
+    summary: 'Simulacro completo de cada área para consolidar las tres fases anteriores antes del simulacro integral.',
     performanceLevels: 'Transferencia',
     indicativeScoreLabel: '~ 350 – 400 pts',
     kind: 'practice-area',
@@ -112,8 +102,7 @@ export function getAreaSimulacroPhaseTitle(areaName: string): string {
 
 export function getAreaSimulacroPhaseSummary(areaName: string): string {
   return (
-    `Simulacro completo de ${areaName} para consolidar las tres fases anteriores ` +
-    'antes del simulacro integral.'
+    `Simulacro completo de ${areaName} para consolidar las tres fases anteriores ` + 'antes del simulacro integral.'
   );
 }
 

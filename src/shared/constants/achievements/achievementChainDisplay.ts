@@ -94,15 +94,12 @@ export function resolveAchievementChainViews(
   const views: AchievementChainDisplayItem[] = [];
 
   for (const chain of ACHIEVEMENT_CHAINS) {
-    const tiers = chain.tierIds
-      .map((id) => byId.get(id))
-      .filter((item): item is AchievementLike => Boolean(item));
+    const tiers = chain.tierIds.map((id) => byId.get(id)).filter((item): item is AchievementLike => Boolean(item));
 
     if (tiers.length === 0) continue;
 
     const activeIndex = tiers.findIndex((tier) => tier.status !== 'completed');
-    const activeTier =
-      activeIndex === -1 ? tiers[tiers.length - 1] : tiers[activeIndex];
+    const activeTier = activeIndex === -1 ? tiers[tiers.length - 1] : tiers[activeIndex];
     const tierLevel = activeIndex === -1 ? tiers.length : activeIndex + 1;
 
     if (mode === 'profile' && !shouldIncludeInProfile(activeTier)) continue;
@@ -143,8 +140,7 @@ export function organizeChainViewsForDisplay(
   views: AchievementChainDisplayItem[],
   categoryFilter: AchievementCategoryKey | 'all' = 'all'
 ): AchievementChainCategorySection[] {
-  const filtered =
-    categoryFilter === 'all' ? views : views.filter((item) => item.category === categoryFilter);
+  const filtered = categoryFilter === 'all' ? views : views.filter((item) => item.category === categoryFilter);
 
   const byCategory = new Map<string, AchievementChainDisplayItem[]>();
   for (const item of filtered) {

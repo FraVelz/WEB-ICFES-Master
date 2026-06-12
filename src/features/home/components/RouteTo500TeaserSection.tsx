@@ -38,7 +38,7 @@ export function RouteTo500TeaserSection() {
           href={ROUTE_TO_500_PATH}
           className={cn(
             'bg-app-accent inline-flex items-center justify-center rounded-xl px-6 py-3 text-sm font-bold text-white',
-            'transition-colors hover:brightness-110 focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:outline-none'
+            'focus-visible:ring-app-accent transition-colors hover:brightness-110 focus-visible:ring-2 focus-visible:outline-none'
           )}
         >
           Conoce la ruta al 500
@@ -47,7 +47,7 @@ export function RouteTo500TeaserSection() {
           href={buildLevelAssessmentUrl('demo')}
           className={cn(
             'border-surface-border text-on-surface-muted inline-flex items-center justify-center rounded-xl border px-6 py-3',
-            'text-sm font-semibold transition-colors hover:text-on-surface hover:bg-surface-via',
+            'hover:text-on-surface hover:bg-surface-via text-sm font-semibold transition-colors',
             'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:outline-none'
           )}
         >

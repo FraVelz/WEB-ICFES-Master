@@ -16,11 +16,7 @@ export function normalizeAnswerKey(answer: string, options?: QuestionOption[]): 
   return answer.toLowerCase();
 }
 
-export function isAnswerCorrect(
-  userAnswer: string,
-  correctAnswer: string,
-  options?: QuestionOption[]
-): boolean {
+export function isAnswerCorrect(userAnswer: string, correctAnswer: string, options?: QuestionOption[]): boolean {
   if (!userAnswer || !correctAnswer) return userAnswer === correctAnswer;
   return normalizeAnswerKey(userAnswer, options) === normalizeAnswerKey(correctAnswer, options);
 }

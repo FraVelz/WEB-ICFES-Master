@@ -65,7 +65,9 @@ export function PhaseStageCard({
         />
       </div>
       <p className="text-on-surface-muted mt-1 text-xs">
-        {skippedByExam ? 'Fase superada con simulacro' : `${lessonCount} lecciones · ${isLocked ? '0' : progressPercent}%`}
+        {skippedByExam
+          ? 'Fase superada con simulacro'
+          : `${lessonCount} lecciones · ${isLocked ? '0' : progressPercent}%`}
       </p>
 
       {(isActive || isLocked) && areaFocus && (

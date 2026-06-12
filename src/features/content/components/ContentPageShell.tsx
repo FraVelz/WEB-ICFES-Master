@@ -32,10 +32,7 @@ function PublicContentChrome({ children }: { children: ReactNode }) {
             <Link href="/login/" className="text-app-accent font-semibold">
               Iniciar sesión
             </Link>
-            <Link
-              href="/signup/"
-              className="bg-app-accent rounded-lg px-3 py-1.5 text-xs font-bold text-white"
-            >
+            <Link href="/signup/" className="bg-app-accent rounded-lg px-3 py-1.5 text-xs font-bold text-white">
               Crear cuenta
             </Link>
           </nav>

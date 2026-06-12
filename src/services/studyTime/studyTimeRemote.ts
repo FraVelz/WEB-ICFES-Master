@@ -4,7 +4,12 @@ import { isDemoUserId } from '@/services/demo/demoCoins';
 import { isSupabaseConfigured } from '@/services/persistence/supabaseConfigured';
 import GamificationSupabaseService from '@/services/supabase/GamificationSupabaseService';
 import { getStudyTimeStats } from './studyTimeStats';
-import { STUDY_TIME_META_KEY, STUDY_TIME_UPDATED_EVENT, type StudyTimeRemoteMeta, type StudyTimeStats } from './studyTimeTypes';
+import {
+  STUDY_TIME_META_KEY,
+  STUDY_TIME_UPDATED_EVENT,
+  type StudyTimeRemoteMeta,
+  type StudyTimeStats,
+} from './studyTimeTypes';
 
 export function notifyStudyTimeUpdated(): void {
   if (typeof window === 'undefined') return;

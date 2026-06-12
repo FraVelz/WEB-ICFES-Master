@@ -66,7 +66,7 @@ export function AchievementsOrganizedSections({
 
             <div
               className={cn(
-                'border-surface-border bg-surface-elevated/40 divide-surface-border overflow-hidden rounded-2xl border divide-y',
+                'border-surface-border bg-surface-elevated/40 divide-surface-border divide-y overflow-hidden rounded-2xl border',
                 'dark:bg-surface-elevated/25'
               )}
             >

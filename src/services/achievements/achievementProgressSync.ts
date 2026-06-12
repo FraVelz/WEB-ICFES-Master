@@ -11,7 +11,11 @@ import {
   readAchievementProgress,
   writeAchievementProgress,
 } from './achievementProgressStorage';
-import type { AchievementProgressMap, SyncAchievementsOptions, SyncAchievementsResult } from './achievementProgressTypes';
+import type {
+  AchievementProgressMap,
+  SyncAchievementsOptions,
+  SyncAchievementsResult,
+} from './achievementProgressTypes';
 
 const syncInFlight = new Map<string, Promise<SyncAchievementsResult>>();
 

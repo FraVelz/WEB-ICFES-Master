@@ -30,10 +30,7 @@ export function ProfileAchievementsSection({
 }: ProfileAchievementsSectionProps) {
   const [activeCategory, setActiveCategory] = useState<AchievementCategoryKey | 'all'>('all');
 
-  const profileChainViews = useMemo(
-    () => resolveAchievementChainViews(achievements, 'profile'),
-    [achievements]
-  );
+  const profileChainViews = useMemo(() => resolveAchievementChainViews(achievements, 'profile'), [achievements]);
 
   const summary = useMemo(() => getAchievementChainSummary(achievements), [achievements]);
 

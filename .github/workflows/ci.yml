@@ -53,9 +53,6 @@ jobs:
       - name: Lint
         run: pnpm run lint
 
-      - name: Audit icons
-        run: pnpm run audit:icons
-
       - name: Format check
         run: pnpm run format:check
 

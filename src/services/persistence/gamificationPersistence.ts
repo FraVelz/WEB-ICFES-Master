@@ -2,11 +2,7 @@
  * Gamificación — recompensas vía API (service role) o lectura directa de perfil.
  */
 import GamificationSupabaseService from '@/services/supabase/GamificationSupabaseService';
-import {
-  awardCoinsViaApi,
-  awardXpViaApi,
-  spendCoinsViaApi,
-} from '@/services/gamification/gamificationAwardClient';
+import { awardCoinsViaApi, awardXpViaApi, spendCoinsViaApi } from '@/services/gamification/gamificationAwardClient';
 
 export const gamificationPersistence = {
   addXP: async (userId: string, points: number, reason = 'activity') => {

@@ -50,9 +50,7 @@ function countCorrectAnswers(attempt: LocalAttemptRecord): number {
 
   const questions = attempt.questions ?? [];
   const answers = attempt.answers ?? {};
-  return questions.filter(
-    (q) => q.id && isAnswerCorrect(answers[q.id] ?? '', q.correctAnswer ?? '')
-  ).length;
+  return questions.filter((q) => q.id && isAnswerCorrect(answers[q.id] ?? '', q.correctAnswer ?? '')).length;
 }
 
 function resolveExamType(attempt: LocalAttemptRecord): string {

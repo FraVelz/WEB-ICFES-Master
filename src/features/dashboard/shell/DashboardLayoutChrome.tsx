@@ -34,7 +34,7 @@ export function DashboardLayoutChrome({ children }: { children: ReactNode }) {
       <div
         className={cn(
           'flex h-dvh max-h-dvh w-full flex-col overflow-hidden',
-          'lg:h-auto lg:max-h-none lg:min-h-dvh lg:overflow-visible lg:flex-row'
+          'lg:h-auto lg:max-h-none lg:min-h-dvh lg:flex-row lg:overflow-visible'
         )}
       >
         <DashboardHeader

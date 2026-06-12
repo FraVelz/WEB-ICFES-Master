@@ -23,10 +23,7 @@ type ProfileAchievementTilesProps = {
 };
 
 /** Vista compacta de logros en cadena para perfil u otros paneles. */
-export function ProfileAchievementChainList({
-  achievements,
-  mode = 'profile',
-}: ProfileAchievementTilesProps) {
+export function ProfileAchievementChainList({ achievements, mode = 'profile' }: ProfileAchievementTilesProps) {
   const chainViews = useMemo(() => resolveAchievementChainViews(achievements, mode), [achievements, mode]);
 
   if (chainViews.length === 0) return null;
@@ -34,7 +31,7 @@ export function ProfileAchievementChainList({
   return (
     <div
       className={cn(
-        'border-surface-border bg-surface-elevated/40 divide-surface-border overflow-hidden rounded-2xl border divide-y',
+        'border-surface-border bg-surface-elevated/40 divide-surface-border divide-y overflow-hidden rounded-2xl border',
         'dark:bg-surface-elevated/25'
       )}
     >
@@ -46,10 +43,7 @@ export function ProfileAchievementChainList({
 }
 
 export function AchievementGridTile({ achievement }: { achievement: ProfileAchievement }) {
-  const chainView = useMemo(
-    () => resolveAchievementChainViews([achievement], 'logros')[0] ?? null,
-    [achievement]
-  );
+  const chainView = useMemo(() => resolveAchievementChainViews([achievement], 'logros')[0] ?? null, [achievement]);
   const display = chainView ?? achievement;
   const isUnlocked = display.status === 'completed';
   const iconName = typeof display.icon === 'string' ? display.icon : 'star';
@@ -103,10 +97,7 @@ export function AchievementGridTile({ achievement }: { achievement: ProfileAchie
 }
 
 export function AchievementDetailRow({ achievement }: { achievement: ProfileAchievement }) {
-  const chainView = useMemo(
-    () => resolveAchievementChainViews([achievement], 'logros')[0] ?? null,
-    [achievement]
-  );
+  const chainView = useMemo(() => resolveAchievementChainViews([achievement], 'logros')[0] ?? null, [achievement]);
 
   if (chainView) {
     return (

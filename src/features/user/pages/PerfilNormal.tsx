@@ -118,15 +118,9 @@ export const PerfilNormal = () => {
           />
         }
         store={
-          <ProfileStoreHighlights
-            highlights={storeHighlights}
-            expanded
-            onGoToStore={() => router.push('/tienda')}
-          />
+          <ProfileStoreHighlights highlights={storeHighlights} expanded onGoToStore={() => router.push('/tienda')} />
         }
-        league={
-          <ProfileLeagueSection league={leagueDisplay} loading={leagueLoading} showCta resetMs={resetMs} />
-        }
+        league={<ProfileLeagueSection league={leagueDisplay} loading={leagueLoading} showCta resetMs={resetMs} />}
         achievements={
           <ProfileAchievementsSection
             achievements={achievements}

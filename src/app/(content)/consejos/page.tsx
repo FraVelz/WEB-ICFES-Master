@@ -4,8 +4,7 @@ import { PageStructuredData } from '@/features/home/seo/PageStructuredData';
 
 export const metadata: Metadata = {
   title: 'Consejos de preparación ICFES',
-  description:
-    'Consejos prácticos de estudio, gestión del tiempo y estrategias para el día del examen ICFES.',
+  description: 'Consejos prácticos de estudio, gestión del tiempo y estrategias para el día del examen ICFES.',
   alternates: { canonical: '/consejos/' },
   openGraph: {
     url: '/consejos/',

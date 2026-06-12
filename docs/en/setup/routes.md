@@ -23,16 +23,16 @@ These are the application **URLs**.
 
 ## Dashboard (requires session or demo)
 
-| URL                  | Description                   |
-| -------------------- | ----------------------------- |
-| `/ruta-aprendizaje/` | Learning path (with AI chat)  |
-| `/logros/`           | Achievements and gamification |
-| `/perfil/`           | User profile                  |
-| `/clasificatoria/`   | Ranking                       |
-| `/configuracion/`    | Settings                      |
-| `/examen-completo/`  | Full mock exam                |
+| URL                  | Description                     |
+| -------------------- | ------------------------------- |
+| `/ruta-aprendizaje/` | Learning path (with AI chat)    |
+| `/logros/`           | Achievements and gamification   |
+| `/perfil/`           | User profile                    |
+| `/clasificatoria/`   | Ranking                         |
+| `/configuracion/`    | Settings                        |
+| `/examen-completo/`  | Full mock exam                  |
 | `/ruta-al-500/`      | Route to 500 — learning journey |
-| `/lectura/`          | ICFES informational content   |
+| `/lectura/`          | ICFES informational content     |
 | `/importancia/`      | Importance of high school       |
 | `/informacion/`      | Official infographics and links |
 | `/consejos/`         | Study and exam tips             |

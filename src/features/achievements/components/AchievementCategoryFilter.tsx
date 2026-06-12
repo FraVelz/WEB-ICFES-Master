@@ -2,7 +2,10 @@
 
 import { cn } from '@/utils/cn';
 import { Icon } from '@/shared/components/Icon';
-import { ACHIEVEMENT_CATEGORIES, type AchievementCategoryKey } from '@/shared/constants/achievements/achievementCategories';
+import {
+  ACHIEVEMENT_CATEGORIES,
+  type AchievementCategoryKey,
+} from '@/shared/constants/achievements/achievementCategories';
 
 type AchievementCategoryFilterProps = {
   activeCategory: AchievementCategoryKey | 'all';
@@ -29,7 +32,7 @@ export function AchievementCategoryFilter({
           onClick={() => onCategoryChange(key as AchievementCategoryKey | 'all')}
           className={cn(
             'flex shrink-0 cursor-pointer items-center gap-1.5 rounded-full border font-semibold whitespace-nowrap',
-            'transition-all duration-300 focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:outline-none',
+            'focus-visible:ring-app-accent transition-all duration-300 focus-visible:ring-2 focus-visible:outline-none',
             'focus-visible:ring-offset-surface-via focus-visible:ring-offset-2',
             compact ? 'px-2.5 py-1.5 text-xs' : 'px-3.5 py-2 text-sm sm:px-4',
             activeCategory === key

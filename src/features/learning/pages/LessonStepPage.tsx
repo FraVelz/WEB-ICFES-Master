@@ -59,13 +59,7 @@ export function LessonStepShell() {
 }
 
 /** @deprecated Usar LessonStepShell vía LessonRouteLayout */
-export function LessonStepPage({
-  lessonId,
-  stepSlug,
-}: {
-  lessonId: string;
-  stepSlug: string;
-}) {
+export function LessonStepPage({ lessonId, stepSlug }: { lessonId: string; stepSlug: string }) {
   void lessonId;
   void stepSlug;
   return null;

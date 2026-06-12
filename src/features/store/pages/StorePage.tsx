@@ -69,7 +69,7 @@ export function StorePage() {
                     'focus-visible:outline-none',
                     'focus-visible:ring-offset-surface',
                     filter === f.id
-                      ? 'border-app-accent bg-app-accent-strong text-app-on-accent shadow-lg shadow-app-accent/25'
+                      ? 'border-app-accent bg-app-accent-strong text-app-on-accent shadow-app-accent/25 shadow-lg'
                       : 'border-surface-border bg-surface-elevated text-on-surface-muted hover:text-on-surface'
                   )}
                 >

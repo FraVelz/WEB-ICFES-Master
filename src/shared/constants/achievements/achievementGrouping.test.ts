@@ -13,10 +13,7 @@ describe('organizeAchievementsForDisplay', () => {
   it('agrupa por categoría y subgrupo', () => {
     const sections = organizeAchievementsForDisplay(sample, 'all');
     expect(sections.map((section) => section.categoryKey)).toEqual(['estudio', 'fases', 'lectura']);
-    expect(sections[1]?.groups.map((group) => group.groupKey)).toEqual([
-      'fases_lectura_critica',
-      'fases_matematicas',
-    ]);
+    expect(sections[1]?.groups.map((group) => group.groupKey)).toEqual(['fases_lectura_critica', 'fases_matematicas']);
   });
 
   it('filtra por categoría fases', () => {

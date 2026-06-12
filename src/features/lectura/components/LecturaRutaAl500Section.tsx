@@ -51,7 +51,7 @@ export function LecturaRutaAl500Section() {
           href={ROUTE_TO_500_PATH}
           className={cn(
             'bg-app-accent inline-flex flex-1 items-center justify-center rounded-xl px-4 py-2.5 text-sm font-bold text-white',
-            'transition-colors hover:brightness-110 focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:outline-none'
+            'focus-visible:ring-app-accent transition-colors hover:brightness-110 focus-visible:ring-2 focus-visible:outline-none'
           )}
         >
           Ver la ruta completa
@@ -60,7 +60,7 @@ export function LecturaRutaAl500Section() {
           href="/ruta-aprendizaje?etapa=facil"
           className={cn(
             'border-surface-border text-on-surface-muted inline-flex flex-1 items-center justify-center rounded-xl border',
-            'px-4 py-2.5 text-sm font-semibold transition-colors hover:text-on-surface hover:bg-surface-via',
+            'hover:text-on-surface hover:bg-surface-via px-4 py-2.5 text-sm font-semibold transition-colors',
             'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:outline-none'
           )}
         >

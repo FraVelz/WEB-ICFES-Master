@@ -73,8 +73,7 @@ const STATUS_ORDER: Record<string, number> = {
 
 export function sortAchievementsForDisplay(items: AchievementDisplayItem[]): AchievementDisplayItem[] {
   return [...items].sort((a, b) => {
-    const statusDiff =
-      (STATUS_ORDER[a.status ?? 'incomplete'] ?? 3) - (STATUS_ORDER[b.status ?? 'incomplete'] ?? 3);
+    const statusDiff = (STATUS_ORDER[a.status ?? 'incomplete'] ?? 3) - (STATUS_ORDER[b.status ?? 'incomplete'] ?? 3);
     if (statusDiff !== 0) return statusDiff;
     return (a.title ?? '').localeCompare(b.title ?? '', 'es');
   });

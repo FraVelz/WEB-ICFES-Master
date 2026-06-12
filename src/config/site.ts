@@ -11,8 +11,7 @@ export function getSiteUrl(): string {
     }
   }
 
-  const vercelHost =
-    process.env.VERCEL_PROJECT_PRODUCTION_URL?.trim() || process.env.VERCEL_URL?.trim();
+  const vercelHost = process.env.VERCEL_PROJECT_PRODUCTION_URL?.trim() || process.env.VERCEL_URL?.trim();
   if (vercelHost) {
     const host = vercelHost.replace(/^https?:\/\//, '');
     return `https://${host}`;

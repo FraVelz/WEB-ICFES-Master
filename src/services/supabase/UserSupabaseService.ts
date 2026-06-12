@@ -70,11 +70,7 @@ function ensureSupabase() {
 const UserSupabaseService = {
   async getProfileSummary(userId: string): Promise<MappedUser | null> {
     const sb = ensureSupabase();
-    const { data, error } = await sb
-      .from(TABLE)
-      .select(PROFILE_SUMMARY_COLUMNS)
-      .eq('id', userId)
-      .maybeSingle();
+    const { data, error } = await sb.from(TABLE).select(PROFILE_SUMMARY_COLUMNS).eq('id', userId).maybeSingle();
     if (error) throw new Error(`Error leyendo usuario: ${error.message}`);
     return data ? mapFromDb(data as unknown as Record<string, unknown>) : null;
   },

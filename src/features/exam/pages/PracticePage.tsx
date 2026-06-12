@@ -73,8 +73,8 @@ export const PracticePage = () => {
         'mx-auto mb-6 max-w-lg rounded-2xl border border-amber-500/30 bg-amber-500/10 px-4 py-3 text-sm text-amber-900 dark:text-amber-100'
       )}
     >
-      Simulacro para saltar <span className="font-semibold">{phaseSkipPhaseTitle ?? 'esta fase'}</span>. Necesitas al menos{' '}
-      <span className="font-semibold">{phaseSkipPassPercent}%</span> de aciertos para superar esta fase.
+      Simulacro para saltar <span className="font-semibold">{phaseSkipPhaseTitle ?? 'esta fase'}</span>. Necesitas al
+      menos <span className="font-semibold">{phaseSkipPassPercent}%</span> de aciertos para superar esta fase.
     </div>
   ) : null;
 
@@ -87,10 +87,7 @@ export const PracticePage = () => {
       <div className="px-4 pt-6">
         <BreadcrumbNav
           className="mb-4"
-          items={[
-            { label: 'Aprendizaje', href: '/ruta-aprendizaje/' },
-            { label: `Práctica ${areaInfo.name}` },
-          ]}
+          items={[{ label: 'Aprendizaje', href: '/ruta-aprendizaje/' }, { label: `Práctica ${areaInfo.name}` }]}
         />
         {phaseSkipBanner}
         {routeBanner}

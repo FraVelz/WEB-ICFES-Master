@@ -22,12 +22,7 @@ const LEAGUE_TIER_IDS = [
   'league_maestro',
 ] as const;
 
-const LECTURA_TIER_IDS = [
-  'read_importancia',
-  'read_informacion',
-  'read_consejos',
-  'read_ruta_al_500',
-] as const;
+const LECTURA_TIER_IDS = ['read_importancia', 'read_informacion', 'read_consejos', 'read_ruta_al_500'] as const;
 
 const PHASE_TIER_KEYS = ['cimentacion', 'relacion', 'maestria', 'simulacro'] as const;
 

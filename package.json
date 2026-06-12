@@ -17,10 +17,7 @@
     "format:check": "prettier --check .",
     "lint:md": "markdownlint-cli2",
     "lint:md:fix": "markdownlint-cli2 --fix",
-    "react:doctor": "react-doctor . --verbose --full",
-    "seed:questions": "tsx scripts/seed-exam-questions.ts",
-    "audit:icons": "node scripts/audit-icons.mjs",
-    "sync:icons": "node scripts/sync-icon-paths.mjs"
+    "react:doctor": "react-doctor . --verbose --full"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.758.0",
@@ -71,7 +68,10 @@
   },
   "pnpm": {
     "overrides": {
-      "esbuild": "0.28.1"
+      "esbuild": "0.28.1",
+      "js-yaml": "^4.1.1",
+      "markdown-it": "^14.1.1",
+      "postcss": "^8.5.10"
     }
   }
 }

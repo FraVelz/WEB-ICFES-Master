@@ -7,22 +7,22 @@ export function DonationCopyMethod() {
   if (currentMethod?.type !== 'copy') return null;
 
   return (
-    <div className="animate-fade-in-up rounded-xl border border-surface-border bg-surface-elevated/50 p-4">
-      <p className="mb-2 text-xs text-on-surface-muted uppercase">Número de cuenta / Billetera</p>
+    <div className="animate-fade-in-up border-surface-border bg-surface-elevated/50 rounded-xl border p-4">
+      <p className="text-on-surface-muted mb-2 text-xs uppercase">Número de cuenta / Billetera</p>
       <div className="mb-2 flex items-center gap-2">
-        <code className="flex-1 rounded-lg bg-surface-overlay/60 p-3 font-mono text-sm break-all text-app-accent-muted">
+        <code className="bg-surface-overlay/60 text-app-accent-muted flex-1 rounded-lg p-3 font-mono text-sm break-all">
           {currentMethod.detail}
         </code>
         <button
           onClick={() => currentMethod.detail && copyToClipboard(currentMethod.detail, currentMethod.id)}
-          className="rounded-lg bg-app-accent-strong p-3 text-app-on-accent transition-colors hover:bg-app-accent-darker"
+          className="bg-app-accent-strong text-app-on-accent hover:bg-app-accent-darker rounded-lg p-3 transition-colors"
           title="Copiar"
         >
           <Icon name={copied === currentMethod.id ? 'check' : 'copy'} />
         </button>
       </div>
       {currentMethod.owner && (
-        <p className="text-xs text-on-surface-muted">
+        <p className="text-on-surface-muted text-xs">
           Titular: <span className="text-on-surface">{currentMethod.owner}</span>
         </p>
       )}
@@ -35,8 +35,8 @@ export function DonationUrlMethod() {
   if (currentMethod?.type !== 'url') return null;
 
   return (
-    <div className="animate-fade-in-up rounded-xl border border-surface-border bg-surface-elevated/50 p-4 text-center">
-      <p className="mb-4 text-sm text-on-surface-muted">
+    <div className="animate-fade-in-up border-surface-border bg-surface-elevated/50 rounded-xl border p-4 text-center">
+      <p className="text-on-surface-muted mb-4 text-sm">
         Serás redirigido a la plataforma segura de {currentMethod.name} para completar la donación.
       </p>
       <a
@@ -44,8 +44,8 @@ export function DonationUrlMethod() {
         target="_blank"
         rel="noopener noreferrer"
         className={cn(
-          'block w-full transform rounded-xl bg-app-accent-strong py-3 font-bold text-app-on-accent shadow-lg',
-          'shadow-app-accent/25 transition-all hover:scale-105 hover:bg-app-accent-darker'
+          'bg-app-accent-strong text-app-on-accent block w-full transform rounded-xl py-3 font-bold shadow-lg',
+          'shadow-app-accent/25 hover:bg-app-accent-darker transition-all hover:scale-105'
         )}
       >
         Ir a Donar
