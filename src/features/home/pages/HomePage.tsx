@@ -22,7 +22,8 @@ export const HomePage = () => {
       <a href="#main-content" className="skip-link">
         Saltar al contenido
       </a>
-      <main id="main-content">
+      <main id="main-content" className="relative z-10 py-8">
+        <h1 className="sr-only">Domina el ICFES desde Cero — ICFES Master</h1>
         <div className="pointer-events-none fixed top-4 right-4 z-50 hidden md:block">
           <div className="pointer-events-auto">
             <ThemeToggle compact />

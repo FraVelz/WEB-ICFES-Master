@@ -1,5 +1,5 @@
 import { FAQS } from '@/features/home/data';
-import { BRAND_IMAGES } from '@/assets';
+import { OG_IMAGE } from '@/config/ogImage';
 import { getSiteUrl } from '@/config/site';
 
 export function HomeStructuredData() {
@@ -10,7 +10,7 @@ export function HomeStructuredData() {
     '@type': 'Organization',
     name: 'ICFES Master',
     url: siteUrl,
-    logo: `${siteUrl}${BRAND_IMAGES.screenshot.src}`,
+    logo: `${siteUrl}${OG_IMAGE.url}`,
     description: 'Plataforma de preparación para el examen ICFES en Colombia.',
   };
 

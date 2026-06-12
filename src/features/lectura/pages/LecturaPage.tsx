@@ -16,6 +16,7 @@ export function LecturaPage() {
   return (
     <div className={cn(LECTURA_PAGE_SHELL_CLASS, 'max-w-3xl space-y-6')}>
       <header className="space-y-2">
+        <h1 className="text-on-surface text-2xl font-bold">Lectura ICFES</h1>
         <p className="text-on-surface-muted max-w-2xl leading-relaxed">
           Material informativo de solo lectura sobre el ICFES, el bachillerato y cómo prepararte. Elige una sección para
           explorar.

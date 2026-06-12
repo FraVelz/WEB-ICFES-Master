@@ -37,8 +37,6 @@ export const HomePageMobile = () => {
         />
       </div>
 
-      <h1 className="sr-only">Domina el ICFES desde Cero — ICFES Master</h1>
-
       <div className="relative z-10 flex justify-end px-4 pt-4">
         <ThemeToggle compact />
       </div>

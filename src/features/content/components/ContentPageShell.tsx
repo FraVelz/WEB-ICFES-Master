@@ -28,7 +28,7 @@ function PublicContentChrome({ children }: { children: ReactNode }) {
           <Link href="/" className="text-on-surface text-sm font-bold">
             ICFES Master
           </Link>
-          <nav className="flex items-center gap-3 text-sm">
+          <nav className="flex items-center gap-3 text-sm" aria-label="Acciones de cuenta">
             <Link href="/login/" className="text-app-accent font-semibold">
               Iniciar sesión
             </Link>

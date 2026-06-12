@@ -99,7 +99,7 @@ export const ForgotPasswordPage = () => {
           ) : null}
 
           {error ? (
-            <div className="flex items-start gap-3 rounded-lg border border-red-500/50 bg-red-500/20 p-4">
+            <div className="flex items-start gap-3 rounded-lg border border-red-500/50 bg-red-500/20 p-4" role="alert">
               <Icon name="exclamation-circle" className="mt-0.5 shrink-0 text-red-400" />
               <p className="text-sm text-red-400">{error}</p>
             </div>

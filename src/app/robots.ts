@@ -29,6 +29,7 @@ export default function robots(): MetadataRoute.Robots {
           '/practica/',
           '/examen-completo/',
           '/api/',
+          '/dev/',
         ],
       },
     ],
