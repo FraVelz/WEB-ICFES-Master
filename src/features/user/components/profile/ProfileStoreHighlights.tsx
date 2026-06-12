@@ -9,6 +9,9 @@ type ProfileStoreHighlightsProps = {
   title?: string;
   emptyMessage?: string;
   onGoToStore?: () => void;
+  className?: string;
+  /** Ocupa el panel grande del perfil (grid más ancho y alto). */
+  expanded?: boolean;
 };
 
 export function ProfileStoreHighlights({
@@ -16,6 +19,8 @@ export function ProfileStoreHighlights({
   title = 'Colección de la tienda',
   emptyMessage = 'Aún no tienes ítems de la tienda.',
   onGoToStore,
+  className,
+  expanded = false,
 }: ProfileStoreHighlightsProps) {
   if (highlights.length === 0 && !onGoToStore) {
     return null;
@@ -25,16 +30,23 @@ export function ProfileStoreHighlights({
     <div
       className={cn(
         'border-surface-border bg-surface-elevated/80 rounded-2xl border p-6',
-        'dark:border-surface-border dark:bg-surface-elevated/50 shadow-sm'
+        'dark:border-surface-border dark:bg-surface-elevated/50 shadow-sm',
+        expanded && 'w-full',
+        className
       )}
     >
-      <h2 className="text-on-surface mb-6 flex items-center gap-3 text-xl font-bold">
+      <h2 className="text-on-surface mb-6 flex shrink-0 items-center gap-3 text-xl font-bold">
         <Icon name="shopping-bag" className="text-amber-600 dark:text-yellow-400" />
         {title}
       </h2>
 
       {highlights.length > 0 ? (
-        <div className="grid gap-3 sm:grid-cols-2">
+        <div
+          className={cn(
+            'grid gap-3 sm:grid-cols-2',
+            expanded && 'sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5'
+          )}
+        >
           {highlights.map((item) => {
             const shopItem = getShopItemById(item.id);
             return (
@@ -83,7 +95,7 @@ export function ProfileStoreHighlights({
           })}
         </div>
       ) : (
-        <div className="text-on-surface-muted py-6 text-center">
+        <div className={cn('text-on-surface-muted py-6 text-center', expanded && 'flex flex-1 flex-col justify-center')}>
           <p>{emptyMessage}</p>
           {onGoToStore && (
             <button

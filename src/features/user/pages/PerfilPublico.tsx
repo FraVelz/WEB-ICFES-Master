@@ -11,6 +11,7 @@ import { hasVipBadge as checkVipBadge } from '@/features/store/constants/vipBadg
 import { buildProfileStoreHighlights } from '@/features/user/utils/profileStoreHighlights';
 import type { PublicProfileViewState } from '@/services/profile/publicProfileView';
 import { ProfilePageLayout } from '../components/profile/ProfilePageLayout';
+import { ProfileMainGrid } from '../components/profile/ProfileMainGrid';
 import { ProfileHeroCard } from '../components/profile/ProfileHeroCard';
 import { ProfileCoursesSection } from '../components/profile/ProfileCoursesSection';
 import { ProfileStatsSection } from '../components/profile/ProfileStatsSection';
@@ -150,38 +151,43 @@ export const PerfilPublico = ({ view }: PerfilPublicoProps) => {
           }
         />
 
-        <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
-          <div className="space-y-8 lg:col-span-2">
-            {displayStoreHighlights.length > 0 && (
-              <ProfileStoreHighlights
-                highlights={displayStoreHighlights}
-                title="Colección de la tienda"
-                emptyMessage="Este usuario aún no tiene ítems de la tienda."
-              />
-            )}
+        <ProfileMainGrid
+          stats={
             <ProfileStatsSection
               achievements={achievements}
               level={level}
               totalXP={totalXP}
               studyTimeMinutes={studyTimeMinutes}
-              title="Estadísticas"
+              title="Estadísticas Rápidas"
             />
+          }
+          courses={
             <ProfileCoursesSection
               courseProgress={courseProgress}
               loading={courseProgressLoading}
               emptyMessage="Este usuario aún no ha iniciado cursos."
             />
-          </div>
-          <div className="space-y-8 lg:col-span-1">
+          }
+          store={
+            displayStoreHighlights.length > 0 ? (
+              <ProfileStoreHighlights
+                highlights={displayStoreHighlights}
+                title="Colección de la tienda"
+                emptyMessage="Este usuario aún no tiene ítems de la tienda."
+                expanded
+              />
+            ) : null
+          }
+          league={
             <ProfileLeagueSection
               league={leagueDisplay}
               loading={leagueLoading}
               showCta={isOwnProfile}
               resetMs={isOwnProfile ? resetMs : undefined}
             />
-            <ProfileAchievementsSection achievements={achievements} />
-          </div>
-        </div>
+          }
+          achievements={<ProfileAchievementsSection achievements={achievements} />}
+        />
 
         <ReportUserDialog
           isOpen={reportDialogOpen}

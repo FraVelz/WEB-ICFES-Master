@@ -6,8 +6,7 @@ import { EmptyState } from '@/shared/components/EmptyState';
 import type { AchievementCategoryKey } from '@/shared/constants/achievements/achievementCategories';
 import { organizeAchievementsForDisplay } from '@/shared/constants/achievements/achievementGrouping';
 import { AchievementCategoryFilter } from './AchievementCategoryFilter';
-import { AchievementSectionHeader } from './AchievementSectionHeader';
-import { AchievementCard } from './AchievementCard';
+import { AchievementsOrganizedSections } from './AchievementsOrganizedSections';
 
 export interface AchievementItem {
   id: string;
@@ -35,7 +34,6 @@ export const AchievementsList = ({ achievements = [] }: AchievementsListProps) =
   );
 
   const visibleCount = sections.reduce((sum, section) => sum + section.totalCount, 0);
-  const showCategoryHeaders = activeCategory === 'all' && sections.length > 1;
 
   return (
     <div className="animate-fade-in w-full min-w-0 space-y-6 sm:space-y-8">
@@ -61,43 +59,7 @@ export const AchievementsList = ({ achievements = [] }: AchievementsListProps) =
           actionHref="/ruta-aprendizaje"
         />
       ) : (
-        <div className="space-y-8 sm:space-y-10">
-          {sections.map((section) => (
-            <section key={section.categoryKey} className="space-y-5 sm:space-y-6">
-              {showCategoryHeaders && (
-                <AchievementSectionHeader
-                  title={section.label}
-                  icon={section.icon}
-                  completedCount={section.completedCount}
-                  totalCount={section.totalCount}
-                  level="category"
-                />
-              )}
-
-              <div className="space-y-6 sm:space-y-7">
-                {section.groups.map((group) => (
-                  <div key={group.groupKey} className="space-y-4">
-                    {(showCategoryHeaders || section.groups.length > 1) && (
-                      <AchievementSectionHeader
-                        title={group.meta.label}
-                        icon={group.meta.icon}
-                        completedCount={group.completedCount}
-                        totalCount={group.totalCount}
-                        level="group"
-                      />
-                    )}
-
-                    <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-5">
-                      {group.achievements.map((achievement) => (
-                        <AchievementCard key={achievement.id} achievement={achievement} />
-                      ))}
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </section>
-          ))}
-        </div>
+        <AchievementsOrganizedSections achievements={achievements} activeCategory={activeCategory} />
       )}
     </div>
   );

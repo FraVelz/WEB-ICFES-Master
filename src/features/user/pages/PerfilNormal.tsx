@@ -11,6 +11,7 @@ import { useUserProfile } from '../hooks/useUserProfile';
 import { useResolvedProfileAvatar } from '@/features/user/hooks/useResolvedProfileAvatar';
 import { buildProfileStoreHighlights } from '@/features/user/utils/profileStoreHighlights';
 import { ProfilePageLayout } from '../components/profile/ProfilePageLayout';
+import { ProfileMainGrid } from '../components/profile/ProfileMainGrid';
 import { ProfileHeroCard } from '../components/profile/ProfileHeroCard';
 import { ProfileCoursesSection } from '../components/profile/ProfileCoursesSection';
 import { ProfileStatsSection } from '../components/profile/ProfileStatsSection';
@@ -99,32 +100,42 @@ export const PerfilNormal = () => {
         }
       />
 
-      <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
-        <div className="space-y-8 lg:col-span-2">
-          <ProfileStoreHighlights highlights={storeHighlights} onGoToStore={() => router.push('/tienda')} />
-          <ProfileCoursesSection
-            courseProgress={courseProgress}
-            loading={courseProgressLoading}
-            emptyMessage="Aún no has iniciado ningún curso."
-            onStartLearning={() => router.push('/ruta-aprendizaje')}
-          />
+      <ProfileMainGrid
+        stats={
           <ProfileStatsSection
             achievements={achievements}
             level={level}
             totalXP={totalXP}
             studyTimeMinutes={studyTimeMinutes}
           />
-        </div>
-        <div className="space-y-8 lg:col-span-1">
+        }
+        courses={
+          <ProfileCoursesSection
+            courseProgress={courseProgress}
+            loading={courseProgressLoading}
+            emptyMessage="Aún no has iniciado ningún curso."
+            onStartLearning={() => router.push('/ruta-aprendizaje')}
+          />
+        }
+        store={
+          <ProfileStoreHighlights
+            highlights={storeHighlights}
+            expanded
+            onGoToStore={() => router.push('/tienda')}
+          />
+        }
+        league={
           <ProfileLeagueSection league={leagueDisplay} loading={leagueLoading} showCta resetMs={resetMs} />
+        }
+        achievements={
           <ProfileAchievementsSection
             achievements={achievements}
             loading={gamificationLoading}
             showViewAll
             onViewAll={() => router.push('/logros')}
           />
-        </div>
-      </div>
+        }
+      />
     </ProfilePageLayout>
   );
 };

@@ -16,6 +16,13 @@ export function sortAchievementsForProfile(achievements: ProfileAchievement[]): 
   return sortAchievementsForDisplay(achievements) as ProfileAchievement[];
 }
 
+/** En perfil solo se muestran logros con avance o ya desbloqueados. */
+export function filterProfileVisibleAchievements(achievements: ProfileAchievement[]): ProfileAchievement[] {
+  return achievements.filter(
+    (achievement) => achievement.status === 'completed' || achievement.status === 'in_progress'
+  );
+}
+
 export function achievementTileClass(status: string): string {
   if (status === 'completed') {
     return (
