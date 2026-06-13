@@ -22,7 +22,7 @@ export function SidebarNavLink({ option, pathname, sidebarExpanded, isLocked }: 
       aria-label={!sidebarExpanded ? option.label : undefined}
       aria-current={isActive ? 'page' : undefined}
       className={cn(
-        'group/item relative flex h-12 items-center rounded-xl transition-all duration-300 focus-visible:z-10',
+        'group/item relative flex h-12 items-center rounded-xl transition-colors duration-200 focus-visible:z-10',
         sidebarExpanded ? 'gap-3 px-3' : 'justify-center px-0',
         FOCUS_RING,
         isActive
@@ -43,7 +43,7 @@ export function SidebarNavLink({ option, pathname, sidebarExpanded, isLocked }: 
         name={option.icon}
         size="lg"
         className={cn(
-          'shrink-0 transition-all duration-300',
+          'shrink-0 transition-transform duration-200',
           !isActive && 'group-hover/item:text-app-accent group-hover/item:scale-110',
           isActive && !sidebarExpanded && 'scale-110',
           isActive && 'drop-shadow-[0_0_8px_currentColor]'

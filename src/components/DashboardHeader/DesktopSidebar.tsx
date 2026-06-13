@@ -26,109 +26,104 @@ export function DesktopSidebar({ className, sidebarExpanded, onToggleSidebar }: 
   const isLockedInDemo = (path: string) => demoMode && isAccountOnlyPath(path);
 
   return (
-    <div className={cn('hidden lg:block', className)}>
+    <div className={cn('hidden lg:block', className)} aria-hidden={false}>
       <header
         className={cn(
-          'flex min-h-0 flex-col overflow-y-auto transition-all duration-300',
+          'fixed top-0 left-0 z-50 flex h-dvh max-h-dvh min-h-0 flex-col overflow-x-hidden overflow-y-auto',
+          'border-app-ring/20 border-r transition-[width] duration-300 ease-out',
           sidebarExpanded
-            ? cn(
-                'border-app-ring/20 fixed top-0 left-0 z-50 h-dvh max-h-dvh w-72',
-                'border-r bg-surface-elevated/55 shadow-app-ring/10 shadow-2xl backdrop-blur-xl'
-              )
-            : cn(
-                'border-app-ring/20 sticky top-0 h-dvh max-h-dvh w-20',
-                'border-r bg-surface-elevated'
-              )
+            ? 'w-72 bg-surface-elevated/55 shadow-app-ring/10 shadow-2xl backdrop-blur-xl'
+            : 'w-20 bg-surface-elevated'
         )}
       >
-      <div
-        className={cn(
-          'border-app-ring/10 relative flex shrink-0 flex-col items-center justify-center gap-0 border-b',
-          sidebarExpanded ? 'h-24' : 'h-auto py-4'
-        )}
-      >
-        <Link
-          href="/"
-          title={!sidebarExpanded ? 'ICFES Master' : undefined}
+        <div
           className={cn(
-            'flex shrink-0 items-center rounded-xl transition-all duration-300',
-            FOCUS_RING,
-            sidebarExpanded ? 'absolute left-[18px] gap-3' : 'justify-center'
+            'border-app-ring/10 relative flex shrink-0 flex-col items-center justify-center gap-0 border-b',
+            sidebarExpanded ? 'h-24' : 'h-auto py-4'
           )}
         >
-          <div
+          <Link
+            href="/"
+            title={!sidebarExpanded ? 'ICFES Master' : undefined}
             className={cn(
-              'flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-linear-to-br',
-              'from-cta-from shadow-app-ring/30 via-blue-500 to-purple-600 shadow-lg'
+              'flex shrink-0 items-center rounded-xl',
+              FOCUS_RING,
+              sidebarExpanded ? 'absolute left-[18px] gap-3' : 'justify-center'
             )}
           >
-            <Icon name="rocket" size="lg" className="text-white" />
-          </div>
-          {sidebarExpanded && (
-            <span
+            <div
               className={cn(
-                'from-cta-text-start via-cta-text-via to-cta-text-end bg-linear-to-r bg-clip-text pl-2',
-                'text-xl font-bold whitespace-nowrap text-transparent'
+                'flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-linear-to-br',
+                'from-cta-from shadow-app-ring/30 via-blue-500 to-purple-600 shadow-lg'
               )}
             >
-              ICFES Master
-            </span>
-          )}
-        </Link>
-        <button
-          type="button"
-          onClick={onToggleSidebar}
+              <Icon name="rocket" size="lg" className="text-white" />
+            </div>
+            {sidebarExpanded && (
+              <span
+                className={cn(
+                  'from-cta-text-start via-cta-text-via to-cta-text-end bg-linear-to-r bg-clip-text pl-2',
+                  'text-xl font-bold whitespace-nowrap text-transparent'
+                )}
+              >
+                ICFES Master
+              </span>
+            )}
+          </Link>
+          <button
+            type="button"
+            onClick={onToggleSidebar}
+            className={cn(
+              'text-on-surface-muted flex h-8 w-8 shrink-0 cursor-pointer items-center justify-center rounded-lg',
+              'hover:text-app-accent transition-colors hover:bg-white/10',
+              FOCUS_RING,
+              sidebarExpanded ? 'absolute top-1/2 right-2 -translate-y-1/2' : 'mt-3'
+            )}
+            aria-label={sidebarExpanded ? 'Cerrar barra lateral' : 'Abrir barra lateral'}
+          >
+            <Icon name={sidebarExpanded ? 'chevron-left' : 'chevron-right'} size="lg" />
+          </button>
+        </div>
+
+        <nav
+          aria-label="Navegación principal"
           className={cn(
-            'text-on-surface-muted flex h-8 w-8 shrink-0 cursor-pointer items-center justify-center rounded-lg',
-            'hover:text-app-accent transition-colors hover:bg-white/10',
-            FOCUS_RING,
-            sidebarExpanded ? 'absolute top-1/2 right-2 -translate-y-1/2' : 'mt-3'
+            'custom-scrollbar flex min-h-0 flex-1 flex-col gap-2 overflow-x-hidden overflow-y-auto py-6',
+            sidebarExpanded ? 'px-3' : 'px-2'
           )}
-          aria-label={sidebarExpanded ? 'Cerrar barra lateral' : 'Abrir barra lateral'}
         >
-          <Icon name={sidebarExpanded ? 'chevron-left' : 'chevron-right'} size="lg" />
-        </button>
-      </div>
+          {mainNavOptions.map((option) => (
+            <SidebarNavLink
+              key={option.path}
+              option={option}
+              pathname={pathname}
+              sidebarExpanded={sidebarExpanded}
+              isLocked={isLockedInDemo(option.path)}
+            />
+          ))}
 
-      <nav
-        aria-label="Navegación principal"
-        className={cn(
-          'custom-scrollbar flex min-h-0 flex-1 flex-col gap-2 overflow-x-hidden overflow-y-auto py-6',
-          sidebarExpanded ? 'px-3' : 'px-2'
-        )}
-      >
-        {mainNavOptions.map((option) => (
-          <SidebarNavLink
-            key={option.path}
-            option={option}
-            pathname={pathname}
-            sidebarExpanded={sidebarExpanded}
-            isLocked={isLockedInDemo(option.path)}
-          />
-        ))}
+          <div className={cn('border-surface-border/50 my-2 border-t', sidebarExpanded ? 'mx-2' : 'mx-0')} />
 
-        <div className={cn('border-surface-border/50 my-2 border-t', sidebarExpanded ? 'mx-2' : 'mx-0')} />
+          {secondaryNavOptions.map((option) => (
+            <SidebarNavLink
+              key={option.path}
+              option={option}
+              pathname={pathname}
+              sidebarExpanded={sidebarExpanded}
+              isLocked={isLockedInDemo(option.path)}
+            />
+          ))}
+        </nav>
 
-        {secondaryNavOptions.map((option) => (
-          <SidebarNavLink
-            key={option.path}
-            option={option}
-            pathname={pathname}
-            sidebarExpanded={sidebarExpanded}
-            isLocked={isLockedInDemo(option.path)}
-          />
-        ))}
-      </nav>
-
-      <DesktopSidebarFooter
-        sidebarExpanded={sidebarExpanded}
-        pathname={pathname}
-        username={user?.username}
-        rankName={rank?.name}
-        avatarSrc={avatarSrc}
-        coinsBalance={coinsBalance}
-        isLockedInDemo={isLockedInDemo}
-      />
+        <DesktopSidebarFooter
+          sidebarExpanded={sidebarExpanded}
+          pathname={pathname}
+          username={user?.username}
+          rankName={rank?.name}
+          avatarSrc={avatarSrc}
+          coinsBalance={coinsBalance}
+          isLockedInDemo={isLockedInDemo}
+        />
       </header>
     </div>
   );
