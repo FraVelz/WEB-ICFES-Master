@@ -21,7 +21,7 @@ export default function GlobalError({ error, reset }: GlobalErrorProps) {
         </a>
         <main id="main-content" className="flex flex-1 items-center justify-center">
           <div className="max-w-md text-center">
-            <p className="text-on-surface-muted mb-2 text-sm font-semibold uppercase tracking-wide" role="alert">
+            <p className="text-on-surface-muted mb-2 text-sm font-semibold tracking-wide uppercase" role="alert">
               Error crítico
             </p>
             <h1 className="mb-2 text-2xl font-semibold">No se pudo cargar la aplicación</h1>

@@ -85,10 +85,7 @@ export function useChatAssistant() {
         ? `${errText} Ve a la página de inicio de sesión para continuar.`
         : isLimitError
           ? `${errText} Puedes seguir estudiando en la ruta de aprendizaje.`
-          : [
-              `Lo siento, ocurrió un error: ${errText}.`,
-              'Verifica que OPENAI_API_KEY esté configurada en .env.local',
-            ].join(' ');
+          : `Lo siento, ocurrió un error: ${errText}. Intenta de nuevo en unos momentos.`;
 
       const errorMessage: ChatMessage = {
         id: `assistant-${Date.now()}`,

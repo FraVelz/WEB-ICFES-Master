@@ -59,94 +59,97 @@ export const useLearningPath = (areaId: string | undefined, options: UseLearning
 
   const phaseFilter = loadAllPhases ? undefined : sectionIdToPhase(sectionId);
 
-  const fetchPath = useCallback(async ({ background = false }: FetchPathOptions = {}) => {
-    if (!areaId) {
-      setLoading(false);
-      return;
-    }
-
-    const seq = ++requestSeq.current;
-    if (!background) {
-      setLoading(true);
-    }
-
-    try {
-      const [lessons, progress] = await Promise.all([
-        LearningService.getLearningPath(areaId, phaseFilter),
-        userId ? LearningService.getUserProgress(userId, areaId) : Promise.resolve(null),
-      ]);
-
-      if (seq !== requestSeq.current) return;
-
-      const activePhase = sectionIdToPhase(sectionId);
-      const sectionIds = loadAllPhases ? LEARNING_PHASE_SECTION_IDS : [phaseToSectionId(activePhase)];
-
-      const groupedSections: PathSection[] = sectionIds.map((id) => ({
-        id,
-        ...SECTION_META[id],
-        nodes: [],
-      }));
-
-      const completedIds = (progress as { completedLessons?: string[] } | null)?.completedLessons ?? [];
-      const blockExamPasses =
-        (progress as { blockExamPasses?: Array<{ areaId: string; blockId: string }> } | null)?.blockExamPasses ?? [];
-      const passedBlockIds = new Set(
-        blockExamPasses.filter((record) => record.areaId === areaId).map((record) => record.blockId)
-      );
-
-      lessons.forEach((lesson) => {
-        const sectionIdForLesson = phaseToSectionId(lesson.phase);
-        const section = groupedSections.find((s) => s.id === sectionIdForLesson);
-        if (!section) return;
-
-        const xp = lesson.rewards?.xp || lesson.xp || 0;
-        const coins = lesson.rewards?.coins || lesson.coins || 0;
-        const nodeType =
-          lesson.moduleType === 'minimum-requirements'
-            ? 'minimum-requirements'
-            : lesson.moduleType === 'block-checkpoint' || lesson.type === 'checkpoint'
-              ? 'checkpoint'
-              : 'lesson';
-
-        section.nodes.push({
-          ...lesson,
-          id: lesson.id ?? '',
-          title: (lesson as { title?: string }).title,
-          description: (lesson as { description?: string }).description,
-          xp,
-          coins,
-          type: nodeType,
-          moduleType: lesson.moduleType,
-          blockId: lesson.blockId,
-          lessonIds: lesson.lessonIds,
-        } as PathNodeData);
-      });
-
-      const completedSet = new Set(completedIds);
-      const useBlockGating = phaseFilter === 1 || (!loadAllPhases && sectionIdToPhase(sectionId) === 1);
-
-      for (const section of groupedSections) {
-        section.nodes = applyLessonStatusesForArea(
-          section.nodes,
-          completedSet,
-          passedBlockIds,
-          areaId as AreaId,
-          useBlockGating && section.id === 'facil'
-        );
-      }
-
-      const activeSections = groupedSections.filter((s) => s.nodes.length > 0);
-      setSections(loadAllPhases ? groupedSections : activeSections.length > 0 ? activeSections : groupedSections);
-      setError(null);
-    } catch (err) {
-      console.error(err);
-      setError('Error al cargar la ruta de aprendizaje');
-    } finally {
-      if (seq === requestSeq.current) {
+  const fetchPath = useCallback(
+    async ({ background = false }: FetchPathOptions = {}) => {
+      if (!areaId) {
         setLoading(false);
+        return;
       }
-    }
-  }, [areaId, userId, phaseFilter, loadAllPhases, sectionId]);
+
+      const seq = ++requestSeq.current;
+      if (!background) {
+        setLoading(true);
+      }
+
+      try {
+        const [lessons, progress] = await Promise.all([
+          LearningService.getLearningPath(areaId, phaseFilter),
+          userId ? LearningService.getUserProgress(userId, areaId) : Promise.resolve(null),
+        ]);
+
+        if (seq !== requestSeq.current) return;
+
+        const activePhase = sectionIdToPhase(sectionId);
+        const sectionIds = loadAllPhases ? LEARNING_PHASE_SECTION_IDS : [phaseToSectionId(activePhase)];
+
+        const groupedSections: PathSection[] = sectionIds.map((id) => ({
+          id,
+          ...SECTION_META[id],
+          nodes: [],
+        }));
+
+        const completedIds = (progress as { completedLessons?: string[] } | null)?.completedLessons ?? [];
+        const blockExamPasses =
+          (progress as { blockExamPasses?: Array<{ areaId: string; blockId: string }> } | null)?.blockExamPasses ?? [];
+        const passedBlockIds = new Set(
+          blockExamPasses.filter((record) => record.areaId === areaId).map((record) => record.blockId)
+        );
+
+        lessons.forEach((lesson) => {
+          const sectionIdForLesson = phaseToSectionId(lesson.phase);
+          const section = groupedSections.find((s) => s.id === sectionIdForLesson);
+          if (!section) return;
+
+          const xp = lesson.rewards?.xp || lesson.xp || 0;
+          const coins = lesson.rewards?.coins || lesson.coins || 0;
+          const nodeType =
+            lesson.moduleType === 'minimum-requirements'
+              ? 'minimum-requirements'
+              : lesson.moduleType === 'block-checkpoint' || lesson.type === 'checkpoint'
+                ? 'checkpoint'
+                : 'lesson';
+
+          section.nodes.push({
+            ...lesson,
+            id: lesson.id ?? '',
+            title: (lesson as { title?: string }).title,
+            description: (lesson as { description?: string }).description,
+            xp,
+            coins,
+            type: nodeType,
+            moduleType: lesson.moduleType,
+            blockId: lesson.blockId,
+            lessonIds: lesson.lessonIds,
+          } as PathNodeData);
+        });
+
+        const completedSet = new Set(completedIds);
+        const useBlockGating = phaseFilter === 1 || (!loadAllPhases && sectionIdToPhase(sectionId) === 1);
+
+        for (const section of groupedSections) {
+          section.nodes = applyLessonStatusesForArea(
+            section.nodes,
+            completedSet,
+            passedBlockIds,
+            areaId as AreaId,
+            useBlockGating && section.id === 'facil'
+          );
+        }
+
+        const activeSections = groupedSections.filter((s) => s.nodes.length > 0);
+        setSections(loadAllPhases ? groupedSections : activeSections.length > 0 ? activeSections : groupedSections);
+        setError(null);
+      } catch (err) {
+        console.error(err);
+        setError('Error al cargar la ruta de aprendizaje');
+      } finally {
+        if (seq === requestSeq.current) {
+          setLoading(false);
+        }
+      }
+    },
+    [areaId, userId, phaseFilter, loadAllPhases, sectionId]
+  );
 
   useEffect(() => {
     void fetchPath();

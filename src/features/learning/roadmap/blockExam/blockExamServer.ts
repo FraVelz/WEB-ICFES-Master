@@ -1,9 +1,5 @@
 import { BLOCK_EXAM_PASS_PERCENT } from '@/services/persistence/blockExamPersistence';
-import {
-  getPhase1BlockDef,
-  parseBlockCheckpointId,
-  type Phase1BlockDef,
-} from '@/features/learning/data/phase1Blocks';
+import { getPhase1BlockDef, parseBlockCheckpointId, type Phase1BlockDef } from '@/features/learning/data/phase1Blocks';
 import { gradeLessonQuizAnswersPure } from '@/features/learning/roadmap/lessonQuiz/gradeLessonQuizAnswersPure';
 import type { NormalizedQuizQuestion } from '@/features/learning/roadmap/lessonQuiz/quizTypes';
 import { loadLessonQuizQuestionsBatch } from '@/services/supabase/LearningSupabaseServer';
@@ -94,11 +90,7 @@ export async function startBlockExamSession(checkpointId: string, lessonIds?: st
   };
 }
 
-export async function gradeBlockExamSession(
-  sessionToken: string,
-  answers: Record<string, string>,
-  userId: string
-) {
+export async function gradeBlockExamSession(sessionToken: string, answers: Record<string, string>, userId: string) {
   const session = verifyBlockExamSession(sessionToken);
   if (!session) {
     throw new Error('La sesión del examen expiró. Vuelve a iniciarlo.');

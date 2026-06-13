@@ -52,9 +52,7 @@ export function ChatPanel({
 
   useDialogA11y(isOpen, onClose, dialogRef, { lockScroll: false });
 
-  const statusText = requiresLogin
-    ? 'Inicia sesión para usar el asistente'
-    : 'Responde tus dudas';
+  const statusText = requiresLogin ? 'Inicia sesión para usar el asistente' : 'Responde tus dudas';
 
   if (!mounted || !isOpen) return null;
 

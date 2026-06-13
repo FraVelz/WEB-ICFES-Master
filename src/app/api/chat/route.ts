@@ -1,12 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createServerSupabaseClient } from '@/config/supabaseClient';
 import { checkRateLimit, getClientIp } from '@/utils/rateLimit';
-import {
-  CHAT_ANON_COOKIE,
-  CHAT_ANON_LIMIT,
-  CHAT_AUTH_COOKIE,
-  CHAT_AUTH_DAILY_LIMIT,
-} from '@/features/learning/constants/chatQuota';
+import { CHAT_AUTH_COOKIE, CHAT_AUTH_DAILY_LIMIT } from '@/features/learning/constants/chatQuota';
 import OpenAI from 'openai';
 
 const MAX_MESSAGES = 30;
@@ -41,8 +36,8 @@ async function getAuthUserFromRequest(request: NextRequest) {
   return user;
 }
 
-function parseCountCookie(request: NextRequest, name: string): number {
-  const raw = request.cookies.get(name)?.value;
+function parseAuthUsageCookie(request: NextRequest): number {
+  const raw = request.cookies.get(CHAT_AUTH_COOKIE)?.value;
   const n = raw !== undefined ? parseInt(raw, 10) : 0;
   return Number.isFinite(n) && n >= 0 ? n : 0;
 }
@@ -56,23 +51,25 @@ function sanitizeClientMessages(messages: Array<{ role: string; content: string 
     }));
 }
 
-async function resolveChatAccess(request: NextRequest) {
-  const authUser = await getAuthUserFromRequest(request);
-  const isLoggedIn = !!authUser;
-  const anonUsed = parseCountCookie(request, CHAT_ANON_COOKIE);
-  const authUsed = parseCountCookie(request, CHAT_AUTH_COOKIE);
-
-  return { isLoggedIn, anonUsed, authUsed, authUser };
-}
-
 export async function GET(request: NextRequest) {
-  const { isLoggedIn, anonUsed, authUsed } = await resolveChatAccess(request);
+  const authUser = await getAuthUserFromRequest(request);
+
+  if (!authUser) {
+    return NextResponse.json({
+      requiresAuth: true,
+      limit: 0,
+      authUsed: 0,
+      unlimited: false,
+    });
+  }
+
+  const authUsed = parseAuthUsageCookie(request);
 
   return NextResponse.json({
-    anonUsed: isLoggedIn ? 0 : anonUsed,
-    limit: isLoggedIn ? CHAT_AUTH_DAILY_LIMIT : CHAT_ANON_LIMIT,
+    requiresAuth: false,
+    limit: CHAT_AUTH_DAILY_LIMIT,
+    authUsed,
     unlimited: false,
-    authUsed: isLoggedIn ? authUsed : 0,
   });
 }
 
@@ -80,12 +77,8 @@ export async function POST(request: NextRequest) {
   try {
     const apiKey = process.env.OPENAI_API_KEY;
     if (!apiKey) {
-      return NextResponse.json(
-        {
-          error: 'OpenAI API key no configurada. Añade OPENAI_API_KEY en .env.local',
-        },
-        { status: 500 }
-      );
+      console.error('OPENAI_API_KEY no configurada');
+      return NextResponse.json({ error: 'El asistente no está disponible temporalmente.' }, { status: 503 });
     }
 
     const body = await request.json();
@@ -107,7 +100,7 @@ export async function POST(request: NextRequest) {
       }
     }
 
-    const { isLoggedIn, anonUsed, authUsed, authUser } = await resolveChatAccess(request);
+    const authUser = await getAuthUserFromRequest(request);
 
     if (!authUser) {
       return NextResponse.json(
@@ -119,27 +112,15 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    const authUsed = parseAuthUsageCookie(request);
     const ip = getClientIp(request);
-    const rateKey = authUser ? `chat:user:${authUser.id}` : `chat:anon:${ip}`;
-    const rate = await checkRateLimit(rateKey, isLoggedIn ? 40 : 8, 60_000);
+    const rate = await checkRateLimit(`chat:user:${authUser.id}:${ip}`, 40, 60_000);
 
     if (!rate.allowed) {
       return NextResponse.json({ error: 'Demasiadas solicitudes al asistente. Espera un momento.' }, { status: 429 });
     }
 
-    if (!isLoggedIn && anonUsed >= CHAT_ANON_LIMIT) {
-      return NextResponse.json(
-        {
-          error: 'Has alcanzado el límite de 3 preguntas sin cuenta. Inicia sesión para seguir usando el asistente.',
-          code: 'ANON_QUOTA_EXCEEDED',
-          anonUsed: CHAT_ANON_LIMIT,
-          limit: CHAT_ANON_LIMIT,
-        },
-        { status: 429 }
-      );
-    }
-
-    if (isLoggedIn && authUsed >= CHAT_AUTH_DAILY_LIMIT) {
+    if (authUsed >= CHAT_AUTH_DAILY_LIMIT) {
       return NextResponse.json(
         {
           error: 'Has alcanzado el límite diario del asistente. Vuelve mañana o continúa estudiando en la ruta.',
@@ -171,29 +152,19 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'No se recibió respuesta del modelo' }, { status: 500 });
     }
 
-    const res = NextResponse.json(
-      isLoggedIn
-        ? { content: assistantMessage, authUsed: authUsed + 1, limit: CHAT_AUTH_DAILY_LIMIT }
-        : {
-            content: assistantMessage,
-            anonUsed: anonUsed + 1,
-            limit: CHAT_ANON_LIMIT,
-          }
-    );
+    const res = NextResponse.json({
+      content: assistantMessage,
+      authUsed: authUsed + 1,
+      limit: CHAT_AUTH_DAILY_LIMIT,
+    });
 
-    const cookieBase = {
+    res.cookies.set(CHAT_AUTH_COOKIE, String(authUsed + 1), {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
-      sameSite: 'lax' as const,
+      sameSite: 'lax',
       path: '/',
       maxAge: 60 * 60 * 24,
-    };
-
-    if (!isLoggedIn) {
-      res.cookies.set(CHAT_ANON_COOKIE, String(anonUsed + 1), cookieBase);
-    } else {
-      res.cookies.set(CHAT_AUTH_COOKIE, String(authUsed + 1), cookieBase);
-    }
+    });
 
     return res;
   } catch (error: unknown) {

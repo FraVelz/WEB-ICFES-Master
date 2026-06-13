@@ -1,4 +1,4 @@
-import { AREA_INFO, HOME_AREA_IDS, type AreaId } from '@/shared/constants';
+import { AREA_INFO, HOME_AREA_IDS, type AreaId } from '@/shared/constants/areaInfo';
 import { ACHIEVEMENT_CATEGORIES, type AchievementCategoryKey } from './achievementCategories';
 
 export type AchievementDisplayItem = {

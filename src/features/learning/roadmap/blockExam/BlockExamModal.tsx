@@ -24,9 +24,7 @@ export function BlockExamModal({ isOpen, onClose, onComplete, checkpoint, areaId
   const dialogRef = useRef<HTMLDivElement>(null);
   const { showToast } = useToast();
 
-  const lessonIds = Array.isArray(checkpoint?.lessonIds)
-    ? (checkpoint.lessonIds as string[])
-    : [];
+  const lessonIds = Array.isArray(checkpoint?.lessonIds) ? (checkpoint.lessonIds as string[]) : [];
 
   const blockId = typeof checkpoint?.blockId === 'string' ? checkpoint.blockId : '';
 
@@ -123,7 +121,7 @@ export function BlockExamModal({ isOpen, onClose, onComplete, checkpoint, areaId
         )}
 
         {isLastQuestion && isSubmitted && finalScore != null && !alreadyPassed && allQuestionsAnswered && (
-          <p className="text-amber-300 px-4 pb-2 text-center text-sm">
+          <p className="px-4 pb-2 text-center text-sm text-amber-300">
             Obtuviste {finalScore}%. Necesitas {passPercent}% para continuar.
           </p>
         )}

@@ -1,7 +1,10 @@
 'use client';
 
 import { useEffect, useMemo, useState } from 'react';
-import { buildMinimumRequirementsLesson, parseAreaFromMinimumRequirementsId } from '@/features/learning/data/phaseMinimumRequirements';
+import {
+  buildMinimumRequirementsLesson,
+  parseAreaFromMinimumRequirementsId,
+} from '@/features/learning/data/phaseMinimumRequirements';
 import type { PathNodeData } from '@/features/learning/roadmap/AreaPath';
 import { useDashboardShellOptional } from '@/features/dashboard/shell';
 import LearningSupabaseService from '@/services/supabase/LearningSupabaseService';

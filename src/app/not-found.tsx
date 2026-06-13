@@ -24,7 +24,9 @@ export default function NotFound() {
             href="/"
             className={cn(
               'from-cta-from to-cta-to inline-block rounded-lg bg-linear-to-r px-8 py-3 font-semibold',
-              'text-white no-underline transition-opacity hover:opacity-90'
+              'text-white no-underline transition-opacity hover:opacity-90',
+              'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none',
+              'focus-visible:ring-offset-surface'
             )}
           >
             Volver al inicio

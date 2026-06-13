@@ -32,8 +32,8 @@ export function DesktopSidebar({ className, sidebarExpanded, onToggleSidebar }: 
           'fixed top-0 left-0 z-50 flex h-dvh max-h-dvh min-h-0 flex-col overflow-x-hidden overflow-y-auto',
           'border-app-ring/20 border-r transition-[width] duration-300 ease-out',
           sidebarExpanded
-            ? 'w-72 bg-surface-elevated/55 shadow-app-ring/10 shadow-2xl backdrop-blur-xl'
-            : 'w-20 bg-surface-elevated'
+            ? 'bg-surface-elevated/55 shadow-app-ring/10 w-72 shadow-2xl backdrop-blur-xl'
+            : 'bg-surface-elevated w-20'
         )}
       >
         <div

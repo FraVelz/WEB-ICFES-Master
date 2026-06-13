@@ -77,7 +77,8 @@ const MODULES: Record<AreaId, PhaseMinimumRequirementsModule | undefined> = {
           'Aprender a escribir ensayos filosóficos',
         ],
         correct_answer: 1,
-        explanation: 'Este módulo consolida alfabetización y comprensión literal, no contenidos avanzados de bachillerato.',
+        explanation:
+          'Este módulo consolida alfabetización y comprensión literal, no contenidos avanzados de bachillerato.',
       },
       {
         id: 'req_lc_2',
@@ -331,22 +332,22 @@ export function getPhaseMinimumRequirementsModule(areaId: AreaId): PhaseMinimumR
 
 /** Lección sintética que se inserta como primer nodo de la fase 1 en cada área. */
 export function buildMinimumRequirementsLesson(areaId: AreaId): LearningPathLesson | null {
-  const module = getPhaseMinimumRequirementsModule(areaId);
-  if (!module) return null;
+  const requirementsModule = getPhaseMinimumRequirementsModule(areaId);
+  if (!requirementsModule) return null;
 
   return {
     id: getMinimumRequirementsLessonId(areaId),
-    title: module.title,
-    description: module.description,
+    title: requirementsModule.title,
+    description: requirementsModule.description,
     order: 0,
     phase: 1,
     difficulty: 'facil',
     moduleType: MINIMUM_REQUIREMENTS_MODULE_TYPE,
-    duration: module.duration,
-    content: module.content,
-    questions: module.questions,
+    duration: requirementsModule.duration,
+    content: requirementsModule.content,
+    questions: requirementsModule.questions,
     quiz: {
-      questions: module.questions,
+      questions: requirementsModule.questions,
       rewards: { xp: 30, coins: 15 },
     },
     rewards: { xp: 30, coins: 15 },

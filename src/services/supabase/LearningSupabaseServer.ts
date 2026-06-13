@@ -58,11 +58,7 @@ export async function loadLessonQuizQuestionsBatch(lessonIds: string[]) {
   let remoteResults: Array<{ lessonId: string; questions: ReturnType<typeof normalizeQuizQuestions> }> = [];
 
   if (sb && remoteIds.length > 0) {
-    const { data, error } = await sb
-      .from(TABLE)
-      .select('id, content')
-      .in('id', remoteIds)
-      .eq('published', true);
+    const { data, error } = await sb.from(TABLE).select('id, content').in('id', remoteIds).eq('published', true);
 
     if (error) throw new Error(`Error leyendo lecciones: ${error.message}`);
 
@@ -79,5 +75,8 @@ export async function loadLessonQuizQuestionsBatch(lessonIds: string[]) {
       .filter((entry): entry is NonNullable<typeof entry> => Boolean(entry));
   }
 
-  return [...staticResults.map((entry) => ({ lessonId: entry.lessonId, questions: entry.questions })), ...remoteResults];
+  return [
+    ...staticResults.map((entry) => ({ lessonId: entry.lessonId, questions: entry.questions })),
+    ...remoteResults,
+  ];
 }

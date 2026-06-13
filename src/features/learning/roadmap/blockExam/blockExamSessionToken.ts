@@ -1,7 +1,7 @@
 import { createHmac, timingSafeEqual } from 'crypto';
 import type { NormalizedQuizQuestion } from '@/features/learning/roadmap/lessonQuiz/quizTypes';
 
-const DEFAULT_SECRET = 'icfes-block-exam-dev-secret';
+const DEV_FALLBACK_SECRET = 'icfes-block-exam-dev-secret';
 
 type BlockExamSessionPayload = {
   checkpointId: string;
@@ -12,17 +12,26 @@ type BlockExamSessionPayload = {
 };
 
 function getSecret(): string {
-  return process.env.BLOCK_EXAM_SESSION_SECRET ?? process.env.SUPABASE_SERVICE_ROLE_KEY ?? DEFAULT_SECRET;
+  const dedicated = process.env.BLOCK_EXAM_SESSION_SECRET?.trim();
+  if (dedicated) return dedicated;
+
+  const serviceRole = process.env.SUPABASE_SERVICE_ROLE_KEY?.trim();
+  if (serviceRole) return serviceRole;
+
+  if (process.env.NODE_ENV === 'production') {
+    throw new Error(
+      'En producción configura BLOCK_EXAM_SESSION_SECRET o SUPABASE_SERVICE_ROLE_KEY para firmar exámenes por bloque'
+    );
+  }
+
+  return DEV_FALLBACK_SECRET;
 }
 
 function signPayload(json: string): string {
   return createHmac('sha256', getSecret()).update(json).digest('base64url');
 }
 
-export function signBlockExamSession(
-  payload: Omit<BlockExamSessionPayload, 'exp'>,
-  ttlMs = 30 * 60 * 1000
-): string {
+export function signBlockExamSession(payload: Omit<BlockExamSessionPayload, 'exp'>, ttlMs = 30 * 60 * 1000): string {
   const data: BlockExamSessionPayload = { ...payload, exp: Date.now() + ttlMs };
   const json = JSON.stringify(data);
   const signature = signPayload(json);

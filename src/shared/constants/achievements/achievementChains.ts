@@ -1,4 +1,4 @@
-import { AREA_INFO, HOME_AREA_IDS } from '@/shared/constants';
+import { AREA_INFO, HOME_AREA_IDS } from '@/shared/constants/areaInfo';
 import { STREAK_ACHIEVEMENT_IDS } from './achievementsConstancyMetas';
 import { phaseAchievementGroupKey } from './achievementGrouping';
 import { phaseAchievementId } from './achievementsPhases';

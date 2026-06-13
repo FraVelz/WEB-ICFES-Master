@@ -108,11 +108,7 @@ export function ResetPasswordForm({
         <p className="text-on-surface-muted mb-2 text-xs font-semibold">
           {EMAIL_MESSAGES.resetPasswordPage.requirementsTitle}
         </p>
-        <ul
-          id="reset-password-rules"
-          aria-live="polite"
-          className="text-on-surface-muted space-y-1 text-xs"
-        >
+        <ul id="reset-password-rules" aria-live="polite" className="text-on-surface-muted space-y-1 text-xs">
           <RequirementItem met={password.length >= 6} label={EMAIL_MESSAGES.resetPasswordPage.requirement1} />
           <RequirementItem met={/[A-Z]/.test(password)} label={EMAIL_MESSAGES.resetPasswordPage.requirement2} />
           <RequirementItem met={/[0-9]/.test(password)} label={EMAIL_MESSAGES.resetPasswordPage.requirement3} />

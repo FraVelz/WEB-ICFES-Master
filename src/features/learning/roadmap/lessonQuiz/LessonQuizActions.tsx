@@ -130,7 +130,7 @@ export function LessonQuizActions({
     >
       {innerClassName ? <div className={innerClassName}>{buttons}</div> : buttons}
       {gradeError ? (
-        <p className="text-red-400 mt-2 text-center text-sm" role="alert">
+        <p className="mt-2 text-center text-sm text-red-400" role="alert">
           {gradeError}
         </p>
       ) : null}

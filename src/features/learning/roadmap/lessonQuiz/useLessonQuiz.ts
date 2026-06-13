@@ -84,9 +84,7 @@ export function useLessonQuiz({
 
     const updatedAnswers = { ...answers, [currentQuestion.id]: selectedOption };
     const allAnswered = displayQuestions.every((q) => updatedAnswers[q.id] != null);
-    const shouldAward = Boolean(
-      !alreadyCompleted && (totalQuestions === 1 || (isLastQuestion && allAnswered))
-    );
+    const shouldAward = Boolean(!alreadyCompleted && (totalQuestions === 1 || (isLastQuestion && allAnswered)));
 
     const applyGradeResult = (
       gradeResult: Awaited<ReturnType<typeof fetchLessonQuizGrade>>,

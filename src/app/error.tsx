@@ -20,10 +20,7 @@ export default function ErrorPage({ error, reset }: ErrorPageProps) {
       <a href="#main-content" className="skip-link">
         Saltar al contenido
       </a>
-      <main
-        id="main-content"
-        className={cn('flex flex-col items-center justify-center p-4', FULL_PAGE_SHELL_CLASS)}
-      >
+      <main id="main-content" className={cn('flex flex-col items-center justify-center p-4', FULL_PAGE_SHELL_CLASS)}>
         <div className="max-w-md text-center" role="alert">
           <h1 className="text-on-surface mb-2 text-2xl font-semibold">Algo salió mal</h1>
           <p className="text-on-surface-muted mb-8">

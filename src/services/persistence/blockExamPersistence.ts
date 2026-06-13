@@ -46,12 +46,7 @@ export function getPassedBlockIdsForArea(areaId: string): Set<string> {
   );
 }
 
-export function markBlockExamPassed(
-  userId: string | undefined,
-  areaId: string,
-  blockId: string,
-  score: number
-): void {
+export function markBlockExamPassed(userId: string | undefined, areaId: string, blockId: string, score: number): void {
   const records = readPasses().filter((record) => !(record.areaId === areaId && record.blockId === blockId));
   records.push({
     areaId,

@@ -54,8 +54,7 @@ export function HomeStructuredData() {
       price: '0',
       priceCurrency: 'COP',
     },
-    description:
-      'Plataforma web gratuita para preparar el Saber 11° con preguntas, simulacros y ruta de aprendizaje.',
+    description: 'Plataforma web gratuita para preparar el Saber 11° con preguntas, simulacros y ruta de aprendizaje.',
     inLanguage: 'es-CO',
   };
 

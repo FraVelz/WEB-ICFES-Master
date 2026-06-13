@@ -26,10 +26,7 @@ export type BlockExamGradeResponse = {
   rewards?: { xp: number; coins: number; alreadyAwarded?: boolean };
 };
 
-export async function fetchBlockExamStart(
-  checkpointId: string,
-  lessonIds: string[]
-): Promise<BlockExamStartResponse> {
+export async function fetchBlockExamStart(checkpointId: string, lessonIds: string[]): Promise<BlockExamStartResponse> {
   const headers = await getApiAuthHeaders();
   if (!('Authorization' in (headers as Record<string, string>))) {
     throw new Error('Debes iniciar sesión para iniciar el examen');

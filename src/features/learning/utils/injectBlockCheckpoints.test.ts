@@ -14,16 +14,10 @@ const lesson = (id: string, order: number, blockId?: string): LearningPathLesson
 
 describe('injectBlockCheckpoints', () => {
   it('inserta un checkpoint al final de cada bloque en fase 1', () => {
-    const lessons = [
-      lesson('m1', 1, 'numeros'),
-      lesson('m2', 2, 'numeros'),
-      lesson('m3', 26, 'algebra'),
-    ];
+    const lessons = [lesson('m1', 1, 'numeros'), lesson('m2', 2, 'numeros'), lesson('m3', 26, 'algebra')];
 
     const result = injectBlockCheckpoints('matematicas', lessons, 1);
-    const checkpointIds = result
-      .filter((item) => item.moduleType === 'block-checkpoint')
-      .map((item) => item.id);
+    const checkpointIds = result.filter((item) => item.moduleType === 'block-checkpoint').map((item) => item.id);
 
     expect(checkpointIds).toContain(getBlockCheckpointId('matematicas', 'numeros'));
     expect(checkpointIds).toContain(getBlockCheckpointId('matematicas', 'algebra'));

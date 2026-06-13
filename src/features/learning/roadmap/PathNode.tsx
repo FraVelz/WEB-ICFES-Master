@@ -48,9 +48,7 @@ export const PathNode = ({
     'focus-visible:ring-offset-surface-via',
     isPending && 'border-surface-border bg-surface-elevated/40 opacity-70 hover:border-surface-border hover:opacity-90',
     isLocked && 'cursor-not-allowed opacity-55 hover:opacity-55',
-    isMinimumRequirements &&
-      !isCompleted &&
-      'border-amber-500/35 bg-surface-elevated/60 hover:border-amber-500/50',
+    isMinimumRequirements && !isCompleted && 'border-amber-500/35 bg-surface-elevated/60 hover:border-amber-500/50',
     isCurrent && cn(borderColor, 'lesson-current-glow bg-surface-elevated hover:bg-surface-overlay'),
     isCompleted && 'border-green-500/40 bg-surface-elevated/50 hover:bg-surface-elevated'
   );

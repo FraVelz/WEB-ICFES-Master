@@ -12,11 +12,7 @@ export const DashboardHeader = ({ className }: { className?: string }) => {
 
   return (
     <>
-      <DesktopSidebar
-        className={className}
-        sidebarExpanded={sidebarExpanded}
-        onToggleSidebar={toggleSidebarExpanded}
-      />
+      <DesktopSidebar className={className} sidebarExpanded={sidebarExpanded} onToggleSidebar={toggleSidebarExpanded} />
 
       <MobileNav
         menuOpen={mobileOptionsMenuOpen}

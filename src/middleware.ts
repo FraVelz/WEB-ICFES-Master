@@ -2,7 +2,11 @@ import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 import { isProtectedDashboardPath } from '@/config/protectedRoutes';
 import { DEMO_SESSION_COOKIE } from '@/utils/apiAuth';
-import { applyEmbeddableSecurityHeaders, applySecurityHeaders, isEmbeddableAssetPath } from '@/utils/contentSecurityPolicy';
+import {
+  applyEmbeddableSecurityHeaders,
+  applySecurityHeaders,
+  isEmbeddableAssetPath,
+} from '@/utils/contentSecurityPolicy';
 import { createMiddlewareSupabaseClient } from '@/utils/supabase/middleware';
 
 function hasApiSession(request: NextRequest): boolean {

@@ -5,7 +5,11 @@ import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { AREA_INFO, type AreaId } from '@/shared/constants';
 import { useLearningPath } from '@/features/learning/hooks/useLearningPath';
 import { pickDefaultSectionId } from '@/features/learning/shell/SecondaryHeader/sectionStageUtils';
-import { LEARNING_ROADMAP_PATH, getLearningPhasesHref, parsePhasesAreaFromPathname } from '@/features/learning/data/competencyPhases';
+import {
+  LEARNING_ROADMAP_PATH,
+  getLearningPhasesHref,
+  parsePhasesAreaFromPathname,
+} from '@/features/learning/data/competencyPhases';
 import { getLessonIdFromPathname, isLessonRoute, resolveLessonAreaId } from '@/features/learning/utils/lessonRoutes';
 import { isLearningPhasesRoute } from './shellRoutes';
 

@@ -96,10 +96,7 @@ export function useFullExam() {
     const attemptId = Date.now();
 
     void fetchGradedExamResults(answers, {
-      awardActivity:
-        user?.uid && !isDemoUserId(user.uid)
-          ? { attemptType: 'full-exam', attemptId }
-          : undefined,
+      awardActivity: user?.uid && !isDemoUserId(user.uid) ? { attemptType: 'full-exam', attemptId } : undefined,
     })
       .then(({ results }) => {
         if (!active) return;

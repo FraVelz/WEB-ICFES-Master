@@ -1,4 +1,4 @@
-import { HOME_AREA_IDS, type AreaId } from '@/shared/constants';
+import { HOME_AREA_IDS, type AreaId } from '@/shared/constants/areaInfo';
 
 export type CompetencyPhaseId = 'cimentacion' | 'relacion' | 'maestria';
 

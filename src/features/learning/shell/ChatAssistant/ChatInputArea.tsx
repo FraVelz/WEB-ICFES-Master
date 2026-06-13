@@ -32,11 +32,11 @@ export function ChatInputArea({
       {requiresLogin ? (
         <p className="text-on-surface-muted text-center text-sm">
           El asistente requiere una cuenta.{' '}
-          <Link href="/login" className={loginLinkClass}>
+          <Link href="/login/" className={loginLinkClass}>
             Inicia sesión
           </Link>{' '}
           o{' '}
-          <Link href="/signup" className={loginLinkClass}>
+          <Link href="/signup/" className={loginLinkClass}>
             crea una cuenta
           </Link>{' '}
           para chatear.

@@ -20,14 +20,7 @@ export type UseBlockExamOptions = {
   onPassed?: () => void;
 };
 
-export function useBlockExam({
-  isOpen,
-  checkpointId,
-  lessonIds,
-  areaId,
-  blockId,
-  onPassed,
-}: UseBlockExamOptions) {
+export function useBlockExam({ isOpen, checkpointId, lessonIds, areaId, blockId, onPassed }: UseBlockExamOptions) {
   const { user } = useAuth();
   const [loading, setLoading] = useState(false);
   const [starting, setStarting] = useState(false);
@@ -128,7 +121,11 @@ export function useBlockExam({
       setRevealedAnswers((prev) => ({ ...prev, [currentQuestion.id]: revealed }));
       setCompletedQuestions((prev) => new Set([...prev, currentQuestion.id]));
 
-      if (gradeResult.totalQuestions > 0 && updatedAnswers && Object.keys(updatedAnswers).length === gradeResult.totalQuestions) {
+      if (
+        gradeResult.totalQuestions > 0 &&
+        updatedAnswers &&
+        Object.keys(updatedAnswers).length === gradeResult.totalQuestions
+      ) {
         setFinalScore(gradeResult.score);
         if (gradeResult.passed) {
           setAlreadyPassed(true);

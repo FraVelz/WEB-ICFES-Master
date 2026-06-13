@@ -51,7 +51,7 @@ export function LessonQuizQuestionPanel({
                   : cn(
                       'border-surface-border/50 bg-surface-overlay/50 text-on-surface',
                       'hover:border-surface-border hover:bg-surface-overlay/70',
-                      'active:scale-[0.98] active:border-surface-border active:bg-surface-overlay'
+                      'active:border-surface-border active:bg-surface-overlay active:scale-[0.98]'
                     )
             )}
           >

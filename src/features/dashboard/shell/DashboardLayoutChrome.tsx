@@ -40,7 +40,7 @@ export function DashboardLayoutChrome({ children }: { children: ReactNode }) {
         <DashboardHeader
           className={cn(
             'z-40 order-2 shrink-0',
-            'border-app-ring/20 border-t lg:order-1 lg:min-h-dvh lg:w-20 lg:border-t-0',
+            'border-app-ring/20 border-t lg:order-1 lg:min-h-dvh lg:w-20 lg:border-t-0'
           )}
         />
 

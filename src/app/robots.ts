@@ -32,7 +32,16 @@ const CRAWLER_RULES: MetadataRoute.Robots['rules'] = [
   },
   {
     userAgent: ['GPTBot', 'ChatGPT-User', 'Claude-Web', 'anthropic-ai', 'Google-Extended', 'PerplexityBot'],
-    allow: ['/', '/lectura/', '/consejos/', '/importancia/', '/informacion/', '/privacidad/', '/terminos/', '/llms.txt'],
+    allow: [
+      '/',
+      '/lectura/',
+      '/consejos/',
+      '/importancia/',
+      '/informacion/',
+      '/privacidad/',
+      '/terminos/',
+      '/llms.txt',
+    ],
     disallow: PRIVATE_PATHS,
   },
 ];

@@ -43,11 +43,7 @@ function isBlockUnlocked(blockId: string, passedBlockIds: Set<string>, blockOrde
   return passedBlockIds.has(previousBlockId);
 }
 
-function blockLessonsComplete(
-  nodes: PathNodeData[],
-  blockId: string,
-  completedIds: Set<string>
-): boolean {
+function blockLessonsComplete(nodes: PathNodeData[], blockId: string, completedIds: Set<string>): boolean {
   const lessons = nodes.filter(
     (node) =>
       node.blockId === blockId &&

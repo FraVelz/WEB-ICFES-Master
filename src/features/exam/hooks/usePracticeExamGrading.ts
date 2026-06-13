@@ -49,10 +49,7 @@ export function usePracticeExamGrading({
     const attemptId = Date.now();
 
     void fetchGradedExamResults(answers, {
-      awardActivity:
-        user?.uid && !isDemoUserId(user.uid)
-          ? { attemptType: 'practice', attemptId }
-          : undefined,
+      awardActivity: user?.uid && !isDemoUserId(user.uid) ? { attemptType: 'practice', attemptId } : undefined,
     })
       .then(({ results }) => {
         if (!active) return;

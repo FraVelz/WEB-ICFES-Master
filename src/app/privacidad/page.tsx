@@ -35,14 +35,14 @@ export default function PrivacidadPage() {
         Saltar al contenido
       </a>
       <main id="main-content" className={cn('relative px-4 py-12 sm:px-6 lg:px-8', FULL_PAGE_SHELL_CLASS)}>
-        <div className="pointer-events-none fixed inset-0 z-0">
+        <div className="pointer-events-none fixed inset-0 z-0 motion-reduce:animate-none">
           <div
             className={cn(
               'bg-lesson-lc-glow-a/20 absolute top-1/3 left-1/4 h-96 w-96',
-              'animate-pulse rounded-full blur-3xl'
+              'animate-pulse rounded-full blur-3xl motion-reduce:animate-none'
             )}
           />
-          <div className="absolute right-1/4 bottom-1/3 h-96 w-96 animate-pulse rounded-full bg-purple-500/20 blur-3xl" />
+          <div className="absolute right-1/4 bottom-1/3 h-96 w-96 animate-pulse rounded-full bg-purple-500/20 blur-3xl motion-reduce:animate-none" />
         </div>
 
         <div

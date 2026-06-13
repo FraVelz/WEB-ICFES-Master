@@ -2,7 +2,6 @@ import ReactMarkdown from 'react-markdown';
 import rehypeSanitize from 'rehype-sanitize';
 import { cn } from '@/utils/cn';
 import { Icon } from '@/shared/components/Icon';
-import { CHAT_ANON_LIMIT } from '@/features/learning/constants/chatAnonQuota';
 import type { ChatMessage } from './chatTypes';
 
 type ChatMessageListProps = {
@@ -23,7 +22,7 @@ export function ChatMessageList({ messages, isTyping, isAnonymous, messagesEndRe
           <p className="text-on-surface-muted mb-2 text-sm">¿Tienes preguntas sobre el ICFES?</p>
           <p className="text-on-surface-muted text-xs">
             {isAnonymous
-              ? `Sin cuenta puedes hacer hasta ${CHAT_ANON_LIMIT} preguntas.`
+              ? 'Inicia sesión o crea una cuenta para chatear con el asistente.'
               : 'Escribe aquí y te ayudaré con tus dudas'}
           </p>
         </div>

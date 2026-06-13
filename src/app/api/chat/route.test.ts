@@ -1,7 +1,7 @@
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 import { NextRequest } from 'next/server';
 import { GET } from './route';
-import { CHAT_ANON_COOKIE, CHAT_ANON_LIMIT } from '@/features/learning/constants/chatAnonQuota';
+import { CHAT_AUTH_COOKIE, CHAT_AUTH_DAILY_LIMIT } from '@/features/learning/constants/chatQuota';
 
 describe('GET /api/chat', () => {
   const originalEnv = { ...process.env };
@@ -15,29 +15,30 @@ describe('GET /api/chat', () => {
     process.env = { ...originalEnv };
   });
 
-  it('returns anonymous quota for unauthenticated requests', async () => {
+  it('requires authentication for chat usage', async () => {
     const request = new NextRequest('http://localhost/api/chat');
     const response = await GET(request);
     const data = await response.json();
 
     expect(response.status).toBe(200);
-    expect(data.limit).toBe(CHAT_ANON_LIMIT);
-    expect(data.anonUsed).toBe(0);
+    expect(data.requiresAuth).toBe(true);
+    expect(data.limit).toBe(0);
+    expect(data.authUsed).toBe(0);
     expect(data.unlimited).toBe(false);
   });
 
-  it('reads anonymous usage from the httpOnly cookie', async () => {
+  it('reads authenticated usage from the httpOnly cookie when JWT is absent', async () => {
     const request = new NextRequest('http://localhost/api/chat');
-    request.cookies.set(CHAT_ANON_COOKIE, '2');
+    request.cookies.set(CHAT_AUTH_COOKIE, '2');
 
     const response = await GET(request);
     const data = await response.json();
 
-    expect(data.anonUsed).toBe(2);
-    expect(data.unlimited).toBe(false);
+    expect(data.requiresAuth).toBe(true);
+    expect(data.limit).toBe(0);
   });
 
-  it('applies anonymous quota when Supabase env is missing and there is no JWT', async () => {
+  it('requires auth when Supabase env is missing and there is no JWT', async () => {
     delete process.env.NEXT_PUBLIC_SUPABASE_URL;
     delete process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
@@ -45,8 +46,10 @@ describe('GET /api/chat', () => {
     const response = await GET(request);
     const data = await response.json();
 
+    expect(data.requiresAuth).toBe(true);
+    expect(data.limit).toBe(0);
+    expect(data.authUsed).toBe(0);
     expect(data.unlimited).toBe(false);
-    expect(data.anonUsed).toBe(0);
-    expect(data.limit).toBe(CHAT_ANON_LIMIT);
+    expect(CHAT_AUTH_DAILY_LIMIT).toBeGreaterThan(0);
   });
 });

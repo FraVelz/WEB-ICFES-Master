@@ -40,7 +40,10 @@ export function PublicSiteFooter({ className }: PublicSiteFooterProps) {
         >
           <div className="flex items-center gap-2">
             <span>Contacto:</span>
-            <a href="mailto:fravelz@proton.me" className={cn('text-app-accent hover:text-app-accent-muted', footerLinkClass)}>
+            <a
+              href="mailto:fravelz@proton.me"
+              className={cn('text-app-accent hover:text-app-accent-muted', footerLinkClass)}
+            >
               fravelz@proton.me
             </a>
           </div>
