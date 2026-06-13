@@ -25,7 +25,7 @@ export function ProfileStatusPicker() {
           <button
             type="button"
             onClick={clearStatus}
-            className="text-xs font-bold tracking-wide text-sky-400 uppercase transition-colors hover:text-sky-300"
+            className="cursor-pointer text-xs font-bold tracking-wide text-sky-400 uppercase transition-colors hover:text-sky-300"
           >
             Borrar
           </button>
@@ -67,7 +67,7 @@ export function ProfileStatusPicker() {
               title={reaction.label}
               onClick={() => setStatus(isActive ? null : reaction.id)}
               className={cn(
-                'flex aspect-square items-center justify-center rounded-2xl border-2 text-2xl transition-all',
+                'flex aspect-square cursor-pointer items-center justify-center rounded-2xl border-2 text-2xl transition-all',
                 'focus-visible:ring-app-accent hover:scale-105 focus-visible:ring-2 focus-visible:outline-none',
                 isActive
                   ? 'border-sky-500/60 bg-sky-500/15 shadow-[0_0_12px_rgba(56,189,248,0.25)]'

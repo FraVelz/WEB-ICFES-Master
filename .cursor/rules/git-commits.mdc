@@ -55,4 +55,6 @@ git log -1 --format=%B
 - If `Co-authored-by: Cursor` appears on **unpushed** commits, rewrite the message before push; do not leave it on `main`.
 - **Do not** `git push --force` to rewrite history unless the user explicitly requests it.
 
+- **Never** restore deleted files or lines before committing unless the user explicitly asks; deletions are usually intentional.
+
 See also `.cursor/commands/auto-commit.md` (section «eliminar menciones de Cursor»).
