@@ -1,6 +1,8 @@
 'use client';
 
 import { useState, useEffect, useRef, useCallback } from 'react';
+import { useAuth } from '@/features/auth/context/AuthContext';
+import { isDemoUserId } from '@/services/demo/demoCoins';
 import { saveFullExam } from '@/services/persistence';
 import { fetchQuestionsForFullExam } from '@/features/exam/services/QuestionService';
 import { fetchGradedExamResults, gradedToExamQuestion } from '@/features/exam/services/examGradingClient';
@@ -24,6 +26,7 @@ export function useFullExam() {
   const [gradedResults, setGradedResults] = useState<GradedExamAnswer[] | null>(null);
   const [gradingError, setGradingError] = useState<string | null>(null);
   const [gradingAttempt, setGradingAttempt] = useState(0);
+  const { user } = useAuth();
   const gradingStartedRef = useRef(false);
 
   const loadQuestions = useCallback(async () => {
@@ -90,8 +93,15 @@ export function useFullExam() {
     gradingStartedRef.current = true;
     let active = true;
 
-    void fetchGradedExamResults(answers)
-      .then((results) => {
+    const attemptId = Date.now();
+
+    void fetchGradedExamResults(answers, {
+      awardActivity:
+        user?.uid && !isDemoUserId(user.uid)
+          ? { attemptType: 'full-exam', attemptId }
+          : undefined,
+    })
+      .then(({ results }) => {
         if (!active) return;
         setGradedResults(results);
         setGradingError(null);
@@ -101,6 +111,7 @@ export function useFullExam() {
         const percentage = Math.round((correctCount / results.length) * 100);
 
         saveFullExam({
+          id: attemptId,
           examType: 'full-exam',
           questions: fullQuestions,
           answers,
@@ -120,7 +131,7 @@ export function useFullExam() {
     return () => {
       active = false;
     };
-  }, [isFinished, showResults, questions, answers, examConfig, gradingAttempt]);
+  }, [isFinished, showResults, questions, answers, examConfig, gradingAttempt, user?.uid]);
 
   const reloadQuestions = loadQuestions;
 

@@ -1,21 +1,17 @@
 import { ACHIEVEMENTS_DATA } from '@/shared/constants/achievementsData';
 import { DEMO_USER_ID, isDemoUserId } from '@/services/demo/demoCoins';
 import { addDemoXP } from '@/services/demo/demoGamification';
+import { awardAchievementsViaApi } from '@/services/gamification/gamificationRewardClient';
 import { addCoinsBalance } from '@/services/persistence/coinsPersistence';
-import { gamificationPersistence } from '@/services/persistence/gamificationPersistence';
 import type { AchievementProgressMap } from './achievementProgressTypes';
 
-async function awardAchievementUnlock(userId: string, achievement: (typeof ACHIEVEMENTS_DATA)[number]): Promise<void> {
+async function awardDemoAchievementUnlock(achievement: (typeof ACHIEVEMENTS_DATA)[number]): Promise<void> {
   if (achievement.coinsReward > 0) {
-    await addCoinsBalance(userId, achievement.coinsReward, `achievement_${achievement.id}`);
+    await addCoinsBalance(DEMO_USER_ID, achievement.coinsReward, `achievement_${achievement.id}`);
   }
 
   if (achievement.xpReward > 0) {
-    if (isDemoUserId(userId)) {
-      addDemoXP(achievement.xpReward);
-    } else {
-      await gamificationPersistence.addXP(userId, achievement.xpReward, `achievement_${achievement.id}`);
-    }
+    addDemoXP(achievement.xpReward);
   }
 }
 
@@ -30,12 +26,18 @@ export async function awardNewUnlocks(
     return isUnlocked && !wasUnlocked;
   });
 
-  await Promise.all(newlyUnlocked.map((achievement) => awardAchievementUnlock(userId, achievement)));
-
-  if (newlyUnlocked.length > 0) {
-    const { emitAchievementUnlocks } = await import('./achievementUnlockEvents');
-    emitAchievementUnlocks(newlyUnlocked);
+  if (newlyUnlocked.length === 0) {
+    return 0;
   }
+
+  if (isDemoUserId(userId)) {
+    await Promise.all(newlyUnlocked.map((achievement) => awardDemoAchievementUnlock(achievement)));
+  } else {
+    await awardAchievementsViaApi(newlyUnlocked.map((achievement) => achievement.id));
+  }
+
+  const { emitAchievementUnlocks } = await import('./achievementUnlockEvents');
+  emitAchievementUnlocks(newlyUnlocked);
 
   return newlyUnlocked.length;
 }

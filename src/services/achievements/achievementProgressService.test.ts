@@ -24,6 +24,10 @@ vi.mock('@/services/streak', async (importOriginal) => {
   };
 });
 
+vi.mock('@/services/gamification/gamificationRewardClient', () => ({
+  awardAchievementsViaApi: vi.fn(async () => ({ awarded: [] })),
+}));
+
 vi.mock('@/services/persistence/coinsPersistence', () => ({
   addCoinsBalance: vi.fn(async () => 2000),
 }));

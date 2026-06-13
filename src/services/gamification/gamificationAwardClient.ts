@@ -6,7 +6,8 @@ async function getAccessToken(): Promise<string | null> {
   return data.session?.access_token ?? null;
 }
 
-async function postAward<T>(body: Record<string, unknown>): Promise<T> {
+export async function spendCoinsViaApi(userId: string, amount: number, item: string): Promise<void> {
+  void userId;
   const token = await getAccessToken();
   if (!token) throw new Error('Sesión no disponible');
 
@@ -16,28 +17,11 @@ async function postAward<T>(body: Record<string, unknown>): Promise<T> {
       Authorization: `Bearer ${token}`,
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify(body),
+    body: JSON.stringify({ type: 'spend_coins', amount, item }),
   });
 
-  const payload = (await response.json()) as T & { error?: string };
+  const payload = (await response.json()) as { error?: string };
   if (!response.ok) {
     throw new Error(typeof payload.error === 'string' ? payload.error : 'No se pudo aplicar la recompensa');
   }
-
-  return payload;
-}
-
-export async function awardXpViaApi(userId: string, points: number, reason: string): Promise<void> {
-  void userId;
-  await postAward({ type: 'xp', points, reason });
-}
-
-export async function awardCoinsViaApi(userId: string, amount: number, reason: string): Promise<void> {
-  void userId;
-  await postAward({ type: 'coins', amount, reason });
-}
-
-export async function spendCoinsViaApi(userId: string, amount: number, item: string): Promise<void> {
-  void userId;
-  await postAward({ type: 'spend_coins', amount, item });
 }

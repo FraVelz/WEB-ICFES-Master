@@ -77,13 +77,13 @@ async function runSyncAchievementsFromGameplay(
   const computed = await computeAchievementProgressFromGameplay(userId, options);
   const next = mergeAchievementProgressMaps(previous, computed);
 
-  const hadNewUnlocks = (await awardNewUnlocks(userId, previous, next)) > 0;
-
   const progressChanged = !progressMapsEqual(previous, next);
 
   if (!isDemoUserId(userId) && isSupabaseConfigured() && progressChanged) {
     await GamificationSupabaseService.updateAchievements(userId, attachStudyTimeMeta(userId, next));
   }
+
+  const hadNewUnlocks = (await awardNewUnlocks(userId, previous, next)) > 0;
   writeAchievementProgress(userId, next);
 
   return { progress: next, progressChanged, hadNewUnlocks };

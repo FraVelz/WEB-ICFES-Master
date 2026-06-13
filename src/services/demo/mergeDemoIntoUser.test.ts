@@ -6,7 +6,7 @@ import {
   mergeDemoIntoUser,
 } from '@/services/demo/mergeDemoIntoUser';
 import { migrateLocalAttemptsToSupabase } from '@/services/demo/migrateLocalAttemptsToSupabase';
-import { gamificationPersistence } from '@/services/persistence/gamificationPersistence';
+import { migrateDemoGamificationViaApi } from '@/services/gamification/gamificationRewardClient';
 import ProgressSupabaseService from '@/services/supabase/ProgressSupabaseService';
 import UserSupabaseService from '@/services/supabase/UserSupabaseService';
 import { mergeDemoStreakIntoUser } from '@/services/streak';
@@ -30,11 +30,8 @@ vi.mock('@/services/supabase/UserSupabaseService', () => ({
   },
 }));
 
-vi.mock('@/services/persistence/gamificationPersistence', () => ({
-  gamificationPersistence: {
-    addCoins: vi.fn(async () => ({})),
-    addXP: vi.fn(async () => ({})),
-  },
+vi.mock('@/services/gamification/gamificationRewardClient', () => ({
+  migrateDemoGamificationViaApi: vi.fn(async () => ({})),
 }));
 
 vi.mock('@/services/supabase/ProgressSupabaseService', () => ({
@@ -105,8 +102,7 @@ describe('mergeDemoIntoUser', () => {
     await mergeDemoIntoUser('user-abc');
 
     expect(vi.mocked(mergeDemoStreakIntoUser)).toHaveBeenCalledWith('user-abc');
-    expect(vi.mocked(gamificationPersistence.addCoins)).toHaveBeenCalledWith('user-abc', 1700, 'demo_migration');
-    expect(vi.mocked(gamificationPersistence.addXP)).toHaveBeenCalledWith('user-abc', 250, 'demo_migration');
+    expect(vi.mocked(migrateDemoGamificationViaApi)).toHaveBeenCalledWith(250, 1700);
     expect(vi.mocked(UserSupabaseService.updateSkillLevel)).toHaveBeenCalledWith('user-abc', 'intermediate');
     expect(vi.mocked(ProgressSupabaseService.upsert)).toHaveBeenCalled();
     expect(vi.mocked(migrateLocalAttemptsToSupabase)).toHaveBeenCalledWith('user-abc');
@@ -130,12 +126,12 @@ describe('mergeDemoIntoUser', () => {
 
     await mergeDemoIntoUser('user-abc');
 
-    expect(vi.mocked(gamificationPersistence.addCoins)).not.toHaveBeenCalled();
+    expect(vi.mocked(migrateDemoGamificationViaApi)).not.toHaveBeenCalled();
   });
 
   it('no migra si no hay datos demo', async () => {
     await mergeDemoIntoUser('user-abc');
     expect(vi.mocked(mergeDemoStreakIntoUser)).not.toHaveBeenCalled();
-    expect(vi.mocked(gamificationPersistence.addCoins)).not.toHaveBeenCalled();
+    expect(vi.mocked(migrateDemoGamificationViaApi)).not.toHaveBeenCalled();
   });
 });

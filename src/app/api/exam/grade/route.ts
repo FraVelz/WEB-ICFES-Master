@@ -1,8 +1,21 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { gradeExamAnswers } from '@/features/exam/services/examGradingServer';
 import { sanitizeGradedResultsForDemo } from '@/features/exam/utils/sanitizeGradedResults';
+import { awardActivityXpServer, type ActivityAttemptType } from '@/services/exam/activityXpServer';
 import { getAuthUserFromRequest, hasApiAccess, isDemoOnlyAccess } from '@/utils/apiAuth';
 import { checkRateLimit, getClientIp } from '@/utils/rateLimit';
+
+function parseActivityAward(raw: unknown): { attemptType: ActivityAttemptType; attemptId: number } | null {
+  if (!raw || typeof raw !== 'object') return null;
+  const body = raw as Record<string, unknown>;
+  const attemptType = body.attemptType;
+  const attemptId = body.attemptId;
+
+  if (attemptType !== 'practice' && attemptType !== 'full-exam') return null;
+  if (typeof attemptId !== 'number' || !Number.isFinite(attemptId) || attemptId <= 0) return null;
+
+  return { attemptType, attemptId: Math.floor(attemptId) };
+}
 
 export async function POST(request: NextRequest) {
   try {
@@ -23,7 +36,10 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const body = (await request.json()) as { answers?: Record<string, string> };
+    const body = (await request.json()) as {
+      answers?: Record<string, string>;
+      awardActivity?: unknown;
+    };
     const answers = body.answers;
 
     if (!answers || typeof answers !== 'object' || Object.keys(answers).length === 0) {
@@ -43,7 +59,20 @@ export async function POST(request: NextRequest) {
     const results = await gradeExamAnswers(answers);
     const payload = isDemoOnlyAccess(request, user) ? sanitizeGradedResultsForDemo(results) : results;
 
-    return NextResponse.json({ results: payload });
+    let activityXp: { awarded: boolean; xp: number; points: number } | undefined;
+    const activityAward = parseActivityAward(body.awardActivity);
+
+    if (user && activityAward && !isDemoOnlyAccess(request, user)) {
+      const correctCount = results.filter((result) => result.correct).length;
+      activityXp = await awardActivityXpServer(
+        user.id,
+        activityAward.attemptType,
+        correctCount,
+        activityAward.attemptId
+      );
+    }
+
+    return NextResponse.json({ results: payload, activityXp });
   } catch (error) {
     console.error('[api/exam/grade]', error);
     return NextResponse.json({ error: 'No se pudo calificar el examen' }, { status: 500 });

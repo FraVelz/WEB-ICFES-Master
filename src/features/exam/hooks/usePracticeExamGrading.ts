@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { useAuth } from '@/features/auth/context/AuthContext';
+import { isDemoUserId } from '@/services/demo/demoCoins';
 import { markPhaseSkipped, PHASE_SKIP_PASS_PERCENT, savePractice } from '@/services/persistence';
 import { fetchGradedExamResults, gradedToExamQuestion } from '@/features/exam/services/examGradingClient';
 import type { GradedExamAnswer } from '@/features/exam/services/examGradingServer';
@@ -45,8 +46,15 @@ export function usePracticeExamGrading({
     gradingStartedRef.current = true;
     let active = true;
 
-    void fetchGradedExamResults(answers)
-      .then((results) => {
+    const attemptId = Date.now();
+
+    void fetchGradedExamResults(answers, {
+      awardActivity:
+        user?.uid && !isDemoUserId(user.uid)
+          ? { attemptType: 'practice', attemptId }
+          : undefined,
+    })
+      .then(({ results }) => {
         if (!active) return;
         setGradedResults(results);
         setGradingError(null);
@@ -56,6 +64,7 @@ export function usePracticeExamGrading({
         const percentage = Math.round((correctCount / results.length) * 100);
 
         savePractice({
+          id: attemptId,
           practiceArea: areaStr,
           areaName,
           examMode: isPhaseSkipMode ? 'phase-skip' : 'area-general',

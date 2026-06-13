@@ -7,8 +7,8 @@ import {
 import { DEMO_COINS_MIN } from '@/services/demo/demoCoins';
 import { DEMO_MIGRATION_MAX_EXTRA_COINS, DEMO_MIGRATION_MAX_XP } from '@/shared/constants/demoMigrationLimits';
 import { getDemoTotalXP } from '@/services/demo/demoGamification';
+import { migrateDemoGamificationViaApi } from '@/services/gamification/gamificationRewardClient';
 import { STARTING_COINS_BALANCE } from '@/shared/constants/gamification';
-import { gamificationPersistence } from '@/services/persistence/gamificationPersistence';
 import { COINS_CHANGE_EVENT } from '@/services/persistence/coinsPersistence';
 import { isSupabaseConfigured } from '@/services/persistence/supabaseConfigured';
 import ProgressSupabaseService from '@/services/supabase/ProgressSupabaseService';
@@ -56,35 +56,31 @@ export async function migrateSkillLevel(userId: string): Promise<void> {
 export async function migrateGamificationBalances(userId: string): Promise<void> {
   if (!isSupabaseConfigured()) return;
 
+  let extraCoins = 0;
   const coinsRaw = localStorage.getItem(DEMO_COINS_KEY);
   if (coinsRaw != null) {
     const demoCoins = Math.max(0, Number.parseInt(coinsRaw, 10) || 0);
-    const extraCoins = Math.min(DEMO_MIGRATION_MAX_EXTRA_COINS, Math.max(0, demoCoins - DEMO_COINS_MIN));
-    if (extraCoins > 0) {
-      try {
-        await gamificationPersistence.addCoins(userId, extraCoins, 'demo_migration');
-        if (typeof window !== 'undefined') {
-          window.dispatchEvent(
-            new CustomEvent(COINS_CHANGE_EVENT, {
-              detail: { balance: STARTING_COINS_BALANCE + extraCoins },
-            })
-          );
-        }
-      } catch (err) {
-        console.warn('No se pudieron migrar monedas del demo:', err);
-      }
-    }
+    extraCoins = Math.min(DEMO_MIGRATION_MAX_EXTRA_COINS, Math.max(0, demoCoins - DEMO_COINS_MIN));
   }
 
+  let xp = 0;
   if (localStorage.getItem(DEMO_GAMIFICATION_KEY) != null) {
-    const xp = Math.min(DEMO_MIGRATION_MAX_XP, getDemoTotalXP());
-    if (xp > 0) {
-      try {
-        await gamificationPersistence.addXP(userId, xp, 'demo_migration');
-      } catch (err) {
-        console.warn('No se pudo migrar XP del demo:', err);
-      }
+    xp = Math.min(DEMO_MIGRATION_MAX_XP, getDemoTotalXP());
+  }
+
+  if (extraCoins <= 0 && xp <= 0) return;
+
+  try {
+    await migrateDemoGamificationViaApi(xp, extraCoins);
+    if (extraCoins > 0 && typeof window !== 'undefined') {
+      window.dispatchEvent(
+        new CustomEvent(COINS_CHANGE_EVENT, {
+          detail: { balance: STARTING_COINS_BALANCE + extraCoins },
+        })
+      );
     }
+  } catch (err) {
+    console.warn('No se pudo migrar gamificación del demo:', err);
   }
 }
 

@@ -1,6 +1,7 @@
 import { ACHIEVEMENTS_DATA } from '@/shared/constants/achievementsData';
 import { STREAK_ACHIEVEMENT_IDS } from '@/shared/constants/achievements/achievementsConstancyMetas';
 import { achievementToUnlockPayload, emitAchievementUnlock } from '@/services/achievements/achievementUnlockEvents';
+import { awardAchievementsViaApi } from '@/services/gamification/gamificationRewardClient';
 import { gamificationPersistence } from '@/services/persistence';
 import GamificationSupabaseService from '@/services/supabase/GamificationSupabaseService';
 import type { AchievementProgressRecord } from './gamificationTypes';
@@ -22,6 +23,7 @@ export async function syncStreakAchievement(
   const profile = await gamificationPersistence.getProfile(userId);
   const achProgress = parseAchievements(profile?.achievements);
   let changed = false;
+  const newlyUnlockedIds: string[] = [];
 
   for (const achievementId of STREAK_ACHIEVEMENT_IDS) {
     const ach = ACHIEVEMENTS_DATA.find((item) => item.id === achievementId);
@@ -39,8 +41,7 @@ export async function syncStreakAchievement(
     changed = true;
 
     if (nextCurrent >= ach.target) {
-      await gamificationPersistence.addCoins(userId, ach.coinsReward || 0, 'achievement');
-      await gamificationPersistence.addXP(userId, ach.xpReward || 0, 'achievement');
+      newlyUnlockedIds.push(achievementId);
       emitAchievementUnlock(achievementToUnlockPayload(ach));
     }
   }
@@ -51,5 +52,10 @@ export async function syncStreakAchievement(
   }
 
   await GamificationSupabaseService.updateAchievements(userId, achProgress);
+
+  if (newlyUnlockedIds.length > 0) {
+    await awardAchievementsViaApi(newlyUnlockedIds);
+  }
+
   lastSyncedStreak.current = longestStreak;
 }

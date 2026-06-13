@@ -34,10 +34,8 @@ export async function addCoinsBalance(userId: string, amount: number, reason = '
   }
 
   if (amount <= 0) return getCoinsBalance(userId);
-  await gamificationPersistence.addCoins(userId, amount, reason);
-  const balance = await readGamificationBalance(userId);
-  emitCoinsChanged(balance);
-  return balance;
+
+  throw new Error('Las monedas solo se otorgan desde acciones verificadas en el servidor');
 }
 
 export async function spendCoinsBalance(userId: string, amount: number, item = 'purchase'): Promise<number> {

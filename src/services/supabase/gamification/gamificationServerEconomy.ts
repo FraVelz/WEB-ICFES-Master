@@ -11,7 +11,7 @@ function hasHistoryReason(history: unknown, reason: string): boolean {
   });
 }
 
-async function getProfileRow(userId: string) {
+export async function getProfileRow(userId: string) {
   const sb = createServiceRoleClient();
   if (!sb) throw new Error('Supabase service role no configurado');
 

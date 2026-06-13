@@ -1,5 +1,18 @@
 import { supabase } from '@/config/supabase';
 import type { GradedExamAnswer } from '@/features/exam/services/examGradingServer';
+import type { ActivityAttemptType } from '@/services/exam/activityXpServer';
+
+export type ExamGradeOptions = {
+  awardActivity?: {
+    attemptType: ActivityAttemptType;
+    attemptId: number;
+  };
+};
+
+export type ExamGradeResponse = {
+  results: GradedExamAnswer[];
+  activityXp?: { awarded: boolean; xp: number; points: number };
+};
 
 async function getAuthHeaders(): Promise<HeadersInit> {
   const headers: HeadersInit = { 'Content-Type': 'application/json' };
@@ -12,20 +25,26 @@ async function getAuthHeaders(): Promise<HeadersInit> {
   return headers;
 }
 
-export async function fetchGradedExamResults(answers: Record<string, string>): Promise<GradedExamAnswer[]> {
+export async function fetchGradedExamResults(
+  answers: Record<string, string>,
+  options?: ExamGradeOptions
+): Promise<ExamGradeResponse> {
   const response = await fetch('/api/exam/grade/', {
     method: 'POST',
     headers: await getAuthHeaders(),
-    body: JSON.stringify({ answers }),
+    body: JSON.stringify({ answers, awardActivity: options?.awardActivity }),
   });
 
-  const data = (await response.json()) as { results?: GradedExamAnswer[]; error?: string };
+  const data = (await response.json()) as ExamGradeResponse & { error?: string };
 
   if (!response.ok) {
     throw new Error(data.error ?? 'No se pudo calificar el examen');
   }
 
-  return data.results ?? [];
+  return {
+    results: data.results ?? [],
+    activityXp: data.activityXp,
+  };
 }
 
 export function gradedToExamQuestion(graded: GradedExamAnswer) {

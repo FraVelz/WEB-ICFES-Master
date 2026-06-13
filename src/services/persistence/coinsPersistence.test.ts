@@ -3,7 +3,6 @@ import { describe, it, expect, beforeEach, vi } from 'vitest';
 vi.mock('./gamificationPersistence', () => ({
   gamificationPersistence: {
     getProfile: vi.fn(async () => ({ totalCoins: 200, spentCoins: 0 })),
-    addCoins: vi.fn(async () => ({})),
     spendCoins: vi.fn(async () => ({})),
   },
 }));
@@ -24,13 +23,18 @@ describe('coinsPersistence', () => {
     await expect(getCoinsBalance('user-1')).resolves.toBe(200);
   });
 
-  it('addCoinsBalance delega en gamificationPersistence y emite evento', async () => {
+  it('addCoinsBalance rechaza cuentas autenticadas', async () => {
+    await expect(addCoinsBalance('user-1', 50, 'test')).rejects.toThrow(
+      'Las monedas solo se otorgan desde acciones verificadas en el servidor'
+    );
+  });
+
+  it('addCoinsBalance permite demo local', async () => {
     const handler = vi.fn();
     window.addEventListener(COINS_CHANGE_EVENT, handler);
 
-    await addCoinsBalance('user-1', 50, 'test');
+    await addCoinsBalance('demo', 50, 'test');
 
-    expect(gamificationPersistence.addCoins).toHaveBeenCalledWith('user-1', 50, 'test');
     expect(handler).toHaveBeenCalled();
     window.removeEventListener(COINS_CHANGE_EVENT, handler);
   });

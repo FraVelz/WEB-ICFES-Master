@@ -8,16 +8,11 @@ import { STORAGE_KEYS } from './progressStorageTypes';
 
 type SavedAttempt = AttemptWithQuestions & { id: number; type: string; date: string };
 
-async function syncAttemptToServer(scope: string, attempt: SavedAttempt, correctCount: number): Promise<void> {
+async function syncAttemptToServer(scope: string, attempt: SavedAttempt): Promise<void> {
   if (scope === 'demo') return;
   void import('@/services/persistence/examPersistence').then(({ syncSavedAttempt }) =>
     syncSavedAttempt(scope, attempt as LocalAttemptRecord)
   );
-  const xpModule =
-    attempt.type === 'full-exam'
-      ? import('@/services/league/activityXp').then(({ awardFullExamXp }) => awardFullExamXp(scope, correctCount))
-      : import('@/services/league/activityXp').then(({ awardPracticeXp }) => awardPracticeXp(scope, correctCount));
-  void xpModule;
 }
 
 function persistAttempt(
@@ -42,7 +37,7 @@ function persistAttempt(
   });
 
   const correctCount = Number(data.correctCount ?? 0);
-  void syncAttemptToServer(scope ?? 'demo', newAttempt, correctCount);
+  void syncAttemptToServer(scope ?? 'demo', newAttempt);
 
   return newAttempt;
 }

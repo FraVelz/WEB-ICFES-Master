@@ -1,6 +1,6 @@
 import { ACHIEVEMENTS_DATA } from '@/shared/constants/achievementsData';
 import { achievementToUnlockPayload, emitAchievementUnlock } from '@/services/achievements/achievementUnlockEvents';
-import { gamificationPersistence } from '@/services/persistence';
+import { awardAchievementsViaApi } from '@/services/gamification/gamificationRewardClient';
 import { addCoinsBalance } from '@/services/persistence/coinsPersistence';
 import { isDemoUserId } from '@/services/demo/demoCoins';
 import { addDemoXP } from '@/services/demo/demoGamification';
@@ -52,6 +52,7 @@ export async function updateAchievementProgressForUser(
 
   if (!accountUserId) return;
 
+  const { gamificationPersistence } = await import('@/services/persistence');
   const profile = await gamificationPersistence.getProfile(accountUserId);
   const achProgress = parseAchievements(profile?.achievements);
   const current = achProgress[achievementId] ?? {};
@@ -65,11 +66,12 @@ export async function updateAchievementProgressForUser(
     unlockedAt: unlocked ? new Date().toISOString() : null,
   };
 
+  await GamificationSupabaseService.updateAchievements(accountUserId, achProgress);
+
   if (unlocked) {
-    await gamificationPersistence.addCoins(accountUserId, ach.coinsReward || 0, 'achievement');
+    await awardAchievementsViaApi([achievementId]);
     emitAchievementUnlock(achievementToUnlockPayload(ach));
   }
-  await gamificationPersistence.addXP(accountUserId, unlocked ? ach.xpReward || 0 : 0, 'achievement');
-  await GamificationSupabaseService.updateAchievements(accountUserId, achProgress);
+
   onReload();
 }

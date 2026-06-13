@@ -12,4 +12,3 @@ export {
   getDemotionIndices,
   LEAGUE_SMALL_GROUP_THRESHOLD,
 } from './leagueRules';
-export { awardPracticeXp, awardFullExamXp } from './activityXp';
