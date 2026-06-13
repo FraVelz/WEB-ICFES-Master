@@ -39,10 +39,9 @@ export function DashboardLayoutChrome({ children }: { children: ReactNode }) {
       >
         <DashboardHeader
           className={cn(
-            'border-app-ring/20 bg-surface-elevated/95 z-40 order-2 shrink-0',
-            'border-t lg:top-0 lg:bottom-auto lg:order-1 lg:self-start',
-            'lg:sticky lg:h-dvh lg:max-h-dvh lg:border-t-0 lg:border-r',
-            'shadow-app-ring/10 shadow-2xl backdrop-blur-xl transition-all duration-300'
+            'z-40 order-2 shrink-0',
+            'border-app-ring/20 border-t lg:order-1 lg:w-20 lg:self-start lg:border-t-0',
+            'transition-all duration-300'
           )}
         />
 

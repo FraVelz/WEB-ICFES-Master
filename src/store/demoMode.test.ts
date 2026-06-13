@@ -12,6 +12,7 @@ describe('demoMode', () => {
     useUiSessionStore.setState({
       hydrated: false,
       demoMode: false,
+      sidebarExpanded: false,
     });
     vi.restoreAllMocks();
     vi.stubGlobal('localStorage', {

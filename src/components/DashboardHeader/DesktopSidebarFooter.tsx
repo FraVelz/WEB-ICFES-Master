@@ -32,8 +32,8 @@ export function DesktopSidebarFooter({
   return (
     <div
       className={cn(
-        'border-app-ring/10 bg-surface-elevated/50 shrink-0 border-t',
-        sidebarExpanded ? 'p-4' : 'px-2 py-4'
+        'border-app-ring/10 shrink-0 border-t',
+        sidebarExpanded ? 'bg-transparent p-4' : 'bg-surface-elevated/50 px-2 py-4'
       )}
     >
       {sidebarExpanded && (

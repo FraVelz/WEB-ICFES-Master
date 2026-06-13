@@ -4,6 +4,8 @@ export interface UiSessionState {
   /** Synced from localStorage after client mount (see UiSessionHydrator). */
   hydrated: boolean;
   demoMode: boolean;
+  /** Desktop sidebar rail expanded (persists across route/layout remounts). */
+  sidebarExpanded: boolean;
 }
 
 type HydratePayload = Pick<UiSessionState, 'demoMode'>;
@@ -11,6 +13,8 @@ type HydratePayload = Pick<UiSessionState, 'demoMode'>;
 interface UiSessionActions {
   hydrateUiSession: (payload: HydratePayload) => void;
   setDemoMode: (demoMode: boolean) => void;
+  setSidebarExpanded: (sidebarExpanded: boolean) => void;
+  toggleSidebarExpanded: () => void;
 }
 
 function persistDemoMode(demoMode: boolean) {
@@ -29,6 +33,7 @@ function persistDemoMode(demoMode: boolean) {
 export const useUiSessionStore = create<UiSessionState & UiSessionActions>((set) => ({
   hydrated: false,
   demoMode: false,
+  sidebarExpanded: false,
 
   hydrateUiSession: (payload) => set({ hydrated: true, ...payload }),
 
@@ -36,4 +41,8 @@ export const useUiSessionStore = create<UiSessionState & UiSessionActions>((set)
     persistDemoMode(demoMode);
     set({ demoMode });
   },
+
+  setSidebarExpanded: (sidebarExpanded) => set({ sidebarExpanded }),
+
+  toggleSidebarExpanded: () => set((state) => ({ sidebarExpanded: !state.sidebarExpanded })),
 }));

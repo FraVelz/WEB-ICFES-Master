@@ -26,14 +26,21 @@ export function DesktopSidebar({ className, sidebarExpanded, onToggleSidebar }: 
   const isLockedInDemo = (path: string) => demoMode && isAccountOnlyPath(path);
 
   return (
-    <header
-      className={cn(
-        'hidden min-h-0 flex-col lg:flex',
-        'lg:sticky lg:top-0 lg:h-dvh lg:max-h-dvh lg:shrink-0 lg:overflow-y-auto',
-        className,
-        sidebarExpanded ? 'w-72' : 'w-20'
-      )}
-    >
+    <div className={cn('hidden lg:block', className)}>
+      <header
+        className={cn(
+          'flex min-h-0 flex-col overflow-y-auto transition-all duration-300',
+          sidebarExpanded
+            ? cn(
+                'border-app-ring/20 fixed top-0 left-0 z-50 h-dvh max-h-dvh w-72',
+                'border-r bg-surface-elevated/55 shadow-app-ring/10 shadow-2xl backdrop-blur-xl'
+              )
+            : cn(
+                'border-app-ring/20 sticky top-0 h-dvh max-h-dvh w-20',
+                'border-r bg-surface-elevated'
+              )
+        )}
+      >
       <div
         className={cn(
           'border-app-ring/10 relative flex shrink-0 flex-col items-center justify-center gap-0 border-b',
@@ -122,6 +129,7 @@ export function DesktopSidebar({ className, sidebarExpanded, onToggleSidebar }: 
         coinsBalance={coinsBalance}
         isLockedInDemo={isLockedInDemo}
       />
-    </header>
+      </header>
+    </div>
   );
 }
