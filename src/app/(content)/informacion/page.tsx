@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { InformacionPage } from '@/features/informacion/pages/InformacionPage';
 import { PageStructuredData } from '@/features/home/seo/PageStructuredData';
+import { contentPageTwitter } from '@/config/seo';
 
 export const metadata: Metadata = {
   title: 'Información oficial del ICFES',
@@ -12,6 +13,10 @@ export const metadata: Metadata = {
     description: 'Recursos oficiales del ICFES para estudiantes y familias.',
     type: 'article',
   },
+  twitter: contentPageTwitter(
+    'Información del ICFES | ICFES Master',
+    'Recursos oficiales del ICFES para estudiantes y familias.'
+  ),
 };
 
 export default function Page() {

@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { LecturaPage } from '@/features/lectura/pages/LecturaPage';
 import { PageStructuredData } from '@/features/home/seo/PageStructuredData';
+import { contentPageTwitter } from '@/config/seo';
 
 export const metadata: Metadata = {
   title: 'Lectura ICFES — Guías y recursos',
@@ -13,6 +14,10 @@ export const metadata: Metadata = {
     description: 'Explora guías de lectura sobre el ICFES y la preparación académica.',
     type: 'website',
   },
+  twitter: contentPageTwitter(
+    'Lectura ICFES | ICFES Master',
+    'Explora guías de lectura sobre el ICFES y la preparación académica.'
+  ),
 };
 
 export default function Page() {

@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { TipsPage } from '@/features/tips/pages/TipsPage';
 import { PageStructuredData } from '@/features/home/seo/PageStructuredData';
+import { contentPageTwitter } from '@/config/seo';
 
 export const metadata: Metadata = {
   title: 'Consejos de preparación ICFES',
@@ -12,6 +13,10 @@ export const metadata: Metadata = {
     description: 'Guías de preparación para dominar el ICFES con método y constancia.',
     type: 'article',
   },
+  twitter: contentPageTwitter(
+    'Consejos ICFES | ICFES Master',
+    'Guías de preparación para dominar el ICFES con método y constancia.'
+  ),
 };
 
 export default function Page() {
