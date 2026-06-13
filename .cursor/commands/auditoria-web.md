@@ -44,12 +44,12 @@ mantener el formato del informe en las cuatro secciones (puede haber «Sin halla
 
 ## Escala de prioridad
 
-| Nivel  | Etiqueta | Criterio orientativo                                                                 |
-| ------ | -------- | ------------------------------------------------------------------------------------ |
-| **P0** | Crítico  | XSS/inyección, exposición de secretos, rutas API sin auth donde la hay, bloqueo total de uso. |
+| Nivel  | Etiqueta | Criterio orientativo                                                                             |
+| ------ | -------- | ------------------------------------------------------------------------------------------------ |
+| **P0** | Crítico  | XSS/inyección, exposición de secretos, rutas API sin auth donde la hay, bloqueo total de uso.    |
 | **P1** | Alto     | SEO roto en páginas públicas clave, a11y que impide completar flujos, UX rota en auth/dashboard. |
 | **P2** | Medio    | Metadata incompleta, foco/contraste débil, fricción UX notable, headers o validación mejorables. |
-| **P3** | Bajo     | Mejoras de copy SEO, micro-interacciones, nitpicks de a11y sin bloqueo, hardening opcional. |
+| **P3** | Bajo     | Mejoras de copy SEO, micro-interacciones, nitpicks de a11y sin bloqueo, hardening opcional.      |
 
 ---
 
@@ -122,15 +122,15 @@ mantener el formato del informe en las cuatro secciones (puede haber «Sin halla
 
 ### Flujos a evaluar (happy path + errores)
 
-| Flujo              | Rutas / código principal                                              |
-| ------------------ | --------------------------------------------------------------------- |
-| Primera visita     | Landing → signup/login → onboarding                                   |
-| Dashboard          | `(dashboard)/` home, sidebar móvil/desktop                            |
-| Aprendizaje        | `ruta-aprendizaje`, `lessons/[area]/[topic]`, chat asistente          |
-| Examen / práctica  | `practica/[area]`, simulacros, feedback de respuestas                 |
-| Gamificación       | logros, tienda, leaderboard                                           |
-| Perfil y ajustes   | perfil, settings, modo demo                                           |
-| Contenido público  | páginas `(content)/`, PDFs, evaluación de nivel                         |
+| Flujo             | Rutas / código principal                                     |
+| ----------------- | ------------------------------------------------------------ |
+| Primera visita    | Landing → signup/login → onboarding                          |
+| Dashboard         | `(dashboard)/` home, sidebar móvil/desktop                   |
+| Aprendizaje       | `ruta-aprendizaje`, `lessons/[area]/[topic]`, chat asistente |
+| Examen / práctica | `practica/[area]`, simulacros, feedback de respuestas        |
+| Gamificación      | logros, tienda, leaderboard                                  |
+| Perfil y ajustes  | perfil, settings, modo demo                                  |
+| Contenido público | páginas `(content)/`, PDFs, evaluación de nivel              |
 
 ### Checklist UX/UI
 
@@ -164,14 +164,14 @@ solo si impactan mantenibilidad percibida o bugs de UI.
 
 Revisar cada handler: auth, validación, rate limit, métodos HTTP permitidos, fugas de información.
 
-| Ruta                               | Riesgos a comprobar                                      |
-| ---------------------------------- | -------------------------------------------------------- |
-| `api/chat/route.ts`                | Rate limit, JWT, límites de mensajes, sin filtrar system prompt |
-| `api/exam/grade`, `learning/quiz/grade` | Auth, validación de payload, anti-trampa cliente    |
-| `api/gamification/*`               | Solo usuario autenticado; sin inflar puntos arbitrariamente |
-| `api/demo/session`                 | Alcance demo acotado; sin escalada a prod                |
-| `api/r2/infographic/[id]`          | IDs predecibles, path traversal, cache headers           |
-| `api/profile/public/[userId]`      | Solo datos públicos; sin PII sensible                    |
+| Ruta                                    | Riesgos a comprobar                                             |
+| --------------------------------------- | --------------------------------------------------------------- |
+| `api/chat/route.ts`                     | Rate limit, JWT, límites de mensajes, sin filtrar system prompt |
+| `api/exam/grade`, `learning/quiz/grade` | Auth, validación de payload, anti-trampa cliente                |
+| `api/gamification/*`                    | Solo usuario autenticado; sin inflar puntos arbitrariamente     |
+| `api/demo/session`                      | Alcance demo acotado; sin escalada a prod                       |
+| `api/r2/infographic/[id]`               | IDs predecibles, path traversal, cache headers                  |
+| `api/profile/public/[userId]`           | Solo datos públicos; sin PII sensible                           |
 
 ### Auth y rutas protegidas
 
@@ -210,33 +210,41 @@ Responder en **español**, con esta estructura:
 ## SEO
 
 ### P0 / P1
+
 - [ ] **Título** — ruta — impacto — fix sugerido (1 línea)
 
 ### P2 / P3
+
 …
 
 ## Accesibilidad
 
 ### P0 / P1
+
 …
 
 ### P2 / P3
+
 …
 
 ## UI/UX
 
 ### P0 / P1
+
 …
 
 ### P2 / P3
+
 …
 
 ## Seguridad
 
 ### P0 / P1
+
 …
 
 ### P2 / P3
+
 …
 
 ## Comprobaciones ejecutadas
