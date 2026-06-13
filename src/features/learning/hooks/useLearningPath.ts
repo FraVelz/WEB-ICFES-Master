@@ -102,7 +102,7 @@ export const useLearningPath = (areaId: string | undefined, options: UseLearning
           description: (lesson as { description?: string }).description,
           xp,
           coins,
-          type: 'lesson',
+          type: lesson.moduleType === 'minimum-requirements' ? 'minimum-requirements' : 'lesson',
         } as PathNodeData);
       });
 

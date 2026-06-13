@@ -69,8 +69,14 @@ export const AreaPath = ({
 
                 <PathNode
                   {...node}
-                  type={node.type === 'checkpoint' ? 'checkpoint' : 'lesson'}
-                  icon={node.type === 'checkpoint' ? 'trophy' : areaIcon}
+                  type={node.type === 'checkpoint' ? 'checkpoint' : node.type === 'minimum-requirements' ? 'minimum-requirements' : 'lesson'}
+                  icon={
+                    node.type === 'checkpoint'
+                      ? 'trophy'
+                      : node.type === 'minimum-requirements'
+                        ? 'clipboard-list'
+                        : areaIcon
+                  }
                   colorClass={colorClass}
                   onClick={() => onNodeClick(node)}
                 />

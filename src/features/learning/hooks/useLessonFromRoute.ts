@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useMemo, useState } from 'react';
+import { buildMinimumRequirementsLesson, parseAreaFromMinimumRequirementsId } from '@/features/learning/data/phaseMinimumRequirements';
 import type { PathNodeData } from '@/features/learning/roadmap/AreaPath';
 import { useDashboardShellOptional } from '@/features/dashboard/shell';
 import LearningSupabaseService from '@/services/supabase/LearningSupabaseService';
@@ -51,6 +52,24 @@ export function useLessonFromRoute(lessonId: string | undefined) {
       setLoading(false);
       setError(null);
       return;
+    }
+
+    const requirementAreaId = parseAreaFromMinimumRequirementsId(lessonId);
+    if (requirementAreaId) {
+      const built = buildMinimumRequirementsLesson(requirementAreaId);
+      if (built) {
+        const lesson = {
+          ...built,
+          title: String(built.title ?? 'Requisitos mínimos'),
+          description: String(built.description ?? ''),
+          type: 'minimum-requirements',
+        } as PathNodeData;
+        fetchedLessonCache.set(lessonId, lesson);
+        setFetchedLesson(lesson);
+        setLoading(false);
+        setError(null);
+        return;
+      }
     }
 
     let active = true;

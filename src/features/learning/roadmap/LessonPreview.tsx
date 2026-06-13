@@ -23,6 +23,7 @@ export interface LessonPreviewProps {
     description?: string;
     xp?: number;
     coins?: number;
+    type?: string;
   } | null;
   onStart: (lesson?: { id?: string }) => void;
 }
@@ -30,6 +31,7 @@ export interface LessonPreviewProps {
 export const LessonPreview = ({ isOpen, onClose, lesson, onStart }: LessonPreviewProps) => {
   const dialogRef = useRef<HTMLDivElement>(null);
   const close = useCallback(() => deferAfterPointer(onClose), [onClose]);
+  const isMinimumRequirements = lesson?.type === 'minimum-requirements';
 
   useDialogA11y(isOpen, close, dialogRef);
 
@@ -110,7 +112,7 @@ export const LessonPreview = ({ isOpen, onClose, lesson, onStart }: LessonPrevie
             )}
           >
             <Icon name="play" />
-            COMENZAR LECCIÓN
+            {isMinimumRequirements ? 'REVISAR REQUISITOS' : 'COMENZAR LECCIÓN'}
           </button>
         </div>
       </div>

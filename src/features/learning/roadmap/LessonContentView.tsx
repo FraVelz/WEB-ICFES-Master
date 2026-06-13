@@ -131,7 +131,6 @@ export function LessonContentView({ lesson, areaId = 'lectura-critica', stepSlug
     <div className="bg-surface-via fixed inset-0 z-50 flex h-dvh flex-col overflow-hidden">
       <LessonContentHeader
         title={lesson.title}
-        stepLabel={stepLabel}
         backHref={backHref}
         progress={progress}
         gradientClass={gradientClass}

@@ -6,6 +6,7 @@ import {
   type LearningPhaseNumber,
 } from '@/features/learning/constants/learningPhases';
 import { ensureLearningProgressSynced } from '@/services/learning';
+import { injectPhaseMinimumRequirements } from '@/features/learning/utils/injectPhaseMinimumRequirements';
 import { getLearningPathFromCatalog } from '@/services/learning/learningCatalogCache';
 import { getCompletedLessons } from '@/services/persistence';
 import LearningSupabaseService from '@/services/supabase/LearningSupabaseService';
@@ -31,6 +32,7 @@ export interface LearningPathLesson {
   order: number;
   phase: LearningPhaseNumber;
   difficulty: string;
+  moduleType?: string;
   rewards: { xp?: number; coins?: number };
   duration?: unknown;
   content?: string;
@@ -55,14 +57,18 @@ function mapStaticLesson(
 /**
  * Learning data: Supabase when configured, otherwise static roadmap JSON
  */
+function finalizeLearningPath(areaId: string, lessons: LearningPathLesson[], phase?: LearningPhaseNumber) {
+  return injectPhaseMinimumRequirements(areaId, lessons, phase);
+}
+
 export const LearningService = {
   getLearningPath: async (areaId: string, phase?: LearningPhaseNumber): Promise<LearningPathLesson[]> => {
     const fromCatalog = await getLearningPathFromCatalog(areaId as AreaId, phase);
-    if (fromCatalog.length > 0) return fromCatalog;
+    if (fromCatalog.length > 0) return finalizeLearningPath(areaId, fromCatalog, phase);
 
     const lessons = await LearningSupabaseService.getLessonsByArea(areaId, phase);
     if (lessons?.length > 0) {
-      return lessons.map((lesson, i) => {
+      const mapped = lessons.map((lesson, i) => {
         const l = lesson as Record<string, unknown>;
         const quiz = (l.quiz ?? {}) as Record<string, unknown>;
         const nestedContent = l.content;
@@ -88,6 +94,7 @@ export const LearningService = {
           quiz: l.quiz,
         });
       });
+      return finalizeLearningPath(areaId, mapped, phase);
     }
 
     const key = getStaticRoadmapDataKey(areaId);
@@ -121,8 +128,8 @@ export const LearningService = {
         : []),
     ];
 
-    if (phase === undefined) return staticLessons;
-    return staticLessons.filter((lesson) => lesson.phase === phase);
+    const filtered = phase === undefined ? staticLessons : staticLessons.filter((lesson) => lesson.phase === phase);
+    return finalizeLearningPath(areaId, filtered, phase);
   },
 
   getUserProgress: async (userId: string, _areaId: string) => {

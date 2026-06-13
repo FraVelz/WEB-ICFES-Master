@@ -33,6 +33,7 @@ export const PathNode = ({
   colorClass = 'bg-blue-500',
 }: PathNodeProps) => {
   const isCheckpoint = type === 'checkpoint';
+  const isMinimumRequirements = type === 'minimum-requirements';
   const isPending = status === 'pending';
   const isCurrent = status === 'current';
   const isCompleted = status === 'completed';
@@ -46,6 +47,9 @@ export const PathNode = ({
     'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-app-accent focus-visible:ring-offset-2',
     'focus-visible:ring-offset-surface-via',
     isPending && 'border-surface-border bg-surface-elevated/40 opacity-70 hover:border-surface-border hover:opacity-90',
+    isMinimumRequirements &&
+      !isCompleted &&
+      'border-amber-500/35 bg-surface-elevated/60 hover:border-amber-500/50',
     isCurrent && cn(borderColor, 'lesson-current-glow bg-surface-elevated hover:bg-surface-overlay'),
     isCompleted && 'border-green-500/40 bg-surface-elevated/50 hover:bg-surface-elevated'
   );
