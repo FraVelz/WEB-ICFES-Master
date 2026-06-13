@@ -65,7 +65,7 @@ export function DashboardShellBanner({ className }: { className?: string }) {
   } = useDashboardShell();
 
   if (shellSection === 'learning' && isPhasesRoute) {
-    const backHref = getRoadmapHref(currentSectionId);
+    const backHref = getRoadmapHref(currentSectionId, currentArea);
     return (
       <NavSectionBanner
         title="Fases del recorrido"

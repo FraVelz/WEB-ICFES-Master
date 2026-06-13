@@ -35,7 +35,8 @@ export function LessonQuizQuestionPanel({
             onClick={() => !isSubmitted && onSelectOption(option.id)}
             disabled={isSubmitted}
             className={cn(
-              'relative min-h-[52px] w-full cursor-pointer rounded-xl border-2 p-3.5 text-left text-sm transition-all',
+              'relative min-h-[52px] w-full cursor-pointer rounded-xl border-2 p-3.5 text-left text-sm',
+              'transition-[transform,border-color,background-color,box-shadow] duration-150',
               'focus-visible:ring-app-accent focus-visible:z-10 focus-visible:ring-2 focus-visible:outline-none',
               'focus-visible:ring-offset-surface-elevated focus-visible:ring-offset-2 disabled:focus-visible:ring-0',
               'lg:min-h-[48px] lg:rounded-xl lg:p-4 lg:text-base',
@@ -46,10 +47,11 @@ export function LessonQuizQuestionPanel({
                     ? 'border-red-500 bg-red-500/15 text-red-300 shadow-lg shadow-red-500/10'
                     : 'border-surface-border/50 bg-surface-overlay/30 text-on-surface-muted opacity-60'
                 : selectedOption === option.id
-                  ? 'scale-[1.02] border-blue-500 bg-blue-500/15 text-blue-300 shadow-lg shadow-blue-500/10'
+                  ? 'scale-[1.02] border-blue-500 bg-blue-500/15 text-blue-300 shadow-lg shadow-blue-500/10 active:scale-[0.98] active:bg-blue-500/20'
                   : cn(
                       'border-surface-border/50 bg-surface-overlay/50 text-on-surface',
-                      'hover:border-surface-border hover:bg-surface-overlay/70 active:bg-on-surface-muted active:scale-[0.98]'
+                      'hover:border-surface-border hover:bg-surface-overlay/70',
+                      'active:scale-[0.98] active:border-surface-border active:bg-surface-overlay'
                     )
             )}
           >

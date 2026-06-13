@@ -6,6 +6,7 @@ import { AREA_INFO, type AreaId } from '@/shared/constants';
 import { useLearningPath } from '@/features/learning/hooks/useLearningPath';
 import { pickDefaultSectionId } from '@/features/learning/shell/SecondaryHeader/sectionStageUtils';
 import { LEARNING_PHASES_PATH, LEARNING_ROADMAP_PATH } from '@/features/learning/data/competencyPhases';
+import { getLessonIdFromPathname, isLessonRoute, resolveLessonAreaId } from '@/features/learning/utils/lessonRoutes';
 import { isLearningPhasesRoute } from './shellRoutes';
 
 function resolveAreaId(param: string | null): AreaId {
@@ -76,10 +77,17 @@ export function useDashboardShellLearning(isLearningShell: boolean) {
 
   useEffect(() => {
     if (!isLearningShell || isPhasesRoute) return;
+
+    if (isLessonRoute(pathname)) {
+      const lessonId = getLessonIdFromPathname(pathname);
+      if (lessonId) setCurrentAreaState(resolveLessonAreaId(lessonId));
+      return;
+    }
+
     setCurrentAreaState(resolveAreaId(searchParams.get('area')));
     const etapa = searchParams.get('etapa');
     if (etapa) setCurrentSectionIdState(etapa);
-  }, [searchParams, isLearningShell, isPhasesRoute]);
+  }, [pathname, searchParams, isLearningShell, isPhasesRoute]);
 
   useEffect(() => {
     if (!isLearningShell || pathLoading || isPhasesRoute) return;

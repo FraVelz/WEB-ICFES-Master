@@ -1,4 +1,4 @@
-import type { LessonQuizGradeResult } from './lessonQuizGradingServer';
+import type { LessonQuizGradeResult } from './quizTypes';
 import { getApiAuthHeaders } from '@/utils/apiClientAuth';
 
 export async function fetchLessonQuizGrade(

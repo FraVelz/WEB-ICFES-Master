@@ -9,6 +9,7 @@ type LessonQuizActionsProps = {
   allQuestionsAnswered: boolean;
   selectedOption: string | null;
   loading: boolean;
+  gradeError?: string | null;
   onPrevious: () => void;
   onClose: () => void;
   onSubmit: () => void;
@@ -18,6 +19,16 @@ type LessonQuizActionsProps = {
   innerClassName?: string;
 };
 
+const secondaryActionClass = cn(
+  'border-surface-border bg-surface-elevated/90 text-on-surface-muted min-h-[48px] cursor-pointer rounded-xl border',
+  'font-semibold shadow-sm transition-[color,background-color,border-color,box-shadow,transform] duration-200',
+  'hover:border-app-ring/45 hover:bg-surface-overlay hover:text-on-surface hover:shadow-md',
+  'active:scale-[0.97]',
+  'lg:min-h-[44px] lg:rounded-xl',
+  'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none',
+  'focus-visible:ring-offset-surface-via'
+);
+
 export function LessonQuizActions({
   currentQuestionIndex,
   isSubmitted,
@@ -26,6 +37,7 @@ export function LessonQuizActions({
   allQuestionsAnswered,
   selectedOption,
   loading,
+  gradeError,
   onPrevious,
   onClose,
   onSubmit,
@@ -40,13 +52,7 @@ export function LessonQuizActions({
         <button
           type="button"
           onClick={onPrevious}
-          className={cn(
-            'bg-surface-overlay/80 min-h-[48px] cursor-pointer rounded-xl px-3.5 py-3 font-bold',
-            'text-on-surface-muted hover:bg-on-surface-muted shadow-md transition-all active:scale-95',
-            'lg:min-h-[44px] lg:rounded-xl lg:px-4',
-            'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none',
-            'focus-visible:ring-offset-surface-via'
-          )}
+          className={cn(secondaryActionClass, 'px-3.5 py-3 font-bold lg:px-4')}
           aria-label="Pregunta anterior"
         >
           <Icon name="arrow-left" size="lg" className="text-base lg:text-lg" />
@@ -56,13 +62,7 @@ export function LessonQuizActions({
       <button
         type="button"
         onClick={onClose}
-        className={cn(
-          'bg-surface-overlay/80 min-h-[48px] flex-1 cursor-pointer rounded-xl px-3 py-3 text-sm',
-          'text-on-surface-muted hover:bg-on-surface-muted font-semibold shadow-md transition-all active:scale-95',
-          'lg:min-h-[44px] lg:rounded-xl lg:px-4 lg:text-base',
-          'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none',
-          'focus-visible:ring-offset-surface-via'
-        )}
+        className={cn(secondaryActionClass, 'flex-1 px-3 py-3 text-sm lg:px-4 lg:text-base')}
       >
         {isLastQuestion && (isCorrect || allQuestionsAnswered) ? 'Cerrar' : 'Cancelar'}
       </button>
@@ -90,12 +90,10 @@ export function LessonQuizActions({
               type="button"
               onClick={onRetry}
               className={cn(
-                'bg-on-surface-muted min-h-[48px] flex-1 cursor-pointer rounded-xl px-3 py-3 text-sm font-bold text-white',
-                'hover:bg-on-surface-muted shadow-md transition-all active:scale-95',
-                'lg:min-h-[44px] lg:rounded-xl lg:px-4 lg:text-base',
-                'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:outline-none',
-                'focus-visible:ring-offset-2',
-                'focus-visible:ring-offset-surface-via'
+                secondaryActionClass,
+                'flex-1 px-3 py-3 text-sm font-bold text-white lg:px-4 lg:text-base',
+                'border-amber-500/35 bg-amber-500/15 text-amber-100',
+                'hover:border-amber-400/55 hover:bg-amber-500/25 hover:text-white'
               )}
             >
               Reintentar
@@ -126,11 +124,16 @@ export function LessonQuizActions({
   return (
     <div
       className={cn(
-        'border-surface-border bg-surface-elevated/95 shrink-0 border-t p-3 pt-2 backdrop-blur-sm lg:p-6 lg:pt-0',
+        'border-surface-border/80 bg-surface-via/95 shrink-0 border-t p-3 pt-2 backdrop-blur-md lg:p-6 lg:pt-0',
         className
       )}
     >
       {innerClassName ? <div className={innerClassName}>{buttons}</div> : buttons}
+      {gradeError ? (
+        <p className="text-red-400 mt-2 text-center text-sm" role="alert">
+          {gradeError}
+        </p>
+      ) : null}
     </div>
   );
 }

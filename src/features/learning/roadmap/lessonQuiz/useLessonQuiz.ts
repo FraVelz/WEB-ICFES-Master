@@ -2,10 +2,12 @@
 
 import { useState, useEffect, useCallback, useMemo } from 'react';
 import { useAuth } from '@/features/auth/context/AuthContext';
+import { isMinimumRequirementsLessonId } from '@/features/learning/data/phaseMinimumRequirements';
 import { getCompletedLessons, markLessonAsCompleted } from '@/services/persistence';
 import { fetchLessonQuizGrade } from './lessonQuizClient';
+import { gradeLessonQuizAnswersPure } from './gradeLessonQuizAnswersPure';
 import { normalizeQuizQuestions } from './normalizeQuizQuestions';
-import { shuffleQuestionOptions, shuffleQuizQuestions } from './shuffleQuizQuestions';
+import { prepareLessonQuizQuestions, reshuffleLessonQuizQuestion } from './prepareLessonQuizQuestions';
 import type { LessonQuizModalProps } from './quizTypes';
 
 export function useLessonQuiz({
@@ -50,7 +52,7 @@ export function useLessonQuiz({
   useEffect(() => {
     if (isOpen && user && lessonId) checkCompletionStatus();
     if (isOpen) {
-      setDisplayQuestions(shuffleQuizQuestions(baseQuestions));
+      setDisplayQuestions(prepareLessonQuizQuestions(lessonId, baseQuestions));
       setCurrentQuestionIndex(0);
       setSelectedOption(null);
       setIsSubmitted(false);
@@ -80,17 +82,16 @@ export function useLessonQuiz({
     setLoading(true);
     setGradeError(null);
 
-    try {
-      const updatedAnswers = { ...answers, [currentQuestion.id]: selectedOption };
-      const allAnswered = displayQuestions.every((q) => updatedAnswers[q.id] != null);
-      const shouldAward = Boolean(
-        !alreadyCompleted && user?.uid && (totalQuestions === 1 || (isLastQuestion && allAnswered))
-      );
+    const updatedAnswers = { ...answers, [currentQuestion.id]: selectedOption };
+    const allAnswered = displayQuestions.every((q) => updatedAnswers[q.id] != null);
+    const shouldAward = Boolean(
+      !alreadyCompleted && (totalQuestions === 1 || (isLastQuestion && allAnswered))
+    );
 
-      const gradeResult = await fetchLessonQuizGrade(lessonId, updatedAnswers, {
-        awardRewards: shouldAward,
-      });
-
+    const applyGradeResult = (
+      gradeResult: Awaited<ReturnType<typeof fetchLessonQuizGrade>>,
+      options?: { localRewards?: { xp: number; coins: number } }
+    ) => {
       const questionResult = gradeResult.results.find((r) => r.questionId === currentQuestion.id);
       const correct = questionResult?.correct ?? false;
       const revealed = questionResult?.correctAnswer ?? '';
@@ -101,14 +102,56 @@ export function useLessonQuiz({
       setRevealedAnswers((prev) => ({ ...prev, [currentQuestion.id]: revealed }));
       setCompletedQuestions((prev) => new Set([...prev, currentQuestion.id]));
 
-      if (gradeResult.rewards) {
-        setRewards(gradeResult.rewards);
+      const rewardsToApply = gradeResult.rewards ?? options?.localRewards;
+      if (rewardsToApply && gradeResult.allCorrect) {
+        setRewards(rewardsToApply);
         setAlreadyCompleted(true);
-        markLessonAsCompleted(user!.uid, lessonId);
+        markLessonAsCompleted(user?.uid ?? '', lessonId);
       } else if (shouldAward && gradeResult.allCorrect) {
         setAlreadyCompleted(true);
-        markLessonAsCompleted(user!.uid, lessonId);
+        markLessonAsCompleted(user?.uid ?? '', lessonId);
       }
+    };
+
+    try {
+      if (isMinimumRequirementsLessonId(lessonId)) {
+        const clientGrade = gradeLessonQuizAnswersPure(displayQuestions, updatedAnswers);
+
+        if (shouldAward && clientGrade.allCorrect && user?.uid) {
+          try {
+            const serverGrade = await fetchLessonQuizGrade(lessonId, updatedAnswers, { awardRewards: true });
+            applyGradeResult(serverGrade);
+            return;
+          } catch {
+            applyGradeResult(clientGrade, {
+              localRewards: {
+                xp: lessonXp ?? quiz?.rewards?.xp ?? 30,
+                coins: lessonCoins ?? quiz?.rewards?.coins ?? 15,
+              },
+            });
+            return;
+          }
+        }
+
+        applyGradeResult(
+          clientGrade,
+          shouldAward && clientGrade.allCorrect
+            ? {
+                localRewards: {
+                  xp: lessonXp ?? quiz?.rewards?.xp ?? 30,
+                  coins: lessonCoins ?? quiz?.rewards?.coins ?? 15,
+                },
+              }
+            : undefined
+        );
+        return;
+      }
+
+      const gradeResult = await fetchLessonQuizGrade(lessonId, updatedAnswers, {
+        awardRewards: shouldAward && Boolean(user?.uid),
+      });
+
+      applyGradeResult(gradeResult);
     } catch (err) {
       setGradeError(err instanceof Error ? err.message : 'No se pudo calificar la respuesta');
     } finally {
@@ -134,14 +177,16 @@ export function useLessonQuiz({
     const shouldReshuffleAll = totalQuestions === 1 || currentQuestionIndex === 0 || isLastQuestion;
 
     if (shouldReshuffleAll) {
-      setDisplayQuestions(shuffleQuizQuestions(baseQuestions));
+      setDisplayQuestions(prepareLessonQuizQuestions(lessonId, baseQuestions));
       setCurrentQuestionIndex(0);
       setAnswers({});
       setRevealedAnswers({});
       setCompletedQuestions(new Set());
     } else {
       setDisplayQuestions((prev) =>
-        prev.map((question, index) => (index === currentQuestionIndex ? shuffleQuestionOptions(question) : question))
+        prev.map((question, index) =>
+          index === currentQuestionIndex ? reshuffleLessonQuizQuestion(lessonId, question) : question
+        )
       );
       setAnswers((prev) => {
         const next = { ...prev };

@@ -14,6 +14,7 @@ type PhaseStageCardProps = {
   lessonCount: number;
   areaFocus?: string;
   sectionId: string;
+  areaId?: string;
   skipExamHref?: string;
   skippedByExam?: boolean;
   performanceLevels?: string;
@@ -26,6 +27,7 @@ export function PhaseStageCard({
   lessonCount,
   areaFocus,
   sectionId,
+  areaId,
   skipExamHref,
   skippedByExam = false,
   performanceLevels,
@@ -33,7 +35,7 @@ export function PhaseStageCard({
   const isCompleted = status === 'completed';
   const isActive = status === 'active';
   const isLocked = status === 'locked';
-  const roadmapHref = getRoadmapHref(sectionId);
+  const roadmapHref = getRoadmapHref(sectionId, areaId);
 
   return (
     <article

@@ -92,9 +92,13 @@ export function getLearningPhasesHref(): string {
   return LEARNING_PHASES_PATH;
 }
 
-export function getRoadmapHref(sectionId?: string): string {
-  if (!sectionId) return LEARNING_ROADMAP_PATH;
-  return `${LEARNING_ROADMAP_PATH}?etapa=${sectionId}`;
+export function getRoadmapHref(sectionId?: string, areaId?: string): string {
+  const params = new URLSearchParams();
+  if (areaId) params.set('area', areaId);
+  if (sectionId) params.set('etapa', sectionId);
+  const qs = params.toString();
+  if (!qs) return LEARNING_ROADMAP_PATH;
+  return `${LEARNING_ROADMAP_PATH}?${qs}`;
 }
 
 /** Examen de práctica para saltar una fase (`?saltar-fase=facil|intermedio|dificil`). */

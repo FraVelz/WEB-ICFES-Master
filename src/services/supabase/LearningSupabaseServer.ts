@@ -1,6 +1,7 @@
 import { createServerSupabaseClient } from '@/config/supabaseClient';
 import { normalizeQuizQuestions } from '@/features/learning/roadmap/lessonQuiz/normalizeQuizQuestions';
 import type { QuizInput, QuizQuestionInput } from '@/features/learning/roadmap/lessonQuiz/quizTypes';
+import { loadStaticLessonQuiz } from '@/services/learning/loadStaticLessonQuiz';
 
 const TABLE = 'learning_content';
 
@@ -11,6 +12,9 @@ type LessonQuizContent = {
 };
 
 export async function loadLessonQuizQuestions(lessonId: string) {
+  const staticLesson = loadStaticLessonQuiz(lessonId);
+  if (staticLesson) return staticLesson;
+
   const sb = createServerSupabaseClient();
   if (!sb) return null;
 

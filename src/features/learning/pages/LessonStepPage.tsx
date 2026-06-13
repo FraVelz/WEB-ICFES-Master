@@ -10,7 +10,7 @@ import { splitLessonContent } from '@/features/learning/utils/splitLessonContent
 import {
   getLessonStartHref,
   getLessonStepSlugFromPathname,
-  normalizeRoadmapAreaId,
+  resolveLessonAreaId,
   parseLessonStepSlug,
 } from '@/features/learning/utils/lessonRoutes';
 import { getRoadmapHref } from '@/features/learning/data/competencyPhases';
@@ -44,16 +44,16 @@ export function LessonStepShell() {
     return null;
   }
 
-  const lessonArea = normalizeRoadmapAreaId(typeof lesson.area === 'string' ? lesson.area : undefined);
+  const lessonArea = resolveLessonAreaId(lessonId, lesson);
   const lessonPhase = normalizeLessonPhase(lesson.phase);
   const sectionId = shell?.currentSectionId ?? phaseToSectionId(lessonPhase);
 
   return (
     <LessonContentView
       lesson={lesson}
-      areaId={shell?.currentArea ?? lessonArea}
+      areaId={lessonArea}
       stepSlug={stepSlug}
-      exitHref={getRoadmapHref(sectionId)}
+      exitHref={getRoadmapHref(sectionId, lessonArea)}
     />
   );
 }

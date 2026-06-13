@@ -68,6 +68,7 @@ export function LearningPhasesPage() {
                 lessonCount={section?.nodes.length ?? 0}
                 areaFocus={phase.areaFocus[currentArea as AreaId]}
                 sectionId={phase.sectionId}
+                areaId={currentArea}
                 skipExamHref={getPhaseSkipExamHref(currentArea, phase.sectionId)}
                 skippedByExam={skippedByExam}
                 performanceLevels={journeyStep?.performanceLevels}

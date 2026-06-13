@@ -62,6 +62,7 @@ export function useLessonFromRoute(lessonId: string | undefined) {
           ...built,
           title: String(built.title ?? 'Requisitos mínimos'),
           description: String(built.description ?? ''),
+          area: requirementAreaId,
           type: 'minimum-requirements',
         } as PathNodeData;
         fetchedLessonCache.set(lessonId, lesson);

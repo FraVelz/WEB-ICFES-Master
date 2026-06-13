@@ -60,6 +60,7 @@ export function LessonQuizPanel({
     rewards,
     isLastQuestion,
     allQuestionsAnswered,
+    gradeError,
     handleSubmit,
     handleNextQuestion,
     handlePreviousQuestion,
@@ -102,6 +103,7 @@ export function LessonQuizPanel({
       allQuestionsAnswered={allQuestionsAnswered}
       selectedOption={selectedOption}
       loading={loading}
+      gradeError={gradeError}
       onPrevious={handlePreviousQuestion}
       onClose={handleClose}
       onSubmit={handleSubmit}

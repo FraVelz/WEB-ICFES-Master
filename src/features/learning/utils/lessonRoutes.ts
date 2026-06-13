@@ -1,5 +1,7 @@
 import type { AreaId } from '@/shared/constants';
 import { AREA_INFO } from '@/shared/constants';
+import { ROADMAP_AREA_TO_STATIC_DATA_KEY } from '@/features/learning/constants/roadmapAreaKeys';
+import { parseAreaFromMinimumRequirementsId } from '@/features/learning/data/phaseMinimumRequirements';
 
 export const LESSON_PATH_PREFIX = '/ruta-aprendizaje/leccion';
 
@@ -29,6 +31,36 @@ export function normalizeRoadmapAreaId(area: string | undefined): AreaId {
   if (area in AREA_INFO) return area as AreaId;
   const underscored = area.replace(/-/g, '_');
   return SUPABASE_AREA_TO_ROADMAP[underscored] ?? SUPABASE_AREA_TO_ROADMAP[area] ?? 'lectura-critica';
+}
+
+const STATIC_DATA_KEY_TO_AREA = Object.entries(ROADMAP_AREA_TO_STATIC_DATA_KEY).reduce(
+  (acc, [areaId, staticKey]) => {
+    if (!(staticKey in acc)) acc[staticKey] = areaId as AreaId;
+    return acc;
+  },
+  {} as Record<string, AreaId>
+);
+
+/** Área ICFES asociada a una lección (ruta, requisitos mínimos, catálogo estático o Supabase). */
+export function resolveLessonAreaId(lessonId: string, lesson?: unknown): AreaId {
+  const lessonRecord = lesson as { area?: unknown } | null | undefined;
+  const fromMinimum = parseAreaFromMinimumRequirementsId(lessonId);
+  if (fromMinimum) return fromMinimum;
+
+  if (lessonRecord?.area != null && String(lessonRecord.area).trim() !== '') {
+    return normalizeRoadmapAreaId(String(lessonRecord.area));
+  }
+
+  const staticPrefix = Object.keys(STATIC_DATA_KEY_TO_AREA).find((key) => lessonId.startsWith(`${key}_`));
+  if (staticPrefix) return STATIC_DATA_KEY_TO_AREA[staticPrefix];
+
+  return 'lectura-critica';
+}
+
+export function getLessonIdFromPathname(pathname: string): string | null {
+  const prefix = `${LESSON_PATH_PREFIX}/`;
+  if (!pathname.startsWith(prefix)) return null;
+  return pathname.slice(prefix.length).split('/')[0]?.trim() || null;
 }
 
 export type LessonStepSlug = `${number}` | 'examen';

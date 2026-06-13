@@ -28,6 +28,13 @@ export type NormalizedQuizQuestion = {
   difficulty: string;
 };
 
+export type LessonQuizGradeResult = {
+  questionId: string;
+  correct: boolean;
+  correctAnswer: string;
+  explanation: string;
+};
+
 export interface LessonQuizModalProps {
   isOpen: boolean;
   onClose: () => void;

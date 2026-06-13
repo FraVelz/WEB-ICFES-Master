@@ -83,11 +83,11 @@ const MODULES: Record<AreaId, PhaseMinimumRequirementsModule | undefined> = {
         id: 'req_lc_2',
         question: 'La comprensión literal consiste en…',
         options: [
-          'Adivinar lo que el autor pensaba sin leer',
           'Entender lo que el texto dice de forma explícita',
+          'Adivinar lo que el autor pensaba sin leer',
           'Memorizar fechas históricas',
         ],
-        correct_answer: 1,
+        correct_answer: 0,
         explanation: 'Literal = lo que está escrito; las inferencias complejas llegan en fases posteriores.',
       },
     ],

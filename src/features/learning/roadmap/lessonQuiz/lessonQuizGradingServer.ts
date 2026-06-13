@@ -4,13 +4,8 @@ import {
   addXpServer,
   hasRewardReason,
 } from '@/services/supabase/gamification/gamificationServerEconomy';
-
-export type LessonQuizGradeResult = {
-  questionId: string;
-  correct: boolean;
-  correctAnswer: string;
-  explanation: string;
-};
+import { gradeLessonQuizAnswersPure } from './gradeLessonQuizAnswersPure';
+import type { LessonQuizGradeResult } from './quizTypes';
 
 export async function gradeLessonQuizAnswers(
   lessonId: string,
@@ -21,21 +16,7 @@ export async function gradeLessonQuizAnswers(
     throw new Error('Lección no encontrada');
   }
 
-  const results = lesson.questions
-    .filter((q) => answers[q.id] != null)
-    .map((question) => {
-      const userAnswer = answers[question.id] ?? '';
-      return {
-        questionId: question.id,
-        correct: userAnswer === question.correctAnswer,
-        correctAnswer: question.correctAnswer,
-        explanation: question.explanation,
-      };
-    });
-
-  const allCorrect = lesson.questions.length > 0 && lesson.questions.every((q) => answers[q.id] === q.correctAnswer);
-
-  return { results, allCorrect };
+  return gradeLessonQuizAnswersPure(lesson.questions, answers);
 }
 
 export async function awardLessonQuizRewards(

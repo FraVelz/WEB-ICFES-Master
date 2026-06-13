@@ -140,7 +140,7 @@ export function getJourneyStepForCompetencyPhase(phaseId: CompetencyPhaseId): Jo
 
 export function getJourneyStepHref(step: JourneyStep, areaId: AreaId = 'lectura-critica'): string | null {
   if (step.kind === 'learning' && step.sectionId) {
-    return getRoadmapHref(step.sectionId);
+    return getRoadmapHref(step.sectionId, areaId);
   }
   if (step.kind === 'practice-area') {
     return getPracticaHrefForRoadmapArea(areaId);
