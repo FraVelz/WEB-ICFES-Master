@@ -22,7 +22,7 @@ export const HomePage = () => {
       <a href="#main-content" className="skip-link">
         Saltar al contenido
       </a>
-      <main id="main-content" className="relative z-10 py-8">
+      <main id="main-content" className="relative z-10 overflow-x-hidden py-0 md:py-8">
         <h1 className="sr-only">Domina el ICFES desde Cero — ICFES Master</h1>
         <div className="pointer-events-none fixed top-4 right-4 z-50 hidden md:block">
           <div className="pointer-events-auto">
@@ -30,8 +30,8 @@ export const HomePage = () => {
           </div>
         </div>
 
-        {/* Background glow effects - Fixed to viewport */}
-        <div className="pointer-events-none fixed inset-0 z-0 opacity-60 motion-reduce:animate-none dark:opacity-100">
+        {/* Background glow effects — solo desktop (móvil usa los de HomePageMobile) */}
+        <div className="pointer-events-none fixed inset-0 z-0 hidden overflow-hidden opacity-60 motion-reduce:animate-none md:block dark:opacity-100">
           <div
             className={cn(
               'bg-ambient-a-strong/20 dark:bg-ambient-a-strong/30 absolute top-1/3 left-1/4',

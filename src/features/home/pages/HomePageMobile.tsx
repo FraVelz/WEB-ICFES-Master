@@ -11,7 +11,7 @@ export const HomePageMobile = () => {
   return (
     <div
       className={cn(
-        'from-surface via-surface-via to-surface text-on-surface flex h-dvh w-screen flex-col',
+        'from-surface via-surface-via to-surface text-on-surface flex h-dvh w-full max-w-full flex-col',
         'bg-linear-to-b'
       )}
     >
