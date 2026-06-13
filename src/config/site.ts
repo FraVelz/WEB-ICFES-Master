@@ -1,4 +1,4 @@
-const DEFAULT_SITE_URL = 'https://icfesmaster.com';
+const DEFAULT_SITE_URL = 'https://icfes-master.vercel.app';
 
 /** Public origin for metadata, sitemap and Open Graph. */
 export function getSiteUrl(): string {

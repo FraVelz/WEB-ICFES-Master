@@ -8,6 +8,7 @@ import { LevelAssessmentGate } from '@/components/LevelAssessmentGate';
 import { cn } from '@/utils/cn';
 import { FULL_PAGE_SHELL_CLASS } from '@/shared/constants/pageShell';
 import Link from 'next/link';
+import { PublicSiteFooter } from '@/shared/components/PublicSiteFooter';
 
 export type ContentVariant = 'public' | 'full';
 
@@ -41,6 +42,7 @@ function PublicContentChrome({ children }: { children: ReactNode }) {
       <main id="main-content" className="relative z-10 py-8">
         {children}
       </main>
+      <PublicSiteFooter />
     </div>
   );
 }

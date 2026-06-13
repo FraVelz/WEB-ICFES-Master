@@ -7,6 +7,7 @@ import { cn } from '@/utils/cn';
 import { gsap } from '@/lib/gsap';
 
 import { Footer } from '@/features/home/components/Footer';
+import { PublicResourcesSection } from '@/features/home/components/PublicResourcesSection';
 import { GSAPGlowBlob } from '@/features/home/components/GSAPGlowBlob';
 
 import {
@@ -150,6 +151,12 @@ const HomePageDesktopComponent = ({ onDemoAccess }: { onDemoAccess: () => void }
           />
           <div data-home-reveal className={homeStyles.revealScroll}>
             <TestimonialsSection />
+          </div>
+        </section>
+
+        <section className="relative overflow-hidden py-12 md:py-16">
+          <div data-home-reveal className={homeStyles.revealScroll}>
+            <PublicResourcesSection />
           </div>
         </section>
 
