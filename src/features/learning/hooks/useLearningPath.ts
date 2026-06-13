@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { LearningService } from '../services/LearningService';
 import { useAuth } from '@/features/auth/context/AuthContext';
 import { LEARNING_PROGRESS_UPDATED_EVENT } from '@/services/learning';
@@ -41,24 +41,40 @@ export type UseLearningPathOptions = {
   loadAllPhases?: boolean;
 };
 
+type FetchPathOptions = {
+  /** Actualiza en segundo plano sin spinner ni ocultar el roadmap. */
+  background?: boolean;
+};
+
 export const useLearningPath = (areaId: string | undefined, options: UseLearningPathOptions = {}) => {
   const { sectionId, loadAllPhases = false } = options;
   const [sections, setSections] = useState<PathSection[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const { user } = useAuth();
+  const userId = user?.uid;
+  const requestSeq = useRef(0);
 
   const phaseFilter = loadAllPhases ? undefined : sectionIdToPhase(sectionId);
 
-  const fetchPath = useCallback(async () => {
-    if (!areaId) return;
+  const fetchPath = useCallback(async ({ background = false }: FetchPathOptions = {}) => {
+    if (!areaId) {
+      setLoading(false);
+      return;
+    }
 
-    setLoading(true);
+    const seq = ++requestSeq.current;
+    if (!background) {
+      setLoading(true);
+    }
+
     try {
       const [lessons, progress] = await Promise.all([
         LearningService.getLearningPath(areaId, phaseFilter),
-        user ? LearningService.getUserProgress(user.uid, areaId) : Promise.resolve(null),
+        userId ? LearningService.getUserProgress(userId, areaId) : Promise.resolve(null),
       ]);
+
+      if (seq !== requestSeq.current) return;
 
       const activePhase = sectionIdToPhase(sectionId);
       const sectionIds = loadAllPhases ? LEARNING_PHASE_SECTION_IDS : [phaseToSectionId(activePhase)];
@@ -102,16 +118,18 @@ export const useLearningPath = (areaId: string | undefined, options: UseLearning
       console.error(err);
       setError('Error al cargar la ruta de aprendizaje');
     } finally {
-      setLoading(false);
+      if (seq === requestSeq.current) {
+        setLoading(false);
+      }
     }
-  }, [areaId, user, phaseFilter, loadAllPhases, sectionId]);
+  }, [areaId, userId, phaseFilter, loadAllPhases, sectionId]);
 
   useEffect(() => {
     void fetchPath();
   }, [fetchPath]);
 
   useEffect(() => {
-    const refresh = debounceFn(() => void fetchPath(), 400);
+    const refresh = debounceFn(() => void fetchPath({ background: true }), 400);
     window.addEventListener(LESSON_COMPLETED_EVENT, refresh);
     window.addEventListener(LEARNING_PROGRESS_UPDATED_EVENT, refresh);
     return () => {

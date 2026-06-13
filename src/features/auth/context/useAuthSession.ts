@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, type Dispatch, type SetStateAction } from 'react';
 import { supabase } from '@/config/supabase';
 import UserSupabaseService from '@/services/supabase/UserSupabaseService';
 import { setActiveStreakUserId } from '@/services/streak';
@@ -8,8 +8,23 @@ import { isSupabaseAuthConfigured } from '@/features/auth/utils/isSupabaseAuthCo
 import type { AuthUser } from './authTypes';
 import { mapSupabaseUser, getOAuthProfileImage } from './authSupabase';
 
+function isSameAuthUser(prev: AuthUser | null, next: AuthUser | null): boolean {
+  if (prev === next) return true;
+  if (!prev || !next) return false;
+  return (
+    prev.uid === next.uid &&
+    prev.email === next.email &&
+    prev.displayName === next.displayName &&
+    prev.profileImage === next.profileImage
+  );
+}
+
+function resolveAuthUser(sessionUser: Parameters<typeof mapSupabaseUser>[0]): AuthUser | null {
+  return sessionUser ? mapSupabaseUser(sessionUser) : null;
+}
+
 type AuthSessionDeps = {
-  setUser: (user: AuthUser | null) => void;
+  setUser: Dispatch<SetStateAction<AuthUser | null>>;
   setLoading: (loading: boolean) => void;
   clearDemoMode: () => void;
   migrateDemoOnAuth: (userId: string) => Promise<void>;
@@ -26,7 +41,8 @@ export function useAuthSession({ setUser, setLoading, clearDemoMode, migrateDemo
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange(async (event, session) => {
-      setUser(session?.user ? mapSupabaseUser(session.user) : null);
+      const nextUser = resolveAuthUser(session?.user ?? null);
+      setUser((prev) => (isSameAuthUser(prev, nextUser) ? prev : nextUser));
       setLoading(false);
 
       if (event === 'SIGNED_IN' && session?.user) {
@@ -50,7 +66,8 @@ export function useAuthSession({ setUser, setLoading, clearDemoMode, migrateDemo
     });
 
     supabase.auth.getSession().then(({ data: { session } }) => {
-      setUser(session?.user ? mapSupabaseUser(session.user) : null);
+      const nextUser = resolveAuthUser(session?.user ?? null);
+      setUser((prev) => (isSameAuthUser(prev, nextUser) ? prev : nextUser));
       if (session?.user) {
         setActiveStreakUserId(session.user.id);
         clearDemoMode();
