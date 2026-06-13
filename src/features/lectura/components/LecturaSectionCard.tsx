@@ -32,7 +32,7 @@ export function LecturaSectionCard({ section, isRead }: LecturaSectionCardProps)
             <span
               className={cn(
                 'inline-flex items-center gap-1 rounded-full bg-emerald-500/10 px-2 py-0.5',
-                'text-xs font-semibold text-emerald-400'
+                'text-xs font-semibold text-emerald-300'
               )}
             >
               <Icon name="check-circle" className="text-sm" />

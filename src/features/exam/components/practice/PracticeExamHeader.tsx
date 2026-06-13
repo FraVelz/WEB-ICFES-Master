@@ -1,10 +1,11 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useRef } from 'react';
 import Link from 'next/link';
 import { cn } from '@/utils/cn';
 import { Icon } from '@/shared/components/Icon';
 import { formatTimeExtended } from '@/services/persistence';
+import { useDialogA11y } from '@/shared/hooks/useDialogA11y';
 
 type PracticeExamHeaderProps = {
   areaName: string;
@@ -31,16 +32,9 @@ export function PracticeExamHeader({
   onCloseMobileMenu,
   onShowAnswerSheet,
 }: PracticeExamHeaderProps) {
-  useEffect(() => {
-    if (!mobileMenuOpen) return;
+  const mobileMenuRef = useRef<HTMLDivElement>(null);
 
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') onCloseMobileMenu();
-    };
-
-    document.addEventListener('keydown', handleKeyDown);
-    return () => document.removeEventListener('keydown', handleKeyDown);
-  }, [mobileMenuOpen, onCloseMobileMenu]);
+  useDialogA11y(mobileMenuOpen, onCloseMobileMenu, mobileMenuRef, { lockScroll: false });
 
   const handleShowAnswerSheet = () => {
     onCloseMobileMenu();
@@ -92,7 +86,8 @@ export function PracticeExamHeader({
             type="button"
             onClick={onToggleMobileMenu}
             aria-expanded={mobileMenuOpen}
-            aria-haspopup="menu"
+            aria-haspopup="dialog"
+            aria-controls="practice-exam-mobile-menu"
             aria-label={mobileMenuOpen ? 'Cerrar menú' : 'Menú de examen'}
             className={cn(
               'text-on-surface hover:bg-surface-overlay rounded-lg p-2 transition-colors',
@@ -112,7 +107,11 @@ export function PracticeExamHeader({
                 onClick={onCloseMobileMenu}
               />
               <div
-                role="menu"
+                ref={mobileMenuRef}
+                id="practice-exam-mobile-menu"
+                role="dialog"
+                aria-modal="true"
+                aria-label="Menú de examen"
                 className={cn(
                   'border-surface-border fixed top-20 right-4 z-50 w-48 overflow-hidden rounded-lg border',
                   'bg-surface-elevated shadow-xl'
@@ -121,7 +120,6 @@ export function PracticeExamHeader({
                 {onShowAnswerSheet && (
                   <button
                     type="button"
-                    role="menuitem"
                     onClick={handleShowAnswerSheet}
                     className={cn(
                       'border-surface-border text-on-surface flex w-full items-center gap-3 border-b px-4 py-3',
@@ -135,7 +133,6 @@ export function PracticeExamHeader({
                 )}
                 <Link
                   href="/"
-                  role="menuitem"
                   onClick={onCloseMobileMenu}
                   className={cn(
                     'text-on-surface hover:bg-surface-overlay flex items-center gap-3 px-4 py-3 transition-colors',

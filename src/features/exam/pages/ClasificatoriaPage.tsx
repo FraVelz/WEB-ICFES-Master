@@ -102,6 +102,7 @@ export const ClasificatoriaPage = () => {
 
   return (
     <div className="relative z-10 mx-auto flex min-h-[70dvh] max-w-2xl flex-col px-4 pb-4">
+      <h1 className="sr-only">Clasificatoria semanal</h1>
       <LeagueShieldNav selectedRank={selectedRank} myLeagueRank={myLeagueRank} onSelect={setSelectedRank} />
 
       {isViewingOwnLeague ? (

@@ -33,7 +33,8 @@ export function LearningPhasesPage() {
 
   return (
     <div className="space-y-3 max-sm:px-2">
-      <div className="space-y-2">
+      <header className="space-y-2">
+        <h1 className="text-on-surface text-xl font-bold sm:text-2xl">Fases de aprendizaje</h1>
         <p className="text-on-surface-muted text-sm">
           Recorrido por competencias en <span className="text-on-surface font-medium">{currentAreaData.name}</span>.
           Cambia el área desde el panel lateral.
@@ -48,7 +49,7 @@ export function LearningPhasesPage() {
           <Icon name="map" className="text-xs" />
           ¿Por qué estas fases? Ver ruta al 500
         </Link>
-      </div>
+      </header>
 
       <ul className="space-y-3">
         {COMPETENCY_PHASES.map((phase) => {

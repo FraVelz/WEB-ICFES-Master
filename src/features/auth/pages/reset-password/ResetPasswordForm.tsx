@@ -19,7 +19,7 @@ type ResetPasswordFormProps = {
 
 const INPUT_CLASS = cn(
   'w-full rounded-lg border border-surface-border bg-surface-overlay/50 py-3 pr-10 pl-10 transition-all',
-  'focus:border-app-ring focus:ring-app-ring/30 focus:ring-2 focus:outline-none'
+  'focus-visible:border-app-ring focus-visible:ring-app-ring/30 focus-visible:ring-2 focus-visible:outline-none'
 );
 
 function RequirementItem({ met, label }: { met: boolean; label: string }) {
@@ -43,6 +43,9 @@ export function ResetPasswordForm({
   onToggleConfirmPassword,
   onSubmit,
 }: ResetPasswordFormProps) {
+  const passwordsMatch = password === confirmPassword && Boolean(password);
+  const passwordInvalid = password.length > 0 && password.length < 6;
+
   return (
     <form onSubmit={onSubmit} className="space-y-6">
       <div>
@@ -58,6 +61,8 @@ export function ResetPasswordForm({
             onChange={(e) => onPasswordChange(e.target.value)}
             placeholder={EMAIL_MESSAGES.resetPasswordPage.passwordPlaceholder}
             className={INPUT_CLASS}
+            aria-invalid={passwordInvalid}
+            aria-describedby="reset-password-rules"
           />
           <button
             type="button"
@@ -83,6 +88,8 @@ export function ResetPasswordForm({
             onChange={(e) => onConfirmPasswordChange(e.target.value)}
             placeholder={EMAIL_MESSAGES.resetPasswordPage.passwordPlaceholder}
             className={INPUT_CLASS}
+            aria-invalid={Boolean(confirmPassword) && !passwordsMatch}
+            aria-describedby="reset-password-rules"
           />
           <button
             type="button"
@@ -101,14 +108,15 @@ export function ResetPasswordForm({
         <p className="text-on-surface-muted mb-2 text-xs font-semibold">
           {EMAIL_MESSAGES.resetPasswordPage.requirementsTitle}
         </p>
-        <ul className="text-on-surface-muted space-y-1 text-xs">
+        <ul
+          id="reset-password-rules"
+          aria-live="polite"
+          className="text-on-surface-muted space-y-1 text-xs"
+        >
           <RequirementItem met={password.length >= 6} label={EMAIL_MESSAGES.resetPasswordPage.requirement1} />
           <RequirementItem met={/[A-Z]/.test(password)} label={EMAIL_MESSAGES.resetPasswordPage.requirement2} />
           <RequirementItem met={/[0-9]/.test(password)} label={EMAIL_MESSAGES.resetPasswordPage.requirement3} />
-          <RequirementItem
-            met={password === confirmPassword && Boolean(password)}
-            label={EMAIL_MESSAGES.resetPasswordPage.requirement4}
-          />
+          <RequirementItem met={passwordsMatch} label={EMAIL_MESSAGES.resetPasswordPage.requirement4} />
         </ul>
       </div>
 

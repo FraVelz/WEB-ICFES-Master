@@ -25,6 +25,7 @@ export const UnifiedAchievementsPage = () => {
   return (
     <div className="relative z-10 w-full space-y-6 px-4 pb-4 sm:space-y-8 sm:px-6 sm:pb-6">
       <header className="space-y-1">
+        <h1 className="text-on-surface text-xl font-bold sm:text-2xl">Logros</h1>
         <p className="text-on-surface-muted text-sm sm:text-base">
           Nivel {level} · {summary.completedTiers} de {summary.totalTiers} escalones · {summary.totalChains} metas
         </p>

@@ -65,7 +65,7 @@ export function FullExamActiveView({
                     </div>
                     <div className="flex-1">
                       <p className="text-lg leading-relaxed font-semibold text-white">{question.text}</p>
-                      <p className="mt-2 text-xs text-gray-500">
+                      <p className="text-on-surface-muted mt-2 text-xs">
                         Dificultad: <span className="text-app-accent-muted">{question.difficulty}</span>
                       </p>
                     </div>
