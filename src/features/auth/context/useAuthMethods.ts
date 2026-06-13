@@ -86,7 +86,7 @@ export function useAuthMethods({
     const origin = typeof window !== 'undefined' ? window.location.origin : '';
     const { data, error: err } = await supabase.auth.signInWithOAuth({
       provider: 'google',
-      options: { redirectTo: origin ? `${origin}/auth/callback?next=/ruta-aprendizaje` : undefined },
+      options: { redirectTo: origin ? `${origin}/auth/callback/?next=/ruta-aprendizaje` : undefined },
     });
     if (err) {
       const msg = mapSupabaseAuthError(err);
