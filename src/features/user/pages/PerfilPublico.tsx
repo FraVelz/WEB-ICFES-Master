@@ -25,6 +25,7 @@ import { mapMyLeagueToDisplay } from '../components/profile/profileLeagueTypes';
 import { PublicProfileChrome } from '../components/profile/PublicProfileChrome';
 import { PublicProfileGate } from '../components/profile/PublicProfileGate';
 import { ReportUserDialog } from '../components/ReportUserDialog';
+import { useToast } from '@/shared/components/Toast/ToastProvider';
 
 const profileActionButtonClass = cn(
   'flex cursor-pointer items-center gap-2 rounded-lg border border-surface-border bg-surface-elevated p-2',
@@ -72,6 +73,7 @@ export const PerfilPublico = ({ view }: PerfilPublicoProps) => {
   const [copied, setCopied] = useState(false);
   const [reportDialogOpen, setReportDialogOpen] = useState(false);
   const [reportAcknowledged, setReportAcknowledged] = useState(false);
+  const { showToast } = useToast();
 
   const displayStoreHighlights = useMemo(() => {
     if (storeHighlights.length > 0) return storeHighlights;
@@ -88,8 +90,9 @@ export const PerfilPublico = ({ view }: PerfilPublicoProps) => {
   const studyTimeMinutes = isOwnProfile ? ownStudyTimeMinutes : publicStudyTimeMinutes;
 
   const handleShare = () => {
-    navigator.clipboard.writeText(window.location.href).then(() => {
+    void navigator.clipboard.writeText(window.location.href).then(() => {
       setCopied(true);
+      showToast('Enlace del perfil copiado al portapapeles', 'success');
       setTimeout(() => setCopied(false), 2000);
     });
   };

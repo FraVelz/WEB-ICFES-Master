@@ -10,6 +10,7 @@ import { useUserProfile } from '../hooks/useUserProfile';
 import { useResolvedProfileAvatar } from '@/features/user/hooks/useResolvedProfileAvatar';
 import { buildProfileStoreHighlights } from '@/features/user/utils/profileStoreHighlights';
 import { ProfilePageSkeleton } from '../components/profile/ProfilePageSkeleton';
+import { useToast } from '@/shared/components/Toast/ToastProvider';
 import { ProfilePageLayout } from '../components/profile/ProfilePageLayout';
 import { ProfileMainGrid } from '../components/profile/ProfileMainGrid';
 import { ProfileHeroCard } from '../components/profile/ProfileHeroCard';
@@ -62,11 +63,13 @@ export const PerfilNormal = () => {
   );
 
   const [copied, setCopied] = useState(false);
+  const { showToast } = useToast();
 
   const handleShare = () => {
     const url = `${window.location.origin}/perfil/public?userId=${encodeURIComponent(uid ?? '')}`;
-    navigator.clipboard.writeText(url).then(() => {
+    void navigator.clipboard.writeText(url).then(() => {
       setCopied(true);
+      showToast('Enlace del perfil copiado al portapapeles', 'success');
       setTimeout(() => setCopied(false), 2000);
     });
   };

@@ -105,14 +105,11 @@ export function StorePage() {
             </div>
 
             {filteredItems.length === 0 && (
-              <div
-                className={cn(
-                  'border-surface-border bg-surface-elevated/40 rounded-3xl border border-dashed py-20 text-center'
-                )}
-              >
-                <Icon name="shopping-bag" size="2xl" className="text-on-surface-muted mb-4 opacity-50" />
-                <p className="text-on-surface-muted text-lg">No hay artículos en esta categoría aún.</p>
-              </div>
+              <EmptyState
+                icon="shopping-bag"
+                title="Sin artículos en esta categoría"
+                description="Prueba otra categoría o vuelve más tarde cuando haya novedades."
+              />
             )}
           </>
         )}
