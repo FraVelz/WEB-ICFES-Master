@@ -13,8 +13,6 @@ Migraciones conocidas en remoto (2026-06-12):
 - `20260612221613` — `rls_baseline`
 - `20260612180000` — `league_rank_config_rls_and_lock_admin_rpc` (también en repo)
 
-Estado post-remediación: [`docs/es/auditoria/04-remediation-status.md`](../docs/es/auditoria/04-remediation-status.md).
-
 ## Checklist RLS
 
 Antes de desplegar cambios de esquema, verifica las políticas documentadas en:
