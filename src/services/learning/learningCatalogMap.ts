@@ -1,9 +1,40 @@
 import { normalizeLessonPhase, phaseToSectionId } from '@/features/learning/constants/learningPhases';
+import { resolveLessonBlockId } from '@/features/learning/data/phase1Blocks';
 import type { LearningPathLesson } from '@/features/learning/services/LearningService';
 import { HOME_AREA_IDS, type AreaId } from '@/shared/constants';
-import { stripQuizAnswersFromContent } from '@/utils/stripQuizAnswers';
 
-export const LEARNING_ROADMAP_COLUMNS = 'id, area, phase, order_index, content' as const;
+/** Proyección ligera del JSONB — sin body ni preguntas del quiz. */
+export const LEARNING_ROADMAP_COLUMNS =
+  'id, area, phase, order_index, title:content->>title, summary:content->>summary, block:content->>block, duration:content->>duration, quiz_rewards:content->quiz->rewards' as const;
+
+function readRoadmapContent(row: Record<string, unknown>): Record<string, unknown> {
+  const nested = row.content;
+  if (nested && typeof nested === 'object' && !Array.isArray(nested)) {
+    return nested as Record<string, unknown>;
+  }
+
+  const rewards = row.quiz_rewards;
+  return {
+    title: row.title,
+    summary: row.summary,
+    block: row.block,
+    duration: row.duration,
+    quiz:
+      rewards && typeof rewards === 'object'
+        ? { rewards }
+        : typeof rewards === 'string'
+          ? { rewards: safeJsonParse(rewards) }
+          : undefined,
+  };
+}
+
+function safeJsonParse(value: string): unknown {
+  try {
+    return JSON.parse(value);
+  } catch {
+    return undefined;
+  }
+}
 
 const DB_AREA_TO_SLUG: Record<string, AreaId> = {
   lectura_critica: 'lectura-critica',
@@ -22,16 +53,21 @@ export function mapRoadmapRowToLesson(row: Record<string, unknown>, index: numbe
   const areaSlug = DB_AREA_TO_SLUG[areaKey];
   if (!areaSlug) return null;
 
-  const content = stripQuizAnswersFromContent((row.content || {}) as Record<string, unknown>);
+  const content = readRoadmapContent(row);
   const phase = normalizeLessonPhase(row.phase ?? content.phase ?? content.fase ?? content.difficulty);
   const quiz = (content.quiz ?? {}) as Record<string, unknown>;
+  const order = Number(row.order_index ?? index);
+  const blockFromContent = typeof content.block === 'string' ? content.block : undefined;
+  const blockId = blockFromContent ?? resolveLessonBlockId(areaSlug, { order, blockId: undefined }) ?? undefined;
 
   return {
     id: String(row.id ?? `${areaSlug}_${index}`),
     title: (content.title as string) || row.id,
-    order: Number(row.order_index ?? index),
+    description: content.summary,
+    order,
     phase,
     difficulty: phaseToSectionId(phase),
+    blockId,
     rewards: (quiz.rewards as { xp?: number; coins?: number }) || { xp: 50, coins: 25 },
     duration: content.duration,
   };

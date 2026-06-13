@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import { useParams } from 'next/navigation';
 import { cn } from '@/utils/cn';
 import { ExamConfigModal } from '@/features/exam/components';
 import { PracticeResultsView } from '@/features/exam/components/practice/PracticeResultsView';
@@ -8,7 +9,7 @@ import { PracticeActiveView } from '@/features/exam/components/practice/Practice
 import { usePracticeExam } from '@/features/exam/hooks/usePracticeExam';
 import { LoadingState } from '@/shared/components/LoadingState';
 import { EmptyState } from '@/shared/components/EmptyState';
-import { LEARNING_PHASES_PATH } from '@/features/learning/data/competencyPhases';
+import { getLearningPhasesHref, isPhasesAreaSlug } from '@/features/learning/data/competencyPhases';
 import { RouteTo500ContextBanner } from '@/features/learning/components/routeTo500/RouteTo500ContextBanner';
 import { BreadcrumbNav } from '@/shared/components/BreadcrumbNav';
 
@@ -28,6 +29,10 @@ function PracticeErrorState({ message, onRetry }: { message: string; onRetry?: (
 }
 
 export const PracticePage = () => {
+  const { area: areaParam } = useParams<{ area: string }>();
+  const areaSlug = Array.isArray(areaParam) ? areaParam[0] : (areaParam ?? '');
+  const phasesHref = getLearningPhasesHref(isPhasesAreaSlug(areaSlug) ? areaSlug : undefined);
+
   const {
     areaInfo,
     isPhaseSkipMode,
@@ -120,7 +125,7 @@ export const PracticePage = () => {
                 Superaste la fase en {areaInfo.name}.
               </p>
               <Link
-                href={LEARNING_PHASES_PATH}
+                href={phasesHref}
                 className={cn(
                   'mt-3 inline-flex rounded-xl bg-green-600 px-4 py-2 text-sm font-bold text-white',
                   'hover:bg-green-500'

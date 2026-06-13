@@ -5,11 +5,12 @@ import type { LearningPhaseNumber } from '@/features/learning/constants/learning
 import type { AreaId } from '@/shared/constants';
 import LearningSupabaseService from '@/services/supabase/LearningSupabaseService';
 
-const CACHE_STORAGE_KEY = 'icfes_learning_catalog_v1';
+const CACHE_STORAGE_KEY = 'icfes_learning_catalog_v2';
 const CACHE_TTL_MS = 20 * 60 * 1000;
 
 type CatalogCachePayload = {
   fetchedAt: number;
+  phase?: LearningPhaseNumber;
   lessonsByArea: Partial<Record<AreaId, LearningPathLesson[]>>;
 };
 
@@ -38,15 +39,18 @@ function writeSessionCache(payload: CatalogCachePayload): void {
   }
 }
 
-function isCacheFresh(cache: CatalogCachePayload | null): cache is CatalogCachePayload {
-  return Boolean(cache && Date.now() - cache.fetchedAt <= CACHE_TTL_MS);
+function isCacheFresh(cache: CatalogCachePayload | null, phase?: LearningPhaseNumber): cache is CatalogCachePayload {
+  return Boolean(cache && Date.now() - cache.fetchedAt <= CACHE_TTL_MS && cache.phase === phase);
 }
 
 let fetchInFlight: Promise<Partial<Record<AreaId, LearningPathLesson[]>>> | null = null;
+let fetchPhaseInFlight: LearningPhaseNumber | undefined;
 
-async function fetchCatalogFromSupabase(): Promise<Partial<Record<AreaId, LearningPathLesson[]>>> {
+async function fetchCatalogFromSupabase(
+  phase?: LearningPhaseNumber
+): Promise<Partial<Record<AreaId, LearningPathLesson[]>>> {
   if (!isSupabaseConfigured() || !supabase) return {};
-  return LearningSupabaseService.fetchPublishedRoadmapCatalog();
+  return LearningSupabaseService.fetchPublishedRoadmapCatalog(phase);
 }
 
 /** Invalida cache en memoria y sessionStorage (p. ej. tras publicar contenido en admin). */
@@ -63,26 +67,32 @@ export function invalidateLearningCatalogCache(): void {
 }
 
 /** Catálogo de lecciones agrupado por área — 1 query Supabase, cache 20 min. */
-export async function fetchLearningCatalog(): Promise<Partial<Record<AreaId, LearningPathLesson[]>>> {
-  if (isCacheFresh(memoryCache)) return memoryCache.lessonsByArea;
+export async function fetchLearningCatalog(
+  options: { phase?: LearningPhaseNumber } = {}
+): Promise<Partial<Record<AreaId, LearningPathLesson[]>>> {
+  const { phase } = options;
+
+  if (isCacheFresh(memoryCache, phase)) return memoryCache.lessonsByArea;
 
   const session = readSessionCache();
-  if (isCacheFresh(session)) {
+  if (isCacheFresh(session, phase)) {
     memoryCache = session;
     return session.lessonsByArea;
   }
 
-  if (fetchInFlight) return fetchInFlight;
+  if (fetchInFlight && fetchPhaseInFlight === phase) return fetchInFlight;
 
-  fetchInFlight = fetchCatalogFromSupabase()
+  fetchPhaseInFlight = phase;
+  fetchInFlight = fetchCatalogFromSupabase(phase)
     .then((lessonsByArea) => {
-      const payload: CatalogCachePayload = { fetchedAt: Date.now(), lessonsByArea };
+      const payload: CatalogCachePayload = { fetchedAt: Date.now(), phase, lessonsByArea };
       memoryCache = payload;
       writeSessionCache(payload);
       return lessonsByArea;
     })
     .finally(() => {
       fetchInFlight = null;
+      fetchPhaseInFlight = undefined;
     });
 
   return fetchInFlight;
@@ -92,7 +102,7 @@ export async function getLearningPathFromCatalog(
   areaId: AreaId,
   phase?: LearningPhaseNumber
 ): Promise<LearningPathLesson[]> {
-  const catalog = await fetchLearningCatalog();
+  const catalog = await fetchLearningCatalog({ phase });
   const lessons = catalog[areaId] ?? [];
   if (phase === undefined) return [...lessons];
   return lessons.filter((lesson) => lesson.phase === phase);

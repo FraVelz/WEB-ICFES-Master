@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
+import { createPortal } from 'react-dom';
 import { Icon } from '@/shared/components/Icon';
 import { useDialogA11y } from '@/shared/hooks/useDialogA11y';
 import { cn } from '@/utils/cn';
@@ -39,10 +40,10 @@ export function PdfViewerModal({ isOpen, title, url, onClose }: PdfViewerModalPr
 
   if (!isOpen) return null;
 
-  return (
+  const modal = (
     <div
       className={cn(
-        'fixed inset-0 z-50 flex items-end justify-center bg-black/70 p-0 backdrop-blur-sm',
+        'fixed inset-0 z-70 flex items-end justify-center bg-black/70 p-0 backdrop-blur-sm',
         'sm:items-center sm:p-4'
       )}
     >
@@ -96,4 +97,6 @@ export function PdfViewerModal({ isOpen, title, url, onClose }: PdfViewerModalPr
       </div>
     </div>
   );
+
+  return typeof document !== 'undefined' ? createPortal(modal, document.body) : null;
 }

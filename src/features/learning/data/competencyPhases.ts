@@ -1,4 +1,4 @@
-import type { AreaId } from '@/shared/constants';
+import { HOME_AREA_IDS, type AreaId } from '@/shared/constants';
 
 export type CompetencyPhaseId = 'cimentacion' | 'relacion' | 'maestria';
 
@@ -88,8 +88,28 @@ export function getCompetencyPhaseBySectionId(sectionId: string): CompetencyPhas
 export const LEARNING_PHASES_PATH = '/fases';
 export const LEARNING_ROADMAP_PATH = '/ruta-aprendizaje';
 
-export function getLearningPhasesHref(): string {
-  return LEARNING_PHASES_PATH;
+/** Slugs válidos para rutas `/fases/[area]`. */
+export const PHASES_AREA_SLUGS = HOME_AREA_IDS;
+
+export type PhasesAreaSlug = Exclude<AreaId, 'examen-completo'>;
+
+export function isPhasesAreaSlug(id: string): id is PhasesAreaSlug {
+  return (PHASES_AREA_SLUGS as readonly string[]).includes(id);
+}
+
+const DEFAULT_PHASES_AREA: PhasesAreaSlug = 'lectura-critica';
+
+export function getLearningPhasesHref(areaId?: string): string {
+  const area = areaId && isPhasesAreaSlug(areaId) ? areaId : DEFAULT_PHASES_AREA;
+  return `${LEARNING_PHASES_PATH}/${area}`;
+}
+
+export function parsePhasesAreaFromPathname(pathname: string): PhasesAreaSlug | null {
+  const normalized = pathname.endsWith('/') && pathname.length > 1 ? pathname.slice(0, -1) : pathname;
+  if (!normalized.startsWith(`${LEARNING_PHASES_PATH}/`)) return null;
+  const slug = normalized.slice(`${LEARNING_PHASES_PATH}/`.length).split('/')[0];
+  if (!slug || !isPhasesAreaSlug(slug)) return null;
+  return slug;
 }
 
 export function getRoadmapHref(sectionId?: string, areaId?: string): string {

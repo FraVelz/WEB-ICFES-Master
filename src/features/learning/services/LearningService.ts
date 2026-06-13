@@ -7,8 +7,10 @@ import {
 } from '@/features/learning/constants/learningPhases';
 import { ensureLearningProgressSynced } from '@/services/learning';
 import { injectPhaseMinimumRequirements } from '@/features/learning/utils/injectPhaseMinimumRequirements';
+import { injectBlockCheckpoints } from '@/features/learning/utils/injectBlockCheckpoints';
 import { getLearningPathFromCatalog } from '@/services/learning/learningCatalogCache';
 import { getCompletedLessons } from '@/services/persistence';
+import { getBlockExamPasses } from '@/services/persistence/blockExamPersistence';
 import LearningSupabaseService from '@/services/supabase/LearningSupabaseService';
 import type { AreaId } from '@/shared/constants';
 
@@ -33,6 +35,9 @@ export interface LearningPathLesson {
   phase: LearningPhaseNumber;
   difficulty: string;
   moduleType?: string;
+  type?: string;
+  blockId?: string;
+  lessonIds?: string[];
   rewards: { xp?: number; coins?: number };
   duration?: unknown;
   content?: string;
@@ -58,7 +63,8 @@ function mapStaticLesson(
  * Learning data: Supabase when configured, otherwise static roadmap JSON
  */
 function finalizeLearningPath(areaId: string, lessons: LearningPathLesson[], phase?: LearningPhaseNumber) {
-  return injectPhaseMinimumRequirements(areaId, lessons, phase);
+  const withRequirements = injectPhaseMinimumRequirements(areaId, lessons, phase);
+  return injectBlockCheckpoints(areaId, withRequirements, phase);
 }
 
 export const LearningService = {
@@ -133,7 +139,20 @@ export const LearningService = {
   },
 
   getUserProgress: async (userId: string, _areaId: string) => {
-    const completed = userId ? (await ensureLearningProgressSynced(userId)).completedLessons : getCompletedLessons();
-    return { completedLessons: completed, currentLevel: 0, totalXP: 0 };
+    if (userId) {
+      const synced = await ensureLearningProgressSynced(userId);
+      return {
+        completedLessons: synced.completedLessons,
+        blockExamPasses: synced.blockExamPasses,
+        currentLevel: 0,
+        totalXP: 0,
+      };
+    }
+    return {
+      completedLessons: getCompletedLessons(),
+      blockExamPasses: getBlockExamPasses(),
+      currentLevel: 0,
+      totalXP: 0,
+    };
   },
 };

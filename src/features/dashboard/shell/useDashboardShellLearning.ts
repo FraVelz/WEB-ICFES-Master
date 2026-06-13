@@ -5,13 +5,20 @@ import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { AREA_INFO, type AreaId } from '@/shared/constants';
 import { useLearningPath } from '@/features/learning/hooks/useLearningPath';
 import { pickDefaultSectionId } from '@/features/learning/shell/SecondaryHeader/sectionStageUtils';
-import { LEARNING_PHASES_PATH, LEARNING_ROADMAP_PATH } from '@/features/learning/data/competencyPhases';
+import { LEARNING_ROADMAP_PATH, getLearningPhasesHref, parsePhasesAreaFromPathname } from '@/features/learning/data/competencyPhases';
 import { getLessonIdFromPathname, isLessonRoute, resolveLessonAreaId } from '@/features/learning/utils/lessonRoutes';
 import { isLearningPhasesRoute } from './shellRoutes';
 
 function resolveAreaId(param: string | null): AreaId {
   if (param && param in AREA_INFO) return param as AreaId;
   return 'lectura-critica';
+}
+
+function resolveInitialArea(pathname: string, areaParam: string | null, isPhasesRoute: boolean): AreaId {
+  if (isPhasesRoute) {
+    return parsePhasesAreaFromPathname(pathname) ?? resolveAreaId(areaParam);
+  }
+  return resolveAreaId(areaParam);
 }
 
 function buildLearningSearch(area: string, sectionId?: string): string {
@@ -26,16 +33,24 @@ export function useDashboardShellLearning(isLearningShell: boolean) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const isPhasesRoute = isLearningPhasesRoute(pathname);
-  const learningPath = isPhasesRoute ? LEARNING_PHASES_PATH : LEARNING_ROADMAP_PATH;
+  const learningPath = LEARNING_ROADMAP_PATH;
 
-  const [currentArea, setCurrentAreaState] = useState(() => resolveAreaId(searchParams.get('area')));
+  const [currentArea, setCurrentAreaState] = useState(() =>
+    resolveInitialArea(pathname, searchParams.get('area'), isPhasesRoute)
+  );
   const [currentSectionId, setCurrentSectionIdState] = useState<string | undefined>(
     searchParams.get('etapa') ?? undefined
   );
 
   const replaceLearningUrl = useCallback(
     (area: string, sectionId?: string) => {
-      if (!isLearningShell || isPhasesRoute) return;
+      if (!isLearningShell) return;
+      if (isPhasesRoute) {
+        const nextUrl = getLearningPhasesHref(area);
+        if (pathname === nextUrl || pathname === `${nextUrl}/`) return;
+        router.replace(nextUrl, { scroll: false });
+        return;
+      }
       const qs = buildLearningSearch(area, sectionId);
       const nextUrl = `${learningPath}?${qs}`;
       const currentQs = searchParams.toString();
@@ -50,7 +65,7 @@ export function useDashboardShellLearning(isLearningShell: boolean) {
     (area: string) => {
       if (!(area in AREA_INFO)) return;
       setCurrentAreaState(area as AreaId);
-      if (!isPhasesRoute) replaceLearningUrl(area, currentSectionId);
+      replaceLearningUrl(area, isPhasesRoute ? undefined : currentSectionId);
     },
     [currentSectionId, isPhasesRoute, replaceLearningUrl]
   );
@@ -76,7 +91,13 @@ export function useDashboardShellLearning(isLearningShell: boolean) {
   const currentSectionIndex = sections.findIndex((s) => s.id === currentSectionId);
 
   useEffect(() => {
-    if (!isLearningShell || isPhasesRoute) return;
+    if (!isLearningShell) return;
+
+    if (isPhasesRoute) {
+      const areaFromPath = parsePhasesAreaFromPathname(pathname);
+      if (areaFromPath) setCurrentAreaState(areaFromPath);
+      return;
+    }
 
     if (isLessonRoute(pathname)) {
       const lessonId = getLessonIdFromPathname(pathname);

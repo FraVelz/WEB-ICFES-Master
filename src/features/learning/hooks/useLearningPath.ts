@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback, useRef } from 'react';
 import { LearningService } from '../services/LearningService';
 import { useAuth } from '@/features/auth/context/AuthContext';
 import { LEARNING_PROGRESS_UPDATED_EVENT } from '@/services/learning';
+import { BLOCK_EXAM_UPDATED_EVENT } from '@/services/persistence/blockExamPersistence';
 import { LESSON_COMPLETED_EVENT } from '@/services/persistence';
 import { debounceFn } from '@/utils/debounceFn';
 import {
@@ -10,7 +11,8 @@ import {
   sectionIdToPhase,
   type LearningPhaseSectionId,
 } from '@/features/learning/constants/learningPhases';
-import { applyLessonStatusesToNodes } from '@/features/learning/utils/lessonPathStatus';
+import { applyLessonStatusesForArea } from '@/features/learning/utils/lessonPathStatus';
+import type { AreaId } from '@/shared/constants';
 
 /**
  * Learning-path state: maps Supabase/local lessons into UI "sections".
@@ -86,6 +88,11 @@ export const useLearningPath = (areaId: string | undefined, options: UseLearning
       }));
 
       const completedIds = (progress as { completedLessons?: string[] } | null)?.completedLessons ?? [];
+      const blockExamPasses =
+        (progress as { blockExamPasses?: Array<{ areaId: string; blockId: string }> } | null)?.blockExamPasses ?? [];
+      const passedBlockIds = new Set(
+        blockExamPasses.filter((record) => record.areaId === areaId).map((record) => record.blockId)
+      );
 
       lessons.forEach((lesson) => {
         const sectionIdForLesson = phaseToSectionId(lesson.phase);
@@ -94,6 +101,12 @@ export const useLearningPath = (areaId: string | undefined, options: UseLearning
 
         const xp = lesson.rewards?.xp || lesson.xp || 0;
         const coins = lesson.rewards?.coins || lesson.coins || 0;
+        const nodeType =
+          lesson.moduleType === 'minimum-requirements'
+            ? 'minimum-requirements'
+            : lesson.moduleType === 'block-checkpoint' || lesson.type === 'checkpoint'
+              ? 'checkpoint'
+              : 'lesson';
 
         section.nodes.push({
           ...lesson,
@@ -102,13 +115,24 @@ export const useLearningPath = (areaId: string | undefined, options: UseLearning
           description: (lesson as { description?: string }).description,
           xp,
           coins,
-          type: lesson.moduleType === 'minimum-requirements' ? 'minimum-requirements' : 'lesson',
+          type: nodeType,
+          moduleType: lesson.moduleType,
+          blockId: lesson.blockId,
+          lessonIds: lesson.lessonIds,
         } as PathNodeData);
       });
 
       const completedSet = new Set(completedIds);
+      const useBlockGating = phaseFilter === 1 || (!loadAllPhases && sectionIdToPhase(sectionId) === 1);
+
       for (const section of groupedSections) {
-        section.nodes = applyLessonStatusesToNodes(section.nodes, completedSet);
+        section.nodes = applyLessonStatusesForArea(
+          section.nodes,
+          completedSet,
+          passedBlockIds,
+          areaId as AreaId,
+          useBlockGating && section.id === 'facil'
+        );
       }
 
       const activeSections = groupedSections.filter((s) => s.nodes.length > 0);
@@ -132,9 +156,11 @@ export const useLearningPath = (areaId: string | undefined, options: UseLearning
     const refresh = debounceFn(() => void fetchPath({ background: true }), 400);
     window.addEventListener(LESSON_COMPLETED_EVENT, refresh);
     window.addEventListener(LEARNING_PROGRESS_UPDATED_EVENT, refresh);
+    window.addEventListener(BLOCK_EXAM_UPDATED_EVENT, refresh);
     return () => {
       window.removeEventListener(LESSON_COMPLETED_EVENT, refresh);
       window.removeEventListener(LEARNING_PROGRESS_UPDATED_EVENT, refresh);
+      window.removeEventListener(BLOCK_EXAM_UPDATED_EVENT, refresh);
     };
   }, [fetchPath]);
 

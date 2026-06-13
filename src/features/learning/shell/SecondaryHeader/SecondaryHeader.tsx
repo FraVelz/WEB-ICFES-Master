@@ -73,7 +73,7 @@ export const SecondaryHeader = ({
   const areaSelectorRef = useRef<HTMLButtonElement>(null);
   const streakButtonRef = useRef<HTMLButtonElement>(null);
 
-  const guideHref = getLearningPhasesHref();
+  const guideHref = getLearningPhasesHref(currentArea);
 
   return (
     <div className="relative z-50 lg:hidden">

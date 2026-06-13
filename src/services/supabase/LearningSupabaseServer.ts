@@ -39,3 +39,45 @@ export async function loadLessonQuizQuestions(lessonId: string) {
     rewards: content.quiz?.rewards,
   };
 }
+
+export async function loadLessonQuizQuestionsBatch(lessonIds: string[]) {
+  if (lessonIds.length === 0) return [];
+
+  const staticResults = lessonIds
+    .map((lessonId) => loadStaticLessonQuiz(lessonId))
+    .filter((entry): entry is NonNullable<typeof entry> => Boolean(entry));
+
+  const staticIds = new Set(staticResults.map((entry) => entry.lessonId));
+  const remoteIds = lessonIds.filter((id) => !staticIds.has(id));
+
+  const sb = createServerSupabaseClient();
+  if (!sb && remoteIds.length > 0) {
+    return staticResults;
+  }
+
+  let remoteResults: Array<{ lessonId: string; questions: ReturnType<typeof normalizeQuizQuestions> }> = [];
+
+  if (sb && remoteIds.length > 0) {
+    const { data, error } = await sb
+      .from(TABLE)
+      .select('id, content')
+      .in('id', remoteIds)
+      .eq('published', true);
+
+    if (error) throw new Error(`Error leyendo lecciones: ${error.message}`);
+
+    remoteResults = (data ?? [])
+      .map((row) => {
+        const content = (row.content ?? {}) as LessonQuizContent;
+        const normalized = normalizeQuizQuestions(content.questions, content.quiz);
+        if (normalized.length === 0) return null;
+        return {
+          lessonId: String(row.id),
+          questions: normalized,
+        };
+      })
+      .filter((entry): entry is NonNullable<typeof entry> => Boolean(entry));
+  }
+
+  return [...staticResults.map((entry) => ({ lessonId: entry.lessonId, questions: entry.questions })), ...remoteResults];
+}

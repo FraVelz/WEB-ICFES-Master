@@ -59,16 +59,29 @@ function mapFullLessonRow(row: Record<string, unknown>) {
 }
 
 const LearningSupabaseService = {
-  /** Catálogo ligero (sin body/quiz) — 1 query para todas las áreas. */
-  async fetchPublishedRoadmapCatalog(): Promise<Partial<Record<AreaId, LearningPathLesson[]>>> {
+  /** Catálogo ligero (sin body/quiz) — 1 query; opcional filtro por fase. */
+  async fetchPublishedRoadmapCatalog(phase?: LearningPhaseNumber): Promise<Partial<Record<AreaId, LearningPathLesson[]>>> {
     const sb = getSupabase();
     if (!sb) return {};
 
-    const { data, error } = await sb
-      .from(TABLE)
-      .select(LEARNING_ROADMAP_COLUMNS)
-      .eq('published', true)
-      .order('order_index', { ascending: true });
+    let query = sb.from(TABLE).select(LEARNING_ROADMAP_COLUMNS).eq('published', true);
+
+    if (phase !== undefined) {
+      query = query.eq('phase', phase);
+    }
+
+    let { data, error } = await query.order('order_index', { ascending: true });
+
+    if (error) {
+      let fallbackQuery = sb.from(TABLE).select('id, area, phase, order_index, content').eq('published', true);
+      if (phase !== undefined) {
+        fallbackQuery = fallbackQuery.eq('phase', phase);
+      }
+      const fallback = await fallbackQuery.order('order_index', { ascending: true });
+      if (fallback.error) throw new Error(`Error leyendo learning_content: ${fallback.error.message}`);
+      data = fallback.data;
+      error = null;
+    }
 
     if (error) throw new Error(`Error leyendo learning_content: ${error.message}`);
     return groupRoadmapRowsByArea((data ?? []) as Record<string, unknown>[]);

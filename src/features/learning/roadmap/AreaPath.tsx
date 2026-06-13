@@ -1,6 +1,8 @@
 import React from 'react';
 import { cn } from '@/utils/cn';
+import { getPhase1BlockDef } from '@/features/learning/data/phase1Blocks';
 import type { LessonPathStatus } from '@/features/learning/utils/lessonPathStatus';
+import type { AreaId } from '@/shared/constants';
 import { PathNode } from './PathNode';
 
 // Area → icon name
@@ -18,7 +20,10 @@ export interface PathNodeData {
   title?: string;
   description?: string;
   type?: string;
+  moduleType?: string;
   status?: LessonPathStatus;
+  blockId?: string;
+  lessonIds?: string[];
   [key: string]: unknown;
 }
 
@@ -36,6 +41,46 @@ export interface AreaPathProps {
   sections?: PathSection[];
   /** Oculta el encabezado inline; la etapa se muestra en el banner secundario. */
   hideSectionHeader?: boolean;
+}
+
+type BlockGroup = {
+  blockId: string | null;
+  title: string;
+  nodes: PathNodeData[];
+};
+
+function groupNodesByBlock(areaId: string, nodes: PathNodeData[]): BlockGroup[] {
+  const groups: BlockGroup[] = [];
+  let current: BlockGroup | null = null;
+
+  for (const node of nodes) {
+    const blockId = typeof node.blockId === 'string' ? node.blockId : null;
+    const isNewGroup = !current || current.blockId !== blockId;
+
+    if (isNewGroup) {
+      const blockDef: ReturnType<typeof getPhase1BlockDef> = blockId
+        ? getPhase1BlockDef(areaId as AreaId, blockId)
+        : undefined;
+      const nextGroup: BlockGroup = {
+        blockId,
+        title: blockDef?.title ?? (blockId ? blockId : 'Inicio'),
+        nodes: [],
+      };
+      current = nextGroup;
+      groups.push(nextGroup);
+    }
+
+    current?.nodes.push(node);
+  }
+
+  return groups;
+}
+
+function getBlockProgress(nodes: PathNodeData[]): { completed: number; total: number } {
+  const lessons = nodes.filter((node) => node.type !== 'checkpoint');
+  const total = lessons.length;
+  const completed = lessons.filter((node) => node.status === 'completed').length;
+  return { completed, total };
 }
 
 export const AreaPath = ({
@@ -62,26 +107,70 @@ export const AreaPath = ({
             </div>
           )}
 
-          <div className="space-y-6">
-            {section.nodes.map((node: PathNodeData) => (
-              <div key={node.id} className="relative pl-2">
-                <div className="bg-surface-overlay absolute top-1/2 left-2 -z-10 h-1 w-6" />
+          <div className="space-y-8">
+            {groupNodesByBlock(areaId, section.nodes).map((group) => {
+              const { completed, total } = getBlockProgress(group.nodes);
+              const isLocked = group.nodes.every((node) => node.status === 'locked');
 
-                <PathNode
-                  {...node}
-                  type={node.type === 'checkpoint' ? 'checkpoint' : node.type === 'minimum-requirements' ? 'minimum-requirements' : 'lesson'}
-                  icon={
-                    node.type === 'checkpoint'
-                      ? 'trophy'
-                      : node.type === 'minimum-requirements'
-                        ? 'clipboard-list'
-                        : areaIcon
-                  }
-                  colorClass={colorClass}
-                  onClick={() => onNodeClick(node)}
-                />
-              </div>
-            ))}
+              return (
+                <div key={`${section.id}-${group.blockId ?? 'intro'}`} className="space-y-4">
+                  {group.blockId && (
+                    <div
+                      className={cn(
+                        'border-surface-border ml-2 rounded-xl border px-4 py-3',
+                        isLocked ? 'bg-surface-elevated/30 opacity-70' : 'bg-surface-elevated/50'
+                      )}
+                    >
+                      <div className="flex items-center justify-between gap-3">
+                        <div>
+                          <p className="text-xs font-semibold tracking-wide text-amber-400/90 uppercase">Bloque</p>
+                          <h4 className="text-base font-bold text-white">{group.title}</h4>
+                        </div>
+                        <span className="text-on-surface-muted text-sm font-medium">
+                          {completed}/{total}
+                        </span>
+                      </div>
+                      {isLocked && (
+                        <p className="text-on-surface-muted mt-2 text-xs">
+                          Aprueba el examen del bloque anterior para desbloquear estas lecciones.
+                        </p>
+                      )}
+                    </div>
+                  )}
+
+                  <div className="space-y-6">
+                    {group.nodes.map((node: PathNodeData) => (
+                      <div key={node.id} className="relative pl-2">
+                        <div className="bg-surface-overlay absolute top-1/2 left-2 -z-10 h-1 w-6" />
+
+                        <PathNode
+                          {...node}
+                          type={
+                            node.type === 'checkpoint'
+                              ? 'checkpoint'
+                              : node.type === 'minimum-requirements'
+                                ? 'minimum-requirements'
+                                : 'lesson'
+                          }
+                          icon={
+                            node.type === 'checkpoint'
+                              ? 'trophy'
+                              : node.type === 'minimum-requirements'
+                                ? 'clipboard-list'
+                                : areaIcon
+                          }
+                          colorClass={colorClass}
+                          onClick={() => {
+                            if (node.status === 'locked') return;
+                            onNodeClick(node);
+                          }}
+                        />
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </div>
       ))}

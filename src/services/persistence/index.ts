@@ -92,4 +92,14 @@ export {
 
 export { PROFILE_STATUS_CHANGE_EVENT, getProfileStatusId, setProfileStatusId } from './profileStatusPersistence';
 
+export {
+  BLOCK_EXAM_PASS_PERCENT,
+  BLOCK_EXAM_UPDATED_EVENT,
+  getBlockExamPasses,
+  isBlockExamPassed,
+  getPassedBlockIdsForArea,
+  markBlockExamPassed,
+  type BlockExamPassRecord,
+} from './blockExamPersistence';
+
 export { formatTimeExtended } from '@/storage/timeFormatter';

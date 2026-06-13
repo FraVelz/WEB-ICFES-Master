@@ -48,6 +48,8 @@ export async function GET(request: NextRequest, context: RouteContext) {
         'Content-Length': String(object.contentLength ?? bytes.byteLength),
         'Cache-Control': 'public, max-age=3600, stale-while-revalidate=86400',
         'Content-Disposition': `inline; filename="${infographic.filename}"`,
+        'Content-Security-Policy': "frame-ancestors 'self'",
+        'X-Frame-Options': 'SAMEORIGIN',
       },
     });
   } catch (error) {

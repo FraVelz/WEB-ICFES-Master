@@ -83,7 +83,7 @@ export function DashboardShellBanner({ className }: { className?: string }) {
       <SectionStageBanner
         section={currentSection}
         areaColorClass={currentAreaData.color ?? 'from-blue-500 to-blue-600'}
-        guideHref={getLearningPhasesHref()}
+        guideHref={getLearningPhasesHref(currentArea)}
         onPrevSection={() => goToAdjacentSection(-1)}
         onNextSection={() => goToAdjacentSection(1)}
         hasPrev={currentSectionIndex > 0}

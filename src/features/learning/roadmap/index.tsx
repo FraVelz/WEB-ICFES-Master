@@ -4,8 +4,10 @@ import dynamic from 'next/dynamic';
 import { useRouter } from 'next/navigation';
 import React, { useMemo, useState } from 'react';
 import { useDashboardShell } from '@/features/dashboard/shell';
+import { getLearningPhasesHref } from '@/features/learning/data/competencyPhases';
 import { getLessonStartHref } from '@/features/learning/utils/lessonRoutes';
 import { splitLessonContent } from '@/features/learning/utils/splitLessonContent';
+import { BlockExamModal } from './blockExam/BlockExamModal';
 
 import { AreaPath } from './AreaPath';
 
@@ -30,6 +32,7 @@ export const LearningRoadmap = () => {
   } = useDashboardShell();
 
   const [selectedLesson, setSelectedLesson] = useState<PathNodeData | null>(null);
+  const [selectedCheckpoint, setSelectedCheckpoint] = useState<PathNodeData | null>(null);
 
   const areaColorClass = currentAreaData?.color ?? 'from-blue-500 to-blue-600';
 
@@ -52,6 +55,10 @@ export const LearningRoadmap = () => {
   }, [sections, currentSectionId]);
 
   const handleNodeClick = (node: PathNodeData) => {
+    if (node.type === 'checkpoint' || node.moduleType === 'block-checkpoint') {
+      setSelectedCheckpoint(node);
+      return;
+    }
     setSelectedLesson(node);
   };
 
@@ -91,7 +98,7 @@ export const LearningRoadmap = () => {
           title="No hay lecciones en esta fase"
           description="Prueba otra área o fase, o vuelve más tarde cuando se publique contenido nuevo."
           actionLabel="Ver fases"
-          actionHref="/fases/"
+          actionHref={getLearningPhasesHref(currentArea)}
           className="mx-auto max-w-md px-4"
         />
       )}
@@ -111,6 +118,14 @@ export const LearningRoadmap = () => {
         onClose={() => setSelectedLesson(null)}
         lesson={selectedLesson}
         onStart={handleStartLesson}
+      />
+
+      <BlockExamModal
+        isOpen={!!selectedCheckpoint}
+        onClose={() => setSelectedCheckpoint(null)}
+        onComplete={() => setSelectedCheckpoint(null)}
+        checkpoint={selectedCheckpoint}
+        areaId={currentArea}
       />
     </div>
   );

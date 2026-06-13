@@ -25,6 +25,18 @@ export const ICFES_INFOGRAPHIC_GROUPS: IcfesInfographicGroup[] = [
     ],
   },
   {
+    id: 'validacion-bachillerato',
+    area: 'Validación del Bachillerato',
+    items: [
+      {
+        id: 'validacion-infografia',
+        title: 'Infografía – Validación del Bachillerato',
+        description: 'Requisitos, áreas evaluadas y funcionamiento del examen de validación del bachillerato académico.',
+        filename: '02-Febrero_Infografia-Validacion-del-Bachillerato-2023.pdf',
+      },
+    ],
+  },
+  {
     id: 'lectura-critica',
     area: 'Lectura Crítica',
     items: [

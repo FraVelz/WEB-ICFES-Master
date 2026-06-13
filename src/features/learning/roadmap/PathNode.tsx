@@ -4,7 +4,6 @@ import { cn } from '@/utils/cn';
 import type { LessonPathStatus } from '@/features/learning/utils/lessonPathStatus';
 
 const BORDER_COLORS = {
-  blue: 'border-blue-500/50',
   green: 'border-green-500/50',
   purple: 'border-purple-500/50',
   orange: 'border-orange-500/50',
@@ -34,7 +33,8 @@ export const PathNode = ({
 }: PathNodeProps) => {
   const isCheckpoint = type === 'checkpoint';
   const isMinimumRequirements = type === 'minimum-requirements';
-  const isPending = status === 'pending';
+  const isLocked = status === 'locked';
+  const isPending = status === 'pending' || isLocked;
   const isCurrent = status === 'current';
   const isCompleted = status === 'completed';
 
@@ -47,6 +47,7 @@ export const PathNode = ({
     'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-app-accent focus-visible:ring-offset-2',
     'focus-visible:ring-offset-surface-via',
     isPending && 'border-surface-border bg-surface-elevated/40 opacity-70 hover:border-surface-border hover:opacity-90',
+    isLocked && 'cursor-not-allowed opacity-55 hover:opacity-55',
     isMinimumRequirements &&
       !isCompleted &&
       'border-amber-500/35 bg-surface-elevated/60 hover:border-amber-500/50',
@@ -67,7 +68,7 @@ export const PathNode = ({
     <>
       <div className={iconCircleClass}>
         <Icon
-          name={isCompleted ? 'check' : icon || 'book'}
+          name={isCompleted ? 'check' : isLocked ? 'lock' : icon || 'book'}
           className={cn(
             isPending && 'text-on-surface-muted',
             isCurrent && 'text-white',
@@ -87,7 +88,9 @@ export const PathNode = ({
         >
           {title}
         </h4>
-        <p className="text-on-surface-muted truncate text-xs">{description}</p>
+        <p className="text-on-surface-muted truncate text-xs">
+          {isLocked ? 'Bloqueado — completa el bloque anterior' : description}
+        </p>
       </div>
 
       <div
@@ -112,7 +115,14 @@ export const PathNode = ({
   );
 
   return (
-    <button type="button" onClick={onClick} className={cardClass} aria-current={isCurrent ? 'step' : undefined}>
+    <button
+      type="button"
+      onClick={onClick}
+      disabled={isLocked}
+      className={cardClass}
+      aria-current={isCurrent ? 'step' : undefined}
+      aria-disabled={isLocked}
+    >
       {body}
     </button>
   );
