@@ -2,8 +2,7 @@
  * ExamQuestionsSupabaseService — banco de preguntas ICFES desde Supabase
  */
 import { routeAreaToDbArea } from '@/features/exam/data/examAreas';
-import type { ExamQuestion } from '@/features/exam/types/question';
-import type { QuestionOption } from '@/features/exam/types/question';
+import type { ExamQuestion, QuestionOption } from '@/features/exam/types/question';
 import { supabase } from '@/config/supabase';
 
 const PUBLIC_VIEW = 'exam_questions_public';
@@ -41,19 +40,25 @@ function rowToPublicExamQuestion(row: ExamQuestionPublicRow): ExamQuestion {
 }
 
 const ExamQuestionsSupabaseService = {
-  async getByRouteArea(routeArea: string): Promise<ExamQuestion[]> {
+  async getByRouteArea(routeArea: string, limit?: number): Promise<ExamQuestion[]> {
     const sb = getSupabase();
     if (!sb) return [];
 
     const dbArea = routeAreaToDbArea(routeArea);
     if (!dbArea) return [];
 
-    const { data, error } = await sb
+    let query = sb
       .from(PUBLIC_VIEW)
       .select(PUBLIC_COLUMNS)
       .eq('area', dbArea)
       .eq('published', true)
       .order('order_index', { ascending: true });
+
+    if (limit != null && limit > 0) {
+      query = query.limit(limit);
+    }
+
+    const { data, error } = await query;
 
     if (error) throw new Error(`Error leyendo exam_questions: ${error.message}`);
     return ((data ?? []) as ExamQuestionPublicRow[]).map(rowToPublicExamQuestion);

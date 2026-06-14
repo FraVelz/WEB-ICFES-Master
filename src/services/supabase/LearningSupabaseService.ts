@@ -72,21 +72,11 @@ const LearningSupabaseService = {
       query = query.eq('phase', phase);
     }
 
-    const primary = await query.order('order_index', { ascending: true });
+    const { data, error } = await query.order('order_index', { ascending: true });
 
-    let rows: Record<string, unknown>[];
+    if (error) throw new Error(`Error leyendo learning_content: ${error.message}`);
 
-    if (primary.error) {
-      let fallbackQuery = sb.from(TABLE).select('id, area, phase, order_index, content').eq('published', true);
-      if (phase !== undefined) {
-        fallbackQuery = fallbackQuery.eq('phase', phase);
-      }
-      const fallback = await fallbackQuery.order('order_index', { ascending: true });
-      if (fallback.error) throw new Error(`Error leyendo learning_content: ${fallback.error.message}`);
-      rows = (fallback.data ?? []) as Record<string, unknown>[];
-    } else {
-      rows = (primary.data ?? []) as Record<string, unknown>[];
-    }
+    const rows = (data ?? []) as Record<string, unknown>[];
 
     return groupRoadmapRowsByArea(rows);
   },
@@ -100,7 +90,7 @@ const LearningSupabaseService = {
     if (!sb) return [];
     const normalizedArea = (AREA_MAP as Record<string, string>)[area] ?? area.replace(/-/g, '_');
 
-    let query = sb.from(TABLE).select('*').eq('area', normalizedArea).eq('published', true);
+    let query = sb.from(TABLE).select(LEARNING_ROADMAP_COLUMNS).eq('area', normalizedArea).eq('published', true);
 
     if (phase !== undefined) {
       query = query.eq('phase', phase);
@@ -112,13 +102,30 @@ const LearningSupabaseService = {
 
     if (!data || data.length === 0) return [];
 
-    return data.map((row) => mapFullLessonRow(row as Record<string, unknown>));
+    return data
+      .map((row, index) => mapRoadmapRowToLesson(row as Record<string, unknown>, index))
+      .filter((lesson): lesson is NonNullable<typeof lesson> => lesson != null)
+      .map((lesson) => ({
+        id: lesson.id,
+        title: lesson.title,
+        summary: lesson.description,
+        phase: lesson.phase,
+        order: lesson.order,
+        blockId: lesson.blockId,
+        quiz: { rewards: lesson.rewards },
+        type: 'lesson',
+      }));
   },
 
   async getLesson(lessonId: string) {
     const sb = getSupabase();
     if (!sb) return null;
-    const { data, error } = await sb.from(TABLE).select('*').eq('id', lessonId).eq('published', true).maybeSingle();
+    const { data, error } = await sb
+      .from(TABLE)
+      .select('id, area, phase, order_index, content')
+      .eq('id', lessonId)
+      .eq('published', true)
+      .maybeSingle();
     if (error) throw new Error(`Error leyendo lección: ${error.message}`);
     if (!data) return null;
     return mapFullLessonRow(data as Record<string, unknown>);

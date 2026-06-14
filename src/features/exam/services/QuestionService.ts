@@ -1,5 +1,10 @@
 import type { ExamQuestionPublic } from '@/features/exam/types/question';
+import { PRACTICE_AREA_QUESTIONS_FETCH_LIMIT } from '@/features/exam/constants/practiceQuestionLimits';
 import { getApiAuthHeaders } from '@/utils/apiClientAuth';
+import {
+  readExamQuestionsSessionCache,
+  writeExamQuestionsSessionCache,
+} from '@/features/exam/services/examQuestionsSessionCache';
 
 async function fetchPublicQuestions(params: URLSearchParams): Promise<ExamQuestionPublic[]> {
   const response = await fetch(`/api/exam/questions/?${params.toString()}`, {
@@ -15,8 +20,17 @@ async function fetchPublicQuestions(params: URLSearchParams): Promise<ExamQuesti
   return data.questions ?? [];
 }
 
-export async function fetchQuestionsByRouteArea(routeArea: string): Promise<ExamQuestionPublic[]> {
-  return fetchPublicQuestions(new URLSearchParams({ area: routeArea }));
+export async function fetchQuestionsByRouteArea(
+  routeArea: string,
+  limit = PRACTICE_AREA_QUESTIONS_FETCH_LIMIT
+): Promise<ExamQuestionPublic[]> {
+  const cached = readExamQuestionsSessionCache(routeArea, limit);
+  if (cached) return cached;
+
+  const params = new URLSearchParams({ area: routeArea, limit: String(limit) });
+  const questions = await fetchPublicQuestions(params);
+  writeExamQuestionsSessionCache(routeArea, limit, questions);
+  return questions;
 }
 
 export async function fetchQuestionsForFullExam(): Promise<ExamQuestionPublic[]> {

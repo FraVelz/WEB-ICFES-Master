@@ -13,17 +13,21 @@ function toPublicList(questions: ExamQuestion[]): ExamQuestionPublic[] {
   return questions.map(toPublicExamQuestion);
 }
 
-export async function fetchPublicQuestionsByRouteArea(routeArea: string): Promise<ExamQuestionPublic[]> {
+export async function fetchPublicQuestionsByRouteArea(
+  routeArea: string,
+  limit?: number
+): Promise<ExamQuestionPublic[]> {
   const fallback = getStaticQuestionsByRouteArea(routeArea);
+  const cappedFallback = limit != null && limit > 0 ? fallback.slice(0, limit) : fallback;
 
   try {
-    const fromDb = await ExamQuestionsSupabaseService.getByRouteArea(routeArea);
+    const fromDb = await ExamQuestionsSupabaseService.getByRouteArea(routeArea, limit);
     if (fromDb.length > 0) return toPublicList(fromDb);
   } catch (error) {
     console.warn('[examQuestionsServer] Supabase fallback for area', routeArea, error);
   }
 
-  return toPublicList(fallback);
+  return toPublicList(cappedFallback);
 }
 
 export async function fetchPublicQuestionsForFullExam(): Promise<ExamQuestionPublic[]> {

@@ -22,12 +22,14 @@ export async function GET(request: NextRequest) {
 
   const area = request.nextUrl.searchParams.get('area');
   const full = request.nextUrl.searchParams.get('full') === '1';
+  const limitParam = request.nextUrl.searchParams.get('limit');
+  const limit = limitParam ? Number.parseInt(limitParam, 10) : undefined;
 
   try {
     const questions = full
       ? await fetchPublicQuestionsForFullExam()
       : area
-        ? await fetchPublicQuestionsByRouteArea(area)
+        ? await fetchPublicQuestionsByRouteArea(area, Number.isFinite(limit) && limit! > 0 ? limit : undefined)
         : [];
 
     if (!full && !area) {
