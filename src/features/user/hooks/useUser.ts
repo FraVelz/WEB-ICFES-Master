@@ -1,4 +1,5 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useMemo } from 'react';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import type { UserProfile, UserRank } from '@/features/user/types/userProfile.types';
 import { getPerformanceRank } from '@/features/user/utils/performanceRank';
 import { PROGRESS_UPDATED_EVENT } from '@/storage/progressStorageTypes';
@@ -17,6 +18,7 @@ import { useGamificationContextOptional } from '@/hooks/gamification/Gamificatio
 import { useUiSessionStore } from '@/store/uiSessionStore';
 import { resolveCoinsUserId } from '@/services/demo/demoCoins';
 import type { MappedUser } from '@/services/supabase/UserSupabaseService';
+import { queryKeys } from '@/services/query/queryKeys';
 
 function toUserProfile(data: MappedUser): UserProfile {
   return {
@@ -35,14 +37,32 @@ function toUserProfile(data: MappedUser): UserProfile {
  * Header/sidebar user state — Supabase for accounts, demo profile for demo mode.
  */
 export const useUser = () => {
-  const [user, setUser] = useState<UserProfile | null>(null);
   const [rank, setRank] = useState<UserRank | null>(null);
   const [coinsBalance, setCoinsBalance] = useState(0);
-  const [isLoading, setIsLoading] = useState(true);
+  const [demoUser, setDemoUser] = useState<UserProfile | null>(null);
   const { user: authUser } = useAuth();
   const demoMode = useUiSessionStore((state) => state.demoMode);
   const gamificationContext = useGamificationContextOptional();
+  const queryClient = useQueryClient();
   const coinsUserId = resolveCoinsUserId(authUser?.uid, demoMode);
+
+  const profileQuery = useQuery({
+    queryKey: queryKeys.userProfile(authUser?.uid ?? ''),
+    queryFn: async () => {
+      if (!authUser?.uid) return null;
+      const remote = await loadUserProfile(authUser.uid, authUser.email, authUser.displayName);
+      return remote && 'id' in remote ? toUserProfile(remote as MappedUser) : null;
+    },
+    enabled: !!authUser?.uid,
+  });
+
+  const user = useMemo(() => {
+    if (authUser?.uid) return profileQuery.data ?? null;
+    if (demoMode) return demoUser;
+    return null;
+  }, [authUser?.uid, demoMode, demoUser, profileQuery.data]);
+
+  const isLoading = Boolean(authUser?.uid && profileQuery.isLoading && profileQuery.data === undefined);
 
   const loadCoins = useCallback(async () => {
     if (gamificationContext != null) {
@@ -62,39 +82,24 @@ export const useUser = () => {
     }
   }, [coinsUserId, gamificationContext]);
 
-  const loadUserData = useCallback(async () => {
-    try {
-      setRank(getPerformanceRank());
-
-      if (authUser?.uid) {
-        const remote = await loadUserProfile(authUser.uid, authUser.email, authUser.displayName);
-        if (remote && 'id' in remote) {
-          setUser(toUserProfile(remote as MappedUser));
-        }
-      } else if (demoMode) {
-        setUser(getDemoProfile());
-      } else {
-        setUser(null);
-      }
-
-      await loadCoins();
-    } catch (err) {
-      console.error('Error cargando datos del usuario:', err);
-    } finally {
-      setIsLoading(false);
+  useEffect(() => {
+    setRank(getPerformanceRank());
+    if (!authUser?.uid && demoMode) {
+      setDemoUser(getDemoProfile());
+    } else if (!authUser?.uid) {
+      setDemoUser(null);
     }
-  }, [authUser?.uid, authUser?.email, authUser?.displayName, demoMode, loadCoins]);
+  }, [authUser?.uid, demoMode]);
+
+  useEffect(() => {
+    void loadCoins();
+  }, [loadCoins]);
 
   useEffect(() => {
     if (gamificationContext != null) {
       setCoinsBalance(gamificationContext.coins);
     }
   }, [gamificationContext?.coins]);
-
-  useEffect(() => {
-    setIsLoading(true);
-    void loadUserData();
-  }, [loadUserData]);
 
   useEffect(() => {
     const refreshRank = () => setRank(getPerformanceRank());
@@ -119,7 +124,8 @@ export const useUser = () => {
     const onProfileChanged = (event: Event) => {
       const detail = (event as CustomEvent<UserProfileChangeDetail>).detail;
       if (detail && (detail.profileImage !== undefined || detail.username !== undefined || detail.bio !== undefined)) {
-        setUser((prev) =>
+        if (!authUser?.uid) return;
+        queryClient.setQueryData<UserProfile | null>(queryKeys.userProfile(authUser.uid), (prev) =>
           prev
             ? {
                 ...prev,
@@ -131,14 +137,19 @@ export const useUser = () => {
         );
         return;
       }
-      void loadUserData();
+      if (authUser?.uid) {
+        void queryClient.invalidateQueries({ queryKey: queryKeys.userProfile(authUser.uid) });
+      }
     };
     window.addEventListener(USER_PROFILE_CHANGE_EVENT, onProfileChanged);
     return () => window.removeEventListener(USER_PROFILE_CHANGE_EVENT, onProfileChanged);
-  }, [loadUserData]);
+  }, [authUser?.uid, queryClient]);
 
   const refreshUser = async () => {
-    await loadUserData();
+    if (authUser?.uid) {
+      await queryClient.invalidateQueries({ queryKey: queryKeys.userProfile(authUser.uid) });
+    }
+    await loadCoins();
   };
 
   const addMoney = async (amount: number) => {
@@ -156,6 +167,9 @@ export const useUser = () => {
     if (!coinsUserId) return false;
     try {
       await spendCoinsBalance(coinsUserId, amount, 'use_user');
+      if (authUser?.uid) {
+        await queryClient.invalidateQueries({ queryKey: queryKeys.gamification(authUser.uid) });
+      }
       return true;
     } catch (_error) {
       console.error('Error al restar dinero:', _error);

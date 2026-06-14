@@ -1,10 +1,12 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
+import { useQueryClient } from '@tanstack/react-query';
 import { LearningService } from '../services/LearningService';
 import { useAuth } from '@/features/auth/context/AuthContext';
 import { LEARNING_PROGRESS_UPDATED_EVENT } from '@/services/learning';
 import { BLOCK_EXAM_UPDATED_EVENT } from '@/services/persistence/blockExamPersistence';
 import { LESSON_COMPLETED_EVENT } from '@/services/persistence';
 import { debounceFn } from '@/utils/debounceFn';
+import { queryKeys } from '@/services/query/queryKeys';
 import {
   LEARNING_PHASE_SECTION_IDS,
   phaseToSectionId,
@@ -55,6 +57,7 @@ export const useLearningPath = (areaId: string | undefined, options: UseLearning
   const [error, setError] = useState<string | null>(null);
   const { user } = useAuth();
   const userId = user?.uid;
+  const queryClient = useQueryClient();
   const requestSeq = useRef(0);
 
   const phaseFilter = loadAllPhases ? undefined : sectionIdToPhase(sectionId);
@@ -72,10 +75,14 @@ export const useLearningPath = (areaId: string | undefined, options: UseLearning
       }
 
       try {
-        const [lessons, progress] = await Promise.all([
-          LearningService.getLearningPath(areaId, phaseFilter),
-          userId ? LearningService.getUserProgress(userId, areaId) : Promise.resolve(null),
-        ]);
+        const lessons = await LearningService.getLearningPath(areaId, phaseFilter);
+        const progress =
+          userId && areaId
+            ? await queryClient.fetchQuery({
+                queryKey: queryKeys.learningProgress(userId, areaId),
+                queryFn: () => LearningService.getUserProgress(userId, areaId),
+              })
+            : null;
 
         if (seq !== requestSeq.current) return;
 
@@ -148,7 +155,7 @@ export const useLearningPath = (areaId: string | undefined, options: UseLearning
         }
       }
     },
-    [areaId, userId, phaseFilter, loadAllPhases, sectionId]
+    [areaId, userId, phaseFilter, loadAllPhases, sectionId, queryClient]
   );
 
   useEffect(() => {
@@ -156,7 +163,12 @@ export const useLearningPath = (areaId: string | undefined, options: UseLearning
   }, [fetchPath]);
 
   useEffect(() => {
-    const refresh = debounceFn(() => void fetchPath({ background: true }), 400);
+    const refresh = debounceFn(() => {
+      if (userId && areaId) {
+        void queryClient.invalidateQueries({ queryKey: queryKeys.learningProgress(userId, areaId) });
+      }
+      void fetchPath({ background: true });
+    }, 400);
     window.addEventListener(LESSON_COMPLETED_EVENT, refresh);
     window.addEventListener(LEARNING_PROGRESS_UPDATED_EVENT, refresh);
     window.addEventListener(BLOCK_EXAM_UPDATED_EVENT, refresh);
@@ -165,7 +177,7 @@ export const useLearningPath = (areaId: string | undefined, options: UseLearning
       window.removeEventListener(LEARNING_PROGRESS_UPDATED_EVENT, refresh);
       window.removeEventListener(BLOCK_EXAM_UPDATED_EVENT, refresh);
     };
-  }, [fetchPath]);
+  }, [fetchPath, userId, areaId, queryClient]);
 
   return { sections, loading, error };
 };
