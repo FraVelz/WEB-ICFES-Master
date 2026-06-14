@@ -91,8 +91,15 @@ export async function computeAchievementProgressFromGameplay(
   options: Pick<SyncAchievementsOptions, 'userLevel' | 'currentStreak' | 'longestStreak'> = {}
 ): Promise<AchievementProgressMap> {
   const scope = toStreakScope(userId);
-  const streakMetrics = getStreakMetrics(await loadStreakState(scope));
-  const longestStreak = Math.max(streakMetrics.longestStreak, options.longestStreak ?? 0, options.currentStreak ?? 0);
+
+  let longestStreak: number;
+  if (options.longestStreak != null || options.currentStreak != null) {
+    longestStreak = Math.max(options.longestStreak ?? 0, options.currentStreak ?? 0);
+  } else {
+    const streakMetrics = getStreakMetrics(await loadStreakState(scope));
+    longestStreak = streakMetrics.longestStreak;
+  }
+
   const level = options.userLevel ?? (await readLevel(userId));
   const readSections = loadLecturaReadSections(userId);
   const studyTime = getStudyTimeStats(userId);

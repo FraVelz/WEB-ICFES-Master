@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { isDemoUserId } from '@/services/demo/demoCoins';
-import { gamificationPersistence } from '@/services/persistence';
+import GamificationSupabaseService from '@/services/supabase/GamificationSupabaseService';
 import { getStudyTimeStats, readStudyTimeRemoteMeta, STUDY_TIME_UPDATED_EVENT } from '@/services/studyTime';
 
 async function resolveStudyTimeMinutes(userId: string): Promise<number> {
@@ -11,8 +11,8 @@ async function resolveStudyTimeMinutes(userId: string): Promise<number> {
   }
 
   try {
-    const profile = await gamificationPersistence.getProfile(userId);
-    const remoteMinutes = readStudyTimeRemoteMeta(profile?.achievements).totalMinutes;
+    const meta = await GamificationSupabaseService.getAchievementsMetaByUserId(userId);
+    const remoteMinutes = readStudyTimeRemoteMeta(meta?.achievements).totalMinutes;
     return Math.max(localMinutes, remoteMinutes);
   } catch {
     return localMinutes;

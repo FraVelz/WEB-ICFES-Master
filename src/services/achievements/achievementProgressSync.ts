@@ -1,5 +1,4 @@
 import { DEMO_USER_ID, isDemoUserId } from '@/services/demo/demoCoins';
-import { gamificationPersistence } from '@/services/persistence/gamificationPersistence';
 import { isSupabaseConfigured } from '@/services/persistence/supabaseConfigured';
 import GamificationSupabaseService from '@/services/supabase/GamificationSupabaseService';
 import { getStudyTimeStats, STUDY_TIME_META_KEY } from '@/services/studyTime/studyTimeService';
@@ -23,8 +22,8 @@ async function loadRemoteAchievementProgress(userId: string): Promise<Achievemen
   if (isDemoUserId(userId) || !isSupabaseConfigured()) return {};
 
   try {
-    const profile = await gamificationPersistence.getProfile(userId);
-    return normalizeAchievementsRecord(profile?.achievements);
+    const meta = await GamificationSupabaseService.getAchievementsMetaByUserId(userId);
+    return normalizeAchievementsRecord(meta?.achievements);
   } catch {
     return {};
   }

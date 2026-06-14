@@ -1,26 +1,33 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest';
 
+vi.mock('@/services/supabase/GamificationSupabaseService', () => ({
+  default: {
+    getEconomyByUserId: vi.fn(async () => ({ totalCoins: 200, spentCoins: 0 })),
+  },
+}));
+
 vi.mock('./gamificationPersistence', () => ({
   gamificationPersistence: {
-    getProfile: vi.fn(async () => ({ totalCoins: 200, spentCoins: 0 })),
     spendCoins: vi.fn(async () => ({})),
   },
 }));
 
+import GamificationSupabaseService from '@/services/supabase/GamificationSupabaseService';
 import { gamificationPersistence } from './gamificationPersistence';
 import { getCoinsBalance, addCoinsBalance, spendCoinsBalance, COINS_CHANGE_EVENT } from './coinsPersistence';
 
 describe('coinsPersistence', () => {
   beforeEach(() => {
     vi.clearAllMocks();
-    vi.mocked(gamificationPersistence.getProfile).mockResolvedValue({
+    vi.mocked(GamificationSupabaseService.getEconomyByUserId).mockResolvedValue({
       totalCoins: 200,
       spentCoins: 0,
-    } as Awaited<ReturnType<typeof gamificationPersistence.getProfile>>);
+    } as Awaited<ReturnType<typeof GamificationSupabaseService.getEconomyByUserId>>);
   });
 
   it('getCoinsBalance lee el saldo del perfil Supabase', async () => {
     await expect(getCoinsBalance('user-1')).resolves.toBe(200);
+    expect(GamificationSupabaseService.getEconomyByUserId).toHaveBeenCalledWith('user-1');
   });
 
   it('addCoinsBalance rechaza cuentas autenticadas', async () => {

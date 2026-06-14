@@ -2,6 +2,7 @@
  * Monedas virtuales — Supabase `user_gamification` o demo local.
  */
 import { gamificationPersistence } from './gamificationPersistence';
+import GamificationSupabaseService from '@/services/supabase/GamificationSupabaseService';
 import { addDemoCoins, getDemoCoins, isDemoUserId, spendDemoCoins } from '@/services/demo/demoCoins';
 
 export const COINS_CHANGE_EVENT = 'icfes:coins-changed';
@@ -13,7 +14,7 @@ function emitCoinsChanged(balance: number) {
 }
 
 async function readGamificationBalance(userId: string): Promise<number> {
-  const profile = await gamificationPersistence.getProfile(userId);
+  const profile = await GamificationSupabaseService.getEconomyByUserId(userId);
   return (profile?.totalCoins ?? 0) - (profile?.spentCoins ?? 0);
 }
 
