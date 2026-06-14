@@ -13,6 +13,7 @@ import {
   type UserProfileChangeDetail,
 } from '@/services/persistence';
 import { useAuth } from '@/features/auth/context/AuthContext';
+import { useGamificationContextOptional } from '@/hooks/gamification/GamificationContext';
 import { useUiSessionStore } from '@/store/uiSessionStore';
 import { resolveCoinsUserId } from '@/services/demo/demoCoins';
 import type { MappedUser } from '@/services/supabase/UserSupabaseService';
@@ -40,9 +41,15 @@ export const useUser = () => {
   const [isLoading, setIsLoading] = useState(true);
   const { user: authUser } = useAuth();
   const demoMode = useUiSessionStore((state) => state.demoMode);
+  const gamificationContext = useGamificationContextOptional();
   const coinsUserId = resolveCoinsUserId(authUser?.uid, demoMode);
 
   const loadCoins = useCallback(async () => {
+    if (gamificationContext != null) {
+      setCoinsBalance(gamificationContext.coins);
+      return;
+    }
+
     if (!coinsUserId) {
       setCoinsBalance(0);
       return;
@@ -53,7 +60,7 @@ export const useUser = () => {
     } catch (err) {
       console.error('Error cargando monedas:', err);
     }
-  }, [coinsUserId]);
+  }, [coinsUserId, gamificationContext]);
 
   const loadUserData = useCallback(async () => {
     try {
@@ -77,6 +84,12 @@ export const useUser = () => {
       setIsLoading(false);
     }
   }, [authUser?.uid, authUser?.email, authUser?.displayName, demoMode, loadCoins]);
+
+  useEffect(() => {
+    if (gamificationContext != null) {
+      setCoinsBalance(gamificationContext.coins);
+    }
+  }, [gamificationContext?.coins]);
 
   useEffect(() => {
     setIsLoading(true);

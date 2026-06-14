@@ -1,5 +1,5 @@
 import { useAuth } from '@/features/auth/context/AuthContext';
-import { useGamification, useGamificationScope } from '@/hooks/gamification';
+import { useGamification, useGamificationContextOptional, useGamificationScope } from '@/hooks/gamification';
 import { getLevelInfo } from '@/services/gamification/gamificationUtils';
 import { RANKS } from '@/shared/constants/ranks';
 import { isDemoUserId } from '@/services/demo/demoCoins';
@@ -21,7 +21,9 @@ export const useUserProfile = (targetUserId: string | null = null) => {
   const uid = targetUserId || authUser?.uid;
   const { profileData, isOwnProfile } = useUserProfileData(uid);
   const streakScope = targetUserId ? (isDemoUserId(targetUserId) ? 'demo' : targetUserId) : ownGamificationScope;
-
+  const gamificationContext = useGamificationContextOptional();
+  const hookScope = targetUserId ? streakScope : gamificationContext ? undefined : ownGamificationScope;
+  const hookGamification = useGamification(hookScope);
   const {
     loading: gamificationLoading,
     achievements,
@@ -34,7 +36,7 @@ export const useUserProfile = (targetUserId: string | null = null) => {
     longestStreak,
     refreshData,
     isDemoScope,
-  } = useGamification(streakScope);
+  } = targetUserId ? hookGamification : (gamificationContext ?? hookGamification);
 
   const studyTimeMinutes = useUserProfileStudyTime(uid);
 

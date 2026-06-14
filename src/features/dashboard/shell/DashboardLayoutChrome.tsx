@@ -4,10 +4,10 @@ import { usePathname } from 'next/navigation';
 import type { ReactNode } from 'react';
 import { DashboardHeader } from '@/components/DashboardHeader';
 import { AchievementUnlockHost } from '@/features/achievements/components/AchievementUnlockHost';
-import { LeagueProvider } from '@/hooks/gamification/LeagueContext';
 import { isLessonRoute } from '@/features/learning/utils/lessonRoutes';
 import { cn } from '@/utils/cn';
 import { DashboardShellGate } from './DashboardShellGate';
+import { DashboardDataProviders } from './DashboardDataProviders';
 
 function DashboardLayoutBody({ children, isFullscreenLesson }: { children: ReactNode; isFullscreenLesson: boolean }) {
   if (isFullscreenLesson) {
@@ -62,8 +62,8 @@ export function DashboardLayoutChrome({ children }: { children: ReactNode }) {
   const isFullscreenLesson = isLessonRoute(pathname);
 
   return (
-    <LeagueProvider>
+    <DashboardDataProviders>
       <DashboardLayoutBody isFullscreenLesson={isFullscreenLesson}>{children}</DashboardLayoutBody>
-    </LeagueProvider>
+    </DashboardDataProviders>
   );
 }

@@ -3,7 +3,7 @@
 import { cn } from '@/utils/cn';
 import { useRef, useState, useMemo } from 'react';
 import { useAuth } from '@/features/auth/context/AuthContext';
-import { useGamification } from '@/hooks/gamification';
+import { useGamification, useGamificationContextOptional } from '@/hooks/gamification';
 import { useUiSessionStore } from '@/store/uiSessionStore';
 import { getStreakScope } from '@/services/streak';
 import type { PathSection } from '@/features/learning/roadmap/AreaPath';
@@ -38,8 +38,10 @@ export const SecondaryHeader = ({
   const { user } = useAuth();
   const demoMode = useUiSessionStore((state) => state.demoMode);
   const streakScope = getStreakScope(user?.uid, demoMode) ?? undefined;
-
-  const { currentStreak = 0, longestStreak = 0, coins = 0, streak = [], loading } = useGamification(streakScope);
+  const gamificationContext = useGamificationContextOptional();
+  const fallbackGamification = useGamification(gamificationContext ? undefined : streakScope);
+  const { currentStreak = 0, longestStreak = 0, coins = 0, streak = [], loading } =
+    gamificationContext ?? fallbackGamification;
 
   const isBadgeUnlocked = useMemo(() => currentStreak >= 7, [currentStreak]);
   const daysUntilBadge = useMemo(() => Math.max(0, 7 - currentStreak), [currentStreak]);

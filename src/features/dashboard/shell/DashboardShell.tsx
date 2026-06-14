@@ -1,10 +1,6 @@
 'use client';
 
 import { Suspense, type ReactNode } from 'react';
-import { useAuth } from '@/features/auth/context/AuthContext';
-import { GamificationProvider } from '@/hooks/gamification/GamificationContext';
-import { getStreakScope } from '@/services/streak';
-import { useUiSessionStore } from '@/store/uiSessionStore';
 import { LoadingState } from '@/shared/components/LoadingState';
 import { DashboardShellProvider, useDashboardShell } from './DashboardShellContext';
 import { DashboardShellBanner } from './DashboardShellBanner';
@@ -103,24 +99,12 @@ function DashboardShellInner({ children }: { children: ReactNode }) {
   );
 }
 
-function DashboardShellWithGamification({ children }: { children: ReactNode }) {
-  const { user } = useAuth();
-  const demoMode = useUiSessionStore((state) => state.demoMode);
-  const streakScope = getStreakScope(user?.uid, demoMode) ?? undefined;
-
-  return (
-    <GamificationProvider scope={streakScope}>
-      <DashboardShellProvider>{children}</DashboardShellProvider>
-    </GamificationProvider>
-  );
-}
-
 export function DashboardShell({ children }: { children: ReactNode }) {
   return (
     <Suspense fallback={<LoadingState label="Cargando..." layout="section" />}>
-      <DashboardShellWithGamification>
+      <DashboardShellProvider>
         <DashboardShellInner>{children}</DashboardShellInner>
-      </DashboardShellWithGamification>
+      </DashboardShellProvider>
     </Suspense>
   );
 }
