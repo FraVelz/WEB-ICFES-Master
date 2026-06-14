@@ -98,10 +98,10 @@ describe('skillLevelPersistence', () => {
     expect(getAssessmentScope(scopeOptions)).toBe('user-1');
   });
 
-  it('resolveLevelAssessmentRedirect devuelve ruta según nivel guardado', async () => {
+  it('resolveLevelAssessmentRedirect devuelve ruta-aprendizaje cuando la evaluación ya está hecha', async () => {
     await persistLevelAssessment('demo', { level: 'intermediate', completedAt: '2026-01-01T00:00:00.000Z' }, null);
 
     const redirect = await resolveLevelAssessmentRedirect({ demoMode: true }, null);
-    expect(redirect).toBe('/practica/matematicas');
+    expect(redirect).toBe('/ruta-aprendizaje');
   });
 });

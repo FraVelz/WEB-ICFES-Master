@@ -1,3 +1,4 @@
+import { AUTH_DEFAULT_REDIRECT } from '@/features/auth/constants/authRoutes';
 import type { SkillLevel } from '@/features/auth/types/skillLevel';
 
 export const LEVEL_ASSESSMENT_PATH = '/evaluacion-nivel';
@@ -26,8 +27,9 @@ export const SKILL_LEVEL_DESTINATIONS: Record<
   },
 };
 
-export function getPathForSkillLevel(level: SkillLevel): string {
-  return SKILL_LEVEL_DESTINATIONS[level].path;
+/** Tras login o evaluación inicial, siempre la ruta de aprendizaje (el nivel solo personaliza recomendaciones). */
+export function getPathForSkillLevel(_level: SkillLevel): string {
+  return AUTH_DEFAULT_REDIRECT;
 }
 
 export function buildLevelAssessmentUrl(context: 'demo' | 'account'): string {
