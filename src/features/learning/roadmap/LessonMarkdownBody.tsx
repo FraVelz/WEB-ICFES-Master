@@ -32,7 +32,10 @@ export function LessonMarkdownBody({ content }: LessonMarkdownBodyProps) {
   return (
     <ReactMarkdown
       remarkPlugins={[remarkGfm, remarkMath]}
-      rehypePlugins={[[rehypeKatex, { throwOnError: false, strict: 'ignore' }], [rehypeSanitize, sanitizeSchema]]}
+      rehypePlugins={[
+        [rehypeKatex, { throwOnError: false, strict: 'ignore' }],
+        [rehypeSanitize, sanitizeSchema],
+      ]}
       components={{
         h1: ({ ...props }) => (
           <h1 className="mt-0 mb-3 text-xl font-bold text-white sm:text-2xl md:text-3xl" {...props} />

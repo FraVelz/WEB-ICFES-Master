@@ -27,7 +27,8 @@ describe('lesson visuals pipeline', () => {
   });
 
   it('converts chart-json blocks into visual shortcodes', () => {
-    const input = 'Intro\n\n```chart-json\n{"chartType":"line","labels":["1","2"],"series":[{"name":"y","values":[3,4]}]}\n```\n\nFin';
+    const input =
+      'Intro\n\n```chart-json\n{"chartType":"line","labels":["1","2"],"series":[{"name":"y","values":[3,4]}]}\n```\n\nFin';
     const prepared = prepareLessonBody(input, []);
     expect(prepared.content).toContain('{{visual:0}}');
     expect(prepared.visuals).toHaveLength(1);

@@ -1,8 +1,6 @@
 @import 'tailwindcss';
 @import 'tailwind-animations';
 
-import 'katex/dist/katex.min.css';
-
 @custom-variant dark (&:where(.dark, .dark *));
 
 :root {

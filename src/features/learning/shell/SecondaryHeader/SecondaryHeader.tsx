@@ -40,8 +40,13 @@ export const SecondaryHeader = ({
   const streakScope = getStreakScope(user?.uid, demoMode) ?? undefined;
   const gamificationContext = useGamificationContextOptional();
   const fallbackGamification = useGamification(gamificationContext ? undefined : streakScope);
-  const { currentStreak = 0, longestStreak = 0, coins = 0, streak = [], loading } =
-    gamificationContext ?? fallbackGamification;
+  const {
+    currentStreak = 0,
+    longestStreak = 0,
+    coins = 0,
+    streak = [],
+    loading,
+  } = gamificationContext ?? fallbackGamification;
 
   const isBadgeUnlocked = useMemo(() => currentStreak >= 7, [currentStreak]);
   const daysUntilBadge = useMemo(() => Math.max(0, 7 - currentStreak), [currentStreak]);

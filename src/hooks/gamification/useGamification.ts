@@ -12,12 +12,7 @@ import {
   readAchievementProgress,
   type AchievementProgressMap,
 } from '@/services/achievements/achievementProgressService';
-import {
-  getStreakMetrics,
-  loadLocalStreakState,
-  STREAK_UPDATED_EVENT,
-  type StreakScope,
-} from '@/services/streak';
+import { getStreakMetrics, loadLocalStreakState, STREAK_UPDATED_EVENT, type StreakScope } from '@/services/streak';
 import { queryKeys } from '@/services/query/queryKeys';
 import { countCompletedAchievements, mergeAchievements } from './gamificationAchievementMerge';
 import { syncStreakAchievement } from './gamificationStreakSync';
@@ -49,20 +44,17 @@ export const useGamification = (scope: StreakScope | undefined) => {
     setCompletedCount(countCompletedAchievements(merged));
   }, []);
 
-  const applyBundle = useCallback(
-    (bundle: Awaited<ReturnType<typeof fetchGamificationBundle>>) => {
-      setAchievements(bundle.achievements);
-      setCompletedCount(bundle.completedCount);
-      setCoins(bundle.coins);
-      setTotalXP(bundle.totalXP);
-      setLevel(bundle.level);
-      setStreak(bundle.streak);
-      setCurrentStreak(bundle.currentStreak);
-      setLongestStreak(bundle.longestStreak);
-      setLoading(false);
-    },
-    []
-  );
+  const applyBundle = useCallback((bundle: Awaited<ReturnType<typeof fetchGamificationBundle>>) => {
+    setAchievements(bundle.achievements);
+    setCompletedCount(bundle.completedCount);
+    setCoins(bundle.coins);
+    setTotalXP(bundle.totalXP);
+    setLevel(bundle.level);
+    setStreak(bundle.streak);
+    setCurrentStreak(bundle.currentStreak);
+    setLongestStreak(bundle.longestStreak);
+    setLoading(false);
+  }, []);
 
   const { data, isLoading, refetch } = useQuery({
     queryKey,

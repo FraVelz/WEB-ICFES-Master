@@ -70,11 +70,11 @@ This document describes the technologies used in **WEB-ICFES Master**, for both 
 
 ### Deployment
 
-| Environment      | Description                                                                                                                                                                             |
-| ---------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Environment      | Description                                                                                                                                                                                                               |
+| ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **Vercel**       | Next.js hosting (recommended). Enable **Web Analytics** in the project dashboard after deploy (`@vercel/analytics` in the root layout). Local performance: `pnpm lighthouse:local` with `pnpm dev` running (Unlighthouse) |
-| **Netlify**      | Serverless or static hosting depending on config                                                                                                                                        |
-| **GitHub Pages** | Only if `output: 'export'` is enabled in `next.config` (not default)                                                                                                                    |
+| **Netlify**      | Serverless or static hosting depending on config                                                                                                                                                                          |
+| **GitHub Pages** | Only if `output: 'export'` is enabled in `next.config` (not default)                                                                                                                                                      |
 
 ---
 

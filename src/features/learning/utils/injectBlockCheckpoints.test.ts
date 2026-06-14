@@ -27,10 +27,7 @@ describe('injectBlockCheckpoints', () => {
   });
 
   it('inserta checkpoints en fase 2 por bloques de order_index', () => {
-    const lessons = [
-      lesson('f2-1', 1, undefined, 2),
-      lesson('f2-2', 26, undefined, 2),
-    ];
+    const lessons = [lesson('f2-1', 1, undefined, 2), lesson('f2-2', 26, undefined, 2)];
 
     const result = injectBlockCheckpoints('matematicas', lessons, 2);
     const checkpoints = result.filter((item) => item.moduleType === 'block-checkpoint');

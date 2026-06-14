@@ -3,7 +3,10 @@ import { parseLessonVisuals } from './lessonVisualTypes';
 
 const CHART_JSON_BLOCK_RE = /```chart-json\s*([\s\S]*?)```/g;
 
-export function prepareLessonBody(content: string, visuals: LessonVisual[] = []): { content: string; visuals: LessonVisual[] } {
+export function prepareLessonBody(
+  content: string,
+  visuals: LessonVisual[] = []
+): { content: string; visuals: LessonVisual[] } {
   const mergedVisuals = [...visuals];
 
   const preparedContent = content.replace(CHART_JSON_BLOCK_RE, (_, jsonRaw: string) => {

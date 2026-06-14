@@ -5,7 +5,6 @@ on:
     branches: [main]
     paths:
       - 'src/**'
-      - 'scripts/**'
       - 'package.json'
       - 'pnpm-lock.yaml'
       - 'next.config.*'
@@ -18,7 +17,6 @@ on:
     branches: [main]
     paths:
       - 'src/**'
-      - 'scripts/**'
       - 'package.json'
       - 'pnpm-lock.yaml'
       - 'next.config.*'

@@ -50,9 +50,7 @@ describe('countPhaseSkipQuestionsAvailable', () => {
   it('marca canStart false cuando hay menos de 120 preguntas', async () => {
     vi.mocked(loadLessonQuizQuestionsBatch).mockResolvedValue(buildLoaded(10, 5));
 
-    const result = await countPhaseSkipQuestionsAvailable(
-      Array.from({ length: 10 }, (_, i) => `lesson-${i}`)
-    );
+    const result = await countPhaseSkipQuestionsAvailable(Array.from({ length: 10 }, (_, i) => `lesson-${i}`));
 
     expect(result.totalQuestions).toBe(50);
     expect(result.canStart).toBe(false);
@@ -61,9 +59,7 @@ describe('countPhaseSkipQuestionsAvailable', () => {
   it('marca canStart true cuando hay al menos 120 preguntas', async () => {
     vi.mocked(loadLessonQuizQuestionsBatch).mockResolvedValue(buildLoaded(40, 4));
 
-    const result = await countPhaseSkipQuestionsAvailable(
-      Array.from({ length: 40 }, (_, i) => `lesson-${i}`)
-    );
+    const result = await countPhaseSkipQuestionsAvailable(Array.from({ length: 40 }, (_, i) => `lesson-${i}`));
 
     expect(result.totalQuestions).toBe(160);
     expect(result.canStart).toBe(true);

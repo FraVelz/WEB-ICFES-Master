@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import Script from 'next/script';
 import { headers } from 'next/headers';
 
+import 'katex/dist/katex.min.css';
 import './globals.css';
 
 import Providers from '@/components/Providers';

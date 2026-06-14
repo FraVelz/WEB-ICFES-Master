@@ -70,11 +70,11 @@ Este documento describe las tecnologías utilizadas en **WEB-ICFES Master**, tan
 
 ### Despliegue
 
-| Entorno          | Descripción                                                                                                                                                                                  |
-| ---------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Entorno          | Descripción                                                                                                                                                                                                                       |
+| ---------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **Vercel**       | Hosting para Next.js (recomendado). Activar **Web Analytics** en el panel del proyecto tras el deploy (`@vercel/analytics` en el layout raíz). Rendimiento local: `pnpm lighthouse:local` con `pnpm dev` en marcha (Unlighthouse) |
-| **Netlify**      | Hosting con runtime serverless o estático según configuración                                                                                                                                |
-| **GitHub Pages** | Solo si se habilita `output: 'export'` en `next.config` (no activo por defecto)                                                                                                              |
+| **Netlify**      | Hosting con runtime serverless o estático según configuración                                                                                                                                                                     |
+| **GitHub Pages** | Solo si se habilita `output: 'export'` en `next.config` (no activo por defecto)                                                                                                                                                   |
 
 ---
 

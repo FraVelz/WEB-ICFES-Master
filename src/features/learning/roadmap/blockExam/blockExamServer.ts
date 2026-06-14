@@ -1,5 +1,6 @@
 import { BLOCK_EXAM_PASS_PERCENT } from '@/services/persistence/blockExamPersistence';
 import { parseBlockCheckpointId } from '@/features/learning/data/phase1Blocks';
+import type { PhaseBlockDef } from '@/features/learning/data/phaseBlockTypes';
 import { findPhaseBlockDef } from '@/features/learning/data/phaseBlocks';
 import { gradeLessonQuizAnswersPure } from '@/features/learning/roadmap/lessonQuiz/gradeLessonQuizAnswersPure';
 import type { NormalizedQuizQuestion } from '@/features/learning/roadmap/lessonQuiz/quizTypes';
@@ -110,7 +111,6 @@ export async function gradeBlockExamSession(sessionToken: string, answers: Recor
     if (await hasRewardReason(userId, reason)) {
       rewards = { xp: 0, coins: 0, alreadyAwarded: true };
     } else {
-      const block = getPhase1BlockDef(session.areaId as AreaId, session.blockId);
       const xp = 80;
       const coins = 40;
       const [xpResult, coinsResult] = await Promise.all([
@@ -142,6 +142,6 @@ export async function gradeBlockExamSession(sessionToken: string, answers: Recor
 export type BlockExamStartResult = Awaited<ReturnType<typeof startBlockExamSession>>;
 export type BlockExamGradeResult = Awaited<ReturnType<typeof gradeBlockExamSession>>;
 
-export function getBlockExamTitle(block: Phase1BlockDef | undefined, blockId: string): string {
+export function getBlockExamTitle(block: PhaseBlockDef | undefined, blockId: string): string {
   return block?.title ?? blockId;
 }

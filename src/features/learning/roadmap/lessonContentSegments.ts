@@ -1,8 +1,6 @@
 import type { LessonVisual } from './lessonVisualTypes';
 
-export type LessonContentSegment =
-  | { type: 'markdown'; content: string }
-  | { type: 'visual'; index: number };
+export type LessonContentSegment = { type: 'markdown'; content: string } | { type: 'visual'; index: number };
 
 const VISUAL_SHORTCODE_RE = /\{\{visual:(\d+)\}\}/g;
 

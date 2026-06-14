@@ -46,8 +46,7 @@ export function PhaseStageCard({
   const roadmapHref = getRoadmapHref(sectionId, areaId);
   const primaryLabel = isCompleted ? 'Repasar' : isActive ? 'Continuar' : 'Entrar';
   const showSkipExam = !isCompleted && skipExamHref;
-  const skipDisabled =
-    phaseSkipRequiresAuth || phaseSkipAvailabilityLoading || !phaseSkipCanStart;
+  const skipDisabled = phaseSkipRequiresAuth || phaseSkipAvailabilityLoading || !phaseSkipCanStart;
   const skipTooltip = phaseSkipRequiresAuth
     ? 'Requiere iniciar sesión con una cuenta real'
     : !phaseSkipCanStart && phaseSkipTotalQuestions != null
@@ -83,14 +82,10 @@ export function PhaseStageCard({
         />
       </div>
       <p className="text-on-surface-muted mt-1 text-xs">
-        {skippedByExam
-          ? 'Fase completada con simulacro'
-          : `${lessonCount} lecciones · ${progressPercent}%`}
+        {skippedByExam ? 'Fase completada con simulacro' : `${lessonCount} lecciones · ${progressPercent}%`}
       </p>
 
-      {!isCompleted && areaFocus && (
-        <p className="text-on-surface-muted mt-3 text-sm leading-relaxed">{areaFocus}</p>
-      )}
+      {!isCompleted && areaFocus && <p className="text-on-surface-muted mt-3 text-sm leading-relaxed">{areaFocus}</p>}
 
       <div className="mt-4 flex flex-col gap-2">
         <Link

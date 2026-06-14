@@ -30,11 +30,7 @@ export function ExamAnswerOptions({
   const groupLabel = `Pregunta ${questionNumber}: opciones de respuesta`;
 
   return (
-    <div
-      role="radiogroup"
-      aria-label={groupLabel}
-      className={cn(responsive ? 'space-y-2 sm:space-y-3' : 'space-y-3')}
-    >
+    <div role="radiogroup" aria-label={groupLabel} className={cn(responsive ? 'space-y-2 sm:space-y-3' : 'space-y-3')}>
       {options.map((option) => {
         const optionKey = option.letter ?? option.id;
         const isSelected = selectedAnswer === optionKey;
@@ -57,10 +53,7 @@ export function ExamAnswerOptions({
             )}
           >
             <div
-              className={cn(
-                'flex gap-2.5',
-                responsive ? 'items-start sm:items-center sm:gap-3' : 'items-center gap-3'
-              )}
+              className={cn('flex gap-2.5', responsive ? 'items-start sm:items-center sm:gap-3' : 'items-center gap-3')}
             >
               <div
                 className={cn(

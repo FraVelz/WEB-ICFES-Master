@@ -11,13 +11,9 @@ import {
 describe('simulacroNavigation', () => {
   it('construye rutas de simulacro', () => {
     expect(getSimulacroCompletoHref()).toBe('/simulacro/completo');
-    expect(getSimulacroCompletoHref('/fases/matematicas')).toBe(
-      '/simulacro/completo?from=%2Ffases%2Fmatematicas'
-    );
+    expect(getSimulacroCompletoHref('/fases/matematicas')).toBe('/simulacro/completo?from=%2Ffases%2Fmatematicas');
     expect(getSimulacroAreaHref('matematicas')).toBe('/simulacro/matematicas');
-    expect(getPhaseSkipExamHref('lectura-critica', 'facil')).toBe(
-      '/simulacro/lectura-critica/fase?etapa=facil'
-    );
+    expect(getPhaseSkipExamHref('lectura-critica', 'facil')).toBe('/simulacro/lectura-critica/fase?etapa=facil');
   });
 
   it('redirige rutas legacy', () => {

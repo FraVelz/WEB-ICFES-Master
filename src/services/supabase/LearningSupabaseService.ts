@@ -15,6 +15,7 @@ import {
   mapRoadmapRowToLesson,
 } from '@/services/learning/learningCatalogMap';
 import { parseLessonVisuals } from '@/features/learning/roadmap/lessonVisualTypes';
+import { stripQuizAnswersFromContent } from '@/utils/stripQuizAnswers';
 
 const TABLE = 'learning_content';
 

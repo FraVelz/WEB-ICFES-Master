@@ -42,11 +42,9 @@ const getCachedDbQuestionsByRouteArea = (
     { revalidate: CACHE_REVALIDATE_SECONDS }
   );
 
-const getCachedDbQuestionsForFullExam = unstable_cache(
-  loadFromDbForFullExam,
-  ['exam-questions-full-exam'],
-  { revalidate: CACHE_REVALIDATE_SECONDS }
-);
+const getCachedDbQuestionsForFullExam = unstable_cache(loadFromDbForFullExam, ['exam-questions-full-exam'], {
+  revalidate: CACHE_REVALIDATE_SECONDS,
+});
 
 export async function fetchPublicQuestionsByRouteArea(
   routeArea: string,
@@ -55,9 +53,7 @@ export async function fetchPublicQuestionsByRouteArea(
 ): Promise<ExamQuestionPublic[]> {
   const fallback = getStaticQuestionsByRouteArea(routeArea);
   const filteredFallback =
-    difficulty != null
-      ? fallback.filter((question) => question.difficulty === difficulty)
-      : fallback;
+    difficulty != null ? fallback.filter((question) => question.difficulty === difficulty) : fallback;
   const cappedFallback = limit != null && limit > 0 ? filteredFallback.slice(0, limit) : filteredFallback;
 
   try {

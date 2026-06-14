@@ -7,12 +7,7 @@ import {
   syncAchievementsFromGameplay,
   type AchievementProgressMap,
 } from '@/services/achievements/achievementProgressService';
-import {
-  backfillStreakFromAttempts,
-  getStreakMetrics,
-  loadStreakState,
-  type StreakScope,
-} from '@/services/streak';
+import { backfillStreakFromAttempts, getStreakMetrics, loadStreakState, type StreakScope } from '@/services/streak';
 import { countCompletedAchievements, mergeAchievements } from './gamificationAchievementMerge';
 import type { AchievementMerged } from './gamificationTypes';
 

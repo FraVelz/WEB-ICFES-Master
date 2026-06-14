@@ -5,10 +5,10 @@ Esta guía describe cómo agregar **tablas**, **fórmulas** y **gráficas** en `
 ## Tablas (Markdown GFM)
 
 ```markdown
-| Variable | Valor |
-| --- | --- |
+| Variable    | Valor |
+| ----------- | ----- |
 | Temperatura | 25 °C |
-| Presión | 1 atm |
+| Presión     | 1 atm |
 ```
 
 ## Matemáticas (KaTeX)
@@ -51,7 +51,7 @@ Observa la tendencia del gasto:
 
 ## Gráficas embebidas (`chart-json`)
 
-```markdown
+````markdown
 ```chart-json
 {
   "chartType": "line",
@@ -60,7 +60,9 @@ Observa la tendencia del gasto:
   "series": [{ "name": "°C", "values": [18, 21, 19] }]
 }
 ```
-```
+````
+
+````
 
 ## Tablas estructuradas (`visuals`)
 
@@ -71,15 +73,15 @@ Observa la tendencia del gasto:
   "headers": ["Muestra", "pH"],
   "rows": [["A", "6.8"], ["B", "7.1"]]
 }
-```
+````
 
 ## Escalado por fase
 
-| Fase | ND | Uso recomendado |
-| --- | --- | --- |
-| 1 | 1–2 | Tabla simple, 1 dato, gráfica de barras básica |
-| 2 | 2–3 | Cruzar tabla + texto; gráfica con 2 series |
-| 3 | 3–4 | Validar conclusión con gráfica; detectar error en datos |
+| Fase | ND  | Uso recomendado                                         |
+| ---- | --- | ------------------------------------------------------- |
+| 1    | 1–2 | Tabla simple, 1 dato, gráfica de barras básica          |
+| 2    | 2–3 | Cruzar tabla + texto; gráfica con 2 series              |
+| 3    | 3–4 | Validar conclusión con gráfica; detectar error en datos |
 
 Campos DCE opcionales en `content`:
 

@@ -4,7 +4,10 @@ import { PHASE_SKIP_MIN_QUESTIONS } from './phaseSkipConstants';
 export class InsufficientPhaseSkipQuestionsError extends Error {
   readonly code = 'INSUFFICIENT_QUESTIONS' as const;
 
-  constructor(readonly available: number, readonly required = PHASE_SKIP_MIN_QUESTIONS) {
+  constructor(
+    readonly available: number,
+    readonly required = PHASE_SKIP_MIN_QUESTIONS
+  ) {
     super(`Se necesitan al menos ${required} preguntas en esta fase (hay ${available})`);
     this.name = 'InsufficientPhaseSkipQuestionsError';
   }
@@ -47,9 +50,7 @@ export function pickPhaseSkipQuestions(
     throw new InsufficientPhaseSkipQuestionsError(allCandidates.length, targetCount);
   }
 
-  const shuffledLessonIds = shuffle(
-    lessonIds.filter((lessonId) => (questionsByLesson.get(lessonId)?.length ?? 0) > 0)
-  );
+  const shuffledLessonIds = shuffle(lessonIds.filter((lessonId) => (questionsByLesson.get(lessonId)?.length ?? 0) > 0));
   const picked: NormalizedQuizQuestion[] = [];
   const usedIds = new Set<string>();
 

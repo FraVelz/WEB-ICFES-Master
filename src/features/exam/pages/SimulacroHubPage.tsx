@@ -64,7 +64,7 @@ export function SimulacroHubPage() {
                 href={href}
                 className={cn(
                   'border-surface-border bg-surface-elevated/80 block rounded-2xl border p-4',
-                  'transition-colors hover:border-app-accent/40 hover:bg-app-accent/5',
+                  'hover:border-app-accent/40 hover:bg-app-accent/5 transition-colors',
                   'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:outline-none'
                 )}
               >

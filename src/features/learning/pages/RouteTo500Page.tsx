@@ -177,7 +177,11 @@ export function RouteTo500Page() {
             </Link>
           )}
           <Link
-            href={getJourneyStepHref(ROUTE_TO_500_STEPS[3], areaId) ?? getSimulacroAreaHref('lectura-critica') ?? '/simulacro'}
+            href={
+              getJourneyStepHref(ROUTE_TO_500_STEPS[3], areaId) ??
+              getSimulacroAreaHref('lectura-critica') ??
+              '/simulacro'
+            }
             className={cn(
               'inline-flex flex-1 items-center justify-center rounded-xl px-4 py-2.5 text-sm font-bold text-white',
               'bg-linear-to-r from-amber-600 to-orange-600 transition-colors hover:brightness-110',
