@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { PerfilPublico } from '@/features/user/pages';
+import { PerfilPublicoLeagueGate } from '@/features/user/pages/PerfilPublicoLeagueGate';
 import { fetchPublicProfile } from '@/services/profile/publicProfileServer';
 import { getSiteUrl } from '@/config/site';
 import {
@@ -38,7 +39,11 @@ export default async function PublicProfilePage({ searchParams }: PageProps) {
 
   const view = buildPublicProfileViewState(userId, payload, errorCode);
 
-  return <PerfilPublico view={view} />;
+  return (
+    <PerfilPublicoLeagueGate>
+      <PerfilPublico view={view} />
+    </PerfilPublicoLeagueGate>
+  );
 }
 
 const NOINDEX: Metadata['robots'] = { index: false, follow: false };

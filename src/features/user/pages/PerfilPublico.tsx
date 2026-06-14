@@ -18,7 +18,7 @@ import { ProfileStatsSection } from '../components/profile/ProfileStatsSection';
 import { ProfileAchievementsSection } from '../components/profile/ProfileAchievementsSection';
 import { ProfileLeagueSection } from '../components/profile/ProfileLeagueSection';
 import { ProfileStoreHighlights } from '../components/profile/ProfileStoreHighlights';
-import { useMyLeague } from '@/hooks/gamification/useMyLeague';
+import { useLeagueContext } from '@/hooks/gamification/LeagueContext';
 import { useProfileCourseProgress } from '../hooks/useProfileCourseProgress';
 import { useUserProfileStudyTime } from '../hooks/useUserProfileStudyTime';
 import { mapMyLeagueToDisplay } from '../components/profile/profileLeagueTypes';
@@ -62,7 +62,7 @@ export const PerfilPublico = ({ view }: PerfilPublicoProps) => {
   } = view;
 
   const isOwnProfile = Boolean(authUser?.uid && userId === authUser.uid);
-  const { leagueState, leagueRank, loading: ownLeagueLoading, resetMs } = useMyLeague();
+  const { leagueState, leagueRank, loading: ownLeagueLoading, resetMs } = useLeagueContext();
   const ownLeagueDisplay = useMemo(() => mapMyLeagueToDisplay(leagueState, leagueRank), [leagueState, leagueRank]);
   const { courseProgress: ownCourseProgress, loading: ownCourseProgressLoading } = useProfileCourseProgress(
     isOwnProfile ? (userId ?? undefined) : undefined

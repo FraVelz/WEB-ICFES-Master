@@ -4,14 +4,12 @@ import { usePathname } from 'next/navigation';
 import type { ReactNode } from 'react';
 import { DashboardHeader } from '@/components/DashboardHeader';
 import { AchievementUnlockHost } from '@/features/achievements/components/AchievementUnlockHost';
+import { LeagueProvider } from '@/hooks/gamification/LeagueContext';
 import { isLessonRoute } from '@/features/learning/utils/lessonRoutes';
 import { cn } from '@/utils/cn';
 import { DashboardShellGate } from './DashboardShellGate';
 
-export function DashboardLayoutChrome({ children }: { children: ReactNode }) {
-  const pathname = usePathname();
-  const isFullscreenLesson = isLessonRoute(pathname);
-
+function DashboardLayoutBody({ children, isFullscreenLesson }: { children: ReactNode; isFullscreenLesson: boolean }) {
   if (isFullscreenLesson) {
     return (
       <>
@@ -56,5 +54,16 @@ export function DashboardLayoutChrome({ children }: { children: ReactNode }) {
       </div>
       <AchievementUnlockHost />
     </>
+  );
+}
+
+export function DashboardLayoutChrome({ children }: { children: ReactNode }) {
+  const pathname = usePathname();
+  const isFullscreenLesson = isLessonRoute(pathname);
+
+  return (
+    <LeagueProvider>
+      <DashboardLayoutBody isFullscreenLesson={isFullscreenLesson}>{children}</DashboardLayoutBody>
+    </LeagueProvider>
   );
 }

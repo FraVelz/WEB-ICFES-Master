@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation';
 import { LoadingState } from '@/shared/components/LoadingState';
 import { useAuth } from '@/features/auth/context/AuthContext';
 import { useLeaderboard, type LeaderboardPlayer } from '@/hooks/gamification';
-import { useMyLeague } from '@/hooks/gamification/useMyLeague';
+import { useLeagueContext } from '@/hooks/gamification/LeagueContext';
 import { useProfileStatus } from '@/features/user/hooks/useProfileStatus';
 import { useResolvedProfileAvatar } from '@/features/user/hooks/useResolvedProfileAvatar';
 import { useVipBadge } from '@/features/store/hooks/useVipBadge';
@@ -23,7 +23,7 @@ import { EmptyState } from '@/shared/components/EmptyState';
 export const ClasificatoriaPage = () => {
   const router = useRouter();
   const { user } = useAuth();
-  const { leagueState, leagueRank: myLeagueRank, loading: leagueLoading, resetMs } = useMyLeague();
+  const { leagueState, leagueRank: myLeagueRank, loading: leagueLoading, resetMs } = useLeagueContext();
   const { statusId } = useProfileStatus();
   const avatarSrc = useResolvedProfileAvatar(user?.profileImage);
   const hasVip = useVipBadge();

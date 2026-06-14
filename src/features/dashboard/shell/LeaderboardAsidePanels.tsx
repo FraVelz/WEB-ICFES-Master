@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { cn } from '@/utils/cn';
 import { getPracticaHrefForRoadmapArea } from '@/shared/constants';
-import { useMyLeague } from '@/hooks/gamification/useMyLeague';
+import { useLeagueContext } from '@/hooks/gamification/LeagueContext';
 import { getRankInfo } from '@/shared/constants/ranks';
 import { ProfileStatusPicker } from '@/features/user/components/profile/ProfileStatusPicker';
 import { AsideCard } from './AsideCard';
@@ -11,7 +11,7 @@ import { useDashboardShell } from './DashboardShellContext';
 
 export function LeaderboardAsidePanels() {
   const { currentArea, currentAreaData, currentStreak, coins } = useDashboardShell();
-  const { leagueState, leagueRank, loading: leagueLoading } = useMyLeague();
+  const { leagueState, leagueRank, loading: leagueLoading } = useLeagueContext();
   const rankInfo = getRankInfo(leagueRank);
   const areaExamHref = getPracticaHrefForRoadmapArea(currentArea);
 

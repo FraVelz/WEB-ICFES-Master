@@ -20,7 +20,7 @@ import { ProfileAchievementsSection } from '../components/profile/ProfileAchieve
 import { ProfileLeagueSection } from '../components/profile/ProfileLeagueSection';
 import { ProfileStoreHighlights } from '../components/profile/ProfileStoreHighlights';
 import { mapMyLeagueToDisplay } from '../components/profile/profileLeagueTypes';
-import { useMyLeague } from '@/hooks/gamification/useMyLeague';
+import { useLeagueContext } from '@/hooks/gamification/LeagueContext';
 import { useProfileCourseProgress } from '../hooks/useProfileCourseProgress';
 
 const profileActionButtonClass = cn(
@@ -52,7 +52,7 @@ export const PerfilNormal = () => {
   const displayProfileImage = useResolvedProfileAvatar(profileImage);
   const isVip = useVipBadge();
   const { inventory, equippedLogoId } = useShop();
-  const { leagueState, leagueRank, loading: leagueLoading, resetMs } = useMyLeague();
+  const { leagueState, leagueRank, loading: leagueLoading, resetMs } = useLeagueContext();
   const { courseProgress, loading: courseProgressLoading } = useProfileCourseProgress(uid);
 
   const leagueDisplay = useMemo(() => mapMyLeagueToDisplay(leagueState, leagueRank), [leagueState, leagueRank]);
