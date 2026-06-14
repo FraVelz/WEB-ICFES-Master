@@ -1,0 +1,11 @@
+{
+  "phase": 2,
+  "total": 350,
+  "byArea": {
+    "lectura-critica": 70,
+    "matematicas": 70,
+    "ciencias-naturales": 70,
+    "sociales-ciudadanas": 70,
+    "ingles": 70
+  }
+}
