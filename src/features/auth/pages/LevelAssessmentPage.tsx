@@ -5,7 +5,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { LevelAssessment } from '@/features/auth/components/LevelAssessment/LevelAssessment';
 import type { LevelAssessmentContext } from '@/features/auth/types/skillLevel';
 import { useAuth } from '@/features/auth/context/AuthContext';
-import { LoadingState } from '@/shared/components/LoadingState';
+import { OnboardingPageSkeleton } from '@/shared/components/PageSkeletons';
 import {
   getAssessmentOptionsFromContext,
   getAssessmentScopeForSession,
@@ -46,7 +46,7 @@ export const LevelAssessmentPage = () => {
   }, [authLoading, context, demoMode, hydrated, router, user?.uid]);
 
   if (!ready) {
-    return <LoadingState label="Verificando evaluación..." layout="page" />;
+    return <OnboardingPageSkeleton />;
   }
 
   return <LevelAssessment context={context} />;

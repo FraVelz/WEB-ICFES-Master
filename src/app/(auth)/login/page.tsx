@@ -1,7 +1,7 @@
 import { Suspense } from 'react';
 import type { Metadata } from 'next';
 import { LoginPage } from '@/features/auth';
-import { LoadingState } from '@/shared/components/LoadingState';
+import { AuthPageSkeleton } from '@/shared/components/PageSkeletons';
 
 export const metadata: Metadata = {
   title: 'Iniciar sesión',
@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 
 export default function Page() {
   return (
-    <Suspense fallback={<LoadingState label="Cargando..." layout="page" />}>
+    <Suspense fallback={<AuthPageSkeleton />}>
       <LoginPage />
     </Suspense>
   );

@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { cn } from '@/utils/cn';
 import { Icon } from '@/shared/components/Icon';
-import { LoadingState } from '@/shared/components/LoadingState';
+import { PhasesPageSkeleton } from '@/shared/components/PageSkeletons';
 import type { AreaId } from '@/shared/constants';
 import { getPracticaHrefForRoadmapArea } from '@/shared/constants';
 import { useDashboardShell } from '@/features/dashboard/shell';
@@ -36,7 +36,7 @@ export function LearningPhasesPage() {
   }, [currentArea, router]);
 
   if (currentArea === 'examen-completo') {
-    return <LoadingState label="Abriendo simulacro completo…" layout="section" />;
+    return <PhasesPageSkeleton />;
   }
 
   const phaseStatuses = resolvePhaseStatuses(COMPETENCY_PHASES, sections, skippedSectionIds);
@@ -44,7 +44,7 @@ export function LearningPhasesPage() {
   const areaSimulacroCopy = getAreaSimulacroPhaseCopy(currentArea as AreaId);
 
   if (pathLoading && sections.length === 0) {
-    return <LoadingState label="Cargando fases..." layout="section" />;
+    return <PhasesPageSkeleton />;
   }
 
   return (

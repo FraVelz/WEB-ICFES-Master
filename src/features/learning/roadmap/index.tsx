@@ -15,7 +15,7 @@ const LessonPreview = dynamic(() => import('./LessonPreview').then((m) => ({ def
   ssr: false,
 });
 
-import { LoadingState } from '@/shared/components/LoadingState';
+import { RoadmapPageSkeleton } from '@/shared/components/PageSkeletons';
 import { EmptyState } from '@/shared/components/EmptyState';
 
 import type { PathNodeData } from './AreaPath';
@@ -79,7 +79,7 @@ export const LearningRoadmap = () => {
 
   return (
     <div className="relative min-h-0">
-      {loading && <LoadingState label="Cargando ruta..." layout="section" />}
+      {loading && <RoadmapPageSkeleton />}
 
       {!loading && pathError && (
         <EmptyState

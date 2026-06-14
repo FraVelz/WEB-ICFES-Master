@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { cn } from '@/utils/cn';
 import { useRouter } from 'next/navigation';
-import { LoadingState } from '@/shared/components/LoadingState';
+import { LeaguePageSkeleton } from '@/shared/components/PageSkeletons';
 import { useAuth } from '@/features/auth/context/AuthContext';
 import { useLeaderboard, type LeaderboardPlayer } from '@/hooks/gamification';
 import { useLeagueContext } from '@/hooks/gamification/LeagueContext';
@@ -110,7 +110,7 @@ export const ClasificatoriaPage = () => {
           <LeagueJoinBanner rankLabel={currentRankInfo.label} />
         ) : (
           <div className="mb-5 text-center">
-            <h2 className="text-lg font-bold text-white sm:text-xl">División {currentRankInfo.label}</h2>
+            <h2 className="text-on-surface text-lg font-bold sm:text-xl">División {currentRankInfo.label}</h2>
             <p className="text-on-surface-muted mt-1 text-xs sm:text-sm">
               Grupo {groupNumber} · {memberCount}/{groupSize} competidores
               {slotsRemaining > 0 && ` · ${slotsRemaining} cupos libres`}
@@ -137,7 +137,7 @@ export const ClasificatoriaPage = () => {
 
       <div className="min-h-0 flex-1">
         {showLeaderboardLoading ? (
-          <LoadingState label="Cargando clasificación..." layout="section" />
+          <LeaguePageSkeleton />
         ) : error ? (
           <EmptyState
             icon="exclamation-triangle"

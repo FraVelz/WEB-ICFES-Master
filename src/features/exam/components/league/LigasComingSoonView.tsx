@@ -27,7 +27,7 @@ export function LigasComingSoonView() {
       <LeagueShieldNav selectedRank={selectedRank} myLeagueRank="novato" onSelect={setSelectedRank} />
 
       <div className="mb-5 text-center">
-        <h2 className="text-lg font-bold text-white sm:text-xl">División {currentRankInfo.label}</h2>
+        <h2 className="text-on-surface text-lg font-bold sm:text-xl">División {currentRankInfo.label}</h2>
         <p
           className={cn(
             'border-surface-border bg-surface-elevated/60 text-on-surface-muted mx-auto mt-4 max-w-md',

@@ -70,7 +70,7 @@ export function SettingsSupportPanel() {
               onChange={(e) => setSupportCategory(e.target.value)}
               className={cn(
                 'focus:border-app-ring border-surface-border bg-surface-via w-full rounded-lg border',
-                'px-3 py-2.5 text-sm text-white outline-none'
+                'text-on-surface px-3 py-2.5 text-sm outline-none'
               )}
             >
               <option value="technical">Error técnico</option>
@@ -92,7 +92,7 @@ export function SettingsSupportPanel() {
                 required
                 className={cn(
                   'focus:border-app-ring border-surface-border bg-surface-via w-full rounded-lg border',
-                  'px-3 py-2.5 text-sm text-white outline-none'
+                  'text-on-surface px-3 py-2.5 text-sm outline-none'
                 )}
                 placeholder="tu@email.com"
               />
@@ -111,7 +111,7 @@ export function SettingsSupportPanel() {
             required
             className={cn(
               'border-surface-border bg-surface-via h-32 w-full resize-none rounded-lg border px-3 py-3 text-sm',
-              'focus:border-app-ring text-white outline-none'
+              'focus:border-app-ring text-on-surface outline-none'
             )}
             placeholder={supportMode === 'response' ? '¿En qué podemos ayudarte?' : 'Describe el error encontrado...'}
           />

@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { Suspense } from 'react';
 import { LevelAssessmentPage } from '@/features/auth/pages/LevelAssessmentPage';
-import { LoadingState } from '@/shared/components/LoadingState';
+import { OnboardingPageSkeleton } from '@/shared/components/PageSkeletons';
 
 export const metadata: Metadata = {
   title: 'Evaluación de nivel',
@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 
 export default function Page() {
   return (
-    <Suspense fallback={<LoadingState label="Cargando evaluación..." layout="page" />}>
+    <Suspense fallback={<OnboardingPageSkeleton />}>
       <LevelAssessmentPage />
     </Suspense>
   );

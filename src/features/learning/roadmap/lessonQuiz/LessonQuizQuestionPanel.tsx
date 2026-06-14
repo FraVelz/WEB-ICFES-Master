@@ -20,7 +20,7 @@ export function LessonQuizQuestionPanel({
   return (
     <div className={hideQuestionTitle ? '' : 'mb-3 lg:mb-6'}>
       {!hideQuestionTitle && (
-        <h4 className="mb-3 px-0.5 text-base leading-relaxed font-semibold text-white lg:mb-4 lg:text-lg">
+        <h4 className="text-on-surface mb-3 px-0.5 text-base leading-relaxed font-semibold lg:mb-4 lg:text-lg">
           {question.question}
         </h4>
       )}
@@ -42,12 +42,12 @@ export function LessonQuizQuestionPanel({
               'lg:min-h-[48px] lg:rounded-xl lg:p-4 lg:text-base',
               isSubmitted
                 ? option.id === question.correctAnswer
-                  ? 'border-green-500 bg-green-500/15 text-green-300 shadow-lg shadow-green-500/10'
+                  ? 'border-green-500 bg-green-500/15 text-green-700 shadow-lg shadow-green-500/10 dark:text-green-300'
                   : option.id === selectedOption
-                    ? 'border-red-500 bg-red-500/15 text-red-300 shadow-lg shadow-red-500/10'
+                    ? 'border-red-500 bg-red-500/15 text-red-700 shadow-lg shadow-red-500/10 dark:text-red-300'
                     : 'border-surface-border/50 bg-surface-overlay/30 text-on-surface-muted opacity-60'
                 : selectedOption === option.id
-                  ? 'scale-[1.02] border-blue-500 bg-blue-500/15 text-blue-300 shadow-lg shadow-blue-500/10 active:scale-[0.98] active:bg-blue-500/20'
+                  ? 'scale-[1.02] border-blue-500 bg-blue-500/15 text-blue-700 shadow-lg shadow-blue-500/10 active:scale-[0.98] active:bg-blue-500/20 dark:text-blue-300'
                   : cn(
                       'border-surface-border/50 bg-surface-overlay/50 text-on-surface',
                       'hover:border-surface-border hover:bg-surface-overlay/70',
@@ -89,8 +89,8 @@ export function LessonQuizQuestionPanel({
 
       {isSubmitted && question.explanation && (
         <div className="mt-4 rounded-xl border border-blue-500/30 bg-blue-500/10 p-3.5 lg:mt-5 lg:p-4">
-          <div className="space-y-2 text-xs leading-relaxed text-blue-200 lg:text-sm">
-            <p className="flex items-center gap-1.5 font-semibold text-blue-300">
+          <div className="space-y-2 text-xs leading-relaxed text-blue-800 lg:text-sm dark:text-blue-200">
+            <p className="flex items-center gap-1.5 font-semibold text-blue-700 dark:text-blue-300">
               <Icon name="lightbulb" size="sm" />
               Explicación:
             </p>

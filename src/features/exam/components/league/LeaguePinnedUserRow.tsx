@@ -73,7 +73,7 @@ export function LeaguePinnedUserRow({
         </div>
 
         <div className="min-w-0 flex-1 text-left">
-          <span className="truncate text-sm font-bold text-white">{name}</span>
+          <span className="text-on-surface truncate text-sm font-bold">{name}</span>
         </div>
 
         <div className="text-on-surface-muted shrink-0 text-right text-sm font-bold">{weeklyXp} XP</div>

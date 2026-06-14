@@ -25,7 +25,7 @@ export function LessonContentHeader({
             href={backHref}
             className={cn(
               'text-on-surface-muted -ml-1 flex min-w-[44px] cursor-pointer items-center gap-2 rounded-xl p-2',
-              'hover:bg-surface-overlay transition-colors hover:text-white focus-visible:outline-none',
+              'hover:bg-surface-overlay hover:text-on-surface transition-colors focus-visible:outline-none',
               'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:ring-offset-2',
               'focus-visible:ring-offset-surface-elevated'
             )}
@@ -33,7 +33,7 @@ export function LessonContentHeader({
             <Icon name="arrow-left" className="text-lg" />
             <span className="hidden text-sm font-medium sm:inline">Salir</span>
           </Link>
-          <h2 className="flex-1 truncate px-2 text-center text-sm font-bold text-white sm:px-4 sm:text-base">
+          <h2 className="text-on-surface flex-1 truncate px-2 text-center text-sm font-bold sm:px-4 sm:text-base">
             {title}
           </h2>
           <div className="w-14 sm:w-20" />

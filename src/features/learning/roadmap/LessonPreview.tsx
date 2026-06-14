@@ -66,7 +66,7 @@ export const LessonPreview = ({ isOpen, onClose, lesson, onStart }: LessonPrevie
             aria-label="Cerrar vista previa"
             className={cn(
               'text-on-surface-muted absolute top-4 right-4 cursor-pointer rounded-lg p-2 transition-colors',
-              'focus-visible:ring-app-accent hover:text-white focus-visible:ring-2 focus-visible:outline-none',
+              'focus-visible:ring-app-accent hover:text-on-surface focus-visible:ring-2 focus-visible:outline-none',
               'focus-visible:ring-offset-surface-elevated focus-visible:ring-offset-2'
             )}
           >
@@ -74,7 +74,7 @@ export const LessonPreview = ({ isOpen, onClose, lesson, onStart }: LessonPrevie
           </button>
 
           <div className="mb-6 text-center">
-            <h3 id="lesson-preview-title" className="mr-8 mb-2 text-xl font-bold text-white">
+            <h3 id="lesson-preview-title" className="text-on-surface mr-8 mb-2 text-xl font-bold">
               {lesson.title}
             </h3>
             <p className="text-on-surface-muted text-sm">{lesson.description}</p>

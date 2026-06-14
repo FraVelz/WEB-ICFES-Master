@@ -24,7 +24,7 @@ export function PracticeQuestionCard({
     <div
       id={`question-${index}`}
       className={cn(
-        'border-surface-border bg-surface-elevated/80 rounded-xl border shadow-lg',
+        'border-surface-border bg-surface-elevated/80 scroll-mt-[var(--exam-sticky-offset,6.25rem)] rounded-xl border shadow-lg',
         'hover:border-surface-border/80 backdrop-blur-md transition-all duration-300 hover:shadow-xl',
         'p-3.5 sm:p-6'
       )}

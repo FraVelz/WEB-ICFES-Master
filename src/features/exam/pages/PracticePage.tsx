@@ -5,10 +5,10 @@ import { ExamConfigModal } from '@/features/exam/components';
 import { PracticeResultsView } from '@/features/exam/components/practice/PracticeResultsView';
 import { PracticeActiveView } from '@/features/exam/components/practice/PracticeActiveView';
 import { usePracticeExam } from '@/features/exam/hooks/usePracticeExam';
-import { LoadingState } from '@/shared/components/LoadingState';
 import { EmptyState } from '@/shared/components/EmptyState';
 import { RouteTo500ContextBanner } from '@/features/learning/components/routeTo500/RouteTo500ContextBanner';
 import { BreadcrumbNav } from '@/shared/components/BreadcrumbNav';
+import { ExamPageSkeleton, GradingSkeleton } from '@/shared/components/PageSkeletons';
 
 const errorBoxClass = 'mx-auto max-w-lg px-4';
 
@@ -55,7 +55,7 @@ export const PracticePage = () => {
   } = usePracticeExam();
 
   if (loadingQuestions) {
-    return <LoadingState label="Cargando preguntas…" layout="section" />;
+    return <ExamPageSkeleton questionCount={5} />;
   }
 
   if (questionsError) {
@@ -81,7 +81,7 @@ export const PracticePage = () => {
     }
 
     if (results.length === 0) {
-      return <LoadingState label="Calificando examen…" layout="section" />;
+      return <GradingSkeleton />;
     }
 
     return (

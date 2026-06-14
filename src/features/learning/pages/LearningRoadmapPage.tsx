@@ -3,7 +3,7 @@
 import { LearningRoadmap } from '@/features/learning/components';
 import { useDailyStreakOnLearningRoute } from '@/features/learning/hooks/useDailyStreakOnLearningRoute';
 import { Suspense } from 'react';
-import { LoadingState } from '@/shared/components/LoadingState';
+import { RoadmapPageSkeleton } from '@/shared/components/PageSkeletons';
 
 const Component = () => {
   useDailyStreakOnLearningRoute();
@@ -17,7 +17,7 @@ const Component = () => {
 
 export const LearningRoadmapPage = () => {
   return (
-    <Suspense fallback={<LoadingState label="Cargando ruta..." layout="section" />}>
+    <Suspense fallback={<RoadmapPageSkeleton />}>
       <Component />
     </Suspense>
   );

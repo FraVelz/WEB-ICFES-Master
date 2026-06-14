@@ -100,7 +100,7 @@ export const AreaPath = ({
 
           {!hideSectionHeader && (
             <div className="border-surface-border mb-6 ml-2 border-l-4 pl-4">
-              <h3 className="text-lg font-bold text-white">{section.title}</h3>
+              <h3 className="text-on-surface text-lg font-bold">{section.title}</h3>
               <p className="text-on-surface-muted text-sm">{section.description}</p>
             </div>
           )}
@@ -122,7 +122,7 @@ export const AreaPath = ({
                       <div className="flex items-center justify-between gap-3">
                         <div>
                           <p className="text-xs font-semibold tracking-wide text-amber-400/90 uppercase">Bloque</p>
-                          <h4 className="text-base font-bold text-white">{group.title}</h4>
+                          <h4 className="text-on-surface text-base font-bold">{group.title}</h4>
                         </div>
                         <span className="text-on-surface-muted text-sm font-medium">
                           {completed}/{total}

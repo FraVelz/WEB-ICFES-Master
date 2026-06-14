@@ -69,7 +69,7 @@ export function StreakCalendar({ streakHistory }: StreakCalendarProps) {
           onClick={() => changeMonth(-1)}
           aria-label="Mes anterior"
           className={cn(
-            'text-on-surface-muted cursor-pointer rounded-lg p-1 transition-colors hover:text-white',
+            'text-on-surface-muted hover:text-on-surface cursor-pointer rounded-lg p-1 transition-colors',
             'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none',
             'focus-visible:ring-offset-surface-via'
           )}
@@ -84,7 +84,7 @@ export function StreakCalendar({ streakHistory }: StreakCalendarProps) {
           onClick={() => changeMonth(1)}
           aria-label="Mes siguiente"
           className={cn(
-            'text-on-surface-muted cursor-pointer rounded-lg p-1 transition-colors hover:text-white',
+            'text-on-surface-muted hover:text-on-surface cursor-pointer rounded-lg p-1 transition-colors',
             'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none',
             'focus-visible:ring-offset-surface-via'
           )}

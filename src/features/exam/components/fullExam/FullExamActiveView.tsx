@@ -11,6 +11,7 @@ import { FullExamMobileAnswerSheet } from './FullExamMobileAnswerSheet';
 import { FullExamAnswerSheetFab } from './FullExamAnswerSheetFab';
 import { FullExamQuestionCard } from './FullExamQuestionCard';
 import { PhaseSkipNotice } from '@/features/exam/components/practice/PhaseSkipNotice';
+import { useExamQuestionScrollSpy } from '@/features/exam/hooks/useExamQuestionScrollSpy';
 
 type FullExamActiveViewProps = {
   areaInfo: { name: string; color: string };
@@ -46,6 +47,12 @@ export function FullExamActiveView({
   const [mobileAnswerSheetOpen, setMobileAnswerSheetOpen] = useState(false);
   const showPhaseSkipNotice = phaseSkipPassPercent != null;
   const answeredCount = Object.keys(answers).length;
+  const { currentQuestion, focusQuestion } = useExamQuestionScrollSpy(questions.length);
+
+  const handleQuestionClick = (index: number) => {
+    focusQuestion(index);
+    onScrollToQuestion(index);
+  };
 
   return (
     <FullExamShell>
@@ -97,8 +104,8 @@ export function FullExamActiveView({
               <AnswerSheet
                 totalQuestions={questions.length}
                 answers={answers}
-                currentQuestion={0}
-                onQuestionClick={onScrollToQuestion}
+                currentQuestion={currentQuestion}
+                onQuestionClick={handleQuestionClick}
                 questions={questions}
               />
               {showPhaseSkipNotice && (
@@ -119,10 +126,11 @@ export function FullExamActiveView({
         isOpen={mobileAnswerSheetOpen}
         questions={questions}
         answers={answers}
+        currentQuestion={currentQuestion}
         phaseSkipPhaseTitle={phaseSkipPhaseTitle}
         phaseSkipPassPercent={phaseSkipPassPercent}
         onClose={() => setMobileAnswerSheetOpen(false)}
-        onScrollToQuestion={onScrollToQuestion}
+        onScrollToQuestion={handleQuestionClick}
       />
     </FullExamShell>
   );

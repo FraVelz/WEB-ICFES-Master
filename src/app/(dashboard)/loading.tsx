@@ -1,5 +1,5 @@
-import { LoadingState } from '@/shared/components/LoadingState';
+import { DashboardPageSkeleton } from '@/shared/components/PageSkeletons';
 
-export default function DashboardLoading() {
-  return <LoadingState layout="page" label="Cargando..." />;
+export default function Loading() {
+  return <DashboardPageSkeleton />;
 }

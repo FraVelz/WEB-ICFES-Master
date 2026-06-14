@@ -89,20 +89,49 @@ html:not(.dark)
     [class*='from-indigo-6'],
     [class*='from-amber-5'],
     [class*='from-yellow-5'],
+    [class*='from-emerald-5'],
+    [class*='from-emerald-6'],
+    [class*='from-rose-5'],
+    [class*='from-rose-6'],
     [class*='bg-orange-5'],
     [class*='bg-green-5'],
     [class*='bg-red-5'],
     [class*='bg-blue-5'],
     [class*='bg-purple-5'],
     [class*='bg-app-accent-strong'],
+    [class*='bg-app-ring'],
+    [class*='bg-cyan-6'],
+    [class*='bg-emerald-5'],
     [class~='bg-app-accent'],
     [class*='bg-linear-to-br'],
     [class*='bg-linear-to-r']
   ).text-white,
 html:not(.dark)
-  :is([class*='from-cta-'], [class*='bg-linear-to-br'], [class*='bg-linear-to-r'], [class~='bg-app-accent'])
+  :is(
+    [class*='from-cta-'],
+    [class*='from-green-5'],
+    [class*='from-green-6'],
+    [class*='from-red-5'],
+    [class*='from-red-6'],
+    [class*='from-blue-5'],
+    [class*='from-blue-6'],
+    [class*='from-purple-5'],
+    [class*='from-purple-6'],
+    [class*='from-cyan-5'],
+    [class*='from-cyan-6'],
+    [class*='bg-app-ring'],
+    [class*='bg-cyan-6'],
+    [class*='bg-linear-to-br'],
+    [class*='bg-linear-to-r'],
+    [class~='bg-app-accent']
+  )
   .text-white {
   color: #ffffff;
+}
+
+/* Opacidad legible en banners con gradiente */
+html:not(.dark) [class*='bg-linear-to-r'] :is(.text-white\/80, .text-white\/70) {
+  color: rgb(255 255 255 / 0.85);
 }
 
 /* Hover pensado para UI oscura */

@@ -8,6 +8,7 @@ import { FullExamHeader } from './FullExamHeader';
 import { FullExamShell } from './FullExamShell';
 import { FullExamMobileAnswerSheet } from './FullExamMobileAnswerSheet';
 import { FullExamAnswerSheetFab } from './FullExamAnswerSheetFab';
+import { useExamQuestionScrollSpy } from '@/features/exam/hooks/useExamQuestionScrollSpy';
 
 type FullExamResultsViewProps = {
   areaInfo: { name: string; color: string };
@@ -36,6 +37,12 @@ export function FullExamResultsView({
 }: FullExamResultsViewProps) {
   const [mobileAnswerSheetOpen, setMobileAnswerSheetOpen] = useState(false);
   const answeredCount = Object.keys(answers).length;
+  const { currentQuestion, focusQuestion } = useExamQuestionScrollSpy(questions.length);
+
+  const handleQuestionClick = (index: number) => {
+    focusQuestion(index);
+    onScrollToQuestion(index);
+  };
 
   return (
     <FullExamShell>
@@ -59,6 +66,7 @@ export function FullExamResultsView({
               areaInfo={areaInfo}
               examConfig={examConfig}
               onRetry={onRetry}
+              returnTo={exitHref}
             />
           </div>
           <div className="hidden xl:block">
@@ -66,8 +74,9 @@ export function FullExamResultsView({
               <AnswerSheet
                 totalQuestions={questions.length}
                 answers={answers}
-                currentQuestion={0}
-                onQuestionClick={onScrollToQuestion}
+                currentQuestion={currentQuestion}
+                onQuestionClick={handleQuestionClick}
+                questions={questions}
               />
             </div>
           </div>
@@ -84,8 +93,9 @@ export function FullExamResultsView({
         isOpen={mobileAnswerSheetOpen}
         questions={questions}
         answers={answers}
+        currentQuestion={currentQuestion}
         onClose={() => setMobileAnswerSheetOpen(false)}
-        onScrollToQuestion={onScrollToQuestion}
+        onScrollToQuestion={handleQuestionClick}
       />
     </FullExamShell>
   );

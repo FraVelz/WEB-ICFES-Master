@@ -89,7 +89,7 @@ export const ShopItemModal = ({
           aria-label="Cerrar"
           className={cn(
             'absolute top-4 right-4 z-10 flex h-8 w-8 cursor-pointer items-center justify-center rounded-full',
-            'bg-surface-overlay text-on-surface-muted hover:bg-on-surface-muted transition-colors hover:text-white',
+            'bg-surface-overlay text-on-surface-muted hover:bg-on-surface-muted hover:text-on-surface transition-colors',
             'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none',
             'focus-visible:ring-offset-surface-elevated'
           )}
@@ -105,7 +105,7 @@ export const ShopItemModal = ({
         </div>
 
         <div className="px-8 pt-12 pb-8 text-center">
-          <h2 id="shop-item-title" className="mb-2 text-2xl font-bold text-white">
+          <h2 id="shop-item-title" className="text-on-surface mb-2 text-2xl font-bold">
             {item.name}
           </h2>
           <div

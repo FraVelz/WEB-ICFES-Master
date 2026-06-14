@@ -31,9 +31,10 @@ export function FullExamHeader({
   answeredCount = 0,
 }: FullExamHeaderProps) {
   const exitButtonClass = cn(
-    'relative z-[60] shrink-0 rounded-lg bg-white/10 px-3 py-2 text-sm text-white transition-all duration-300 sm:px-4',
-    'focus-visible:ring-app-accent hover:bg-white/20 focus-visible:ring-2 focus-visible:outline-none',
-    'focus-visible:ring-offset-2 focus-visible:ring-offset-gray-900'
+    'relative z-[60] shrink-0 rounded-lg border px-3 py-2 text-sm sm:px-4',
+    'border-surface-border bg-surface-overlay text-on-surface hover:bg-surface-border transition-all duration-300',
+    'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:outline-none',
+    'focus-visible:ring-offset-surface-via focus-visible:ring-offset-2'
   );
 
   const exitControl = onExit ? (

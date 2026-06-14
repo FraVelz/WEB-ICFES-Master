@@ -1,5 +1,6 @@
 import { cn } from '@/utils/cn';
 import { Icon } from '@/shared/components/Icon';
+import { SkeletonCard } from '@/shared/components/SkeletonCard';
 import type { PhaseCardStatus } from '@/features/learning/data/phaseProgressUtils';
 import { HOME_AREA_IDS } from '@/shared/constants';
 import type {
@@ -195,7 +196,13 @@ export function ProfileCoursesSection({
 
       <div className="space-y-6">
         {loading ? (
-          <div className="text-on-surface-muted py-8 text-center text-sm">Cargando progreso...</div>
+          <div className="space-y-4" role="status" aria-label="Cargando progreso">
+            <SkeletonCard className="h-20" />
+            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+              <SkeletonCard className="h-24" />
+              <SkeletonCard className="h-24" />
+            </div>
+          </div>
         ) : hasContent && courseProgress ? (
           <>
             {activeArea && courseProgress.phasesAvailable ? (

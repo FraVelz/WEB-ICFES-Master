@@ -5,7 +5,7 @@ import { ExamConfigModal } from '@/features/exam/components';
 import { FullExamActiveView } from '@/features/exam/components/fullExam/FullExamActiveView';
 import { FullExamResultsView } from '@/features/exam/components/fullExam/FullExamResultsView';
 import { useFullExam } from '@/features/exam/hooks/useFullExam';
-import { LoadingState } from '@/shared/components/LoadingState';
+import { ExamPageSkeleton, GradingSkeleton } from '@/shared/components/PageSkeletons';
 import { EmptyState } from '@/shared/components/EmptyState';
 import { RouteTo500ContextBanner } from '@/features/learning/components/routeTo500/RouteTo500ContextBanner';
 
@@ -39,7 +39,7 @@ export const FullExamPage = () => {
   } = useFullExam();
 
   if (loadingQuestions) {
-    return <LoadingState label="Cargando preguntas…" layout="section" />;
+    return <ExamPageSkeleton questionCount={6} />;
   }
 
   if (questionsError) {
@@ -85,7 +85,7 @@ export const FullExamPage = () => {
     }
 
     if (!gradedResults) {
-      return <LoadingState label="Calificando examen…" layout="section" />;
+      return <GradingSkeleton />;
     }
 
     return (

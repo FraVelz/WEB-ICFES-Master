@@ -40,12 +40,22 @@ describe('getPracticeExitHref', () => {
     ).toBe('/fases/lectura-critica');
   });
 
-  it('falls back to roadmap for the area when no context', () => {
+  it('falls back to simulacro area when no context', () => {
     expect(
       getPracticeExitHref({
         areaSlug: 'lectura-critica',
       })
-    ).toBe('/ruta-aprendizaje?area=lectura-critica&etapa=facil');
+    ).toBe('/simulacro/lectura-critica');
+  });
+
+  it('uses from query param for simulacro hub', () => {
+    const params = new URLSearchParams('from=%2Fsimulacro');
+    expect(
+      getPracticeExitHref({
+        areaSlug: 'matematicas',
+        searchParams: params,
+      })
+    ).toBe('/simulacro');
   });
 });
 

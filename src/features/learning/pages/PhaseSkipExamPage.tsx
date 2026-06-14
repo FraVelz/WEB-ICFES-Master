@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { cn } from '@/utils/cn';
 import { FullExamActiveView } from '@/features/exam/components/fullExam/FullExamActiveView';
 import { FullExamResultsView } from '@/features/exam/components/fullExam/FullExamResultsView';
-import { LoadingState } from '@/shared/components/LoadingState';
+import { ExamPageSkeleton, GradingSkeleton } from '@/shared/components/PageSkeletons';
 import { EmptyState } from '@/shared/components/EmptyState';
 import { getLearningPhasesHref } from '@/features/learning/data/competencyPhases';
 import { usePhaseSkipExam } from '@/features/learning/phaseSkip/usePhaseSkipExam';
@@ -42,7 +42,7 @@ export function PhaseSkipExamPage() {
   const phasesHref = getLearningPhasesHref(areaStr || undefined);
 
   if (loadingQuestions) {
-    return <LoadingState label="Cargando simulacro de fase…" layout="section" />;
+    return <ExamPageSkeleton questionCount={5} />;
   }
 
   if (questionsError) {
@@ -59,7 +59,7 @@ export function PhaseSkipExamPage() {
   }
 
   if (!examConfig || questions.length === 0) {
-    return <LoadingState label="Preparando simulacro…" layout="section" />;
+    return <ExamPageSkeleton questionCount={5} />;
   }
 
   if (isFinished || showResults) {
@@ -77,7 +77,7 @@ export function PhaseSkipExamPage() {
     }
 
     if (results.length === 0) {
-      return <LoadingState label="Calificando simulacro…" layout="section" />;
+      return <GradingSkeleton />;
     }
 
     return (

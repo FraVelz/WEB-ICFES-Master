@@ -3,7 +3,7 @@ import { LearningPhasesPage } from '@/features/learning/pages/LearningPhasesPage
 import { getLearningPhasesHref, isPhasesAreaSlug, PHASES_AREA_SLUGS } from '@/features/learning/data/competencyPhases';
 import { redirect } from 'next/navigation';
 import { Suspense } from 'react';
-import { LoadingState } from '@/shared/components/LoadingState';
+import { PhasesPageSkeleton } from '@/shared/components/PageSkeletons';
 
 type PageProps = {
   params: Promise<{ area: string }>;
@@ -21,7 +21,7 @@ export default async function Page({ params }: PageProps) {
 
   return (
     <ProtectedPage blockDemoContent={false}>
-      <Suspense fallback={<LoadingState label="Cargando fases..." layout="section" />}>
+      <Suspense fallback={<PhasesPageSkeleton />}>
         <LearningPhasesPage />
       </Suspense>
     </ProtectedPage>

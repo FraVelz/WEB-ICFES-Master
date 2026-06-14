@@ -3,7 +3,7 @@ import type { ExamQuestionPublic } from '@/features/exam/types/question';
 
 /** Sticky wrapper para la hoja de respuestas bajo el header del examen. */
 export const EXAM_SIDEBAR_STICKY_CLASS =
-  'sticky top-[var(--exam-sticky-offset,6.25rem)] z-20 max-h-[calc(100dvh-var(--exam-sticky-offset,6.25rem)-1rem)] overflow-y-auto';
+  'sticky top-[var(--exam-sticky-offset,6.25rem)] z-10 max-h-[calc(100dvh-var(--exam-sticky-offset,6.25rem)-1rem)] overflow-y-auto';
 
 interface AnswerSheetProps {
   totalQuestions: number;
@@ -50,8 +50,8 @@ export const AnswerSheet = ({
           const isCurrent = currentQuestion === idx;
 
           const label = isAnswered
-            ? `Pregunta ${questionNum}, respondida: ${answer}${isCurrent ? ', actual' : ''}`
-            : `Pregunta ${questionNum}, sin responder${isCurrent ? ', actual' : ''}`;
+            ? `Pregunta ${questionNum}, respondida: ${answer}${isCurrent ? ', viendo ahora' : ''}`
+            : `Pregunta ${questionNum}, sin responder${isCurrent ? ', viendo ahora' : ''}`;
 
           return (
             <button
@@ -65,17 +65,21 @@ export const AnswerSheet = ({
                 'transition-all duration-300',
                 'focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none',
                 'focus-visible:ring-offset-surface-via',
-                isCurrent
+                isAnswered
                   ? cn(
-                      'bg-app-ring/30 text-app-accent-strong ring-app-accent scale-110 ring-2',
-                      'focus-visible:ring-app-accent-bright'
+                      'bg-linear-to-r from-green-500 to-emerald-500 text-white',
+                      'hover:shadow-lg hover:shadow-green-500/50 focus-visible:ring-white'
                     )
-                  : isAnswered
-                    ? cn(
-                        'bg-linear-to-r from-green-500 to-emerald-500 text-white',
-                        'hover:shadow-lg hover:shadow-green-500/50 focus-visible:ring-white'
-                      )
-                    : 'focus-visible:ring-app-accent border-surface-border bg-surface-overlay/50 text-on-surface-muted hover:bg-surface-overlay border'
+                  : cn(
+                      'border-surface-border bg-surface-overlay/50 text-on-surface-muted hover:bg-surface-overlay border',
+                      'focus-visible:ring-app-accent'
+                    ),
+                isCurrent &&
+                  cn(
+                    'ring-app-accent text-app-accent-strong ring-offset-surface-elevated z-10 scale-110 ring-2 ring-offset-2',
+                    'focus-visible:ring-app-accent-bright',
+                    !isAnswered && 'bg-app-ring/30'
+                  )
               )}
             >
               {isAnswered ? <span className="text-xs">{answer}</span> : <span>{questionNum}</span>}
@@ -85,6 +89,10 @@ export const AnswerSheet = ({
       </div>
 
       <div className="text-on-surface-muted mt-6 space-y-2 text-xs">
+        <div className="flex items-center gap-2">
+          <div className="ring-app-accent bg-surface-overlay/50 ring-offset-surface-elevated h-4 w-4 rounded ring-2 ring-offset-1" />
+          <span>Viendo ahora</span>
+        </div>
         <div className="flex items-center gap-2">
           <div className="border-surface-border bg-surface-overlay/50 h-4 w-4 rounded border" />
           <span>No respondidas</span>

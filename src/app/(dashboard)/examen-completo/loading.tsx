@@ -1,5 +1,5 @@
-import { LoadingState } from '@/shared/components/LoadingState';
+import { ExamPageSkeleton } from '@/shared/components/PageSkeletons';
 
-export default function FullExamLoading() {
-  return <LoadingState layout="page" label="Cargando examen..." />;
+export default function Loading() {
+  return <ExamPageSkeleton layout="page" questionCount={6} />;
 }

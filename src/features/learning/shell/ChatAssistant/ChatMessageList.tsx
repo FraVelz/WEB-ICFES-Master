@@ -52,7 +52,7 @@ export function ChatMessageList({ messages, isTyping, isAnonymous, messagesEndRe
             {msg.role === 'assistant' ? (
               <div
                 className={cn(
-                  '[&_code]:bg-on-surface-muted/50 text-sm leading-relaxed text-white [&_code]:rounded',
+                  '[&_code]:bg-on-surface-muted/50 text-on-surface text-sm leading-relaxed [&_code]:rounded',
                   '[&_code]:px-1 [&_li]:ml-4 [&_ol]:my-2 [&_p]:my-1',
                   '[&_strong]:font-semibold [&_ul]:my-2'
                 )}
@@ -60,7 +60,7 @@ export function ChatMessageList({ messages, isTyping, isAnonymous, messagesEndRe
                 <ReactMarkdown rehypePlugins={[rehypeSanitize]}>{msg.content}</ReactMarkdown>
               </div>
             ) : (
-              <p className="text-sm leading-relaxed text-white">{msg.content}</p>
+              <p className="text-on-surface text-sm leading-relaxed">{msg.content}</p>
             )}
           </div>
         </div>

@@ -6,7 +6,7 @@ export function SettingsInfoPanel() {
     <SettingsSection title="Información" icon="shield-alt">
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <div className="border-surface-border bg-surface-via/50 rounded-xl border p-4">
-          <h3 className="mb-2 flex items-center gap-2 font-bold text-white">
+          <h3 className="text-on-surface mb-2 flex items-center gap-2 font-bold">
             <Icon name="cloud" className="text-app-accent" />
             Cloud Sync
           </h3>
@@ -15,7 +15,7 @@ export function SettingsInfoPanel() {
           </p>
         </div>
         <div className="border-surface-border bg-surface-via/50 rounded-xl border p-4">
-          <h3 className="mb-2 flex items-center gap-2 font-bold text-white">
+          <h3 className="text-on-surface mb-2 flex items-center gap-2 font-bold">
             <Icon name="lock" className="text-app-accent" />
             Privacidad
           </h3>

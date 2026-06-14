@@ -8,8 +8,18 @@ import {
 import { LEARNING_PHASE_SECTION_IDS } from '@/features/learning/constants/learningPhases';
 import { getDefaultFullExamExitHref } from './fullExamNavigation';
 import { getSkippedSectionIdsForArea } from '@/services/persistence/phaseSkipPersistence';
+import { SIMULACRO_PATH, getSimulacroAreaHref } from './simulacroNavigation';
 
-const SAFE_EXIT_PREFIXES = ['/fases', '/fases/', '/ruta-aprendizaje', '/ruta-al-500', '/logros', '/tienda', '/perfil'];
+const SAFE_EXIT_PREFIXES = [
+  '/fases',
+  '/fases/',
+  '/ruta-aprendizaje',
+  '/ruta-al-500',
+  '/simulacro',
+  '/logros',
+  '/tienda',
+  '/perfil',
+];
 
 function isSafeInternalPath(pathname: string): boolean {
   if (!pathname.startsWith('/')) return false;
@@ -68,15 +78,23 @@ export function getPracticeExitHref({
   }
 
   if (isPhasesAreaSlug(areaSlug)) {
-    const likelySection = inferLikelyPhaseSectionId(areaSlug);
-    return getRoadmapHref(likelySection, areaSlug);
+    return getSimulacroAreaHref(areaSlug) ?? SIMULACRO_PATH;
   }
 
   if (areaSlug) {
     return `${LEARNING_ROADMAP_PATH}?area=${encodeURIComponent(areaSlug)}`;
   }
 
-  return LEARNING_ROADMAP_PATH;
+  return SIMULACRO_PATH;
+}
+
+export function getResultsBackLabel(returnTo: string): string {
+  const path = returnTo.split('?')[0];
+  if (path.startsWith('/ruta-aprendizaje')) return 'Volver a la Ruta';
+  if (path === '/simulacro' || path.startsWith('/simulacro/')) return 'Volver a Simulacros';
+  if (path.startsWith('/fases')) return 'Volver a Fases';
+  if (path.startsWith('/ruta-al-500')) return 'Volver a la Ruta al 500';
+  return 'Volver';
 }
 
 const FULL_EXAM_BLOCKED_REFERRER_PREFIXES = ['/simulacro', '/examen-completo', '/practica'] as const;

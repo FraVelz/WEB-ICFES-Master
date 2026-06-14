@@ -1,5 +1,5 @@
-import { LoadingState } from '@/shared/components/LoadingState';
+import { LessonPageSkeleton } from '@/shared/components/PageSkeletons';
 
-export default function LessonLoading() {
-  return <LoadingState layout="page" label="Cargando lección..." />;
+export default function Loading() {
+  return <LessonPageSkeleton layout="page" />;
 }

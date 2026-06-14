@@ -1,7 +1,7 @@
 'use client';
 
 import { useParams } from 'next/navigation';
-import { LoadingState } from '@/shared/components/LoadingState';
+import { LessonPageSkeleton } from '@/shared/components/PageSkeletons';
 import { EmptyState } from '@/shared/components/EmptyState';
 import { LessonRouteProvider, useLessonRoute } from '@/features/learning/context/LessonRouteContext';
 import { LessonStepShell } from '@/features/learning/pages/LessonStepPage';
@@ -10,7 +10,7 @@ function LessonRouteGate({ children }: { children: React.ReactNode }) {
   const { lesson, loading, error } = useLessonRoute();
 
   if (loading) {
-    return <LoadingState label="Cargando lección..." layout="section" />;
+    return <LessonPageSkeleton />;
   }
 
   if (error || !lesson) {

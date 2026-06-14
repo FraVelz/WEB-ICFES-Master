@@ -1,3 +1,5 @@
+'use client';
+
 import { cn } from '@/utils/cn';
 import { AnswerSheet, EXAM_SIDEBAR_STICKY_CLASS } from '@/features/exam/components';
 import type { ExamConfig } from '@/features/exam/types';
@@ -7,6 +9,7 @@ import { PracticeExamHeader } from './PracticeExamHeader';
 import { PracticeQuestionCard } from './PracticeQuestionCard';
 import { PracticeMobileAnswerSheet } from './PracticeMobileAnswerSheet';
 import { PhaseSkipNotice } from './PhaseSkipNotice';
+import { useExamQuestionScrollSpy } from '@/features/exam/hooks/useExamQuestionScrollSpy';
 
 type PracticeActiveViewProps = {
   areaInfo: { name: string; color: string };
@@ -47,6 +50,13 @@ export function PracticeActiveView({
   onScrollToQuestion,
   onFinish,
 }: PracticeActiveViewProps) {
+  const { currentQuestion, focusQuestion } = useExamQuestionScrollSpy(questions.length);
+
+  const handleQuestionClick = (index: number) => {
+    focusQuestion(index);
+    onScrollToQuestion(index);
+  };
+
   const showPhaseSkipNotice = phaseSkipPassPercent != null;
   return (
     <FullExamShell>
@@ -105,8 +115,8 @@ export function PracticeActiveView({
               <AnswerSheet
                 totalQuestions={questions.length}
                 answers={answers}
-                currentQuestion={0}
-                onQuestionClick={onScrollToQuestion}
+                currentQuestion={currentQuestion}
+                onQuestionClick={handleQuestionClick}
                 questions={questions}
               />
               {showPhaseSkipNotice && (
@@ -121,10 +131,11 @@ export function PracticeActiveView({
         isOpen={showAnswerSheetMobile}
         questions={questions}
         answers={answers}
+        currentQuestion={currentQuestion}
         phaseSkipPhaseTitle={phaseSkipPhaseTitle}
         phaseSkipPassPercent={phaseSkipPassPercent}
         onClose={() => setShowAnswerSheetMobile(false)}
-        onScrollToQuestion={onScrollToQuestion}
+        onScrollToQuestion={handleQuestionClick}
       />
     </FullExamShell>
   );

@@ -1,7 +1,7 @@
 'use client';
 
 import { Suspense, type ReactNode } from 'react';
-import { LoadingState } from '@/shared/components/LoadingState';
+import { DashboardPageSkeleton } from '@/shared/components/PageSkeletons';
 import { DashboardShellProvider, useDashboardShell } from './DashboardShellContext';
 import { DashboardShellBanner } from './DashboardShellBanner';
 import { DashboardShellAside } from './DashboardShellAside';
@@ -101,7 +101,7 @@ function DashboardShellInner({ children }: { children: ReactNode }) {
 
 export function DashboardShell({ children }: { children: ReactNode }) {
   return (
-    <Suspense fallback={<LoadingState label="Cargando..." layout="section" />}>
+    <Suspense fallback={<DashboardPageSkeleton />}>
       <DashboardShellProvider>
         <DashboardShellInner>{children}</DashboardShellInner>
       </DashboardShellProvider>

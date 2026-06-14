@@ -3,6 +3,8 @@ import Link from 'next/link';
 import type { ExamQuestion } from '@/features/exam/types/question';
 import type { ExamConfig } from '@/features/exam/types';
 import { findQuestionOption, formatAnswerLabel } from '@/features/exam/utils/answerKey';
+import { getResultsBackLabel } from '@/features/exam/utils/getPracticeExitHref';
+import { SIMULACRO_PATH } from '@/features/exam/utils/simulacroNavigation';
 
 interface ResultItem {
   question: ExamQuestion;
@@ -30,8 +32,8 @@ export const ResultsAnalysis = ({
   onRetry,
   returnTo,
 }: ResultsAnalysisProps) => {
-  const backHref = returnTo || '/';
-  const backLabel = returnTo === '/ruta-aprendizaje' ? 'Volver a la Ruta' : 'Volver al Inicio';
+  const backHref = returnTo || SIMULACRO_PATH;
+  const backLabel = getResultsBackLabel(backHref);
   return (
     <div className="space-y-6">
       <div className="border-surface-border bg-surface-elevated/80 rounded-3xl border p-12 shadow-2xl backdrop-blur-sm">
@@ -102,8 +104,9 @@ export const ResultsAnalysis = ({
           return (
             <div
               key={result.question.id}
+              id={`question-${idx}`}
               className={cn(
-                'border-surface-border bg-surface-elevated/80 rounded-xl border p-6 shadow-lg',
+                'border-surface-border bg-surface-elevated/80 scroll-mt-[var(--exam-sticky-offset,6.25rem)] rounded-xl border p-6 shadow-lg',
                 'hover:border-surface-border/80 backdrop-blur-md transition-all duration-300 hover:shadow-xl'
               )}
             >

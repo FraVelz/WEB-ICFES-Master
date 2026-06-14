@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { cn } from '@/utils/cn';
 import { Icon } from '@/shared/components/Icon';
-import { LoadingState } from '@/shared/components/LoadingState';
+import { LeagueSkeletonRows } from '@/features/exam/components/league/LeagueSkeletonRows';
 import { getRankInfo } from '@/shared/constants/ranks';
 import { formatCountdownToReset } from '@/services/league/leagueWeekUtils';
 import type { ProfileLeagueDisplay } from './profileLeagueTypes';
@@ -33,7 +33,7 @@ export function ProfileLeagueSection({ league, loading = false, showCta = false,
           'dark:border-surface-border dark:bg-surface-elevated/50'
         )}
       >
-        <LoadingState label="Cargando torneo..." layout="section" className="min-h-[8rem] py-6" />
+        <LeagueSkeletonRows count={4} />
       </div>
     );
   }

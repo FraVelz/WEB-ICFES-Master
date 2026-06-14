@@ -50,7 +50,7 @@ export function ShopItemCardFooter({
           'focus-visible:ring-offset-surface-via',
           processing && 'cursor-wait opacity-70',
           isEquipped
-            ? 'bg-surface-overlay text-on-surface-muted hover:bg-on-surface-muted hover:text-white'
+            ? 'bg-surface-overlay text-on-surface-muted hover:bg-on-surface-muted hover:text-on-surface'
             : 'bg-app-ring/20 text-app-accent hover:bg-app-ring/35 hover:shadow-app-ring/20 hover:shadow-md'
         )}
       >
@@ -111,7 +111,7 @@ export function ShopItemCardFooter({
           canAfford
             ? cn(
                 'border border-emerald-600/35 bg-emerald-100 text-emerald-900 group-hover:bg-emerald-500',
-                'group-hover:text-white dark:border-transparent dark:bg-emerald-500/10 dark:text-emerald-300'
+                'group-hover:text-on-surface dark:border-transparent dark:bg-emerald-500/10 dark:text-emerald-300 dark:group-hover:text-white'
               )
             : 'bg-surface-overlay text-on-surface-muted'
         )}

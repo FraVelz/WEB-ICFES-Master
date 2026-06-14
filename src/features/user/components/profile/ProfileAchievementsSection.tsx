@@ -3,7 +3,7 @@
 import { useMemo, useState } from 'react';
 import { cn } from '@/utils/cn';
 import { Icon } from '@/shared/components/Icon';
-import { LoadingState } from '@/shared/components/LoadingState';
+import { SkeletonGrid } from '@/shared/components/SkeletonCard';
 import { EmptyState } from '@/shared/components/EmptyState';
 import type { AchievementCategoryKey } from '@/shared/constants/achievements/achievementCategories';
 import {
@@ -82,7 +82,7 @@ export function ProfileAchievementsSection({
         </div>
       )}
 
-      {showSectionLoading && <LoadingState label="Cargando logros..." layout="section" className="py-6" />}
+      {showSectionLoading && <SkeletonGrid count={4} columnsClassName="grid-cols-1 sm:grid-cols-2" className="py-2" />}
 
       {!showSectionLoading && visibleCount > 0 && (
         <AchievementsOrganizedSections

@@ -1,10 +1,12 @@
+'use client';
+
 import { AnswerSheet, EXAM_SIDEBAR_STICKY_CLASS } from '@/features/exam/components';
-import { cn } from '@/utils/cn';
 import type { ExamConfig } from '@/features/exam/types';
 import type { ExamQuestion, ExamQuestionPublic } from '@/features/exam/types/question';
 import { FullExamShell } from '@/features/exam/components/fullExam/FullExamShell';
 import { ResultsAnalysis } from '@/features/exam/components/ResultsAnalysis';
 import { PracticeExamHeader } from './PracticeExamHeader';
+import { useExamQuestionScrollSpy } from '@/features/exam/hooks/useExamQuestionScrollSpy';
 
 type PracticeResultsViewProps = {
   areaInfo: { name: string; color: string };
@@ -35,6 +37,13 @@ export function PracticeResultsView({
   onRetry,
   exitHref,
 }: PracticeResultsViewProps) {
+  const { currentQuestion, focusQuestion } = useExamQuestionScrollSpy(questions.length);
+
+  const handleQuestionClick = (index: number) => {
+    focusQuestion(index);
+    onScrollToQuestion(index);
+  };
+
   return (
     <FullExamShell>
       <PracticeExamHeader
@@ -48,9 +57,9 @@ export function PracticeResultsView({
         onShowAnswerSheet={() => setMobileMenuOpen(false)}
       />
 
-      <div className="mx-auto max-w-7xl px-6 py-8">
-        <div className="grid grid-cols-1 gap-6 lg:grid-cols-4">
-          <div className="lg:col-span-3">
+      <div className="mx-auto max-w-7xl px-3 py-4 pb-[max(5rem,env(safe-area-inset-bottom))] sm:px-6 sm:py-8 sm:pb-24 xl:pb-8">
+        <div className="grid grid-cols-1 gap-6 xl:grid-cols-4">
+          <div className="xl:col-span-3">
             <ResultsAnalysis
               results={results}
               questions={results.map((r) => r.question)}
@@ -59,15 +68,17 @@ export function PracticeResultsView({
               areaInfo={areaInfo}
               examConfig={examConfig}
               onRetry={onRetry}
+              returnTo={exitHref}
             />
           </div>
-          <div className="hidden lg:block">
+          <div className="hidden xl:block">
             <div className={EXAM_SIDEBAR_STICKY_CLASS}>
               <AnswerSheet
                 totalQuestions={questions.length}
                 answers={answers}
-                currentQuestion={0}
-                onQuestionClick={onScrollToQuestion}
+                currentQuestion={currentQuestion}
+                onQuestionClick={handleQuestionClick}
+                questions={questions}
               />
             </div>
           </div>

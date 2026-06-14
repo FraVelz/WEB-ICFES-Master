@@ -38,7 +38,7 @@ export function LessonMarkdownBody({ content }: LessonMarkdownBodyProps) {
       ]}
       components={{
         h1: ({ ...props }) => (
-          <h1 className="mt-0 mb-3 text-xl font-bold text-white sm:text-2xl md:text-3xl" {...props} />
+          <h1 className="text-on-surface mt-0 mb-3 text-xl font-bold sm:text-2xl md:text-3xl" {...props} />
         ),
         h2: ({ ...props }) => (
           <h2

@@ -60,7 +60,7 @@ export function ExamAnswerOptions({
                   'flex shrink-0 items-center justify-center rounded-full border-2 font-bold',
                   responsive ? 'mt-0.5 h-7 w-7 text-xs sm:mt-0 sm:h-8 sm:w-8 sm:text-sm' : 'h-8 w-8 text-sm',
                   isSelected
-                    ? 'border-app-accent bg-app-ring text-white'
+                    ? 'border-app-accent bg-app-ring text-app-on-accent'
                     : 'border-surface-border text-on-surface-muted'
                 )}
               >
