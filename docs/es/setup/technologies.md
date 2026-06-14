@@ -72,7 +72,7 @@ Este documento describe las tecnologías utilizadas en **WEB-ICFES Master**, tan
 
 | Entorno          | Descripción                                                                                                                                                                                  |
 | ---------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Vercel**       | Hosting para Next.js (recomendado). Activar **Web Analytics** y **Speed Insights** en el panel del proyecto tras el deploy (`@vercel/analytics`, `@vercel/speed-insights` en el layout raíz) |
+| **Vercel**       | Hosting para Next.js (recomendado). Activar **Web Analytics** en el panel del proyecto tras el deploy (`@vercel/analytics` en el layout raíz). Rendimiento local: `pnpm lighthouse:local` con `pnpm dev` en marcha (Unlighthouse) |
 | **Netlify**      | Hosting con runtime serverless o estático según configuración                                                                                                                                |
 | **GitHub Pages** | Solo si se habilita `output: 'export'` en `next.config` (no activo por defecto)                                                                                                              |
 
