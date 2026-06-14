@@ -98,10 +98,16 @@ describe('skillLevelPersistence', () => {
     expect(getAssessmentScope(scopeOptions)).toBe('user-1');
   });
 
-  it('resolveLevelAssessmentRedirect devuelve ruta-aprendizaje cuando la evaluación ya está hecha', async () => {
-    await persistLevelAssessment('demo', { level: 'intermediate', completedAt: '2026-01-01T00:00:00.000Z' }, null);
+  it('resolveLevelAssessmentRedirect devuelve la ruta según el nivel cuando la evaluación ya está hecha', async () => {
+    await persistLevelAssessment('demo', { level: 'basics', completedAt: '2026-01-01T00:00:00.000Z' }, null);
+    expect(await resolveLevelAssessmentRedirect({ demoMode: true }, null)).toBe(
+      '/ruta-aprendizaje?area=lectura-critica&etapa=facil'
+    );
 
-    const redirect = await resolveLevelAssessmentRedirect({ demoMode: true }, null);
-    expect(redirect).toBe('/ruta-aprendizaje');
+    await persistLevelAssessment('demo', { level: 'intermediate', completedAt: '2026-01-01T00:00:00.000Z' }, null);
+    expect(await resolveLevelAssessmentRedirect({ demoMode: true }, null)).toBe('/ruta-al-500');
+
+    await persistLevelAssessment('demo', { level: 'advanced', completedAt: '2026-01-01T00:00:00.000Z' }, null);
+    expect(await resolveLevelAssessmentRedirect({ demoMode: true }, null)).toBe('/simulacro-completo');
   });
 });
