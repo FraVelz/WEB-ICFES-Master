@@ -14,7 +14,7 @@ import {
   LEARNING_ROADMAP_COLUMNS,
   mapRoadmapRowToLesson,
 } from '@/services/learning/learningCatalogMap';
-import { stripQuizAnswersFromContent } from '@/utils/stripQuizAnswers';
+import { parseLessonVisuals } from '@/features/learning/roadmap/lessonVisualTypes';
 
 const TABLE = 'learning_content';
 
@@ -50,6 +50,10 @@ function mapFullLessonRow(row: Record<string, unknown>) {
     title: (content.title as string) || row.id,
     summary: content.summary,
     body: lessonBody,
+    visuals: parseLessonVisuals(content.visuals),
+    performance_level: content.performance_level,
+    competency: content.competency,
+    evidence: content.evidence,
     questions: content.questions || [],
     quiz: content.quiz,
     type: content.type || 'lesson',

@@ -3,12 +3,16 @@
 import { useMemo } from 'react';
 import { splitLessonContent, extractSectionTitle, stripFirstHeadingIfDuplicate } from '../utils/splitLessonContent';
 import { getAdjacentLessonStepHrefs, getLessonStepLabel, parseLessonStepSlug } from '../utils/lessonRoutes';
+import { prepareLessonBody } from './lessonMarkdownUtils';
 import type { LessonQuizModalProps } from './lessonQuiz/quizTypes';
+import type { LessonVisual } from './lessonVisualTypes';
+import { parseLessonVisuals } from './lessonVisualTypes';
 
 export type LessonContentLesson = {
   id?: string;
   title?: string;
   content?: string;
+  visuals?: LessonVisual[];
   quiz?: unknown;
   questions?: unknown[];
   xp?: number;
@@ -23,8 +27,13 @@ export function useLessonContentStep(lesson: LessonContentLesson, stepSlug: stri
   const hasQuiz = lesson?.quiz && typeof lesson.quiz === 'object';
   const canShowQuiz = Boolean(hasQuestions || hasQuiz);
 
-  const contentStr = typeof lesson?.content === 'string' ? lesson.content : '';
-  const sections = useMemo(() => splitLessonContent(contentStr), [contentStr]);
+  const preparedLesson = useMemo(() => {
+    const contentStr = typeof lesson?.content === 'string' ? lesson.content : '';
+    const baseVisuals = parseLessonVisuals(lesson?.visuals);
+    return prepareLessonBody(contentStr, baseVisuals);
+  }, [lesson?.content, lesson?.visuals]);
+
+  const sections = useMemo(() => splitLessonContent(preparedLesson.content), [preparedLesson.content]);
 
   const parsedStep = useMemo(
     () => parseLessonStepSlug(stepSlug, sections.length, canShowQuiz),
@@ -78,6 +87,7 @@ export function useLessonContentStep(lesson: LessonContentLesson, stepSlug: stri
     progress,
     mascotDialogue,
     contentToRender,
+    visuals: preparedLesson.visuals,
     prevHref,
     nextHref,
     stepLabel,

@@ -1,7 +1,22 @@
+'use client';
+
 import ReactMarkdown from 'react-markdown';
-import rehypeSanitize from 'rehype-sanitize';
+import rehypeKatex from 'rehype-katex';
+import rehypeSanitize, { defaultSchema } from 'rehype-sanitize';
+import remarkGfm from 'remark-gfm';
+import remarkMath from 'remark-math';
 import { cn } from '@/utils/cn';
 import { isSafeHref } from '@/shared/utils/safeHref';
+
+const sanitizeSchema = {
+  ...defaultSchema,
+  attributes: {
+    ...defaultSchema.attributes,
+    span: [...(defaultSchema.attributes?.span ?? []), ['className']],
+    div: [...(defaultSchema.attributes?.div ?? []), ['className']],
+    code: [...(defaultSchema.attributes?.code ?? []), ['className']],
+  },
+};
 
 type LessonMarkdownBodyProps = {
   content: string;
@@ -16,7 +31,8 @@ export function LessonMarkdownBody({ content }: LessonMarkdownBodyProps) {
 
   return (
     <ReactMarkdown
-      rehypePlugins={[rehypeSanitize]}
+      remarkPlugins={[remarkGfm, remarkMath]}
+      rehypePlugins={[[rehypeKatex, { throwOnError: false, strict: 'ignore' }], [rehypeSanitize, sanitizeSchema]]}
       components={{
         h1: ({ ...props }) => (
           <h1 className="mt-0 mb-3 text-xl font-bold text-white sm:text-2xl md:text-3xl" {...props} />
@@ -61,6 +77,16 @@ export function LessonMarkdownBody({ content }: LessonMarkdownBodyProps) {
             {...props}
           />
         ),
+        table: ({ ...props }) => (
+          <div className="lesson-table-wrap my-4 overflow-x-auto sm:my-5">
+            <table className="lesson-table w-full min-w-[280px] text-left text-sm" {...props} />
+          </div>
+        ),
+        thead: ({ ...props }) => <thead {...props} />,
+        tbody: ({ ...props }) => <tbody {...props} />,
+        tr: ({ ...props }) => <tr {...props} />,
+        th: ({ ...props }) => <th {...props} />,
+        td: ({ ...props }) => <td {...props} />,
         code: ({ className, children, ...props }) => {
           const isInline = !className?.includes('language-');
           const codeContent = Array.isArray(children) ? children.join('') : (children ?? '');

@@ -1,6 +1,8 @@
 @import 'tailwindcss';
 @import 'tailwind-animations';
 
+import 'katex/dist/katex.min.css';
+
 @custom-variant dark (&:where(.dark, .dark *));
 
 :root {
@@ -345,4 +347,36 @@ html:not(.dark) :where(.rounded-2xl, .rounded-xl, .rounded-lg).border.border-sur
   .animate-pulse {
     animation: none !important;
   }
+}
+
+.lesson-table-wrap {
+  border: 1px solid var(--icfes-surface-border);
+  border-radius: 0.75rem;
+  background: color-mix(in oklab, var(--icfes-surface-overlay) 40%, transparent);
+}
+
+.lesson-table {
+  border-collapse: collapse;
+}
+
+.lesson-table th,
+.lesson-table td {
+  border-bottom: 1px solid color-mix(in oklab, var(--icfes-surface-border) 80%, transparent);
+  padding: 0.625rem 0.75rem;
+  color: var(--icfes-on-surface-muted);
+  vertical-align: top;
+}
+
+.lesson-table th {
+  color: var(--icfes-on-surface);
+  font-weight: 600;
+  background: color-mix(in oklab, var(--icfes-surface-overlay) 55%, transparent);
+}
+
+.lesson-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.katex {
+  font-size: 1.05em;
 }

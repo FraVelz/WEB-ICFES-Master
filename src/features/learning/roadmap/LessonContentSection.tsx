@@ -2,7 +2,8 @@ import { cn } from '@/utils/cn';
 import { MASCOT_IMAGES } from '@/assets';
 import { EmptyState } from '@/shared/components/EmptyState';
 import { LessonMascotBubble } from './LessonMascotBubble';
-import { LessonMarkdownBody } from './LessonMarkdownBody';
+import { LessonRichContent } from './LessonRichContent';
+import type { LessonVisual } from './lessonVisualTypes';
 
 type LessonContentSectionProps = {
   sectionsCount: number;
@@ -10,6 +11,7 @@ type LessonContentSectionProps = {
   mascotDialogue: string;
   bubbleBorder: string;
   contentToRender: string;
+  visuals?: LessonVisual[];
   sectionInnerClass: string;
 };
 
@@ -19,6 +21,7 @@ export function LessonContentSection({
   mascotDialogue,
   bubbleBorder,
   contentToRender,
+  visuals,
   sectionInnerClass,
 }: LessonContentSectionProps) {
   const hasSections = sectionsCount > 0;
@@ -46,7 +49,7 @@ export function LessonContentSection({
 
       {hasSections ? (
         <div className="border-surface-border/60 bg-surface-elevated/30 rounded-2xl border p-4 sm:p-6 md:p-8">
-          <LessonMarkdownBody content={markdownContent} />
+          <LessonRichContent content={markdownContent} visuals={visuals} />
         </div>
       ) : (
         <EmptyState

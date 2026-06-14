@@ -44,6 +44,7 @@ export function LessonContentView({ lesson, areaId = 'lectura-critica', stepSlug
     progress,
     mascotDialogue,
     contentToRender,
+    visuals,
     prevHref,
     nextHref,
     stepLabel,
@@ -170,6 +171,7 @@ export function LessonContentView({ lesson, areaId = 'lectura-critica', stepSlug
             mascotDialogue={mascotDialogue}
             bubbleBorder={bubbleBorder}
             contentToRender={contentToRender}
+            visuals={visuals}
             sectionInnerClass={SECTION_INNER}
           />
         )}

@@ -2,5 +2,8 @@ packages:
   - '.'
 
 allowBuilds:
+  '@parcel/watcher': set this to true or false
   esbuild: true
+  puppeteer: set this to true or false
   sharp: true
+  vue-demi: set this to true or false

@@ -7,6 +7,7 @@ import {
 } from '@/features/learning/data/phaseMinimumRequirements';
 import type { PathNodeData } from '@/features/learning/roadmap/AreaPath';
 import { useDashboardShellOptional } from '@/features/dashboard/shell';
+import { parseLessonVisuals } from '@/features/learning/roadmap/lessonVisualTypes';
 import LearningSupabaseService from '@/services/supabase/LearningSupabaseService';
 
 const fetchedLessonCache = new Map<string, PathNodeData>();
@@ -102,6 +103,7 @@ export function useLessonFromRoute(lessonId: string | undefined) {
           title: data.title as string | undefined,
           description: (data.description ?? data.summary) as string | undefined,
           content: typeof rawContent === 'string' ? rawContent : undefined,
+          visuals: parseLessonVisuals(data.visuals),
           xp: (quiz.rewards as { xp?: number } | undefined)?.xp ?? (data.xp as number | undefined),
           coins: (quiz.rewards as { coins?: number } | undefined)?.coins ?? (data.coins as number | undefined),
           questions: data.questions,
