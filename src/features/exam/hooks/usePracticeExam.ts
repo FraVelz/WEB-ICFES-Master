@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback, useMemo } from 'react';
 import { useParams, useSearchParams } from 'next/navigation';
+import { getDifficultyForPhaseSkipSection } from '@/features/exam/data/phaseSkipDifficulty';
 import { getPracticeExitHref } from '@/features/exam/utils/getPracticeExitHref';
 import type { ExamConfig } from '@/features/exam/types';
 import type { ExamQuestionPublic } from '@/features/exam/types/question';
@@ -13,12 +14,16 @@ export function usePracticeExam() {
   const { area } = useParams<{ area: string }>();
   const searchParams = useSearchParams();
   const areaStr = Array.isArray(area) ? area[0] : (area ?? '');
+  const practiceDifficulty = useMemo(
+    () => getDifficultyForPhaseSkipSection(searchParams.get('etapa') ?? searchParams.get('saltar-fase')),
+    [searchParams]
+  );
   const shared = SHARED_AREA_INFO[areaStr as keyof typeof SHARED_AREA_INFO];
   const areaInfo = shared
     ? { name: shared.name, color: shared.color }
     : { name: SHARED_AREA_INFO['examen-completo'].name, color: SHARED_AREA_INFO['examen-completo'].color };
 
-  const { allQuestions, loadingQuestions, questionsError } = usePracticeExamQuestions(areaStr);
+  const { allQuestions, loadingQuestions, questionsError } = usePracticeExamQuestions(areaStr, practiceDifficulty);
 
   const [examConfig, setExamConfig] = useState<ExamConfig | null>(null);
   const [questions, setQuestions] = useState<ExamQuestionPublic[]>([]);

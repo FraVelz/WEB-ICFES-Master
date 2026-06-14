@@ -1,5 +1,5 @@
 import { normalizeLessonPhase, phaseToSectionId } from '@/features/learning/constants/learningPhases';
-import { resolveLessonBlockId } from '@/features/learning/data/phase1Blocks';
+import { resolveLessonBlockIdForPhase } from '@/features/learning/data/phaseBlocks';
 import type { LearningPathLesson } from '@/features/learning/services/LearningService';
 import { HOME_AREA_IDS, type AreaId } from '@/shared/constants';
 
@@ -58,7 +58,8 @@ export function mapRoadmapRowToLesson(row: Record<string, unknown>, index: numbe
   const quiz = (content.quiz ?? {}) as Record<string, unknown>;
   const order = Number(row.order_index ?? index);
   const blockFromContent = typeof content.block === 'string' ? content.block : undefined;
-  const blockId = blockFromContent ?? resolveLessonBlockId(areaSlug, { order, blockId: undefined }) ?? undefined;
+  const blockId =
+    blockFromContent ?? resolveLessonBlockIdForPhase(areaSlug, phase, { order, blockId: undefined }) ?? undefined;
 
   return {
     id: String(row.id ?? `${areaSlug}_${index}`),

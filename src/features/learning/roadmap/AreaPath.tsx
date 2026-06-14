@@ -1,6 +1,6 @@
 import React from 'react';
 import { cn } from '@/utils/cn';
-import { getPhase1BlockDef } from '@/features/learning/data/phase1Blocks';
+import { findPhaseBlockDef } from '@/features/learning/data/phaseBlocks';
 import type { LessonPathStatus } from '@/features/learning/utils/lessonPathStatus';
 import type { AreaId } from '@/shared/constants';
 import { PathNode } from './PathNode';
@@ -58,9 +58,7 @@ function groupNodesByBlock(areaId: string, nodes: PathNodeData[]): BlockGroup[] 
     const isNewGroup = !current || current.blockId !== blockId;
 
     if (isNewGroup) {
-      const blockDef: ReturnType<typeof getPhase1BlockDef> = blockId
-        ? getPhase1BlockDef(areaId as AreaId, blockId)
-        : undefined;
+      const blockDef = blockId ? findPhaseBlockDef(areaId as AreaId, blockId) : undefined;
       const nextGroup: BlockGroup = {
         blockId,
         title: blockDef?.title ?? (blockId ? blockId : 'Inicio'),

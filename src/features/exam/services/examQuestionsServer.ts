@@ -1,6 +1,7 @@
 import 'server-only';
 
 import { unstable_cache } from 'next/cache';
+import type { ExamQuestionDifficulty } from '@/features/exam/data/phaseSkipDifficulty';
 import {
   getStaticQuestionsByRouteArea,
   getStaticQuestionsForFullExam,
@@ -16,8 +17,12 @@ function toPublicList(questions: ExamQuestion[]): ExamQuestionPublic[] {
   return questions.map(toPublicExamQuestion);
 }
 
-async function loadFromDbByRouteArea(routeArea: string, limit?: number): Promise<ExamQuestionPublic[]> {
-  const fromDb = await ExamQuestionsSupabaseService.getByRouteArea(routeArea, limit);
+async function loadFromDbByRouteArea(
+  routeArea: string,
+  limit?: number,
+  difficulty?: ExamQuestionDifficulty | null
+): Promise<ExamQuestionPublic[]> {
+  const fromDb = await ExamQuestionsSupabaseService.getByRouteArea(routeArea, limit, difficulty);
   return fromDb.length > 0 ? toPublicList(fromDb) : [];
 }
 
@@ -26,10 +31,14 @@ async function loadFromDbForFullExam(): Promise<ExamQuestionPublic[]> {
   return fromDb.length > 0 ? toPublicList(fromDb) : [];
 }
 
-const getCachedDbQuestionsByRouteArea = (routeArea: string, limit?: number) =>
+const getCachedDbQuestionsByRouteArea = (
+  routeArea: string,
+  limit?: number,
+  difficulty?: ExamQuestionDifficulty | null
+) =>
   unstable_cache(
-    () => loadFromDbByRouteArea(routeArea, limit),
-    ['exam-questions-area', routeArea, String(limit ?? 'all')],
+    () => loadFromDbByRouteArea(routeArea, limit, difficulty),
+    ['exam-questions-area', routeArea, String(limit ?? 'all'), difficulty ?? 'all'],
     { revalidate: CACHE_REVALIDATE_SECONDS }
   );
 
@@ -41,13 +50,18 @@ const getCachedDbQuestionsForFullExam = unstable_cache(
 
 export async function fetchPublicQuestionsByRouteArea(
   routeArea: string,
-  limit?: number
+  limit?: number,
+  difficulty?: ExamQuestionDifficulty | null
 ): Promise<ExamQuestionPublic[]> {
   const fallback = getStaticQuestionsByRouteArea(routeArea);
-  const cappedFallback = limit != null && limit > 0 ? fallback.slice(0, limit) : fallback;
+  const filteredFallback =
+    difficulty != null
+      ? fallback.filter((question) => question.difficulty === difficulty)
+      : fallback;
+  const cappedFallback = limit != null && limit > 0 ? filteredFallback.slice(0, limit) : filteredFallback;
 
   try {
-    const fromDb = await getCachedDbQuestionsByRouteArea(routeArea, limit)();
+    const fromDb = await getCachedDbQuestionsByRouteArea(routeArea, limit, difficulty)();
     if (fromDb.length > 0) return fromDb;
   } catch (error) {
     console.warn('[examQuestionsServer] Supabase fallback for area', routeArea, error);

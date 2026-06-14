@@ -3,11 +3,11 @@ import { getBlockCheckpointId } from '@/features/learning/data/phase1Blocks';
 import type { LearningPathLesson } from '@/features/learning/services/LearningService';
 import { injectBlockCheckpoints } from '@/features/learning/utils/injectBlockCheckpoints';
 
-const lesson = (id: string, order: number, blockId?: string): LearningPathLesson => ({
+const lesson = (id: string, order: number, blockId?: string, phase = 1): LearningPathLesson => ({
   id,
   order,
-  phase: 1,
-  difficulty: 'facil',
+  phase,
+  difficulty: phase === 1 ? 'facil' : phase === 2 ? 'intermedio' : 'dificil',
   blockId,
   rewards: { xp: 50, coins: 25 },
 });
@@ -26,9 +26,25 @@ describe('injectBlockCheckpoints', () => {
     );
   });
 
-  it('no modifica fases 2 o 3', () => {
-    const lessons = [lesson('x', 1)];
-    lessons[0].phase = 2;
-    expect(injectBlockCheckpoints('matematicas', lessons, 2)).toEqual(lessons);
+  it('inserta checkpoints en fase 2 por bloques de order_index', () => {
+    const lessons = [
+      lesson('f2-1', 1, undefined, 2),
+      lesson('f2-2', 26, undefined, 2),
+    ];
+
+    const result = injectBlockCheckpoints('matematicas', lessons, 2);
+    const checkpoints = result.filter((item) => item.moduleType === 'block-checkpoint');
+
+    expect(checkpoints.length).toBeGreaterThanOrEqual(1);
+    expect(checkpoints[0]?.phase).toBe(2);
+    expect(checkpoints[0]?.difficulty).toBe('intermedio');
+  });
+
+  it('deja intactas lecciones de otras fases', () => {
+    const lessons = [lesson('x', 1, undefined, 3)];
+    const other = { ...lessons[0], id: 'phase1', phase: 1 as const };
+    const input = [other, ...lessons];
+    const result = injectBlockCheckpoints('matematicas', input, 2);
+    expect(result.filter((item) => item.phase === 1)).toHaveLength(1);
   });
 });

@@ -1,10 +1,11 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import type { ExamQuestionDifficulty } from '@/features/exam/data/phaseSkipDifficulty';
 import { fetchQuestionsByRouteArea } from '@/features/exam/services/QuestionService';
 import type { ExamQuestionPublic } from '@/features/exam/types/question';
 
-export function usePracticeExamQuestions(areaStr: string) {
+export function usePracticeExamQuestions(areaStr: string, difficulty?: ExamQuestionDifficulty | null) {
   const [allQuestions, setAllQuestions] = useState<ExamQuestionPublic[]>([]);
   const [loadingQuestions, setLoadingQuestions] = useState(true);
   const [questionsError, setQuestionsError] = useState<string | null>(null);
@@ -15,7 +16,7 @@ export function usePracticeExamQuestions(areaStr: string) {
     setLoadingQuestions(true);
     setQuestionsError(null);
 
-    void fetchQuestionsByRouteArea(areaStr)
+    void fetchQuestionsByRouteArea(areaStr, undefined, difficulty)
       .then((loaded) => {
         if (!active) return;
         setAllQuestions(loaded);
@@ -32,7 +33,7 @@ export function usePracticeExamQuestions(areaStr: string) {
     return () => {
       active = false;
     };
-  }, [areaStr]);
+  }, [areaStr, difficulty]);
 
   return { allQuestions, loadingQuestions, questionsError };
 }

@@ -1,3 +1,4 @@
+import type { ExamQuestionDifficulty } from '@/features/exam/data/phaseSkipDifficulty';
 import type { ExamQuestionPublic } from '@/features/exam/types/question';
 
 const CACHE_PREFIX = 'icfes_exam_questions_v1';
@@ -8,14 +9,18 @@ type CachedQuestions = {
   questions: ExamQuestionPublic[];
 };
 
-function cacheKey(area: string, limit: number): string {
-  return `${CACHE_PREFIX}:${area}:${limit}`;
+function cacheKey(area: string, limit: number, difficulty?: ExamQuestionDifficulty | null): string {
+  return `${CACHE_PREFIX}:${area}:${limit}:${difficulty ?? 'all'}`;
 }
 
-export function readExamQuestionsSessionCache(area: string, limit: number): ExamQuestionPublic[] | null {
+export function readExamQuestionsSessionCache(
+  area: string,
+  limit: number,
+  difficulty?: ExamQuestionDifficulty | null
+): ExamQuestionPublic[] | null {
   if (typeof window === 'undefined') return null;
   try {
-    const raw = sessionStorage.getItem(cacheKey(area, limit));
+    const raw = sessionStorage.getItem(cacheKey(area, limit, difficulty));
     if (!raw) return null;
     const parsed = JSON.parse(raw) as CachedQuestions;
     if (!parsed?.fetchedAt || !Array.isArray(parsed.questions)) return null;
@@ -26,11 +31,16 @@ export function readExamQuestionsSessionCache(area: string, limit: number): Exam
   }
 }
 
-export function writeExamQuestionsSessionCache(area: string, limit: number, questions: ExamQuestionPublic[]): void {
+export function writeExamQuestionsSessionCache(
+  area: string,
+  limit: number,
+  questions: ExamQuestionPublic[],
+  difficulty?: ExamQuestionDifficulty | null
+): void {
   if (typeof window === 'undefined') return;
   try {
     const payload: CachedQuestions = { fetchedAt: Date.now(), questions };
-    sessionStorage.setItem(cacheKey(area, limit), JSON.stringify(payload));
+    sessionStorage.setItem(cacheKey(area, limit, difficulty), JSON.stringify(payload));
   } catch {
     // quota exceeded — ignore
   }

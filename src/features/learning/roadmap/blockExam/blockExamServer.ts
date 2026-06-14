@@ -1,5 +1,6 @@
 import { BLOCK_EXAM_PASS_PERCENT } from '@/services/persistence/blockExamPersistence';
-import { getPhase1BlockDef, parseBlockCheckpointId, type Phase1BlockDef } from '@/features/learning/data/phase1Blocks';
+import { parseBlockCheckpointId } from '@/features/learning/data/phase1Blocks';
+import { findPhaseBlockDef } from '@/features/learning/data/phaseBlocks';
 import { gradeLessonQuizAnswersPure } from '@/features/learning/roadmap/lessonQuiz/gradeLessonQuizAnswersPure';
 import type { NormalizedQuizQuestion } from '@/features/learning/roadmap/lessonQuiz/quizTypes';
 import { loadLessonQuizQuestionsBatch } from '@/services/supabase/LearningSupabaseServer';
@@ -53,7 +54,7 @@ export async function startBlockExamSession(checkpointId: string, lessonIds?: st
   }
 
   const { areaId, blockId } = parsed;
-  const block = getPhase1BlockDef(areaId, blockId);
+  const block = findPhaseBlockDef(areaId, blockId);
   const poolLessonIds = lessonIds?.length ? lessonIds : [];
 
   if (poolLessonIds.length === 0) {

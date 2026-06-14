@@ -1,10 +1,11 @@
 import type { LearningPhaseNumber } from '@/features/learning/constants/learningPhases';
+import { getBlockCheckpointId } from '@/features/learning/data/phase1Blocks';
 import {
-  getBlockCheckpointId,
-  getPhase1BlockDef,
-  getPhase1BlocksForArea,
-  resolveLessonBlockId,
-} from '@/features/learning/data/phase1Blocks';
+  getBlockCheckpointDifficulty,
+  getPhaseBlockDef,
+  getPhaseBlocksForArea,
+  resolveLessonBlockIdForPhase,
+} from '@/features/learning/data/phaseBlocks';
 import { isMinimumRequirementsLessonId } from '@/features/learning/data/phaseMinimumRequirements';
 import type { LearningPathLesson } from '@/features/learning/services/LearningService';
 import type { AreaId } from '@/shared/constants';
@@ -15,15 +16,20 @@ function isInjectedCheckpoint(lesson: LearningPathLesson): boolean {
   return lesson.moduleType === BLOCK_CHECKPOINT_MODULE_TYPE || lesson.type === 'checkpoint';
 }
 
-function buildBlockCheckpoint(areaId: AreaId, blockId: string, lessonIds: string[]): LearningPathLesson {
-  const block = getPhase1BlockDef(areaId, blockId);
+function buildBlockCheckpoint(
+  areaId: AreaId,
+  blockId: string,
+  lessonIds: string[],
+  phase: LearningPhaseNumber
+): LearningPathLesson {
+  const block = getPhaseBlockDef(areaId, blockId, phase);
   return {
     id: getBlockCheckpointId(areaId, blockId),
     title: `Examen: ${block?.title ?? blockId}`,
     description: 'Preguntas aleatorias del bloque. Necesitas al menos 70% para continuar.',
     order: 0,
-    phase: 1,
-    difficulty: 'facil',
+    phase,
+    difficulty: getBlockCheckpointDifficulty(phase),
     type: 'checkpoint',
     moduleType: BLOCK_CHECKPOINT_MODULE_TYPE,
     blockId,
@@ -35,25 +41,23 @@ function buildBlockCheckpoint(areaId: AreaId, blockId: string, lessonIds: string
 }
 
 /**
- * Agrupa lecciones de fase 1 por bloque e inserta un checkpoint al final de cada uno.
+ * Agrupa lecciones por bloque e inserta un checkpoint al final de cada uno (fases 1–3).
  */
 export function injectBlockCheckpoints(
   areaId: string,
   lessons: LearningPathLesson[],
-  phase?: LearningPhaseNumber
+  phase: LearningPhaseNumber = 1
 ): LearningPathLesson[] {
-  if (phase === 2 || phase === 3) return lessons;
-
   const area = areaId as AreaId;
-  const blockDefs = getPhase1BlocksForArea(area);
+  const blockDefs = getPhaseBlocksForArea(area, phase);
   if (blockDefs.length === 0) return lessons;
 
   const prefix: LearningPathLesson[] = [];
-  const phaseOneLessons: LearningPathLesson[] = [];
+  const phaseLessons: LearningPathLesson[] = [];
   const suffix: LearningPathLesson[] = [];
 
   for (const lesson of lessons) {
-    if (lesson.phase !== 1) {
+    if (lesson.phase !== phase) {
       suffix.push(lesson);
       continue;
     }
@@ -61,14 +65,14 @@ export function injectBlockCheckpoints(
       prefix.push(lesson);
       continue;
     }
-    phaseOneLessons.push({
+    phaseLessons.push({
       ...lesson,
-      blockId: resolveLessonBlockId(area, lesson) ?? lesson.blockId,
+      blockId: resolveLessonBlockIdForPhase(area, phase, lesson) ?? lesson.blockId,
     });
   }
 
   const lessonsByBlock = new Map<string, LearningPathLesson[]>();
-  for (const lesson of phaseOneLessons) {
+  for (const lesson of phaseLessons) {
     const blockId = lesson.blockId;
     if (!blockId) continue;
     const group = lessonsByBlock.get(blockId) ?? [];
@@ -86,12 +90,13 @@ export function injectBlockCheckpoints(
       buildBlockCheckpoint(
         area,
         block.blockId,
-        sorted.map((lesson) => String(lesson.id))
+        sorted.map((lesson) => String(lesson.id)),
+        phase
       )
     );
   }
 
-  const ungrouped = phaseOneLessons.filter((lesson) => !lesson.blockId);
+  const ungrouped = phaseLessons.filter((lesson) => !lesson.blockId);
   if (ungrouped.length > 0) {
     blockPath.push(...ungrouped.sort((a, b) => a.order - b.order));
   }

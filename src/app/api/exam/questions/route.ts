@@ -3,6 +3,7 @@ import {
   fetchPublicQuestionsByRouteArea,
   fetchPublicQuestionsForFullExam,
 } from '@/features/exam/services/examQuestionsServer';
+import { normalizeExamDifficulty } from '@/features/exam/data/phaseSkipDifficulty';
 import { getAuthUserFromRequest, hasApiAccess } from '@/utils/apiAuth';
 import { checkRateLimit, getClientIp } from '@/utils/rateLimit';
 
@@ -24,12 +25,17 @@ export async function GET(request: NextRequest) {
   const full = request.nextUrl.searchParams.get('full') === '1';
   const limitParam = request.nextUrl.searchParams.get('limit');
   const limit = limitParam ? Number.parseInt(limitParam, 10) : undefined;
+  const difficulty = normalizeExamDifficulty(request.nextUrl.searchParams.get('difficulty'));
 
   try {
     const questions = full
       ? await fetchPublicQuestionsForFullExam()
       : area
-        ? await fetchPublicQuestionsByRouteArea(area, Number.isFinite(limit) && limit! > 0 ? limit : undefined)
+        ? await fetchPublicQuestionsByRouteArea(
+            area,
+            Number.isFinite(limit) && limit! > 0 ? limit : undefined,
+            difficulty
+          )
         : [];
 
     if (!full && !area) {

@@ -1,3 +1,4 @@
+import type { ExamQuestionDifficulty } from '@/features/exam/data/phaseSkipDifficulty';
 import type { ExamQuestionPublic } from '@/features/exam/types/question';
 import { PRACTICE_AREA_QUESTIONS_FETCH_LIMIT } from '@/features/exam/constants/practiceQuestionLimits';
 import { getApiAuthHeaders } from '@/utils/apiClientAuth';
@@ -22,14 +23,16 @@ async function fetchPublicQuestions(params: URLSearchParams): Promise<ExamQuesti
 
 export async function fetchQuestionsByRouteArea(
   routeArea: string,
-  limit = PRACTICE_AREA_QUESTIONS_FETCH_LIMIT
+  limit = PRACTICE_AREA_QUESTIONS_FETCH_LIMIT,
+  difficulty?: ExamQuestionDifficulty | null
 ): Promise<ExamQuestionPublic[]> {
-  const cached = readExamQuestionsSessionCache(routeArea, limit);
+  const cached = readExamQuestionsSessionCache(routeArea, limit, difficulty);
   if (cached) return cached;
 
   const params = new URLSearchParams({ area: routeArea, limit: String(limit) });
+  if (difficulty) params.set('difficulty', difficulty);
   const questions = await fetchPublicQuestions(params);
-  writeExamQuestionsSessionCache(routeArea, limit, questions);
+  writeExamQuestionsSessionCache(routeArea, limit, questions, difficulty);
   return questions;
 }
 

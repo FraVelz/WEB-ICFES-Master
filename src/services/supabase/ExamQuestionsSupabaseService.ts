@@ -2,6 +2,7 @@
  * ExamQuestionsSupabaseService — banco de preguntas ICFES desde Supabase
  */
 import { routeAreaToDbArea, type ExamQuestionDbArea } from '@/features/exam/data/examAreas';
+import type { ExamQuestionDifficulty } from '@/features/exam/data/phaseSkipDifficulty';
 import type { ExamQuestion, QuestionOption } from '@/features/exam/types/question';
 import { supabase } from '@/config/supabase';
 
@@ -40,7 +41,11 @@ function rowToPublicExamQuestion(row: ExamQuestionPublicRow): ExamQuestion {
 }
 
 const ExamQuestionsSupabaseService = {
-  async getByRouteArea(routeArea: string, limit?: number): Promise<ExamQuestion[]> {
+  async getByRouteArea(
+    routeArea: string,
+    limit?: number,
+    difficulty?: ExamQuestionDifficulty | null
+  ): Promise<ExamQuestion[]> {
     const sb = getSupabase();
     if (!sb) return [];
 
@@ -53,6 +58,10 @@ const ExamQuestionsSupabaseService = {
       .eq('area', dbArea)
       .eq('published', true)
       .order('order_index', { ascending: true });
+
+    if (difficulty) {
+      query = query.eq('difficulty', difficulty);
+    }
 
     if (limit != null && limit > 0) {
       query = query.limit(limit);
