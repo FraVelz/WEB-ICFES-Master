@@ -95,13 +95,10 @@ export function useDashboardShellLearning(isLearningShell: boolean) {
     sections,
     loading: pathLoading,
     error: pathError,
-  } = useLearningPath(
-    isLearningShell && currentArea !== 'examen-completo' ? currentArea : undefined,
-    {
-      loadAllPhases: isPhasesRoute,
-      sectionId: isPhasesRoute ? undefined : currentSectionId,
-    }
-  );
+  } = useLearningPath(isLearningShell && currentArea !== 'examen-completo' ? currentArea : undefined, {
+    loadAllPhases: isPhasesRoute,
+    sectionId: isPhasesRoute ? undefined : currentSectionId,
+  });
 
   const currentSection = sections.find((s) => s.id === currentSectionId);
   const currentSectionIndex = sections.findIndex((s) => s.id === currentSectionId);

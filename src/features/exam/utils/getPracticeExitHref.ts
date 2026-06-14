@@ -7,11 +7,7 @@ import {
 } from '@/features/learning/data/competencyPhases';
 import { LEARNING_PHASE_SECTION_IDS } from '@/features/learning/constants/learningPhases';
 import { getSkippedSectionIdsForArea } from '@/services/persistence/phaseSkipPersistence';
-import {
-  SIMULACRO_PATH,
-  getSimulacroAreaHref,
-  getSimulacroCompletoSectionHref,
-} from './simulacroNavigation';
+import { SIMULACRO_PATH, getSimulacroAreaHref, getSimulacroCompletoSectionHref } from './simulacroNavigation';
 
 const SAFE_EXIT_PREFIXES = [
   '/fases',
