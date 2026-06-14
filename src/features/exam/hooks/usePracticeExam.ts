@@ -1,9 +1,11 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback, useMemo } from 'react';
 import { useParams, useSearchParams } from 'next/navigation';
 import { PHASE_SKIP_PASS_PERCENT } from '@/services/persistence';
 import { getCompetencyPhaseBySectionId } from '@/features/learning/data/competencyPhases';
+import { buildPhaseSkipExamConfig } from '@/features/exam/data/phaseSkipExamConfig';
+import { getPracticeExitHref } from '@/features/exam/utils/getPracticeExitHref';
 import type { ExamConfig } from '@/features/exam/types';
 import type { ExamQuestionPublic } from '@/features/exam/types/question';
 import { AREA_INFO as SHARED_AREA_INFO } from '@/shared/constants/areaInfo';
@@ -32,6 +34,30 @@ export function usePracticeExam() {
   const [isFinished, setIsFinished] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [showAnswerSheetMobile, setShowAnswerSheetMobile] = useState(false);
+  const [referrerPath, setReferrerPath] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (!document.referrer) return;
+    try {
+      const ref = new URL(document.referrer);
+      if (ref.origin === window.location.origin) {
+        setReferrerPath(`${ref.pathname}${ref.search}`);
+      }
+    } catch {
+      /* ignore invalid referrer */
+    }
+  }, []);
+
+  const exitHref = useMemo(
+    () =>
+      getPracticeExitHref({
+        areaSlug: areaStr,
+        phaseSkipSectionId,
+        searchParams,
+        referrerPath,
+      }),
+    [areaStr, phaseSkipSectionId, searchParams, referrerPath]
+  );
 
   const { gradingError, phaseSkipPassed, results, correctCount, percentage, resetGrading } = usePracticeExamGrading({
     isFinished,
@@ -45,15 +71,23 @@ export function usePracticeExam() {
     phaseSkipSectionId,
   });
 
-  const handleExamStart = (config: ExamConfig) => {
-    const selectedQuestions = allQuestions.slice(0, config.numQuestions);
-    setQuestions(selectedQuestions);
-    setExamConfig(config);
-    resetGrading();
-    if (config.useTimer) {
-      setTimeRemaining(config.numQuestions * (config.timePerQuestion ?? 2) * 60);
-    }
-  };
+  const handleExamStart = useCallback(
+    (config: ExamConfig) => {
+      const selectedQuestions = allQuestions.slice(0, config.numQuestions);
+      setQuestions(selectedQuestions);
+      setExamConfig(config);
+      resetGrading();
+      if (config.useTimer) {
+        setTimeRemaining(config.numQuestions * (config.timePerQuestion ?? 2) * 60);
+      }
+    },
+    [allQuestions, resetGrading]
+  );
+
+  useEffect(() => {
+    if (!isPhaseSkipMode || examConfig || loadingQuestions || allQuestions.length === 0) return;
+    handleExamStart(buildPhaseSkipExamConfig(allQuestions.length));
+  }, [isPhaseSkipMode, examConfig, loadingQuestions, allQuestions.length, handleExamStart]);
 
   useEffect(() => {
     if (!timeRemaining || timeRemaining <= 0) return;
@@ -102,6 +136,7 @@ export function usePracticeExam() {
     phaseSkipPhaseTitle: phaseSkipPhase?.title,
     phaseSkipPassed,
     phaseSkipPassPercent: PHASE_SKIP_PASS_PERCENT,
+    exitHref,
     allQuestions,
     loadingQuestions,
     questionsError,

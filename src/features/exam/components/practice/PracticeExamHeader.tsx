@@ -11,6 +11,7 @@ type PracticeExamHeaderProps = {
   areaName: string;
   areaColor: string;
   subtitle: string;
+  exitHref?: string;
   timeRemaining?: number | null;
   timeColor?: string;
   showTimer?: boolean;
@@ -24,6 +25,7 @@ export function PracticeExamHeader({
   areaName,
   areaColor,
   subtitle,
+  exitHref = '/',
   timeRemaining,
   timeColor,
   showTimer,
@@ -70,7 +72,7 @@ export function PracticeExamHeader({
         )}
 
         <Link
-          href="/"
+          href={exitHref}
           className={cn(
             'border-surface-border bg-surface-overlay hidden rounded-lg border px-4 py-2 text-sm',
             'text-on-surface hover:bg-surface-border transition-all duration-300',
@@ -132,7 +134,7 @@ export function PracticeExamHeader({
                   </button>
                 )}
                 <Link
-                  href="/"
+                  href={exitHref}
                   onClick={onCloseMobileMenu}
                   className={cn(
                     'text-on-surface hover:bg-surface-overlay flex items-center gap-3 px-4 py-3 transition-colors',

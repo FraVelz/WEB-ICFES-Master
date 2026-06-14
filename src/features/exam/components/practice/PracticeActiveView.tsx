@@ -6,6 +6,7 @@ import { FullExamShell } from '@/features/exam/components/fullExam/FullExamShell
 import { PracticeExamHeader } from './PracticeExamHeader';
 import { PracticeQuestionCard } from './PracticeQuestionCard';
 import { PracticeMobileAnswerSheet } from './PracticeMobileAnswerSheet';
+import { PhaseSkipNotice } from './PhaseSkipNotice';
 
 type PracticeActiveViewProps = {
   areaInfo: { name: string; color: string };
@@ -19,6 +20,9 @@ type PracticeActiveViewProps = {
   setMobileMenuOpen: (open: boolean) => void;
   showAnswerSheetMobile: boolean;
   setShowAnswerSheetMobile: (open: boolean) => void;
+  phaseSkipPhaseTitle?: string;
+  phaseSkipPassPercent?: number;
+  exitHref?: string;
   onAnswer: (questionId: string, answer: string) => void;
   onScrollToQuestion: (index: number) => void;
   onFinish: () => void;
@@ -36,16 +40,21 @@ export function PracticeActiveView({
   setMobileMenuOpen,
   showAnswerSheetMobile,
   setShowAnswerSheetMobile,
+  phaseSkipPhaseTitle,
+  phaseSkipPassPercent,
+  exitHref,
   onAnswer,
   onScrollToQuestion,
   onFinish,
 }: PracticeActiveViewProps) {
+  const showPhaseSkipNotice = phaseSkipPassPercent != null;
   return (
     <FullExamShell>
       <PracticeExamHeader
         areaName={areaInfo.name}
         areaColor={areaInfo.color}
         subtitle={`Preguntas: ${questions.length}`}
+        exitHref={exitHref}
         timeRemaining={timeRemaining}
         timeColor={timeColor}
         showTimer={examConfig.useTimer}
@@ -90,14 +99,19 @@ export function PracticeActiveView({
             </div>
           </div>
 
-          <div>
-            <AnswerSheet
-              totalQuestions={questions.length}
-              answers={answers}
-              currentQuestion={0}
-              onQuestionClick={onScrollToQuestion}
-              questions={questions}
-            />
+          <div className="hidden lg:block">
+            <div className="sticky top-6 space-y-4">
+              <AnswerSheet
+                totalQuestions={questions.length}
+                answers={answers}
+                currentQuestion={0}
+                onQuestionClick={onScrollToQuestion}
+                questions={questions}
+              />
+              {showPhaseSkipNotice && (
+                <PhaseSkipNotice phaseTitle={phaseSkipPhaseTitle} passPercent={phaseSkipPassPercent} />
+              )}
+            </div>
           </div>
         </div>
       </div>
@@ -106,6 +120,8 @@ export function PracticeActiveView({
         isOpen={showAnswerSheetMobile}
         questions={questions}
         answers={answers}
+        phaseSkipPhaseTitle={phaseSkipPhaseTitle}
+        phaseSkipPassPercent={phaseSkipPassPercent}
         onClose={() => setShowAnswerSheetMobile(false)}
         onScrollToQuestion={onScrollToQuestion}
       />

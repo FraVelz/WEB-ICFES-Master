@@ -6,11 +6,14 @@ import { Icon } from '@/shared/components/Icon';
 import { AnswerSheet } from '@/features/exam/components';
 import { useDialogA11y } from '@/shared/hooks/useDialogA11y';
 import type { ExamQuestionPublic } from '@/features/exam/types/question';
+import { PhaseSkipNotice } from './PhaseSkipNotice';
 
 type PracticeMobileAnswerSheetProps = {
   isOpen: boolean;
   questions: ExamQuestionPublic[];
   answers: Record<string, string>;
+  phaseSkipPhaseTitle?: string;
+  phaseSkipPassPercent?: number;
   onClose: () => void;
   onScrollToQuestion: (index: number) => void;
 };
@@ -19,9 +22,12 @@ export function PracticeMobileAnswerSheet({
   isOpen,
   questions,
   answers,
+  phaseSkipPhaseTitle,
+  phaseSkipPassPercent,
   onClose,
   onScrollToQuestion,
 }: PracticeMobileAnswerSheetProps) {
+  const showPhaseSkipNotice = phaseSkipPassPercent != null;
   const dialogRef = useRef<HTMLDivElement>(null);
 
   useDialogA11y(isOpen, onClose, dialogRef);
@@ -63,7 +69,7 @@ export function PracticeMobileAnswerSheet({
             <Icon name="x-mark" size="lg" />
           </button>
         </div>
-        <div className="p-4">
+        <div className="space-y-4 p-4">
           <AnswerSheet
             totalQuestions={questions.length}
             answers={answers}
@@ -74,6 +80,9 @@ export function PracticeMobileAnswerSheet({
             }}
             questions={questions}
           />
+          {showPhaseSkipNotice && (
+            <PhaseSkipNotice phaseTitle={phaseSkipPhaseTitle} passPercent={phaseSkipPassPercent} />
+          )}
         </div>
       </div>
     </div>

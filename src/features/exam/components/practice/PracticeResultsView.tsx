@@ -17,6 +17,7 @@ type PracticeResultsViewProps = {
   setMobileMenuOpen: (open: boolean) => void;
   onScrollToQuestion: (index: number) => void;
   onRetry: () => void;
+  exitHref?: string;
 };
 
 export function PracticeResultsView({
@@ -31,6 +32,7 @@ export function PracticeResultsView({
   setMobileMenuOpen,
   onScrollToQuestion,
   onRetry,
+  exitHref,
 }: PracticeResultsViewProps) {
   return (
     <FullExamShell>
@@ -38,6 +40,7 @@ export function PracticeResultsView({
         areaName={areaInfo.name}
         areaColor={areaInfo.color}
         subtitle="Análisis de Resultados"
+        exitHref={exitHref}
         mobileMenuOpen={mobileMenuOpen}
         onToggleMobileMenu={() => setMobileMenuOpen(!mobileMenuOpen)}
         onCloseMobileMenu={() => setMobileMenuOpen(false)}

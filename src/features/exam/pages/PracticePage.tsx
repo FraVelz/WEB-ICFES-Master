@@ -12,6 +12,7 @@ import { EmptyState } from '@/shared/components/EmptyState';
 import { getLearningPhasesHref, isPhasesAreaSlug } from '@/features/learning/data/competencyPhases';
 import { RouteTo500ContextBanner } from '@/features/learning/components/routeTo500/RouteTo500ContextBanner';
 import { BreadcrumbNav } from '@/shared/components/BreadcrumbNav';
+import { PhaseSkipNotice } from '@/features/exam/components/practice/PhaseSkipNotice';
 
 const errorBoxClass = 'mx-auto max-w-lg px-4';
 
@@ -62,6 +63,7 @@ export const PracticePage = () => {
     correctCount,
     percentage,
     timeColor,
+    exitHref,
   } = usePracticeExam();
 
   if (loadingQuestions) {
@@ -73,14 +75,11 @@ export const PracticePage = () => {
   }
 
   const phaseSkipBanner = isPhaseSkipMode ? (
-    <div
-      className={cn(
-        'mx-auto mb-6 max-w-lg rounded-2xl border border-amber-500/30 bg-amber-500/10 px-4 py-3 text-sm text-amber-900 dark:text-amber-100'
-      )}
-    >
-      Simulacro para saltar <span className="font-semibold">{phaseSkipPhaseTitle ?? 'esta fase'}</span>. Necesitas al
-      menos <span className="font-semibold">{phaseSkipPassPercent}%</span> de aciertos para superar esta fase.
-    </div>
+    <PhaseSkipNotice
+      phaseTitle={phaseSkipPhaseTitle}
+      passPercent={phaseSkipPassPercent}
+      className="mx-auto mb-6 max-w-lg"
+    />
   ) : null;
 
   const routeBanner = !isPhaseSkipMode ? (
@@ -88,13 +87,43 @@ export const PracticePage = () => {
   ) : null;
 
   if (!examConfig) {
+    if (isPhaseSkipMode) {
+      if (allQuestions.length === 0) {
+        return (
+          <div className="px-4 pt-6">
+            <BreadcrumbNav
+              className="mb-4"
+              items={[{ label: 'Aprendizaje', href: '/ruta-aprendizaje/' }, { label: `Práctica ${areaInfo.name}` }]}
+            />
+            {phaseSkipBanner}
+            <EmptyState
+              icon="exclamation-circle"
+              title="Sin preguntas disponibles"
+              description="No hay preguntas cargadas para este simulacro. Intenta más tarde."
+              className={errorBoxClass}
+            />
+          </div>
+        );
+      }
+
+      return (
+        <div className="px-4 pt-6">
+          <BreadcrumbNav
+            className="mb-4"
+            items={[{ label: 'Aprendizaje', href: '/ruta-aprendizaje/' }, { label: `Práctica ${areaInfo.name}` }]}
+          />
+          {phaseSkipBanner}
+          <LoadingState label="Preparando simulacro…" layout="section" />
+        </div>
+      );
+    }
+
     return (
       <div className="px-4 pt-6">
         <BreadcrumbNav
           className="mb-4"
           items={[{ label: 'Aprendizaje', href: '/ruta-aprendizaje/' }, { label: `Práctica ${areaInfo.name}` }]}
         />
-        {phaseSkipBanner}
         {routeBanner}
         <ExamConfigModal area={areaInfo.name} totalQuestions={allQuestions.length} onStart={handleExamStart} />
       </div>
@@ -148,30 +177,31 @@ export const PracticePage = () => {
           setMobileMenuOpen={setMobileMenuOpen}
           onScrollToQuestion={handleScrollToQuestion}
           onRetry={resetExam}
+          exitHref={exitHref}
         />
       </>
     );
   }
 
   return (
-    <>
-      {phaseSkipBanner && <div className="relative z-20 px-6 pt-4">{phaseSkipBanner}</div>}
-      <PracticeActiveView
-        areaInfo={areaInfo}
-        examConfig={examConfig}
-        questions={questions}
-        answers={answers}
-        showResults={showResults}
-        timeRemaining={timeRemaining}
-        timeColor={timeColor}
-        mobileMenuOpen={mobileMenuOpen}
-        setMobileMenuOpen={setMobileMenuOpen}
-        showAnswerSheetMobile={showAnswerSheetMobile}
-        setShowAnswerSheetMobile={setShowAnswerSheetMobile}
-        onAnswer={handleAnswer}
-        onScrollToQuestion={handleScrollToQuestion}
-        onFinish={() => setShowResults(true)}
-      />
-    </>
+    <PracticeActiveView
+      areaInfo={areaInfo}
+      examConfig={examConfig}
+      questions={questions}
+      answers={answers}
+      showResults={showResults}
+      timeRemaining={timeRemaining}
+      timeColor={timeColor}
+      mobileMenuOpen={mobileMenuOpen}
+      setMobileMenuOpen={setMobileMenuOpen}
+      showAnswerSheetMobile={showAnswerSheetMobile}
+      setShowAnswerSheetMobile={setShowAnswerSheetMobile}
+      phaseSkipPhaseTitle={isPhaseSkipMode ? phaseSkipPhaseTitle : undefined}
+      phaseSkipPassPercent={isPhaseSkipMode ? phaseSkipPassPercent : undefined}
+      exitHref={exitHref}
+      onAnswer={handleAnswer}
+      onScrollToQuestion={handleScrollToQuestion}
+      onFinish={() => setShowResults(true)}
+    />
   );
 };
