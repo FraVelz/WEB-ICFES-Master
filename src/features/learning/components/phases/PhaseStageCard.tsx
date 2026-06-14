@@ -6,6 +6,7 @@ import { Icon } from '@/shared/components/Icon';
 import type { CompetencyPhase } from '@/features/learning/data/competencyPhases';
 import { getRoadmapHref } from '@/features/learning/data/competencyPhases';
 import type { PhaseCardStatus } from '@/features/learning/data/phaseProgressUtils';
+import { PHASE_SKIP_MIN_QUESTIONS } from '@/features/learning/phaseSkip/phaseSkipConstants';
 
 type PhaseStageCardProps = {
   phase: CompetencyPhase;
@@ -18,6 +19,10 @@ type PhaseStageCardProps = {
   skipExamHref?: string;
   skippedByExam?: boolean;
   performanceLevels?: string;
+  phaseSkipCanStart?: boolean;
+  phaseSkipTotalQuestions?: number;
+  phaseSkipAvailabilityLoading?: boolean;
+  phaseSkipRequiresAuth?: boolean;
 };
 
 export function PhaseStageCard({
@@ -31,11 +36,23 @@ export function PhaseStageCard({
   skipExamHref,
   skippedByExam = false,
   performanceLevels,
+  phaseSkipCanStart = true,
+  phaseSkipTotalQuestions,
+  phaseSkipAvailabilityLoading = false,
+  phaseSkipRequiresAuth = false,
 }: PhaseStageCardProps) {
   const isCompleted = status === 'completed';
   const isActive = status === 'active';
   const roadmapHref = getRoadmapHref(sectionId, areaId);
   const primaryLabel = isCompleted ? 'Repasar' : isActive ? 'Continuar' : 'Entrar';
+  const showSkipExam = !isCompleted && skipExamHref;
+  const skipDisabled =
+    phaseSkipRequiresAuth || phaseSkipAvailabilityLoading || !phaseSkipCanStart;
+  const skipTooltip = phaseSkipRequiresAuth
+    ? 'Requiere iniciar sesión con una cuenta real'
+    : !phaseSkipCanStart && phaseSkipTotalQuestions != null
+      ? `Se necesitan al menos ${PHASE_SKIP_MIN_QUESTIONS} preguntas en esta fase (hay ${phaseSkipTotalQuestions})`
+      : undefined;
 
   return (
     <article
@@ -87,19 +104,37 @@ export function PhaseStageCard({
         >
           {primaryLabel}
         </Link>
-        {!isCompleted && skipExamHref && (
-          <Link
-            href={skipExamHref}
-            className={cn(
-              'border-surface-border text-on-surface-muted inline-flex w-full items-center justify-center',
-              'gap-2 rounded-xl border px-4 py-2.5 text-sm font-semibold',
-              'transition-colors hover:border-amber-500/40 hover:bg-amber-500/10 hover:text-amber-200',
-              'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:outline-none'
+        {showSkipExam && (
+          <>
+            <p className="text-on-surface-muted text-center text-xs">
+              Simulacro: {PHASE_SKIP_MIN_QUESTIONS} preguntas · ~4 h · mín. 70%
+            </p>
+            {skipDisabled ? (
+              <span
+                title={skipTooltip}
+                className={cn(
+                  'border-surface-border text-on-surface-muted inline-flex w-full cursor-not-allowed items-center',
+                  'justify-center gap-2 rounded-xl border px-4 py-2.5 text-sm font-semibold opacity-60'
+                )}
+              >
+                <Icon name="bolt" className="text-amber-400/60" />
+                {phaseSkipAvailabilityLoading ? 'Comprobando simulacro…' : 'Completar fase con simulacro'}
+              </span>
+            ) : (
+              <Link
+                href={skipExamHref}
+                className={cn(
+                  'border-surface-border text-on-surface-muted inline-flex w-full items-center justify-center',
+                  'gap-2 rounded-xl border px-4 py-2.5 text-sm font-semibold',
+                  'transition-colors hover:border-amber-500/40 hover:bg-amber-500/10 hover:text-amber-200',
+                  'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:outline-none'
+                )}
+              >
+                <Icon name="bolt" className="text-amber-400" />
+                Completar fase con simulacro
+              </Link>
             )}
-          >
-            <Icon name="bolt" className="text-amber-400" />
-            Completar fase con simulacro
-          </Link>
+          </>
         )}
       </div>
     </article>

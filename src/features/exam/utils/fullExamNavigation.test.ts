@@ -7,12 +7,12 @@ import {
 
 describe('fullExamNavigation', () => {
   it('buildFullExamHref omits query when from is empty', () => {
-    expect(buildFullExamHref()).toBe('/examen-completo');
-    expect(buildFullExamHref('   ')).toBe('/examen-completo');
+    expect(buildFullExamHref()).toBe('/simulacro/completo');
+    expect(buildFullExamHref('   ')).toBe('/simulacro/completo');
   });
 
   it('buildFullExamHref encodes from path', () => {
-    expect(buildFullExamHref('/fases/matematicas')).toBe('/examen-completo?from=%2Ffases%2Fmatematicas');
+    expect(buildFullExamHref('/fases/matematicas')).toBe('/simulacro/completo?from=%2Ffases%2Fmatematicas');
   });
 
   it('getDefaultFullExamExitHref returns lectura critica roadmap', () => {
@@ -27,7 +27,7 @@ describe('fullExamNavigation', () => {
         isPhasesRoute: true,
         area: 'matematicas',
       })
-    ).toBe('/examen-completo?from=%2Ffases%2Fmatematicas');
+    ).toBe('/simulacro/completo?from=%2Ffases%2Fmatematicas');
   });
 
   it('buildFullExamHrefFromLearningContext uses roadmap with area and etapa', () => {
@@ -39,7 +39,7 @@ describe('fullExamNavigation', () => {
         area: 'matematicas',
         sectionId: 'intermedio',
       })
-    ).toBe('/examen-completo?from=%2Fruta-aprendizaje%3Farea%3Dmatematicas%26etapa%3Dintermedio');
+    ).toBe('/simulacro/completo?from=%2Fruta-aprendizaje%3Farea%3Dmatematicas%26etapa%3Dintermedio');
   });
 
   it('buildFullExamHrefFromLearningContext preserves ruta-al-500 query', () => {
@@ -50,6 +50,6 @@ describe('fullExamNavigation', () => {
         isPhasesRoute: false,
         area: 'ciencias-naturales',
       })
-    ).toBe('/examen-completo?from=%2Fruta-al-500%3Farea%3Dciencias-naturales');
+    ).toBe('/simulacro/completo?from=%2Fruta-al-500%3Farea%3Dciencias-naturales');
   });
 });

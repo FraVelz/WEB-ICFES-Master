@@ -18,6 +18,7 @@ const PRIVATE_PATHS = [
   '/perfil/public/',
   '/configuracion/',
   '/tienda/',
+  '/simulacro/',
   '/practica/',
   '/examen-completo/',
   '/api/',

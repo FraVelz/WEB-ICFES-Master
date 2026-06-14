@@ -39,7 +39,7 @@ export function isNavOptionActive(pathname: string, option: NavOption): boolean 
 export const LECTURA_SUB_PATHS = ['/ruta-al-500', '/importancia', '/informacion', '/consejos'] as const;
 
 /** Rutas donde no se muestra la barra de navegación principal en móvil. */
-export const HIDE_MOBILE_MAIN_NAV_PATHS = ['/practica', '/examen-completo'] as const;
+export const HIDE_MOBILE_MAIN_NAV_PATHS = ['/simulacro', '/practica', '/examen-completo'] as const;
 
 export function shouldHideMobileMainNav(pathname: string): boolean {
   return HIDE_MOBILE_MAIN_NAV_PATHS.some((path) => isNavPathActive(pathname, path));

@@ -9,7 +9,7 @@ import { LoadingState } from '@/shared/components/LoadingState';
 import type { AreaId } from '@/shared/constants';
 import { getPracticaHrefForRoadmapArea } from '@/shared/constants';
 import { useDashboardShell } from '@/features/dashboard/shell';
-import { COMPETENCY_PHASES, getLearningPhasesHref, getPhaseSkipExamHref, isPhasesAreaSlug } from '../data/competencyPhases';
+import { COMPETENCY_PHASES, getLearningPhasesHref, isPhasesAreaSlug } from '../data/competencyPhases';
 import {
   ROUTE_TO_500_PATH,
   getAreaSimulacroPhaseCopy,
@@ -18,7 +18,7 @@ import {
 } from '../data/routeTo500';
 import { buildFullExamHref, DEFAULT_FULL_EXAM_EXIT_AREA } from '@/features/exam/utils/fullExamNavigation';
 import { getSectionProgress, resolvePhaseStatuses } from '../data/phaseProgressUtils';
-import { PhaseStageCard } from '../components/phases/PhaseStageCard';
+import { PhaseStageCardContainer } from '../components/phases/PhaseStageCardContainer';
 import { usePhaseSkips } from '../hooks/usePhaseSkips';
 
 const areaExamStep = getJourneyStepById('examen-materia');
@@ -77,15 +77,13 @@ export function LearningPhasesPage() {
 
           return (
             <li key={phase.id}>
-              <PhaseStageCard
+              <PhaseStageCardContainer
                 phase={phase}
                 status={status}
                 progressPercent={skippedByExam ? 100 : percent}
-                lessonCount={section?.nodes.length ?? 0}
-                areaFocus={phase.areaFocus[currentArea as AreaId]}
-                sectionId={phase.sectionId}
+                section={section}
                 areaId={currentArea}
-                skipExamHref={getPhaseSkipExamHref(currentArea, phase.sectionId)}
+                areaFocus={phase.areaFocus[currentArea as AreaId]}
                 skippedByExam={skippedByExam}
                 performanceLevels={journeyStep?.performanceLevels}
               />

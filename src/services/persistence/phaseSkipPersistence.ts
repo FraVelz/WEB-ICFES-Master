@@ -1,4 +1,8 @@
 import { pushLearningProgressToRemote } from '@/services/learning';
+import { LESSON_COMPLETED_EVENT } from '@/storage/progressStorageTypes';
+import { getCompletedLessons } from '@/storage/progressLessonStorage';
+import { syncAchievementsAfterGameplay } from '@/storage/progressAchievementSync';
+import { STORAGE_KEYS } from '@/storage/progressStorageTypes';
 
 /** Porcentaje mínimo en el examen de salto para superar una fase bloqueada. */
 export const PHASE_SKIP_PASS_PERCENT = 70;
@@ -57,5 +61,23 @@ export function markPhaseSkipped(userId: string | undefined, areaId: string, sec
   writeSkips(records);
   if (userId) {
     void pushLearningProgressToRemote(userId);
+  }
+}
+
+/** Marca todas las lecciones de la fase como completadas y registra el salto por simulacro. */
+export function markPhaseLessonsComplete(
+  userId: string | undefined,
+  areaId: string,
+  sectionId: string,
+  lessonIds: string[],
+  score: number
+): void {
+  const completed = getCompletedLessons();
+  const merged = [...new Set([...completed, ...lessonIds])];
+  localStorage.setItem(STORAGE_KEYS.COMPLETED_LESSONS, JSON.stringify(merged));
+  markPhaseSkipped(userId, areaId, sectionId, score);
+  void syncAchievementsAfterGameplay();
+  if (typeof window !== 'undefined') {
+    window.dispatchEvent(new Event(LESSON_COMPLETED_EVENT));
   }
 }

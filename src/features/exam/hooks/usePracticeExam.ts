@@ -2,9 +2,6 @@
 
 import { useState, useEffect, useCallback, useMemo } from 'react';
 import { useParams, useSearchParams } from 'next/navigation';
-import { PHASE_SKIP_PASS_PERCENT } from '@/services/persistence';
-import { getCompetencyPhaseBySectionId } from '@/features/learning/data/competencyPhases';
-import { buildPhaseSkipExamConfig } from '@/features/exam/data/phaseSkipExamConfig';
 import { getPracticeExitHref } from '@/features/exam/utils/getPracticeExitHref';
 import type { ExamConfig } from '@/features/exam/types';
 import type { ExamQuestionPublic } from '@/features/exam/types/question';
@@ -16,9 +13,6 @@ export function usePracticeExam() {
   const { area } = useParams<{ area: string }>();
   const searchParams = useSearchParams();
   const areaStr = Array.isArray(area) ? area[0] : (area ?? '');
-  const phaseSkipSectionId = searchParams.get('saltar-fase');
-  const isPhaseSkipMode = Boolean(phaseSkipSectionId);
-  const phaseSkipPhase = phaseSkipSectionId ? getCompetencyPhaseBySectionId(phaseSkipSectionId) : undefined;
   const shared = SHARED_AREA_INFO[areaStr as keyof typeof SHARED_AREA_INFO];
   const areaInfo = shared
     ? { name: shared.name, color: shared.color }
@@ -52,14 +46,13 @@ export function usePracticeExam() {
     () =>
       getPracticeExitHref({
         areaSlug: areaStr,
-        phaseSkipSectionId,
         searchParams,
         referrerPath,
       }),
-    [areaStr, phaseSkipSectionId, searchParams, referrerPath]
+    [areaStr, searchParams, referrerPath]
   );
 
-  const { gradingError, phaseSkipPassed, results, correctCount, percentage, resetGrading } = usePracticeExamGrading({
+  const { gradingError, results, correctCount, percentage, resetGrading } = usePracticeExamGrading({
     isFinished,
     showResults,
     questions,
@@ -67,8 +60,6 @@ export function usePracticeExam() {
     examConfig,
     areaStr,
     areaName: areaInfo.name,
-    isPhaseSkipMode,
-    phaseSkipSectionId,
   });
 
   const handleExamStart = useCallback(
@@ -83,11 +74,6 @@ export function usePracticeExam() {
     },
     [allQuestions, resetGrading]
   );
-
-  useEffect(() => {
-    if (!isPhaseSkipMode || examConfig || loadingQuestions || allQuestions.length === 0) return;
-    handleExamStart(buildPhaseSkipExamConfig(allQuestions.length));
-  }, [isPhaseSkipMode, examConfig, loadingQuestions, allQuestions.length, handleExamStart]);
 
   useEffect(() => {
     if (!timeRemaining || timeRemaining <= 0) return;
@@ -131,11 +117,6 @@ export function usePracticeExam() {
 
   return {
     areaInfo,
-    isPhaseSkipMode,
-    phaseSkipSectionId,
-    phaseSkipPhaseTitle: phaseSkipPhase?.title,
-    phaseSkipPassed,
-    phaseSkipPassPercent: PHASE_SKIP_PASS_PERCENT,
     exitHref,
     allQuestions,
     loadingQuestions,

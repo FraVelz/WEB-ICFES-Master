@@ -79,7 +79,7 @@ export function getPracticeExitHref({
   return LEARNING_ROADMAP_PATH;
 }
 
-const FULL_EXAM_BLOCKED_REFERRER_PREFIXES = ['/examen-completo', '/practica'] as const;
+const FULL_EXAM_BLOCKED_REFERRER_PREFIXES = ['/simulacro', '/examen-completo', '/practica'] as const;
 
 function isSafeFullExamReferrer(pathname: string): boolean {
   if (FULL_EXAM_BLOCKED_REFERRER_PREFIXES.some((prefix) => pathname === prefix || pathname.startsWith(`${prefix}/`))) {

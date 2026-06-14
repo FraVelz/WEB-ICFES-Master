@@ -8,6 +8,7 @@ export const PROTECTED_DASHBOARD_PREFIXES = [
   '/perfil',
   '/configuracion',
   '/tienda',
+  '/simulacro',
   '/practica',
   '/examen-completo',
   '/evaluacion-nivel',

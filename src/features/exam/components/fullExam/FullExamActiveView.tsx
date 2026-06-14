@@ -5,6 +5,7 @@ import type { ExamQuestionPublic } from '@/features/exam/types/question';
 import { FullExamHeader } from './FullExamHeader';
 import { FullExamShell } from './FullExamShell';
 import { ExamAnswerOptions } from '@/features/exam/components/ExamAnswerOptions';
+import { PhaseSkipNotice } from '@/features/exam/components/practice/PhaseSkipNotice';
 
 type FullExamActiveViewProps = {
   areaInfo: { name: string; color: string };
@@ -14,6 +15,9 @@ type FullExamActiveViewProps = {
   timeRemaining: number | null;
   timeColor: string;
   exitHref?: string;
+  headerSubtitle?: string;
+  phaseSkipPhaseTitle?: string;
+  phaseSkipPassPercent?: number;
   onAnswer: (questionId: string, answer: string) => void;
   onScrollToQuestion: (index: number) => void;
   onFinish: () => void;
@@ -27,16 +31,21 @@ export function FullExamActiveView({
   timeRemaining,
   timeColor,
   exitHref,
+  headerSubtitle,
+  phaseSkipPhaseTitle,
+  phaseSkipPassPercent,
   onAnswer,
   onScrollToQuestion,
   onFinish,
 }: FullExamActiveViewProps) {
+  const showPhaseSkipNotice = phaseSkipPassPercent != null;
+
   return (
     <FullExamShell>
       <FullExamHeader
         areaName={areaInfo.name}
         areaColor={areaInfo.color}
-        subtitle={`Preguntas: ${questions.length}`}
+        subtitle={headerSubtitle ?? `Preguntas: ${questions.length}`}
         exitHref={exitHref}
         timeRemaining={timeRemaining}
         timeColor={timeColor}
@@ -116,6 +125,9 @@ export function FullExamActiveView({
                 onQuestionClick={onScrollToQuestion}
                 questions={questions}
               />
+              {showPhaseSkipNotice && (
+                <PhaseSkipNotice phaseTitle={phaseSkipPhaseTitle} passPercent={phaseSkipPassPercent} />
+              )}
             </div>
           </div>
         </div>

@@ -121,7 +121,4 @@ export function getRoadmapHref(sectionId?: string, areaId?: string): string {
   return `${LEARNING_ROADMAP_PATH}?${qs}`;
 }
 
-/** Examen de práctica para saltar una fase (`?saltar-fase=facil|intermedio|dificil`). */
-export function getPhaseSkipExamHref(areaId: string, sectionId: string): string {
-  return `/practica/${areaId}?saltar-fase=${sectionId}`;
-}
+export { getPhaseSkipExamHref } from '@/features/exam/utils/simulacroNavigation';

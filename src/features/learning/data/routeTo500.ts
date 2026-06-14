@@ -5,7 +5,7 @@ import { COMPETENCY_PHASES, JOURNEY_TIPS, type CompetencyPhaseId, getRoadmapHref
 import { buildFullExamHref } from '@/features/exam/utils/fullExamNavigation';
 
 export const ROUTE_TO_500_PATH = '/ruta-al-500';
-export const GLOBAL_EXAM_PATH = '/examen-completo';
+export { SIMULACRO_COMPLETO_PATH as GLOBAL_EXAM_PATH } from '@/features/exam/utils/simulacroNavigation';
 export const LECTURA_INDEX_PATH = '/lectura';
 
 export type JourneyStepKind = 'learning' | 'practice-area' | 'practice-global';

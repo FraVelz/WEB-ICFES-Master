@@ -1,15 +1,19 @@
-import ProtectedPage from '@/components/ProtectedPage';
-import { PracticePage } from '@/features/exam/pages';
-import { PRACTICA_AREA_SLUGS } from '@/shared/constants/practiceAreas';
+import { buildLegacyPracticaRedirect } from '@/features/exam/utils/simulacroNavigation';
+import { redirect } from 'next/navigation';
 
-export function generateStaticParams() {
-  return PRACTICA_AREA_SLUGS.map((area) => ({ area }));
-}
+type PageProps = {
+  params: Promise<{ area: string }>;
+  searchParams: Promise<Record<string, string | string[] | undefined>>;
+};
 
-export default function Page() {
-  return (
-    <ProtectedPage blockDemoContent={false}>
-      <PracticePage />
-    </ProtectedPage>
-  );
+export default async function Page({ params, searchParams }: PageProps) {
+  const { area } = await params;
+  const raw = await searchParams;
+  const qs = new URLSearchParams();
+  for (const [key, value] of Object.entries(raw)) {
+    if (typeof value === 'string') qs.set(key, value);
+    else if (Array.isArray(value)) value.forEach((v) => qs.append(key, v));
+  }
+  const query = qs.toString();
+  redirect(buildLegacyPracticaRedirect(area, query || undefined));
 }

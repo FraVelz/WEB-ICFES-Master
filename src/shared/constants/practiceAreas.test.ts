@@ -11,7 +11,7 @@ describe('practiceAreas', () => {
   it('valida slugs y construye hrefs', () => {
     expect(isPracticaAreaSlug('matematicas')).toBe(true);
     expect(isPracticaAreaSlug('examen-completo')).toBe(false);
-    expect(getPracticaHrefForRoadmapArea('ingles')).toBe('/practica/ingles');
+    expect(getPracticaHrefForRoadmapArea('ingles')).toBe('/simulacro/ingles');
     expect(getPracticaHrefForRoadmapArea('invalid')).toBeNull();
   });
 });

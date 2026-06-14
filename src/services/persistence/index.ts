@@ -87,6 +87,7 @@ export {
   isPhaseSkipped,
   getSkippedSectionIdsForArea,
   markPhaseSkipped,
+  markPhaseLessonsComplete,
   type PhaseSkipRecord,
 } from './phaseSkipPersistence';
 

@@ -1,10 +1,17 @@
-import ProtectedPage from '@/components/ProtectedPage';
-import { FullExamPage } from '@/features/exam/pages';
+import { buildLegacyFullExamRedirect } from '@/features/exam/utils/simulacroNavigation';
+import { redirect } from 'next/navigation';
 
-export default function Page() {
-  return (
-    <ProtectedPage>
-      <FullExamPage />
-    </ProtectedPage>
-  );
+type PageProps = {
+  searchParams: Promise<Record<string, string | string[] | undefined>>;
+};
+
+export default async function Page({ searchParams }: PageProps) {
+  const params = await searchParams;
+  const qs = new URLSearchParams();
+  for (const [key, value] of Object.entries(params)) {
+    if (typeof value === 'string') qs.set(key, value);
+    else if (Array.isArray(value)) value.forEach((v) => qs.append(key, v));
+  }
+  const query = qs.toString();
+  redirect(buildLegacyFullExamRedirect(query || undefined));
 }

@@ -1,6 +1,8 @@
 import { HOME_AREA_IDS, type AreaId } from './areaInfo';
 
-/** Slugs válidos para rutas `/practica/[area]`. */
+import { getSimulacroAreaHref } from '@/features/exam/utils/simulacroNavigation';
+
+/** Slugs válidos para rutas `/simulacro/[area]`. */
 export const PRACTICA_AREA_SLUGS = HOME_AREA_IDS;
 
 export type PracticaAreaSlug = Exclude<AreaId, 'examen-completo'>;
@@ -10,6 +12,5 @@ export function isPracticaAreaSlug(id: string): id is PracticaAreaSlug {
 }
 
 export function getPracticaHrefForRoadmapArea(roadmapAreaId: string): string | null {
-  if (!isPracticaAreaSlug(roadmapAreaId)) return null;
-  return `/practica/${roadmapAreaId}`;
+  return getSimulacroAreaHref(roadmapAreaId);
 }

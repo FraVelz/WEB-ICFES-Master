@@ -1,6 +1,7 @@
 import { cn } from '@/utils/cn';
 import Link from 'next/link';
 import { Icon } from '@/shared/components/Icon';
+import { getSimulacroAreaHref, getSimulacroCompletoHref } from '@/features/exam/utils/simulacroNavigation';
 import { AREAS } from '@/features/home/data';
 
 export const AreasSection = () => {
@@ -19,7 +20,7 @@ export const AreasSection = () => {
         {AREAS.map((area) => (
           <div key={area.id}>
             <Link
-              href={`/practica/${area.id}`}
+              href={getSimulacroAreaHref(area.id) ?? '/simulacro'}
               className={cn(
                 'group relative block rounded-xl',
                 'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:outline-none',
@@ -89,7 +90,7 @@ export const AreasSection = () => {
           </p>
 
           <Link
-            href="/examen-completo"
+            href={getSimulacroCompletoHref()}
             className={cn(
               'inline-flex items-center gap-2 rounded-lg bg-linear-to-r from-red-600 to-pink-600 px-8',
               'py-4 font-bold text-white transition-all duration-300 hover:scale-105 hover:shadow-lg',

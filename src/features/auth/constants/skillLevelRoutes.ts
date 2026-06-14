@@ -14,13 +14,13 @@ export const SKILL_LEVEL_DESTINATIONS: Record<
     icon: 'book',
   },
   intermediate: {
-    path: '/practica/matematicas',
+    path: '/simulacro/matematicas',
     title: 'Tengo un nivel intermedio',
     description: 'Ya manejo conceptos clave y quiero reforzar practicando por áreas.',
     icon: 'chart-line',
   },
   advanced: {
-    path: '/examen-completo',
+    path: '/simulacro/completo',
     title: 'Confío en mi conocimiento',
     description: 'Quiero ir directo a practicar exámenes y simulacros tipo ICFES.',
     icon: 'clipboard-list',

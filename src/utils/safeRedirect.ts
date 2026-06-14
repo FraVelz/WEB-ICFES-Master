@@ -8,6 +8,7 @@ const ALLOWED_PREFIXES = [
   '/perfil',
   '/configuracion',
   '/tienda',
+  '/simulacro',
   '/practica',
   '/examen-completo',
   '/consejos',
