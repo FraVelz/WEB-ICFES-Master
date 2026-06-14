@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect, useRef, useCallback, useMemo } from 'react';
-import { useSearchParams } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useAuth } from '@/features/auth/context/AuthContext';
 import { isDemoUserId } from '@/services/demo/demoCoins';
 import { saveFullExam } from '@/services/persistence';
@@ -12,8 +12,11 @@ import type { ExamQuestion, ExamQuestionPublic } from '@/features/exam/types/que
 import type { ExamConfig } from '@/features/exam/types';
 import { AREA_INFO } from '@/shared/constants';
 import { getFullExamExitHref } from '@/features/exam/utils/getPracticeExitHref';
+import { consumePendingFullExamConfig } from '@/features/exam/utils/fullExamConfigStorage';
+import { getSimulacroCompletoSectionHref } from '@/features/exam/utils/simulacroNavigation';
 
 export function useFullExam() {
+  const router = useRouter();
   const areaInfo = AREA_INFO['examen-completo'];
   const searchParams = useSearchParams();
   const exitHref = useMemo(() => getFullExamExitHref({ searchParams }), [searchParams]);
@@ -53,18 +56,35 @@ export function useFullExam() {
     void loadQuestions();
   }, [loadQuestions]);
 
-  const handleExamStart = (config: ExamConfig) => {
-    const selectedQuestions = allQuestions.slice(0, config.numQuestions);
-    setQuestions(selectedQuestions);
-    setExamConfig(config);
-    setGradedResults(null);
-    setGradingError(null);
-    gradingStartedRef.current = false;
+  const handleExamStart = useCallback(
+    (config: ExamConfig) => {
+      const selectedQuestions = allQuestions.slice(0, config.numQuestions);
+      setQuestions(selectedQuestions);
+      setExamConfig(config);
+      setGradedResults(null);
+      setGradingError(null);
+      gradingStartedRef.current = false;
 
-    if (config.useTimer) {
-      setTimeRemaining(config.numQuestions * (config.timePerQuestion ?? 2) * 60);
+      if (config.useTimer) {
+        setTimeRemaining(config.numQuestions * (config.timePerQuestion ?? 2) * 60);
+      } else {
+        setTimeRemaining(null);
+      }
+    },
+    [allQuestions]
+  );
+
+  useEffect(() => {
+    if (loadingQuestions || questionsError || examConfig) return;
+
+    const pendingConfig = consumePendingFullExamConfig();
+    if (pendingConfig) {
+      handleExamStart(pendingConfig);
+      return;
     }
-  };
+
+    router.replace(getSimulacroCompletoSectionHref());
+  }, [loadingQuestions, questionsError, examConfig, handleExamStart, router]);
 
   useEffect(() => {
     if (!timeRemaining || timeRemaining <= 0) return;
@@ -144,14 +164,7 @@ export function useFullExam() {
   }, []);
 
   const resetExam = () => {
-    setExamConfig(null);
-    setAnswers({});
-    setShowResults(false);
-    setIsFinished(false);
-    setTimeRemaining(null);
-    setGradedResults(null);
-    setGradingError(null);
-    gradingStartedRef.current = false;
+    router.push(getSimulacroCompletoSectionHref());
   };
 
   const results =

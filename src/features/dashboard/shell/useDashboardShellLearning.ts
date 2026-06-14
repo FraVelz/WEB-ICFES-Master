@@ -11,7 +11,10 @@ import {
   parsePhasesAreaFromPathname,
 } from '@/features/learning/data/competencyPhases';
 import { getLessonIdFromPathname, isLessonRoute, resolveLessonAreaId } from '@/features/learning/utils/lessonRoutes';
-import { buildFullExamHrefFromLearningContext } from '@/features/exam/utils/fullExamNavigation';
+import {
+  getSimulacroCompletoSectionHref,
+  isSimulacroCompletoSectionRoute,
+} from '@/features/exam/utils/simulacroNavigation';
 import { isLearningPhasesRoute } from './shellRoutes';
 
 function resolveAreaId(param: string | null): AreaId {
@@ -20,6 +23,7 @@ function resolveAreaId(param: string | null): AreaId {
 }
 
 function resolveInitialArea(pathname: string, areaParam: string | null, isPhasesRoute: boolean): AreaId {
+  if (isSimulacroCompletoSectionRoute(pathname)) return 'examen-completo';
   if (isPhasesRoute) {
     return parsePhasesAreaFromPathname(pathname) ?? resolveAreaId(areaParam);
   }
@@ -70,21 +74,13 @@ export function useDashboardShellLearning(isLearningShell: boolean) {
     (area: string) => {
       if (!(area in AREA_INFO)) return;
       if (area === 'examen-completo') {
-        router.push(
-          buildFullExamHrefFromLearningContext({
-            pathname,
-            searchParams,
-            isPhasesRoute,
-            area: currentArea,
-            sectionId: currentSectionId,
-          })
-        );
+        router.push(getSimulacroCompletoSectionHref());
         return;
       }
       setCurrentAreaState(area as AreaId);
       replaceLearningUrl(area, isPhasesRoute ? undefined : currentSectionId);
     },
-    [currentArea, currentSectionId, isPhasesRoute, pathname, replaceLearningUrl, router, searchParams]
+    [currentSectionId, isPhasesRoute, replaceLearningUrl, router]
   );
 
   const setCurrentSectionId = useCallback(
@@ -99,16 +95,24 @@ export function useDashboardShellLearning(isLearningShell: boolean) {
     sections,
     loading: pathLoading,
     error: pathError,
-  } = useLearningPath(isLearningShell ? currentArea : undefined, {
-    loadAllPhases: isPhasesRoute,
-    sectionId: isPhasesRoute ? undefined : currentSectionId,
-  });
+  } = useLearningPath(
+    isLearningShell && currentArea !== 'examen-completo' ? currentArea : undefined,
+    {
+      loadAllPhases: isPhasesRoute,
+      sectionId: isPhasesRoute ? undefined : currentSectionId,
+    }
+  );
 
   const currentSection = sections.find((s) => s.id === currentSectionId);
   const currentSectionIndex = sections.findIndex((s) => s.id === currentSectionId);
 
   useEffect(() => {
     if (!isLearningShell) return;
+
+    if (isSimulacroCompletoSectionRoute(pathname)) {
+      setCurrentAreaState('examen-completo');
+      return;
+    }
 
     if (isPhasesRoute) {
       const areaFromPath = parsePhasesAreaFromPathname(pathname);

@@ -46,7 +46,7 @@ export function shouldHideMobileMainNav(pathname: string): boolean {
 }
 
 export const mainNavOptions: NavOption[] = [
-  { path: '/ruta-aprendizaje', label: 'Aprendizaje', icon: 'graduation-cap', activePaths: ['/fases'] },
+  { path: '/ruta-aprendizaje', label: 'Aprendizaje', icon: 'graduation-cap', activePaths: ['/fases', '/simulacro-completo'] },
   { path: '/logros', label: 'Logros', icon: 'medal' },
   { path: '/clasificatoria', label: 'Clasificatoria', icon: 'trophy' },
   { path: '/tienda', label: 'Tienda', icon: 'shopping-bag' },

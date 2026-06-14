@@ -60,8 +60,8 @@ describe('getPracticeExitHref', () => {
 });
 
 describe('getFullExamExitHref', () => {
-  it('defaults to lectura critica roadmap when from is missing', () => {
-    expect(getFullExamExitHref({})).toBe('/ruta-aprendizaje?area=lectura-critica&etapa=facil');
+  it('defaults to simulacro completo section when from is missing', () => {
+    expect(getFullExamExitHref({})).toBe('/simulacro-completo');
   });
 
   it('uses from query param when safe', () => {
@@ -74,13 +74,13 @@ describe('getFullExamExitHref', () => {
     expect(getFullExamExitHref({ searchParams: params })).toBe('/fases/matematicas');
   });
 
-  it('falls back to lectura critica when from is empty', () => {
+  it('falls back to simulacro completo section when from is empty', () => {
     const params = new URLSearchParams('from=');
-    expect(getFullExamExitHref({ searchParams: params })).toBe('/ruta-aprendizaje?area=lectura-critica&etapa=facil');
+    expect(getFullExamExitHref({ searchParams: params })).toBe('/simulacro-completo');
   });
 
-  it('falls back to lectura critica when from is unsafe', () => {
+  it('falls back to simulacro completo section when from is unsafe', () => {
     const params = new URLSearchParams('from=%2Fexamen-completo');
-    expect(getFullExamExitHref({ searchParams: params })).toBe('/ruta-aprendizaje?area=lectura-critica&etapa=facil');
+    expect(getFullExamExitHref({ searchParams: params })).toBe('/simulacro-completo');
   });
 });

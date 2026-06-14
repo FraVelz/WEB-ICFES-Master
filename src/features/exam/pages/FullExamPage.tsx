@@ -1,19 +1,14 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
-import { ExamConfigModal } from '@/features/exam/components';
 import { FullExamActiveView } from '@/features/exam/components/fullExam/FullExamActiveView';
 import { FullExamResultsView } from '@/features/exam/components/fullExam/FullExamResultsView';
 import { useFullExam } from '@/features/exam/hooks/useFullExam';
 import { ExamPageSkeleton, GradingSkeleton } from '@/shared/components/PageSkeletons';
 import { EmptyState } from '@/shared/components/EmptyState';
-import { RouteTo500ContextBanner } from '@/features/learning/components/routeTo500/RouteTo500ContextBanner';
 
 export const FullExamPage = () => {
-  const router = useRouter();
   const {
     areaInfo,
-    allQuestions,
     loadingQuestions,
     questionsError,
     gradingError,
@@ -26,7 +21,6 @@ export const FullExamPage = () => {
     setShowResults,
     isFinished,
     gradedResults,
-    handleExamStart,
     handleAnswer,
     handleScrollToQuestion,
     resetExam,
@@ -38,7 +32,7 @@ export const FullExamPage = () => {
     exitHref,
   } = useFullExam();
 
-  if (loadingQuestions) {
+  if (loadingQuestions || !examConfig) {
     return <ExamPageSkeleton questionCount={6} />;
   }
 
@@ -52,21 +46,6 @@ export const FullExamPage = () => {
         onAction={() => void reloadQuestions()}
         className="mx-auto max-w-lg"
       />
-    );
-  }
-
-  if (!examConfig) {
-    return (
-      <div className="px-4 pt-6">
-        <RouteTo500ContextBanner stepId="examen-global" />
-        <ExamConfigModal
-          area={areaInfo.name}
-          totalQuestions={allQuestions.length}
-          onStart={handleExamStart}
-          onCancel={() => router.push(exitHref)}
-          isFullExam={true}
-        />
-      </div>
     );
   }
 

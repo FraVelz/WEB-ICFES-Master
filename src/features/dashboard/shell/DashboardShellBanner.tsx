@@ -4,10 +4,11 @@ import Link from 'next/link';
 import { cn } from '@/utils/cn';
 import { Icon } from '@/shared/components/Icon';
 import { getLearningPhasesHref, getRoadmapHref } from '@/features/learning/data/competencyPhases';
-import { buildFullExamHref, DEFAULT_FULL_EXAM_EXIT_AREA } from '@/features/exam/utils/fullExamNavigation';
+import { isSimulacroCompletoSectionRoute } from '@/features/exam/utils/simulacroNavigation';
 import { SectionStageBanner } from '@/features/learning/shell/SecondaryHeader/SectionStageBanner';
 import { useDashboardShell } from './DashboardShellContext';
 import { SHELL_SECTION_META } from './shellRoutes';
+import { usePathname } from 'next/navigation';
 
 type NavSectionBannerProps = {
   title: string;
@@ -53,6 +54,7 @@ function NavSectionBanner({ title, subtitle, gradient, icon, href, className }: 
 }
 
 export function DashboardShellBanner({ className }: { className?: string }) {
+  const pathname = usePathname();
   const {
     shellSection,
     isPhasesRoute,
@@ -65,20 +67,19 @@ export function DashboardShellBanner({ className }: { className?: string }) {
     goToAdjacentSection,
   } = useDashboardShell();
 
-  if (shellSection === 'learning' && isPhasesRoute) {
-    if (currentArea === 'examen-completo') {
-      return (
-        <NavSectionBanner
-          title="Simulacro completo"
-          subtitle="ICFES Saber 11°"
-          gradient={currentAreaData.color ?? 'from-pink-600 to-rose-700'}
-          icon="clipboard-list"
-          href={buildFullExamHref(getLearningPhasesHref(DEFAULT_FULL_EXAM_EXIT_AREA))}
-          className={className}
-        />
-      );
-    }
+  if (shellSection === 'learning' && isSimulacroCompletoSectionRoute(pathname)) {
+    return (
+      <NavSectionBanner
+        title="Simulacro completo"
+        subtitle="ICFES Saber 11°"
+        gradient={currentAreaData.color ?? 'from-pink-600 to-rose-700'}
+        icon="clipboard-list"
+        className={className}
+      />
+    );
+  }
 
+  if (shellSection === 'learning' && isPhasesRoute) {
     const backHref = getRoadmapHref(currentSectionId, currentArea);
     return (
       <NavSectionBanner

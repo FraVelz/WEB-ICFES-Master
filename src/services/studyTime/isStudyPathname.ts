@@ -1,6 +1,7 @@
 const STUDY_PATH_PREFIXES = [
   '/ruta-aprendizaje',
   '/simulacro',
+  '/simulacro-completo',
   '/practica/',
   '/examen-completo',
   '/lectura',

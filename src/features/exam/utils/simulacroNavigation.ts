@@ -2,6 +2,8 @@ import { isPracticaAreaSlug } from '@/shared/constants/practiceAreas';
 
 export const SIMULACRO_PATH = '/simulacro';
 export const SIMULACRO_COMPLETO_PATH = '/simulacro/completo';
+/** Sección dedicada (sin fases) con configuración personalizada del simulacro integral. */
+export const SIMULACRO_COMPLETO_SECTION_PATH = '/simulacro-completo';
 
 /** Rutas legacy que redirigen a `/simulacro`. */
 export const LEGACY_FULL_EXAM_PATH = '/examen-completo';
@@ -24,7 +26,24 @@ export function getSimulacroHubHref(): string {
   return SIMULACRO_PATH;
 }
 
+export function isSimulacroCompletoSectionRoute(pathname: string): boolean {
+  const normalized = pathname.endsWith('/') && pathname.length > 1 ? pathname.slice(0, -1) : pathname;
+  return normalized === SIMULACRO_COMPLETO_SECTION_PATH;
+}
+
+/** Hub del simulacro integral (configuración personalizada, sin layout de fases). */
+export function getSimulacroCompletoSectionHref(): string {
+  return SIMULACRO_COMPLETO_SECTION_PATH;
+}
+
+/** Alias de navegación hacia la sección dedicada del simulacro completo. */
 export function getSimulacroCompletoHref(fromPath?: string | null): string {
+  void fromPath;
+  return getSimulacroCompletoSectionHref();
+}
+
+/** Pantalla de examen activo del simulacro integral. */
+export function getSimulacroCompletoExamHref(fromPath?: string | null): string {
   const trimmed = fromPath?.trim();
   if (!trimmed) return SIMULACRO_COMPLETO_PATH;
 
@@ -50,7 +69,8 @@ export function buildLegacyPracticaRedirect(area: string, search?: string): stri
 }
 
 export function buildLegacyFullExamRedirect(search?: string): string {
-  return search ? `${SIMULACRO_COMPLETO_PATH}?${search}` : SIMULACRO_COMPLETO_PATH;
+  void search;
+  return getSimulacroCompletoSectionHref();
 }
 
 export function buildLegacyPhaseSkipRedirect(area?: string, etapa?: string): string {

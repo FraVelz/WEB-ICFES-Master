@@ -34,6 +34,41 @@ export function LearningAsidePanels() {
         ? `Mejor sesión: ${formatStudyTime(studyStats.longestSessionMinutes)}`
         : 'Se registra mientras estudias en la ruta o en práctica';
 
+  if (currentArea === 'examen-completo') {
+    return (
+      <>
+        <AsideCard title="Tiempo de estudio" icon="clock">
+          <p className="text-on-surface text-3xl font-bold">{formatStudyTime(studyStats.totalMinutes)}</p>
+          <p className="text-on-surface-muted mt-1 text-sm">Simulacro integral · todas las áreas</p>
+          <p className="text-on-surface-muted mt-3 text-xs leading-relaxed">{studyDetail}</p>
+        </AsideCard>
+
+        <AsideCard title="Resumen rápido" icon="star">
+          <ul className="text-on-surface-muted space-y-2 text-sm">
+            <li className="flex items-center justify-between gap-2">
+              <span>Nivel</span>
+              <span className="text-on-surface font-semibold">
+                {level} · {totalXP.toLocaleString('es-CO')} XP
+              </span>
+            </li>
+            <li className="flex items-center justify-between gap-2">
+              <span>Racha activa</span>
+              <span className="text-on-surface font-semibold">{currentStreak} días</span>
+            </li>
+            <li className="flex items-center justify-between gap-2">
+              <span>Mejor racha</span>
+              <span className="text-on-surface font-semibold">{longestStreak} días</span>
+            </li>
+            <li className="flex items-center justify-between gap-2">
+              <span>Monedas</span>
+              <span className="font-semibold text-yellow-500">{coins.toLocaleString('es-CO')}</span>
+            </li>
+          </ul>
+        </AsideCard>
+      </>
+    );
+  }
+
   return (
     <>
       <AsideCard title="Tiempo de estudio" icon="clock">

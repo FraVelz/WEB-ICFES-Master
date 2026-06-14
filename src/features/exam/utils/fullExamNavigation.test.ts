@@ -6,8 +6,8 @@ import {
 } from './fullExamNavigation';
 
 describe('fullExamNavigation', () => {
-  it('buildFullExamHref omits query when from is empty', () => {
-    expect(buildFullExamHref()).toBe('/simulacro/completo');
+  it('buildFullExamHref usa la sección dedicada como origen por defecto', () => {
+    expect(buildFullExamHref()).toBe('/simulacro/completo?from=%2Fsimulacro-completo');
     expect(buildFullExamHref('   ')).toBe('/simulacro/completo');
   });
 

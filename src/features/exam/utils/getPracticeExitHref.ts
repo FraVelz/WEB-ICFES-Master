@@ -6,9 +6,12 @@ import {
   isPhasesAreaSlug,
 } from '@/features/learning/data/competencyPhases';
 import { LEARNING_PHASE_SECTION_IDS } from '@/features/learning/constants/learningPhases';
-import { getDefaultFullExamExitHref } from './fullExamNavigation';
 import { getSkippedSectionIdsForArea } from '@/services/persistence/phaseSkipPersistence';
-import { SIMULACRO_PATH, getSimulacroAreaHref } from './simulacroNavigation';
+import {
+  SIMULACRO_PATH,
+  getSimulacroAreaHref,
+  getSimulacroCompletoSectionHref,
+} from './simulacroNavigation';
 
 const SAFE_EXIT_PREFIXES = [
   '/fases',
@@ -16,6 +19,7 @@ const SAFE_EXIT_PREFIXES = [
   '/ruta-aprendizaje',
   '/ruta-al-500',
   '/simulacro',
+  '/simulacro-completo',
   '/logros',
   '/tienda',
   '/perfil',
@@ -91,6 +95,7 @@ export function getPracticeExitHref({
 export function getResultsBackLabel(returnTo: string): string {
   const path = returnTo.split('?')[0];
   if (path.startsWith('/ruta-aprendizaje')) return 'Volver a la Ruta';
+  if (path === '/simulacro-completo') return 'Volver al simulacro completo';
   if (path === '/simulacro' || path.startsWith('/simulacro/')) return 'Volver a Simulacros';
   if (path.startsWith('/fases')) return 'Volver a Fases';
   if (path.startsWith('/ruta-al-500')) return 'Volver a la Ruta al 500';
@@ -120,5 +125,5 @@ export function getFullExamExitHref({ searchParams }: FullExamExitContext): stri
     }
   }
 
-  return getDefaultFullExamExitHref();
+  return getSimulacroCompletoSectionHref();
 }

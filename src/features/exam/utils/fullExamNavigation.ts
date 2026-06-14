@@ -4,7 +4,10 @@ import {
   getRoadmapHref,
   isPhasesAreaSlug,
 } from '@/features/learning/data/competencyPhases';
-import { GLOBAL_EXAM_PATH } from '@/features/learning/data/routeTo500';
+import {
+  getSimulacroCompletoExamHref,
+  getSimulacroCompletoSectionHref,
+} from '@/features/exam/utils/simulacroNavigation';
 
 export const DEFAULT_FULL_EXAM_EXIT_AREA = 'lectura-critica' as const;
 
@@ -14,13 +17,7 @@ export function getDefaultFullExamExitHref(): string {
 
 /** Ruta interna de retorno codificada en `?from=` al abrir el simulacro completo. */
 export function buildFullExamHref(fromPath?: string | null): string {
-  const trimmed = fromPath?.trim();
-  if (!trimmed) return GLOBAL_EXAM_PATH;
-
-  const path = trimmed.startsWith('/') ? trimmed : `/${trimmed}`;
-  const params = new URLSearchParams();
-  params.set('from', path);
-  return `${GLOBAL_EXAM_PATH}?${params.toString()}`;
+  return getSimulacroCompletoExamHref(fromPath ?? getSimulacroCompletoSectionHref());
 }
 
 export function buildCurrentLocationPath(pathname: string, searchParams: Pick<URLSearchParams, 'toString'>): string {

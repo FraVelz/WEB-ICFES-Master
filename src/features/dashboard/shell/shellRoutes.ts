@@ -6,6 +6,7 @@ export type DashboardShellSection = 'learning' | 'achievements' | 'leaderboard' 
 const SHELL_PREFIXES = [
   '/ruta-aprendizaje',
   '/fases',
+  '/simulacro-completo',
   '/logros',
   '/clasificatoria',
   '/lectura',
@@ -18,7 +19,11 @@ export function isDashboardShellRoute(pathname: string): boolean {
 }
 
 export function resolveDashboardShellSection(pathname: string): DashboardShellSection {
-  if (isNavPathActive(pathname, '/fases') || isNavPathActive(pathname, '/ruta-aprendizaje')) {
+  if (
+    isNavPathActive(pathname, '/fases') ||
+    isNavPathActive(pathname, '/ruta-aprendizaje') ||
+    isNavPathActive(pathname, '/simulacro-completo')
+  ) {
     return 'learning';
   }
   if (isNavPathActive(pathname, '/logros')) return 'achievements';

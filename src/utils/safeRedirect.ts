@@ -9,6 +9,7 @@ const ALLOWED_PREFIXES = [
   '/configuracion',
   '/tienda',
   '/simulacro',
+  '/simulacro-completo',
   '/practica',
   '/examen-completo',
   '/consejos',
