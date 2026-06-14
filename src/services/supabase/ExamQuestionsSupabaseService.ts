@@ -1,7 +1,7 @@
 /**
  * ExamQuestionsSupabaseService — banco de preguntas ICFES desde Supabase
  */
-import { routeAreaToDbArea } from '@/features/exam/data/examAreas';
+import { routeAreaToDbArea, type ExamQuestionDbArea } from '@/features/exam/data/examAreas';
 import type { ExamQuestion, QuestionOption } from '@/features/exam/types/question';
 import { supabase } from '@/config/supabase';
 
@@ -65,8 +65,24 @@ const ExamQuestionsSupabaseService = {
   },
 
   async getByRouteAreas(routeAreas: string[]): Promise<ExamQuestion[]> {
-    const results = await Promise.all(routeAreas.map((area) => this.getByRouteArea(area)));
-    return results.flat();
+    const sb = getSupabase();
+    if (!sb || routeAreas.length === 0) return [];
+
+    const dbAreas = [
+      ...new Set(routeAreas.map(routeAreaToDbArea).filter((area): area is ExamQuestionDbArea => area != null)),
+    ];
+    if (dbAreas.length === 0) return [];
+
+    const { data, error } = await sb
+      .from(PUBLIC_VIEW)
+      .select(PUBLIC_COLUMNS)
+      .in('area', dbAreas)
+      .eq('published', true)
+      .order('area', { ascending: true })
+      .order('order_index', { ascending: true });
+
+    if (error) throw new Error(`Error leyendo exam_questions: ${error.message}`);
+    return ((data ?? []) as ExamQuestionPublicRow[]).map(rowToPublicExamQuestion);
   },
 
   async getByIds(ids: string[]): Promise<ExamQuestion[]> {
