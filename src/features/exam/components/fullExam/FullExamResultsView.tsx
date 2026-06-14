@@ -1,9 +1,13 @@
+'use client';
+
+import { useState } from 'react';
 import { AnswerSheet, EXAM_SIDEBAR_STICKY_CLASS, ResultsAnalysis } from '@/features/exam/components';
-import { cn } from '@/utils/cn';
 import type { ExamConfig } from '@/features/exam/types';
 import type { ExamQuestion, ExamQuestionPublic } from '@/features/exam/types/question';
 import { FullExamHeader } from './FullExamHeader';
 import { FullExamShell } from './FullExamShell';
+import { FullExamMobileAnswerSheet } from './FullExamMobileAnswerSheet';
+import { FullExamAnswerSheetFab } from './FullExamAnswerSheetFab';
 
 type FullExamResultsViewProps = {
   areaInfo: { name: string; color: string };
@@ -30,6 +34,9 @@ export function FullExamResultsView({
   onScrollToQuestion,
   onRetry,
 }: FullExamResultsViewProps) {
+  const [mobileAnswerSheetOpen, setMobileAnswerSheetOpen] = useState(false);
+  const answeredCount = Object.keys(answers).length;
+
   return (
     <FullExamShell>
       <FullExamHeader
@@ -37,11 +44,13 @@ export function FullExamResultsView({
         areaColor={areaInfo.color}
         subtitle="Análisis de Resultados"
         exitHref={exitHref}
+        answeredCount={answeredCount}
+        onOpenAnswerSheet={() => setMobileAnswerSheetOpen(true)}
       />
 
-      <div className="mx-auto max-w-7xl px-6 py-8">
-        <div className="grid grid-cols-1 gap-6 lg:grid-cols-4">
-          <div className="lg:col-span-3">
+      <div className="mx-auto max-w-7xl px-3 py-4 pb-[max(5rem,env(safe-area-inset-bottom))] sm:px-6 sm:py-8 sm:pb-24 xl:pb-8">
+        <div className="grid grid-cols-1 gap-6 xl:grid-cols-4">
+          <div className="xl:col-span-3">
             <ResultsAnalysis
               results={results}
               questions={results.map((r) => r.question)}
@@ -52,7 +61,7 @@ export function FullExamResultsView({
               onRetry={onRetry}
             />
           </div>
-          <div className="hidden lg:block">
+          <div className="hidden xl:block">
             <div className={EXAM_SIDEBAR_STICKY_CLASS}>
               <AnswerSheet
                 totalQuestions={questions.length}
@@ -64,6 +73,20 @@ export function FullExamResultsView({
           </div>
         </div>
       </div>
+
+      <FullExamAnswerSheetFab
+        isOpen={mobileAnswerSheetOpen}
+        answeredCount={answeredCount}
+        onOpen={() => setMobileAnswerSheetOpen(true)}
+      />
+
+      <FullExamMobileAnswerSheet
+        isOpen={mobileAnswerSheetOpen}
+        questions={questions}
+        answers={answers}
+        onClose={() => setMobileAnswerSheetOpen(false)}
+        onScrollToQuestion={onScrollToQuestion}
+      />
     </FullExamShell>
   );
 }

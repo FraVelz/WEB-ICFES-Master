@@ -67,9 +67,9 @@ export function PracticeActiveView({
         }}
       />
 
-      <div className="mx-auto max-w-7xl px-6 py-8 pb-[max(1.5rem,env(safe-area-inset-bottom))]">
-        <div className="grid grid-cols-1 gap-6 lg:grid-cols-4">
-          <div className="space-y-6 lg:col-span-3">
+      <div className="mx-auto max-w-7xl px-3 py-4 pb-[max(1.5rem,env(safe-area-inset-bottom))] sm:px-6 sm:py-8 sm:pb-8">
+        <div className="grid grid-cols-1 gap-4 sm:gap-6 xl:grid-cols-4">
+          <div className="space-y-4 sm:space-y-6 xl:col-span-3">
             {questions.map((question, index) => (
               <PracticeQuestionCard
                 key={question.id}
@@ -82,13 +82,14 @@ export function PracticeActiveView({
               />
             ))}
 
-            <div className="flex justify-center pt-8">
+            <div className="flex justify-center pt-4 sm:pt-8">
               <button
                 type="button"
                 onClick={onFinish}
                 className={cn(
-                  'rounded-xl bg-linear-to-r from-green-500 to-emerald-500 px-12 py-4 text-lg font-bold',
-                  'text-white transition-all duration-300 hover:from-green-600 hover:to-emerald-600',
+                  'w-full max-w-md rounded-xl bg-linear-to-r from-green-500 to-emerald-500 px-6 py-3.5',
+                  'text-base font-bold text-white sm:w-auto sm:px-12 sm:py-4 sm:text-lg',
+                  'transition-all duration-300 hover:from-green-600 hover:to-emerald-600',
                   'cursor-pointer hover:shadow-lg hover:shadow-green-500/50',
                   'focus-visible:ring-2 focus-visible:ring-white focus-visible:outline-none',
                   'focus-visible:ring-offset-surface-via focus-visible:ring-offset-2'
@@ -99,7 +100,7 @@ export function PracticeActiveView({
             </div>
           </div>
 
-          <div className="hidden lg:block">
+          <div className="hidden xl:block">
             <div className={cn(EXAM_SIDEBAR_STICKY_CLASS, 'space-y-4')}>
               <AnswerSheet
                 totalQuestions={questions.length}

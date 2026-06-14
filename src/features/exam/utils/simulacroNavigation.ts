@@ -13,6 +13,13 @@ export function isSimulacroRoute(pathname: string): boolean {
   return normalized === SIMULACRO_PATH || normalized.startsWith(`${SIMULACRO_PATH}/`);
 }
 
+/** Rutas de examen activo (no el hub `/simulacro`). */
+export function isSimulacroExamRoute(pathname: string): boolean {
+  const normalized = pathname.endsWith('/') && pathname.length > 1 ? pathname.slice(0, -1) : pathname;
+  if (normalized === SIMULACRO_PATH) return false;
+  return isSimulacroRoute(pathname);
+}
+
 export function getSimulacroHubHref(): string {
   return SIMULACRO_PATH;
 }

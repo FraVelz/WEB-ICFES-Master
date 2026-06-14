@@ -11,6 +11,8 @@ type ExamAnswerOptionsProps = {
   optionClassName?: string;
   selectedClassName?: string;
   unselectedClassName?: string;
+  /** Estilo más compacto en pantallas pequeñas (simulacros fullscreen). */
+  responsive?: boolean;
 };
 
 export function ExamAnswerOptions({
@@ -23,11 +25,16 @@ export function ExamAnswerOptions({
   optionClassName,
   selectedClassName,
   unselectedClassName,
+  responsive = false,
 }: ExamAnswerOptionsProps) {
   const groupLabel = `Pregunta ${questionNumber}: opciones de respuesta`;
 
   return (
-    <div role="radiogroup" aria-label={groupLabel} className="space-y-3">
+    <div
+      role="radiogroup"
+      aria-label={groupLabel}
+      className={cn(responsive ? 'space-y-2 sm:space-y-3' : 'space-y-3')}
+    >
       {options.map((option) => {
         const optionKey = option.letter ?? option.id;
         const isSelected = selectedAnswer === optionKey;
@@ -41,17 +48,24 @@ export function ExamAnswerOptions({
             disabled={disabled}
             onClick={() => onSelect(questionId, optionKey)}
             className={cn(
-              'w-full rounded-lg border-2 p-4 text-left transition-all duration-300',
+              'w-full rounded-lg border-2 text-left transition-all duration-300',
+              responsive ? 'p-3 sm:p-4' : 'p-4',
               'focus-visible:z-10 focus-visible:ring-2 focus-visible:outline-none',
               'focus-visible:ring-app-accent focus-visible:ring-offset-2',
               isSelected ? selectedClassName : unselectedClassName,
               optionClassName
             )}
           >
-            <div className="flex items-center gap-3">
+            <div
+              className={cn(
+                'flex gap-2.5',
+                responsive ? 'items-start sm:items-center sm:gap-3' : 'items-center gap-3'
+              )}
+            >
               <div
                 className={cn(
-                  'flex h-8 w-8 shrink-0 items-center justify-center rounded-full border-2 text-sm font-bold',
+                  'flex shrink-0 items-center justify-center rounded-full border-2 font-bold',
+                  responsive ? 'mt-0.5 h-7 w-7 text-xs sm:mt-0 sm:h-8 sm:w-8 sm:text-sm' : 'h-8 w-8 text-sm',
                   isSelected
                     ? 'border-app-accent bg-app-ring text-white'
                     : 'border-surface-border text-on-surface-muted'
@@ -59,7 +73,7 @@ export function ExamAnswerOptions({
               >
                 {option.letter}
               </div>
-              <span>{option.text}</span>
+              <span className={cn(responsive && 'text-sm leading-snug sm:text-base')}>{option.text}</span>
             </div>
           </button>
         );

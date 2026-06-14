@@ -1,10 +1,15 @@
+'use client';
+
+import { useState } from 'react';
 import { cn } from '@/utils/cn';
 import { AnswerSheet, EXAM_SIDEBAR_STICKY_CLASS } from '@/features/exam/components';
 import type { ExamConfig } from '@/features/exam/types';
 import type { ExamQuestionPublic } from '@/features/exam/types/question';
 import { FullExamHeader } from './FullExamHeader';
 import { FullExamShell } from './FullExamShell';
-import { ExamAnswerOptions } from '@/features/exam/components/ExamAnswerOptions';
+import { FullExamMobileAnswerSheet } from './FullExamMobileAnswerSheet';
+import { FullExamAnswerSheetFab } from './FullExamAnswerSheetFab';
+import { FullExamQuestionCard } from './FullExamQuestionCard';
 import { PhaseSkipNotice } from '@/features/exam/components/practice/PhaseSkipNotice';
 
 type FullExamActiveViewProps = {
@@ -38,7 +43,9 @@ export function FullExamActiveView({
   onScrollToQuestion,
   onFinish,
 }: FullExamActiveViewProps) {
+  const [mobileAnswerSheetOpen, setMobileAnswerSheetOpen] = useState(false);
   const showPhaseSkipNotice = phaseSkipPassPercent != null;
+  const answeredCount = Object.keys(answers).length;
 
   return (
     <FullExamShell>
@@ -50,62 +57,31 @@ export function FullExamActiveView({
         timeRemaining={timeRemaining}
         timeColor={timeColor}
         showTimer={examConfig.useTimer}
+        answeredCount={answeredCount}
+        onOpenAnswerSheet={() => setMobileAnswerSheetOpen(true)}
       />
 
-      <div className="mx-auto max-w-7xl px-6 py-8 pb-[max(1.5rem,env(safe-area-inset-bottom))]">
-        <div className="grid grid-cols-1 gap-6 lg:grid-cols-4">
-          <div className="space-y-6 lg:col-span-3">
+      <div className="mx-auto max-w-7xl px-3 py-4 pb-[max(5rem,env(safe-area-inset-bottom))] sm:px-6 sm:py-8 sm:pb-24 xl:pb-8">
+        <div className="grid grid-cols-1 gap-6 xl:grid-cols-4">
+          <div className="space-y-4 sm:space-y-6 xl:col-span-3">
             {questions.map((question, index) => (
-              <div
+              <FullExamQuestionCard
                 key={question.id}
-                id={`question-${index}`}
-                className={cn(
-                  'rounded-xl border border-white/10 bg-linear-to-br from-gray-800/40 via-gray-900/40',
-                  'to-gray-950/40 p-6 shadow-lg backdrop-blur-md transition-all duration-300',
-                  'hover:border-white/20 hover:shadow-xl'
-                )}
-              >
-                <div className="mb-6">
-                  <div className="flex items-start gap-4">
-                    <div
-                      className={cn(
-                        'flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-linear-to-r',
-                        'from-cta-from to-cta-progress-end text-sm font-bold'
-                      )}
-                    >
-                      {index + 1}
-                    </div>
-                    <div className="flex-1">
-                      <p className="text-lg leading-relaxed font-semibold text-white">{question.text}</p>
-                      <p className="text-on-surface-muted mt-2 text-xs">
-                        Dificultad: <span className="text-app-accent-muted">{question.difficulty}</span>
-                      </p>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="ml-14">
-                  <ExamAnswerOptions
-                    questionId={question.id}
-                    questionNumber={index + 1}
-                    options={question.options}
-                    selectedAnswer={answers[question.id]}
-                    onSelect={onAnswer}
-                    selectedClassName="border-app-accent bg-app-ring/20 text-app-on-accent"
-                    unselectedClassName="hover:border-app-accent/50 hover:bg-app-ring/10 border-white/20 bg-white/5 text-white"
-                    optionClassName="focus-visible:ring-offset-gray-950"
-                  />
-                </div>
-              </div>
+                question={question}
+                index={index}
+                answer={answers[question.id]}
+                onAnswer={onAnswer}
+              />
             ))}
 
-            <div className="flex justify-center pt-8">
+            <div className="flex justify-center pt-4 sm:pt-8">
               <button
                 type="button"
                 onClick={onFinish}
                 className={cn(
-                  'rounded-xl bg-linear-to-r from-green-500 to-emerald-500 px-12 py-4 text-lg font-bold',
-                  'text-white transition-all duration-300 hover:from-green-600 hover:to-emerald-600',
+                  'w-full max-w-md rounded-xl bg-linear-to-r from-green-500 to-emerald-500 px-6 py-3.5',
+                  'text-base font-bold text-white sm:w-auto sm:px-12 sm:py-4 sm:text-lg',
+                  'transition-all duration-300 hover:from-green-600 hover:to-emerald-600',
                   'cursor-pointer hover:shadow-lg hover:shadow-green-500/50',
                   'focus-visible:ring-2 focus-visible:ring-white focus-visible:outline-none',
                   'focus-visible:ring-offset-2 focus-visible:ring-offset-gray-900'
@@ -116,7 +92,7 @@ export function FullExamActiveView({
             </div>
           </div>
 
-          <div className="hidden lg:block">
+          <div className="hidden xl:block">
             <div className={cn(EXAM_SIDEBAR_STICKY_CLASS, 'space-y-4')}>
               <AnswerSheet
                 totalQuestions={questions.length}
@@ -132,6 +108,22 @@ export function FullExamActiveView({
           </div>
         </div>
       </div>
+
+      <FullExamAnswerSheetFab
+        isOpen={mobileAnswerSheetOpen}
+        answeredCount={answeredCount}
+        onOpen={() => setMobileAnswerSheetOpen(true)}
+      />
+
+      <FullExamMobileAnswerSheet
+        isOpen={mobileAnswerSheetOpen}
+        questions={questions}
+        answers={answers}
+        phaseSkipPhaseTitle={phaseSkipPhaseTitle}
+        phaseSkipPassPercent={phaseSkipPassPercent}
+        onClose={() => setMobileAnswerSheetOpen(false)}
+        onScrollToQuestion={onScrollToQuestion}
+      />
     </FullExamShell>
   );
 }

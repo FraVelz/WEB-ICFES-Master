@@ -6,7 +6,7 @@ type FullExamShellProps = {
 
 export function FullExamShell({ children }: FullExamShellProps) {
   return (
-    <div className="from-surface via-surface-via to-surface text-on-surface min-h-dvh bg-linear-to-br [--exam-sticky-offset:6.25rem]">
+    <div className="from-surface via-surface-via to-surface text-on-surface flex h-dvh flex-col overflow-hidden bg-linear-to-br [--exam-sticky-offset:6.25rem]">
       <div className="pointer-events-none fixed inset-0 overflow-hidden">
         <div
           className={[
@@ -21,7 +21,7 @@ export function FullExamShell({ children }: FullExamShellProps) {
           ].join(' ')}
         />
       </div>
-      <div className="relative z-10">{children}</div>
+      <div className="relative z-10 flex min-h-0 flex-1 flex-col overflow-y-auto">{children}</div>
     </div>
   );
 }

@@ -5,6 +5,7 @@ import type { ReactNode } from 'react';
 import { DashboardHeader } from '@/components/DashboardHeader';
 import { AchievementUnlockHost } from '@/features/achievements/components/AchievementUnlockHost';
 import { isLessonRoute } from '@/features/learning/utils/lessonRoutes';
+import { isSimulacroExamRoute } from '@/features/exam/utils/simulacroNavigation';
 import { cn } from '@/utils/cn';
 import { DashboardShellGate } from './DashboardShellGate';
 import { DashboardDataProviders } from './DashboardDataProviders';
@@ -59,11 +60,11 @@ function DashboardLayoutBody({ children, isFullscreenLesson }: { children: React
 
 export function DashboardLayoutChrome({ children }: { children: ReactNode }) {
   const pathname = usePathname();
-  const isFullscreenLesson = isLessonRoute(pathname);
+  const isFullscreenChrome = isLessonRoute(pathname) || isSimulacroExamRoute(pathname);
 
   return (
     <DashboardDataProviders>
-      <DashboardLayoutBody isFullscreenLesson={isFullscreenLesson}>{children}</DashboardLayoutBody>
+      <DashboardLayoutBody isFullscreenLesson={isFullscreenChrome}>{children}</DashboardLayoutBody>
     </DashboardDataProviders>
   );
 }
