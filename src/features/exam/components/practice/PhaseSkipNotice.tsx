@@ -14,8 +14,8 @@ export function PhaseSkipNotice({ phaseTitle, passPercent, className }: PhaseSki
         className
       )}
     >
-      Simulacro para saltar <span className="font-semibold">{phaseTitle ?? 'esta fase'}</span>. Necesitas al menos{' '}
-      <span className="font-semibold">{passPercent}%</span> de aciertos para superar esta fase.
+      Simulacro para completar <span className="font-semibold">{phaseTitle ?? 'esta fase'}</span>. Necesitas al menos{' '}
+      <span className="font-semibold">{passPercent}%</span> de aciertos para completar esta fase.
     </div>
   );
 }

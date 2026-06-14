@@ -67,7 +67,7 @@ export function PhaseStageCard({
       </div>
       <p className="text-on-surface-muted mt-1 text-xs">
         {skippedByExam
-          ? 'Fase superada con simulacro'
+          ? 'Fase completada con simulacro'
           : `${lessonCount} lecciones · ${progressPercent}%`}
       </p>
 
@@ -98,7 +98,7 @@ export function PhaseStageCard({
             )}
           >
             <Icon name="bolt" className="text-amber-400" />
-            Saltar fase con simulacro
+            Completar fase con simulacro
           </Link>
         )}
       </div>

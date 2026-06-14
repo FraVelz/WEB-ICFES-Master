@@ -6,7 +6,7 @@ type FullExamShellProps = {
 
 export function FullExamShell({ children }: FullExamShellProps) {
   return (
-    <div className="from-surface via-surface-via to-surface text-on-surface min-h-dvh bg-linear-to-br">
+    <div className="from-surface via-surface-via to-surface text-on-surface min-h-dvh bg-linear-to-br [--exam-sticky-offset:6.25rem]">
       <div className="pointer-events-none fixed inset-0 overflow-hidden">
         <div
           className={[

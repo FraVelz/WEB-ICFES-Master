@@ -1,5 +1,6 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
 import { ExamConfigModal } from '@/features/exam/components';
 import { FullExamActiveView } from '@/features/exam/components/fullExam/FullExamActiveView';
 import { FullExamResultsView } from '@/features/exam/components/fullExam/FullExamResultsView';
@@ -9,6 +10,7 @@ import { EmptyState } from '@/shared/components/EmptyState';
 import { RouteTo500ContextBanner } from '@/features/learning/components/routeTo500/RouteTo500ContextBanner';
 
 export const FullExamPage = () => {
+  const router = useRouter();
   const {
     areaInfo,
     allQuestions,
@@ -33,6 +35,7 @@ export const FullExamPage = () => {
     percentage,
     timeRemaining,
     timeColor,
+    exitHref,
   } = useFullExam();
 
   if (loadingQuestions) {
@@ -60,6 +63,7 @@ export const FullExamPage = () => {
           area={areaInfo.name}
           totalQuestions={allQuestions.length}
           onStart={handleExamStart}
+          onCancel={() => router.push(exitHref)}
           isFullExam={true}
         />
       </div>
@@ -95,6 +99,7 @@ export const FullExamPage = () => {
         percentage={percentage}
         onScrollToQuestion={handleScrollToQuestion}
         onRetry={resetExam}
+        exitHref={exitHref}
       />
     );
   }
@@ -110,6 +115,7 @@ export const FullExamPage = () => {
       onAnswer={handleAnswer}
       onScrollToQuestion={handleScrollToQuestion}
       onFinish={() => setShowResults(true)}
+      exitHref={exitHref}
     />
   );
 };

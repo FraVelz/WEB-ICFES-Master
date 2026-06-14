@@ -1,12 +1,17 @@
 import { cn } from '@/utils/cn';
 import type { ExamQuestionPublic } from '@/features/exam/types/question';
 
+/** Sticky wrapper para la hoja de respuestas bajo el header del examen. */
+export const EXAM_SIDEBAR_STICKY_CLASS =
+  'sticky top-[var(--exam-sticky-offset,6.25rem)] z-20 max-h-[calc(100dvh-var(--exam-sticky-offset,6.25rem)-1rem)] overflow-y-auto';
+
 interface AnswerSheetProps {
   totalQuestions: number;
   answers: Record<string, string>;
   currentQuestion: number;
   onQuestionClick: (index: number) => void;
   questions?: ExamQuestionPublic[];
+  className?: string;
 }
 
 export const AnswerSheet = ({
@@ -15,12 +20,14 @@ export const AnswerSheet = ({
   currentQuestion,
   onQuestionClick,
   questions = [],
+  className,
 }: AnswerSheetProps) => {
   return (
     <div
       className={cn(
-        'border-surface-border bg-surface-elevated/90 sticky top-6 h-fit rounded-xl border',
-        'p-4 shadow-2xl backdrop-blur-md'
+        'border-surface-border bg-surface-elevated/90 h-fit rounded-xl border',
+        'p-4 shadow-2xl backdrop-blur-md',
+        className
       )}
     >
       <h3 className="text-on-surface mb-4 flex items-center gap-2 text-sm font-bold">

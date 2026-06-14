@@ -1,4 +1,5 @@
-import { AnswerSheet, ResultsAnalysis } from '@/features/exam/components';
+import { AnswerSheet, EXAM_SIDEBAR_STICKY_CLASS, ResultsAnalysis } from '@/features/exam/components';
+import { cn } from '@/utils/cn';
 import type { ExamConfig } from '@/features/exam/types';
 import type { ExamQuestion, ExamQuestionPublic } from '@/features/exam/types/question';
 import { FullExamHeader } from './FullExamHeader';
@@ -12,6 +13,7 @@ type FullExamResultsViewProps = {
   results: { question: ExamQuestion; correct: boolean; userAnswer: string }[];
   correctCount: number;
   percentage: number;
+  exitHref?: string;
   onScrollToQuestion: (index: number) => void;
   onRetry: () => void;
 };
@@ -24,6 +26,7 @@ export function FullExamResultsView({
   results,
   correctCount,
   percentage,
+  exitHref,
   onScrollToQuestion,
   onRetry,
 }: FullExamResultsViewProps) {
@@ -33,7 +36,7 @@ export function FullExamResultsView({
         areaName={areaInfo.name}
         areaColor={areaInfo.color}
         subtitle="Análisis de Resultados"
-        onExit={() => window.history.back()}
+        exitHref={exitHref}
       />
 
       <div className="mx-auto max-w-7xl px-6 py-8">
@@ -49,13 +52,15 @@ export function FullExamResultsView({
               onRetry={onRetry}
             />
           </div>
-          <div>
-            <AnswerSheet
-              totalQuestions={questions.length}
-              answers={answers}
-              currentQuestion={0}
-              onQuestionClick={onScrollToQuestion}
-            />
+          <div className="hidden lg:block">
+            <div className={EXAM_SIDEBAR_STICKY_CLASS}>
+              <AnswerSheet
+                totalQuestions={questions.length}
+                answers={answers}
+                currentQuestion={0}
+                onQuestionClick={onScrollToQuestion}
+              />
+            </div>
           </div>
         </div>
       </div>

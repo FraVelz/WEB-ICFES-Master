@@ -151,7 +151,7 @@ function AreaGeneralExamsPanel({
       {courseProgress.totalPhaseSkipExamCount > 0 && (
         <p className="text-on-surface-muted border-surface-border border-t pt-3 text-xs">
           + {courseProgress.totalPhaseSkipExamCount}{' '}
-          {courseProgress.totalPhaseSkipExamCount === 1 ? 'examen' : 'exámenes'} para saltar fase
+          {courseProgress.totalPhaseSkipExamCount === 1 ? 'examen' : 'exámenes'} para completar fase
         </p>
       )}
     </div>

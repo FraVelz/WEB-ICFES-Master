@@ -8,6 +8,7 @@ interface ExamConfigModalProps {
   area: string;
   totalQuestions: number;
   onStart: (config: ExamConfig) => void;
+  onCancel?: () => void;
   isFullExam?: boolean;
 }
 
@@ -15,6 +16,7 @@ export const ExamConfigModal = ({
   area,
   totalQuestions: maxQuestions,
   onStart,
+  onCancel,
   isFullExam = false,
 }: ExamConfigModalProps) => {
   const [numQuestions, setNumQuestions] = useState(isFullExam ? maxQuestions : 10);
@@ -23,7 +25,7 @@ export const ExamConfigModal = ({
   const [showExplanations, setShowExplanations] = useState(true);
   const dialogRef = useRef<HTMLDivElement>(null);
 
-  useDialogA11y(true, () => window.history.back(), dialogRef);
+  useDialogA11y(true, onCancel ?? (() => window.history.back()), dialogRef);
 
   const handleStart = () => {
     onStart({
@@ -146,7 +148,7 @@ export const ExamConfigModal = ({
           <div className="flex gap-3 pt-6">
             <button
               type="button"
-              onClick={() => window.history.back()}
+              onClick={onCancel ?? (() => window.history.back())}
               className={cn(
                 'border-surface-border bg-surface-overlay flex-1 rounded-lg border px-6 py-3 text-center font-semibold',
                 'text-on-surface hover:bg-surface-border cursor-pointer transition-all duration-300',

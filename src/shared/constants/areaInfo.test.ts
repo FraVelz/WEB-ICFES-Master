@@ -12,6 +12,6 @@ describe('areaInfo', () => {
   });
 
   it('incluye examen completo en el catálogo', () => {
-    expect(AREA_INFO['examen-completo'].name).toContain('Examen Completo');
+    expect(AREA_INFO['examen-completo'].name).toContain('Simulacro completo');
   });
 });

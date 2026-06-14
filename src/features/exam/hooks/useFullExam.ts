@@ -1,6 +1,7 @@
 'use client';
 
-import { useState, useEffect, useRef, useCallback } from 'react';
+import { useState, useEffect, useRef, useCallback, useMemo } from 'react';
+import { useSearchParams } from 'next/navigation';
 import { useAuth } from '@/features/auth/context/AuthContext';
 import { isDemoUserId } from '@/services/demo/demoCoins';
 import { saveFullExam } from '@/services/persistence';
@@ -10,9 +11,12 @@ import type { GradedExamAnswer } from '@/features/exam/services/examGradingServe
 import type { ExamQuestion, ExamQuestionPublic } from '@/features/exam/types/question';
 import type { ExamConfig } from '@/features/exam/types';
 import { AREA_INFO } from '@/shared/constants';
+import { getFullExamExitHref } from '@/features/exam/utils/getPracticeExitHref';
 
 export function useFullExam() {
   const areaInfo = AREA_INFO['examen-completo'];
+  const searchParams = useSearchParams();
+  const exitHref = useMemo(() => getFullExamExitHref({ searchParams }), [searchParams]);
 
   const [allQuestions, setAllQuestions] = useState<ExamQuestionPublic[]>([]);
   const [loadingQuestions, setLoadingQuestions] = useState(true);
@@ -191,5 +195,6 @@ export function useFullExam() {
     correctCount,
     percentage,
     timeColor,
+    exitHref,
   };
 }

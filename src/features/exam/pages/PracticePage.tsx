@@ -149,9 +149,9 @@ export const PracticePage = () => {
                 'text-center text-green-900 dark:text-green-100'
               )}
             >
-              <p className="font-semibold">¡Fase superada!</p>
+              <p className="font-semibold">¡Fase completada!</p>
               <p className="mt-1 text-sm text-green-800/90 dark:text-green-200/90">
-                Superaste la fase en {areaInfo.name}.
+                Completaste la fase en {areaInfo.name}.
               </p>
               <Link
                 href={phasesHref}

@@ -2,6 +2,7 @@ import type { SkillLevel } from '@/features/auth/types/skillLevel';
 import type { AreaId } from '@/shared/constants';
 import { getAreaInfo, getPracticaHrefForRoadmapArea } from '@/shared/constants';
 import { COMPETENCY_PHASES, JOURNEY_TIPS, type CompetencyPhaseId, getRoadmapHref } from './competencyPhases';
+import { buildFullExamHref } from '@/features/exam/utils/fullExamNavigation';
 
 export const ROUTE_TO_500_PATH = '/ruta-al-500';
 export const GLOBAL_EXAM_PATH = '/examen-completo';
@@ -127,7 +128,7 @@ export const SKILL_LEVEL_RECOMMENDATION_COPY: Record<SkillLevel, string> = {
   intermediate:
     'Según tu evaluación, puedes entrar en Relación (ND 2–3). Repasa Cimentación si los simulacros te lo piden.',
   advanced:
-    'Según tu evaluación, puedes avanzar a Maestría (ND 3–4) o usar un simulacro para saltar fases si ya dominas el contenido.',
+    'Según tu evaluación, puedes avanzar a Maestría (ND 3–4) o completar fases con un simulacro si ya dominas el contenido.',
 };
 
 export function getJourneyStepById(stepId: JourneyStepId): JourneyStep | undefined {
@@ -146,7 +147,7 @@ export function getJourneyStepHref(step: JourneyStep, areaId: AreaId = 'lectura-
     return getPracticaHrefForRoadmapArea(areaId);
   }
   if (step.kind === 'practice-global') {
-    return GLOBAL_EXAM_PATH;
+    return buildFullExamHref(getRoadmapHref(undefined, areaId));
   }
   return null;
 }

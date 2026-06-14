@@ -86,7 +86,7 @@ export const AREA_INFO: Record<AreaId, AreaInfo> = {
     dificultad: 'Intermedio',
   },
   'examen-completo': {
-    name: 'Examen Completo ICFES',
+    name: 'Simulacro completo',
     color: 'from-subject-full-from to-subject-full-to',
     icon: 'clipboard-list',
     gradient: 'from-subject-full-from to-subject-full-to',

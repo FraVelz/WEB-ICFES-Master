@@ -1,19 +1,22 @@
 'use client';
 
+import { useEffect } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { cn } from '@/utils/cn';
 import { Icon } from '@/shared/components/Icon';
 import { LoadingState } from '@/shared/components/LoadingState';
 import type { AreaId } from '@/shared/constants';
 import { getPracticaHrefForRoadmapArea } from '@/shared/constants';
 import { useDashboardShell } from '@/features/dashboard/shell';
-import { COMPETENCY_PHASES, getPhaseSkipExamHref } from '../data/competencyPhases';
+import { COMPETENCY_PHASES, getLearningPhasesHref, getPhaseSkipExamHref, isPhasesAreaSlug } from '../data/competencyPhases';
 import {
   ROUTE_TO_500_PATH,
   getAreaSimulacroPhaseCopy,
   getJourneyStepById,
   getJourneyStepForCompetencyPhase,
 } from '../data/routeTo500';
+import { buildFullExamHref, DEFAULT_FULL_EXAM_EXIT_AREA } from '@/features/exam/utils/fullExamNavigation';
 import { getSectionProgress, resolvePhaseStatuses } from '../data/phaseProgressUtils';
 import { PhaseStageCard } from '../components/phases/PhaseStageCard';
 import { usePhaseSkips } from '../hooks/usePhaseSkips';
@@ -21,8 +24,21 @@ import { usePhaseSkips } from '../hooks/usePhaseSkips';
 const areaExamStep = getJourneyStepById('examen-materia');
 
 export function LearningPhasesPage() {
+  const router = useRouter();
   const { currentArea, currentAreaData, sections, pathLoading } = useDashboardShell();
   const { skippedSectionIds } = usePhaseSkips(currentArea);
+
+  useEffect(() => {
+    if (currentArea === 'examen-completo') {
+      const phasesArea = isPhasesAreaSlug(currentArea) ? currentArea : DEFAULT_FULL_EXAM_EXIT_AREA;
+      router.replace(buildFullExamHref(getLearningPhasesHref(phasesArea)));
+    }
+  }, [currentArea, router]);
+
+  if (currentArea === 'examen-completo') {
+    return <LoadingState label="Abriendo simulacro completo…" layout="section" />;
+  }
+
   const phaseStatuses = resolvePhaseStatuses(COMPETENCY_PHASES, sections, skippedSectionIds);
   const areaExamHref = getPracticaHrefForRoadmapArea(currentArea);
   const areaSimulacroCopy = getAreaSimulacroPhaseCopy(currentArea as AreaId);

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { getPracticeExitHref } from './getPracticeExitHref';
+import { getFullExamExitHref, getPracticeExitHref } from './getPracticeExitHref';
 
 describe('getPracticeExitHref', () => {
   it('returns phases page when saltar-fase is present', () => {
@@ -46,5 +46,31 @@ describe('getPracticeExitHref', () => {
         areaSlug: 'lectura-critica',
       })
     ).toBe('/ruta-aprendizaje?area=lectura-critica&etapa=facil');
+  });
+});
+
+describe('getFullExamExitHref', () => {
+  it('defaults to lectura critica roadmap when from is missing', () => {
+    expect(getFullExamExitHref({})).toBe('/ruta-aprendizaje?area=lectura-critica&etapa=facil');
+  });
+
+  it('uses from query param when safe', () => {
+    const params = new URLSearchParams('from=%2Fruta-aprendizaje%3Farea%3Dmatematicas%26etapa%3Dintermedio');
+    expect(getFullExamExitHref({ searchParams: params })).toBe('/ruta-aprendizaje?area=matematicas&etapa=intermedio');
+  });
+
+  it('uses from for fases route', () => {
+    const params = new URLSearchParams('from=%2Ffases%2Fmatematicas');
+    expect(getFullExamExitHref({ searchParams: params })).toBe('/fases/matematicas');
+  });
+
+  it('falls back to lectura critica when from is empty', () => {
+    const params = new URLSearchParams('from=');
+    expect(getFullExamExitHref({ searchParams: params })).toBe('/ruta-aprendizaje?area=lectura-critica&etapa=facil');
+  });
+
+  it('falls back to lectura critica when from is unsafe', () => {
+    const params = new URLSearchParams('from=%2Fexamen-completo');
+    expect(getFullExamExitHref({ searchParams: params })).toBe('/ruta-aprendizaje?area=lectura-critica&etapa=facil');
   });
 });

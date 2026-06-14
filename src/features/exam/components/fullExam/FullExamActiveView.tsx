@@ -1,5 +1,5 @@
 import { cn } from '@/utils/cn';
-import { AnswerSheet } from '@/features/exam/components';
+import { AnswerSheet, EXAM_SIDEBAR_STICKY_CLASS } from '@/features/exam/components';
 import type { ExamConfig } from '@/features/exam/types';
 import type { ExamQuestionPublic } from '@/features/exam/types/question';
 import { FullExamHeader } from './FullExamHeader';
@@ -13,6 +13,7 @@ type FullExamActiveViewProps = {
   answers: Record<string, string>;
   timeRemaining: number | null;
   timeColor: string;
+  exitHref?: string;
   onAnswer: (questionId: string, answer: string) => void;
   onScrollToQuestion: (index: number) => void;
   onFinish: () => void;
@@ -25,6 +26,7 @@ export function FullExamActiveView({
   answers,
   timeRemaining,
   timeColor,
+  exitHref,
   onAnswer,
   onScrollToQuestion,
   onFinish,
@@ -35,6 +37,7 @@ export function FullExamActiveView({
         areaName={areaInfo.name}
         areaColor={areaInfo.color}
         subtitle={`Preguntas: ${questions.length}`}
+        exitHref={exitHref}
         timeRemaining={timeRemaining}
         timeColor={timeColor}
         showTimer={examConfig.useTimer}
@@ -104,14 +107,16 @@ export function FullExamActiveView({
             </div>
           </div>
 
-          <div>
-            <AnswerSheet
-              totalQuestions={questions.length}
-              answers={answers}
-              currentQuestion={0}
-              onQuestionClick={onScrollToQuestion}
-              questions={questions}
-            />
+          <div className="hidden lg:block">
+            <div className={cn(EXAM_SIDEBAR_STICKY_CLASS, 'space-y-4')}>
+              <AnswerSheet
+                totalQuestions={questions.length}
+                answers={answers}
+                currentQuestion={0}
+                onQuestionClick={onScrollToQuestion}
+                questions={questions}
+              />
+            </div>
           </div>
         </div>
       </div>

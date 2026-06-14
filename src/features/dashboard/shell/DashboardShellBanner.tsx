@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { cn } from '@/utils/cn';
 import { Icon } from '@/shared/components/Icon';
 import { getLearningPhasesHref, getRoadmapHref } from '@/features/learning/data/competencyPhases';
+import { buildFullExamHref, DEFAULT_FULL_EXAM_EXIT_AREA } from '@/features/exam/utils/fullExamNavigation';
 import { SectionStageBanner } from '@/features/learning/shell/SecondaryHeader/SectionStageBanner';
 import { useDashboardShell } from './DashboardShellContext';
 import { SHELL_SECTION_META } from './shellRoutes';
@@ -65,6 +66,19 @@ export function DashboardShellBanner({ className }: { className?: string }) {
   } = useDashboardShell();
 
   if (shellSection === 'learning' && isPhasesRoute) {
+    if (currentArea === 'examen-completo') {
+      return (
+        <NavSectionBanner
+          title="Simulacro completo"
+          subtitle="ICFES Saber 11°"
+          gradient={currentAreaData.color ?? 'from-pink-600 to-rose-700'}
+          icon="clipboard-list"
+          href={buildFullExamHref(getLearningPhasesHref(DEFAULT_FULL_EXAM_EXIT_AREA))}
+          className={className}
+        />
+      );
+    }
+
     const backHref = getRoadmapHref(currentSectionId, currentArea);
     return (
       <NavSectionBanner

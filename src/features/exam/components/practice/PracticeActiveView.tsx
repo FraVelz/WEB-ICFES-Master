@@ -1,5 +1,5 @@
 import { cn } from '@/utils/cn';
-import { AnswerSheet } from '@/features/exam/components';
+import { AnswerSheet, EXAM_SIDEBAR_STICKY_CLASS } from '@/features/exam/components';
 import type { ExamConfig } from '@/features/exam/types';
 import type { ExamQuestionPublic } from '@/features/exam/types/question';
 import { FullExamShell } from '@/features/exam/components/fullExam/FullExamShell';
@@ -100,7 +100,7 @@ export function PracticeActiveView({
           </div>
 
           <div className="hidden lg:block">
-            <div className="sticky top-6 space-y-4">
+            <div className={cn(EXAM_SIDEBAR_STICKY_CLASS, 'space-y-4')}>
               <AnswerSheet
                 totalQuestions={questions.length}
                 answers={answers}

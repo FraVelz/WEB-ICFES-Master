@@ -6,9 +6,10 @@ import {
   isPhasesAreaSlug,
 } from '@/features/learning/data/competencyPhases';
 import { LEARNING_PHASE_SECTION_IDS } from '@/features/learning/constants/learningPhases';
+import { getDefaultFullExamExitHref } from './fullExamNavigation';
 import { getSkippedSectionIdsForArea } from '@/services/persistence/phaseSkipPersistence';
 
-const SAFE_EXIT_PREFIXES = ['/fases/', '/ruta-aprendizaje', '/ruta-al-500', '/logros', '/tienda', '/perfil'];
+const SAFE_EXIT_PREFIXES = ['/fases', '/fases/', '/ruta-aprendizaje', '/ruta-al-500', '/logros', '/tienda', '/perfil'];
 
 function isSafeInternalPath(pathname: string): boolean {
   if (!pathname.startsWith('/')) return false;
@@ -76,4 +77,30 @@ export function getPracticeExitHref({
   }
 
   return LEARNING_ROADMAP_PATH;
+}
+
+const FULL_EXAM_BLOCKED_REFERRER_PREFIXES = ['/examen-completo', '/practica'] as const;
+
+function isSafeFullExamReferrer(pathname: string): boolean {
+  if (FULL_EXAM_BLOCKED_REFERRER_PREFIXES.some((prefix) => pathname === prefix || pathname.startsWith(`${prefix}/`))) {
+    return false;
+  }
+  return isSafeInternalPath(pathname);
+}
+
+export type FullExamExitContext = {
+  searchParams?: Pick<URLSearchParams, 'get'>;
+};
+
+export function getFullExamExitHref({ searchParams }: FullExamExitContext): string {
+  const from = searchParams?.get('from') ?? searchParams?.get('origen');
+  if (from?.trim()) {
+    const normalized = normalizeFromParam(from);
+    if (normalized) {
+      const pathname = normalized.split('?')[0];
+      if (isSafeFullExamReferrer(pathname)) return normalized;
+    }
+  }
+
+  return getDefaultFullExamExitHref();
 }

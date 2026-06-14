@@ -11,6 +11,7 @@ import {
   parsePhasesAreaFromPathname,
 } from '@/features/learning/data/competencyPhases';
 import { getLessonIdFromPathname, isLessonRoute, resolveLessonAreaId } from '@/features/learning/utils/lessonRoutes';
+import { buildFullExamHrefFromLearningContext } from '@/features/exam/utils/fullExamNavigation';
 import { isLearningPhasesRoute } from './shellRoutes';
 
 function resolveAreaId(param: string | null): AreaId {
@@ -68,10 +69,22 @@ export function useDashboardShellLearning(isLearningShell: boolean) {
   const setCurrentArea = useCallback(
     (area: string) => {
       if (!(area in AREA_INFO)) return;
+      if (area === 'examen-completo') {
+        router.push(
+          buildFullExamHrefFromLearningContext({
+            pathname,
+            searchParams,
+            isPhasesRoute,
+            area: currentArea,
+            sectionId: currentSectionId,
+          })
+        );
+        return;
+      }
       setCurrentAreaState(area as AreaId);
       replaceLearningUrl(area, isPhasesRoute ? undefined : currentSectionId);
     },
-    [currentSectionId, isPhasesRoute, replaceLearningUrl]
+    [currentArea, currentSectionId, isPhasesRoute, pathname, replaceLearningUrl, router, searchParams]
   );
 
   const setCurrentSectionId = useCallback(

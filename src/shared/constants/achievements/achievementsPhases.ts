@@ -27,7 +27,7 @@ export const ACHIEVEMENTS_PHASES = HOME_AREA_IDS.flatMap((areaId) => {
     category: 'fases' as const,
     group: areaGroup,
     title: `${phase.title.replace('Fase de ', '')} — ${areaName}`,
-    description: `Completa la ${phase.title.toLowerCase()} en ${areaName} (lecciones o simulacro de salto).`,
+    description: `Completa la ${phase.title.toLowerCase()} en ${areaName} (lecciones o simulacro de la fase).`,
     icon: PHASE_ICONS[phase.id] ?? 'book',
     target: 1,
     xpReward: 100,

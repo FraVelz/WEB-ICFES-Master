@@ -1,4 +1,5 @@
-import { AnswerSheet } from '@/features/exam/components';
+import { AnswerSheet, EXAM_SIDEBAR_STICKY_CLASS } from '@/features/exam/components';
+import { cn } from '@/utils/cn';
 import type { ExamConfig } from '@/features/exam/types';
 import type { ExamQuestion, ExamQuestionPublic } from '@/features/exam/types/question';
 import { FullExamShell } from '@/features/exam/components/fullExam/FullExamShell';
@@ -60,13 +61,15 @@ export function PracticeResultsView({
               onRetry={onRetry}
             />
           </div>
-          <div>
-            <AnswerSheet
-              totalQuestions={questions.length}
-              answers={answers}
-              currentQuestion={0}
-              onQuestionClick={onScrollToQuestion}
-            />
+          <div className="hidden lg:block">
+            <div className={EXAM_SIDEBAR_STICKY_CLASS}>
+              <AnswerSheet
+                totalQuestions={questions.length}
+                answers={answers}
+                currentQuestion={0}
+                onQuestionClick={onScrollToQuestion}
+              />
+            </div>
           </div>
         </div>
       </div>
