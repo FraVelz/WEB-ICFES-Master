@@ -14,8 +14,8 @@ export const HeroSection = () => {
     <section
       className={cn(
         'focus:ring-app-accent focus:ring-offset-surface flex min-h-dvh scroll-mt-4',
-        'items-center justify-center px-6 pt-5 outline-none focus:ring-2 focus:ring-offset-2',
-        'sm:scroll-mt-6 sm:pt-20 md:px-8'
+        'items-center justify-center px-6 pt-[max(1.25rem,env(safe-area-inset-top))] outline-none',
+        'focus:ring-2 focus:ring-offset-2 sm:scroll-mt-6 sm:pt-14 md:px-8'
       )}
     >
       <div className="mx-auto max-w-6xl space-y-8 text-center">

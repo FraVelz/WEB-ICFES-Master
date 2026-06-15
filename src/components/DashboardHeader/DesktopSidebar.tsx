@@ -1,7 +1,9 @@
 'use client';
 
+import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { BRAND_IMAGES } from '@/assets';
 import { Icon } from '@/shared/components/Icon';
 import { isAccountOnlyPath } from '@/features/auth/constants/accountOnlyRoutes';
 import { useUser } from '@/features/user/hooks/useUser';
@@ -51,13 +53,16 @@ export function DesktopSidebar({ className, sidebarExpanded, onToggleSidebar }: 
               sidebarExpanded ? 'absolute left-[18px] gap-3' : 'justify-center'
             )}
           >
-            <div
-              className={cn(
-                'flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-linear-to-br',
-                'from-cta-from shadow-app-ring/30 via-blue-500 to-purple-600 shadow-lg'
-              )}
-            >
-              <Icon name="rocket" size="lg" className="text-white" />
+            <div className="h-11 w-11 shrink-0 overflow-hidden rounded-full">
+              <Image
+                src={BRAND_IMAGES.brandMark}
+                alt=""
+                width={44}
+                height={44}
+                className="h-full w-full object-contain select-none"
+                draggable={false}
+                priority
+              />
             </div>
             {sidebarExpanded && (
               <span

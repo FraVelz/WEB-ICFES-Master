@@ -16,11 +16,12 @@ export function PublicSiteFooter({ className }: PublicSiteFooterProps) {
   return (
     <footer
       className={cn(
-        'border-surface-border bg-surface-elevated/80 w-full border-t px-4 py-8 backdrop-blur-sm',
+        'border-surface-border bg-surface-elevated/80 w-full border-t px-4 pt-4',
+        'pb-[max(0.75rem,env(safe-area-inset-bottom,0px))] backdrop-blur-sm',
         className
       )}
     >
-      <div className="mx-auto max-w-7xl space-y-6">
+      <div className="mx-auto max-w-7xl space-y-4">
         <nav
           aria-label="Recursos sobre el ICFES"
           className="text-on-surface-muted flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-sm"

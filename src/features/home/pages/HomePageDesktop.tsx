@@ -20,7 +20,7 @@ import {
   FinalCTASection,
 } from '@/features/home/components';
 
-import { PAGE_SHELL_CLASS } from '@/shared/constants/pageShell';
+import { PUBLIC_PAGE_SHELL_CLASS } from '@/shared/constants/pageShell';
 
 import homeStyles from './HomePageDesktop.module.css';
 
@@ -98,7 +98,7 @@ const HomePageDesktopComponent = () => {
   };
 
   return (
-    <div className={cn('overflow-x-hidden', PAGE_SHELL_CLASS)}>
+    <div className={cn('overflow-x-hidden', PUBLIC_PAGE_SHELL_CLASS)}>
       <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden lg:px-20" role="presentation">
         <div className="to-surface/40 absolute inset-0 bg-linear-to-b from-transparent via-transparent" />
         {GLOW_EFFECTS.map((effect, index) => (
@@ -166,7 +166,7 @@ const HomePageDesktopComponent = () => {
           </div>
         </section>
 
-        <section className="relative overflow-hidden py-12 md:py-16">
+        <section className="relative overflow-hidden py-8 md:py-10">
           <div
             className={cn(
               'absolute top-0 right-0 left-0 h-1 bg-linear-to-r',

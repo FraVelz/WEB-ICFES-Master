@@ -40,7 +40,7 @@ export const HomePageMobile = () => {
         />
       </div>
 
-      <div className="relative z-10 flex justify-end px-4 pt-4">
+      <div className="relative z-10 flex justify-end px-4 pt-[max(0.75rem,env(safe-area-inset-top))]">
         <ThemeToggle compact />
       </div>
 
@@ -63,7 +63,12 @@ export const HomePageMobile = () => {
       </div>
 
       {/* Bottom CTAs — pinned */}
-      <div className="relative z-10 flex w-full flex-col gap-3 px-6 py-6">
+      <div
+        className={cn(
+          'relative z-10 flex w-full flex-col gap-3 px-6 pt-4',
+          'pb-[max(1rem,env(safe-area-inset-bottom))]'
+        )}
+      >
         <button
           type="button"
           onClick={handlePrimaryCta}

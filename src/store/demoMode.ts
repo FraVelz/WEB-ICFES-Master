@@ -20,16 +20,17 @@ export function enterDemoMode() {
 }
 
 /** Activa demo y lleva a la evaluación inicial solo si aún no se completó. */
-export function enterDemoModeWithAssessment() {
+export function enterDemoModeWithAssessment(navigate?: (path: string) => void) {
   enterDemoMode();
   if (typeof window === 'undefined') return;
 
   void resolveLevelAssessmentRedirect({ demoMode: true }, null).then((redirect) => {
-    if (redirect) {
-      window.location.href = redirect;
+    const path = redirect ?? buildLevelAssessmentUrl('demo');
+    if (navigate) {
+      navigate(path);
       return;
     }
-    window.location.href = buildLevelAssessmentUrl('demo');
+    window.location.href = path;
   });
 }
 

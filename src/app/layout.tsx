@@ -1,4 +1,4 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import Script from 'next/script';
 import { headers } from 'next/headers';
 
@@ -66,6 +66,10 @@ export const metadata: Metadata = {
   },
 };
 
+export const viewport: Viewport = {
+  viewportFit: 'cover',
+};
+
 export default async function RootLayout({
   children,
 }: Readonly<{
@@ -74,7 +78,7 @@ export default async function RootLayout({
   const nonce = (await headers()).get('x-nonce') ?? undefined;
 
   return (
-    <html lang="es" suppressHydrationWarning>
+    <html lang="es" className="dark" suppressHydrationWarning>
       <body className="bg-surface text-on-surface m-0 box-border min-h-dvh p-0 font-sans antialiased">
         <Script
           id="theme-init"

@@ -20,11 +20,16 @@ export function useContentVariant(): ContentVariant {
 
 function PublicContentChrome({ children }: { children: ReactNode }) {
   return (
-    <div className={cn(FULL_PAGE_SHELL_CLASS, 'relative')}>
+    <div className={cn(FULL_PAGE_SHELL_CLASS, 'relative flex min-h-dvh flex-col')}>
       <a href="#main-content" className="skip-link">
         Saltar al contenido
       </a>
-      <header className="border-surface-border bg-surface-elevated/90 sticky top-0 z-30 border-b px-4 py-3 backdrop-blur-md">
+      <header
+        className={cn(
+          'border-surface-border bg-surface-elevated/90 sticky top-0 z-30 border-b px-4',
+          'pt-[max(0.5rem,env(safe-area-inset-top))] pb-2 backdrop-blur-md'
+        )}
+      >
         <div className="mx-auto flex max-w-4xl items-center justify-between gap-4">
           <Link href="/" className="text-on-surface text-sm font-bold">
             ICFES Master
@@ -39,7 +44,7 @@ function PublicContentChrome({ children }: { children: ReactNode }) {
           </nav>
         </div>
       </header>
-      <main id="main-content" className="relative z-10 py-8">
+      <main id="main-content" className="relative z-10 flex-1 py-6">
         {children}
       </main>
       <PublicSiteFooter />

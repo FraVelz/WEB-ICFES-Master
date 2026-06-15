@@ -49,6 +49,18 @@ describe('demoMode', () => {
     storage.set('icfes_level_assessment_done_demo', 'true');
     storage.set('icfes_skill_level_demo', 'basics');
 
+    const navigate = vi.fn();
+
+    enterDemoModeWithAssessment(navigate);
+    await vi.waitFor(() => expect(navigate).toHaveBeenCalled());
+
+    expect(navigate).toHaveBeenCalledWith('/ruta-aprendizaje?area=lectura-critica&etapa=facil');
+  });
+
+  it('enterDemoModeWithAssessment usa location.href sin navigate', async () => {
+    storage.set('icfes_level_assessment_done_demo', 'true');
+    storage.set('icfes_skill_level_demo', 'basics');
+
     const hrefSetter = vi.fn();
     let hrefValue = '';
     vi.stubGlobal('location', {
