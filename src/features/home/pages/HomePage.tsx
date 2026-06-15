@@ -14,7 +14,7 @@ import { HomePageMobile } from './HomePageMobile';
 export const HomePage = () => {
   return (
     <>
-      <a href="#main-content" className="skip-link">
+      <a href="#main-content" className="skip-to-content">
         Saltar al contenido
       </a>
       <main id="main-content" className="relative z-10 overflow-x-hidden py-0 md:pt-6 md:pb-0">

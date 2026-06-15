@@ -14,7 +14,7 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
         'bg-linear-to-b'
       )}
     >
-      <a href="#main-content" className="skip-link">
+      <a href="#main-content" className="skip-to-content">
         Saltar al contenido
       </a>
       <div className="pointer-events-none fixed inset-0 z-0 motion-reduce:animate-none">

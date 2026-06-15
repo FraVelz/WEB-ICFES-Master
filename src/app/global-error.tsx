@@ -16,7 +16,7 @@ export default function GlobalError({ error, reset }: GlobalErrorProps) {
   return (
     <html lang="es">
       <body className="bg-surface text-on-surface flex min-h-dvh flex-col p-4">
-        <a href="#main-content" className="skip-link">
+        <a href="#main-content" className="skip-to-content">
           Saltar al contenido
         </a>
         <main id="main-content" className="flex flex-1 items-center justify-center">

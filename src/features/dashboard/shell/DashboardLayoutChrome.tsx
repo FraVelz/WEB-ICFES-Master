@@ -14,7 +14,7 @@ function DashboardLayoutBody({ children, isFullscreenLesson }: { children: React
   if (isFullscreenLesson) {
     return (
       <>
-        <a href="#main-content" className="skip-link">
+        <a href="#main-content" className="skip-to-content">
           Saltar al contenido
         </a>
         <main id="main-content" className="relative min-h-dvh w-full flex-1 overflow-hidden">
@@ -27,7 +27,7 @@ function DashboardLayoutBody({ children, isFullscreenLesson }: { children: React
 
   return (
     <>
-      <a href="#main-content" className="skip-link">
+      <a href="#main-content" className="skip-to-content">
         Saltar al contenido
       </a>
       <div

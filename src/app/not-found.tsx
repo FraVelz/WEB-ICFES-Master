@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 export default function NotFound() {
   return (
     <>
-      <a href="#main-content" className="skip-link">
+      <a href="#main-content" className="skip-to-content">
         Saltar al contenido
       </a>
       <main id="main-content" className={cn('flex flex-col items-center justify-center p-4', FULL_PAGE_SHELL_CLASS)}>

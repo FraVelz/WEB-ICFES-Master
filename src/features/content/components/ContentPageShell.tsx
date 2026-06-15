@@ -21,7 +21,7 @@ export function useContentVariant(): ContentVariant {
 function PublicContentChrome({ children }: { children: ReactNode }) {
   return (
     <div className={cn(FULL_PAGE_SHELL_CLASS, 'relative flex min-h-dvh flex-col')}>
-      <a href="#main-content" className="skip-link">
+      <a href="#main-content" className="skip-to-content">
         Saltar al contenido
       </a>
       <header

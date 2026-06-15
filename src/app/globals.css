@@ -318,7 +318,58 @@ html.dark :is(a, button)[class~='bg-app-accent']:not([class*='bg-app-accent/']):
   display: none;
 }
 
-/* Control “Volver arriba”: oculto salvo al tabular (flotante y centrado al enfocar) */
+/* Enlace “Saltar al contenido” — todas las páginas con #main-content */
+.skip-to-content {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+  outline: none;
+  background: transparent;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+}
+
+.skip-to-content:focus,
+.skip-to-content:focus-visible {
+  position: fixed;
+  top: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10000;
+  width: auto;
+  height: auto;
+  padding: 0.625rem 1.25rem;
+  margin: 0;
+  overflow: visible;
+  clip: auto;
+  clip-path: none;
+  white-space: normal;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: white;
+  text-decoration: none;
+  background-color: color-mix(in oklab, var(--color-app-ring) 45%, transparent);
+  box-shadow:
+    0 0 0 2px #000,
+    0 0 0 4px var(--color-app-accent);
+}
+
+.skip-to-content:focus:hover,
+.skip-to-content:focus-visible:hover {
+  color: white;
+  background-color: color-mix(in oklab, var(--color-app-ring) 55%, transparent);
+}
+
+/* Control “Volver arriba” — solo en la home (desktop), oculto salvo al tabular */
 .skip-link {
   position: absolute;
   width: 1px;

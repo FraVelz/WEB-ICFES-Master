@@ -31,7 +31,7 @@ export default function PrivacidadPage() {
         description="Política de privacidad y tratamiento de datos en ICFES Master."
         path="/privacidad/"
       />
-      <a href="#main-content" className="skip-link">
+      <a href="#main-content" className="skip-to-content">
         Saltar al contenido
       </a>
       <main id="main-content" className={cn('relative px-4 py-12 sm:px-6 lg:px-8', FULL_PAGE_SHELL_CLASS)}>
