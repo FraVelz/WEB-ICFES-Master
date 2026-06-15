@@ -5,16 +5,10 @@ import Link from 'next/link';
 import { Icon } from '@/shared/components/Icon';
 import { AnimatedReveal } from '@/features/home/components/AnimatedReveal';
 
-import { enterDemoModeWithAssessment } from '@/features/home/utils/enterDemoMode';
+import { useHomePrimaryCta } from '@/features/home/hooks/useHomePrimaryCta';
 
-export const HeroSection = ({ onDemoAccess }: { onDemoAccess: () => void }) => {
-  const handleDemoClick = () => {
-    if (onDemoAccess) {
-      onDemoAccess();
-    } else {
-      enterDemoModeWithAssessment();
-    }
-  };
+export const HeroSection = () => {
+  const { isContinuing, isPrimaryBusy, primaryLabel, primaryIcon, handlePrimaryCta } = useHomePrimaryCta();
 
   return (
     <section
@@ -64,17 +58,21 @@ export const HeroSection = ({ onDemoAccess }: { onDemoAccess: () => void }) => {
         <AnimatedReveal isVisible delay={0.45} className="flex flex-col justify-center gap-4 pt-4 md:flex-row">
           <button
             type="button"
-            onClick={handleDemoClick}
+            onClick={handlePrimaryCta}
+            disabled={isPrimaryBusy}
+            aria-busy={isPrimaryBusy}
             className={cn(
-              'flex cursor-pointer items-center justify-center gap-2 rounded-lg bg-linear-to-r',
+              'flex items-center justify-center gap-2 rounded-lg bg-linear-to-r',
               'from-cta-from to-cta-to px-8 py-4 text-lg font-bold text-white transition-all',
               'hover:shadow-app-ring/50 duration-300 hover:scale-105 hover:shadow-lg',
               'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:outline-none',
-              'focus-visible:ring-offset-surface focus-visible:ring-offset-2'
+              'focus-visible:ring-offset-surface focus-visible:ring-offset-2',
+              'disabled:cursor-wait disabled:opacity-70 disabled:hover:scale-100',
+              'cursor-pointer'
             )}
           >
-            <Icon name="play" />
-            Probar Demo
+            <Icon name={isPrimaryBusy ? 'spinner' : primaryIcon} className={isPrimaryBusy ? 'animate-spin' : undefined} />
+            {isPrimaryBusy ? (isContinuing ? 'Continuando...' : 'Cargando...') : primaryLabel}
           </button>
           <Link
             href="/login"

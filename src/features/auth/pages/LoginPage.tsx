@@ -1,9 +1,10 @@
 'use client';
 
 import { cn } from '@/utils/cn';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Icon } from '@/shared/components/Icon';
+import { LoadingState } from '@/shared/components/LoadingState';
 import { ThemeToggle } from '@/shared/components/ThemeToggle';
 import { useAuth } from '@/features/auth/context/AuthContext';
 import { AUTH_DEFAULT_REDIRECT } from '@/features/auth/constants/authRoutes';
@@ -14,18 +15,13 @@ import { LoginPageFooter } from './login/LoginPageFooter';
 
 export const LoginPage = () => {
   const router = useRouter();
-  const { login, isAuthenticated, loading: authLoading, user } = useAuth();
+  const { login, loading: authLoading } = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
-
-  useEffect(() => {
-    if (!authLoading && isAuthenticated && user?.uid) {
-      void redirectAfterAuth(user.uid, (path) => router.replace(path));
-    }
-  }, [authLoading, isAuthenticated, router, user?.uid]);
+  const [isRedirecting, setIsRedirecting] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -34,6 +30,7 @@ export const LoginPage = () => {
     try {
       const loggedIn = await login(email.trim(), password);
       if (loggedIn?.uid) {
+        setIsRedirecting(true);
         await redirectAfterAuth(loggedIn.uid, (path) => router.push(path));
         return;
       }
@@ -44,6 +41,10 @@ export const LoginPage = () => {
       setIsSubmitting(false);
     }
   };
+
+  if (authLoading || isRedirecting) {
+    return <LoadingState label={isRedirecting ? 'Entrando...' : 'Cargando...'} layout="fill" />;
+  }
 
   return (
     <div

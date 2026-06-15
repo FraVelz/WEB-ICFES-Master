@@ -1,7 +1,6 @@
 'use client';
 
 import { cn } from '@/utils/cn';
-import { enterDemoModeWithAssessment } from '@/features/home/utils/enterDemoMode';
 import { ThemeToggle } from '@/shared/components/ThemeToggle';
 
 import { HomePageDesktop } from './HomePageDesktop';
@@ -13,10 +12,6 @@ import { HomePageMobile } from './HomePageMobile';
  * Resize en PC actualiza la vista sin listeners.
  */
 export const HomePage = () => {
-  const handleDemoAccess = () => {
-    enterDemoModeWithAssessment();
-  };
-
   return (
     <>
       <a href="#main-content" className="skip-link">
@@ -56,7 +51,7 @@ export const HomePage = () => {
           <HomePageMobile />
         </div>
         <div className="hidden md:block">
-          <HomePageDesktop onDemoAccess={handleDemoAccess} />
+          <HomePageDesktop />
         </div>
       </main>
     </>

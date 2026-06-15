@@ -45,7 +45,7 @@ const GLOW_EFFECTS = [
   },
 ];
 
-const HomePageDesktopComponent = ({ onDemoAccess }: { onDemoAccess: () => void }) => {
+const HomePageDesktopComponent = () => {
   const scrollLayerRef = useRef<HTMLDivElement>(null);
 
   useGSAP(
@@ -114,7 +114,7 @@ const HomePageDesktopComponent = ({ onDemoAccess }: { onDemoAccess: () => void }
       <div ref={scrollLayerRef} className="relative z-10 w-full">
         <section tabIndex={-1} id="top" className="relative overflow-hidden py-0">
           <div data-home-reveal className={homeStyles.revealScroll}>
-            <HeroSection onDemoAccess={onDemoAccess} />
+            <HeroSection />
           </div>
         </section>
 

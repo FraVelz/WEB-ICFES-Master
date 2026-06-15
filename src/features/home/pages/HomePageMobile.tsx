@@ -5,9 +5,12 @@ import { MASCOT_IMAGES } from '@/assets';
 import { MascotaCircle } from '@/shared/components/MascotaCircle';
 import { ThemeToggle } from '@/shared/components/ThemeToggle';
 
-import { enterDemoModeWithAssessment } from '@/features/home/utils/enterDemoMode';
+import { Icon } from '@/shared/components/Icon';
+import { useHomePrimaryCta } from '@/features/home/hooks/useHomePrimaryCta';
 
 export const HomePageMobile = () => {
+  const { isContinuing, isPrimaryBusy, primaryLabel, primaryIcon, handlePrimaryCta } = useHomePrimaryCta();
+
   return (
     <div
       className={cn(
@@ -62,16 +65,19 @@ export const HomePageMobile = () => {
       {/* Bottom CTAs — pinned */}
       <div className="relative z-10 flex w-full flex-col gap-3 px-6 py-6">
         <button
-          onClick={() => {
-            enterDemoModeWithAssessment();
-          }}
+          type="button"
+          onClick={handlePrimaryCta}
+          disabled={isPrimaryBusy}
+          aria-busy={isPrimaryBusy}
           className={cn(
-            'from-cta-from to-cta-to block w-full transform rounded-lg bg-linear-to-r py-3',
-            'text-center font-semibold text-white transition-all duration-200 hover:scale-105',
-            'hover:from-cta-from hover:to-cta-to hover:shadow-app-ring/40 hover:shadow-lg'
+            'from-cta-from to-cta-to flex w-full transform items-center justify-center gap-2 rounded-lg',
+            'bg-linear-to-r py-3 text-center font-semibold text-white transition-all duration-200',
+            'hover:scale-105 hover:from-cta-from hover:to-cta-to hover:shadow-app-ring/40 hover:shadow-lg',
+            'disabled:cursor-wait disabled:opacity-70 disabled:hover:scale-100'
           )}
         >
-          Probar Demo
+          <Icon name={isPrimaryBusy ? 'spinner' : primaryIcon} className={isPrimaryBusy ? 'animate-spin' : undefined} />
+          {isPrimaryBusy ? (isContinuing ? 'Continuando...' : 'Cargando...') : primaryLabel}
         </button>
 
         <a
