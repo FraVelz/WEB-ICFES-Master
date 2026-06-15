@@ -10,4 +10,4 @@ export function contentPageTwitter(title: string, description: string): NonNulla
   };
 }
 
-export const SITE_LOGO_URL = '/apple-icon/';
+export const SITE_LOGO_URL = '/apple-icon.png';
