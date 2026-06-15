@@ -109,8 +109,8 @@ export const HeroSection = () => {
               'rounded-lg border p-2 shadow-sm sm:p-4 dark:shadow-none'
             )}
           >
-            <p className="text-3xl font-bold text-indigo-700 dark:text-purple-400">+1</p>
-            <p className="text-on-surface-muted mt-1 text-xs font-medium">Estudiantes</p>
+            <p className="text-3xl font-bold text-indigo-700 dark:text-purple-400">100%</p>
+            <p className="text-on-surface-muted mt-1 text-xs font-medium">Gratis</p>
           </div>
           <div
             className={cn(
