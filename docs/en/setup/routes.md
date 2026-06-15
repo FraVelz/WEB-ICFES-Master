@@ -28,7 +28,7 @@ These are the application **URLs**.
 | `/ruta-aprendizaje/` | Learning path (with AI chat)    |
 | `/logros/`           | Achievements and gamification   |
 | `/perfil/`           | User profile                    |
-| `/clasificatoria/`   | Ranking                         |
+| `/ligas/`   | Weekly leagues and ranking      |
 | `/configuracion/`    | Settings                        |
 | `/examen-completo/`  | Full mock exam                  |
 | `/ruta-al-500/`      | Route to 500 — learning journey |

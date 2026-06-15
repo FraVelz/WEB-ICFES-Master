@@ -1,9 +1,11 @@
 import { AUTH_DEFAULT_REDIRECT } from '@/features/auth/constants/authRoutes';
+import { LEGACY_CLASIFICATORIA_PATH, LIGAS_PATH } from '@/features/exam/utils/leagueNavigation';
 
 const ALLOWED_PREFIXES = [
   '/ruta-aprendizaje',
   '/fases',
-  '/clasificatoria',
+  LIGAS_PATH,
+  LEGACY_CLASIFICATORIA_PATH,
   '/logros',
   '/perfil',
   '/configuracion',

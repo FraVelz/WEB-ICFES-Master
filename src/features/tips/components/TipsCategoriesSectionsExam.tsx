@@ -86,7 +86,7 @@ export function TipsCategoriesSectionsExam({ previewLimit }: TipsCategoriesSecti
         />
         <TipCard
           title="Estudia con alguien"
-          description="Comparte metas con un compañero o familia. La clasificatoria también añade motivación social."
+          description="Comparte metas con un compañero o familia. Las ligas también añaden motivación social."
         />
         <TipCard
           title="Descansa bien"

@@ -5,6 +5,6 @@ export type { ExamQuestion, QuestionOption, ExamConfig } from './types';
 
 export { ExamConfigModal, AnswerSheet, ResultsAnalysis } from './components';
 
-export { PracticePage, FullExamPage, ClasificatoriaPage } from './pages';
+export { PracticePage, FullExamPage, LigasPage } from './pages';
 
 export { useExam } from './hooks';

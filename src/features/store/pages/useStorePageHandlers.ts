@@ -30,7 +30,7 @@ export function useStorePageHandlers(
             : item.id === STREAK_SHIELD_ITEM_ID
               ? '¡Protector de racha adquirido! Se usará automáticamente si fallas un día.'
               : item.id === VIP_BADGE_ITEM_ID
-                ? '¡Insignia VIP activa! Borde dorado en tu perfil y en la clasificatoria.'
+                ? '¡Insignia VIP activa! Borde dorado en tu perfil y en las ligas.'
                 : `¡Has comprado ${item.name}!`;
         showToast(message);
       } catch (err) {

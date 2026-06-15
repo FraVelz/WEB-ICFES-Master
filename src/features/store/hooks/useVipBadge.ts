@@ -5,7 +5,7 @@ import { resolveCoinsUserId } from '@/services/demo/demoCoins';
 import { getShopInventoryState, SHOP_INVENTORY_CHANGE_EVENT, type ShopInventoryState } from '@/services/persistence';
 import { hasVipBadge } from '../constants/vipBadge';
 
-/** Insignia VIP comprada — efecto visual en clasificatoria. */
+/** Insignia VIP comprada — efecto visual en ligas. */
 export function useVipBadge() {
   const { user } = useAuth();
   const demoMode = useUiSessionStore((state) => state.demoMode);

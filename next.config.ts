@@ -36,7 +36,10 @@ const nextConfig: NextConfig = {
     removeConsole: process.env.NODE_ENV === 'production' ? { exclude: ['error'] } : false,
   },
   async redirects() {
-    return [{ source: '/aprendizaje', destination: '/ruta-aprendizaje', permanent: true }];
+    return [
+      { source: '/aprendizaje', destination: '/ruta-aprendizaje', permanent: true },
+      { source: '/clasificatoria', destination: '/ligas', permanent: true },
+    ];
   },
   async headers() {
     return [

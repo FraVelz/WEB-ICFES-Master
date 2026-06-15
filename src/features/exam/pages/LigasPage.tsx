@@ -11,16 +11,25 @@ import { useProfileStatus } from '@/features/user/hooks/useProfileStatus';
 import { useResolvedProfileAvatar } from '@/features/user/hooks/useResolvedProfileAvatar';
 import { useVipBadge } from '@/features/store/hooks/useVipBadge';
 import { getRankInfo } from '@/shared/constants/ranks';
-import { LEAGUE_GROUP_SIZE } from '@/shared/constants/gamification';
+import { LEAGUE_GROUP_SIZE, LEAGUES_TEMPORARILY_DISABLED } from '@/shared/constants/gamification';
 import { formatCountdownToReset } from '@/services/league/leagueWeekUtils';
 import { LeagueShieldNav } from '@/features/exam/components/league/LeagueShieldNav';
+import { LigasComingSoonView } from '@/features/exam/components/league/LigasComingSoonView';
 import { LeagueJoinBanner } from '@/features/exam/components/league/LeagueJoinBanner';
 import { LeagueSkeletonRows } from '@/features/exam/components/league/LeagueSkeletonRows';
 import { LeaguePlayerRow } from '@/features/exam/components/league/LeaguePlayerRow';
 import { LeaguePinnedUserRow } from '@/features/exam/components/league/LeaguePinnedUserRow';
 import { EmptyState } from '@/shared/components/EmptyState';
 
-export const ClasificatoriaPage = () => {
+export const LigasPage = () => {
+  if (LEAGUES_TEMPORARILY_DISABLED) {
+    return <LigasComingSoonView />;
+  }
+
+  return <LigasActivePage />;
+};
+
+function LigasActivePage() {
   const router = useRouter();
   const { user } = useAuth();
   const { leagueState, leagueRank: myLeagueRank, loading: leagueLoading, resetMs } = useLeagueContext();
@@ -102,7 +111,7 @@ export const ClasificatoriaPage = () => {
 
   return (
     <div className="relative z-10 mx-auto flex min-h-[70dvh] max-w-2xl flex-col px-4 pb-4">
-      <h1 className="sr-only">Clasificatoria semanal</h1>
+      <h1 className="sr-only">Ligas semanales</h1>
       <LeagueShieldNav selectedRank={selectedRank} myLeagueRank={myLeagueRank} onSelect={setSelectedRank} />
 
       {isViewingOwnLeague ? (
@@ -145,7 +154,7 @@ export const ClasificatoriaPage = () => {
             description={
               error?.message?.includes('index') || error?.message?.includes('function')
                 ? 'Ejecuta la migración de ligas en Supabase y recarga el esquema (NOTIFY pgrst).'
-                : error.message || 'Hubo un problema al cargar la clasificación.'
+                : error.message || 'Hubo un problema al cargar el ranking de ligas.'
             }
             actionLabel="Reintentar"
             onAction={() => void refresh()}
@@ -188,4 +197,4 @@ export const ClasificatoriaPage = () => {
       </div>
     </div>
   );
-};
+}

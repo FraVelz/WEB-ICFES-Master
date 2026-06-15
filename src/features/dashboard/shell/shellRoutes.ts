@@ -1,5 +1,6 @@
 import { isNavPathActive, LECTURA_SUB_PATHS, type NavOption } from '@/components/DashboardHeader/constants';
 import { isLessonRoute } from '@/features/learning/utils/lessonRoutes';
+import { isLigasRoute, LIGAS_PATH } from '@/features/exam/utils/leagueNavigation';
 
 export type DashboardShellSection = 'learning' | 'achievements' | 'leaderboard' | 'lectura';
 
@@ -8,7 +9,7 @@ const SHELL_PREFIXES = [
   '/fases',
   '/simulacro-completo',
   '/logros',
-  '/clasificatoria',
+  LIGAS_PATH,
   '/lectura',
   ...LECTURA_SUB_PATHS,
 ] as const;
@@ -27,7 +28,7 @@ export function resolveDashboardShellSection(pathname: string): DashboardShellSe
     return 'learning';
   }
   if (isNavPathActive(pathname, '/logros')) return 'achievements';
-  if (isNavPathActive(pathname, '/clasificatoria')) return 'leaderboard';
+  if (isLigasRoute(pathname)) return 'leaderboard';
   if (isNavPathActive(pathname, '/lectura') || LECTURA_SUB_PATHS.some((path) => isNavPathActive(pathname, path))) {
     return 'lectura';
   }
@@ -56,7 +57,7 @@ export const SHELL_SECTION_META: Record<
     icon: 'medal',
   },
   leaderboard: {
-    title: 'Clasificatoria',
+    title: 'Ligas',
     subtitle: 'Liga semanal y ranking',
     gradient: 'from-amber-600 to-orange-700',
     icon: 'trophy',

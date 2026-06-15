@@ -2,7 +2,6 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { cn } from '@/utils/cn';
 import { useAuth } from '@/features/auth/context/AuthContext';
 import { useProfileStatus } from '@/features/user/hooks/useProfileStatus';
 import { useResolvedProfileAvatar } from '@/features/user/hooks/useResolvedProfileAvatar';
@@ -11,6 +10,7 @@ import { getRankInfo } from '@/shared/constants/ranks';
 import { LeagueShieldNav } from './LeagueShieldNav';
 import { LeagueSkeletonRows } from './LeagueSkeletonRows';
 import { LeaguePinnedUserRow } from './LeaguePinnedUserRow';
+import { LeagueDisabledNotice } from './LeagueDisabledNotice';
 
 export function LigasComingSoonView() {
   const router = useRouter();
@@ -28,15 +28,7 @@ export function LigasComingSoonView() {
 
       <div className="mb-5 text-center">
         <h2 className="text-on-surface text-lg font-bold sm:text-xl">División {currentRankInfo.label}</h2>
-        <p
-          className={cn(
-            'border-surface-border bg-surface-elevated/60 text-on-surface-muted mx-auto mt-4 max-w-md',
-            'rounded-2xl border px-4 py-3 text-sm leading-relaxed'
-          )}
-        >
-          Las ligas semanales están en preparación. Muy pronto podrás competir con otros estudiantes por ascender de
-          división.
-        </p>
+        <LeagueDisabledNotice className="mx-auto mt-4 max-w-md text-left sm:text-center" />
       </div>
 
       <div className="min-h-0 flex-1">

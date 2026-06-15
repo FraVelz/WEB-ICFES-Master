@@ -4,6 +4,12 @@ export const STARTING_COINS_BALANCE = 100;
 /** Jugadores por cohorte dentro de cada liga. */
 export const LEAGUE_GROUP_SIZE = 30;
 
+/** Ligas semanales pausadas en UI hasta reactivar el torneo en producción. */
+export const LEAGUES_TEMPORARILY_DISABLED = true;
+
+export const LEAGUES_DISABLED_MESSAGE =
+  'Las ligas semanales están deshabilitadas temporalmente. Volverán pronto.';
+
 /** XP por respuesta correcta en práctica. */
 export const PRACTICE_XP_PER_CORRECT = 10;
 

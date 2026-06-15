@@ -12,7 +12,7 @@ const PRIVATE_PATHS = [
   '/ruta-aprendizaje/',
   '/ruta-al-500/',
   '/fases/',
-  '/clasificatoria/',
+  '/ligas/',
   '/logros/',
   '/perfil/',
   '/perfil/public/',

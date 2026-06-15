@@ -1,9 +1,11 @@
+import { LIGAS_PATH } from '@/features/exam/utils/leagueNavigation';
+
 /** Rutas del dashboard que requieren sesión (cuenta o demo). */
 export const PROTECTED_DASHBOARD_PREFIXES = [
   '/ruta-aprendizaje',
   '/ruta-al-500',
   '/fases',
-  '/clasificatoria',
+  LIGAS_PATH,
   '/logros',
   '/perfil',
   '/configuracion',

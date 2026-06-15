@@ -5,6 +5,9 @@ import { cn } from '@/utils/cn';
 import { Icon } from '@/shared/components/Icon';
 import { LeagueSkeletonRows } from '@/features/exam/components/league/LeagueSkeletonRows';
 import { getRankInfo } from '@/shared/constants/ranks';
+import { LEAGUES_TEMPORARILY_DISABLED } from '@/shared/constants/gamification';
+import { LeagueDisabledNotice } from '@/features/exam/components/league/LeagueDisabledNotice';
+import { getLigasHref } from '@/features/exam/utils/leagueNavigation';
 import { formatCountdownToReset } from '@/services/league/leagueWeekUtils';
 import type { ProfileLeagueDisplay } from './profileLeagueTypes';
 
@@ -51,7 +54,7 @@ export function ProfileLeagueSection({ league, loading = false, showCta = false,
             <Icon name="trophy" className="text-amber-600 dark:text-yellow-400" />
             Torneo semanal
           </h2>
-          <p className="text-on-surface-muted mt-1 text-xs">Clasificatoria por divisiones</p>
+          <p className="text-on-surface-muted mt-1 text-xs">Ligas por divisiones</p>
         </div>
         <div
           className={cn(
@@ -66,6 +69,7 @@ export function ProfileLeagueSection({ league, loading = false, showCta = false,
       </div>
 
       <div className="mb-4">
+        {LEAGUES_TEMPORARILY_DISABLED ? <LeagueDisabledNotice className="mb-4" /> : null}
         <p className="text-on-surface text-sm font-semibold">División {rankInfo.label}</p>
         {showGroupMeta ? (
           <p className="text-on-surface-muted mt-1 text-xs">
@@ -105,7 +109,7 @@ export function ProfileLeagueSection({ league, loading = false, showCta = false,
 
       {showCta && (
         <Link
-          href="/clasificatoria"
+          href={getLigasHref()}
           className={cn(
             'border-app-accent/40 inline-flex w-full items-center justify-center gap-2 rounded-xl border',
             'bg-app-accent/10 text-app-accent-strong px-4 py-2.5 text-sm font-semibold transition-colors',
@@ -116,7 +120,7 @@ export function ProfileLeagueSection({ league, loading = false, showCta = false,
           )}
         >
           <Icon name="chart-line" />
-          Ver clasificatoria
+          Ver ligas
         </Link>
       )}
     </div>

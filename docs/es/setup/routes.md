@@ -28,7 +28,7 @@ Estas son las **URLs** del proyecto.
 | `/ruta-aprendizaje/` | Ruta de aprendizaje (con chat IA) |
 | `/logros/`           | Logros y gamificación             |
 | `/perfil/`           | Perfil del usuario                |
-| `/clasificatoria/`   | Clasificación / ranking           |
+| `/ligas/`   | Ligas semanales y ranking           |
 | `/configuracion/`    | Configuración                     |
 | `/examen-completo/`  | Simulacro completo                |
 | `/ruta-al-500/`      | Ruta pedagógica al puntaje 500    |

@@ -5,6 +5,9 @@ import { cn } from '@/utils/cn';
 import { getPracticaHrefForRoadmapArea } from '@/shared/constants';
 import { useLeagueContext } from '@/hooks/gamification/LeagueContext';
 import { getRankInfo } from '@/shared/constants/ranks';
+import { LEAGUES_TEMPORARILY_DISABLED } from '@/shared/constants/gamification';
+import { LeagueDisabledNotice } from '@/features/exam/components/league/LeagueDisabledNotice';
+import { getLigasHref } from '@/features/exam/utils/leagueNavigation';
 import { ProfileStatusPicker } from '@/features/user/components/profile/ProfileStatusPicker';
 import { AsideCard } from './AsideCard';
 import { useDashboardShell } from './DashboardShellContext';
@@ -29,6 +32,9 @@ export function LeaderboardAsidePanels() {
       </AsideCard>
 
       <AsideCard title="Tu liga" icon="trophy">
+        {LEAGUES_TEMPORARILY_DISABLED ? (
+          <LeagueDisabledNotice className="mb-3" />
+        ) : null}
         <p className="text-on-surface text-lg font-bold">División {rankInfo.label}</p>
         <ul className="text-on-surface-muted mt-3 space-y-2 text-sm">
           <li className="flex justify-between gap-2">
@@ -47,13 +53,13 @@ export function LeaderboardAsidePanels() {
           ) : null}
         </ul>
         <Link
-          href="/clasificatoria"
+          href={getLigasHref()}
           className={cn(
             'text-app-accent hover:text-app-accent-muted mt-4 inline-flex text-xs font-semibold underline',
             'underline-offset-2 transition-colors'
           )}
         >
-          Ver clasificatoria completa
+          Ver ligas completas
         </Link>
       </AsideCard>
 

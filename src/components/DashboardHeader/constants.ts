@@ -1,3 +1,5 @@
+import { LIGAS_PATH } from '@/features/exam/utils/leagueNavigation';
+
 export type NavOption = {
   path: string;
   label: string;
@@ -53,7 +55,7 @@ export const mainNavOptions: NavOption[] = [
     activePaths: ['/fases', '/simulacro-completo'],
   },
   { path: '/logros', label: 'Logros', icon: 'medal' },
-  { path: '/clasificatoria', label: 'Clasificatoria', icon: 'trophy' },
+  { path: LIGAS_PATH, label: 'Ligas', icon: 'trophy' },
   { path: '/tienda', label: 'Tienda', icon: 'shopping-bag' },
 ];
 
