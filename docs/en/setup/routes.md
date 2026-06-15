@@ -23,8 +23,8 @@ These are the application **URLs**.
 
 ## Initial level assessment (mandatory)
 
-| URL                  | Description                               |
-| -------------------- | ----------------------------------------- |
+| URL                  | Description                                 |
+| -------------------- | ------------------------------------------- |
 | `/evaluacion-nivel/` | Short quiz to personalize the learning path |
 
 After **demo mode** or sign-in/sign-up, `LevelAssessmentGate` (`src/components/LevelAssessmentGate.tsx`) blocks dashboard routes until the user completes this assessment for their scope (demo or account). This is intentional: it sets the starting level for the learning path and avoids generic recommendations.
@@ -39,7 +39,7 @@ After **demo mode** or sign-in/sign-up, `LevelAssessmentGate` (`src/components/L
 | `/ruta-aprendizaje/` | Learning path (with AI chat)    |
 | `/logros/`           | Achievements and gamification   |
 | `/perfil/`           | User profile                    |
-| `/ligas/`   | Weekly leagues and ranking      |
+| `/ligas/`            | Weekly leagues and ranking      |
 | `/configuracion/`    | Settings                        |
 | `/examen-completo/`  | Full mock exam                  |
 | `/ruta-al-500/`      | Route to 500 — learning journey |

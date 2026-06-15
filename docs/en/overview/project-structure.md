@@ -126,7 +126,7 @@ URLs end with a **trailing slash** (`trailingSlash: true`). Full list in [routes
 | `/ruta-aprendizaje`                   | Learning roadmap                            |
 | `/practica/[area]`                    | Practice by area                            |
 | `/examen-completo`                    | Full exam                                   |
-| `/ligas`                     | Weekly leagues / ranking                    |
+| `/ligas`                              | Weekly leagues / ranking                    |
 | `/logros/`                            | Achievements hub (`features/achievements/`) |
 | `/perfil`, `/perfil/public`           | Private and public profile                  |
 | `/configuracion`                      | Settings                                    |

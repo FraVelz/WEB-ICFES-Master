@@ -179,7 +179,7 @@ const { exam, getUserExams, resetUserExams, refresh } = useExam(examId);
 | coins_history   | jsonb | Historial monedas                                                      |
 | league_rank     | text  | Liga competitiva actual (`novato` … `maestro`)                         |
 | league_group_id | uuid  | FK a `league_groups` — cohorte de hasta 30 jugadores                   |
-| weekly_xp       | int   | XP de la semana en curso (ligas)                              |
+| weekly_xp       | int   | XP de la semana en curso (ligas)                                       |
 | weekly_xp_week  | text  | Semana ISO activa, ej. `2026-W24`                                      |
 
 ### `league_groups`

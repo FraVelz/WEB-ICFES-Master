@@ -1,8 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import {
-  computeDemoMigrationBalances,
-  parseDemoMigrationPayload,
-} from './computeDemoMigrationBalances';
+import { computeDemoMigrationBalances, parseDemoMigrationPayload } from './computeDemoMigrationBalances';
 import { DEMO_MIGRATION_MAX_EXTRA_COINS, DEMO_MIGRATION_MAX_XP } from '@/shared/constants/demoMigrationLimits';
 
 describe('computeDemoMigrationBalances', () => {
@@ -14,9 +11,7 @@ describe('computeDemoMigrationBalances', () => {
   });
 
   it('caps xp from demo gamification', () => {
-    expect(
-      computeDemoMigrationBalances({ demoCoins: null, hasDemoGamification: true, demoTotalXp: 99_999 })
-    ).toEqual({
+    expect(computeDemoMigrationBalances({ demoCoins: null, hasDemoGamification: true, demoTotalXp: 99_999 })).toEqual({
       xp: DEMO_MIGRATION_MAX_XP,
       coins: 0,
     });

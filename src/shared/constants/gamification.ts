@@ -7,8 +7,7 @@ export const LEAGUE_GROUP_SIZE = 30;
 /** Ligas semanales pausadas en UI hasta reactivar el torneo en producción. */
 export const LEAGUES_TEMPORARILY_DISABLED = true;
 
-export const LEAGUES_DISABLED_MESSAGE =
-  'Las ligas semanales están deshabilitadas temporalmente. Volverán pronto.';
+export const LEAGUES_DISABLED_MESSAGE = 'Las ligas semanales están deshabilitadas temporalmente. Volverán pronto.';
 
 /** XP por respuesta correcta en práctica. */
 export const PRACTICE_XP_PER_CORRECT = 10;

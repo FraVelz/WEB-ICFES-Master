@@ -23,9 +23,9 @@ Estas son las **URLs** del proyecto.
 
 ## Evaluación de nivel inicial (obligatoria)
 
-| URL                  | Descripción                                      |
-| -------------------- | ------------------------------------------------ |
-| `/evaluacion-nivel/` | Cuestionario corto para personalizar la ruta     |
+| URL                  | Descripción                                  |
+| -------------------- | -------------------------------------------- |
+| `/evaluacion-nivel/` | Cuestionario corto para personalizar la ruta |
 
 Tras entrar en **modo demo** o crear/iniciar sesión, `LevelAssessmentGate` (`src/components/LevelAssessmentGate.tsx`) redirige al dashboard solo cuando el usuario completó esta evaluación para su ámbito (demo o cuenta). Es intencional: fija el nivel inicial de la ruta de aprendizaje y evita recomendaciones genéricas.
 
@@ -39,7 +39,7 @@ Tras entrar en **modo demo** o crear/iniciar sesión, `LevelAssessmentGate` (`sr
 | `/ruta-aprendizaje/` | Ruta de aprendizaje (con chat IA) |
 | `/logros/`           | Logros y gamificación             |
 | `/perfil/`           | Perfil del usuario                |
-| `/ligas/`   | Ligas semanales y ranking           |
+| `/ligas/`            | Ligas semanales y ranking         |
 | `/configuracion/`    | Configuración                     |
 | `/examen-completo/`  | Simulacro completo                |
 | `/ruta-al-500/`      | Ruta pedagógica al puntaje 500    |

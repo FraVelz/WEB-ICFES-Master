@@ -71,7 +71,7 @@ features/nombre-feature/
 | **auth/**         | Login, registro, OAuth, onboarding, `AuthContext`                                    |
 | **home/**         | Landing, secciones marketing, donaciones                                             |
 | **learning/**     | Roadmap y chat IA (`roadmap/`, `shell/`, `context/`)                                 |
-| **exam/**         | Práctica, examen completo, ligas; datos en `exam/data/`                     |
+| **exam/**         | Práctica, examen completo, ligas; datos en `exam/data/`                              |
 | **user/**         | Perfil, configuración, hooks `useProgress`, `useUserData`                            |
 | **achievements/** | Badges, UI de logros (ruta `/logros/`; hooks transversales en `hooks/gamification/`) |
 | **store/**        | Tienda virtual (UI), modales de compra                                               |
@@ -127,7 +127,7 @@ Las URLs llevan **`/` final** (`trailingSlash: true`). Lista completa en [routes
 | `/ruta-aprendizaje`                   | Roadmap de aprendizaje                      |
 | `/practica/[area]`                    | Práctica por área                           |
 | `/examen-completo`                    | Examen completo                             |
-| `/ligas`                     | Ligas / ranking semanal                     |
+| `/ligas`                              | Ligas / ranking semanal                     |
 | `/logros/`                            | Centro de logros (`features/achievements/`) |
 | `/perfil`, `/perfil/public`           | Perfil privado y público                    |
 | `/configuracion`                      | Ajustes                                     |

@@ -31,7 +31,10 @@ const FeaturesSection = dynamic(
 );
 
 const RouteTo500TeaserSection = dynamic(
-  () => import('@/features/home/components/RouteTo500TeaserSection').then((mod) => ({ default: mod.RouteTo500TeaserSection })),
+  () =>
+    import('@/features/home/components/RouteTo500TeaserSection').then((mod) => ({
+      default: mod.RouteTo500TeaserSection,
+    })),
   { loading: () => sectionFallback }
 );
 
@@ -41,7 +44,10 @@ const TestimonialsSection = dynamic(
 );
 
 const PublicResourcesSection = dynamic(
-  () => import('@/features/home/components/PublicResourcesSection').then((mod) => ({ default: mod.PublicResourcesSection })),
+  () =>
+    import('@/features/home/components/PublicResourcesSection').then((mod) => ({
+      default: mod.PublicResourcesSection,
+    })),
   { loading: () => sectionFallback }
 );
 

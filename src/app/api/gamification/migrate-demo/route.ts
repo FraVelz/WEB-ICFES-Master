@@ -24,7 +24,10 @@ export async function POST(request: NextRequest) {
     const body = await request.json();
     const parsed = parseDemoMigrationPayload(body);
     if (!parsed) {
-      return NextResponse.json({ error: 'Cantidad inválida o fuera de los límites de migración demo' }, { status: 400 });
+      return NextResponse.json(
+        { error: 'Cantidad inválida o fuera de los límites de migración demo' },
+        { status: 400 }
+      );
     }
 
     const { xp, coins } = parsed;

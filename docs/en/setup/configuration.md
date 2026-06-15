@@ -8,15 +8,15 @@ Environment variables and runtime modes. For first-time setup, see [installation
 
 Copy [`.env.example`](../../../.env.example) to `.env.local` at the project root.
 
-| Variable                        | Required                 | Description                                                                  |
-| ------------------------------- | ------------------------ | ---------------------------------------------------------------------------- |
-| `NEXT_PUBLIC_SUPABASE_URL`      | Yes                      | Supabase project URL                                                         |
-| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Yes                      | Supabase public anon key                                                     |
-| `OPENAI_API_KEY`                | No                       | OpenAI API key for `/api/chat` (AI assistant)                                |
-| `NEXT_PUBLIC_SITE_URL`          | Recommended in production | Public origin for `metadataBase`, sitemap, Open Graph, and canonical URLs   |
-| `NEXT_PUBLIC_TWITTER_SITE`      | No                       | Twitter/X handle (`@icfesmaster`) for `twitter:site` metadata               |
-| `KV_REST_API_URL`               | Recommended in production | Upstash/Vercel KV REST URL for distributed API rate limiting                |
-| `KV_REST_API_TOKEN`             | Recommended in production | KV token; without it limits are in-memory per serverless instance           |
+| Variable                        | Required                  | Description                                                               |
+| ------------------------------- | ------------------------- | ------------------------------------------------------------------------- |
+| `NEXT_PUBLIC_SUPABASE_URL`      | Yes                       | Supabase project URL                                                      |
+| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Yes                       | Supabase public anon key                                                  |
+| `OPENAI_API_KEY`                | No                        | OpenAI API key for `/api/chat` (AI assistant)                             |
+| `NEXT_PUBLIC_SITE_URL`          | Recommended in production | Public origin for `metadataBase`, sitemap, Open Graph, and canonical URLs |
+| `NEXT_PUBLIC_TWITTER_SITE`      | No                        | Twitter/X handle (`@icfesmaster`) for `twitter:site` metadata             |
+| `KV_REST_API_URL`               | Recommended in production | Upstash/Vercel KV REST URL for distributed API rate limiting              |
+| `KV_REST_API_TOKEN`             | Recommended in production | KV token; without it limits are in-memory per serverless instance         |
 
 ### API rate limiting
 

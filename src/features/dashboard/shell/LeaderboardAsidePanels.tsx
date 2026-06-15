@@ -32,9 +32,7 @@ export function LeaderboardAsidePanels() {
       </AsideCard>
 
       <AsideCard title="Tu liga" icon="trophy">
-        {LEAGUES_TEMPORARILY_DISABLED ? (
-          <LeagueDisabledNotice className="mb-3" />
-        ) : null}
+        {LEAGUES_TEMPORARILY_DISABLED ? <LeagueDisabledNotice className="mb-3" /> : null}
         <p className="text-on-surface text-lg font-bold">División {rankInfo.label}</p>
         <ul className="text-on-surface-muted mt-3 space-y-2 text-sm">
           <li className="flex justify-between gap-2">
