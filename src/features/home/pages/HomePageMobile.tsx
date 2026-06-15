@@ -77,7 +77,7 @@ export const HomePageMobile = () => {
           className={cn(
             'from-cta-from to-cta-to flex w-full transform items-center justify-center gap-2 rounded-lg',
             'bg-linear-to-r py-3 text-center font-semibold text-white transition-all duration-200',
-            'hover:scale-105 hover:from-cta-from hover:to-cta-to hover:shadow-app-ring/40 hover:shadow-lg',
+            'hover:from-cta-from hover:to-cta-to hover:shadow-app-ring/40 hover:scale-105 hover:shadow-lg',
             'disabled:cursor-wait disabled:opacity-70 disabled:hover:scale-100'
           )}
         >

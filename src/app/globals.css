@@ -168,7 +168,7 @@ html:not(.dark) :where(.rounded-2xl, .rounded-xl, .rounded-lg).border.border-sur
   --color-app-ring: var(--color-cyan-500);
   --color-app-accent-strong: var(--color-cyan-600);
   --color-app-accent-bright: var(--color-cyan-200);
-  --color-app-on-accent: var(--color-cyan-100);
+  --color-app-on-accent: #ffffff;
   --color-app-accent-darker: var(--color-cyan-700);
 
   /* Botones / titulares con gradiente (auth, hero, CTA) */
@@ -283,6 +283,20 @@ html:not(.dark) :where(.rounded-2xl, .rounded-xl, .rounded-lg).border.border-sur
   --color-feature-5-to: var(--color-pink-600);
   --color-feature-6-from: var(--color-indigo-600);
   --color-feature-6-to: var(--color-purple-600);
+}
+
+/*
+ * Botones/enlaces con fondo sólido app-accent en tema oscuro.
+ * cyan-400 + texto claro no cumple contraste; fondo más oscuro + blanco sí.
+ */
+html.dark :is(a, button)[class~='bg-app-accent']:not([class*='bg-app-accent/']) {
+  background-color: var(--color-cyan-600);
+  color: #ffffff;
+}
+
+html.dark :is(a, button)[class~='bg-app-accent']:not([class*='bg-app-accent/']):hover {
+  filter: none;
+  background-color: var(--color-cyan-500);
 }
 
 /*

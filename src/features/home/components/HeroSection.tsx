@@ -71,7 +71,10 @@ export const HeroSection = () => {
               'cursor-pointer'
             )}
           >
-            <Icon name={isPrimaryBusy ? 'spinner' : primaryIcon} className={isPrimaryBusy ? 'animate-spin' : undefined} />
+            <Icon
+              name={isPrimaryBusy ? 'spinner' : primaryIcon}
+              className={isPrimaryBusy ? 'animate-spin' : undefined}
+            />
             {isPrimaryBusy ? (isContinuing ? 'Continuando...' : 'Cargando...') : primaryLabel}
           </button>
           <Link

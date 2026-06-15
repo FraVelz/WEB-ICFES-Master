@@ -59,7 +59,21 @@ export const PathNode = ({
     isCheckpoint ? 'h-16 w-16 text-2xl' : 'h-12 w-12 text-lg',
     isPending && 'border-surface-border bg-surface-overlay text-on-surface-muted',
     isCurrent && cn(colorClass, 'border-white/20 text-white shadow-md'),
-    isCompleted && 'border-green-600 bg-green-600/20 text-green-400'
+    isCompleted &&
+      'border-green-600/40 bg-green-500/15 text-green-600 dark:border-green-600 dark:bg-green-600/20 dark:text-green-400'
+  );
+
+  const playButtonClass = cn(
+    'flex h-8 w-8 shrink-0 items-center justify-center rounded-full',
+    isPending && 'bg-surface-overlay text-on-surface-muted',
+    isCurrent && 'bg-on-surface text-surface shadow-sm',
+    isCompleted && 'bg-surface-overlay text-green-500 dark:text-green-400'
+  );
+
+  const playIconClass = cn(
+    isPending && 'text-on-surface-muted',
+    isCurrent && 'text-surface',
+    isCompleted && 'text-green-500 dark:text-green-400'
   );
 
   const body = (
@@ -70,7 +84,7 @@ export const PathNode = ({
           className={cn(
             isPending && 'text-on-surface-muted',
             isCurrent && 'text-white',
-            isCompleted && 'text-green-400'
+            isCompleted && 'text-green-500 dark:text-green-400'
           )}
         />
       </div>
@@ -80,8 +94,8 @@ export const PathNode = ({
           className={cn(
             'truncate text-base font-bold',
             isPending && 'text-on-surface-muted',
-            isCurrent && 'text-white',
-            isCompleted && 'text-green-400'
+            isCurrent && 'text-on-surface',
+            isCompleted && 'text-green-600 dark:text-green-400'
           )}
         >
           {title}
@@ -91,23 +105,8 @@ export const PathNode = ({
         </p>
       </div>
 
-      <div
-        className={cn(
-          'flex h-8 w-8 shrink-0 items-center justify-center rounded-full',
-          isPending && 'bg-on-surface-muted/50 text-on-surface-muted',
-          isCurrent && 'text-surface-via bg-white',
-          isCompleted && 'bg-surface-overlay text-green-400'
-        )}
-      >
-        <Icon
-          name={isCompleted ? 'check' : 'play'}
-          size="sm"
-          className={cn(
-            isPending && 'text-on-surface-muted',
-            isCurrent && 'text-surface-via',
-            isCompleted && 'text-green-400'
-          )}
-        />
+      <div className={playButtonClass}>
+        <Icon name={isCompleted ? 'check' : 'play'} size="sm" className={playIconClass} />
       </div>
     </>
   );
