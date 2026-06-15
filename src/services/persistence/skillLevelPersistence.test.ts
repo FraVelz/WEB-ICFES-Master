@@ -110,4 +110,12 @@ describe('skillLevelPersistence', () => {
     await persistLevelAssessment('demo', { level: 'advanced', completedAt: '2026-01-01T00:00:00.000Z' }, null);
     expect(await resolveLevelAssessmentRedirect({ demoMode: true }, null)).toBe('/simulacro-completo');
   });
+
+  it('resolvePostAuthEntryPath envía al dashboard si la evaluación está aplazada', async () => {
+    const { snoozeLevelAssessment } = await import('@/features/auth/utils/levelAssessmentSnooze');
+    const { resolvePostAuthEntryPath } = await import('@/services/persistence/skillLevelPersistence');
+
+    snoozeLevelAssessment('demo');
+    await expect(resolvePostAuthEntryPath({ demoMode: true }, null)).resolves.toBe('/ruta-aprendizaje');
+  });
 });

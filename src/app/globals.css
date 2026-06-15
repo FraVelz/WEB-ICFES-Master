@@ -308,6 +308,17 @@ html.dark :is(a, button)[class~='bg-app-accent']:not([class*='bg-app-accent/']):
  * Acordeón o chip sobre panel oscuro: focus-visible:ring-inset opcionalmente.
  */
 
+/* Títulos con gradiente: fallback legible con alto contraste o sin gradiente */
+@media (prefers-contrast: more) {
+  .hero-title-gradient {
+    background: none;
+    background-clip: border-box;
+    -webkit-background-clip: border-box;
+    -webkit-text-fill-color: currentColor;
+    color: var(--icfes-on-surface);
+  }
+}
+
 /* Hide scrollbar while maintaining scroll functionality */
 .hide-scrollbar {
   -ms-overflow-style: none;

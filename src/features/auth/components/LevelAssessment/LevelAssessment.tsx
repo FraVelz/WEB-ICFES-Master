@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { MASCOT_IMAGES } from '@/assets';
 import { OnboardingIntroStage } from '@/features/auth/components/OnboardingQuiz/OnboardingIntroStage';
+import { AUTH_DEFAULT_REDIRECT } from '@/features/auth/constants/authRoutes';
 import { getPathForSkillLevel } from '@/features/auth/constants/skillLevelRoutes';
 import type { LevelAssessmentContext, SkillLevel } from '@/features/auth/types/skillLevel';
 import {
@@ -11,6 +12,7 @@ import {
   getAssessmentScope,
   persistLevelAssessment,
 } from '@/services/persistence/skillLevelPersistence';
+import { snoozeLevelAssessment } from '@/features/auth/utils/levelAssessmentSnooze';
 import { useUiSessionStore } from '@/store/uiSessionStore';
 import { useAuth } from '@/features/auth/context/AuthContext';
 import { LEVEL_ASSESSMENT_INTRO } from './data';
@@ -55,6 +57,11 @@ export function LevelAssessment({ context }: LevelAssessmentProps) {
     }
   };
 
+  const handleDefer = () => {
+    snoozeLevelAssessment(scope);
+    router.replace(AUTH_DEFAULT_REDIRECT);
+  };
+
   if (stage === 'intro') {
     return (
       <OnboardingIntroStage
@@ -63,6 +70,8 @@ export function LevelAssessment({ context }: LevelAssessmentProps) {
         avatarSrc={MASCOT_IMAGES.logo}
         onBack={() => router.push('/')}
         onNext={() => setStage('levels')}
+        deferLabel="Evaluar más tarde"
+        onDefer={handleDefer}
       />
     );
   }

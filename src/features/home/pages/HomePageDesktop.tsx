@@ -10,7 +10,7 @@ import { gsap } from '@/lib/gsap';
 import { Footer } from '@/features/home/components/Footer';
 import { GSAPGlowBlob } from '@/features/home/components/GSAPGlowBlob';
 
-import { HeroSection, AreasSection, FeaturesSection } from '@/features/home/components';
+import { HeroSection } from '@/features/home/components/HeroSection';
 
 import { PUBLIC_PAGE_SHELL_CLASS } from '@/shared/constants/pageShell';
 
@@ -18,6 +18,16 @@ import homeStyles from './HomePageDesktop.module.css';
 
 const sectionFallback = (
   <div className="bg-surface-border/40 mx-auto min-h-48 max-w-6xl animate-pulse rounded-2xl motion-reduce:animate-none" />
+);
+
+const AreasSection = dynamic(
+  () => import('@/features/home/components/AreasSection').then((mod) => ({ default: mod.AreasSection })),
+  { loading: () => sectionFallback }
+);
+
+const FeaturesSection = dynamic(
+  () => import('@/features/home/components/FeaturesSection').then((mod) => ({ default: mod.FeaturesSection })),
+  { loading: () => sectionFallback }
 );
 
 const RouteTo500TeaserSection = dynamic(

@@ -29,8 +29,8 @@ These are the application **URLs**.
 
 After **demo mode** or sign-in/sign-up, `LevelAssessmentGate` (`src/components/LevelAssessmentGate.tsx`) blocks dashboard routes until the user completes this assessment for their scope (demo or account). This is intentional: it sets the starting level for the learning path and avoids generic recommendations.
 
+- On `/evaluacion-nivel/`, users can choose **“Assess later”**: snoozes the quiz for **7 days** (`levelAssessmentSnooze.ts`) and enters the dashboard with the default path.
 - The route uses `robots: noindex` and is excluded from the sitemap.
-- If the flow is relaxed later, common options are a “assess later” snooze or a dashboard banner instead of a hard redirect.
 
 ## Dashboard (requires session or demo)
 

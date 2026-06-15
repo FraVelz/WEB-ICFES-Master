@@ -32,6 +32,8 @@ Sin `KV_REST_API_*`, `src/utils/rateLimit.ts` usa un mapa en memoria por instanc
 
 Si faltan las variables en `NODE_ENV=production`, el servidor registra un warning en logs al primer uso del fallback.
 
+En **desarrollo local** no es necesario configurar KV: el fallback en memoria es suficiente para probar la app.
+
 ### SEO y metadatos públicos
 
 - **`NEXT_PUBLIC_SITE_URL`:** usada por `getSiteUrl()` en `src/config/site.ts` para `metadataBase`, `robots.ts`, `sitemap.ts` y Open Graph. En Vercel, si no se define, se infiere de `VERCEL_URL` / `VERCEL_PROJECT_PRODUCTION_URL`.

@@ -31,6 +31,8 @@ Without `KV_REST_API_*`, `src/utils/rateLimit.ts` falls back to an in-memory map
 
 When vars are missing in `NODE_ENV=production`, the server logs a warning on first fallback use.
 
+**Local development** does not require KV: the in-memory fallback is enough for day-to-day work.
+
 ### Public SEO metadata
 
 - **`NEXT_PUBLIC_SITE_URL`:** used by `getSiteUrl()` in `src/config/site.ts` for `metadataBase`, `robots.ts`, `sitemap.ts`, and Open Graph. On Vercel, if unset, it is inferred from `VERCEL_URL` / `VERCEL_PROJECT_PRODUCTION_URL`.

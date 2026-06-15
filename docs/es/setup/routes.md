@@ -29,8 +29,8 @@ Estas son las **URLs** del proyecto.
 
 Tras entrar en **modo demo** o crear/iniciar sesión, `LevelAssessmentGate` (`src/components/LevelAssessmentGate.tsx`) redirige al dashboard solo cuando el usuario completó esta evaluación para su ámbito (demo o cuenta). Es intencional: fija el nivel inicial de la ruta de aprendizaje y evita recomendaciones genéricas.
 
+- En `/evaluacion-nivel/` el usuario puede elegir **«Evaluar más tarde»**: aplaza la evaluación **7 días** (`levelAssessmentSnooze.ts`) y entra al dashboard con ruta genérica.
 - La ruta tiene `robots: noindex` y no está en el sitemap.
-- Si en el futuro se relaja el flujo, las opciones habituales son «evaluar más tarde» (snooze) o un banner en el dashboard en lugar de redirección forzada.
 
 ## Dashboard (requiere sesión o demo)
 

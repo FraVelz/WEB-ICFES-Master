@@ -1,6 +1,5 @@
-import { buildLevelAssessmentUrl } from '@/features/auth/constants/skillLevelRoutes';
 import { ensureDemoCoinsMinimum } from '@/services/demo/demoCoins';
-import { resolveLevelAssessmentRedirect } from '@/services/persistence/skillLevelPersistence';
+import { resolvePostAuthEntryPath } from '@/services/persistence/skillLevelPersistence';
 import { useUiSessionStore } from '@/store/uiSessionStore';
 
 function syncDemoSessionCookie(method: 'POST' | 'DELETE') {
@@ -24,8 +23,7 @@ export function enterDemoModeWithAssessment(navigate?: (path: string) => void) {
   enterDemoMode();
   if (typeof window === 'undefined') return;
 
-  void resolveLevelAssessmentRedirect({ demoMode: true }, null).then((redirect) => {
-    const path = redirect ?? buildLevelAssessmentUrl('demo');
+  void resolvePostAuthEntryPath({ demoMode: true }, null).then((path) => {
     if (navigate) {
       navigate(path);
       return;

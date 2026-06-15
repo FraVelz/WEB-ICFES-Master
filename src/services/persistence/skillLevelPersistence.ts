@@ -2,7 +2,7 @@
  * Persistencia del nivel autodeclarado: localStorage (demo) o Supabase users (cuenta).
  */
 import { AUTH_DEFAULT_REDIRECT } from '@/features/auth/constants/authRoutes';
-import { getPathForSkillLevel } from '@/features/auth/constants/skillLevelRoutes';
+import { buildLevelAssessmentUrl, getPathForSkillLevel } from '@/features/auth/constants/skillLevelRoutes';
 import type { LevelAssessmentContext, LevelAssessmentResult, SkillLevel } from '@/features/auth/types/skillLevel';
 import {
   getStoredSkillLevel,
@@ -10,6 +10,7 @@ import {
   markLevelAssessmentDone,
   resolveAssessmentScope,
 } from '@/features/auth/utils/skillLevelStorage';
+import { isLevelAssessmentSnoozed, clearLevelAssessmentSnooze } from '@/features/auth/utils/levelAssessmentSnooze';
 import UserSupabaseService from '@/services/supabase/UserSupabaseService';
 import { isSupabaseConfigured } from './supabaseConfigured';
 
@@ -38,6 +39,26 @@ export function getAssessmentScopeForSession(demoMode: boolean, userId?: string 
   return getAssessmentOptionsFromContext(context, demoMode, userId);
 }
 
+/** Destino tras login/demo si la evaluación está hecha, aplazada o pendiente. */
+export async function resolvePostAuthEntryPath(
+  options: LevelAssessmentScopeOptions,
+  userId?: string | null
+): Promise<string> {
+  const scope = getAssessmentScope(options);
+  const done = await hasCompletedLevelAssessment(scope, userId);
+  if (done) {
+    const level = await loadPersistedSkillLevel(scope, userId);
+    return level ? getPathForSkillLevel(level) : AUTH_DEFAULT_REDIRECT;
+  }
+
+  if (isLevelAssessmentSnoozed(scope)) {
+    return AUTH_DEFAULT_REDIRECT;
+  }
+
+  const context: LevelAssessmentContext = options.demoMode && !userId ? 'demo' : 'account';
+  return buildLevelAssessmentUrl(context);
+}
+
 /** Redirect target when assessment is already done; null if the user still needs it. */
 export async function resolveLevelAssessmentRedirect(
   options: LevelAssessmentScopeOptions,
@@ -62,6 +83,7 @@ export async function persistLevelAssessment(
   userId?: string | null
 ): Promise<void> {
   markLevelAssessmentDone(scope, result);
+  clearLevelAssessmentSnooze(scope);
 
   if (isDemoScope(scope) || !userId || !isSupabaseConfigured()) return;
 

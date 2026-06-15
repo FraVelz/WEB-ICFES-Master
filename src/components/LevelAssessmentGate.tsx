@@ -10,6 +10,7 @@ import {
   getAssessmentScopeForSession,
   hasCompletedLevelAssessment,
 } from '@/services/persistence/skillLevelPersistence';
+import { isLevelAssessmentSnoozed } from '@/features/auth/utils/levelAssessmentSnooze';
 import { useUiSessionStore } from '@/store/uiSessionStore';
 
 /** Redirige a la evaluación inicial si el usuario demo o cuenta nueva aún no la completó. */
@@ -35,6 +36,7 @@ export function LevelAssessmentGate() {
 
     void hasCompletedLevelAssessment(scope, user?.uid).then((done) => {
       if (checkVersion !== checkVersionRef.current || done) return;
+      if (isLevelAssessmentSnoozed(scope)) return;
       router.replace(buildLevelAssessmentUrl(context));
     });
   }, [demoMode, hydrated, loading, pathname, router, user]);
