@@ -21,6 +21,17 @@ These are the application **URLs**.
 | `/privacidad/`      | Privacy policy          |
 | `/terminos/`        | Terms and conditions    |
 
+## Initial level assessment (mandatory)
+
+| URL                  | Description                               |
+| -------------------- | ----------------------------------------- |
+| `/evaluacion-nivel/` | Short quiz to personalize the learning path |
+
+After **demo mode** or sign-in/sign-up, `LevelAssessmentGate` (`src/components/LevelAssessmentGate.tsx`) blocks dashboard routes until the user completes this assessment for their scope (demo or account). This is intentional: it sets the starting level for the learning path and avoids generic recommendations.
+
+- The route uses `robots: noindex` and is excluded from the sitemap.
+- If the flow is relaxed later, common options are a “assess later” snooze or a dashboard banner instead of a hard redirect.
+
 ## Dashboard (requires session or demo)
 
 | URL                  | Description                     |
