@@ -1,28 +1,49 @@
 'use client';
 
 import { useGSAP } from '@gsap/react';
+import dynamic from 'next/dynamic';
 import { memo, useRef } from 'react';
 import { cn } from '@/utils/cn';
 
 import { gsap } from '@/lib/gsap';
 
 import { Footer } from '@/features/home/components/Footer';
-import { PublicResourcesSection } from '@/features/home/components/PublicResourcesSection';
 import { GSAPGlowBlob } from '@/features/home/components/GSAPGlowBlob';
 
-import {
-  HeroSection,
-  AreasSection,
-  RouteTo500TeaserSection,
-  FeaturesSection,
-  TestimonialsSection,
-  FAQSection,
-  FinalCTASection,
-} from '@/features/home/components';
+import { HeroSection, AreasSection, FeaturesSection } from '@/features/home/components';
 
 import { PUBLIC_PAGE_SHELL_CLASS } from '@/shared/constants/pageShell';
 
 import homeStyles from './HomePageDesktop.module.css';
+
+const sectionFallback = (
+  <div className="bg-surface-border/40 mx-auto min-h-48 max-w-6xl animate-pulse rounded-2xl motion-reduce:animate-none" />
+);
+
+const RouteTo500TeaserSection = dynamic(
+  () => import('@/features/home/components/RouteTo500TeaserSection').then((mod) => ({ default: mod.RouteTo500TeaserSection })),
+  { loading: () => sectionFallback }
+);
+
+const TestimonialsSection = dynamic(
+  () => import('@/features/home/components/TestimonialsSection').then((mod) => ({ default: mod.TestimonialsSection })),
+  { loading: () => sectionFallback }
+);
+
+const PublicResourcesSection = dynamic(
+  () => import('@/features/home/components/PublicResourcesSection').then((mod) => ({ default: mod.PublicResourcesSection })),
+  { loading: () => sectionFallback }
+);
+
+const FAQSection = dynamic(
+  () => import('@/features/home/components/FAQSection').then((mod) => ({ default: mod.FAQSection })),
+  { loading: () => sectionFallback }
+);
+
+const FinalCTASection = dynamic(
+  () => import('@/features/home/components/FinalCTASection').then((mod) => ({ default: mod.FinalCTASection })),
+  { loading: () => sectionFallback }
+);
 
 const GLOW_EFFECTS = [
   {
