@@ -14,6 +14,8 @@ Copia [`.env.example`](../../../.env.example) a `.env.local` en la raíz del pro
 | `NEXT_PUBLIC_SUPABASE_URL`      | Sí                       | URL del proyecto Supabase                                                   |
 | `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Sí                       | Clave anónima pública de Supabase                                           |
 | `OPENAI_API_KEY`                | No                       | API key de OpenAI para `/api/chat` (asistente IA)                           |
+| `NEXT_PUBLIC_SITE_URL`          | Recomendada en producción | Origen público para `metadataBase`, sitemap, Open Graph y URLs canónicas   |
+| `NEXT_PUBLIC_TWITTER_SITE`      | No                       | Handle de Twitter/X (`@icfesmaster`) para `twitter:site` en metadatos       |
 | `KV_REST_API_URL`               | Recomendada en producción | URL REST de Upstash/Vercel KV para rate limiting distribuido en APIs       |
 | `KV_REST_API_TOKEN`             | Recomendada en producción | Token de KV; sin esto los límites son en memoria por instancia serverless   |
 
@@ -29,6 +31,13 @@ Sin `KV_REST_API_*`, `src/utils/rateLimit.ts` usa un mapa en memoria por instanc
 - `/api/r2/infographic/[id]`
 
 Si faltan las variables en `NODE_ENV=production`, el servidor registra un warning en logs al primer uso del fallback.
+
+### SEO y metadatos públicos
+
+- **`NEXT_PUBLIC_SITE_URL`:** usada por `getSiteUrl()` en `src/config/site.ts` para `metadataBase`, `robots.ts`, `sitemap.ts` y Open Graph. En Vercel, si no se define, se infiere de `VERCEL_URL` / `VERCEL_PROJECT_PRODUCTION_URL`.
+- **`NEXT_PUBLIC_TWITTER_SITE`:** opcional; si está definida, se añade `twitter:site` en el layout raíz (`src/app/layout.tsx`).
+
+Sin `NEXT_PUBLIC_SITE_URL` en producción con dominio custom, los enlaces absolutos pueden apuntar al subdominio `.vercel.app` en lugar del dominio canónico.
 
 Sin las variables de Supabase, login/registro y persistencia de cuentas no funcionan. El **modo demo** (landing) sigue usando almacenamiento local en el navegador sin cuenta.
 

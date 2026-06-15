@@ -13,6 +13,8 @@ Copy [`.env.example`](../../../.env.example) to `.env.local` at the project root
 | `NEXT_PUBLIC_SUPABASE_URL`      | Yes                      | Supabase project URL                                                         |
 | `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Yes                      | Supabase public anon key                                                     |
 | `OPENAI_API_KEY`                | No                       | OpenAI API key for `/api/chat` (AI assistant)                                |
+| `NEXT_PUBLIC_SITE_URL`          | Recommended in production | Public origin for `metadataBase`, sitemap, Open Graph, and canonical URLs   |
+| `NEXT_PUBLIC_TWITTER_SITE`      | No                       | Twitter/X handle (`@icfesmaster`) for `twitter:site` metadata               |
 | `KV_REST_API_URL`               | Recommended in production | Upstash/Vercel KV REST URL for distributed API rate limiting                |
 | `KV_REST_API_TOKEN`             | Recommended in production | KV token; without it limits are in-memory per serverless instance           |
 
@@ -28,6 +30,13 @@ Without `KV_REST_API_*`, `src/utils/rateLimit.ts` falls back to an in-memory map
 - `/api/r2/infographic/[id]`
 
 When vars are missing in `NODE_ENV=production`, the server logs a warning on first fallback use.
+
+### Public SEO metadata
+
+- **`NEXT_PUBLIC_SITE_URL`:** used by `getSiteUrl()` in `src/config/site.ts` for `metadataBase`, `robots.ts`, `sitemap.ts`, and Open Graph. On Vercel, if unset, it is inferred from `VERCEL_URL` / `VERCEL_PROJECT_PRODUCTION_URL`.
+- **`NEXT_PUBLIC_TWITTER_SITE`:** optional; when set, adds `twitter:site` in the root layout (`src/app/layout.tsx`).
+
+Without `NEXT_PUBLIC_SITE_URL` in production with a custom domain, absolute URLs may point at the `.vercel.app` host instead of the canonical domain.
 
 Without Supabase env vars, login/signup and account persistence will not work. **Demo mode** (from the landing page) still uses local browser storage without an account.
 
