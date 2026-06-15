@@ -3,6 +3,7 @@
 import { useState, useEffect, useCallback, useMemo } from 'react';
 import { useAuth } from '@/features/auth/context/AuthContext';
 import { isMinimumRequirementsLessonId } from '@/features/learning/data/phaseMinimumRequirements';
+import { getLessonRewardsForPhase } from '@/features/learning/utils/lessonRewards';
 import { getCompletedLessons, markLessonAsCompleted } from '@/services/persistence';
 import { fetchLessonQuizGrade } from './lessonQuizClient';
 import { gradeLessonQuizAnswersPure } from './gradeLessonQuizAnswersPure';
@@ -38,6 +39,8 @@ export function useLessonQuiz({
   const totalQuestions = displayQuestions.length;
   const isLastQuestion = currentQuestionIndex === totalQuestions - 1;
   const allQuestionsAnswered = completedQuestions.size === totalQuestions;
+
+  const phaseOneRewards = getLessonRewardsForPhase(1);
 
   const checkCompletionStatus = useCallback(async () => {
     try {
@@ -123,8 +126,8 @@ export function useLessonQuiz({
           } catch {
             applyGradeResult(clientGrade, {
               localRewards: {
-                xp: lessonXp ?? quiz?.rewards?.xp ?? 30,
-                coins: lessonCoins ?? quiz?.rewards?.coins ?? 15,
+                xp: lessonXp ?? quiz?.rewards?.xp ?? phaseOneRewards.xp,
+                coins: lessonCoins ?? quiz?.rewards?.coins ?? phaseOneRewards.coins,
               },
             });
             return;
@@ -136,8 +139,8 @@ export function useLessonQuiz({
           shouldAward && clientGrade.allCorrect
             ? {
                 localRewards: {
-                  xp: lessonXp ?? quiz?.rewards?.xp ?? 30,
-                  coins: lessonCoins ?? quiz?.rewards?.coins ?? 15,
+                  xp: lessonXp ?? quiz?.rewards?.xp ?? phaseOneRewards.xp,
+                  coins: lessonCoins ?? quiz?.rewards?.coins ?? phaseOneRewards.coins,
                 },
               }
             : undefined

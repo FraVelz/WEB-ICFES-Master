@@ -11,6 +11,7 @@ import { EmptyState } from '@/shared/components/EmptyState';
 import { RouteTo500ContextBanner } from '@/features/learning/components/routeTo500/RouteTo500ContextBanner';
 import { getLearningPhasesHref } from '@/features/learning/data/competencyPhases';
 import { fetchQuestionsForFullExam } from '@/features/exam/services/QuestionService';
+import { capFullExamQuestionCount } from '@/features/exam/constants/fullExamLimits';
 import { savePendingFullExamConfig } from '@/features/exam/utils/fullExamConfigStorage';
 import {
   getSimulacroCompletoExamHref,
@@ -32,7 +33,7 @@ export function SimulacroCompletoSectionPage() {
 
     try {
       const loaded = await fetchQuestionsForFullExam();
-      setTotalQuestions(loaded.length);
+      setTotalQuestions(capFullExamQuestionCount(loaded.length));
     } catch (err: unknown) {
       setError(err instanceof Error ? err.message : 'No se pudieron cargar las preguntas.');
       setTotalQuestions(0);

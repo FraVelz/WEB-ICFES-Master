@@ -7,6 +7,7 @@ import {
   getStaticQuestionsForFullExam,
 } from '@/features/exam/data/examStaticPool.server';
 import { FULL_EXAM_ROUTE_AREAS } from '@/features/exam/data/examAreas';
+import { FULL_EXAM_MAX_QUESTIONS } from '@/features/exam/constants/fullExamLimits';
 import { toPublicExamQuestion, type ExamQuestion, type ExamQuestionPublic } from '@/features/exam/types/question';
 import ExamQuestionsSupabaseService from '@/services/supabase/ExamQuestionsSupabaseService';
 import { getExamQuestionsByIdsForGrading } from '@/services/supabase/ExamQuestionsServerService';
@@ -66,17 +67,21 @@ export async function fetchPublicQuestionsByRouteArea(
   return toPublicList(cappedFallback);
 }
 
+function capFullExamQuestions(questions: ExamQuestionPublic[]): ExamQuestionPublic[] {
+  return questions.slice(0, FULL_EXAM_MAX_QUESTIONS);
+}
+
 export async function fetchPublicQuestionsForFullExam(): Promise<ExamQuestionPublic[]> {
   const fallback = getStaticQuestionsForFullExam();
 
   try {
     const fromDb = await getCachedDbQuestionsForFullExam();
-    if (fromDb.length > 0) return fromDb;
+    if (fromDb.length > 0) return capFullExamQuestions(fromDb);
   } catch (error) {
     console.warn('[examQuestionsServer] Supabase fallback for full exam', error);
   }
 
-  return toPublicList(fallback);
+  return capFullExamQuestions(toPublicList(fallback));
 }
 
 export async function loadQuestionsByIdsForGrading(ids: string[]): Promise<ExamQuestion[]> {

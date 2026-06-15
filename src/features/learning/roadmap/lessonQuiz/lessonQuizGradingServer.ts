@@ -1,4 +1,5 @@
 import { loadLessonQuizQuestions } from '@/services/supabase/LearningSupabaseServer';
+import { getLessonRewardsForPhase } from '@/features/learning/utils/lessonRewards';
 import {
   addCoinsServer,
   addXpServer,
@@ -30,8 +31,8 @@ export async function awardLessonQuizRewards(
   }
 
   const lesson = await loadLessonQuizQuestions(lessonId);
-  const xp = lesson?.rewards?.xp ?? 500;
-  const coins = lesson?.rewards?.coins ?? 250;
+  const phase = lesson?.phase ?? 1;
+  const { xp, coins } = getLessonRewardsForPhase(phase);
 
   const [xpResult, coinsResult] = await Promise.all([
     addXpServer(userId, xp, reason),

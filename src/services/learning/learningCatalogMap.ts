@@ -1,4 +1,5 @@
 import { normalizeLessonPhase, phaseToSectionId } from '@/features/learning/constants/learningPhases';
+import { getLessonRewardsForPhase } from '@/features/learning/utils/lessonRewards';
 import { resolveLessonBlockIdForPhase } from '@/features/learning/data/phaseBlocks';
 import type { LearningPathLesson } from '@/features/learning/services/LearningService';
 import { HOME_AREA_IDS, type AreaId } from '@/shared/constants';
@@ -69,7 +70,7 @@ export function mapRoadmapRowToLesson(row: Record<string, unknown>, index: numbe
     phase,
     difficulty: phaseToSectionId(phase),
     blockId,
-    rewards: (quiz.rewards as { xp?: number; coins?: number }) || { xp: 50, coins: 25 },
+    rewards: getLessonRewardsForPhase(phase),
     duration: content.duration,
   };
 }

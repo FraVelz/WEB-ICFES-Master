@@ -1,4 +1,5 @@
 import { createServerSupabaseClient } from '@/config/supabaseClient';
+import { normalizeLessonPhase } from '@/features/learning/constants/learningPhases';
 import { normalizeQuizQuestions } from '@/features/learning/roadmap/lessonQuiz/normalizeQuizQuestions';
 import type { QuizInput, QuizQuestionInput } from '@/features/learning/roadmap/lessonQuiz/quizTypes';
 import { loadStaticLessonQuiz } from '@/services/learning/loadStaticLessonQuiz';
@@ -20,7 +21,7 @@ export async function loadLessonQuizQuestions(lessonId: string) {
 
   const { data, error } = await sb
     .from(TABLE)
-    .select('id, content')
+    .select('id, phase, content')
     .eq('id', lessonId)
     .eq('published', true)
     .maybeSingle();
@@ -36,6 +37,7 @@ export async function loadLessonQuizQuestions(lessonId: string) {
   return {
     lessonId: data.id as string,
     questions: normalized,
+    phase: normalizeLessonPhase(data.phase),
     rewards: content.quiz?.rewards,
   };
 }

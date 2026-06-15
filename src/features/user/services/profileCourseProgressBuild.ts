@@ -1,6 +1,7 @@
 import { COMPETENCY_PHASES } from '@/features/learning/data/competencyPhases';
 import { resolvePhaseStatuses } from '@/features/learning/data/phaseProgressUtils';
 import { LEARNING_PHASE_SECTION_IDS, phaseToSectionId } from '@/features/learning/constants/learningPhases';
+import { getLessonRewardsForPhase } from '@/features/learning/utils/lessonRewards';
 import { applyLessonStatusesToNodes } from '@/features/learning/utils/lessonPathStatus';
 import type { PathSection } from '@/features/learning/roadmap/AreaPath';
 import type { LearningPathLesson } from '@/features/learning/services/LearningService';
@@ -34,12 +35,13 @@ export function buildPathSectionsFromLessons(
     const section = groupedSections.find((s) => s.id === sectionId);
     if (!section) continue;
 
+    const phaseRewards = getLessonRewardsForPhase(lesson.phase);
     section.nodes.push({
       id: lesson.id,
       title: lesson.title as string | undefined,
       description: lesson.description as string | undefined,
-      xp: lesson.rewards?.xp ?? lesson.xp ?? 0,
-      coins: lesson.rewards?.coins ?? lesson.coins ?? 0,
+      xp: lesson.rewards?.xp ?? lesson.xp ?? phaseRewards.xp,
+      coins: lesson.rewards?.coins ?? lesson.coins ?? phaseRewards.coins,
       type: 'lesson',
     });
   }

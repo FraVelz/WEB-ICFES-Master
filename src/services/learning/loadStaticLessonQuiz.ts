@@ -2,6 +2,7 @@ import {
   buildMinimumRequirementsLesson,
   parseAreaFromMinimumRequirementsId,
 } from '@/features/learning/data/phaseMinimumRequirements';
+import { getLessonRewardsForPhase } from '@/features/learning/utils/lessonRewards';
 import { normalizeQuizQuestions } from '@/features/learning/roadmap/lessonQuiz/normalizeQuizQuestions';
 import type { QuizInput, QuizQuestionInput } from '@/features/learning/roadmap/lessonQuiz/quizTypes';
 
@@ -22,6 +23,7 @@ export function loadStaticLessonQuiz(lessonId: string) {
   return {
     lessonId,
     questions: normalized,
-    rewards: lesson.rewards ?? (lesson.quiz as QuizInput | undefined)?.rewards,
+    phase: 1 as const,
+    rewards: getLessonRewardsForPhase(1),
   };
 }

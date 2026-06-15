@@ -1,4 +1,5 @@
 import type { LearningPathLesson } from '@/features/learning/services/LearningService';
+import { getLessonRewardsForPhase } from '@/features/learning/utils/lessonRewards';
 import { HOME_AREA_IDS, type AreaId } from '@/shared/constants';
 
 /** Tipo de módulo en la ruta (primer nodo de fase 1). */
@@ -335,6 +336,8 @@ export function buildMinimumRequirementsLesson(areaId: AreaId): LearningPathLess
   const requirementsModule = getPhaseMinimumRequirementsModule(areaId);
   if (!requirementsModule) return null;
 
+  const phaseOneRewards = getLessonRewardsForPhase(1);
+
   return {
     id: getMinimumRequirementsLessonId(areaId),
     title: requirementsModule.title,
@@ -348,10 +351,10 @@ export function buildMinimumRequirementsLesson(areaId: AreaId): LearningPathLess
     questions: requirementsModule.questions,
     quiz: {
       questions: requirementsModule.questions,
-      rewards: { xp: 30, coins: 15 },
+      rewards: phaseOneRewards,
     },
-    rewards: { xp: 30, coins: 15 },
-    xp: 30,
-    coins: 15,
+    rewards: phaseOneRewards,
+    xp: phaseOneRewards.xp,
+    coins: phaseOneRewards.coins,
   };
 }

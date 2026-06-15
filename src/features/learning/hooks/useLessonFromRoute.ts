@@ -8,6 +8,8 @@ import {
 import type { PathNodeData } from '@/features/learning/roadmap/AreaPath';
 import { useDashboardShellOptional } from '@/features/dashboard/shell';
 import { parseLessonVisuals } from '@/features/learning/roadmap/lessonVisualTypes';
+import { normalizeLessonPhase } from '@/features/learning/constants/learningPhases';
+import { getLessonRewardsForPhase } from '@/features/learning/utils/lessonRewards';
 import LearningSupabaseService from '@/services/supabase/LearningSupabaseService';
 
 const fetchedLessonCache = new Map<string, PathNodeData>();
@@ -90,7 +92,8 @@ export function useLessonFromRoute(lessonId: string | undefined) {
           return;
         }
         const data = row as Record<string, unknown>;
-        const quiz = (data.quiz ?? {}) as Record<string, unknown>;
+        const phase = normalizeLessonPhase(data.phase);
+        const phaseRewards = getLessonRewardsForPhase(phase);
         const rawContent =
           data.content ??
           data.body ??
@@ -104,8 +107,9 @@ export function useLessonFromRoute(lessonId: string | undefined) {
           description: (data.description ?? data.summary) as string | undefined,
           content: typeof rawContent === 'string' ? rawContent : undefined,
           visuals: parseLessonVisuals(data.visuals),
-          xp: (quiz.rewards as { xp?: number } | undefined)?.xp ?? (data.xp as number | undefined),
-          coins: (quiz.rewards as { coins?: number } | undefined)?.coins ?? (data.coins as number | undefined),
+          xp: phaseRewards.xp,
+          coins: phaseRewards.coins,
+          rewards: phaseRewards,
           questions: data.questions,
           quiz: data.quiz,
           type: 'lesson',

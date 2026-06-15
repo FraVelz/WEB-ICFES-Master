@@ -13,6 +13,7 @@ import {
   sectionIdToPhase,
   type LearningPhaseSectionId,
 } from '@/features/learning/constants/learningPhases';
+import { getLessonRewardsForPhase } from '@/features/learning/utils/lessonRewards';
 import { applyLessonStatusesForArea } from '@/features/learning/utils/lessonPathStatus';
 import type { AreaId } from '@/shared/constants';
 
@@ -107,8 +108,9 @@ export const useLearningPath = (areaId: string | undefined, options: UseLearning
           const section = groupedSections.find((s) => s.id === sectionIdForLesson);
           if (!section) return;
 
-          const xp = lesson.rewards?.xp || lesson.xp || 0;
-          const coins = lesson.rewards?.coins || lesson.coins || 0;
+          const phaseRewards = getLessonRewardsForPhase(lesson.phase);
+          const xp = lesson.rewards?.xp ?? lesson.xp ?? phaseRewards.xp;
+          const coins = lesson.rewards?.coins ?? lesson.coins ?? phaseRewards.coins;
           const nodeType =
             lesson.moduleType === 'minimum-requirements'
               ? 'minimum-requirements'

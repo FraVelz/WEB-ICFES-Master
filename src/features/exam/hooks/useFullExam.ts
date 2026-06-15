@@ -6,6 +6,7 @@ import { useAuth } from '@/features/auth/context/AuthContext';
 import { isDemoUserId } from '@/services/demo/demoCoins';
 import { saveFullExam } from '@/services/persistence';
 import { fetchQuestionsForFullExam } from '@/features/exam/services/QuestionService';
+import { FULL_EXAM_MAX_QUESTIONS } from '@/features/exam/constants/fullExamLimits';
 import { fetchGradedExamResults, gradedToExamQuestion } from '@/features/exam/services/examGradingClient';
 import type { GradedExamAnswer } from '@/features/exam/services/examGradingServer';
 import type { ExamQuestion, ExamQuestionPublic } from '@/features/exam/types/question';
@@ -58,15 +59,16 @@ export function useFullExam() {
 
   const handleExamStart = useCallback(
     (config: ExamConfig) => {
-      const selectedQuestions = allQuestions.slice(0, config.numQuestions);
+      const questionCount = Math.min(config.numQuestions, FULL_EXAM_MAX_QUESTIONS, allQuestions.length);
+      const selectedQuestions = allQuestions.slice(0, questionCount);
       setQuestions(selectedQuestions);
-      setExamConfig(config);
+      setExamConfig({ ...config, numQuestions: questionCount });
       setGradedResults(null);
       setGradingError(null);
       gradingStartedRef.current = false;
 
       if (config.useTimer) {
-        setTimeRemaining(config.numQuestions * (config.timePerQuestion ?? 2) * 60);
+        setTimeRemaining(questionCount * (config.timePerQuestion ?? 2) * 60);
       } else {
         setTimeRemaining(null);
       }

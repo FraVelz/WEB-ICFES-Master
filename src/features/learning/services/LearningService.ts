@@ -8,6 +8,7 @@ import {
 import { ensureLearningProgressSynced } from '@/services/learning';
 import { injectPhaseMinimumRequirements } from '@/features/learning/utils/injectPhaseMinimumRequirements';
 import { injectBlockCheckpoints } from '@/features/learning/utils/injectBlockCheckpoints';
+import { getLessonRewardsForPhase } from '@/features/learning/utils/lessonRewards';
 import { getLearningPathFromCatalog } from '@/services/learning/learningCatalogCache';
 import { getCompletedLessons } from '@/services/persistence';
 import { getBlockExamPasses } from '@/services/persistence/blockExamPersistence';
@@ -93,7 +94,7 @@ export const LearningService = {
           title: l.title,
           order: i,
           phase: lessonPhase,
-          rewards: (quiz.rewards as { xp?: number; coins?: number }) || { xp: 50, coins: 25 },
+          rewards: getLessonRewardsForPhase(lessonPhase),
           duration: l.duration,
           content: contentStr,
           questions: l.questions,
@@ -114,7 +115,7 @@ export const LearningService = {
           title: t.title,
           order: i,
           phase: 1,
-          rewards: { xp: 50, coins: 25 },
+          rewards: getLessonRewardsForPhase(1),
           duration: t.duration,
           content: t.content,
         })
@@ -126,7 +127,7 @@ export const LearningService = {
               title: intermedio.title,
               order: basics.length,
               phase: 2,
-              rewards: { xp: 100, coins: 50 },
+              rewards: getLessonRewardsForPhase(2),
               description: intermedio.description,
               questions: intermedio.questions,
             }),
