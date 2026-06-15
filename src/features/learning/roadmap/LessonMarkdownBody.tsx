@@ -1,5 +1,6 @@
 'use client';
 
+import { useEffect, useRef } from 'react';
 import ReactMarkdown from 'react-markdown';
 import rehypeKatex from 'rehype-katex';
 import rehypeSanitize, { defaultSchema } from 'rehype-sanitize';
@@ -23,6 +24,18 @@ type LessonMarkdownBodyProps = {
 };
 
 export function LessonMarkdownBody({ content }: LessonMarkdownBodyProps) {
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const root = containerRef.current;
+    if (!root) return;
+
+    root.querySelectorAll('.katex-display').forEach((node) => {
+      node.setAttribute('role', 'math');
+      node.setAttribute('aria-label', 'Fórmula matemática');
+    });
+  }, [content]);
+
   const linkClass = cn(
     'focus-visible:ring-app-accent rounded-sm text-blue-400 underline decoration-blue-400/30',
     'hover:text-blue-300 hover:decoration-blue-300 focus-visible:ring-2',
@@ -30,7 +43,8 @@ export function LessonMarkdownBody({ content }: LessonMarkdownBodyProps) {
   );
 
   return (
-    <ReactMarkdown
+    <div ref={containerRef} role="region" aria-label="Contenido de la lección" className="lesson-markdown-body">
+      <ReactMarkdown
       remarkPlugins={[remarkGfm, remarkMath]}
       rehypePlugins={[
         [rehypeKatex, { throwOnError: false, strict: 'ignore' }],
@@ -136,8 +150,9 @@ export function LessonMarkdownBody({ content }: LessonMarkdownBodyProps) {
           />
         ),
       }}
-    >
-      {content}
-    </ReactMarkdown>
+      >
+        {content}
+      </ReactMarkdown>
+    </div>
   );
 }

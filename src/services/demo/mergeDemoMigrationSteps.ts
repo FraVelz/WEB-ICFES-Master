@@ -4,8 +4,7 @@ import {
   isLevelAssessmentDone,
   markLevelAssessmentDone,
 } from '@/features/auth/utils/skillLevelStorage';
-import { DEMO_COINS_MIN } from '@/services/demo/demoCoins';
-import { DEMO_MIGRATION_MAX_EXTRA_COINS, DEMO_MIGRATION_MAX_XP } from '@/shared/constants/demoMigrationLimits';
+import { computeDemoMigrationBalances } from '@/services/demo/computeDemoMigrationBalances';
 import { getDemoTotalXP } from '@/services/demo/demoGamification';
 import { migrateDemoGamificationViaApi } from '@/services/gamification/gamificationRewardClient';
 import { STARTING_COINS_BALANCE } from '@/shared/constants/gamification';
@@ -56,17 +55,14 @@ export async function migrateSkillLevel(userId: string): Promise<void> {
 export async function migrateGamificationBalances(userId: string): Promise<void> {
   if (!isSupabaseConfigured()) return;
 
-  let extraCoins = 0;
   const coinsRaw = localStorage.getItem(DEMO_COINS_KEY);
-  if (coinsRaw != null) {
-    const demoCoins = Math.max(0, Number.parseInt(coinsRaw, 10) || 0);
-    extraCoins = Math.min(DEMO_MIGRATION_MAX_EXTRA_COINS, Math.max(0, demoCoins - DEMO_COINS_MIN));
-  }
-
-  let xp = 0;
-  if (localStorage.getItem(DEMO_GAMIFICATION_KEY) != null) {
-    xp = Math.min(DEMO_MIGRATION_MAX_XP, getDemoTotalXP());
-  }
+  const demoCoins = coinsRaw != null ? Math.max(0, Number.parseInt(coinsRaw, 10) || 0) : null;
+  const hasDemoGamification = localStorage.getItem(DEMO_GAMIFICATION_KEY) != null;
+  const { xp, coins: extraCoins } = computeDemoMigrationBalances({
+    demoCoins,
+    hasDemoGamification,
+    demoTotalXp: hasDemoGamification ? getDemoTotalXP() : 0,
+  });
 
   if (extraCoins <= 0 && xp <= 0) return;
 

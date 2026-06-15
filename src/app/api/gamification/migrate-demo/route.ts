@@ -6,9 +6,9 @@ import {
 } from '@/services/supabase/gamification/gamificationServerEconomy';
 import { getAuthUserFromRequest } from '@/utils/apiAuth';
 import { checkRateLimit } from '@/utils/rateLimit';
+import { parseDemoMigrationPayload } from '@/services/demo/computeDemoMigrationBalances';
 
-import { DEMO_MIGRATION_MAX_EXTRA_COINS, DEMO_MIGRATION_MAX_XP } from '@/shared/constants/demoMigrationLimits';
-
+/** One-shot demo → account XP/coins. Caps are enforced server-side; full anti-fraud needs a server ledger. */
 export async function POST(request: NextRequest) {
   try {
     const user = await getAuthUserFromRequest(request);
@@ -21,12 +21,13 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Demasiadas solicitudes. Intenta de nuevo en un momento.' }, { status: 429 });
     }
 
-    const body = (await request.json()) as { xp?: unknown; coins?: unknown };
-    const xp = typeof body.xp === 'number' ? Math.min(Math.max(0, Math.floor(body.xp)), DEMO_MIGRATION_MAX_XP) : 0;
-    const coins =
-      typeof body.coins === 'number'
-        ? Math.min(Math.max(0, Math.floor(body.coins)), DEMO_MIGRATION_MAX_EXTRA_COINS)
-        : 0;
+    const body = await request.json();
+    const parsed = parseDemoMigrationPayload(body);
+    if (!parsed) {
+      return NextResponse.json({ error: 'Cantidad inválida o fuera de los límites de migración demo' }, { status: 400 });
+    }
+
+    const { xp, coins } = parsed;
 
     if (xp === 0 && coins === 0) {
       return NextResponse.json({ error: 'No hay progreso demo para migrar' }, { status: 400 });
