@@ -6,6 +6,18 @@ type RateLimitEntry = {
 /** En memoria por instancia serverless; fallback si no hay KV configurado. */
 const buckets = new Map<string, RateLimitEntry>();
 
+let memoryFallbackWarned = false;
+
+function warnMemoryFallbackOnce(): void {
+  if (memoryFallbackWarned || process.env.NODE_ENV !== 'production') return;
+  memoryFallbackWarned = true;
+  console.warn(
+    '[rateLimit] KV_REST_API_URL / KV_REST_API_TOKEN not configured. ' +
+      'API rate limits are per serverless instance, not global. ' +
+      'Set Upstash/Vercel KV in production — see docs/es/setup/configuration.md'
+  );
+}
+
 export type RateLimitResult = {
   allowed: boolean;
   remaining: number;
@@ -77,6 +89,7 @@ async function kvRateLimit(key: string, limit: number, windowMs: number): Promis
 export async function checkRateLimit(key: string, limit: number, windowMs: number): Promise<RateLimitResult> {
   const distributed = await kvRateLimit(key, limit, windowMs);
   if (distributed) return distributed;
+  warnMemoryFallbackOnce();
   return memoryRateLimit(key, limit, windowMs);
 }
 

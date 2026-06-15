@@ -8,11 +8,26 @@ Environment variables and runtime modes. For first-time setup, see [installation
 
 Copy [`.env.example`](../../../.env.example) to `.env.local` at the project root.
 
-| Variable                        | Required | Description                                   |
-| ------------------------------- | -------- | --------------------------------------------- |
-| `NEXT_PUBLIC_SUPABASE_URL`      | Yes      | Supabase project URL                          |
-| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Yes      | Supabase public anon key                      |
-| `OPENAI_API_KEY`                | No       | OpenAI API key for `/api/chat` (AI assistant) |
+| Variable                        | Required                 | Description                                                                  |
+| ------------------------------- | ------------------------ | ---------------------------------------------------------------------------- |
+| `NEXT_PUBLIC_SUPABASE_URL`      | Yes                      | Supabase project URL                                                         |
+| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Yes                      | Supabase public anon key                                                     |
+| `OPENAI_API_KEY`                | No                       | OpenAI API key for `/api/chat` (AI assistant)                                |
+| `KV_REST_API_URL`               | Recommended in production | Upstash/Vercel KV REST URL for distributed API rate limiting                |
+| `KV_REST_API_TOKEN`             | Recommended in production | KV token; without it limits are in-memory per serverless instance           |
+
+### API rate limiting
+
+Without `KV_REST_API_*`, `src/utils/rateLimit.ts` falls back to an in-memory map per instance (each Vercel cold start has its own counter). Configure KV in production for global limits on:
+
+- `/api/chat`
+- `/api/demo/session`
+- `/api/exam/questions` and `/api/exam/grade`
+- `/api/gamification/*`
+- `/api/profile/public/[userId]`
+- `/api/r2/infographic/[id]`
+
+When vars are missing in `NODE_ENV=production`, the server logs a warning on first fallback use.
 
 Without Supabase env vars, login/signup and account persistence will not work. **Demo mode** (from the landing page) still uses local browser storage without an account.
 

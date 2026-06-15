@@ -9,11 +9,26 @@ Referencia de variables de entorno y modos de ejecución. Para la instalación i
 
 Copia [`.env.example`](../../../.env.example) a `.env.local` en la raíz del proyecto.
 
-| Variable                        | Obligatoria | Descripción                                       |
-| ------------------------------- | ----------- | ------------------------------------------------- |
-| `NEXT_PUBLIC_SUPABASE_URL`      | Sí          | URL del proyecto Supabase                         |
-| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Sí          | Clave anónima pública de Supabase                 |
-| `OPENAI_API_KEY`                | No          | API key de OpenAI para `/api/chat` (asistente IA) |
+| Variable                        | Obligatoria              | Descripción                                                                 |
+| ------------------------------- | ------------------------ | --------------------------------------------------------------------------- |
+| `NEXT_PUBLIC_SUPABASE_URL`      | Sí                       | URL del proyecto Supabase                                                   |
+| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Sí                       | Clave anónima pública de Supabase                                           |
+| `OPENAI_API_KEY`                | No                       | API key de OpenAI para `/api/chat` (asistente IA)                           |
+| `KV_REST_API_URL`               | Recomendada en producción | URL REST de Upstash/Vercel KV para rate limiting distribuido en APIs       |
+| `KV_REST_API_TOKEN`             | Recomendada en producción | Token de KV; sin esto los límites son en memoria por instancia serverless   |
+
+### Rate limiting en APIs
+
+Sin `KV_REST_API_*`, `src/utils/rateLimit.ts` usa un mapa en memoria por instancia (cada cold start en Vercel tiene su propio contador). En producción conviene configurar KV para límites globales en:
+
+- `/api/chat`
+- `/api/demo/session`
+- `/api/exam/questions` y `/api/exam/grade`
+- `/api/gamification/*`
+- `/api/profile/public/[userId]`
+- `/api/r2/infographic/[id]`
+
+Si faltan las variables en `NODE_ENV=production`, el servidor registra un warning en logs al primer uso del fallback.
 
 Sin las variables de Supabase, login/registro y persistencia de cuentas no funcionan. El **modo demo** (landing) sigue usando almacenamiento local en el navegador sin cuenta.
 
