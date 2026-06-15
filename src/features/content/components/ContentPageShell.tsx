@@ -54,22 +54,27 @@ function PublicContentChrome({ children }: { children: ReactNode }) {
 
 function PublicContentCta() {
   return (
-    <aside className="border-app-ring/25 bg-app-ring/10 mx-auto mt-10 max-w-4xl rounded-2xl border p-6 text-center">
-      <p className="text-on-surface mb-4 text-sm leading-relaxed">
-        Crea una cuenta gratis para ver guías completas, infografías interactivas y seguir tu progreso de lectura.
-      </p>
-      <div className="flex flex-wrap items-center justify-center gap-3">
-        <Link
-          href="/signup/"
-          className="from-cta-from to-cta-to rounded-xl bg-linear-to-r px-5 py-2.5 text-sm font-bold text-white"
-        >
-          Registrarme
-        </Link>
-        <Link href="/login/" className="text-app-accent text-sm font-semibold underline">
-          Ya tengo cuenta
-        </Link>
+    <details className="border-app-ring/25 bg-app-ring/10 mx-auto mt-10 max-w-4xl rounded-2xl border p-6">
+      <summary className="text-on-surface cursor-pointer text-sm font-semibold select-none">
+        ¿Quieres guardar tu progreso de lectura?
+      </summary>
+      <div className="mt-4 text-center">
+        <p className="text-on-surface-muted mb-4 text-sm leading-relaxed">
+          Crea una cuenta gratis para ver guías completas, infografías interactivas y seguir tu avance cuando vuelvas.
+        </p>
+        <div className="flex flex-wrap items-center justify-center gap-3">
+          <Link
+            href="/signup/"
+            className="from-cta-from to-cta-to rounded-xl bg-linear-to-r px-5 py-2.5 text-sm font-bold text-white"
+          >
+            Registrarme
+          </Link>
+          <Link href="/login/" className="text-app-accent text-sm font-semibold underline">
+            Ya tengo cuenta
+          </Link>
+        </div>
       </div>
-    </aside>
+    </details>
   );
 }
 

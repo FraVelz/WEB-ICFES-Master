@@ -67,7 +67,7 @@ export function ChatMessageList({ messages, isTyping, isAnonymous, messagesEndRe
       ))}
 
       {isTyping && (
-        <div className="flex gap-3">
+        <div className="flex gap-3" role="status" aria-live="polite" aria-label="El asistente está escribiendo">
           <div className="bg-app-ring/30 flex h-8 w-8 shrink-0 items-center justify-center rounded-full">
             <Icon name="robot" className="text-app-accent" />
           </div>

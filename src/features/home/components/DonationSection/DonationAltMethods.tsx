@@ -17,6 +17,7 @@ export function DonationCopyMethod() {
           onClick={() => currentMethod.detail && copyToClipboard(currentMethod.detail, currentMethod.id)}
           className="bg-app-accent-strong text-app-on-accent hover:bg-app-accent-darker rounded-lg p-3 transition-colors"
           title="Copiar"
+          aria-label="Copiar número de cuenta"
         >
           <Icon name={copied === currentMethod.id ? 'check' : 'copy'} />
         </button>
