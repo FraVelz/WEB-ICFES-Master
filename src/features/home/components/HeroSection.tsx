@@ -13,9 +13,8 @@ export const HeroSection = () => {
   return (
     <section
       className={cn(
-        'focus:ring-app-accent focus:ring-offset-surface flex min-h-dvh scroll-mt-4',
-        'items-center justify-center px-6 pt-[max(1.25rem,env(safe-area-inset-top))] outline-none',
-        'focus:ring-2 focus:ring-offset-2 sm:scroll-mt-6 sm:pt-14 md:px-8'
+        'flex min-h-dvh scroll-mt-4 items-center justify-center px-6',
+        'pt-[max(1.25rem,env(safe-area-inset-top))] sm:scroll-mt-6 sm:pt-14 md:px-8'
       )}
     >
       <div className="mx-auto max-w-6xl space-y-8 text-center">
@@ -36,14 +35,14 @@ export const HeroSection = () => {
 
         {/* Main Title */}
         <AnimatedReveal isVisible delay={0.15}>
-          <h2
+          <h1
             className={cn(
               'from-cta-text-start via-cta-text-via to-cta-text-end mb-6 bg-linear-to-r bg-clip-text text-5xl',
               'leading-tight font-black text-transparent md:text-7xl lg:text-8xl'
             )}
           >
             Domina el ICFES desde Cero
-          </h2>
+          </h1>
         </AnimatedReveal>
 
         {/* Subtitle */}

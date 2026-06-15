@@ -50,14 +50,14 @@ export const HomePageMobile = () => {
           {/* Logo */}
           <MascotaCircle src={MASCOT_IMAGES.logo} size="md" alt="Mascota de ICFES Master" />
 
-          {/* App Name */}
-          <p className="text-on-surface text-3xl font-bold" aria-hidden="true">
-            ICFES Master
-          </p>
+          {/* Título principal (único h1 en vista móvil; desktop usa HeroSection) */}
+          <h1 className="text-on-surface text-center text-2xl font-bold">Domina el ICFES desde Cero</h1>
+
+          <p className="text-on-surface-muted text-lg font-semibold">ICFES Master</p>
 
           {/* Tagline */}
           <p className="text-on-surface-muted max-w-xs text-center text-sm">
-            Domina el examen ICFES con nuestra plataforma, y diviértete mientras aprendes.
+            Prepárate para Saber 11° con simulacros, práctica por áreas y gamificación.
           </p>
         </div>
       </div>
