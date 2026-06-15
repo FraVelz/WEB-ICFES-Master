@@ -85,7 +85,7 @@ export function ShopItemCardBadge({
     return (
       <span
         className={cn(
-          'flex items-center gap-1 rounded-full border border-red-600/30 bg-red-100 px-2 py-1',
+          'flex max-w-full items-center gap-1 rounded-full border border-red-600/30 bg-red-100 px-2 py-1',
           'text-xs font-bold text-red-800 dark:border-red-500/30 dark:bg-red-500/20 dark:text-red-400'
         )}
       >

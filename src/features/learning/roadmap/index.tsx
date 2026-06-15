@@ -35,18 +35,19 @@ export const LearningRoadmap = () => {
   const [selectedCheckpoint, setSelectedCheckpoint] = useState<PathNodeData | null>(null);
 
   const areaColorClass = currentAreaData?.color ?? 'from-blue-500 to-blue-600';
+  const colorClass = currentAreaData?.bgColor ?? getSolidAreaBgClass(areaColorClass);
 
-  const getColorClass = (gradient: string) => {
-    if (gradient.includes('blue')) return 'bg-blue-500';
-    if (gradient.includes('green')) return 'bg-green-500';
-    if (gradient.includes('purple')) return 'bg-purple-500';
-    if (gradient.includes('orange')) return 'bg-orange-500';
-    if (gradient.includes('pink')) return 'bg-pink-500';
-    if (gradient.includes('indigo')) return 'bg-indigo-500';
-    return 'bg-on-surface-muted';
-  };
-
-  const colorClass = getColorClass(areaColorClass);
+  function getSolidAreaBgClass(gradient: string) {
+    if (gradient.includes('subject-lc') || gradient.includes('blue')) return 'bg-subject-lc-bold';
+    if (gradient.includes('subject-math') || gradient.includes('green')) return 'bg-subject-math-bold';
+    if (gradient.includes('subject-sci') || gradient.includes('purple')) return 'bg-subject-sci-bold';
+    if (gradient.includes('subject-soc') || gradient.includes('orange')) return 'bg-subject-soc-bold';
+    if (gradient.includes('subject-eng') || gradient.includes('indigo') || gradient.includes('pink')) {
+      return 'bg-subject-eng-bold';
+    }
+    if (gradient.includes('subject-full')) return 'bg-subject-full-to';
+    return 'bg-app-accent-strong';
+  }
 
   const activeSections = useMemo(() => {
     if (!currentSectionId) return sections;

@@ -4,13 +4,30 @@ import { cn } from '@/utils/cn';
 import type { LessonPathStatus } from '@/features/learning/utils/lessonPathStatus';
 
 const BORDER_COLORS = {
-  green: 'border-green-500/50',
-  purple: 'border-purple-500/50',
-  orange: 'border-orange-500/50',
-  pink: 'border-pink-500/50',
-  indigo: 'border-indigo-500/50',
-  slate: 'border-on-surface-muted/50',
-};
+  green: 'border-green-500/30',
+  purple: 'border-purple-500/30',
+  orange: 'border-orange-500/30',
+  pink: 'border-pink-500/30',
+  indigo: 'border-indigo-500/30',
+  blue: 'border-blue-500/30',
+  slate: 'border-surface-border',
+} as const;
+
+function resolveAccentBorder(bgClass: string): string {
+  const subjectMatch = bgClass.match(/subject-(lc|math|sci|soc|eng|full)/);
+  if (subjectMatch) {
+    return `border-subject-${subjectMatch[1]}/30`;
+  }
+
+  const legacyColor = (bgClass.split('-')[1] || 'slate') as keyof typeof BORDER_COLORS;
+  return BORDER_COLORS[legacyColor] ?? BORDER_COLORS.slate;
+}
+
+const FOCUS_RING_CLASS = cn(
+  'focus-visible:outline-none focus-visible:relative focus-visible:z-10',
+  'focus-visible:border-app-accent',
+  'focus-visible:shadow-[0_0_0_2px_var(--icfes-surface),0_0_0_5px_var(--color-app-ring)]'
+);
 
 export interface PathNodeProps {
   status?: LessonPathStatus;
@@ -38,19 +55,27 @@ export const PathNode = ({
   const isCurrent = status === 'current';
   const isCompleted = status === 'completed';
 
-  const colorName = (colorClass.split('-')[1] || 'slate') as keyof typeof BORDER_COLORS;
-  const borderColor = BORDER_COLORS[colorName] ?? BORDER_COLORS.slate;
+  const borderColor = resolveAccentBorder(colorClass);
+
+  const currentIconCircleClass = isMinimumRequirements
+    ? 'border-amber-400/30 bg-amber-600 text-white shadow-md'
+    : cn(colorClass, 'border-white/20 text-white shadow-md');
 
   const cardClass = cn(
-    'group relative flex w-full cursor-pointer items-center gap-4 rounded-2xl border-2 p-4',
+    'group relative flex w-full cursor-pointer items-center gap-4 rounded-2xl border p-4',
     'text-left transition-all duration-200',
-    'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-app-accent focus-visible:ring-offset-2',
-    'focus-visible:ring-offset-surface-via',
+    FOCUS_RING_CLASS,
     isPending && 'border-surface-border bg-surface-elevated/40 opacity-70 hover:border-surface-border hover:opacity-90',
     isLocked && 'cursor-not-allowed opacity-55 hover:opacity-55',
-    isMinimumRequirements && !isCompleted && 'border-amber-500/35 bg-surface-elevated/60 hover:border-amber-500/50',
-    isCurrent && cn(borderColor, 'lesson-current-glow bg-surface-elevated hover:bg-surface-overlay'),
-    isCompleted && 'border-green-500/40 bg-surface-elevated/50 hover:bg-surface-elevated'
+    isMinimumRequirements &&
+      !isCompleted &&
+      (isCurrent
+        ? 'border-amber-500/30 bg-surface-elevated/60 lesson-current-glow hover:border-amber-500/40 hover:bg-surface-overlay'
+        : 'border-amber-500/25 bg-surface-elevated/60 hover:border-amber-500/35'),
+    isCurrent &&
+      !isMinimumRequirements &&
+      cn(borderColor, 'lesson-current-glow bg-surface-elevated hover:bg-surface-overlay'),
+    isCompleted && 'border-green-500/30 bg-surface-elevated/50 hover:bg-surface-elevated'
   );
 
   const iconCircleClass = cn(
@@ -58,7 +83,7 @@ export const PathNode = ({
     'transition-transform group-hover:scale-105',
     isCheckpoint ? 'h-16 w-16 text-2xl' : 'h-12 w-12 text-lg',
     isPending && 'border-surface-border bg-surface-overlay text-on-surface-muted',
-    isCurrent && cn(colorClass, 'border-white/20 text-white shadow-md'),
+    isCurrent && currentIconCircleClass,
     isCompleted &&
       'border-green-600/40 bg-green-500/15 text-green-600 dark:border-green-600 dark:bg-green-600/20 dark:text-green-400'
   );
@@ -84,7 +109,7 @@ export const PathNode = ({
           className={cn(
             isPending && 'text-on-surface-muted',
             isCurrent && 'text-white',
-            isCompleted && 'text-green-500 dark:text-green-400'
+            isCompleted && 'text-green-600 dark:text-green-400'
           )}
         />
       </div>

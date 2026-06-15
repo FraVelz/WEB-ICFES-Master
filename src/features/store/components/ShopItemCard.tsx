@@ -70,7 +70,7 @@ export const ShopItemCard = ({
         )}
       />
 
-      <div className="absolute top-3 right-3">
+      <div className="mb-4 flex items-start justify-end empty:hidden">
         <ShopItemCardBadge
           item={item}
           isPurchased={isPurchased}
@@ -83,7 +83,7 @@ export const ShopItemCard = ({
         />
       </div>
 
-      <div className="mt-2 mb-6 flex justify-center">
+      <div className="mb-6 flex justify-center">
         <ShopItemPreview
           item={item}
           variant="card"
