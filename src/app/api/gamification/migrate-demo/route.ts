@@ -4,7 +4,7 @@ import {
   addXpServerWithMultiplier,
   hasRewardReason,
 } from '@/services/supabase/gamification/gamificationServerEconomy';
-import { getAuthUserFromRequest } from '@/utils/apiAuth';
+import { getAuthUserFromRequest, hasDemoSession } from '@/utils/apiAuth';
 import { checkRateLimit } from '@/utils/rateLimit';
 import { parseDemoMigrationPayload } from '@/services/demo/computeDemoMigrationBalances';
 
@@ -14,6 +14,13 @@ export async function POST(request: NextRequest) {
     const user = await getAuthUserFromRequest(request);
     if (!user) {
       return NextResponse.json({ error: 'Debes iniciar sesión' }, { status: 401 });
+    }
+
+    if (!hasDemoSession(request)) {
+      return NextResponse.json(
+        { error: 'La migración demo requiere haber usado el modo demo en esta sesión' },
+        { status: 403 }
+      );
     }
 
     const rate = await checkRateLimit(`demo-migrate:${user.id}`, 5, 60_000);
