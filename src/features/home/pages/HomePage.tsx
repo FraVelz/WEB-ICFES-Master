@@ -6,19 +6,16 @@ import { ThemeToggle } from '@/shared/components/ThemeToggle';
 
 import { HomePageMobile } from './HomePageMobile';
 
-const HomePageDesktop = dynamic(
-  () => import('./HomePageDesktop').then((mod) => ({ default: mod.HomePageDesktop })),
-  {
-    loading: () => (
-      <div
-        className={cn(
-          'bg-surface-border/40 mx-auto hidden min-h-dvh max-w-6xl animate-pulse rounded-2xl',
-          'motion-reduce:animate-none md:block'
-        )}
-      />
-    ),
-  }
-);
+const HomePageDesktop = dynamic(() => import('./HomePageDesktop').then((mod) => ({ default: mod.HomePageDesktop })), {
+  loading: () => (
+    <div
+      className={cn(
+        'bg-surface-border/40 mx-auto hidden min-h-dvh max-w-6xl animate-pulse rounded-2xl',
+        'motion-reduce:animate-none md:block'
+      )}
+    />
+  ),
+});
 
 /**
  * Móvil/desktop con CSS (breakpoints Tailwind), no JS con window:
