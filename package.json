@@ -12,7 +12,7 @@
     "lint": "eslint .",
     "test": "vitest run",
     "test:watch": "vitest",
-    "audit": "pnpm audit --audit-level moderate",
+    "audit": "pnpm audit --audit-level moderate --prod",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "lint:md": "markdownlint-cli2",
