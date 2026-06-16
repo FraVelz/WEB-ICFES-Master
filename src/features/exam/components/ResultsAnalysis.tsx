@@ -14,7 +14,6 @@ interface ResultItem {
 
 interface ResultsAnalysisProps {
   results: ResultItem[];
-  questions: ExamQuestion[];
   percentage: number;
   correctCount: number;
   examConfig: ExamConfig | null;
@@ -25,7 +24,6 @@ interface ResultsAnalysisProps {
 
 export const ResultsAnalysis = ({
   results,
-  questions,
   percentage,
   correctCount,
   examConfig,
@@ -56,7 +54,7 @@ export const ResultsAnalysis = ({
           </div>
           <p className="text-on-surface-muted mb-2 text-xl">Calificación Final</p>
           <p className="text-on-surface-muted text-lg">
-            {correctCount} de {questions.length} respuestas correctas
+            {correctCount} de {results.length} respuestas correctas
           </p>
         </div>
 

@@ -62,7 +62,6 @@ export function PracticeResultsView({
           <div className="xl:col-span-3">
             <ResultsAnalysis
               results={results}
-              questions={results.map((r) => r.question)}
               percentage={percentage}
               correctCount={correctCount}
               areaInfo={areaInfo}
