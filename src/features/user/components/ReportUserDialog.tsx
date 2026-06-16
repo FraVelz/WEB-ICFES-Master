@@ -51,25 +51,28 @@ export function ReportUserDialog({
   if (!isOpen) return null;
 
   return (
-    <div
-      className="fixed inset-0 z-80 flex items-center justify-center bg-black/70 p-4 backdrop-blur-sm"
-      onClick={() => {
-        if (!submitting) onClose();
-      }}
-      role="presentation"
-    >
-      <div
-        ref={dialogRef}
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby={titleId}
-        aria-describedby={descId}
-        className={cn(
-          'border-surface-border bg-surface-elevated w-full max-w-lg rounded-2xl border p-6 shadow-2xl',
-          'dark:border-surface-border dark:bg-surface-elevated'
-        )}
-        onClick={(e) => e.stopPropagation()}
-      >
+    <>
+      <button
+        type="button"
+        aria-label="Cerrar diálogo"
+        className="fixed inset-0 z-80 bg-black/70 backdrop-blur-sm"
+        disabled={submitting}
+        onClick={() => {
+          if (!submitting) onClose();
+        }}
+      />
+      <div className="pointer-events-none fixed inset-0 z-80 flex items-center justify-center p-4">
+        <div
+          ref={dialogRef}
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby={titleId}
+          aria-describedby={descId}
+          className={cn(
+            'border-surface-border bg-surface-elevated pointer-events-auto w-full max-w-lg rounded-2xl border p-6 shadow-2xl',
+            'dark:border-surface-border dark:bg-surface-elevated'
+          )}
+        >
         <div className="mb-5 flex items-start justify-between gap-4">
           <div className="flex items-center gap-3 text-red-600 dark:text-red-400">
             <div className="flex h-10 w-10 items-center justify-center rounded-full bg-red-500/10">
@@ -113,7 +116,8 @@ export function ReportUserDialog({
           onDetailsChange={setDetails}
           onSubmit={handleSubmit}
         />
+        </div>
       </div>
-    </div>
+    </>
   );
 }
