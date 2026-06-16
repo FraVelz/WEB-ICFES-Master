@@ -1,12 +1,14 @@
 const BOGOTA_TZ = 'America/Bogota';
 
+const BOGOTA_DATE_PARTS_FORMATTER = new Intl.DateTimeFormat('en-US', {
+  timeZone: BOGOTA_TZ,
+  year: 'numeric',
+  month: '2-digit',
+  day: '2-digit',
+});
+
 function getBogotaDateParts(date: Date): { year: number; month: number; day: number } {
-  const parts = new Intl.DateTimeFormat('en-US', {
-    timeZone: BOGOTA_TZ,
-    year: 'numeric',
-    month: '2-digit',
-    day: '2-digit',
-  }).formatToParts(date);
+  const parts = BOGOTA_DATE_PARTS_FORMATTER.formatToParts(date);
 
   return {
     year: Number(parts.find((p) => p.type === 'year')?.value ?? 0),

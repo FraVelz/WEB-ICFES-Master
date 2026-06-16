@@ -24,7 +24,14 @@ export async function awardAchievementRewardsServer(
   userId: string,
   achievementIds: string[]
 ): Promise<{ awarded: string[]; skipped: string[] }> {
-  const uniqueIds = [...new Set(achievementIds.map((id) => id.trim()).filter(Boolean))];
+  const uniqueIds = [
+    ...new Set(
+      achievementIds.flatMap((id) => {
+        const trimmed = id.trim();
+        return trimmed ? [trimmed] : [];
+      })
+    ),
+  ];
   if (uniqueIds.length === 0) {
     return { awarded: [], skipped: [] };
   }
@@ -35,34 +42,37 @@ export async function awardAchievementRewardsServer(
   const awarded: string[] = [];
   const skipped: string[] = [];
 
-  for (const achievementId of uniqueIds) {
-    const achievement = ACHIEVEMENTS_DATA.find((item) => item.id === achievementId);
-    if (!achievement) {
-      skipped.push(achievementId);
-      continue;
-    }
+  await Promise.all(
+    uniqueIds.map(async (achievementId) => {
+      const achievement = ACHIEVEMENTS_DATA.find((item) => item.id === achievementId);
+      if (!achievement) {
+        skipped.push(achievementId);
+        return;
+      }
 
-    if (!progress[achievementId]?.unlocked) {
-      skipped.push(achievementId);
-      continue;
-    }
+      if (!progress[achievementId]?.unlocked) {
+        skipped.push(achievementId);
+        return;
+      }
 
-    const reason = achievementReason(achievementId);
-    if (await hasRewardReason(userId, reason)) {
-      skipped.push(achievementId);
-      continue;
-    }
+      const reason = achievementReason(achievementId);
+      if (await hasRewardReason(userId, reason)) {
+        skipped.push(achievementId);
+        return;
+      }
 
-    if (achievement.coinsReward > 0) {
-      await addCoinsServer(userId, achievement.coinsReward, reason);
-    }
+      const rewards: Promise<unknown>[] = [];
+      if (achievement.coinsReward > 0) {
+        rewards.push(addCoinsServer(userId, achievement.coinsReward, reason));
+      }
+      if (achievement.xpReward > 0) {
+        rewards.push(addXpServerWithMultiplier(userId, achievement.xpReward, reason));
+      }
+      await Promise.all(rewards);
 
-    if (achievement.xpReward > 0) {
-      await addXpServerWithMultiplier(userId, achievement.xpReward, reason);
-    }
-
-    awarded.push(achievementId);
-  }
+      awarded.push(achievementId);
+    })
+  );
 
   return { awarded, skipped };
 }
