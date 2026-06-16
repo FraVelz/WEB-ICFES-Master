@@ -72,7 +72,8 @@ export function SettingsDeleteModal() {
               onChange={(e) => setDeleteConfirmation(e.target.value)}
               className={cn(
                 'border-surface-border bg-surface-elevated w-full rounded-lg border px-3 py-2 text-sm',
-                'text-white outline-none focus:border-red-500'
+                'text-white focus:border-red-500 focus-visible:ring-2 focus-visible:ring-red-500/50',
+                'focus-visible:outline-none'
               )}
               placeholder="Confirmación..."
             />
