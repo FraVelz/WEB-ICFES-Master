@@ -26,7 +26,7 @@ export async function getCoinsBalance(userId: string): Promise<number> {
   return readGamificationBalance(userId);
 }
 
-export async function addCoinsBalance(userId: string, amount: number, reason = 'reward'): Promise<number> {
+export async function addCoinsBalance(userId: string, amount: number, _reason = 'reward'): Promise<number> {
   if (isDemoUserId(userId)) {
     if (amount <= 0) return getDemoCoins();
     const balance = addDemoCoins(amount);

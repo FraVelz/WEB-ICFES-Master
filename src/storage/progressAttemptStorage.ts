@@ -36,7 +36,6 @@ function persistAttempt(
     syncAchievementsAfterGameplay();
   });
 
-  const correctCount = Number(data.correctCount ?? 0);
   void syncAttemptToServer(scope ?? 'demo', newAttempt);
 
   return newAttempt;

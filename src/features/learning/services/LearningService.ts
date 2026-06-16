@@ -77,7 +77,6 @@ export const LearningService = {
     if (lessons?.length > 0) {
       const mapped = lessons.map((lesson, i) => {
         const l = lesson as Record<string, unknown>;
-        const quiz = (l.quiz ?? {}) as Record<string, unknown>;
         const nestedContent = l.content;
         const rawContent =
           l.body ??

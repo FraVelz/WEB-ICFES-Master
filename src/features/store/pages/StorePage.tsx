@@ -3,7 +3,6 @@
 import dynamic from 'next/dynamic';
 import { useState } from 'react';
 import { cn } from '@/utils/cn';
-import { Icon } from '@/shared/components';
 import { SkeletonGrid } from '@/shared/components/SkeletonCard';
 import { useToast } from '@/shared/components/Toast/ToastProvider';
 import { PAGE_SHELL_CLASS } from '@/shared/constants/pageShell';

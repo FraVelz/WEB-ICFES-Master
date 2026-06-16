@@ -24,11 +24,6 @@ export function invalidateLearningProgressSync(userId: string): void {
   syncCache.delete(userId);
 }
 
-async function fetchRemoteLearningProgress(userId: string): Promise<LearningProgressSnapshot> {
-  const profile = await GamificationSupabaseService.getAchievementsMetaByUserId(userId);
-  return readLearningProgressRemoteMeta(profile?.achievements);
-}
-
 async function writeRemoteLearningProgress(
   userId: string,
   snapshot: LearningProgressSnapshot,

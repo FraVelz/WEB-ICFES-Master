@@ -103,8 +103,6 @@ export function getAdjacentLessonStepHrefs(
   contentStepCount: number,
   hasQuiz: boolean
 ): { prev: string | null; next: string | null } {
-  const totalSteps = contentStepCount + (hasQuiz ? 1 : 0);
-
   if (current.kind === 'content') {
     const position = current.index;
     return {
@@ -118,7 +116,6 @@ export function getAdjacentLessonStepHrefs(
     };
   }
 
-  const examPosition = contentStepCount;
   return {
     prev: contentStepCount > 0 ? getLessonStepHref(lessonId, contentStepCount) : null,
     next: null,

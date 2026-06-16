@@ -7,7 +7,7 @@ import ExamSupabaseService from '@/services/supabase/ExamSupabaseService';
 import ProgressSupabaseService from '@/services/supabase/ProgressSupabaseService';
 import { isDemoUserId } from '@/services/demo/demoCoins';
 import { isSupabaseConfigured } from '@/services/persistence/supabaseConfigured';
-import type { AreaStatItem, AttemptWithQuestions, ProgressData } from '@/storage/progressStorage';
+import type { AttemptWithQuestions, ProgressData } from '@/storage/progressStorage';
 import { isAnswerCorrect } from '@/features/exam/utils/answerKey';
 
 const AREA_BUCKETS: Record<string, { key: string; icon: string; color: string }> = {

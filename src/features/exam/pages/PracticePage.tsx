@@ -1,6 +1,5 @@
 'use client';
 
-import { cn } from '@/utils/cn';
 import { ExamConfigModal } from '@/features/exam/components';
 import { PracticeResultsView } from '@/features/exam/components/practice/PracticeResultsView';
 import { PracticeActiveView } from '@/features/exam/components/practice/PracticeActiveView';

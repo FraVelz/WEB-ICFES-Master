@@ -35,7 +35,6 @@ export function resolvePhaseStatuses(
 
   for (const phase of phases) {
     const section = sections.find((s) => s.id === phase.sectionId);
-    const { percent } = getSectionProgress(section);
 
     if (isPhaseDone(section, skippedSectionIds, phase.sectionId)) {
       statuses.set(phase.id, 'completed');

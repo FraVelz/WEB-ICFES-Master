@@ -52,7 +52,7 @@ export async function migrateSkillLevel(userId: string): Promise<void> {
   }
 }
 
-export async function migrateGamificationBalances(userId: string): Promise<void> {
+export async function migrateGamificationBalances(_userId: string): Promise<void> {
   if (!isSupabaseConfigured()) return;
 
   const coinsRaw = localStorage.getItem(DEMO_COINS_KEY);

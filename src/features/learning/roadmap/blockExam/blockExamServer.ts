@@ -10,7 +10,6 @@ import {
   addXpServer,
   hasRewardReason,
 } from '@/services/supabase/gamification/gamificationServerEconomy';
-import type { AreaId } from '@/shared/constants';
 import { signBlockExamSession, stripCorrectAnswers, verifyBlockExamSession } from './blockExamSessionToken';
 
 function shuffle<T>(items: T[]): T[] {
@@ -99,7 +98,6 @@ export async function gradeBlockExamSession(sessionToken: string, answers: Recor
   }
 
   const { results, allCorrect } = gradeLessonQuizAnswersPure(session.questions, answers);
-  const answeredCount = session.questions.filter((question) => answers[question.id] != null).length;
   const correctCount = results.filter((result) => result.correct).length;
   const allAnswered = session.questions.every((question) => answers[question.id] != null);
   const score = allAnswered ? Math.round((correctCount / session.questions.length) * 100) : 0;

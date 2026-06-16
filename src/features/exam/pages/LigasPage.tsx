@@ -164,7 +164,7 @@ function LigasActivePage() {
             {needsJoinCta || leaderboardData.length <= 1 ? (
               <LeagueSkeletonRows count={Math.min(12, Math.max(8, groupSize - 1))} />
             ) : (
-              otherPlayers.map((player: LeaderboardPlayer, index: number) => {
+              otherPlayers.map((player: LeaderboardPlayer) => {
                 const originalIndex = leaderboardData.findIndex((p) => p.id === player.id);
                 const style = getPositionStyle(originalIndex, leaderboardData.length);
                 return (

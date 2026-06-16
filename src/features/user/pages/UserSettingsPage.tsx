@@ -3,7 +3,7 @@
 import { cn } from '@/utils/cn';
 import Link from 'next/link';
 import { Icon } from '@/shared/components/Icon';
-import { UserSettingsProvider, useUserSettingsContext } from '@/features/user/context/UserSettingsContext';
+import { UserSettingsProvider } from '@/features/user/context/UserSettingsContext';
 import { SettingsProfilePanel } from '@/features/user/components/settings/SettingsProfilePanel';
 import { SettingsAccountPanel } from '@/features/user/components/settings/SettingsAccountPanel';
 import { SettingsAppearancePanel } from '@/features/user/components/settings/SettingsAppearancePanel';

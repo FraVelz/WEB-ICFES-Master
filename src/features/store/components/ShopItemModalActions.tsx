@@ -2,7 +2,6 @@
 
 import { cn } from '@/utils/cn';
 import { Icon } from '@/shared/components/Icon';
-import { DOUBLE_XP_ITEM_ID } from '../constants/doubleXp';
 import { MAX_STREAK_SHIELDS, STREAK_SHIELD_ITEM_ID } from '../constants/streakShield';
 import type { ShopItem } from '../data/shopItems';
 import type { ShopItemModalPurchase } from './ShopItemModal';

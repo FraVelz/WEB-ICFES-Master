@@ -7,7 +7,6 @@ import { AREA_INFO, HOME_AREA_IDS } from '@/shared/constants/areaInfo';
 import {
   getSimulacroAreaHref,
   getSimulacroCompletoHref,
-  getSimulacroHubHref,
 } from '@/features/exam/utils/simulacroNavigation';
 import { getLearningPhasesHref } from '@/features/learning/data/competencyPhases';
 

@@ -7,7 +7,7 @@ import { PhasesPageSkeleton } from '@/shared/components/PageSkeletons';
 import type { AreaId } from '@/shared/constants';
 import { getPracticaHrefForRoadmapArea } from '@/shared/constants';
 import { useDashboardShell } from '@/features/dashboard/shell';
-import { COMPETENCY_PHASES, getLearningPhasesHref } from '../data/competencyPhases';
+import { COMPETENCY_PHASES } from '../data/competencyPhases';
 import {
   ROUTE_TO_500_PATH,
   getAreaSimulacroPhaseCopy,

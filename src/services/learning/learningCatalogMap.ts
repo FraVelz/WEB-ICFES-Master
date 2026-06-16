@@ -56,7 +56,6 @@ export function mapRoadmapRowToLesson(row: Record<string, unknown>, index: numbe
 
   const content = readRoadmapContent(row);
   const phase = normalizeLessonPhase(row.phase ?? content.phase ?? content.fase ?? content.difficulty);
-  const quiz = (content.quiz ?? {}) as Record<string, unknown>;
   const order = Number(row.order_index ?? index);
   const blockFromContent = typeof content.block === 'string' ? content.block : undefined;
   const blockId =
