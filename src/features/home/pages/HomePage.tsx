@@ -18,6 +18,7 @@ export const HomePage = () => {
         Saltar al contenido
       </a>
       <main id="main-content" className="relative z-10 overflow-x-hidden py-0 md:pt-6 md:pb-0">
+        <h1 className="sr-only">Domina el ICFES desde Cero — ICFES Master</h1>
         <div className="pointer-events-none fixed top-[max(1rem,env(safe-area-inset-top))] right-4 z-50 hidden md:block">
           <div className="pointer-events-auto">
             <ThemeToggle compact />

@@ -35,14 +35,14 @@ export const HeroSection = () => {
 
         {/* Main Title */}
         <AnimatedReveal isVisible delay={0.15}>
-          <h1
+          <p
             className={cn(
               'hero-title-gradient from-cta-text-start via-cta-text-via to-cta-text-end mb-6 bg-linear-to-r',
               'bg-clip-text text-5xl leading-tight font-black text-transparent md:text-7xl lg:text-8xl'
             )}
           >
             Domina el ICFES desde Cero
-          </h1>
+          </p>
         </AnimatedReveal>
 
         {/* Subtitle */}
