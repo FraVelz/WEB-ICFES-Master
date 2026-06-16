@@ -4,10 +4,7 @@ import Link from 'next/link';
 import { cn } from '@/utils/cn';
 import { Icon } from '@/shared/components/Icon';
 import { AREA_INFO, HOME_AREA_IDS } from '@/shared/constants/areaInfo';
-import {
-  getSimulacroAreaHref,
-  getSimulacroCompletoHref,
-} from '@/features/exam/utils/simulacroNavigation';
+import { getSimulacroAreaHref, getSimulacroCompletoHref } from '@/features/exam/utils/simulacroNavigation';
 import { getLearningPhasesHref } from '@/features/learning/data/competencyPhases';
 
 const AREA_ICONS: Record<string, string> = {

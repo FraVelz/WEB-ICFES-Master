@@ -73,49 +73,49 @@ export function ReportUserDialog({
             'dark:border-surface-border dark:bg-surface-elevated'
           )}
         >
-        <div className="mb-5 flex items-start justify-between gap-4">
-          <div className="flex items-center gap-3 text-red-600 dark:text-red-400">
-            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-red-500/10">
-              <Icon name="flag" />
+          <div className="mb-5 flex items-start justify-between gap-4">
+            <div className="flex items-center gap-3 text-red-600 dark:text-red-400">
+              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-red-500/10">
+                <Icon name="flag" />
+              </div>
+              <div>
+                <h2 id={titleId} className="text-on-surface text-lg font-bold">
+                  Reportar perfil
+                </h2>
+                <p id={descId} className="text-on-surface-muted mt-0.5 text-sm">
+                  Usuario: <strong className="text-on-surface">{reportedUserName}</strong>
+                </p>
+              </div>
             </div>
-            <div>
-              <h2 id={titleId} className="text-on-surface text-lg font-bold">
-                Reportar perfil
-              </h2>
-              <p id={descId} className="text-on-surface-muted mt-0.5 text-sm">
-                Usuario: <strong className="text-on-surface">{reportedUserName}</strong>
-              </p>
-            </div>
+            <button
+              type="button"
+              onClick={onClose}
+              disabled={submitting}
+              className={cn(
+                'text-on-surface-muted hover:text-on-surface cursor-pointer rounded-lg p-1 transition-colors',
+                'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:outline-none',
+                'disabled:cursor-not-allowed disabled:opacity-50'
+              )}
+              aria-label="Cerrar"
+            >
+              <Icon name="x-mark" />
+            </button>
           </div>
-          <button
-            type="button"
-            onClick={onClose}
-            disabled={submitting}
-            className={cn(
-              'text-on-surface-muted hover:text-on-surface cursor-pointer rounded-lg p-1 transition-colors',
-              'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:outline-none',
-              'disabled:cursor-not-allowed disabled:opacity-50'
-            )}
-            aria-label="Cerrar"
-          >
-            <Icon name="x-mark" />
-          </button>
-        </div>
 
-        <ReportUserDialogBody
-          success={success}
-          isAuthenticated={isAuthenticated}
-          reason={reason}
-          details={details}
-          submitting={submitting}
-          error={error}
-          cancelRef={cancelRef}
-          onClose={onClose}
-          onLogin={() => router.push('/login')}
-          onReasonChange={setReason}
-          onDetailsChange={setDetails}
-          onSubmit={handleSubmit}
-        />
+          <ReportUserDialogBody
+            success={success}
+            isAuthenticated={isAuthenticated}
+            reason={reason}
+            details={details}
+            submitting={submitting}
+            error={error}
+            cancelRef={cancelRef}
+            onClose={onClose}
+            onLogin={() => router.push('/login')}
+            onReasonChange={setReason}
+            onDetailsChange={setDetails}
+            onSubmit={handleSubmit}
+          />
         </div>
       </div>
     </>

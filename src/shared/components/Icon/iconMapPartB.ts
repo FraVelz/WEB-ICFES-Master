@@ -1,11 +1,7 @@
 /** Second half of ICONS map. */
 import type { ReactNode } from 'react';
 
-import {
-  messageIcon,
-  microchipIcon,
-  paperPlaneIcon,
-} from './iconPaths/iconPaths3';
+import { messageIcon, microchipIcon, paperPlaneIcon } from './iconPaths/iconPaths3';
 import {
   playIcon,
   playCircleIcon,
