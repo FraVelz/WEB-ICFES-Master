@@ -33,7 +33,7 @@ export function DashboardShellAside() {
         'sticky top-0 h-dvh overflow-y-auto'
       )}
     >
-      <div className="flex flex-col gap-4 p-5">
+      <div className="flex flex-col gap-4 p-5 pb-8">
         <RoadmapStatsBar
           currentArea={currentArea}
           currentStreak={currentStreak}

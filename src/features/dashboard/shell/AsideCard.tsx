@@ -15,7 +15,7 @@ export function AsideCard({ title, icon, children, action, className }: AsideCar
   return (
     <section
       className={cn(
-        'border-surface-border bg-surface-elevated/80 rounded-2xl border p-5 shadow-sm',
+        'border-surface-border bg-surface-elevated/80 min-w-0 rounded-2xl border p-5 shadow-sm',
         'dark:border-surface-border dark:bg-surface-elevated/50',
         className
       )}

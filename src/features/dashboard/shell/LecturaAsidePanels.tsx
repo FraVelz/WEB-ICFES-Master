@@ -5,10 +5,9 @@ import { cn } from '@/utils/cn';
 import { LECTURA_SECTIONS } from '@/features/lectura/constants';
 import { useLecturaRead } from '@/features/lectura/hooks/useLecturaRead';
 import { AsideCard } from './AsideCard';
-import { useDashboardShell } from './DashboardShellContext';
+import { AsideAdSlot } from './AsideAdSlot';
 
 export function LecturaAsidePanels() {
-  const { currentStreak } = useDashboardShell();
   const { readSections } = useLecturaRead();
   const totalSections = LECTURA_SECTIONS.length;
   const readCount = readSections.length;
@@ -28,10 +27,7 @@ export function LecturaAsidePanels() {
         </p>
       </AsideCard>
 
-      <AsideCard title="Tu constancia" icon="fire">
-        <p className="text-on-surface text-2xl font-bold">{currentStreak} días</p>
-        <p className="text-on-surface-muted mt-1 text-sm">Racha activa mientras estudias en la app</p>
-      </AsideCard>
+      <AsideAdSlot slot="lectura-aside" />
 
       <AsideCard title="Explorar lectura" icon="graduation-cap">
         <Link

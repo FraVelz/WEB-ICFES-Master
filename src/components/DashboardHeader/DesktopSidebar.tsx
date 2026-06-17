@@ -22,7 +22,7 @@ type DesktopSidebarProps = {
 
 export function DesktopSidebar({ className, sidebarExpanded, onToggleSidebar }: DesktopSidebarProps) {
   const pathname = usePathname();
-  const { user, rank, coinsBalance } = useUser();
+  const { user, rank } = useUser();
   const avatarSrc = useResolvedProfileAvatar(user?.profileImage);
   const demoMode = useUiSessionStore((s) => s.demoMode);
   const isLockedInDemo = (path: string) => demoMode && isAccountOnlyPath(path);
@@ -126,7 +126,6 @@ export function DesktopSidebar({ className, sidebarExpanded, onToggleSidebar }: 
           username={user?.username}
           rankName={rank?.name}
           avatarSrc={avatarSrc}
-          coinsBalance={coinsBalance}
           isLockedInDemo={isLockedInDemo}
         />
       </header>

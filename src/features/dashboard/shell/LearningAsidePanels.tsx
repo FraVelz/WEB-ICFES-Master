@@ -4,7 +4,6 @@ import { useMemo } from 'react';
 import Link from 'next/link';
 import { cn } from '@/utils/cn';
 import { useAuth } from '@/features/auth/context/AuthContext';
-import { useGamificationContext } from '@/hooks/gamification/GamificationContext';
 import { getStageLabel } from '@/features/learning/shell/SecondaryHeader/sectionStageUtils';
 import { getPracticaHrefForRoadmapArea } from '@/shared/constants';
 import { resolveStudyTimeUserId } from '@/services/studyTime';
@@ -13,14 +12,15 @@ import { AsideCard } from './AsideCard';
 import { useDashboardShell } from './DashboardShellContext';
 import { computeSectionProgress, findNextLesson, formatStudyTime } from './asidePanelUtils';
 import { useStudyTimeStats } from './useStudyTimeStats';
+import { AsideAdSlot } from './AsideAdSlot';
+import { LearningAsideDonations } from './LearningAsideDonations';
 
 export function LearningAsidePanels() {
-  const { currentArea, currentAreaData, currentSection, currentStreak, coins } = useDashboardShell();
+  const { currentArea, currentAreaData, currentSection } = useDashboardShell();
   const { user } = useAuth();
   const demoMode = useUiSessionStore((state) => state.demoMode);
   const studyUserId = resolveStudyTimeUserId(user?.uid, demoMode);
   const studyStats = useStudyTimeStats(studyUserId);
-  const { totalXP, level, longestStreak } = useGamificationContext();
 
   const sectionProgress = useMemo(() => computeSectionProgress(currentSection), [currentSection]);
   const nextLesson = useMemo(() => findNextLesson(currentSection), [currentSection]);
@@ -43,28 +43,9 @@ export function LearningAsidePanels() {
           <p className="text-on-surface-muted mt-3 text-xs leading-relaxed">{studyDetail}</p>
         </AsideCard>
 
-        <AsideCard title="Resumen rápido" icon="star">
-          <ul className="text-on-surface-muted space-y-2 text-sm">
-            <li className="flex items-center justify-between gap-2">
-              <span>Nivel</span>
-              <span className="text-on-surface font-semibold">
-                {level} · {totalXP.toLocaleString('es-CO')} XP
-              </span>
-            </li>
-            <li className="flex items-center justify-between gap-2">
-              <span>Racha activa</span>
-              <span className="text-on-surface font-semibold">{currentStreak} días</span>
-            </li>
-            <li className="flex items-center justify-between gap-2">
-              <span>Mejor racha</span>
-              <span className="text-on-surface font-semibold">{longestStreak} días</span>
-            </li>
-            <li className="flex items-center justify-between gap-2">
-              <span>Monedas</span>
-              <span className="font-semibold text-yellow-500">{coins.toLocaleString('es-CO')}</span>
-            </li>
-          </ul>
-        </AsideCard>
+        <AsideAdSlot slot="learning-aside" />
+
+        <LearningAsideDonations />
       </>
     );
   }
@@ -107,32 +88,7 @@ export function LearningAsidePanels() {
         ) : null}
       </AsideCard>
 
-      <AsideCard title="Resumen rápido" icon="star">
-        <ul className="text-on-surface-muted space-y-2 text-sm">
-          <li className="flex items-center justify-between gap-2">
-            <span>Nivel</span>
-            <span className="text-on-surface font-semibold">
-              {level} · {totalXP.toLocaleString('es-CO')} XP
-            </span>
-          </li>
-          <li className="flex items-center justify-between gap-2">
-            <span>Racha activa</span>
-            <span className="text-on-surface font-semibold">{currentStreak} días</span>
-          </li>
-          <li className="flex items-center justify-between gap-2">
-            <span>Mejor racha</span>
-            <span className="text-on-surface font-semibold">{longestStreak} días</span>
-          </li>
-          <li className="flex items-center justify-between gap-2">
-            <span>Monedas</span>
-            <span className="font-semibold text-yellow-500">{coins.toLocaleString('es-CO')}</span>
-          </li>
-          <li className="flex items-center justify-between gap-2">
-            <span>Lecciones pendientes</span>
-            <span className="text-on-surface font-semibold">{pendingLessons}</span>
-          </li>
-        </ul>
-      </AsideCard>
+      <AsideAdSlot slot="learning-aside" />
 
       {areaExamHref ? (
         <AsideCard title="Simulacro" icon="brain">
@@ -149,6 +105,8 @@ export function LearningAsidePanels() {
           </Link>
         </AsideCard>
       ) : null}
+
+      <LearningAsideDonations />
     </>
   );
 }

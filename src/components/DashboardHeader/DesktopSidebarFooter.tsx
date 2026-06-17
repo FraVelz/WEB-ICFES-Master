@@ -13,7 +13,6 @@ type DesktopSidebarFooterProps = {
   username?: string | null;
   rankName?: string | null;
   avatarSrc?: ImageSource | null;
-  coinsBalance: number;
   isLockedInDemo: (path: string) => boolean;
 };
 
@@ -23,7 +22,6 @@ export function DesktopSidebarFooter({
   username,
   rankName,
   avatarSrc,
-  coinsBalance,
   isLockedInDemo,
 }: DesktopSidebarFooterProps) {
   const isProfileActive = isNavPathActive(pathname, '/perfil');
@@ -36,18 +34,6 @@ export function DesktopSidebarFooter({
         sidebarExpanded ? 'bg-transparent p-4' : 'bg-surface-elevated/50 px-2 py-4'
       )}
     >
-      {sidebarExpanded && (
-        <div
-          className={cn(
-            'bg-surface-elevated/80 mb-4 flex h-10 items-center gap-3 rounded-lg',
-            'border border-amber-500/20 px-3'
-          )}
-        >
-          <Icon name="coins" className="shrink-0 text-amber-400" />
-          <span className="font-bold whitespace-nowrap text-amber-400">{coinsBalance}</span>
-        </div>
-      )}
-
       <Link
         href="/perfil"
         title={!sidebarExpanded ? username || 'Perfil' : undefined}
