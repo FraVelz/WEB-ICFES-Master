@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 
+import { ReferralCapture } from '@/features/auth/components/ReferralCapture';
 import { cn } from '@/utils/cn';
 
 export const metadata: Metadata = {
@@ -23,6 +24,7 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
         <div className="bg-ambient-c/20 absolute top-2/3 left-3/4 h-72 w-72 animate-pulse rounded-full blur-3xl motion-reduce:animate-none" />
       </div>
       <main id="main-content" className="relative z-10 flex-1 overflow-y-auto">
+        <ReferralCapture />
         {children}
       </main>
     </div>

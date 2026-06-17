@@ -8,6 +8,7 @@ import { SettingsProfilePanel } from '@/features/user/components/settings/Settin
 import { SettingsAccountPanel } from '@/features/user/components/settings/SettingsAccountPanel';
 import { SettingsAppearancePanel } from '@/features/user/components/settings/SettingsAppearancePanel';
 import { SettingsSupportPanel } from '@/features/user/components/settings/SettingsSupportPanel';
+import { SettingsInvitePanel } from '@/features/user/components/settings/SettingsInvitePanel';
 import { SettingsDonationPanel } from '@/features/user/components/settings/SettingsDonationPanel';
 import { SettingsLogosPanel } from '@/features/user/components/settings/SettingsLogosPanel';
 import { SettingsInfoPanel } from '@/features/user/components/settings/SettingsInfoPanel';
@@ -47,6 +48,7 @@ function UserSettingsContent() {
               <SettingsAppearancePanel />
               <SettingsLogosPanel />
               <SettingsAccountPanel />
+              <SettingsInvitePanel />
               <SettingsSupportPanel />
               <SettingsDonationPanel />
               <SettingsInfoPanel />

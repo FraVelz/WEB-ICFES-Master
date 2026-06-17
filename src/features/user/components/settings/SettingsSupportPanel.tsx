@@ -2,6 +2,7 @@ import { useId } from 'react';
 import { cn } from '@/utils/cn';
 import { Icon } from '@/shared/components/Icon';
 import { useUserSettingsContext } from '@/features/user/context/UserSettingsContext';
+import { SUPPORT_BUG_REWARD_COPY, SUPPORT_CATEGORIES } from '@/features/user/constants/supportRequestConstants';
 import { SettingsSection } from './SettingsSection';
 
 export function SettingsSupportPanel() {
@@ -14,6 +15,7 @@ export function SettingsSupportPanel() {
     setSupportMessage,
     supportEmail,
     setSupportEmail,
+    supportSubmitting,
     handleSupportSubmit,
   } = useUserSettingsContext();
   const categoryId = useId();
@@ -23,8 +25,18 @@ export function SettingsSupportPanel() {
   return (
     <SettingsSection title="Ayuda y Soporte" icon="headset">
       <p className="text-on-surface-muted mb-4 text-sm">
-        Completa el formulario y se abrirá tu cliente de correo con el mensaje preparado.
+        Completa el formulario y enviaremos tu mensaje directamente al equipo.
       </p>
+      {supportMode === 'report' && (
+        <p
+          className={cn(
+            'border-app-ring/30 bg-app-ring/10 text-on-surface mb-4 flex items-start gap-2 rounded-xl border px-4 py-3 text-sm'
+          )}
+        >
+          <Icon name="gift" className="text-app-accent-strong mt-0.5 shrink-0" />
+          <span>{SUPPORT_BUG_REWARD_COPY}</span>
+        </p>
+      )}
       <div className="border-surface-border bg-surface/50 mb-6 flex rounded-xl border p-1">
         <button
           type="button"
@@ -73,10 +85,11 @@ export function SettingsSupportPanel() {
                 'text-on-surface px-3 py-2.5 text-sm outline-none'
               )}
             >
-              <option value="technical">Error técnico</option>
-              <option value="content">Contenido</option>
-              <option value="suggestion">Sugerencia</option>
-              <option value="other">Otro</option>
+              {SUPPORT_CATEGORIES.map((item) => (
+                <option key={item.value} value={item.value}>
+                  {item.label}
+                </option>
+              ))}
             </select>
           </div>
           {supportMode === 'response' && (
@@ -119,6 +132,7 @@ export function SettingsSupportPanel() {
 
         <button
           type="submit"
+          disabled={supportSubmitting}
           className={cn(
             'from-app-accent-strong w-full cursor-pointer rounded-xl bg-linear-to-r to-blue-600 py-3 font-bold',
             'shadow-app-ring/20 hover:from-cta-from text-white shadow-lg transition-all',
@@ -127,7 +141,11 @@ export function SettingsSupportPanel() {
             'focus-visible:ring-offset-surface-via focus-visible:ring-offset-2'
           )}
         >
-          Abrir correo para enviar
+          {supportSubmitting
+            ? 'Enviando…'
+            : supportMode === 'report'
+              ? 'Enviar reporte'
+              : 'Enviar mensaje'}
         </button>
       </form>
     </SettingsSection>

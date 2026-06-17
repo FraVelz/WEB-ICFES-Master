@@ -19,6 +19,9 @@ export interface GamificationProfile {
   leagueGroupId: string | null;
   weeklyXp: number;
   weeklyXpWeek: string | null;
+  referralQualifiedCount: number;
+  supportApprovedCount: number;
+  profileReportApprovedCount: number;
   updatedAt: unknown;
 }
 

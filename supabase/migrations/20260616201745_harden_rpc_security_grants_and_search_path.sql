@@ -1,5 +1,4 @@
 -- Harden public RPC security (shared by WEB-ICFES-Master, app móvil, WEB-ICFES-Admin).
--- Applied via Supabase migration: harden_rpc_security_grants_and_search_path
 
 -- 1) Require authenticated caller for user-scoped RPCs (blocks anon abuse).
 CREATE OR REPLACE FUNCTION public.add_weekly_xp(p_user_id uuid, p_points integer)

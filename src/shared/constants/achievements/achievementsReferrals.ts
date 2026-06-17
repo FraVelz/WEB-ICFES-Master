@@ -1,0 +1,48 @@
+export const REFERRAL_ACHIEVEMENT_IDS = ['referral_1', 'referral_3', 'referral_7', 'referral_15'] as const;
+
+export const ACHIEVEMENTS_REFERRALS = [
+  {
+    id: 'referral_1',
+    category: 'metas' as const,
+    group: 'metas_referidos',
+    title: 'Embajador I',
+    description: 'Consigue 1 amigo que complete su primera lección con tu enlace',
+    icon: 'user-plus',
+    target: 1,
+    xpReward: 150,
+    coinsReward: 75,
+  },
+  {
+    id: 'referral_3',
+    category: 'metas' as const,
+    group: 'metas_referidos',
+    title: 'Embajador II',
+    description: 'Consigue 3 amigos que completen su primera lección',
+    icon: 'users',
+    target: 3,
+    xpReward: 300,
+    coinsReward: 150,
+  },
+  {
+    id: 'referral_7',
+    category: 'metas' as const,
+    group: 'metas_referidos',
+    title: 'Embajador III',
+    description: 'Consigue 7 amigos que completen su primera lección',
+    icon: 'share-alt',
+    target: 7,
+    xpReward: 500,
+    coinsReward: 250,
+  },
+  {
+    id: 'referral_15',
+    category: 'metas' as const,
+    group: 'metas_referidos',
+    title: 'Embajador Leyenda',
+    description: 'Consigue 15 amigos que completen su primera lección',
+    icon: 'crown',
+    target: 15,
+    xpReward: 800,
+    coinsReward: 400,
+  },
+] as const;

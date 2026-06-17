@@ -6,6 +6,8 @@ import { useProgress } from '@/features/user/hooks/useProgress';
 import { useExam } from '@/features/exam/hooks/useExam';
 import { clearLocalClientData } from '@/services/persistence/clearLocalClientData';
 import { isSupabaseConfigured } from '@/services/persistence/supabaseConfigured';
+import { isSupportCategory } from '@/features/user/constants/supportRequestConstants';
+import { submitSupportRequest } from '@/services/support/supportRequestService';
 import type { useUserSettingsState } from './useUserSettingsState';
 
 type SettingsState = ReturnType<typeof useUserSettingsState>;
@@ -20,6 +22,7 @@ export function useUserSettingsAccountHandlers(state: SettingsState) {
     supportMode,
     supportCategory,
     supportMessage,
+    setSupportMessage,
     supportEmail,
     user,
     userData,
@@ -28,26 +31,42 @@ export function useUserSettingsAccountHandlers(state: SettingsState) {
     setDeleteConfirmation,
     setLoading,
     showMessage,
+    setSupportSubmitting,
   } = state;
 
-  const handleSupportSubmit = (e: React.FormEvent) => {
+  const handleSupportSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!supportMessage.trim()) {
-      showMessage('Por favor describe tu problema o pregunta', 'error');
-      return;
-    }
-    if (supportMode === 'response' && !supportEmail.trim()) {
-      showMessage('Por favor ingresa un email para responderte', 'error');
+
+    const kind = supportMode === 'report' ? 'bug' : 'contact';
+    const category = isSupportCategory(supportCategory) ? supportCategory : 'other';
+    const contactEmail =
+      supportMode === 'response'
+        ? supportEmail.trim() || user?.email || userData?.email || null
+        : user?.email || userData?.email || null;
+
+    setSupportSubmitting(true);
+    const result = await submitSupportRequest({
+      kind,
+      category,
+      message: supportMessage,
+      contactEmail,
+      pageUrl: typeof window !== 'undefined' ? window.location.href : null,
+      userAgent: typeof navigator !== 'undefined' ? navigator.userAgent : null,
+    });
+    setSupportSubmitting(false);
+
+    if (!result.ok) {
+      showMessage(result.error, 'error');
       return;
     }
 
-    const subject = encodeURIComponent(
-      `[ICFES Master] ${supportMode === 'report' ? 'Reporte' : 'Soporte'} — ${supportCategory}`
+    showMessage(
+      kind === 'bug'
+        ? 'Reporte enviado. Si se confirma como error real, recibirás 100 XP y 50 monedas.'
+        : 'Mensaje enviado. Te responderemos pronto.',
+      'success'
     );
-    const body = encodeURIComponent(
-      `${supportMessage.trim()}\n\n---\nEmail: ${supportEmail || user?.email || userData?.email || 'no indicado'}`
-    );
-    window.location.href = `mailto:fravelz@proton.me?subject=${subject}&body=${body}`;
+    setSupportMessage('');
   };
 
   const handleLogout = async () => {

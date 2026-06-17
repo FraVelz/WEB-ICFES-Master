@@ -20,6 +20,7 @@ export function useUserSettingsState() {
   const [supportCategory, setSupportCategory] = useState('technical');
   const [supportMessage, setSupportMessage] = useState('');
   const [supportEmail, setSupportEmail] = useState('');
+  const [supportSubmitting, setSupportSubmitting] = useState(false);
 
   useEffect(() => {
     setUsername(user?.username ?? userData?.displayName ?? userData?.username ?? '');
@@ -61,6 +62,8 @@ export function useUserSettingsState() {
     setSupportMessage,
     supportEmail,
     setSupportEmail,
+    supportSubmitting,
+    setSupportSubmitting,
     showMessage,
   };
 }

@@ -11,6 +11,9 @@ export type SupportKind = 'contact' | 'bug';
 export const SUPPORT_MESSAGE_MIN = 10;
 export const SUPPORT_MESSAGE_MAX = 4000;
 
+export const SUPPORT_BUG_REWARD_COPY =
+  'Si tu reporte es aceptado por el equipo, recibirás 100 XP y 50 monedas, además de avanzar en los logros de reportes.';
+
 export function isSupportCategory(value: string): value is SupportCategory {
   return SUPPORT_CATEGORIES.some((item) => item.value === value);
 }

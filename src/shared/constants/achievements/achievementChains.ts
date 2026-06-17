@@ -1,5 +1,10 @@
 import { AREA_INFO, HOME_AREA_IDS } from '@/shared/constants/areaInfo';
 import { STREAK_ACHIEVEMENT_IDS } from './achievementsConstancyMetas';
+import { REFERRAL_ACHIEVEMENT_IDS } from './achievementsReferrals';
+import {
+  PROFILE_REPORT_ACHIEVEMENT_IDS,
+  SUPPORT_REPORT_ACHIEVEMENT_IDS,
+} from './achievementsReports';
 import { phaseAchievementGroupKey } from './achievementGrouping';
 import { phaseAchievementId } from './achievementsPhases';
 import type { AchievementCategoryKey } from './achievementCategories';
@@ -66,6 +71,30 @@ const STATIC_CHAINS: AchievementChainDefinition[] = [
     category: 'ligas',
     group: 'ligas_clasificatoria',
     tierIds: LEAGUE_TIER_IDS,
+  },
+  {
+    id: 'referidos_amigos',
+    title: 'Invita amigos',
+    icon: 'user-plus',
+    category: 'metas',
+    group: 'metas_referidos',
+    tierIds: REFERRAL_ACHIEVEMENT_IDS,
+  },
+  {
+    id: 'reportes_soporte',
+    title: 'Reportes de soporte',
+    icon: 'bug',
+    category: 'metas',
+    group: 'metas_reportes_soporte',
+    tierIds: SUPPORT_REPORT_ACHIEVEMENT_IDS,
+  },
+  {
+    id: 'reportes_perfil',
+    title: 'Reportes de perfil',
+    icon: 'flag',
+    category: 'metas',
+    group: 'metas_reportes_perfil',
+    tierIds: PROFILE_REPORT_ACHIEVEMENT_IDS,
   },
 ];
 

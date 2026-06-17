@@ -3,6 +3,7 @@
 import { useEffect, type Dispatch, type SetStateAction } from 'react';
 import { supabase } from '@/config/supabase';
 import UserSupabaseService from '@/services/supabase/UserSupabaseService';
+import { applyStoredReferralIfNeeded } from '@/services/referrals/applyStoredReferral';
 import { setActiveStreakUserId } from '@/services/streak';
 import { isSupabaseAuthConfigured } from '@/features/auth/utils/isSupabaseAuthConfigured';
 import type { AuthUser } from './authTypes';
@@ -58,6 +59,7 @@ export function useAuthSession({ setUser, setLoading, clearDemoMode, migrateDemo
               displayName,
               profileImage: getOAuthProfileImage(session.user),
             });
+            await applyStoredReferralIfNeeded(session.user.id, 'web');
           }
         } catch (profileErr) {
           console.warn('Perfil tras inicio de sesión (puede existir por trigger):', profileErr);

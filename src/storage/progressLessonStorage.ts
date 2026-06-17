@@ -1,4 +1,5 @@
 import { pushLearningProgressToRemote } from '@/services/learning';
+import { requestReferralQualify } from '@/services/referrals/referralQualifyClient';
 import { LESSON_COMPLETED_EVENT, STORAGE_KEYS } from './progressStorageTypes';
 import { syncAchievementsAfterGameplay } from './progressAchievementSync';
 
@@ -13,7 +14,10 @@ export const markLessonAsCompleted = (userId: string, lessonId: string): void =>
   localStorage.setItem(STORAGE_KEYS.COMPLETED_LESSONS, JSON.stringify(completed));
   void syncAchievementsAfterGameplay();
   if (userId) {
-    void pushLearningProgressToRemote(userId);
+    void (async () => {
+      await pushLearningProgressToRemote(userId);
+      await requestReferralQualify();
+    })();
   }
   if (typeof window !== 'undefined') {
     window.dispatchEvent(new Event(LESSON_COMPLETED_EVENT));

@@ -1,4 +1,9 @@
 import { ACHIEVEMENTS_DATA } from '@/shared/constants/achievementsData';
+import { REFERRAL_ACHIEVEMENT_IDS } from '@/shared/constants/achievements/achievementsReferrals';
+import {
+  PROFILE_REPORT_ACHIEVEMENT_IDS,
+  SUPPORT_REPORT_ACHIEVEMENT_IDS,
+} from '@/shared/constants/achievements/achievementsReports';
 import { isDemoUserId } from '@/services/demo/demoCoins';
 import { getDemoTotalXP } from '@/services/demo/demoGamification';
 import { gamificationPersistence } from '@/services/persistence/gamificationPersistence';
@@ -31,6 +36,23 @@ async function readLevel(userId: string): Promise<number> {
   }
 }
 
+async function readServerCounts(userId: string): Promise<{ referral: number; support: number; profileReport: number }> {
+  if (isDemoUserId(userId)) {
+    return { referral: 0, support: 0, profileReport: 0 };
+  }
+
+  try {
+    const profile = await gamificationPersistence.getProfile(userId);
+    return {
+      referral: profile.referralQualifiedCount ?? 0,
+      support: profile.supportApprovedCount ?? 0,
+      profileReport: profile.profileReportApprovedCount ?? 0,
+    };
+  } catch {
+    return { referral: 0, support: 0, profileReport: 0 };
+  }
+}
+
 function streakProgress(longestStreak: number): Record<string, number> {
   return {
     const_1: longestStreak,
@@ -38,6 +60,18 @@ function streakProgress(longestStreak: number): Record<string, number> {
     const_180: longestStreak,
     const_365: longestStreak,
   };
+}
+
+function serverCountMetrics(
+  referralCount: number,
+  supportCount: number,
+  profileReportCount: number
+): Record<string, number> {
+  const metrics: Record<string, number> = {};
+  for (const id of REFERRAL_ACHIEVEMENT_IDS) metrics[id] = referralCount;
+  for (const id of SUPPORT_REPORT_ACHIEVEMENT_IDS) metrics[id] = supportCount;
+  for (const id of PROFILE_REPORT_ACHIEVEMENT_IDS) metrics[id] = profileReportCount;
+  return metrics;
 }
 
 function buildProgressFromGameplay(
@@ -52,7 +86,8 @@ function buildProgressFromGameplay(
   readConsejos: number,
   readRutaAl500: number,
   longestStudySessionMinutes: number,
-  phaseMetrics: Record<string, number>
+  phaseMetrics: Record<string, number>,
+  serverCounts?: { referral: number; support: number; profileReport: number }
 ): AchievementProgressMap {
   const metrics: Record<string, number> = {
     study_1: completedLessons,
@@ -69,6 +104,7 @@ function buildProgressFromGameplay(
     read_informacion: readInformacion,
     read_consejos: readConsejos,
     ...phaseMetrics,
+    ...serverCountMetrics(serverCounts?.referral ?? 0, serverCounts?.support ?? 0, serverCounts?.profileReport ?? 0),
   };
 
   const next: AchievementProgressMap = {};
@@ -106,6 +142,7 @@ export async function computeAchievementProgressFromGameplay(
   const practices = getStoredPractices() as Array<Record<string, unknown>>;
   const exams = getStoredExams() as Array<Record<string, unknown>>;
   const phaseMetrics = await computePhaseAchievementMetrics();
+  const serverCounts = await readServerCounts(userId);
 
   return buildProgressFromGameplay(
     getCompletedLessons().length,
@@ -119,6 +156,7 @@ export async function computeAchievementProgressFromGameplay(
     readSections.includes('consejos') ? 1 : 0,
     readSections.includes('ruta-al-500') ? 1 : 0,
     studyTime.longestSessionMinutes,
-    phaseMetrics
+    phaseMetrics,
+    serverCounts
   );
 }

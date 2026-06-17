@@ -1,5 +1,4 @@
 -- Backfill content.block en lecciones fase 1 (learning_content.phase = 1)
--- Proyecto: web-icfes-master (lfijpvklueklhbywvuhf)
 -- Nota: hay 10 lecciones legacy (order_index 1-10) + 115 del catálogo (11-125) = 125 por área.
 
 BEGIN;

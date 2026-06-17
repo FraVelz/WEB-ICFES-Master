@@ -3,6 +3,7 @@
 import { useCallback } from 'react';
 import { supabase } from '@/config/supabase';
 import UserSupabaseService from '@/services/supabase/UserSupabaseService';
+import { applyStoredReferralIfNeeded } from '@/services/referrals/applyStoredReferral';
 import { getAggregatedUserData } from '@/services/persistence';
 import { setActiveStreakUserId } from '@/services/streak';
 import { mapSupabaseAuthError, REQUIRES_EMAIL_CONFIRMATION } from '@/features/auth/utils/mapSupabaseAuthError';
@@ -52,6 +53,7 @@ export function useAuthMethods({
           username: null,
           bio: null,
         });
+        await applyStoredReferralIfNeeded(data.user.id, 'web');
       } catch (profileErr) {
         console.warn('Perfil tras registro (puede existir por trigger):', profileErr);
       }

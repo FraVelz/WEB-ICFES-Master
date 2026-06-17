@@ -56,6 +56,9 @@ export function mapFromDb(row: Record<string, unknown> | null): GamificationProf
     leagueGroupId,
     weeklyXp: Number(row.weekly_xp ?? 0),
     weeklyXpWeek,
+    referralQualifiedCount: Number(row.referral_qualified_count ?? 0),
+    supportApprovedCount: Number(row.support_approved_count ?? 0),
+    profileReportApprovedCount: Number(row.profile_report_approved_count ?? 0),
     updatedAt: row.updated_at,
   };
 }

@@ -3,6 +3,8 @@ import { ACHIEVEMENTS_CONSTANCY_METAS } from './achievements/achievementsConstan
 import { ACHIEVEMENTS_LECTURA } from './achievements/achievementsLectura';
 import { ACHIEVEMENTS_PHASES } from './achievements/achievementsPhases';
 import { ACHIEVEMENTS_LIGAS } from './achievements/achievementsLigas';
+import { ACHIEVEMENTS_REFERRALS } from './achievements/achievementsReferrals';
+import { ACHIEVEMENTS_PROFILE_REPORTS, ACHIEVEMENTS_SUPPORT_REPORTS } from './achievements/achievementsReports';
 export { ACHIEVEMENT_CATEGORIES, type AchievementCategoryKey } from './achievements/achievementCategories';
 
 export const ACHIEVEMENTS_DATA = [
@@ -11,6 +13,9 @@ export const ACHIEVEMENTS_DATA = [
   ...ACHIEVEMENTS_LECTURA,
   ...ACHIEVEMENTS_PHASES,
   ...ACHIEVEMENTS_LIGAS,
+  ...ACHIEVEMENTS_REFERRALS,
+  ...ACHIEVEMENTS_SUPPORT_REPORTS,
+  ...ACHIEVEMENTS_PROFILE_REPORTS,
 ] as const;
 
 /** IDs de logros otorgados al ascender de liga (job semanal). */
