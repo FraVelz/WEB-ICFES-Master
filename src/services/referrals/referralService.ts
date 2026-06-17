@@ -29,6 +29,25 @@ export async function getReferralCodeForUser(userId: string): Promise<string | n
   return typeof data?.referral_code === 'string' ? data.referral_code : null;
 }
 
+export async function getInviteeReferralStatus(
+  userId: string
+): Promise<{ referralCode: string | null; referredBy: string | null }> {
+  if (!supabase) return { referralCode: null, referredBy: null };
+  const { data, error } = await supabase
+    .from('users')
+    .select('referral_code, referred_by')
+    .eq('id', userId)
+    .maybeSingle();
+  if (error) {
+    console.warn('No se pudo leer estado de referidos:', error.message);
+    return { referralCode: null, referredBy: null };
+  }
+  return {
+    referralCode: typeof data?.referral_code === 'string' ? data.referral_code : null,
+    referredBy: typeof data?.referred_by === 'string' ? data.referred_by : null,
+  };
+}
+
 export async function getQualifiedReferralCount(userId: string): Promise<number> {
   if (!supabase) return 0;
   const { data, error } = await supabase

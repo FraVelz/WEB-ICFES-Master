@@ -29,8 +29,8 @@ export function SettingsSection({
         >
           <div
             className={cn(
-              'text-app-accent bg-surface-elevated flex h-8 w-8 items-center justify-center',
-              'rounded-lg shadow-inner'
+              'bg-app-ring/15 text-app-accent flex h-9 w-9 shrink-0 items-center justify-center',
+              'rounded-lg'
             )}
           >
             <Icon name={icon ?? 'cog'} />
