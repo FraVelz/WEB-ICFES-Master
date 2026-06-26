@@ -106,13 +106,16 @@ const HomePageDesktopComponent = () => {
             opacity: 1,
             y: 0,
             scale: 1,
-            ease: 'none',
+            duration: 0.55,
+            ease: 'power2.out',
             scrollTrigger: {
               trigger: el,
-              start: 'top bottom',
-              end: 'top 35%',
-              scrub: 0.45,
+              start: 'top 88%',
+              once: true,
               invalidateOnRefresh: true,
+            },
+            onComplete: () => {
+              gsap.set(el, { clearProps: 'willChange' });
             },
           }
         );
