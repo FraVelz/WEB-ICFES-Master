@@ -1,10 +1,7 @@
 import { AREA_INFO, HOME_AREA_IDS } from '@/shared/constants/areaInfo';
 import { STREAK_ACHIEVEMENT_IDS } from './achievementsConstancyMetas';
 import { REFERRAL_ACHIEVEMENT_IDS } from './achievementsReferrals';
-import {
-  PROFILE_REPORT_ACHIEVEMENT_IDS,
-  SUPPORT_REPORT_ACHIEVEMENT_IDS,
-} from './achievementsReports';
+import { PROFILE_REPORT_ACHIEVEMENT_IDS, SUPPORT_REPORT_ACHIEVEMENT_IDS } from './achievementsReports';
 import { phaseAchievementGroupKey } from './achievementGrouping';
 import { phaseAchievementId } from './achievementsPhases';
 import type { AchievementCategoryKey } from './achievementCategories';

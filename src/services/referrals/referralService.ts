@@ -1,6 +1,10 @@
 import { supabase } from '@/config/supabase';
 
-export async function applyReferralCode(userId: string, referralCode: string, source: 'web' | 'app' = 'web'): Promise<boolean> {
+export async function applyReferralCode(
+  userId: string,
+  referralCode: string,
+  source: 'web' | 'app' = 'web'
+): Promise<boolean> {
   if (!supabase) return false;
   const normalized = referralCode.trim();
   if (!normalized) return false;

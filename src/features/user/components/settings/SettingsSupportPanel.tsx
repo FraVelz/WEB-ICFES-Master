@@ -141,11 +141,7 @@ export function SettingsSupportPanel() {
             'focus-visible:ring-offset-surface-via focus-visible:ring-offset-2'
           )}
         >
-          {supportSubmitting
-            ? 'Enviando…'
-            : supportMode === 'report'
-              ? 'Enviar reporte'
-              : 'Enviar mensaje'}
+          {supportSubmitting ? 'Enviando…' : supportMode === 'report' ? 'Enviar reporte' : 'Enviar mensaje'}
         </button>
       </form>
     </SettingsSection>

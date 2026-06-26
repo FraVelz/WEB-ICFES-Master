@@ -1,11 +1,7 @@
 import { REFERRAL_ACHIEVEMENT_IDS } from '@/shared/constants/achievements/achievementsReferrals';
 import { LEARNING_PROGRESS_META_KEY } from '@/services/learning/learningProgressTypes';
 import { syncAchievementChainFromCount } from '@/services/achievements/serverAchievementSync';
-import {
-  addCoinsServer,
-  addXpServer,
-  getProfileRow,
-} from '@/services/supabase/gamification/gamificationServerEconomy';
+import { addCoinsServer, addXpServer, getProfileRow } from '@/services/supabase/gamification/gamificationServerEconomy';
 import { createServiceRoleClient } from '@/config/supabaseServiceRole';
 import { REFERRAL_QUALIFY_COINS, REFERRAL_QUALIFY_XP, referralQualifiedReason } from './referralConstants';
 
@@ -17,7 +13,9 @@ function readCompletedLessonCount(achievementsRaw: unknown): number {
   if (typeof achievementsRaw !== 'object' || achievementsRaw === null || Array.isArray(achievementsRaw)) {
     return 0;
   }
-  const meta = (achievementsRaw as Record<string, unknown>)[LEARNING_PROGRESS_META_KEY] as LearningProgressMeta | undefined;
+  const meta = (achievementsRaw as Record<string, unknown>)[LEARNING_PROGRESS_META_KEY] as
+    | LearningProgressMeta
+    | undefined;
   const lessons = meta?.completedLessons;
   return Array.isArray(lessons) ? lessons.length : 0;
 }

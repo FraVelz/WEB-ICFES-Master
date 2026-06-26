@@ -5,10 +5,7 @@ import { cn } from '@/utils/cn';
 import { Icon } from '@/shared/components/Icon';
 import { useAuth } from '@/features/auth/context/AuthContext';
 import { getSiteUrl } from '@/config/site';
-import {
-  applyReferralCode,
-  getInviteeReferralStatus,
-} from '@/services/referrals/referralService';
+import { applyReferralCode, getInviteeReferralStatus } from '@/services/referrals/referralService';
 import { SettingsSection } from './SettingsSection';
 
 async function copyText(value: string): Promise<boolean> {
@@ -179,7 +176,7 @@ export function SettingsInvitePanel() {
                   className={cn(
                     'border-surface-border bg-surface/50 text-on-surface w-full rounded-xl border px-4 py-3',
                     'font-mono text-sm font-semibold tracking-widest uppercase',
-                    'placeholder:font-sans placeholder:normal-case placeholder:tracking-normal',
+                    'placeholder:font-sans placeholder:tracking-normal placeholder:normal-case',
                     'focus-visible:ring-app-accent focus:border-app-accent focus-visible:ring-2 focus-visible:outline-none'
                   )}
                 />
