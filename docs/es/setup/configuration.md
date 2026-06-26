@@ -16,12 +16,12 @@ Copia [`.env.example`](../../../.env.example) a `.env.local` en la raíz del pro
 | `OPENAI_API_KEY`                | No                        | API key de OpenAI para `/api/chat` (asistente IA)                         |
 | `NEXT_PUBLIC_SITE_URL`          | Recomendada en producción | Origen público para `metadataBase`, sitemap, Open Graph y URLs canónicas  |
 | `NEXT_PUBLIC_TWITTER_SITE`      | No                        | Handle de Twitter/X (`@icfesmaster`) para `twitter:site` en metadatos     |
-| `KV_REST_API_URL`               | Recomendada en producción | URL REST de Upstash/Vercel KV para rate limiting distribuido en APIs      |
+| `KV_REST_API_URL`               | Recomendada en producción | URL REST de Upstash/Vercel KV para rate limiting y cuota diaria del chat |
 | `KV_REST_API_TOKEN`             | Recomendada en producción | Token de KV; sin esto los límites son en memoria por instancia serverless |
 
 ### Rate limiting en APIs
 
-Sin `KV_REST_API_*`, `src/utils/rateLimit.ts` usa un mapa en memoria por instancia (cada cold start en Vercel tiene su propio contador). En producción conviene configurar KV para límites globales en:
+Sin `KV_REST_API_*`, `src/utils/rateLimit.ts` y `src/services/chat/chatQuotaServer.ts` usan fallback en memoria o cookie por instancia. En producción conviene configurar KV para límites globales en:
 
 - `/api/chat`
 - `/api/demo/session`
@@ -30,7 +30,7 @@ Sin `KV_REST_API_*`, `src/utils/rateLimit.ts` usa un mapa en memoria por instanc
 - `/api/profile/public/[userId]`
 - `/api/r2/infographic/[id]`
 
-Si faltan las variables en `NODE_ENV=production`, el servidor registra un warning en logs al primer uso del fallback.
+Si faltan las variables en `NODE_ENV=production`, `src/instrumentation.ts` registra un warning al arrancar el servidor Node.
 
 En **desarrollo local** no es necesario configurar KV: el fallback en memoria es suficiente para probar la app.
 

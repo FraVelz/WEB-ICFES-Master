@@ -1,5 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createServerSupabaseClient } from '@/config/supabaseClient';
+import {
+  getAuthChatUsage,
+  incrementAuthChatUsage,
+  isDistributedChatQuotaEnabled,
+} from '@/services/chat/chatQuotaServer';
 import { checkRateLimit, getClientIp } from '@/utils/rateLimit';
 import { CHAT_AUTH_COOKIE, CHAT_AUTH_DAILY_LIMIT } from '@/features/learning/constants/chatQuota';
 import OpenAI from 'openai';
@@ -63,13 +68,15 @@ export async function GET(request: NextRequest) {
     });
   }
 
-  const authUsed = parseAuthUsageCookie(request);
+  const cookieUsed = parseAuthUsageCookie(request);
+  const authUsed = await getAuthChatUsage(authUser.id, cookieUsed);
 
   return NextResponse.json({
     requiresAuth: false,
     limit: CHAT_AUTH_DAILY_LIMIT,
     authUsed,
     unlimited: false,
+    quotaSource: isDistributedChatQuotaEnabled() ? 'server' : 'cookie',
   });
 }
 
@@ -112,7 +119,8 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const authUsed = parseAuthUsageCookie(request);
+    const cookieUsed = parseAuthUsageCookie(request);
+    const authUsed = await getAuthChatUsage(authUser.id, cookieUsed);
     const ip = getClientIp(request);
     const rate = await checkRateLimit(`chat:user:${authUser.id}:${ip}`, 40, 60_000);
 
@@ -152,13 +160,15 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'No se recibió respuesta del modelo' }, { status: 500 });
     }
 
+    const nextUsed = await incrementAuthChatUsage(authUser.id, cookieUsed);
+
     const res = NextResponse.json({
       content: assistantMessage,
-      authUsed: authUsed + 1,
+      authUsed: nextUsed,
       limit: CHAT_AUTH_DAILY_LIMIT,
     });
 
-    res.cookies.set(CHAT_AUTH_COOKIE, String(authUsed + 1), {
+    res.cookies.set(CHAT_AUTH_COOKIE, String(nextUsed), {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
       sameSite: 'lax',

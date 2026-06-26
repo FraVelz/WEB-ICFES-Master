@@ -1,3 +1,5 @@
+import { isKvConfigured, kvIncr } from '@/utils/kvRest';
+
 type RateLimitEntry = {
   count: number;
   resetAt: number;
@@ -24,6 +26,8 @@ export type RateLimitResult = {
   resetAt: number;
 };
 
+export { isKvConfigured as isDistributedRateLimitEnabled };
+
 function memoryRateLimit(key: string, limit: number, windowMs: number): RateLimitResult {
   const now = Date.now();
   const entry = buckets.get(key);
@@ -49,41 +53,20 @@ function windowKey(key: string, windowMs: number): string {
 }
 
 async function kvRateLimit(key: string, limit: number, windowMs: number): Promise<RateLimitResult | null> {
-  const baseUrl = process.env.KV_REST_API_URL;
-  const token = process.env.KV_REST_API_TOKEN;
-  if (!baseUrl || !token) return null;
+  if (!isKvConfigured()) return null;
 
   const redisKey = windowKey(key, windowMs);
   const ttlSeconds = Math.ceil(windowMs / 1000);
+  const count = await kvIncr(redisKey, ttlSeconds);
+  if (count === null) return null;
 
-  try {
-    const response = await fetch(`${baseUrl}/pipeline`, {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${token}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify([
-        ['INCR', redisKey],
-        ['EXPIRE', redisKey, ttlSeconds],
-      ]),
-      cache: 'no-store',
-    });
+  const resetAt = Date.now() + windowMs;
 
-    if (!response.ok) return null;
-
-    const results = (await response.json()) as { result: number | boolean }[];
-    const count = typeof results[0]?.result === 'number' ? results[0].result : limit + 1;
-    const resetAt = Date.now() + windowMs;
-
-    if (count > limit) {
-      return { allowed: false, remaining: 0, resetAt };
-    }
-
-    return { allowed: true, remaining: Math.max(0, limit - count), resetAt };
-  } catch {
-    return null;
+  if (count > limit) {
+    return { allowed: false, remaining: 0, resetAt };
   }
+
+  return { allowed: true, remaining: Math.max(0, limit - count), resetAt };
 }
 
 export async function checkRateLimit(key: string, limit: number, windowMs: number): Promise<RateLimitResult> {
