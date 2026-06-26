@@ -8,6 +8,7 @@ import remarkGfm from 'remark-gfm';
 import remarkMath from 'remark-math';
 import { cn } from '@/utils/cn';
 import { isSafeHref } from '@/shared/utils/safeHref';
+import { annotateKatexNodes } from './katexA11y';
 
 const sanitizeSchema = {
   ...defaultSchema,
@@ -29,11 +30,7 @@ export function LessonMarkdownBody({ content }: LessonMarkdownBodyProps) {
   useEffect(() => {
     const root = containerRef.current;
     if (!root) return;
-
-    root.querySelectorAll('.katex-display').forEach((node) => {
-      node.setAttribute('role', 'math');
-      node.setAttribute('aria-label', 'Fórmula matemática');
-    });
+    annotateKatexNodes(root, content);
   }, [content]);
 
   const linkClass = cn(

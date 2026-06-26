@@ -72,7 +72,7 @@ export const LoginPage = () => {
           >
             <Icon name="times" size="2xl" className="text-2xl" aria-hidden />
           </button>
-          <h2 className="text-lg font-semibold">Ingresa tus datos</h2>
+          <h1 className="text-lg font-semibold">Ingresa tus datos</h1>
           <ThemeToggle compact />
         </div>
         <div className="via-surface-border h-px bg-linear-to-r from-transparent to-transparent" />

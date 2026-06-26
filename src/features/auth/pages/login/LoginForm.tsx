@@ -41,14 +41,14 @@ export function LoginForm({
         >
           <Icon name="rocket" size="2xl" className="text-2xl" />
         </div>
-        <h1
+        <p
           className={cn(
             'from-cta-text-start via-cta-text-via to-cta-text-end mb-2 bg-linear-to-r bg-clip-text text-3xl',
             'font-black text-transparent md:text-4xl'
           )}
         >
           ICFES Master
-        </h1>
+        </p>
         <p className="text-on-surface-muted">Prepárate para dominar el ICFES</p>
       </div>
 
