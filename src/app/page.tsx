@@ -5,6 +5,8 @@ import { contentPageTwitter } from '@/config/seo';
 
 export const metadata: Metadata = {
   alternates: { canonical: '/' },
+  description:
+    'Prepárate para el ICFES con +500 preguntas, simulacros reales, gamificación y una ruta de aprendizaje guiada.',
   openGraph: {
     url: '/',
     title: 'ICFES Master | Domina el ICFES desde cero',

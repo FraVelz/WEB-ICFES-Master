@@ -50,9 +50,7 @@ export const HomePageMobile = () => {
           {/* Logo */}
           <MascotaCircle src={MASCOT_IMAGES.logo} size="md" alt="Mascota de ICFES Master" />
 
-          <p className="text-on-surface text-center text-2xl font-bold" aria-hidden="true">
-            Domina el ICFES desde Cero
-          </p>
+          <h1 className="text-on-surface text-center text-2xl font-bold">Domina el ICFES desde Cero</h1>
 
           <p className="text-on-surface-muted text-lg font-semibold">ICFES Master</p>
 
