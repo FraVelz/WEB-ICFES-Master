@@ -60,3 +60,7 @@ jobs:
 
       - name: Build
         run: pnpm run build
+
+      - name: React Doctor
+        continue-on-error: true
+        run: pnpm run react:doctor
