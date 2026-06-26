@@ -49,7 +49,7 @@ export default function ProtectedPage({
   if (!hasAccess) {
     return (
       <div className={cn('flex flex-col items-center justify-center', FULL_PAGE_SHELL_CLASS)}>
-        <LoadingState label="Verificando sesión..." layout="fill" />
+        <LoadingState label="Redirigiendo al inicio de sesión..." layout="fill" />
       </div>
     );
   }

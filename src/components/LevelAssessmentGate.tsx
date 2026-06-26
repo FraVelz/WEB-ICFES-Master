@@ -1,10 +1,12 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
-import { usePathname, useRouter } from 'next/navigation';
+import { useEffect, useRef, useState } from 'react';
+import { usePathname } from 'next/navigation';
 
 import { useAuth } from '@/features/auth/context/AuthContext';
-import { buildLevelAssessmentUrl, LEVEL_ASSESSMENT_PATH } from '@/features/auth/constants/skillLevelRoutes';
+import { LEVEL_ASSESSMENT_PATH } from '@/features/auth/constants/skillLevelRoutes';
+import type { LevelAssessmentContext } from '@/features/auth/types/skillLevel';
+import { LevelAssessmentBanner } from '@/features/auth/components/LevelAssessmentBanner';
 import {
   getAssessmentScope,
   getAssessmentScopeForSession,
@@ -13,33 +15,55 @@ import {
 import { isLevelAssessmentSnoozed } from '@/features/auth/utils/levelAssessmentSnooze';
 import { useUiSessionStore } from '@/store/uiSessionStore';
 
-/** Redirige a la evaluación inicial si el usuario demo o cuenta nueva aún no la completó. */
+type PendingAssessment = {
+  context: LevelAssessmentContext;
+  scope: string;
+};
+
+/** Muestra un aviso no intrusivo cuando falta la evaluación inicial (sin redirección forzada). */
 export function LevelAssessmentGate() {
-  const router = useRouter();
   const pathname = usePathname();
   const demoMode = useUiSessionStore((s) => s.demoMode);
   const hydrated = useUiSessionStore((s) => s.hydrated);
   const { user, loading } = useAuth();
   const checkVersionRef = useRef(0);
+  const [pending, setPending] = useState<PendingAssessment | null>(null);
 
   useEffect(() => {
     if (!hydrated || loading) return;
-    if (pathname === LEVEL_ASSESSMENT_PATH) return;
+    if (pathname === LEVEL_ASSESSMENT_PATH) {
+      setPending(null);
+      return;
+    }
 
     const hasAccess = demoMode || !!user;
-    if (!hasAccess) return;
+    if (!hasAccess) {
+      setPending(null);
+      return;
+    }
 
     const scopeOptions = getAssessmentScopeForSession(demoMode, user?.uid);
     const scope = getAssessmentScope(scopeOptions);
-    const context = scopeOptions.demoMode && !user ? 'demo' : 'account';
+    const context: LevelAssessmentContext = scopeOptions.demoMode && !user ? 'demo' : 'account';
     const checkVersion = ++checkVersionRef.current;
 
     void hasCompletedLevelAssessment(scope, user?.uid).then((done) => {
-      if (checkVersion !== checkVersionRef.current || done) return;
-      if (isLevelAssessmentSnoozed(scope)) return;
-      router.replace(buildLevelAssessmentUrl(context));
+      if (checkVersion !== checkVersionRef.current) return;
+      if (done || isLevelAssessmentSnoozed(scope)) {
+        setPending(null);
+        return;
+      }
+      setPending({ context, scope });
     });
-  }, [demoMode, hydrated, loading, pathname, router, user]);
+  }, [demoMode, hydrated, loading, pathname, user]);
 
-  return null;
+  if (!pending) return null;
+
+  return (
+    <LevelAssessmentBanner
+      context={pending.context}
+      scope={pending.scope}
+      onDismiss={() => setPending(null)}
+    />
+  );
 }
