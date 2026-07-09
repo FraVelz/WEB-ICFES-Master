@@ -16,7 +16,7 @@ Copia [`.env.example`](../../../.env.example) a `.env.local` en la raíz del pro
 | `OPENAI_API_KEY`                | No                        | API key de OpenAI para `/api/chat` (asistente IA)                         |
 | `NEXT_PUBLIC_SITE_URL`          | Recomendada en producción | Origen público para `metadataBase`, sitemap, Open Graph y URLs canónicas  |
 | `NEXT_PUBLIC_TWITTER_SITE`      | No                        | Handle de Twitter/X (`@icfesmaster`) para `twitter:site` en metadatos     |
-| `KV_REST_API_URL`               | Recomendada en producción | URL REST de Upstash/Vercel KV para rate limiting y cuota diaria del chat |
+| `KV_REST_API_URL`               | Recomendada en producción | URL REST de Upstash/Vercel KV para rate limiting y cuota diaria del chat  |
 | `KV_REST_API_TOKEN`             | Recomendada en producción | Token de KV; sin esto los límites son en memoria por instancia serverless |
 
 ### Rate limiting en APIs

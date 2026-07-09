@@ -59,11 +59,5 @@ export function LevelAssessmentGate() {
 
   if (!pending) return null;
 
-  return (
-    <LevelAssessmentBanner
-      context={pending.context}
-      scope={pending.scope}
-      onDismiss={() => setPending(null)}
-    />
-  );
+  return <LevelAssessmentBanner context={pending.context} scope={pending.scope} onDismiss={() => setPending(null)} />;
 }
