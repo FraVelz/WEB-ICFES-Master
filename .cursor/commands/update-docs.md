@@ -3,6 +3,14 @@
 Usar cuando el usuario invoque **`/update-docs`**, adjunte `.cursor/commands/update-docs.md` o mencione esta
 instrucción, con uno o más archivos Markdown (`@`).
 
+## Modos
+
+- **Por defecto / `@` archivos:** ortografía + sync del par bilingüe (según idioma fuente).
+- **`sync-en` / "sincronizar a inglés":** tomar `README.md` (y docs ES si aplica) como
+  **fuente** y **actualizar o crear** el espejo EN (`README.EN.md` / `README.en.md`). No
+  reescribir el ES salvo typos. En el EN, la cabecera debe incluir:
+  `This document is in English. [Versión en español](./README.md)`.
+
 ## Objetivo
 
 1. **Revisar ortografía y redacción** del archivo fuente (según el idioma del documento) y **aplicar correcciones en el

@@ -1,6 +1,6 @@
 # Web Icfes Master - Master the ICFES from Scratch 📝
 
-[Spanish version](README.md)
+This document is in English. [Versión en español](README.md)
 
 An interactive platform to practice questions and learn topics from the ICFES state exam (Saber 11) in Colombia. Built
 with **feature-based** architecture using Next.js 15, React 19, Tailwind CSS 4, and Supabase.
