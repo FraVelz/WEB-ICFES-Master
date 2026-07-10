@@ -25,21 +25,11 @@ const AreasSection = dynamic(
   { loading: () => sectionFallback }
 );
 
-const FeaturesSection = dynamic(
-  () => import('@/features/home/components/FeaturesSection').then((mod) => ({ default: mod.FeaturesSection })),
-  { loading: () => sectionFallback }
-);
-
 const RouteTo500TeaserSection = dynamic(
   () =>
     import('@/features/home/components/RouteTo500TeaserSection').then((mod) => ({
       default: mod.RouteTo500TeaserSection,
     })),
-  { loading: () => sectionFallback }
-);
-
-const TestimonialsSection = dynamic(
-  () => import('@/features/home/components/TestimonialsSection').then((mod) => ({ default: mod.TestimonialsSection })),
   { loading: () => sectionFallback }
 );
 
@@ -53,11 +43,6 @@ const PublicResourcesSection = dynamic(
 
 const FAQSection = dynamic(
   () => import('@/features/home/components/FAQSection').then((mod) => ({ default: mod.FAQSection })),
-  { loading: () => sectionFallback }
-);
-
-const FinalCTASection = dynamic(
-  () => import('@/features/home/components/FinalCTASection').then((mod) => ({ default: mod.FinalCTASection })),
   { loading: () => sectionFallback }
 );
 
@@ -178,24 +163,6 @@ const HomePageDesktopComponent = () => {
 
         <section className="relative overflow-hidden py-12 md:py-16">
           <div data-home-reveal className={homeStyles.revealScroll}>
-            <FeaturesSection />
-          </div>
-        </section>
-
-        <section className="relative overflow-hidden py-12 md:py-16">
-          <div
-            className={cn(
-              'absolute top-0 right-0 left-0 h-1 bg-linear-to-r',
-              'from-transparent via-purple-500/50 to-transparent'
-            )}
-          />
-          <div data-home-reveal className={homeStyles.revealScroll}>
-            <TestimonialsSection />
-          </div>
-        </section>
-
-        <section className="relative overflow-hidden py-12 md:py-16">
-          <div data-home-reveal className={homeStyles.revealScroll}>
             <PublicResourcesSection />
           </div>
         </section>
@@ -203,18 +170,6 @@ const HomePageDesktopComponent = () => {
         <section className="relative overflow-hidden py-12 md:py-16">
           <div data-home-reveal className={homeStyles.revealScroll}>
             <FAQSection />
-          </div>
-        </section>
-
-        <section className="relative overflow-hidden py-8 md:py-10">
-          <div
-            className={cn(
-              'absolute top-0 right-0 left-0 h-1 bg-linear-to-r',
-              'from-transparent via-blue-500/50 to-transparent'
-            )}
-          />
-          <div data-home-reveal className={homeStyles.revealScroll}>
-            <FinalCTASection />
           </div>
         </section>
 

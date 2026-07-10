@@ -28,9 +28,7 @@ export const HeroSection = () => {
           )}
         >
           <Icon name="star" className="text-app-accent" />
-          <span className="text-app-accent text-sm font-semibold">
-            Conviértete en uno de los primeros estudiantes en alcanzar +400
-          </span>
+          <span className="text-app-accent text-sm font-semibold">Saber 11° · práctica por áreas y simulacros</span>
         </AnimatedReveal>
 
         {/* Main Title */}
@@ -41,15 +39,15 @@ export const HeroSection = () => {
               'bg-clip-text text-5xl leading-tight font-black text-transparent md:text-7xl lg:text-8xl'
             )}
           >
-            Domina el ICFES desde Cero
+            Practica el ICFES con simulacros reales
           </h1>
         </AnimatedReveal>
 
         {/* Subtitle */}
         <AnimatedReveal isVisible delay={0.3}>
           <p className="text-on-surface-muted mx-auto max-w-3xl text-lg leading-relaxed font-medium md:text-xl">
-            Prepárate para Saber 11° y la validación del bachillerato en Colombia. Plataforma 100% gratuita con acceso
-            web y app móvil en App Store: practica por áreas y simulacros tipo ICFES.
+            Preguntas por materia, temporizador y seguimiento de progreso para Saber 11° en Colombia. Gratis en web; hay
+            app en App Store.
           </p>
         </AnimatedReveal>
 
@@ -92,35 +90,10 @@ export const HeroSection = () => {
           </Link>
         </AnimatedReveal>
 
-        {/* Stats */}
-        <AnimatedReveal isVisible delay={0.6} className="mx-auto grid max-w-2xl grid-cols-3 gap-4 pt-8">
-          <div
-            className={cn(
-              'border-surface-border bg-surface-elevated dark:bg-surface-elevated/80',
-              'rounded-lg border p-2 shadow-sm sm:p-4 dark:shadow-none'
-            )}
-          >
-            <p className="text-app-accent text-3xl font-bold">+500</p>
-            <p className="text-on-surface-muted mt-1 text-xs font-medium">Preguntas</p>
-          </div>
-          <div
-            className={cn(
-              'border-surface-border bg-surface-elevated dark:bg-surface-elevated/80',
-              'rounded-lg border p-2 shadow-sm sm:p-4 dark:shadow-none'
-            )}
-          >
-            <p className="text-3xl font-bold text-indigo-700 dark:text-purple-400">100%</p>
-            <p className="text-on-surface-muted mt-1 text-xs font-medium">Gratis</p>
-          </div>
-          <div
-            className={cn(
-              'border-surface-border bg-surface-elevated dark:bg-surface-elevated/80',
-              'rounded-lg border p-2 shadow-sm sm:p-4 dark:shadow-none'
-            )}
-          >
-            <p className="text-3xl font-bold text-blue-800 dark:text-pink-400">+400</p>
-            <p className="text-on-surface-muted mt-1 text-xs font-medium">Puntaje promedio</p>
-          </div>
+        <AnimatedReveal isVisible delay={0.6} className="pt-6">
+          <p className="text-on-surface-muted text-sm font-medium">
+            Más de 500 preguntas sacadas de recursos oficiales del ICFES
+          </p>
         </AnimatedReveal>
       </div>
     </section>

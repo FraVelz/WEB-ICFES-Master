@@ -50,13 +50,13 @@ export const HomePageMobile = () => {
           {/* Logo */}
           <MascotaCircle src={MASCOT_IMAGES.logo} size="md" alt="Mascota de ICFES Master" />
 
-          <h1 className="text-on-surface text-center text-2xl font-bold">Domina el ICFES desde Cero</h1>
+          <h1 className="text-on-surface text-center text-2xl font-bold">Practica el ICFES con simulacros</h1>
 
           <p className="text-on-surface-muted text-lg font-semibold">ICFES Master</p>
 
           {/* Tagline */}
           <p className="text-on-surface-muted max-w-xs text-center text-sm">
-            Prepárate para Saber 11° con simulacros, práctica por áreas y gamificación.
+            Preguntas por materia y seguimiento de progreso para Saber 11°.
           </p>
         </div>
       </div>

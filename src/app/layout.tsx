@@ -19,11 +19,10 @@ const themeInitScript =
 export const metadata: Metadata = {
   metadataBase: new URL(getSiteUrl()),
   title: {
-    default: 'ICFES Master | Domina el ICFES desde cero',
+    default: 'ICFES Master | Simulacros y práctica Saber 11°',
     template: '%s | ICFES Master',
   },
-  description:
-    'Prepárate para el ICFES con +500 preguntas, simulacros reales, gamificación y una ruta de aprendizaje guiada.',
+  description: 'Practica Saber 11° con más de 500 preguntas, simulacros cronometrados y seguimiento de progreso.',
   applicationName: 'ICFES Master',
   referrer: 'origin-when-cross-origin',
   keywords: [
@@ -53,14 +52,14 @@ export const metadata: Metadata = {
     type: 'website',
     locale: 'es_CO',
     siteName: 'ICFES Master',
-    title: 'ICFES Master | Domina el ICFES desde cero',
-    description: 'La plataforma #1 para preparar el ICFES: +500 preguntas, simulacros reales y aprendizaje guiado.',
+    title: 'ICFES Master | Simulacros y práctica Saber 11°',
+    description: 'Más de 500 preguntas, simulacros cronometrados y práctica por áreas para Saber 11°.',
     url: '/',
     ...ogImageOpenGraph,
   },
   twitter: {
-    title: 'ICFES Master | Domina el ICFES desde cero',
-    description: 'Prepárate con simulacros y preguntas reales para lograr un gran puntaje en el ICFES.',
+    title: 'ICFES Master | Simulacros y práctica Saber 11°',
+    description: 'Practica con simulacros y preguntas por materia para el ICFES.',
     ...(getTwitterSite() ? { site: getTwitterSite() } : {}),
     ...ogImageTwitter,
   },

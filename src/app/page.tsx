@@ -5,17 +5,15 @@ import { contentPageTwitter } from '@/config/seo';
 
 export const metadata: Metadata = {
   alternates: { canonical: '/' },
-  description:
-    'Prepárate para el ICFES con +500 preguntas, simulacros reales, gamificación y una ruta de aprendizaje guiada.',
+  description: 'Practica Saber 11° con más de 500 preguntas, simulacros cronometrados y seguimiento de progreso.',
   openGraph: {
     url: '/',
-    title: 'ICFES Master | Domina el ICFES desde cero',
-    description:
-      'Prepárate para el ICFES con +500 preguntas, simulacros reales, gamificación y una ruta de aprendizaje guiada.',
+    title: 'ICFES Master | Simulacros y práctica Saber 11°',
+    description: 'Practica Saber 11° con más de 500 preguntas, simulacros cronometrados y seguimiento de progreso.',
   },
   twitter: contentPageTwitter(
-    'ICFES Master | Domina el ICFES desde cero',
-    'Prepárate para el ICFES con +500 preguntas, simulacros reales, gamificación y una ruta de aprendizaje guiada.'
+    'ICFES Master | Simulacros y práctica Saber 11°',
+    'Practica Saber 11° con más de 500 preguntas, simulacros cronometrados y seguimiento de progreso.'
   ),
 };
 
