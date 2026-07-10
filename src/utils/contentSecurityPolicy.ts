@@ -20,11 +20,11 @@ function buildCspDirectives(nonce: string, frameAncestors: "'none'" | "'self'"):
   ].join('; ');
 }
 
-export function buildContentSecurityPolicy(nonce: string): string {
+function buildContentSecurityPolicy(nonce: string): string {
   return buildCspDirectives(nonce, "'none'");
 }
 
-export function buildEmbeddableContentSecurityPolicy(nonce: string): string {
+function buildEmbeddableContentSecurityPolicy(nonce: string): string {
   return buildCspDirectives(nonce, "'self'");
 }
 

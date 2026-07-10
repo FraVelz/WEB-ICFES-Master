@@ -8,7 +8,7 @@ export type LessonPathStatus = 'pending' | 'current' | 'completed' | 'locked';
 /**
  * Asigna estado por orden en la etapa: la primera pendiente es `current`, el resto `pending`.
  */
-export function resolveLessonStatuses(
+function resolveLessonStatuses(
   nodes: Pick<PathNodeData, 'id'>[],
   completedIds: Set<string> | string[]
 ): LessonPathStatus[] {
@@ -57,7 +57,7 @@ function blockLessonsComplete(nodes: PathNodeData[], blockId: string, completedI
 /**
  * Desbloqueo por bloques (fase 1): checkpoint ≥70% habilita el bloque siguiente.
  */
-export function applyBlockAwareLessonStatuses(
+function applyBlockAwareLessonStatuses(
   nodes: PathNodeData[],
   completedIds: Set<string> | string[],
   passedBlockIds: Set<string> | string[],

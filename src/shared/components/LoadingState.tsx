@@ -1,7 +1,7 @@
 'use client';
 
 import { cn } from '@/utils/cn';
-import { Icon } from './Icon';
+import { Icon } from './Icon/Icon';
 
 export type LoadingStateLayout = 'page' | 'fill' | 'section';
 

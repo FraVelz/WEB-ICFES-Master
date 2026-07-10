@@ -31,8 +31,8 @@ export async function gradeExamAnswers(answers: Record<string, string>): Promise
   });
 }
 
-export async function gradeFullExamPool(answers: Record<string, string>): Promise<GradedExamAnswer[]> {
+async function gradeFullExamPool(answers: Record<string, string>): Promise<GradedExamAnswer[]> {
   return gradeExamAnswers(answers);
 }
 
-export const FULL_EXAM_AREA_IDS = FULL_EXAM_ROUTE_AREAS;
+const FULL_EXAM_AREA_IDS = FULL_EXAM_ROUTE_AREAS;

@@ -5,12 +5,7 @@ export const SIMULACRO_COMPLETO_PATH = '/simulacro/completo';
 /** Sección dedicada (sin fases) con configuración personalizada del simulacro integral. */
 export const SIMULACRO_COMPLETO_SECTION_PATH = '/simulacro-completo';
 
-/** Rutas legacy que redirigen a `/simulacro`. */
-export const LEGACY_FULL_EXAM_PATH = '/examen-completo';
-export const LEGACY_PRACTICA_PATH = '/practica';
-export const LEGACY_PHASE_SKIP_PATH = '/fases/simulacro';
-
-export function isSimulacroRoute(pathname: string): boolean {
+function isSimulacroRoute(pathname: string): boolean {
   const normalized = pathname.endsWith('/') && pathname.length > 1 ? pathname.slice(0, -1) : pathname;
   return normalized === SIMULACRO_PATH || normalized.startsWith(`${SIMULACRO_PATH}/`);
 }
@@ -22,7 +17,7 @@ export function isSimulacroExamRoute(pathname: string): boolean {
   return isSimulacroRoute(pathname);
 }
 
-export function getSimulacroHubHref(): string {
+function getSimulacroHubHref(): string {
   return SIMULACRO_PATH;
 }
 

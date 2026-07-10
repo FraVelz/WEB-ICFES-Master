@@ -76,5 +76,3 @@ export const EMAIL_MESSAGES = {
     goToLoginButton: 'Ir al Login',
   },
 };
-
-export default EMAIL_MESSAGES;

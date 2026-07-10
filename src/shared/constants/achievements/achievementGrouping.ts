@@ -156,7 +156,7 @@ export function organizeAchievementsForDisplay(
     .sort((a, b) => a.order - b.order);
 }
 
-export function pickAchievementsForProfilePreview(
+function pickAchievementsForProfilePreview(
   sections: AchievementCategorySection[],
   maxItems = 12,
   maxPerGroup = 2

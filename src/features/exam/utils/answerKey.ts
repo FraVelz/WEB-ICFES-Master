@@ -9,7 +9,7 @@ export function findQuestionOption(
 }
 
 /** Normaliza id de opción (a, b…) aunque la UI envíe la letra (A, B…). */
-export function normalizeAnswerKey(answer: string, options?: QuestionOption[]): string {
+function normalizeAnswerKey(answer: string, options?: QuestionOption[]): string {
   if (!answer) return answer;
   const match = options ? findQuestionOption(options, answer) : undefined;
   if (match) return match.id;

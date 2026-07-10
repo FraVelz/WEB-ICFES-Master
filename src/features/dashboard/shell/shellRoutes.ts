@@ -70,7 +70,7 @@ export const SHELL_SECTION_META: Record<
   },
 };
 
-export function getActiveNavOption(pathname: string, options: NavOption[]): NavOption | undefined {
+function getActiveNavOption(pathname: string, options: NavOption[]): NavOption | undefined {
   return options.find((option) => {
     if (isNavPathActive(pathname, option.path)) return true;
     return option.activePaths?.some((path) => isNavPathActive(pathname, path)) ?? false;

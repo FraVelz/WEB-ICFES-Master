@@ -140,6 +140,6 @@ export async function gradeBlockExamSession(sessionToken: string, answers: Recor
 export type BlockExamStartResult = Awaited<ReturnType<typeof startBlockExamSession>>;
 export type BlockExamGradeResult = Awaited<ReturnType<typeof gradeBlockExamSession>>;
 
-export function getBlockExamTitle(block: PhaseBlockDef | undefined, blockId: string): string {
+function getBlockExamTitle(block: PhaseBlockDef | undefined, blockId: string): string {
   return block?.title ?? blockId;
 }

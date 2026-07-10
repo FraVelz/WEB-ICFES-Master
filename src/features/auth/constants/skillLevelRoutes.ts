@@ -7,7 +7,7 @@ import { ROUTE_TO_500_PATH } from '@/features/learning/data/routeTo500';
 export const LEVEL_ASSESSMENT_PATH = '/evaluacion-nivel';
 
 /** Fase 1 (Cimentación) de Lectura Crítica en la ruta de aprendizaje. */
-export const SKILL_LEVEL_BASICS_PATH = getRoadmapHref('facil', 'lectura-critica');
+const SKILL_LEVEL_BASICS_PATH = getRoadmapHref('facil', 'lectura-critica');
 
 export const SKILL_LEVEL_DESTINATIONS: Record<
   SkillLevel,

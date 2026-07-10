@@ -27,7 +27,7 @@ export function mergePhaseSkips(a: PhaseSkipRecord[], b: PhaseSkipRecord[]): Pha
   return [...byKey.values()];
 }
 
-export function mergeBlockExamPasses(a: BlockExamPassRecord[], b: BlockExamPassRecord[]): BlockExamPassRecord[] {
+function mergeBlockExamPasses(a: BlockExamPassRecord[], b: BlockExamPassRecord[]): BlockExamPassRecord[] {
   const byKey = new Map<string, BlockExamPassRecord>();
 
   for (const record of [...a, ...b]) {

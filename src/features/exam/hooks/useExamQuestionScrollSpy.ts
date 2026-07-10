@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from 'react';
 
-export const EXAM_SCROLL_ROOT_ID = 'exam-scroll-root';
+const EXAM_SCROLL_ROOT_ID = 'exam-scroll-root';
 
 const SCROLL_SPY_THRESHOLDS = [0, 0.1, 0.25, 0.5, 0.75, 1] as const;
 

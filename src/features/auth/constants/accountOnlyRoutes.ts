@@ -1,7 +1,7 @@
 /** Rutas disponibles solo con cuenta (no en modo demo). */
 import { LIGAS_PATH } from '@/features/exam/utils/leagueNavigation';
 
-export const ACCOUNT_ONLY_PATHS = [LIGAS_PATH, '/perfil', '/configuracion'] as const;
+const ACCOUNT_ONLY_PATHS = [LIGAS_PATH, '/perfil', '/configuracion'] as const;
 
 export type AccountOnlyPath = (typeof ACCOUNT_ONLY_PATHS)[number];
 

@@ -9,14 +9,14 @@ export type PhaseBlockDef = {
   orderIndexTo: number;
 };
 
-export function getBlocksForAreaAndPhase(
+function getBlocksForAreaAndPhase(
   blocksByArea: Partial<Record<string, PhaseBlockDef[]>>,
   areaId: string
 ): PhaseBlockDef[] {
   return blocksByArea[areaId] ?? [];
 }
 
-export function resolveBlockIdFromOrder(
+function resolveBlockIdFromOrder(
   blocks: PhaseBlockDef[],
   orderIndex: number,
   explicitBlockId?: string | null
@@ -29,10 +29,10 @@ export function resolveBlockIdFromOrder(
   return block?.blockId ?? null;
 }
 
-export function getBlockDef(blocks: PhaseBlockDef[], blockId: string): PhaseBlockDef | undefined {
+function getBlockDef(blocks: PhaseBlockDef[], blockId: string): PhaseBlockDef | undefined {
   return blocks.find((block) => block.blockId === blockId);
 }
 
-export function getCheckpointPhaseNumber(phase?: LearningPhaseNumber): LearningPhaseNumber {
+function getCheckpointPhaseNumber(phase?: LearningPhaseNumber): LearningPhaseNumber {
   return phase ?? 1;
 }

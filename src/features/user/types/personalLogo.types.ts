@@ -1,6 +1,6 @@
 export const MAX_PERSONAL_LOGOS = 2;
 export const PERSONAL_LOGO_MAX_BYTES = 2 * 1024 * 1024;
-export const PERSONAL_LOGO_ID_PREFIX = 'personal_logo_';
+const PERSONAL_LOGO_ID_PREFIX = 'personal_logo_';
 
 export interface PersonalLogo {
   id: string;

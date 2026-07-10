@@ -19,7 +19,7 @@ export const ACHIEVEMENTS_DATA = [
 ] as const;
 
 /** IDs de logros otorgados al ascender de liga (job semanal). */
-export const LEAGUE_ACHIEVEMENT_IDS: Record<string, string> = {
+const LEAGUE_ACHIEVEMENT_IDS: Record<string, string> = {
   explorador: 'league_explorador',
   aprendiz: 'league_aprendiz',
   competente: 'league_competente',

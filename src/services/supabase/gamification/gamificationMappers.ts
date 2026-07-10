@@ -5,12 +5,12 @@ import type { GamificationProfile } from './gamificationTypes';
 
 export const GAMIFICATION_TABLE = 'user_gamification';
 
-export function parseShopInventory(value: unknown): string[] {
+function parseShopInventory(value: unknown): string[] {
   if (!Array.isArray(value)) return [];
   return value.filter((entry): entry is string => typeof entry === 'string' && entry.length > 0);
 }
 
-export function parsePersonalLogos(value: unknown): PersonalLogo[] {
+function parsePersonalLogos(value: unknown): PersonalLogo[] {
   if (!Array.isArray(value)) return [];
   return value
     .filter((entry): entry is PersonalLogo => {

@@ -6,13 +6,13 @@ export type LearningPhaseSectionId = (typeof LEARNING_PHASE_SECTION_IDS)[number]
 /** Fase pedagógica almacenada en `learning_content.phase`. */
 export type LearningPhaseNumber = 1 | 2 | 3;
 
-export const SECTION_ID_TO_PHASE: Record<LearningPhaseSectionId, LearningPhaseNumber> = {
+const SECTION_ID_TO_PHASE: Record<LearningPhaseSectionId, LearningPhaseNumber> = {
   facil: 1,
   intermedio: 2,
   dificil: 3,
 };
 
-export const PHASE_TO_SECTION_ID: Record<LearningPhaseNumber, LearningPhaseSectionId> = {
+const PHASE_TO_SECTION_ID: Record<LearningPhaseNumber, LearningPhaseSectionId> = {
   1: 'facil',
   2: 'intermedio',
   3: 'dificil',

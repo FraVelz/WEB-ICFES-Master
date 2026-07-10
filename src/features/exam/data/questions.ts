@@ -140,7 +140,7 @@ export const ENGLISH_QUESTIONS: ExamQuestion[] = [
   },
 ];
 
-export const ALL_QUESTIONS: ExamQuestion[] = [
+const ALL_QUESTIONS: ExamQuestion[] = [
   ...MATHEMATICS_QUESTIONS,
   ...LANGUAGE_QUESTIONS,
   ...SCIENCE_QUESTIONS,

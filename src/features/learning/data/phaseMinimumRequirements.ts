@@ -3,11 +3,11 @@ import { getLessonRewardsForPhase } from '@/features/learning/utils/lessonReward
 import { HOME_AREA_IDS, type AreaId } from '@/shared/constants';
 
 /** Tipo de módulo en la ruta (primer nodo de fase 1). */
-export const MINIMUM_REQUIREMENTS_MODULE_TYPE = 'minimum-requirements' as const;
+const MINIMUM_REQUIREMENTS_MODULE_TYPE = 'minimum-requirements' as const;
 
 export type MinimumRequirementsModuleType = typeof MINIMUM_REQUIREMENTS_MODULE_TYPE;
 
-export const MINIMUM_REQUIREMENTS_ID_PREFIX = 'req-minimos-';
+const MINIMUM_REQUIREMENTS_ID_PREFIX = 'req-minimos-';
 
 export type PhaseMinimumRequirementsModule = {
   areaId: AreaId;
@@ -327,7 +327,7 @@ export function parseAreaFromMinimumRequirementsId(id: string): AreaId | null {
   return HOME_AREA_IDS.includes(areaId) ? areaId : null;
 }
 
-export function getPhaseMinimumRequirementsModule(areaId: AreaId): PhaseMinimumRequirementsModule | null {
+function getPhaseMinimumRequirementsModule(areaId: AreaId): PhaseMinimumRequirementsModule | null {
   return MODULES[areaId] ?? null;
 }
 

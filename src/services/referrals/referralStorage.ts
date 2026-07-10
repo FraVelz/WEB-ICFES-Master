@@ -22,7 +22,7 @@ export function clearStoredReferralCode(): void {
   sessionStorage.removeItem(REFERRAL_STORAGE_KEY);
 }
 
-export function normalizeReferralCode(value: string | null | undefined): string | null {
+function normalizeReferralCode(value: string | null | undefined): string | null {
   const trimmed = value?.trim();
   return trimmed ? trimmed.toUpperCase() : null;
 }

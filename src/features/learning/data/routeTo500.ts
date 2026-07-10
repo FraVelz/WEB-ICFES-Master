@@ -101,7 +101,7 @@ export function getAreaSimulacroPhaseTitle(areaName: string): string {
   return `Simulacro general de ${areaName}`;
 }
 
-export function getAreaSimulacroPhaseSummary(areaName: string): string {
+function getAreaSimulacroPhaseSummary(areaName: string): string {
   return (
     `Simulacro completo de ${areaName} para consolidar las tres fases anteriores ` + 'antes del simulacro integral.'
   );

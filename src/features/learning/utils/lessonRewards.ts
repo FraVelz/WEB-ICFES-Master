@@ -1,9 +1,9 @@
 import type { LearningPhaseNumber } from '@/features/learning/constants/learningPhases';
 
-export const LESSON_REWARD_BASE_XP = 50;
-export const LESSON_REWARD_BASE_COINS = 25;
+const LESSON_REWARD_BASE_XP = 50;
+const LESSON_REWARD_BASE_COINS = 25;
 
-export function getLessonPhaseRewardMultiplier(phase: LearningPhaseNumber): number {
+function getLessonPhaseRewardMultiplier(phase: LearningPhaseNumber): number {
   return phase;
 }
 

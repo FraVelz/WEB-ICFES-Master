@@ -5,9 +5,9 @@ import { useLayoutEffect, useState, type CSSProperties, type RefObject } from 'r
 type Align = 'start' | 'end' | 'stretch';
 
 /** Mismo breakpoint que `lg:` de Tailwind (sidebar / layout escritorio). */
-export const MOBILE_BOTTOM_SHEET_MQ = '(max-width: 1023px)';
+const MOBILE_BOTTOM_SHEET_MQ = '(max-width: 1023px)';
 
-export function isMobileBottomSheetViewport(): boolean {
+function isMobileBottomSheetViewport(): boolean {
   if (typeof window === 'undefined') return false;
   return window.matchMedia(MOBILE_BOTTOM_SHEET_MQ).matches;
 }

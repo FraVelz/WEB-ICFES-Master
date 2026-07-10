@@ -3,7 +3,7 @@ import { AREA_INFO } from '@/shared/constants';
 import { ROADMAP_AREA_TO_STATIC_DATA_KEY } from '@/features/learning/constants/roadmapAreaKeys';
 import { parseAreaFromMinimumRequirementsId } from '@/features/learning/data/phaseMinimumRequirements';
 
-export const LESSON_PATH_PREFIX = '/ruta-aprendizaje/leccion';
+const LESSON_PATH_PREFIX = '/ruta-aprendizaje/leccion';
 
 export function isLessonRoute(pathname: string): boolean {
   return pathname.startsWith(`${LESSON_PATH_PREFIX}/`);
@@ -26,7 +26,7 @@ const SUPABASE_AREA_TO_ROADMAP: Record<string, AreaId> = {
 };
 
 /** Convierte `area` de Supabase o slug de ruta al id usado en el roadmap. */
-export function normalizeRoadmapAreaId(area: string | undefined): AreaId {
+function normalizeRoadmapAreaId(area: string | undefined): AreaId {
   if (!area) return 'lectura-critica';
   if (area in AREA_INFO) return area as AreaId;
   const underscored = area.replace(/-/g, '_');

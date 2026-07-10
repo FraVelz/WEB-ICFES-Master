@@ -1,7 +1,7 @@
 import type { AreaId } from '@/shared/constants';
 import type { PhaseBlockDef } from './phaseBlockTypes';
 
-export const PHASE3_BLOCKS: Partial<Record<AreaId, PhaseBlockDef[]>> = {
+const PHASE3_BLOCKS: Partial<Record<AreaId, PhaseBlockDef[]>> = {
   'lectura-critica': [
     {
       blockId: 'nivel-critico',

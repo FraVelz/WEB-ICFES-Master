@@ -1,7 +1,7 @@
 import type { LearningPathLesson } from '@/features/learning/services/LearningService';
 import { HOME_AREA_IDS, type AreaId } from '@/shared/constants';
 
-export const BLOCK_CHECKPOINT_ID_PREFIX = 'block-checkpoint-';
+const BLOCK_CHECKPOINT_ID_PREFIX = 'block-checkpoint-';
 
 export type Phase1BlockDef = {
   blockId: string;
@@ -161,7 +161,7 @@ export function getBlockCheckpointId(areaId: AreaId, blockId: string): string {
   return `${BLOCK_CHECKPOINT_ID_PREFIX}${areaId}-${blockId}`;
 }
 
-export function isBlockCheckpointId(id: string): boolean {
+function isBlockCheckpointId(id: string): boolean {
   return id.startsWith(BLOCK_CHECKPOINT_ID_PREFIX);
 }
 
@@ -175,10 +175,7 @@ export function parseBlockCheckpointId(id: string): { areaId: AreaId; blockId: s
   return { areaId, blockId };
 }
 
-export function resolveLessonBlockId(
-  areaId: AreaId,
-  lesson: Pick<LearningPathLesson, 'blockId' | 'order'>
-): string | null {
+function resolveLessonBlockId(areaId: AreaId, lesson: Pick<LearningPathLesson, 'blockId' | 'order'>): string | null {
   if (lesson.blockId && typeof lesson.blockId === 'string') return lesson.blockId;
 
   const orderIndex = Number(lesson.order);
@@ -190,6 +187,6 @@ export function resolveLessonBlockId(
   return block?.blockId ?? null;
 }
 
-export function getPhase1BlockDef(areaId: AreaId, blockId: string): Phase1BlockDef | undefined {
+function getPhase1BlockDef(areaId: AreaId, blockId: string): Phase1BlockDef | undefined {
   return getPhase1BlocksForArea(areaId).find((block) => block.blockId === blockId);
 }

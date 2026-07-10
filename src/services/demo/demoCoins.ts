@@ -37,7 +37,7 @@ export function getDemoCoins(): number {
   return stored;
 }
 
-export function setDemoCoins(amount: number): number {
+function setDemoCoins(amount: number): number {
   if (typeof window === 'undefined') return Math.max(0, amount);
   const next = Math.max(0, amount);
   localStorage.setItem(DEMO_COINS_KEY, String(next));

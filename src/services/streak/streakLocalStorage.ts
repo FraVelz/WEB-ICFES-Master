@@ -20,7 +20,7 @@ export function saveLocalStreakState(scope: StreakScope, state: StreakState): vo
   writeKey(resolveStorageKey(scope), state);
 }
 
-export function clearLocalStreakState(scope: StreakScope): void {
+function clearLocalStreakState(scope: StreakScope): void {
   if (typeof window === 'undefined') return;
   localStorage.removeItem(resolveStorageKey(scope));
 }
@@ -29,6 +29,6 @@ export function clearDemoStreakLocal(): void {
   clearLocalStreakState('demo');
 }
 
-export function loadDemoStreakFromLegacyKey(): StreakState {
+function loadDemoStreakFromLegacyKey(): StreakState {
   return readKey(DEMO_STREAK_KEY);
 }

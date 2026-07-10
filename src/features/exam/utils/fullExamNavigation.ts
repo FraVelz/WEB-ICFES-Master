@@ -9,7 +9,7 @@ import {
   getSimulacroCompletoSectionHref,
 } from '@/features/exam/utils/simulacroNavigation';
 
-export const DEFAULT_FULL_EXAM_EXIT_AREA = 'lectura-critica' as const;
+const DEFAULT_FULL_EXAM_EXIT_AREA = 'lectura-critica' as const;
 
 export function getDefaultFullExamExitHref(): string {
   return getRoadmapHref('facil', DEFAULT_FULL_EXAM_EXIT_AREA);
@@ -20,7 +20,7 @@ export function buildFullExamHref(fromPath?: string | null): string {
   return getSimulacroCompletoExamHref(fromPath ?? getSimulacroCompletoSectionHref());
 }
 
-export function buildCurrentLocationPath(pathname: string, searchParams: Pick<URLSearchParams, 'toString'>): string {
+function buildCurrentLocationPath(pathname: string, searchParams: Pick<URLSearchParams, 'toString'>): string {
   const qs = searchParams.toString();
   return qs ? `${pathname}?${qs}` : pathname;
 }

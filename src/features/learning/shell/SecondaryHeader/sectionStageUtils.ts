@@ -6,7 +6,7 @@ const STAGE_NUMBERS: Record<string, number> = {
   dificil: 3,
 };
 
-export function getStageNumber(sectionId: string): number {
+function getStageNumber(sectionId: string): number {
   return STAGE_NUMBERS[sectionId] ?? 1;
 }
 

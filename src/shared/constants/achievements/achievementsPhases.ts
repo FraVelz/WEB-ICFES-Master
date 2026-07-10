@@ -2,7 +2,7 @@ import { COMPETENCY_PHASES } from '@/features/learning/data/competencyPhases';
 import { AREA_INFO, HOME_AREA_IDS, type AreaId } from '@/shared/constants/areaInfo';
 import { phaseAchievementGroupKey } from './achievementGrouping';
 
-export function phaseAchievementAreaSuffix(areaId: AreaId): string {
+function phaseAchievementAreaSuffix(areaId: AreaId): string {
   return areaId.replace(/-/g, '_');
 }
 

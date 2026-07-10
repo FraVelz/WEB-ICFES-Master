@@ -9,7 +9,7 @@ export type ExamQuestionRouteArea =
   | 'sociales-ciudadanas'
   | 'ingles';
 
-export const EXAM_ROUTE_TO_DB_AREA: Record<ExamQuestionRouteArea, ExamQuestionDbArea> = {
+const EXAM_ROUTE_TO_DB_AREA: Record<ExamQuestionRouteArea, ExamQuestionDbArea> = {
   matematicas: 'matematicas',
   'lectura-critica': 'lectura_critica',
   'ciencias-naturales': 'ciencias_naturales',
@@ -28,6 +28,6 @@ export function routeAreaToDbArea(routeArea: string): ExamQuestionDbArea | null 
   return (EXAM_ROUTE_TO_DB_AREA as Record<string, ExamQuestionDbArea | undefined>)[routeArea] ?? null;
 }
 
-export function isExamQuestionRouteArea(value: string): value is ExamQuestionRouteArea {
+function isExamQuestionRouteArea(value: string): value is ExamQuestionRouteArea {
   return value in EXAM_ROUTE_TO_DB_AREA;
 }

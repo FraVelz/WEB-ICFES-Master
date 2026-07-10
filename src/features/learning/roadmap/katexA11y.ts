@@ -16,7 +16,7 @@ function truncateForAria(label: string, max = 160): string {
   return `${normalized.slice(0, max - 1)}…`;
 }
 
-export function collectKatexNodes(root: HTMLElement): Element[] {
+function collectKatexNodes(root: HTMLElement): Element[] {
   return Array.from(root.querySelectorAll('.katex-display, .katex')).filter(
     (el) => el.classList.contains('katex-display') || !el.closest('.katex-display')
   );

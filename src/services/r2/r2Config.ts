@@ -50,7 +50,7 @@ export function buildR2ObjectKeyCandidates(filename: string): string[] {
   return [...keys];
 }
 
-export function buildR2ObjectKey(filename: string, prefix?: string): string {
+function buildR2ObjectKey(filename: string, prefix?: string): string {
   return (
     buildR2ObjectKeyCandidates(filename).find((key) => {
       const folder = (prefix ?? getR2ServerConfig()?.prefix ?? DEFAULT_PDF_PREFIX).replace(/^\/+|\/+$/g, '');

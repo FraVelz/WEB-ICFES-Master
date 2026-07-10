@@ -85,7 +85,7 @@ export function getCompetencyPhaseBySectionId(sectionId: string): CompetencyPhas
   return COMPETENCY_PHASES.find((p) => p.sectionId === sectionId);
 }
 
-export const LEARNING_PHASES_PATH = '/fases';
+const LEARNING_PHASES_PATH = '/fases';
 export const LEARNING_ROADMAP_PATH = '/ruta-aprendizaje';
 
 /** Slugs válidos para rutas `/fases/[area]`. */

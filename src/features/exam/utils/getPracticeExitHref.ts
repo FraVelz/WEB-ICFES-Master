@@ -35,7 +35,7 @@ function normalizeFromParam(value: string): string | null {
 }
 
 /** Primera fase no saltada por simulacro; sirve como destino probable sin contexto en la URL. */
-export function inferLikelyPhaseSectionId(areaSlug: string): (typeof LEARNING_PHASE_SECTION_IDS)[number] {
+function inferLikelyPhaseSectionId(areaSlug: string): (typeof LEARNING_PHASE_SECTION_IDS)[number] {
   if (typeof window === 'undefined') return 'facil';
   const skipped = getSkippedSectionIdsForArea(areaSlug);
   for (const sectionId of LEARNING_PHASE_SECTION_IDS) {

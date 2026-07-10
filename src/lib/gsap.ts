@@ -41,7 +41,7 @@ if (typeof window !== 'undefined') {
 
 export { gsap, ScrollTrigger };
 
-export const GSAP_DEFAULTS = {
+const GSAP_DEFAULTS = {
   duration: reducedMotion ? 0 : GSAP_DURATION,
   ease: reducedMotion ? 'none' : GSAP_EASE,
   stagger: reducedMotion ? 0 : 0.1,

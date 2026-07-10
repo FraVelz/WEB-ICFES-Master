@@ -47,7 +47,7 @@ export async function getExamQuestionsByIdsForGrading(ids: string[]): Promise<Ex
   return ((data ?? []) as ExamQuestionRow[]).map(rowToExamQuestion);
 }
 
-export async function getExamQuestionsByRouteAreaForGrading(routeArea: string): Promise<ExamQuestion[]> {
+async function getExamQuestionsByRouteAreaForGrading(routeArea: string): Promise<ExamQuestion[]> {
   const sb = createServiceRoleClient();
   if (!sb) return [];
 

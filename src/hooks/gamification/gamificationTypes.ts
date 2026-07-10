@@ -1,4 +1,4 @@
-export const STREAK_ACHIEVEMENT_ID = 'const_1';
+const STREAK_ACHIEVEMENT_ID = 'const_1';
 
 export type AchievementProgressEntry = {
   current?: number;

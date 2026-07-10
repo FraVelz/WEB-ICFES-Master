@@ -16,7 +16,7 @@ function isNotFoundError(error: unknown): boolean {
   );
 }
 
-export function getR2Client(): S3Client | null {
+function getR2Client(): S3Client | null {
   const config = getR2ServerConfig();
   if (!config) return null;
 

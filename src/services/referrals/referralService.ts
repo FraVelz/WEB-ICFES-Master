@@ -23,7 +23,7 @@ export async function applyReferralCode(
   return Boolean(data);
 }
 
-export async function getReferralCodeForUser(userId: string): Promise<string | null> {
+async function getReferralCodeForUser(userId: string): Promise<string | null> {
   if (!supabase) return null;
   const { data, error } = await supabase.from('users').select('referral_code').eq('id', userId).maybeSingle();
   if (error) {
@@ -52,7 +52,7 @@ export async function getInviteeReferralStatus(
   };
 }
 
-export async function getQualifiedReferralCount(userId: string): Promise<number> {
+async function getQualifiedReferralCount(userId: string): Promise<number> {
   if (!supabase) return 0;
   const { data, error } = await supabase
     .from('user_gamification')

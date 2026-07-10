@@ -2,7 +2,7 @@
  * Utilidades de gamificación (niveles y XP)
  */
 
-export const LEVELS = [
+const LEVELS = [
   {
     level: 1,
     name: 'Aprendiz',

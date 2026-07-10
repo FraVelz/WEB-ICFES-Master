@@ -46,7 +46,7 @@ export const useUser = () => {
   const queryClient = useQueryClient();
   const coinsUserId = resolveCoinsUserId(authUser?.uid, demoMode);
 
-  const profileQuery = useQuery({
+  const { data: profileData, isLoading: profileIsLoading } = useQuery({
     queryKey: queryKeys.userProfile(authUser?.uid ?? ''),
     queryFn: async () => {
       if (!authUser?.uid) return null;
@@ -57,12 +57,12 @@ export const useUser = () => {
   });
 
   const user = useMemo(() => {
-    if (authUser?.uid) return profileQuery.data ?? null;
+    if (authUser?.uid) return profileData ?? null;
     if (demoMode) return demoUser;
     return null;
-  }, [authUser?.uid, demoMode, demoUser, profileQuery.data]);
+  }, [authUser?.uid, demoMode, demoUser, profileData]);
 
-  const isLoading = Boolean(authUser?.uid && profileQuery.isLoading && profileQuery.data === undefined);
+  const isLoading = Boolean(authUser?.uid && profileIsLoading && profileData === undefined);
 
   const loadCoins = useCallback(async () => {
     if (gamificationContext != null) {
