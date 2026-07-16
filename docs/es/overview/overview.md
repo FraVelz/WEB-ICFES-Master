@@ -9,6 +9,7 @@ de nuevos desarrolladores y servir como referencia técnica.
 
 - **[Resumen ejecutivo](executive-summary.md)**: Visión de alto nivel para managers y nuevos integrantes.
 - **[Estructura del proyecto](project-structure.md)**: Explicación de la arquitectura de carpetas y módulos.
+- **[ADR billing 2026](../decisions/billing-no-2026.md)**: Planes Free/Pro/Premium desactivados.
 
 ### 2. Configuración (`/setup`)
 

@@ -10,7 +10,8 @@ Los recursos estáticos (mascota, capturas de marca) viven en **`src/assets/`** 
 > [!NOTE] Se buscaba abarcar muchos más países además de Colombia, pero cada país maneja la educación de forma distinta:
 > las preguntas, los temas y las materias cambian. Incluso hay países donde el examen no es obligatorio o no existe.
 >
-> [!IMPORTANT] Donaciones y tienda/planes están **en desarrollo**. Ver [integrations/payments.md](docs/es/integrations/payments.md).
+> [!IMPORTANT] Billing de planes Free/Pro/Premium está **desactivado en 2026** (`BILLING_ENABLED=false`). Ver
+> [decisions/billing-no-2026.md](docs/es/decisions/billing-no-2026.md).
 
 ![Hero section de la plataforma ICFES - Domina el ICFES desde Cero](src/assets/images/screenshot.png)
 

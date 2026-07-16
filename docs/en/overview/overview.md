@@ -9,6 +9,7 @@ developers and serve as a technical reference.
 
 - **[Executive summary](executive-summary.md)**: High-level vision for managers and new team members.
 - **[Project structure](project-structure.md)**: Explanation of folder architecture and modules.
+- **[ADR billing 2026](../decisions/billing-no-2026.md)**: Free/Pro/Premium plans disabled.
 
 ### 2. Setup (`/setup`)
 

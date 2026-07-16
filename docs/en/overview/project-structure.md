@@ -16,17 +16,15 @@ src/
 ├── features/             # Main business modules
 ├── shared/               # Cross-feature UI (Icon, ModalOverlay…) + ICFES constants
 ├── storage/              # localStorage implementation (internal)
-├── services/             # Supabase/local persistence + store + gamification
+├── services/             # Supabase/local persistence + gamification
 │   ├── persistence/      # Public API for features
-│   ├── persistence/      # Unified layer (Supabase + local demo)
 │   ├── supabase/
-│   ├── store/            # Plan services (not features/store or Zustand)
 │   └── gamification/
-├── config/               # Supabase (`supabase.ts`, `supabaseClient.ts`) and `emailMessages.ts`
+├── config/               # Supabase, site, feature flags (`featureFlags.ts`)
 ├── components/           # App shell (Providers, guards, DashboardHeader)
 ├── hooks/                # GSAP + cross-feature hooks (`hooks/gamification/`)
 ├── lib/                  # GSAP (ScrollTrigger)
-├── store/                # Zustand: uiSession (demo, plan UI) + `demoMode.ts`
+├── store/                # Zustand: uiSession (demo) + `demoMode.ts`
 ├── types/                # Global TypeScript types
 └── utils/                # Pure utilities (`cn`)
 ```
@@ -75,13 +73,15 @@ features/feature-name/
 | **achievements/** | Badges, achievements UI (route `/logros/`; cross-feature hooks in `hooks/gamification/`) |
 | **store/**        | Virtual shop (UI), purchase modals                                                       |
 
-### Three different “store” names
+### Two different “store” names
 
-| Path               | What it is                                                    |
-| ------------------ | ------------------------------------------------------------- |
-| `features/store/`  | Shop components and hooks                                     |
-| `services/store/`  | Plan logic (`SubscriptionPlanService`, `PlanScheduleService`) |
-| `store/` (Zustand) | UI state: demo mode, selected plan                            |
+| Path               | What it is                                |
+| ------------------ | ----------------------------------------- |
+| `features/store/`  | Coin shop components and hooks            |
+| `store/` (Zustand) | UI state: demo mode                       |
+
+Free/Pro/Premium plans are not a 2026 product (`BILLING_ENABLED=false`). See
+[billing-no-2026.md](../decisions/billing-no-2026.md).
 
 ## Shared layer (`src/shared/`)
 

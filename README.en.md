@@ -10,7 +10,8 @@ Static assets (mascot, brand screenshots) live in **`src/assets/`** and are impo
 > [!NOTE] The goal was to reach many more countries beyond Colombia, but each country handles education differently:
 > questions, topics, and subjects change. There are even countries where the exam is not mandatory or does not exist.
 >
-> [!IMPORTANT] Donations and shop/plans are **still in development**. See [integrations/payments.md](docs/en/integrations/payments.md).
+> [!IMPORTANT] Free/Pro/Premium plan billing is **disabled for 2026** (`BILLING_ENABLED=false`). See
+> [decisions/billing-no-2026.md](docs/en/decisions/billing-no-2026.md).
 
 ![Hero section of the ICFES platform - Master the ICFES from Scratch](src/assets/images/screenshot.png)
 
