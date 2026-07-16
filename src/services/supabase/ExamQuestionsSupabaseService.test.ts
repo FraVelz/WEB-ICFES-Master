@@ -73,3 +73,42 @@ describe('ExamQuestionsSupabaseService.getByRouteAreas', () => {
     expect(result).toEqual([]);
   });
 });
+
+describe('ExamQuestionsSupabaseService.countPublishedByRouteAreas', () => {
+  beforeEach(() => {
+    vi.clearAllMocks();
+    mockFrom.mockImplementation(() => {
+      let dbArea: string | null = null;
+      const chain = {
+        select: (...args: unknown[]) => {
+          mockSelect(...args);
+          return chain;
+        },
+        eq: (column: string, value: string) => {
+          mockEq(column, value);
+          if (column === 'area') {
+            dbArea = value;
+            return chain;
+          }
+          const count = dbArea === 'matematicas' ? 12 : dbArea === 'ingles' ? 0 : 3;
+          return Promise.resolve({ count, error: null, data: null });
+        },
+      };
+      return chain;
+    });
+  });
+
+  it('counts published questions per route area with head queries', async () => {
+    const result = await ExamQuestionsSupabaseService.countPublishedByRouteAreas(['matematicas', 'ingles']);
+
+    expect(mockFrom).toHaveBeenCalledWith('exam_questions_public');
+    expect(mockSelect).toHaveBeenCalledWith('id', { count: 'exact', head: true });
+    expect(result).toEqual({ matematicas: 12, ingles: 0 });
+  });
+
+  it('returns zeros without querying when areas are unknown', async () => {
+    const result = await ExamQuestionsSupabaseService.countPublishedByRouteAreas(['unknown-area']);
+    expect(mockFrom).not.toHaveBeenCalled();
+    expect(result).toEqual({ 'unknown-area': 0 });
+  });
+});
