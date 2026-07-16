@@ -12,6 +12,8 @@ export interface ExamQuestion {
   explanation?: string;
   difficulty?: string;
   showExplanations?: boolean;
+  /** Content revision (DB + static). Bump when stem/options/key/explanation change. */
+  version?: number;
 }
 
 /** Pregunta enviada al cliente durante el examen (sin respuesta correcta). */

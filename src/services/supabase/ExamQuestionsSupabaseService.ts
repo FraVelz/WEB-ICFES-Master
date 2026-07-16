@@ -20,6 +20,8 @@ export interface ExamQuestionPublicRow {
   difficulty: string | null;
   published: boolean;
   order_index: number;
+  /** Present after migration + view update; defaults to 1 in mapper. */
+  version?: number | null;
 }
 
 const getSupabase = () => {
@@ -37,6 +39,7 @@ function rowToPublicExamQuestion(row: ExamQuestionPublicRow): ExamQuestion {
     correctAnswer: '',
     explanation: row.explanation ?? undefined,
     difficulty: row.difficulty ?? undefined,
+    version: typeof row.version === 'number' && row.version >= 1 ? row.version : 1,
   };
 }
 

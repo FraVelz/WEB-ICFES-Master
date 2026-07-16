@@ -21,6 +21,8 @@
 
 Oleada 3 / guía `02` semanas 9–12: admin editorial con audit log publicar/archivar + versionado `question.version` (tickets B3-*).
 
+Ver también: [`gold-bank.md`](./gold-bank.md) (N gold/área) y [`leaderboard-anti-abuse.md`](./leaderboard-anti-abuse.md).
+
 ## Estado
 
 | Campo | Valor |
