@@ -1,3 +1,4 @@
+import { clearAllPracticeSessions } from '@/features/exam/utils/practiceSessionStorage';
 import { clearAllData } from '@/storage/progressStorage';
 
 const LEGACY_KEYS = [
@@ -18,6 +19,7 @@ export function clearLocalClientData(userId?: string | null): void {
   if (typeof window === 'undefined') return;
 
   clearAllData();
+  clearAllPracticeSessions();
 
   for (const key of LEGACY_KEYS) {
     localStorage.removeItem(key);
