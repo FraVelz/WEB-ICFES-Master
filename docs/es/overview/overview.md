@@ -10,6 +10,7 @@ de nuevos desarrolladores y servir como referencia técnica.
 - **[Resumen ejecutivo](executive-summary.md)**: Visión de alto nivel para managers y nuevos integrantes.
 - **[Estructura del proyecto](project-structure.md)**: Explicación de la arquitectura de carpetas y módulos.
 - **[ADR billing 2026](../decisions/billing-no-2026.md)**: Planes Free/Pro/Premium desactivados.
+- **[ADR modo estrella](../decisions/star-mode-practice-by-area.md)**: Práctica por área es el flagship; simulacro global queda beta.
 
 ### 2. Configuración (`/setup`)
 

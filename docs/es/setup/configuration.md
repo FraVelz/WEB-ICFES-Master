@@ -18,6 +18,7 @@ Copia [`.env.example`](../../../.env.example) a `.env.local` en la raíz del pro
 | `OPENAI_ENABLED`                  | No (default `false`)      | Activa el asistente IA en servidor; requiere también `OPENAI_API_KEY`       |
 | `NEXT_PUBLIC_OPENAI_ENABLED`      | No (default `false`)      | Flag de build para UI cliente (opcional; el mount usa la resolución server) |
 | `OPENAI_API_KEY`                  | No                        | API key de OpenAI para `/api/chat` (sin key el asistente permanece off)     |
+| `NEXT_PUBLIC_SENTRY_DSN`          | No                        | DSN de Sentry para errores del runner (load/submit); sin DSN = no-op       |
 | `NEXT_PUBLIC_SITE_URL`            | Recomendada en producción | Origen público para `metadataBase`, sitemap, Open Graph y URLs canónicas    |
 | `NEXT_PUBLIC_TWITTER_SITE`        | No                        | Handle de Twitter/X (`@icfesmaster`) para `twitter:site` en metadatos       |
 | `KV_REST_API_URL`                 | Recomendada en producción | URL REST de Upstash/Vercel KV para rate limiting y cuota diaria del chat    |

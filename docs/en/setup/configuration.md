@@ -17,6 +17,7 @@ Copy [`.env.example`](../../../.env.example) to `.env.local` at the project root
 | `OPENAI_ENABLED`                | No (default `false`)      | Enables the AI assistant on the server; also requires `OPENAI_API_KEY`        |
 | `NEXT_PUBLIC_OPENAI_ENABLED`    | No (default `false`)      | Client build flag (optional; mounts resolve via server `isOpenAIEnabled()`)   |
 | `OPENAI_API_KEY`                | No                        | OpenAI API key for `/api/chat` (assistant stays off without a key)            |
+| `NEXT_PUBLIC_SENTRY_DSN`        | No                        | Sentry DSN for exam runner load/submit errors; unset = no-op                  |
 | `NEXT_PUBLIC_SITE_URL`          | Recommended in production | Public origin for `metadataBase`, sitemap, Open Graph, and canonical URLs     |
 | `NEXT_PUBLIC_TWITTER_SITE`      | No                        | Twitter/X handle (`@icfesmaster`) for `twitter:site` metadata                 |
 | `KV_REST_API_URL`               | Recommended in production | Upstash/Vercel KV REST URL for distributed rate limits and chat daily quota   |
