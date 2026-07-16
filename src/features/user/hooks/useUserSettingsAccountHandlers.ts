@@ -8,6 +8,7 @@ import { clearLocalClientData } from '@/services/persistence/clearLocalClientDat
 import { isSupabaseConfigured } from '@/services/persistence/supabaseConfigured';
 import { isSupportCategory } from '@/features/user/constants/supportRequestConstants';
 import { submitSupportRequest } from '@/services/support/supportRequestService';
+import { downloadUserResultsExport } from '@/features/user/utils/exportUserResults';
 import type { useUserSettingsState } from './useUserSettingsState';
 
 type SettingsState = ReturnType<typeof useUserSettingsState>;
@@ -28,11 +29,24 @@ export function useUserSettingsAccountHandlers(state: SettingsState) {
     userData,
     deleteConfirmation,
     setShowDeleteModal,
+    setDeleteMode,
     setDeleteConfirmation,
     setLoading,
     showMessage,
     setSupportSubmitting,
   } = state;
+
+  const handleExportResults = () => {
+    try {
+      downloadUserResultsExport();
+      showMessage('Resultados exportados (JSON descargado)', 'success');
+    } catch (err) {
+      showMessage(
+        `Error al exportar: ${err instanceof Error ? err.message : 'Error desconocido'}`,
+        'error'
+      );
+    }
+  };
 
   const handleSupportSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -95,6 +109,7 @@ export function useUserSettingsAccountHandlers(state: SettingsState) {
       sessionStorage.clear();
       showMessage('Todos tus datos han sido eliminados', 'success');
       setShowDeleteModal(false);
+      setDeleteMode(null);
       setDeleteConfirmation('');
       setTimeout(() => router.push('/dashboard'), 1500);
     } catch (err) {
@@ -120,6 +135,9 @@ export function useUserSettingsAccountHandlers(state: SettingsState) {
         ? ' Datos locales borrados. Para eliminar la cuenta en la nube, contacta soporte.'
         : '';
       showMessage(`Sesión cerrada y datos locales eliminados.${suffix}`, 'success');
+      setShowDeleteModal(false);
+      setDeleteMode(null);
+      setDeleteConfirmation('');
       setTimeout(() => router.push('/'), 1500);
     } catch (err) {
       showMessage(`Error al eliminar cuenta: ${err instanceof Error ? err.message : 'Error desconocido'}`, 'error');
@@ -131,6 +149,7 @@ export function useUserSettingsAccountHandlers(state: SettingsState) {
   return {
     handleSupportSubmit,
     handleLogout,
+    handleExportResults,
     handleClearAllData,
     handleDeleteAccount,
   };
