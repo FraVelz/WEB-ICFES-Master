@@ -26,7 +26,10 @@ export type PracticeSessionSnapshot = {
   examConfig: ExamConfig;
   questions: ExamQuestionPublic[];
   answers: Record<string, string>;
-  /** Absolute end time (ms) when timer is active; null if no timer. */
+  /**
+   * Absolute end time (ms) when timer is active; null if no timer.
+   * Source of truth for remaining time — client renders `endsAt - now`, not a decrementing counter.
+   */
   timerEndsAt: number | null;
   updatedAt: string;
 };

@@ -113,4 +113,12 @@ describe('practiceSessionStorage', () => {
     expect(computeTimeRemainingFromEndsAt(1_000, 2_000)).toBe(0);
     expect(computeTimeRemainingFromEndsAt(5_000, 2_000)).toBe(3);
   });
+
+  it('derives remaining from fixed endsAt as wall clock advances (no counter drift)', () => {
+    const startedAt = 1_700_000_000_000;
+    const endsAt = startedAt + 60_000; // absolute anchor set once at start
+    expect(computeTimeRemainingFromEndsAt(endsAt, startedAt)).toBe(60);
+    expect(computeTimeRemainingFromEndsAt(endsAt, startedAt + 15_000)).toBe(45);
+    expect(computeTimeRemainingFromEndsAt(endsAt, startedAt + 60_000)).toBe(0);
+  });
 });

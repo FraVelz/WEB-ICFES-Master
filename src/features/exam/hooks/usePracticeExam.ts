@@ -7,7 +7,7 @@ import { getPracticeExitHref } from '@/features/exam/utils/getPracticeExitHref';
 import {
   clearPracticeSession,
   computeTimeRemainingFromEndsAt,
-  loadPracticeSession,
+  hydratePracticeSessionFromStorage,
   savePracticeSession,
 } from '@/features/exam/utils/practiceSessionStorage';
 import type { ExamConfig } from '@/features/exam/types';
@@ -35,6 +35,8 @@ export function usePracticeExam() {
   const [questions, setQuestions] = useState<ExamQuestionPublic[]>([]);
   const [answers, setAnswers] = useState<Record<string, string>>({});
   const [showResults, setShowResults] = useState(false);
+  /** Absolute end timestamp (ms); source of truth for the timer. UI renders wall-clock delta. */
+  const [timerEndsAt, setTimerEndsAt] = useState<number | null>(null);
   const [timeRemaining, setTimeRemaining] = useState<number | null>(null);
   const [isFinished, setIsFinished] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -46,11 +48,11 @@ export function usePracticeExam() {
     examConfig: null as ExamConfig | null,
     questions: [] as ExamQuestionPublic[],
     answers: {} as Record<string, string>,
-    timeRemaining: null as number | null,
+    timerEndsAt: null as number | null,
     isFinished: false,
     showResults: false,
   });
-  liveRef.current = { examConfig, questions, answers, timeRemaining, isFinished, showResults };
+  liveRef.current = { examConfig, questions, answers, timerEndsAt, isFinished, showResults };
 
   useEffect(() => {
     if (!document.referrer) return;
@@ -68,17 +70,18 @@ export function usePracticeExam() {
   useEffect(() => {
     setSessionHydrated(false);
 
-    const snapshot = loadPracticeSession(areaStr, practiceDifficulty);
-    if (snapshot) {
-      setExamConfig(snapshot.examConfig);
-      setQuestions(snapshot.questions);
-      setAnswers(snapshot.answers);
+    const hydrated = hydratePracticeSessionFromStorage(areaStr, practiceDifficulty);
+    if (hydrated) {
+      setExamConfig(hydrated.examConfig);
+      setQuestions(hydrated.questions);
+      setAnswers(hydrated.answers);
       setShowResults(false);
       setIsFinished(false);
       setMobileMenuOpen(false);
       setShowAnswerSheetMobile(false);
+      setTimerEndsAt(hydrated.timerEndsAt);
 
-      const remaining = computeTimeRemainingFromEndsAt(snapshot.timerEndsAt);
+      const remaining = hydrated.timeRemaining;
       if (remaining === null) {
         setTimeRemaining(null);
       } else if (remaining <= 0) {
@@ -93,6 +96,7 @@ export function usePracticeExam() {
       setAnswers({});
       setShowResults(false);
       setIsFinished(false);
+      setTimerEndsAt(null);
       setTimeRemaining(null);
     }
 
@@ -124,7 +128,7 @@ export function usePracticeExam() {
       config: ExamConfig,
       selectedQuestions: ExamQuestionPublic[],
       nextAnswers: Record<string, string>,
-      remaining: number | null
+      endsAt: number | null
     ) => {
       savePracticeSession({
         state: 'in_progress',
@@ -133,7 +137,7 @@ export function usePracticeExam() {
         examConfig: config,
         questions: selectedQuestions,
         answers: nextAnswers,
-        timerEndsAt: remaining != null ? Date.now() + remaining * 1000 : null,
+        timerEndsAt: endsAt,
       });
     },
     [areaStr, practiceDifficulty]
@@ -142,41 +146,49 @@ export function usePracticeExam() {
   const handleExamStart = useCallback(
     (config: ExamConfig) => {
       const selectedQuestions = allQuestions.slice(0, config.numQuestions);
-      const remaining = config.useTimer ? config.numQuestions * (config.timePerQuestion ?? 2) * 60 : null;
+      const durationSec = config.useTimer ? config.numQuestions * (config.timePerQuestion ?? 2) * 60 : null;
+      const endsAt = durationSec != null ? Date.now() + durationSec * 1000 : null;
       setQuestions(selectedQuestions);
       setExamConfig(config);
       setAnswers({});
       setShowResults(false);
       setIsFinished(false);
       resetGrading();
-      setTimeRemaining(remaining);
-      persistInProgress(config, selectedQuestions, {}, remaining);
+      setTimerEndsAt(endsAt);
+      setTimeRemaining(durationSec);
+      persistInProgress(config, selectedQuestions, {}, endsAt);
     },
     [allQuestions, resetGrading, persistInProgress]
   );
 
+  // Tick from wall clock against absolute timerEndsAt (not decrementing interval state).
   useEffect(() => {
-    if (!timeRemaining || timeRemaining <= 0) return;
-    const timer = setInterval(() => {
-      setTimeRemaining((prev) => {
-        if (prev === null || prev <= 1) {
-          setIsFinished(true);
-          return 0;
-        }
-        return prev - 1;
-      });
-    }, 1000);
-    return () => clearInterval(timer);
-  }, [timeRemaining]);
+    if (timerEndsAt == null) {
+      setTimeRemaining(null);
+      return;
+    }
 
-  // Keep timerEndsAt fresh periodically so refresh mid-timer stays accurate.
+    const tick = () => {
+      const remaining = computeTimeRemainingFromEndsAt(timerEndsAt);
+      setTimeRemaining(remaining);
+      if (remaining !== null && remaining <= 0) {
+        setIsFinished(true);
+      }
+    };
+
+    tick();
+    const id = window.setInterval(tick, 1000);
+    return () => window.clearInterval(id);
+  }, [timerEndsAt]);
+
+  // Keep answers/meta durable; timerEndsAt stays the fixed absolute anchor.
   useEffect(() => {
     if (!sessionHydrated || !examConfig || isFinished || showResults) return;
 
     const id = window.setInterval(() => {
       const live = liveRef.current;
       if (!live.examConfig || live.isFinished || live.showResults) return;
-      persistInProgress(live.examConfig, live.questions, live.answers, live.timeRemaining);
+      persistInProgress(live.examConfig, live.questions, live.answers, live.timerEndsAt);
     }, 15_000);
 
     return () => window.clearInterval(id);
@@ -193,7 +205,7 @@ export function usePracticeExam() {
     setAnswers((prev) => {
       const next = { ...prev, [questionId]: answer };
       if (examConfig) {
-        persistInProgress(examConfig, questions, next, timeRemaining);
+        persistInProgress(examConfig, questions, next, timerEndsAt);
       }
       return next;
     });
@@ -211,6 +223,7 @@ export function usePracticeExam() {
     setAnswers({});
     setShowResults(false);
     setIsFinished(false);
+    setTimerEndsAt(null);
     setTimeRemaining(null);
     setMobileMenuOpen(false);
     setShowAnswerSheetMobile(false);
