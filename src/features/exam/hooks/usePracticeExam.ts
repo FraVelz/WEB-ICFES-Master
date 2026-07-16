@@ -10,11 +10,13 @@ import {
   hydratePracticeSessionFromStorage,
   savePracticeSession,
 } from '@/features/exam/utils/practiceSessionStorage';
+import { fetchSignedExamTimer } from '@/features/exam/services/examTimerClient';
 import type { ExamConfig } from '@/features/exam/types';
 import type { ExamQuestionPublic } from '@/features/exam/types/question';
 import { AREA_INFO as SHARED_AREA_INFO } from '@/shared/constants/areaInfo';
 import { usePracticeExamQuestions } from './usePracticeExamQuestions';
 import { usePracticeExamGrading } from './usePracticeExamGrading';
+import { captureExamRunnerError } from '@/lib/monitoring/examSentry';
 
 export function usePracticeExam() {
   const { area } = useParams<{ area: string }>();
@@ -37,22 +39,25 @@ export function usePracticeExam() {
   const [showResults, setShowResults] = useState(false);
   /** Absolute end timestamp (ms); source of truth for the timer. UI renders wall-clock delta. */
   const [timerEndsAt, setTimerEndsAt] = useState<number | null>(null);
+  const [timerToken, setTimerToken] = useState<string | null>(null);
   const [timeRemaining, setTimeRemaining] = useState<number | null>(null);
   const [isFinished, setIsFinished] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [showAnswerSheetMobile, setShowAnswerSheetMobile] = useState(false);
   const [referrerPath, setReferrerPath] = useState<string | null>(null);
   const [sessionHydrated, setSessionHydrated] = useState(false);
+  const [startError, setStartError] = useState<string | null>(null);
 
   const liveRef = useRef({
     examConfig: null as ExamConfig | null,
     questions: [] as ExamQuestionPublic[],
     answers: {} as Record<string, string>,
     timerEndsAt: null as number | null,
+    timerToken: null as string | null,
     isFinished: false,
     showResults: false,
   });
-  liveRef.current = { examConfig, questions, answers, timerEndsAt, isFinished, showResults };
+  liveRef.current = { examConfig, questions, answers, timerEndsAt, timerToken, isFinished, showResults };
 
   useEffect(() => {
     if (!document.referrer) return;
@@ -80,6 +85,8 @@ export function usePracticeExam() {
       setMobileMenuOpen(false);
       setShowAnswerSheetMobile(false);
       setTimerEndsAt(hydrated.timerEndsAt);
+      setTimerToken(hydrated.timerToken ?? null);
+      setStartError(null);
 
       const remaining = hydrated.timeRemaining;
       if (remaining === null) {
@@ -97,7 +104,9 @@ export function usePracticeExam() {
       setShowResults(false);
       setIsFinished(false);
       setTimerEndsAt(null);
+      setTimerToken(null);
       setTimeRemaining(null);
+      setStartError(null);
     }
 
     setSessionHydrated(true);
@@ -121,6 +130,7 @@ export function usePracticeExam() {
     examConfig,
     areaStr,
     areaName: areaInfo.name,
+    timerToken,
   });
 
   const persistInProgress = useCallback(
@@ -128,7 +138,8 @@ export function usePracticeExam() {
       config: ExamConfig,
       selectedQuestions: ExamQuestionPublic[],
       nextAnswers: Record<string, string>,
-      endsAt: number | null
+      endsAt: number | null,
+      token: string | null
     ) => {
       savePracticeSession({
         state: 'in_progress',
@@ -138,27 +149,44 @@ export function usePracticeExam() {
         questions: selectedQuestions,
         answers: nextAnswers,
         timerEndsAt: endsAt,
+        timerToken: token,
       });
     },
     [areaStr, practiceDifficulty]
   );
 
   const handleExamStart = useCallback(
-    (config: ExamConfig) => {
+    async (config: ExamConfig) => {
       const selectedQuestions = allQuestions.slice(0, config.numQuestions);
       const durationSec = config.useTimer ? config.numQuestions * (config.timePerQuestion ?? 2) * 60 : null;
-      const endsAt = durationSec != null ? Date.now() + durationSec * 1000 : null;
-      setQuestions(selectedQuestions);
-      setExamConfig(config);
-      setAnswers({});
-      setShowResults(false);
-      setIsFinished(false);
-      resetGrading();
-      setTimerEndsAt(endsAt);
-      setTimeRemaining(durationSec);
-      persistInProgress(config, selectedQuestions, {}, endsAt);
+      setStartError(null);
+
+      try {
+        const issued = await fetchSignedExamTimer({
+          durationSec,
+          questionCount: selectedQuestions.length,
+          attemptType: 'practice',
+        });
+        const endsAt = issued.endsAt;
+        const remainingSec =
+          endsAt != null ? computeTimeRemainingFromEndsAt(endsAt) : null;
+
+        setQuestions(selectedQuestions);
+        setExamConfig(config);
+        setAnswers({});
+        setShowResults(false);
+        setIsFinished(false);
+        resetGrading();
+        setTimerEndsAt(endsAt);
+        setTimerToken(issued.timerToken);
+        setTimeRemaining(remainingSec);
+        persistInProgress(config, selectedQuestions, {}, endsAt, issued.timerToken);
+      } catch (error: unknown) {
+        captureExamRunnerError(error, { phase: 'load', area: areaStr });
+        setStartError(error instanceof Error ? error.message : 'No se pudo iniciar el timer firmado');
+      }
     },
-    [allQuestions, resetGrading, persistInProgress]
+    [allQuestions, resetGrading, persistInProgress, areaStr]
   );
 
   // Tick from wall clock against absolute timerEndsAt (not decrementing interval state).
@@ -188,7 +216,7 @@ export function usePracticeExam() {
     const id = window.setInterval(() => {
       const live = liveRef.current;
       if (!live.examConfig || live.isFinished || live.showResults) return;
-      persistInProgress(live.examConfig, live.questions, live.answers, live.timerEndsAt);
+      persistInProgress(live.examConfig, live.questions, live.answers, live.timerEndsAt, live.timerToken);
     }, 15_000);
 
     return () => window.clearInterval(id);
@@ -205,7 +233,7 @@ export function usePracticeExam() {
     setAnswers((prev) => {
       const next = { ...prev, [questionId]: answer };
       if (examConfig) {
-        persistInProgress(examConfig, questions, next, timerEndsAt);
+        persistInProgress(examConfig, questions, next, timerEndsAt, timerToken);
       }
       return next;
     });
@@ -224,7 +252,9 @@ export function usePracticeExam() {
     setShowResults(false);
     setIsFinished(false);
     setTimerEndsAt(null);
+    setTimerToken(null);
     setTimeRemaining(null);
+    setStartError(null);
     setMobileMenuOpen(false);
     setShowAnswerSheetMobile(false);
     resetGrading();
@@ -244,6 +274,7 @@ export function usePracticeExam() {
     loadingQuestions: !sessionHydrated || (loadingQuestions && !examConfig),
     questionsError,
     gradingError,
+    startError,
     examConfig,
     questions,
     answers,

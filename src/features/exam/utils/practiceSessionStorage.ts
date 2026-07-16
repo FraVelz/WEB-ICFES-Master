@@ -31,8 +31,11 @@ export type PracticeSessionSnapshot = {
   /**
    * Absolute end time (ms) when timer is active; null if no timer.
    * Source of truth for remaining time — client renders `endsAt - now`, not a decrementing counter.
+   * Prefer the value from a server-signed `timerToken` (B3-1), not a raw client Date.now().
    */
   timerEndsAt: number | null;
+  /** HMAC timer/start token from POST /api/exam/timer — required for league XP (B3-2). */
+  timerToken?: string | null;
   updatedAt: string;
 };
 
@@ -66,6 +69,7 @@ function isValidSnapshot(parsed: unknown): parsed is PracticeSessionSnapshot {
   if (!Array.isArray(s.questions) || s.questions.length === 0) return false;
   if (!s.answers || typeof s.answers !== 'object') return false;
   if (s.timerEndsAt != null && typeof s.timerEndsAt !== 'number') return false;
+  if (s.timerToken != null && typeof s.timerToken !== 'string') return false;
   return true;
 }
 

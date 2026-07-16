@@ -8,7 +8,7 @@ import { ExamConfigForm } from './ExamConfigForm';
 interface ExamConfigModalProps {
   area: string;
   totalQuestions: number;
-  onStart: (config: ExamConfig) => void;
+  onStart: (config: ExamConfig) => void | Promise<void>;
   onCancel?: () => void;
   isFullExam?: boolean;
 }

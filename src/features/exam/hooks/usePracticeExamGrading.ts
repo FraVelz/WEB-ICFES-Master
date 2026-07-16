@@ -18,6 +18,7 @@ type GradingParams = {
   examConfig: ExamConfig | null;
   areaStr: string;
   areaName: string;
+  timerToken: string | null;
 };
 
 export function usePracticeExamGrading({
@@ -28,6 +29,7 @@ export function usePracticeExamGrading({
   examConfig,
   areaStr,
   areaName,
+  timerToken,
 }: GradingParams) {
   const { user } = useAuth();
   const [gradedResults, setGradedResults] = useState<GradedExamAnswer[] | null>(null);
@@ -44,7 +46,10 @@ export function usePracticeExamGrading({
     const attemptId = Date.now();
 
     void fetchGradedExamResults(answers, {
-      awardActivity: user?.uid && !isDemoUserId(user.uid) ? { attemptType: 'practice', attemptId } : undefined,
+      awardActivity:
+        user?.uid && !isDemoUserId(user.uid)
+          ? { attemptType: 'practice', attemptId, timerToken: timerToken ?? undefined }
+          : undefined,
     })
       .then(({ results }) => {
         if (!active) return;
@@ -79,7 +84,7 @@ export function usePracticeExamGrading({
     return () => {
       active = false;
     };
-  }, [isFinished, showResults, questions, answers, examConfig, areaStr, areaName, user?.uid]);
+  }, [isFinished, showResults, questions, answers, examConfig, areaStr, areaName, user?.uid, timerToken]);
 
   const resetGrading = () => {
     setGradedResults(null);
