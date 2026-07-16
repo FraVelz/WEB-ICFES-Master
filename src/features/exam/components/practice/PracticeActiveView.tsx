@@ -1,5 +1,6 @@
 'use client';
 
+import { useCallback, useState } from 'react';
 import { cn } from '@/utils/cn';
 import { AnswerSheet, EXAM_SIDEBAR_STICKY_CLASS } from '@/features/exam/components';
 import type { ExamConfig } from '@/features/exam/types';
@@ -10,6 +11,7 @@ import { PracticeQuestionCard } from './PracticeQuestionCard';
 import { PracticeMobileAnswerSheet } from './PracticeMobileAnswerSheet';
 import { PhaseSkipNotice } from './PhaseSkipNotice';
 import { useExamQuestionScrollSpy } from '@/features/exam/hooks/useExamQuestionScrollSpy';
+import { usePracticeExamKeyboard } from '@/features/exam/hooks/usePracticeExamKeyboard';
 
 type PracticeActiveViewProps = {
   areaInfo: { name: string; color: string };
@@ -51,11 +53,31 @@ export function PracticeActiveView({
   onFinish,
 }: PracticeActiveViewProps) {
   const { currentQuestion, focusQuestion } = useExamQuestionScrollSpy(questions.length);
+  const [flaggedIds, setFlaggedIds] = useState<Set<string>>(() => new Set());
 
   const handleQuestionClick = (index: number) => {
     focusQuestion(index);
     onScrollToQuestion(index);
   };
+
+  const handleToggleFlag = useCallback((questionId: string) => {
+    setFlaggedIds((prev) => {
+      const next = new Set(prev);
+      if (next.has(questionId)) next.delete(questionId);
+      else next.add(questionId);
+      return next;
+    });
+  }, []);
+
+  usePracticeExamKeyboard({
+    enabled: !showResults && !showAnswerSheetMobile && !mobileMenuOpen,
+    questions,
+    currentQuestion,
+    answers,
+    onAnswer,
+    onFocusQuestion: handleQuestionClick,
+    onToggleFlag: handleToggleFlag,
+  });
 
   const showPhaseSkipNotice = phaseSkipPassPercent != null;
   return (
@@ -63,7 +85,7 @@ export function PracticeActiveView({
       <PracticeExamHeader
         areaName={areaInfo.name}
         areaColor={areaInfo.color}
-        subtitle={`Preguntas: ${questions.length}`}
+        subtitle={`Preguntas: ${questions.length} · Atajos: 1–4, N/P, F`}
         exitHref={exitHref}
         timeRemaining={timeRemaining}
         timeColor={timeColor}
@@ -118,6 +140,7 @@ export function PracticeActiveView({
                 currentQuestion={currentQuestion}
                 onQuestionClick={handleQuestionClick}
                 questions={questions}
+                flaggedIds={flaggedIds}
               />
               {showPhaseSkipNotice && (
                 <PhaseSkipNotice phaseTitle={phaseSkipPhaseTitle} passPercent={phaseSkipPassPercent} />
@@ -132,6 +155,7 @@ export function PracticeActiveView({
         questions={questions}
         answers={answers}
         currentQuestion={currentQuestion}
+        flaggedIds={flaggedIds}
         phaseSkipPhaseTitle={phaseSkipPhaseTitle}
         phaseSkipPassPercent={phaseSkipPassPercent}
         onClose={() => setShowAnswerSheetMobile(false)}

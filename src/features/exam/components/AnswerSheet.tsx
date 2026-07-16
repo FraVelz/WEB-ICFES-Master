@@ -11,6 +11,8 @@ interface AnswerSheetProps {
   currentQuestion: number;
   onQuestionClick: (index: number) => void;
   questions?: ExamQuestionPublic[];
+  /** Question ids marked for review (keyboard F). */
+  flaggedIds?: ReadonlySet<string>;
   className?: string;
 }
 
@@ -20,6 +22,7 @@ export const AnswerSheet = ({
   currentQuestion,
   onQuestionClick,
   questions = [],
+  flaggedIds,
   className,
 }: AnswerSheetProps) => {
   return (
@@ -48,10 +51,15 @@ export const AnswerSheet = ({
           const answer = answers[questionId];
           const isAnswered = answer !== undefined;
           const isCurrent = currentQuestion === idx;
+          const isFlagged = questionId ? Boolean(flaggedIds?.has(questionId)) : false;
 
-          const label = isAnswered
-            ? `Pregunta ${questionNum}, respondida: ${answer}${isCurrent ? ', viendo ahora' : ''}`
-            : `Pregunta ${questionNum}, sin responder${isCurrent ? ', viendo ahora' : ''}`;
+          const labelParts = [
+            `Pregunta ${questionNum}`,
+            isAnswered ? `respondida: ${answer}` : 'sin responder',
+            isFlagged ? 'marcada' : null,
+            isCurrent ? 'viendo ahora' : null,
+          ].filter(Boolean);
+          const label = labelParts.join(', ');
 
           return (
             <button
@@ -74,6 +82,7 @@ export const AnswerSheet = ({
                       'border-surface-border bg-surface-overlay/50 text-on-surface-muted hover:bg-surface-overlay border',
                       'focus-visible:ring-app-accent'
                     ),
+                isFlagged && 'outline outline-2 outline-offset-1 outline-amber-400',
                 isCurrent &&
                   cn(
                     'ring-app-accent text-app-accent-strong ring-offset-surface-elevated z-10 scale-110 ring-2 ring-offset-2',
@@ -100,6 +109,10 @@ export const AnswerSheet = ({
         <div className="flex items-center gap-2">
           <div className="h-4 w-4 rounded bg-linear-to-r from-green-500 to-emerald-500" />
           <span>Respondidas</span>
+        </div>
+        <div className="flex items-center gap-2">
+          <div className="h-4 w-4 rounded outline outline-2 outline-offset-1 outline-amber-400" />
+          <span>Marcadas (F)</span>
         </div>
       </div>
     </div>

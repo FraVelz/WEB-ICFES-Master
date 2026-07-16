@@ -7,6 +7,7 @@ import { Icon } from '@/shared/components/Icon';
 import { formatTimeExtended } from '@/services/persistence';
 import { useDialogA11y } from '@/shared/hooks/useDialogA11y';
 import { SIMULACRO_PATH } from '@/features/exam/utils/simulacroNavigation';
+import { ExamTimerLiveRegion } from '@/features/exam/components/practice/ExamTimerLiveRegion';
 
 type PracticeExamHeaderProps = {
   areaName: string;
@@ -72,14 +73,15 @@ export function PracticeExamHeader({
 
         <div className="relative z-[60] flex shrink-0 items-center gap-1.5 sm:gap-3">
           {showTimer && timeRemaining != null && (
-            <div
-              aria-live="polite"
-              aria-atomic="true"
-              aria-label="Tiempo restante del examen"
-              className={cn('shrink-0 font-mono text-lg font-bold tabular-nums sm:text-2xl', timeColor)}
-            >
-              {formatTimeExtended(timeRemaining)}
-            </div>
+            <>
+              <div
+                aria-hidden="true"
+                className={cn('shrink-0 font-mono text-lg font-bold tabular-nums sm:text-2xl', timeColor)}
+              >
+                {formatTimeExtended(timeRemaining)}
+              </div>
+              <ExamTimerLiveRegion showTimer={showTimer} timeRemaining={timeRemaining} />
+            </>
           )}
 
           <Link href={exitHref} className={cn(exitButtonClass, 'hidden md:inline-flex')}>
