@@ -86,6 +86,20 @@ export function loadPracticeSession(
   }
 }
 
+/** Load durable snapshot and derive timer remaining (post-reload hydrate). */
+export function hydratePracticeSessionFromStorage(
+  areaSlug: string,
+  difficulty: ExamQuestionDifficulty | null | undefined,
+  now: number = Date.now()
+): (PracticeSessionSnapshot & { timeRemaining: number | null }) | null {
+  const snapshot = loadPracticeSession(areaSlug, difficulty);
+  if (!snapshot) return null;
+  return {
+    ...snapshot,
+    timeRemaining: computeTimeRemainingFromEndsAt(snapshot.timerEndsAt, now),
+  };
+}
+
 export function savePracticeSession(snapshot: Omit<PracticeSessionSnapshot, 'version' | 'updatedAt'>): void {
   if (typeof window === 'undefined') return;
   if (snapshot.state !== 'in_progress') return;

@@ -3,6 +3,7 @@ import { beforeEach, describe, expect, it, vi } from 'vitest';
 import {
   clearPracticeSession,
   computeTimeRemainingFromEndsAt,
+  hydratePracticeSessionFromStorage,
   loadPracticeSession,
   practiceSessionStorageKey,
   savePracticeSession,
@@ -52,6 +53,40 @@ describe('practiceSessionStorage', () => {
     expect(loaded?.answers).toEqual({ q1: 'a' });
     expect(loaded?.questions).toHaveLength(2);
     expect(loaded?.examConfig.numQuestions).toBe(2);
+  });
+
+  it('restores answers and timer after simulated reload', () => {
+    const now = 1_700_000_000_000;
+    const timerEndsAt = now + 120_000;
+
+    // In-memory session (as React state would hold mid-practice).
+    let memory: {
+      answers: Record<string, string>;
+      timerEndsAt: number | null;
+      questions: typeof baseSnapshot.questions;
+    } | null = {
+      answers: { q1: 'a', q2: 'a' },
+      timerEndsAt,
+      questions: baseSnapshot.questions,
+    };
+
+    savePracticeSession({
+      ...baseSnapshot,
+      answers: memory.answers,
+      timerEndsAt: memory.timerEndsAt,
+    });
+
+    // Simulated browser reload: drop in-memory state; durable storage remains.
+    memory = null;
+
+    const restored = hydratePracticeSessionFromStorage('matematicas', null, now);
+    expect(memory).toBeNull();
+    expect(restored).not.toBeNull();
+    expect(restored?.answers).toEqual({ q1: 'a', q2: 'a' });
+    expect(restored?.questions).toHaveLength(2);
+    expect(restored?.timerEndsAt).toBe(timerEndsAt);
+    expect(restored?.timeRemaining).toBe(120);
+    expect(restored?.state).toBe('in_progress');
   });
 
   it('uses distinct keys per area and difficulty', () => {
