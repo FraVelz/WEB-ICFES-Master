@@ -8,6 +8,7 @@ import { fetchGradedExamResults, gradedToExamQuestion } from '@/features/exam/se
 import type { GradedExamAnswer } from '@/features/exam/services/examGradingServer';
 import type { ExamConfig } from '@/features/exam/types';
 import type { ExamQuestion, ExamQuestionPublic } from '@/features/exam/types/question';
+import { captureExamRunnerError } from '@/lib/monitoring/examSentry';
 
 type GradingParams = {
   isFinished: boolean;
@@ -71,6 +72,7 @@ export function usePracticeExamGrading({
       .catch((error: unknown) => {
         if (!active) return;
         gradingStartedRef.current = false;
+        captureExamRunnerError(error, { phase: 'submit', area: areaStr });
         setGradingError(error instanceof Error ? error.message : 'Error al calificar el examen');
       });
 
