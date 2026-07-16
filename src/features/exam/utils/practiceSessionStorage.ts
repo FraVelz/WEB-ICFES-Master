@@ -1,7 +1,7 @@
 /**
  * Mid-practice session autosave (práctica por área).
  *
- * Explicit session states:
+ * Explicit session states (see practiceSessionMachine.ts):
  * - `not_started` — no durable snapshot (config modal / idle)
  * - `in_progress` — active attempt; answers + meta persisted; restored on refresh
  * - `submitted` — user finished / grading started; snapshot cleared
@@ -13,8 +13,10 @@
 import type { ExamQuestionDifficulty } from '@/features/exam/data/phaseSkipDifficulty';
 import type { ExamConfig } from '@/features/exam/types';
 import type { ExamQuestionPublic } from '@/features/exam/types/question';
+import type { PracticeSessionState } from '@/features/exam/utils/practiceSessionMachine';
+import { shouldPersistPracticeSession } from '@/features/exam/utils/practiceSessionMachine';
 
-export type PracticeSessionState = 'not_started' | 'in_progress' | 'submitted' | 'abandoned';
+export type { PracticeSessionState };
 
 export const PRACTICE_SESSION_STORAGE_PREFIX = 'icfes_practice_session_v1';
 
@@ -105,7 +107,7 @@ export function hydratePracticeSessionFromStorage(
 
 export function savePracticeSession(snapshot: Omit<PracticeSessionSnapshot, 'version' | 'updatedAt'>): void {
   if (typeof window === 'undefined') return;
-  if (snapshot.state !== 'in_progress') return;
+  if (!shouldPersistPracticeSession(snapshot.state)) return;
   try {
     const payload: PracticeSessionSnapshot = {
       ...snapshot,
