@@ -62,6 +62,8 @@ export function useFullExam() {
       const questionCount = Math.min(config.numQuestions, FULL_EXAM_MAX_QUESTIONS, allQuestions.length);
       const selectedQuestions = allQuestions.slice(0, questionCount);
       setQuestions(selectedQuestions);
+      // Drop the pre-start pool so the client does not keep a 200+ dump in memory mid-session.
+      setAllQuestions([]);
       setExamConfig({ ...config, numQuestions: questionCount });
       setGradedResults(null);
       setGradingError(null);
