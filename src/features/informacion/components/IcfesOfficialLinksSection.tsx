@@ -1,16 +1,11 @@
 import { Icon } from '@/shared/components/Icon';
-import { cn } from '@/utils/cn';
 
 const ICFES_SABER_11_URL = 'https://www.icfes.gov.co/evaluaciones-icfes/saber-11/';
 const ICFES_VALIDACION_URL =
   'https://www.icfes.gov.co/evaluaciones-icfes/1-acerca-del-examen-validacion-del-bachillerato-academico/';
 
-const externalLinkClass = cn(
-  'text-app-accent font-medium underline underline-offset-2',
-  'hover:text-app-accent-muted transition-colors',
-  'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none',
-  'focus-visible:ring-offset-surface'
-);
+const externalLinkClass =
+  'text-app-accent font-medium underline underline-offset-2 hover:text-app-accent-muted transition-colors focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none focus-visible:ring-offset-surface';
 
 export function IcfesOfficialLinksSection() {
   return (

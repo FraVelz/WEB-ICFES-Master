@@ -45,12 +45,8 @@ export function PracticeExamHeader({
     onShowAnswerSheet?.();
   };
 
-  const exitButtonClass = cn(
-    'relative z-[60] shrink-0 rounded-lg border px-3 py-2 text-sm sm:px-4',
-    'border-surface-border bg-surface-overlay text-on-surface hover:bg-surface-border transition-all duration-300',
-    'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:outline-none',
-    'focus-visible:ring-offset-surface-via focus-visible:ring-offset-2'
-  );
+  const exitButtonClass =
+    'relative z-[60] shrink-0 rounded-lg border px-3 py-2 text-sm sm:px-4 border-surface-border bg-surface-overlay text-on-surface hover:bg-surface-border transition-all duration-300 focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:outline-none focus-visible:ring-offset-surface-via focus-visible:ring-offset-2';
 
   return (
     <div

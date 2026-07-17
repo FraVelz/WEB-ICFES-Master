@@ -21,11 +21,8 @@ export function ChatInputArea({
   onKeyDown,
   onSend,
 }: ChatInputAreaProps) {
-  const loginLinkClass = cn(
-    'text-app-accent hover:text-app-accent-muted rounded font-semibold underline',
-    'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:ring-offset-2',
-    'focus-visible:outline-none focus-visible:ring-offset-surface-elevated'
-  );
+  const loginLinkClass =
+    'text-app-accent hover:text-app-accent-muted rounded font-semibold underline focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none focus-visible:ring-offset-surface-elevated';
 
   return (
     <div className="border-surface-border/50 bg-surface-elevated/50 min-w-0 border-t p-3 sm:p-4">

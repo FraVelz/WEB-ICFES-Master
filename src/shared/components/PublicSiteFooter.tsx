@@ -2,11 +2,8 @@ import Link from 'next/link';
 import { PUBLIC_CONTENT_PAGES, PUBLIC_LEGAL_PAGES } from '@/config/publicContentPages';
 import { cn } from '@/utils/cn';
 
-const footerLinkClass = cn(
-  'hover:text-on-surface rounded transition-colors',
-  'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none',
-  'focus-visible:ring-offset-surface'
-);
+const footerLinkClass =
+  'hover:text-on-surface rounded transition-colors focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none focus-visible:ring-offset-surface';
 
 type PublicSiteFooterProps = {
   className?: string;

@@ -1,12 +1,8 @@
 import Link from 'next/link';
 import { PUBLIC_CONTENT_PAGES } from '@/config/publicContentPages';
-import { cn } from '@/utils/cn';
 
-const linkClass = cn(
-  'border-surface-border bg-surface-elevated/60 hover:border-app-ring/40 hover:bg-surface-elevated',
-  'block rounded-xl border p-4 transition-colors',
-  'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none'
-);
+const linkClass =
+  'border-surface-border bg-surface-elevated/60 hover:border-app-ring/40 hover:bg-surface-elevated block rounded-xl border p-4 transition-colors focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none';
 
 export function PublicResourcesSection() {
   return (

@@ -2,11 +2,8 @@ import Link from 'next/link';
 import { Icon } from '@/shared/components/Icon';
 import { cn } from '@/utils/cn';
 
-const linkClass = cn(
-  'text-on-surface-muted hover:text-on-surface inline-flex items-center gap-2 text-sm font-medium transition-colors',
-  'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none',
-  'focus-visible:ring-offset-surface'
-);
+const linkClass =
+  'text-on-surface-muted hover:text-on-surface inline-flex items-center gap-2 text-sm font-medium transition-colors focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none focus-visible:ring-offset-surface';
 
 export function PublicProfileChrome() {
   return (

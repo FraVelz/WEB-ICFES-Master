@@ -17,10 +17,8 @@ type ResetPasswordFormProps = {
   onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
 };
 
-const INPUT_CLASS = cn(
-  'w-full rounded-lg border border-surface-border bg-surface-overlay/50 py-3 pr-10 pl-10 transition-all',
-  'focus-visible:border-app-ring focus-visible:ring-app-ring/30 focus-visible:ring-2 focus-visible:outline-none'
-);
+const INPUT_CLASS =
+  'w-full rounded-lg border border-surface-border bg-surface-overlay/50 py-3 pr-10 pl-10 transition-all focus-visible:border-app-ring focus-visible:ring-app-ring/30 focus-visible:ring-2 focus-visible:outline-none';
 
 function RequirementItem({ met, label }: { met: boolean; label: string }) {
   return (

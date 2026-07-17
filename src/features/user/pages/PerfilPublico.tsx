@@ -27,15 +27,8 @@ import { PublicProfileGate } from '../components/profile/PublicProfileGate';
 import { ReportUserDialog } from '../components/ReportUserDialog';
 import { useToast } from '@/shared/components/Toast/ToastProvider';
 
-const profileActionButtonClass = cn(
-  'flex cursor-pointer items-center gap-2 rounded-lg border border-surface-border bg-surface-elevated p-2',
-  'text-sm font-medium text-app-accent-strong transition-colors duration-200',
-  'hover:border-app-ring/30 hover:bg-surface-via',
-  'dark:border-surface-border/40 dark:bg-surface-overlay/60 dark:text-app-accent',
-  'dark:hover:border-app-ring/35 dark:hover:bg-app-ring/15 dark:hover:text-app-accent-bright',
-  'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:outline-none',
-  'focus-visible:ring-offset-2 focus-visible:ring-offset-surface-elevated'
-);
+const profileActionButtonClass =
+  'flex cursor-pointer items-center gap-2 rounded-lg border border-surface-border bg-surface-elevated p-2 text-sm font-medium text-app-accent-strong transition-colors duration-200 hover:border-app-ring/30 hover:bg-surface-via dark:border-surface-border/40 dark:bg-surface-overlay/60 dark:text-app-accent dark:hover:border-app-ring/35 dark:hover:bg-app-ring/15 dark:hover:text-app-accent-bright focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:outline-none focus-visible:ring-offset-2 focus-visible:ring-offset-surface-elevated';
 
 type PerfilPublicoProps = {
   view: PublicProfileViewState;
