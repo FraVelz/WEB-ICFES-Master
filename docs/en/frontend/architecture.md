@@ -68,13 +68,15 @@ The `@/hooks` barrel re-exports feature hooks for convenience, but **prefer dire
 
 ---
 
-## Three different “store” names
+## Two different “store” names
 
-| Path                  | Role                                                       |
-| --------------------- | ---------------------------------------------------------- |
-| `src/features/store/` | Shop UI (modals, item cards)                               |
-| `src/services/store/` | Plan and subscription services (`SubscriptionPlanService`) |
-| `src/store/`          | Zustand: UI session (`uiSession`: demo, selected plan)     |
+| Path                  | Role                                          |
+| --------------------- | --------------------------------------------- |
+| `src/features/store/` | Coin shop UI (modals, item cards)             |
+| `src/store/`          | Zustand: UI session (`uiSession`: demo)       |
+
+Free/Pro/Premium plan billing is disabled for 2026. See
+[billing-no-2026.md](../decisions/billing-no-2026.md).
 
 ---
 

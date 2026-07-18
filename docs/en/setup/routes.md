@@ -73,7 +73,9 @@ Slugs aligned with `AREA_INFO` in `src/shared/constants/areaInfo.ts`:
 | ----------- | -------- | ----------------- |
 | `/api/chat` | GET/POST | AI assistant chat |
 
-Requires `OPENAI_API_KEY` on the server. Anonymous users have a limited quota (httpOnly cookie; constants in `src/features/learning/constants/chatAnonQuota.ts`). The client syncs the counter via `GET /api/chat`.
+Requires `OPENAI_ENABLED=true` and `OPENAI_API_KEY` on the server (`isOpenAIEnabled()`). Without the flag or key, the
+launcher is not mounted and the API returns 503. Authenticated users have a daily quota (httpOnly cookie / KV;
+constants in `src/features/learning/constants/chatQuota.ts`). The client syncs the counter via `GET /api/chat`.
 
 ---
 

@@ -14,7 +14,6 @@ export type AreaInfo = {
   bgColor?: string;
   gradient?: string;
   description?: string;
-  preguntas?: number;
   dificultad?: string;
 };
 
@@ -28,6 +27,7 @@ const DEFAULT_AREA: AreaInfo = {
 
 /**
  * Fuente de verdad para metadatos de áreas ICFES (nombres, colores, iconos).
+ * No incluye conteos de preguntas: esos vienen del banco publicado (live).
  */
 export const AREA_INFO: Record<AreaId, AreaInfo> = {
   'lectura-critica': {
@@ -38,7 +38,6 @@ export const AREA_INFO: Record<AreaId, AreaInfo> = {
     bgColor: 'bg-subject-lc-bold',
     gradient: 'from-subject-lc-grad-from to-subject-lc-grad-to',
     description: 'Comprensión y análisis de textos',
-    preguntas: 120,
     dificultad: 'Intermedio',
   },
   matematicas: {
@@ -49,7 +48,6 @@ export const AREA_INFO: Record<AreaId, AreaInfo> = {
     bgColor: 'bg-subject-math-bold',
     gradient: 'from-subject-math-grad-from to-subject-math-grad-to',
     description: 'Razonamiento cuantitativo',
-    preguntas: 150,
     dificultad: 'Avanzado',
   },
   'ciencias-naturales': {
@@ -60,7 +58,6 @@ export const AREA_INFO: Record<AreaId, AreaInfo> = {
     bgColor: 'bg-subject-sci-bold',
     gradient: 'from-subject-sci-grad-from to-subject-sci-grad-to',
     description: 'Física, química y biología',
-    preguntas: 130,
     dificultad: 'Avanzado',
   },
   'sociales-ciudadanas': {
@@ -71,7 +68,6 @@ export const AREA_INFO: Record<AreaId, AreaInfo> = {
     bgColor: 'bg-subject-soc-bold',
     gradient: 'from-subject-soc-grad-from to-subject-soc-grad-to',
     description: 'Historia, geografía y competencias ciudadanas',
-    preguntas: 140,
     dificultad: 'Intermedio',
   },
   ingles: {
@@ -82,7 +78,6 @@ export const AREA_INFO: Record<AreaId, AreaInfo> = {
     bgColor: 'bg-subject-eng-bold',
     gradient: 'from-subject-eng-grad-from to-subject-eng-grad-to',
     description: 'Comprensión de lectura y vocabulario en inglés',
-    preguntas: 110,
     dificultad: 'Intermedio',
   },
   'examen-completo': {

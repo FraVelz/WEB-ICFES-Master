@@ -68,13 +68,15 @@ propietaria (p. ej. `@/features/auth/utils/mapSupabaseAuthError`, no shims en `@
 
 ---
 
-## Tres nombres “store” (no confundir)
+## Dos nombres “store” (no confundir)
 
-| Ruta                  | Rol                                                           |
-| --------------------- | ------------------------------------------------------------- |
-| `src/features/store/` | UI de tienda (modales, tarjetas de items)                     |
-| `src/services/store/` | Servicios de planes y suscripción (`SubscriptionPlanService`) |
-| `src/store/`          | Zustand: sesión UI (`uiSession`: demo, plan seleccionado)     |
+| Ruta                  | Rol                                       |
+| --------------------- | ----------------------------------------- |
+| `src/features/store/` | UI de tienda de monedas (ítems, modales)  |
+| `src/store/`          | Zustand: sesión UI (`uiSession`: demo)    |
+
+Billing de planes Free/Pro/Premium está desactivado en 2026. Ver
+[billing-no-2026.md](../decisions/billing-no-2026.md).
 
 ---
 

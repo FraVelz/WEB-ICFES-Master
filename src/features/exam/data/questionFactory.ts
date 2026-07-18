@@ -22,5 +22,6 @@ export function makeQuestion(
     correctAnswer: String.fromCharCode(97 + correctIndex),
     explanation,
     difficulty,
+    version: 1,
   };
 }

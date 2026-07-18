@@ -21,6 +21,8 @@ export interface ExamQuestionRow {
   difficulty: string | null;
   published: boolean;
   order_index: number;
+  /** Populated when SELECT includes version (post-migration). */
+  version?: number | null;
 }
 
 function rowToExamQuestion(row: ExamQuestionRow): ExamQuestion {
@@ -33,6 +35,7 @@ function rowToExamQuestion(row: ExamQuestionRow): ExamQuestion {
     correctAnswer: row.correct_answer ?? '',
     explanation: row.explanation ?? undefined,
     difficulty: row.difficulty ?? undefined,
+    version: typeof row.version === 'number' && row.version >= 1 ? row.version : 1,
   };
 }
 

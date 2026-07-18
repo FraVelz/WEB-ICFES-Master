@@ -31,6 +31,7 @@ export const PracticePage = () => {
     loadingQuestions,
     questionsError,
     gradingError,
+    startError,
     examConfig,
     questions,
     answers,
@@ -69,6 +70,7 @@ export const PracticePage = () => {
           items={[{ label: 'Aprendizaje', href: '/ruta-aprendizaje/' }, { label: `Práctica ${areaInfo.name}` }]}
         />
         <RouteTo500ContextBanner stepId="examen-materia" areaName={areaInfo.name} className="max-w-lg" />
+        {startError ? <PracticeErrorState message={startError} onRetry={() => window.location.reload()} /> : null}
         <ExamConfigModal area={areaInfo.name} totalQuestions={allQuestions.length} onStart={handleExamStart} />
       </div>
     );

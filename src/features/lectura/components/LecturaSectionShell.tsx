@@ -13,11 +13,8 @@ type LecturaSectionShellProps = {
   children: ReactNode;
 };
 
-const navButtonClass = cn(
-  'text-on-surface-muted hover:text-on-surface inline-flex items-center gap-2 text-sm font-semibold transition-colors',
-  'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none',
-  'focus-visible:ring-offset-surface'
-);
+const navButtonClass =
+  'text-on-surface-muted hover:text-on-surface inline-flex items-center gap-2 text-sm font-semibold transition-colors focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none focus-visible:ring-offset-surface';
 
 export function LecturaSectionShell({ sectionId, children }: LecturaSectionShellProps) {
   const router = useRouter();

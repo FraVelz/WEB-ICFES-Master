@@ -6,6 +6,8 @@ export type ExamGradeOptions = {
   awardActivity?: {
     attemptType: ActivityAttemptType;
     attemptId: number;
+    /** Server-signed timer from POST /api/exam/timer — required for league XP. */
+    timerToken?: string;
   };
 };
 

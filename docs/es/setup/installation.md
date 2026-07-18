@@ -42,11 +42,19 @@ Crea `.env.local` en la raíz del proyecto:
 NEXT_PUBLIC_SUPABASE_URL=https://tu-proyecto.supabase.co
 NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJ...
 
-# OpenAI (opcional, para el asistente de chat)
+# OpenAI chat (optional; requires OPENAI_ENABLED=true and OPENAI_API_KEY)
+OPENAI_ENABLED=false
+NEXT_PUBLIC_OPENAI_ENABLED=false
 OPENAI_API_KEY=sk-...
+
+# Billing / Free-Pro-Premium (keep false in 2026)
+BILLING_ENABLED=false
+NEXT_PUBLIC_BILLING_ENABLED=false
 ```
 
 Para probar la app sin cuenta, usa el **modo demo** desde la landing (no requiere Supabase para la sesión demo).
+
+El asistente IA solo aparece si `OPENAI_ENABLED=true` **y** hay `OPENAI_API_KEY`. Los planes de pago no están activos en 2026 (ver [billing-no-2026.md](../decisions/billing-no-2026.md)).
 
 ### 4. Iniciar servidor de desarrollo
 

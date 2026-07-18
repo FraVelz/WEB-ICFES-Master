@@ -8,7 +8,9 @@ import {
 } from '@/features/exam/data/examStaticPool.server';
 import { FULL_EXAM_ROUTE_AREAS } from '@/features/exam/data/examAreas';
 import { FULL_EXAM_MAX_QUESTIONS } from '@/features/exam/constants/fullExamLimits';
+import { zeroCoverageForAreas } from '@/features/exam/utils/areaCoverage';
 import { toPublicExamQuestion, type ExamQuestion, type ExamQuestionPublic } from '@/features/exam/types/question';
+import { HOME_AREA_IDS } from '@/shared/constants/areaInfo';
 import ExamQuestionsSupabaseService from '@/services/supabase/ExamQuestionsSupabaseService';
 import { getExamQuestionsByIdsForGrading } from '@/services/supabase/ExamQuestionsServerService';
 
@@ -98,5 +100,23 @@ export async function loadQuestionsByIdsForGrading(ids: string[]): Promise<ExamQ
     return uniqueIds.map((id) => merged.get(id)).filter((q): q is ExamQuestion => Boolean(q));
   } catch {
     return staticMatches;
+  }
+}
+
+async function loadPublishedCoverageByArea(): Promise<Record<string, number>> {
+  return ExamQuestionsSupabaseService.countPublishedByRouteAreas([...HOME_AREA_IDS]);
+}
+
+const getCachedPublishedCoverageByArea = unstable_cache(loadPublishedCoverageByArea, ['exam-questions-coverage'], {
+  revalidate: CACHE_REVALIDATE_SECONDS,
+});
+
+/** Conteos live del banco publicado por área (sin fallback estático de marketing). */
+export async function fetchPublishedCoverageByArea(): Promise<Record<string, number>> {
+  try {
+    return await getCachedPublishedCoverageByArea();
+  } catch (error) {
+    console.warn('[examQuestionsServer] Supabase coverage count failed', error);
+    return zeroCoverageForAreas(HOME_AREA_IDS);
   }
 }

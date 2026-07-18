@@ -14,4 +14,10 @@ describe('areaInfo', () => {
   it('incluye examen completo en el catálogo', () => {
     expect(AREA_INFO['examen-completo'].name).toContain('Simulacro completo');
   });
+
+  it('no inventa conteos de preguntas en metadatos estáticos', () => {
+    for (const area of getHomeAreas()) {
+      expect(area).not.toHaveProperty('preguntas');
+    }
+  });
 });

@@ -8,6 +8,8 @@ import { saveFullExam } from '@/services/persistence';
 import { fetchQuestionsForFullExam } from '@/features/exam/services/QuestionService';
 import { FULL_EXAM_MAX_QUESTIONS } from '@/features/exam/constants/fullExamLimits';
 import { fetchGradedExamResults, gradedToExamQuestion } from '@/features/exam/services/examGradingClient';
+import { fetchSignedExamTimer } from '@/features/exam/services/examTimerClient';
+import { computeTimeRemainingFromEndsAt } from '@/features/exam/utils/practiceSessionStorage';
 import type { GradedExamAnswer } from '@/features/exam/services/examGradingServer';
 import type { ExamQuestion, ExamQuestionPublic } from '@/features/exam/types/question';
 import type { ExamConfig } from '@/features/exam/types';
@@ -29,6 +31,8 @@ export function useFullExam() {
   const [questions, setQuestions] = useState<ExamQuestionPublic[]>([]);
   const [answers, setAnswers] = useState<Record<string, string>>({});
   const [showResults, setShowResults] = useState(false);
+  const [timerEndsAt, setTimerEndsAt] = useState<number | null>(null);
+  const [timerToken, setTimerToken] = useState<string | null>(null);
   const [timeRemaining, setTimeRemaining] = useState<number | null>(null);
   const [isFinished, setIsFinished] = useState(false);
   const [gradedResults, setGradedResults] = useState<GradedExamAnswer[] | null>(null);
@@ -58,20 +62,29 @@ export function useFullExam() {
   }, [loadQuestions]);
 
   const handleExamStart = useCallback(
-    (config: ExamConfig) => {
+    async (config: ExamConfig) => {
       const questionCount = Math.min(config.numQuestions, FULL_EXAM_MAX_QUESTIONS, allQuestions.length);
       const selectedQuestions = allQuestions.slice(0, questionCount);
+      const durationSec = config.useTimer ? questionCount * (config.timePerQuestion ?? 2) * 60 : null;
+
+      const issued = await fetchSignedExamTimer({
+        durationSec,
+        questionCount,
+        attemptType: 'full-exam',
+      });
+
       setQuestions(selectedQuestions);
+      // Drop the pre-start pool so the client does not keep a 200+ dump in memory mid-session.
+      setAllQuestions([]);
       setExamConfig({ ...config, numQuestions: questionCount });
       setGradedResults(null);
       setGradingError(null);
       gradingStartedRef.current = false;
-
-      if (config.useTimer) {
-        setTimeRemaining(questionCount * (config.timePerQuestion ?? 2) * 60);
-      } else {
-        setTimeRemaining(null);
-      }
+      setTimerEndsAt(issued.endsAt);
+      setTimerToken(issued.timerToken);
+      setTimeRemaining(issued.endsAt != null ? computeTimeRemainingFromEndsAt(issued.endsAt) : null);
+      setIsFinished(false);
+      setAnswers({});
     },
     [allQuestions]
   );
@@ -81,7 +94,9 @@ export function useFullExam() {
 
     const pendingConfig = consumePendingFullExamConfig();
     if (pendingConfig) {
-      handleExamStart(pendingConfig);
+      void handleExamStart(pendingConfig).catch((error: unknown) => {
+        setQuestionsError(error instanceof Error ? error.message : 'No se pudo iniciar el timer firmado');
+      });
       return;
     }
 
@@ -89,20 +104,23 @@ export function useFullExam() {
   }, [loadingQuestions, questionsError, examConfig, handleExamStart, router]);
 
   useEffect(() => {
-    if (!timeRemaining || timeRemaining <= 0) return;
+    if (timerEndsAt == null) {
+      setTimeRemaining(null);
+      return;
+    }
 
-    const timer = setInterval(() => {
-      setTimeRemaining((prev) => {
-        if (prev === null || prev <= 1) {
-          setIsFinished(true);
-          return 0;
-        }
-        return prev - 1;
-      });
-    }, 1000);
+    const tick = () => {
+      const remaining = computeTimeRemainingFromEndsAt(timerEndsAt);
+      setTimeRemaining(remaining);
+      if (remaining !== null && remaining <= 0) {
+        setIsFinished(true);
+      }
+    };
 
-    return () => clearInterval(timer);
-  }, [timeRemaining]);
+    tick();
+    const id = window.setInterval(tick, 1000);
+    return () => window.clearInterval(id);
+  }, [timerEndsAt]);
 
   const handleAnswer = (questionId: string, answer: string) => {
     setAnswers((prev) => ({ ...prev, [questionId]: answer }));
@@ -122,7 +140,10 @@ export function useFullExam() {
     const attemptId = Date.now();
 
     void fetchGradedExamResults(answers, {
-      awardActivity: user?.uid && !isDemoUserId(user.uid) ? { attemptType: 'full-exam', attemptId } : undefined,
+      awardActivity:
+        user?.uid && !isDemoUserId(user.uid)
+          ? { attemptType: 'full-exam', attemptId, timerToken: timerToken ?? undefined }
+          : undefined,
     })
       .then(({ results }) => {
         if (!active) return;
@@ -154,7 +175,7 @@ export function useFullExam() {
     return () => {
       active = false;
     };
-  }, [isFinished, showResults, questions, answers, examConfig, gradingAttempt, user?.uid]);
+  }, [isFinished, showResults, questions, answers, examConfig, gradingAttempt, user?.uid, timerToken]);
 
   const reloadQuestions = loadQuestions;
 

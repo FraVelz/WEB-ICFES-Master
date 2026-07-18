@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { isOpenAIEnabled } from '@/config/featureFlags';
 import { createServerSupabaseClient } from '@/config/supabaseClient';
 import {
   getAuthChatUsage,
@@ -57,10 +58,24 @@ function sanitizeClientMessages(messages: Array<{ role: string; content: string 
 }
 
 export async function GET(request: NextRequest) {
+  if (!isOpenAIEnabled()) {
+    return NextResponse.json(
+      {
+        enabled: false,
+        requiresAuth: false,
+        limit: 0,
+        authUsed: 0,
+        unlimited: false,
+      },
+      { status: 503 }
+    );
+  }
+
   const authUser = await getAuthUserFromRequest(request);
 
   if (!authUser) {
     return NextResponse.json({
+      enabled: true,
       requiresAuth: true,
       limit: 0,
       authUsed: 0,
@@ -72,6 +87,7 @@ export async function GET(request: NextRequest) {
   const authUsed = await getAuthChatUsage(authUser.id, cookieUsed);
 
   return NextResponse.json({
+    enabled: true,
     requiresAuth: false,
     limit: CHAT_AUTH_DAILY_LIMIT,
     authUsed,
@@ -82,6 +98,13 @@ export async function GET(request: NextRequest) {
 
 export async function POST(request: NextRequest) {
   try {
+    if (!isOpenAIEnabled()) {
+      return NextResponse.json(
+        { error: 'El asistente de IA está desactivado.', code: 'OPENAI_DISABLED' },
+        { status: 503 }
+      );
+    }
+
     const apiKey = process.env.OPENAI_API_KEY;
     if (!apiKey) {
       console.error('OPENAI_API_KEY no configurada');

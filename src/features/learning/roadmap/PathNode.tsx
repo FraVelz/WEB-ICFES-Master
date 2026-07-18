@@ -23,11 +23,8 @@ function resolveAccentBorder(bgClass: string): string {
   return BORDER_COLORS[legacyColor] ?? BORDER_COLORS.slate;
 }
 
-const FOCUS_RING_CLASS = cn(
-  'focus-visible:outline-none focus-visible:relative focus-visible:z-10',
-  'focus-visible:border-app-accent',
-  'focus-visible:shadow-[0_0_0_2px_var(--icfes-surface),0_0_0_5px_var(--color-app-ring)]'
-);
+const FOCUS_RING_CLASS =
+  'focus-visible:outline-none focus-visible:relative focus-visible:z-10 focus-visible:border-app-accent focus-visible:shadow-[0_0_0_2px_var(--icfes-surface),0_0_0_5px_var(--color-app-ring)]';
 
 export interface PathNodeProps {
   status?: LessonPathStatus;

@@ -10,12 +10,8 @@ type LecturaSectionCardProps = {
   isRead: boolean;
 };
 
-const cardLinkClass = cn(
-  'group border-surface-border bg-surface-elevated/60 flex items-start gap-4 rounded-2xl border p-5 transition-all',
-  'hover:border-app-ring/40 hover:bg-surface-elevated hover:shadow-lg hover:shadow-app-ring/5',
-  'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none',
-  'focus-visible:ring-offset-surface'
-);
+const cardLinkClass =
+  'group border-surface-border bg-surface-elevated/60 flex items-start gap-4 rounded-2xl border p-5 transition-all hover:border-app-ring/40 hover:bg-surface-elevated hover:shadow-lg hover:shadow-app-ring/5 focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none focus-visible:ring-offset-surface';
 
 export function LecturaSectionCard({ section, isRead }: LecturaSectionCardProps) {
   return (
