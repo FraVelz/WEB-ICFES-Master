@@ -103,7 +103,11 @@ describe('practiceSessionStorage', () => {
   it('rejects invalid snapshots', () => {
     storage.set(
       practiceSessionStorageKey('matematicas', null),
-      JSON.stringify({ version: 1, state: 'in_progress', areaSlug: 'matematicas' } satisfies Partial<PracticeSessionSnapshot>)
+      JSON.stringify({
+        version: 1,
+        state: 'in_progress',
+        areaSlug: 'matematicas',
+      } satisfies Partial<PracticeSessionSnapshot>)
     );
     expect(loadPracticeSession('matematicas', null)).toBeNull();
   });

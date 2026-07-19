@@ -1,9 +1,5 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import {
-  buildUserResultsExport,
-  downloadUserResultsExport,
-  userResultsExportFilename,
-} from './exportUserResults';
+import { buildUserResultsExport, downloadUserResultsExport, userResultsExportFilename } from './exportUserResults';
 
 vi.mock('@/storage/progressStorage', () => ({
   getProgress: vi.fn(() => ({

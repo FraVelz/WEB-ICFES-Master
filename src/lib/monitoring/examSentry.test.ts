@@ -1,10 +1,6 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
-import {
-  __setExamSentryCaptureForTests,
-  captureExamRunnerError,
-  isExamSentryConfigured,
-} from './examSentry';
+import { __setExamSentryCaptureForTests, captureExamRunnerError, isExamSentryConfigured } from './examSentry';
 
 describe('examSentry', () => {
   afterEach(() => {

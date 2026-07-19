@@ -1,10 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import {
-  formatTimerAnnouncement,
-  shouldAnnounceTimerRemaining,
-} from '@/features/exam/utils/practiceExamKeyboard';
+import { formatTimerAnnouncement, shouldAnnounceTimerRemaining } from '@/features/exam/utils/practiceExamKeyboard';
 
 type ExamTimerLiveRegionProps = {
   timeRemaining: number | null;

@@ -75,10 +75,10 @@ features/feature-name/
 
 ### Two different “store” names
 
-| Path               | What it is                                |
-| ------------------ | ----------------------------------------- |
-| `features/store/`  | Coin shop components and hooks            |
-| `store/` (Zustand) | UI state: demo mode                       |
+| Path               | What it is                     |
+| ------------------ | ------------------------------ |
+| `features/store/`  | Coin shop components and hooks |
+| `store/` (Zustand) | UI state: demo mode            |
 
 Free/Pro/Premium plans are not a 2026 product (`BILLING_ENABLED=false`). See
 [billing-no-2026.md](../decisions/billing-no-2026.md).

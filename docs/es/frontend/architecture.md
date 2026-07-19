@@ -70,10 +70,10 @@ propietaria (p. ej. `@/features/auth/utils/mapSupabaseAuthError`, no shims en `@
 
 ## Dos nombres “store” (no confundir)
 
-| Ruta                  | Rol                                       |
-| --------------------- | ----------------------------------------- |
-| `src/features/store/` | UI de tienda de monedas (ítems, modales)  |
-| `src/store/`          | Zustand: sesión UI (`uiSession`: demo)    |
+| Ruta                  | Rol                                      |
+| --------------------- | ---------------------------------------- |
+| `src/features/store/` | UI de tienda de monedas (ítems, modales) |
+| `src/store/`          | Zustand: sesión UI (`uiSession`: demo)   |
 
 Billing de planes Free/Pro/Premium está desactivado en 2026. Ver
 [billing-no-2026.md](../decisions/billing-no-2026.md).

@@ -1,9 +1,6 @@
 import { FULL_EXAM_ROUTE_AREAS } from '@/features/exam/data/examAreas';
 import { loadQuestionsByIdsForGrading } from '@/features/exam/services/examQuestionsServer';
-import {
-  gradeExamAnswersPure,
-  type GradedExamAnswer,
-} from '@/features/exam/services/gradeExamAnswersPure';
+import { gradeExamAnswersPure, type GradedExamAnswer } from '@/features/exam/services/gradeExamAnswersPure';
 
 export type { GradedExamAnswer };
 

@@ -9,20 +9,20 @@ Referencia de variables de entorno y modos de ejecución. Para la instalación i
 
 Copia [`.env.example`](../../../.env.example) a `.env.local` en la raíz del proyecto.
 
-| Variable                          | Obligatoria               | Descripción                                                                 |
-| --------------------------------- | ------------------------- | --------------------------------------------------------------------------- |
-| `NEXT_PUBLIC_SUPABASE_URL`        | Sí                        | URL del proyecto Supabase                                                   |
-| `NEXT_PUBLIC_SUPABASE_ANON_KEY`   | Sí                        | Clave anónima pública de Supabase                                           |
-| `BILLING_ENABLED`                 | No (default `false`)      | Producto de planes Free/Pro/Premium; mantener off en 2026                   |
-| `NEXT_PUBLIC_BILLING_ENABLED`     | No (default `false`)      | Misma flag visible en cliente                                               |
-| `OPENAI_ENABLED`                  | No (default `false`)      | Activa el asistente IA en servidor; requiere también `OPENAI_API_KEY`       |
-| `NEXT_PUBLIC_OPENAI_ENABLED`      | No (default `false`)      | Flag de build para UI cliente (opcional; el mount usa la resolución server) |
-| `OPENAI_API_KEY`                  | No                        | API key de OpenAI para `/api/chat` (sin key el asistente permanece off)     |
-| `NEXT_PUBLIC_SENTRY_DSN`          | No                        | DSN de Sentry para errores del runner (load/submit); sin DSN = no-op       |
-| `NEXT_PUBLIC_SITE_URL`            | Recomendada en producción | Origen público para `metadataBase`, sitemap, Open Graph y URLs canónicas    |
-| `NEXT_PUBLIC_TWITTER_SITE`        | No                        | Handle de Twitter/X (`@icfesmaster`) para `twitter:site` en metadatos       |
-| `KV_REST_API_URL`                 | Recomendada en producción | URL REST de Upstash/Vercel KV para rate limiting y cuota diaria del chat    |
-| `KV_REST_API_TOKEN`               | Recomendada en producción | Token de KV; sin esto los límites son en memoria por instancia serverless   |
+| Variable                        | Obligatoria               | Descripción                                                                 |
+| ------------------------------- | ------------------------- | --------------------------------------------------------------------------- |
+| `NEXT_PUBLIC_SUPABASE_URL`      | Sí                        | URL del proyecto Supabase                                                   |
+| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Sí                        | Clave anónima pública de Supabase                                           |
+| `BILLING_ENABLED`               | No (default `false`)      | Producto de planes Free/Pro/Premium; mantener off en 2026                   |
+| `NEXT_PUBLIC_BILLING_ENABLED`   | No (default `false`)      | Misma flag visible en cliente                                               |
+| `OPENAI_ENABLED`                | No (default `false`)      | Activa el asistente IA en servidor; requiere también `OPENAI_API_KEY`       |
+| `NEXT_PUBLIC_OPENAI_ENABLED`    | No (default `false`)      | Flag de build para UI cliente (opcional; el mount usa la resolución server) |
+| `OPENAI_API_KEY`                | No                        | API key de OpenAI para `/api/chat` (sin key el asistente permanece off)     |
+| `NEXT_PUBLIC_SENTRY_DSN`        | No                        | DSN de Sentry para errores del runner (load/submit); sin DSN = no-op        |
+| `NEXT_PUBLIC_SITE_URL`          | Recomendada en producción | Origen público para `metadataBase`, sitemap, Open Graph y URLs canónicas    |
+| `NEXT_PUBLIC_TWITTER_SITE`      | No                        | Handle de Twitter/X (`@icfesmaster`) para `twitter:site` en metadatos       |
+| `KV_REST_API_URL`               | Recomendada en producción | URL REST de Upstash/Vercel KV para rate limiting y cuota diaria del chat    |
+| `KV_REST_API_TOKEN`             | Recomendada en producción | Token de KV; sin esto los límites son en memoria por instancia serverless   |
 
 ### Feature flags (billing y OpenAI)
 

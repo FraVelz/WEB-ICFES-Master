@@ -70,7 +70,5 @@ export function formatTimerAnnouncement(timeRemainingSec: number): string {
   if (mins === 0) return secs === 1 ? 'Queda 1 segundo' : `Quedan ${secs} segundos`;
   const minLabel = mins === 1 ? '1 minuto' : `${mins} minutos`;
   if (secs === 0) return mins === 1 ? `Queda ${minLabel}` : `Quedan ${minLabel}`;
-  return mins === 1
-    ? `Queda ${minLabel} y ${secs} segundos`
-    : `Quedan ${minLabel} y ${secs} segundos`;
+  return mins === 1 ? `Queda ${minLabel} y ${secs} segundos` : `Quedan ${minLabel} y ${secs} segundos`;
 }

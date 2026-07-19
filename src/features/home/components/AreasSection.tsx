@@ -47,9 +47,7 @@ export const AreasSection = () => {
           const publishedCount = coverage?.[area.id] ?? 0;
           const loadingCoverage = coverage === null;
           const empty = !loadingCoverage && isAreaCoverageEmpty(publishedCount);
-          const coverageLabel = loadingCoverage
-            ? 'Cargando cobertura…'
-            : formatPublishedCoverageLabel(publishedCount);
+          const coverageLabel = loadingCoverage ? 'Cargando cobertura…' : formatPublishedCoverageLabel(publishedCount);
 
           const body = (
             <>

@@ -1,11 +1,6 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
-import {
-  isPlausibleExamElapsed,
-  MIN_MS_PER_QUESTION_FOR_XP,
-  signExamTimer,
-  verifyExamTimer,
-} from './examTimerToken';
+import { isPlausibleExamElapsed, MIN_MS_PER_QUESTION_FOR_XP, signExamTimer, verifyExamTimer } from './examTimerToken';
 
 describe('examTimerToken', () => {
   afterEach(() => {

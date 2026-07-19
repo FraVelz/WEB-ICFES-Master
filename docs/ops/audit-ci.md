@@ -2,10 +2,10 @@
 
 ## Gate
 
-| Campo | Valor |
-|-------|--------|
-| Script | `pnpm run audit` → `node scripts/audit-high.mjs` |
-| Nivel | **high** + **critical** (prod tree only) |
+| Campo   | Valor                                                     |
+| ------- | --------------------------------------------------------- |
+| Script  | `pnpm run audit` → `node scripts/audit-high.mjs`          |
+| Nivel   | **high** + **critical** (prod tree only)                  |
 | CI step | `.github/workflows/ci.yml` → “Audit dependencies (high+)” |
 
 ## Por qué no `pnpm audit` directo

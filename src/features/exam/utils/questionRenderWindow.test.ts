@@ -3,10 +3,7 @@ import { describe, expect, it } from 'vitest';
 import { PRACTICE_AREA_QUESTIONS_FETCH_LIMIT } from '@/features/exam/constants/practiceQuestionLimits';
 import { FULL_EXAM_MAX_QUESTIONS } from '@/features/exam/constants/fullExamLimits';
 
-import {
-  assertPracticeFetchBelowFullSimulacro,
-  getQuestionRenderWindow,
-} from './questionRenderWindow';
+import { assertPracticeFetchBelowFullSimulacro, getQuestionRenderWindow } from './questionRenderWindow';
 
 describe('getQuestionRenderWindow', () => {
   it('renders current and prefetches the next question', () => {

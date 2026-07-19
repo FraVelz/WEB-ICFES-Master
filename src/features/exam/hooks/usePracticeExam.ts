@@ -168,8 +168,7 @@ export function usePracticeExam() {
           attemptType: 'practice',
         });
         const endsAt = issued.endsAt;
-        const remainingSec =
-          endsAt != null ? computeTimeRemainingFromEndsAt(endsAt) : null;
+        const remainingSec = endsAt != null ? computeTimeRemainingFromEndsAt(endsAt) : null;
 
         setQuestions(selectedQuestions);
         setExamConfig(config);

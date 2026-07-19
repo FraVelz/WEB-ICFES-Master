@@ -17,10 +17,10 @@ No incluye email ni tokens. Si el usuario tiene sync Supabase, el JSON refleja l
 
 ## Path borrado (PII)
 
-| Acción UI | Confirmación | Efecto |
-|-----------|--------------|--------|
-| Borrar mis Datos | `BORRAR TODO` | `resetProgress` + `resetUserExams` (borra `exam_results` del user en Supabase si hay sesión) + `clearLocalClientData` |
-| Eliminar Cuenta | `BORRAR MI CUENTA` | Lo anterior + `logout`. **Auth user en Supabase Auth no se auto-borra** (sin service role en cliente) |
+| Acción UI        | Confirmación       | Efecto                                                                                                                |
+| ---------------- | ------------------ | --------------------------------------------------------------------------------------------------------------------- |
+| Borrar mis Datos | `BORRAR TODO`      | `resetProgress` + `resetUserExams` (borra `exam_results` del user en Supabase si hay sesión) + `clearLocalClientData` |
+| Eliminar Cuenta  | `BORRAR MI CUENTA` | Lo anterior + `logout`. **Auth user en Supabase Auth no se auto-borra** (sin service role en cliente)                 |
 
 ### Honestidad
 

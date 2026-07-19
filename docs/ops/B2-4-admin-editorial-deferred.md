@@ -11,21 +11,21 @@
 
 ## Interim (humano / ops)
 
-| Necesidad | Path |
-|-----------|------|
+| Necesidad                       | Path                                                                        |
+| ------------------------------- | --------------------------------------------------------------------------- |
 | Publicar / despublicar pregunta | Supabase Table Editor o SQL sobre la vista/tabla de preguntas (`published`) |
-| Lecciones | `WEB-ICFES-Admin` → `/dashboard/contenido/` |
-| Contar cobertura | `GET /api/exam/coverage` |
+| Lecciones                       | `WEB-ICFES-Admin` → `/dashboard/contenido/`                                 |
+| Contar cobertura                | `GET /api/exam/coverage`                                                    |
 
 ## Cuándo reabrir
 
-Oleada 3 / guía `02` semanas 9–12: admin editorial con audit log publicar/archivar + versionado `question.version` (tickets B3-*).
+Oleada 3 / guía `02` semanas 9–12: admin editorial con audit log publicar/archivar + versionado `question.version` (tickets B3-\*).
 
 Ver también: [`gold-bank.md`](./gold-bank.md) (N gold/área) y [`leaderboard-anti-abuse.md`](./leaderboard-anti-abuse.md).
 
 ## Estado
 
-| Campo | Valor |
-|-------|--------|
+| Campo       | Valor                                                       |
+| ----------- | ----------------------------------------------------------- |
 | Ticket B2-4 | **skipped** (condicionado “si bloquea piloto” → no bloquea) |
-| Fecha | 2026-07-15 |
+| Fecha       | 2026-07-15                                                  |
