@@ -8,12 +8,12 @@
 
 **Checks**
 
-| # | Acción |
-|---|--------|
-| 1 | Sentry → Issues filtrar `feature:exam-runner` + `phase:submit` (últimos 15–60 min) |
-| 2 | Vercel → Runtime Logs / Functions en ventana del incidente |
-| 3 | `curl -sS https://<prod>/api/health` → `status: ok` |
-| 4 | Cobertura banco: `GET /api/exam/coverage` (¿área vacía vs bug de grade?) |
+| #   | Acción                                                                             |
+| --- | ---------------------------------------------------------------------------------- |
+| 1   | Sentry → Issues filtrar `feature:exam-runner` + `phase:submit` (últimos 15–60 min) |
+| 2   | Vercel → Runtime Logs / Functions en ventana del incidente                         |
+| 3   | `curl -sS https://<prod>/api/health` → `status: ok`                                |
+| 4   | Cobertura banco: `GET /api/exam/coverage` (¿área vacía vs bug de grade?)           |
 
 **Mitigar**
 
@@ -30,11 +30,11 @@
 
 **Checks**
 
-| # | Acción |
-|---|--------|
-| 1 | Confirmar práctica por área (D1) — no simulacro global 200Q (sigue beta sin resume full) |
-| 2 | `localStorage` key `icfes_practice_session_v1:*` presente en DevTools |
-| 3 | Regresión reciente en `practiceSessionStorage` / `usePracticeExam` |
+| #   | Acción                                                                                   |
+| --- | ---------------------------------------------------------------------------------------- |
+| 1   | Confirmar práctica por área (D1) — no simulacro global 200Q (sigue beta sin resume full) |
+| 2   | `localStorage` key `icfes_practice_session_v1:*` presente en DevTools                    |
+| 3   | Regresión reciente en `practiceSessionStorage` / `usePracticeExam`                       |
 
 **Mitigar:** hotfix restore; si corrupto, limpiar key y pedir reinicio de práctica. Documentar en `docs/incidents/`.
 
@@ -52,10 +52,10 @@
 
 Crear `docs/incidents/YYYY-MM-DD-corto.md`:
 
-1. Qué vio el usuario  
-2. Detección (Sentry / health / reporte)  
-3. Mitigación  
-4. Causa raíz (1 frase)  
+1. Qué vio el usuario
+2. Detección (Sentry / health / reporte)
+3. Mitigación
+4. Causa raíz (1 frase)
 5. Follow-up (ticket)
 
 ---

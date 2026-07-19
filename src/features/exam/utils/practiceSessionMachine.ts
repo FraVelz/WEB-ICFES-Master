@@ -25,10 +25,7 @@ const TRANSITIONS: Record<PracticeSessionState, Partial<Record<PracticeSessionEv
   },
 };
 
-export function canTransitionPracticeSession(
-  state: PracticeSessionState,
-  event: PracticeSessionEvent
-): boolean {
+export function canTransitionPracticeSession(state: PracticeSessionState, event: PracticeSessionEvent): boolean {
   return TRANSITIONS[state][event] != null;
 }
 

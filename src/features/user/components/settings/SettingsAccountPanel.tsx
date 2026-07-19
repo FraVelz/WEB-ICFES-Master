@@ -4,14 +4,8 @@ import { useUserSettingsContext } from '@/features/user/context/UserSettingsCont
 import { SettingsSection, SettingOption } from './SettingsSection';
 
 export function SettingsAccountPanel() {
-  const {
-    loading,
-    setShowDeleteModal,
-    setDeleteMode,
-    setDeleteConfirmation,
-    handleLogout,
-    handleExportResults,
-  } = useUserSettingsContext();
+  const { loading, setShowDeleteModal, setDeleteMode, setDeleteConfirmation, handleLogout, handleExportResults } =
+    useUserSettingsContext();
 
   const openDeleteModal = (mode: 'clear-data' | 'delete-account') => {
     setDeleteMode(mode);

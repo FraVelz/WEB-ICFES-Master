@@ -30,14 +30,14 @@ Cada fila = una persona real que:
 2. Completa **≥ 1 práctica por área** (o abandona con motivo anotado).
 3. Idealmente vuelve en otra sesión (retención 7d opcional).
 
-| # | Alias / código | Canal | Fecha 1ª sesión | Prácticas iniciadas | Completadas | % complete | Notas |
-|---|----------------|-------|-----------------|---------------------|-------------|------------|-------|
-| 1 | | | | | | | |
-| 2 | | | | | | | |
-| … | | | | | | | |
-| 20 | | | | | | | |
+| #   | Alias / código | Canal | Fecha 1ª sesión | Prácticas iniciadas | Completadas | % complete | Notas |
+| --- | -------------- | ----- | --------------- | ------------------- | ----------- | ---------- | ----- |
+| 1   |                |       |                 |                     |             |            |       |
+| 2   |                |       |                 |                     |             |            |       |
+| …   |                |       |                 |                     |             |            |       |
+| 20  |                |       |                 |                     |             |            |       |
 
-*Filas 21+ opcionales si el piloto crece.*
+_Filas 21+ opcionales si el piloto crece._
 
 ---
 
@@ -45,11 +45,11 @@ Cada fila = una persona real que:
 
 Si no se alcanza N=20 personas, documentar **log de sesiones reales**:
 
-| Evidencia | Formato | Dónde |
-|-----------|---------|--------|
-| Sesiones `submitted` / `abandoned` | CSV anonimizado (sin email) | fuera del git público o path privado |
-| % práctica completada | `submitted / (submitted + abandoned)` en ventana del piloto | nota en este archivo al cerrar |
-| Retención | % con ≥2 sesiones en 7 días | opcional |
+| Evidencia                          | Formato                                                     | Dónde                                |
+| ---------------------------------- | ----------------------------------------------------------- | ------------------------------------ |
+| Sesiones `submitted` / `abandoned` | CSV anonimizado (sin email)                                 | fuera del git público o path privado |
+| % práctica completada              | `submitted / (submitted + abandoned)` en ventana del piloto | nota en este archivo al cerrar       |
+| Retención                          | % con ≥2 sesiones en 7 días                                 | opcional                             |
 
 **No** subir PII (nombres reales, emails, documentos) al repo público.
 
@@ -57,11 +57,11 @@ Si no se alcanza N=20 personas, documentar **log de sesiones reales**:
 
 ## Evidencia mínima para cerrar B2-1
 
-| Evidencia | Dónde |
-|-----------|--------|
-| Tabla ≥20 o CSV sesiones + % complete | este archivo (local) / nota privada |
-| Captura cobertura banco o link coverage API | opcional |
-| Incidente durante piloto (si hubo) | `docs/incidents/` (5 líneas) |
+| Evidencia                                   | Dónde                               |
+| ------------------------------------------- | ----------------------------------- |
+| Tabla ≥20 o CSV sesiones + % complete       | este archivo (local) / nota privada |
+| Captura cobertura banco o link coverage API | opcional                            |
+| Incidente durante piloto (si hubo)          | `docs/incidents/` (5 líneas)        |
 
 **No cuenta como cierre:** cuentas de prueba del founder, scripts de carga, o “20 filas inventadas”.
 
@@ -69,8 +69,8 @@ Si no se alcanza N=20 personas, documentar **log de sesiones reales**:
 
 ## Estado
 
-| Campo | Valor |
-|-------|--------|
-| Checklist docs | listo (2026-07-15) |
+| Campo                                   | Valor                                     |
+| --------------------------------------- | ----------------------------------------- |
+| Checklist docs                          | listo (2026-07-15)                        |
 | Piloto humano ≥ 20 / evidencia sesiones | **pendiente** — ejecutar fuera del agente |
-| Fecha cierre real | _TBD_ |
+| Fecha cierre real                       | _TBD_                                     |

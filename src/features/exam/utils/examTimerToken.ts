@@ -14,8 +14,7 @@ export type ExamTimerPayload = {
 };
 
 function getSecret(): string {
-  const dedicated =
-    process.env.EXAM_TIMER_SECRET?.trim() || process.env.BLOCK_EXAM_SESSION_SECRET?.trim();
+  const dedicated = process.env.EXAM_TIMER_SECRET?.trim() || process.env.BLOCK_EXAM_SESSION_SECRET?.trim();
   if (dedicated) return dedicated;
 
   const serviceRole = process.env.SUPABASE_SERVICE_ROLE_KEY?.trim();
@@ -34,10 +33,7 @@ function signPayload(json: string): string {
   return createHmac('sha256', getSecret()).update(json).digest('base64url');
 }
 
-export function signExamTimer(
-  payload: Omit<ExamTimerPayload, 'exp'>,
-  ttlMs = 6 * 60 * 60 * 1000
-): string {
+export function signExamTimer(payload: Omit<ExamTimerPayload, 'exp'>, ttlMs = 6 * 60 * 60 * 1000): string {
   const data: ExamTimerPayload = { ...payload, exp: Date.now() + ttlMs };
   const json = JSON.stringify(data);
   const signature = signPayload(json);

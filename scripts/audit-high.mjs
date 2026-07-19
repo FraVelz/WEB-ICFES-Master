@@ -79,9 +79,7 @@ function main() {
 
     console.error(`[audit-high] FAIL — ${hits.length} high/critical advisory(ies):\n`);
     for (const hit of hits) {
-      console.error(
-        `- [${hit.severity}] ${hit.name}@${hit.vulnerable_versions}\n  ${hit.title}\n  ${hit.url}`
-      );
+      console.error(`- [${hit.severity}] ${hit.name}@${hit.vulnerable_versions}\n  ${hit.title}\n  ${hit.url}`);
     }
     process.exitCode = 1;
   });

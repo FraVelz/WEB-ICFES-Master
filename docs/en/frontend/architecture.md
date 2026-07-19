@@ -70,10 +70,10 @@ The `@/hooks` barrel re-exports feature hooks for convenience, but **prefer dire
 
 ## Two different “store” names
 
-| Path                  | Role                                          |
-| --------------------- | --------------------------------------------- |
-| `src/features/store/` | Coin shop UI (modals, item cards)             |
-| `src/store/`          | Zustand: UI session (`uiSession`: demo)       |
+| Path                  | Role                                    |
+| --------------------- | --------------------------------------- |
+| `src/features/store/` | Coin shop UI (modals, item cards)       |
+| `src/store/`          | Zustand: UI session (`uiSession`: demo) |
 
 Free/Pro/Premium plan billing is disabled for 2026. See
 [billing-no-2026.md](../decisions/billing-no-2026.md).

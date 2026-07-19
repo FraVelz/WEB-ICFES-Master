@@ -7,14 +7,14 @@ Sentry runner: tags `feature:exam-runner` + `phase:load|submit` (ver `src/lib/mo
 
 ## 1. Uptime (healthcheck)
 
-| Campo | Valor |
-|-------|--------|
-| URL | `https://<prod>/api/health` |
-| Método | GET |
-| Expect | HTTP 200 + JSON `status === "ok"` |
-| Intervalo sugerido | 5 min |
-| Fallo | 2 checks consecutivos fallidos → alerta |
-| Herramienta | Better Stack / UptimeRobot / Vercel Monitoring (cualquiera) |
+| Campo              | Valor                                                       |
+| ------------------ | ----------------------------------------------------------- |
+| URL                | `https://<prod>/api/health`                                 |
+| Método             | GET                                                         |
+| Expect             | HTTP 200 + JSON `status === "ok"`                           |
+| Intervalo sugerido | 5 min                                                       |
+| Fallo              | 2 checks consecutivos fallidos → alerta                     |
+| Herramienta        | Better Stack / UptimeRobot / Vercel Monitoring (cualquiera) |
 
 **Verificar local:**
 
@@ -29,12 +29,12 @@ curl -sS http://localhost:3000/api/health | jq .
 
 Crear una **Issue Alert** (o Metric Alert) en el proyecto Sentry del runner:
 
-| Campo | Valor |
-|-------|--------|
-| Filter | `feature:exam-runner` **AND** `phase:submit` |
+| Campo              | Valor                                                            |
+| ------------------ | ---------------------------------------------------------------- |
+| Filter             | `feature:exam-runner` **AND** `phase:submit`                     |
 | Condición sugerida | ≥ **5** eventos en **10 min** (ajustar tras baseline del piloto) |
-| Acción | Email / Slack al owner del repo |
-| Env | Production (y Preview solo si hay ruido controlado) |
+| Acción             | Email / Slack al owner del repo                                  |
+| Env                | Production (y Preview solo si hay ruido controlado)              |
 
 Opcional segunda alerta: `phase:load` con umbral más alto (fallos de carga de banco).
 

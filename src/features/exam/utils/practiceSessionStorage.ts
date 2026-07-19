@@ -46,10 +46,7 @@ export function practiceSessionStorageKey(
   return `${PRACTICE_SESSION_STORAGE_PREFIX}:${areaSlug}:${difficulty ?? 'all'}`;
 }
 
-export function computeTimeRemainingFromEndsAt(
-  timerEndsAt: number | null,
-  now: number = Date.now()
-): number | null {
+export function computeTimeRemainingFromEndsAt(timerEndsAt: number | null, now: number = Date.now()): number | null {
   if (timerEndsAt == null) return null;
   return Math.max(0, Math.ceil((timerEndsAt - now) / 1000));
 }
@@ -118,19 +115,13 @@ export function savePracticeSession(snapshot: Omit<PracticeSessionSnapshot, 'ver
       version: 1,
       updatedAt: new Date().toISOString(),
     };
-    localStorage.setItem(
-      practiceSessionStorageKey(snapshot.areaSlug, snapshot.difficulty),
-      JSON.stringify(payload)
-    );
+    localStorage.setItem(practiceSessionStorageKey(snapshot.areaSlug, snapshot.difficulty), JSON.stringify(payload));
   } catch {
     // quota / private mode — ignore
   }
 }
 
-export function clearPracticeSession(
-  areaSlug: string,
-  difficulty: ExamQuestionDifficulty | null | undefined
-): void {
+export function clearPracticeSession(areaSlug: string, difficulty: ExamQuestionDifficulty | null | undefined): void {
   if (typeof window === 'undefined' || !areaSlug) return;
   localStorage.removeItem(practiceSessionStorageKey(areaSlug, difficulty));
 }

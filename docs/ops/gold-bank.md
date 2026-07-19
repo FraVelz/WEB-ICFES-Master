@@ -5,8 +5,8 @@
 
 ## N (piso documentado)
 
-| Constante | Valor | Significado |
-|-----------|-------|-------------|
+| Constante              | Valor | Significado                                                                                |
+| ---------------------- | ----- | ------------------------------------------------------------------------------------------ |
 | `GOLD_BANK_N_PER_AREA` | **8** | Mínimo de preguntas **gold** (revisión humana) por área ICFES en el seed estático del repo |
 
 Objetivo guía `02` (semanas 17–24 / checklist): **50** gold/área — meta de crecimiento, **no** el piso actual.
@@ -15,13 +15,13 @@ Objetivo guía `02` (semanas 17–24 / checklist): **50** gold/área — meta de
 
 Fuente: `src/features/exam/data/` (`makeQuestion` / `ENGLISH_QUESTIONS`, `version: 1`).
 
-| Área (ruta) | Gold seed | ≥ N=8 |
-|-------------|-----------|-------|
-| matematicas | 8 | sí |
-| lectura-critica | 8 | sí |
-| ciencias-naturales | 8 | sí |
-| sociales-ciudadanas | 8 | sí |
-| ingles | 10 | sí |
+| Área (ruta)         | Gold seed | ≥ N=8 |
+| ------------------- | --------- | ----- |
+| matematicas         | 8         | sí    |
+| lectura-critica     | 8         | sí    |
+| ciencias-naturales  | 8         | sí    |
+| sociales-ciudadanas | 8         | sí    |
+| ingles              | 10        | sí    |
 
 El conteo **live** de `GET /api/exam/coverage` refleja `exam_questions_public` en Supabase (puede ser 0 si el área no está sembrada en DB). El seed estático es el fallback de práctica y el piso gold documentado.
 

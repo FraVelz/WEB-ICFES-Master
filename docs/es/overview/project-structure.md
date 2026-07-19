@@ -76,10 +76,10 @@ features/nombre-feature/
 
 ### Dos nombres “store”
 
-| Ruta               | Qué es                                           |
-| ------------------ | ------------------------------------------------ |
-| `features/store/`  | Componentes y hooks de la tienda de monedas      |
-| `store/` (Zustand) | Estado UI: modo demo                             |
+| Ruta               | Qué es                                      |
+| ------------------ | ------------------------------------------- |
+| `features/store/`  | Componentes y hooks de la tienda de monedas |
+| `store/` (Zustand) | Estado UI: modo demo                        |
 
 Planes Free/Pro/Premium no están en el producto 2026 (`BILLING_ENABLED=false`). Ver
 [billing-no-2026.md](../decisions/billing-no-2026.md).

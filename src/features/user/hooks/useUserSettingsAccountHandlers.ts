@@ -41,10 +41,7 @@ export function useUserSettingsAccountHandlers(state: SettingsState) {
       downloadUserResultsExport();
       showMessage('Resultados exportados (JSON descargado)', 'success');
     } catch (err) {
-      showMessage(
-        `Error al exportar: ${err instanceof Error ? err.message : 'Error desconocido'}`,
-        'error'
-      );
+      showMessage(`Error al exportar: ${err instanceof Error ? err.message : 'Error desconocido'}`, 'error');
     }
   };
 

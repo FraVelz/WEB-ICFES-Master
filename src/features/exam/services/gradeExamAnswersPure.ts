@@ -12,10 +12,7 @@ export type GradedExamAnswer = {
 };
 
 /** Pure grading — no DB. Used by examGradingServer and unit tests. */
-export function gradeExamAnswersPure(
-  questions: ExamQuestion[],
-  answers: Record<string, string>
-): GradedExamAnswer[] {
+export function gradeExamAnswersPure(questions: ExamQuestion[], answers: Record<string, string>): GradedExamAnswer[] {
   return questions.map((question) => {
     const userAnswer = answers[question.id] ?? '';
     return {
