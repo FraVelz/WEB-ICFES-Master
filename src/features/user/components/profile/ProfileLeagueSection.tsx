@@ -18,10 +18,8 @@ type ProfileLeagueSectionProps = {
   resetMs?: number;
 };
 
-const statTileClass = cn(
-  'rounded-xl border border-surface-border bg-surface-via/70 p-3 text-center',
-  'dark:border-transparent dark:bg-surface-overlay/50'
-);
+const statTileClass =
+  'rounded-xl border border-surface-border bg-surface-via/70 p-3 text-center dark:border-transparent dark:bg-surface-overlay/50';
 
 export function ProfileLeagueSection({ league, loading = false, showCta = false, resetMs }: ProfileLeagueSectionProps) {
   const rankInfo = getRankInfo(league.leagueRank);

@@ -73,7 +73,9 @@ Slugs alineados con `AREA_INFO` en `src/shared/constants/areaInfo.ts`:
 | ----------- | -------- | --------------------------------------- |
 | `/api/chat` | GET/POST | Chat con modelo de IA para el asistente |
 
-Requiere `OPENAI_API_KEY` en el servidor. Usuarios anónimos tienen cuota limitada (cookie httpOnly; constantes en `src/features/learning/constants/chatAnonQuota.ts`). El cliente sincroniza el contador con `GET /api/chat`.
+Requiere `OPENAI_ENABLED=true` y `OPENAI_API_KEY` en el servidor (`isOpenAIEnabled()`). Sin flag o sin key, el
+launcher no se monta y la API responde 503. Usuarios autenticados tienen cuota diaria (cookie httpOnly / KV;
+constantes en `src/features/learning/constants/chatQuota.ts`). El cliente sincroniza el contador con `GET /api/chat`.
 
 ---
 

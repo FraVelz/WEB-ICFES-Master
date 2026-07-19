@@ -7,7 +7,7 @@ import type { ExamConfig } from '@/features/exam/types';
 type ExamConfigFormProps = {
   area: string;
   totalQuestions: number;
-  onStart: (config: ExamConfig) => void;
+  onStart: (config: ExamConfig) => void | Promise<void>;
   onCancel?: () => void;
   isFullExam?: boolean;
   variant?: 'modal' | 'page';

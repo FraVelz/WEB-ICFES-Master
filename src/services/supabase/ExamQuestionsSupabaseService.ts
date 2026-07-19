@@ -20,6 +20,8 @@ export interface ExamQuestionPublicRow {
   difficulty: string | null;
   published: boolean;
   order_index: number;
+  /** Present after migration + view update; defaults to 1 in mapper. */
+  version?: number | null;
 }
 
 const getSupabase = () => {
@@ -37,6 +39,7 @@ function rowToPublicExamQuestion(row: ExamQuestionPublicRow): ExamQuestion {
     correctAnswer: '',
     explanation: row.explanation ?? undefined,
     difficulty: row.difficulty ?? undefined,
+    version: typeof row.version === 'number' && row.version >= 1 ? row.version : 1,
   };
 }
 
@@ -117,6 +120,35 @@ const ExamQuestionsSupabaseService = {
 
     if (error) throw new Error(`Error leyendo exam_questions: ${error.message}`);
     return ((data ?? []) as ExamQuestionPublicRow[]).map(rowToPublicExamQuestion);
+  },
+
+  /** Conteos live de preguntas publicadas por slug de ruta (`HOME_AREA_IDS`). */
+  async countPublishedByRouteAreas(routeAreas: string[]): Promise<Record<string, number>> {
+    const counts: Record<string, number> = Object.fromEntries(routeAreas.map((area) => [area, 0]));
+    const sb = getSupabase();
+    if (!sb || routeAreas.length === 0) return counts;
+
+    const pairs = routeAreas
+      .map((routeArea) => {
+        const dbArea = routeAreaToDbArea(routeArea);
+        return dbArea ? { routeArea, dbArea } : null;
+      })
+      .filter((pair): pair is { routeArea: string; dbArea: ExamQuestionDbArea } => pair != null);
+
+    await Promise.all(
+      pairs.map(async ({ routeArea, dbArea }) => {
+        const { count, error } = await sb
+          .from(PUBLIC_VIEW)
+          .select('id', { count: 'exact', head: true })
+          .eq('area', dbArea)
+          .eq('published', true);
+
+        if (error) throw new Error(`Error contando exam_questions: ${error.message}`);
+        counts[routeArea] = count ?? 0;
+      })
+    );
+
+    return counts;
   },
 };
 

@@ -19,15 +19,8 @@ type LessonQuizActionsProps = {
   innerClassName?: string;
 };
 
-const secondaryActionClass = cn(
-  'border-surface-border bg-surface-elevated/90 text-on-surface-muted min-h-[48px] cursor-pointer rounded-xl border',
-  'font-semibold shadow-sm transition-[color,background-color,border-color,box-shadow,transform] duration-200',
-  'hover:border-app-ring/45 hover:bg-surface-overlay hover:text-on-surface hover:shadow-md',
-  'active:scale-[0.97]',
-  'lg:min-h-[44px] lg:rounded-xl',
-  'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none',
-  'focus-visible:ring-offset-surface-via'
-);
+const secondaryActionClass =
+  'border-surface-border bg-surface-elevated/90 text-on-surface-muted min-h-[48px] cursor-pointer rounded-xl border font-semibold shadow-sm transition-[color,background-color,border-color,box-shadow,transform] duration-200 hover:border-app-ring/45 hover:bg-surface-overlay hover:text-on-surface hover:shadow-md active:scale-[0.97] lg:min-h-[44px] lg:rounded-xl focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none focus-visible:ring-offset-surface-via';
 
 export function LessonQuizActions({
   currentQuestionIndex,

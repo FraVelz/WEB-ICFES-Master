@@ -17,17 +17,15 @@ src/
 ├── features/             # Módulos principales de negocio
 ├── shared/               # UI transversal (Icon, ModalOverlay…) + constantes ICFES
 ├── storage/              # Implementación localStorage (uso interno)
-├── services/             # Persistencia Supabase/local + store + gamificación
+├── services/             # Persistencia Supabase/local + gamificación
 │   ├── persistence/      # API pública para features
-│   ├── persistence/      # Capa unificada (Supabase + demo local)
 │   ├── supabase/
-│   ├── store/            # Servicios de planes (no confundir con features/store ni Zustand)
 │   └── gamification/
-├── config/               # Supabase (`supabase.ts`, `supabaseClient.ts`) y `emailMessages.ts`
+├── config/               # Supabase, site, feature flags (`featureFlags.ts`)
 ├── components/           # Shell global (Providers, guards, DashboardHeader)
 ├── hooks/                # GSAP + hooks transversales (`hooks/gamification/`)
 ├── lib/                  # GSAP (ScrollTrigger)
-├── store/                # Zustand: uiSession (demo, plan UI) + `demoMode.ts`
+├── store/                # Zustand: uiSession (demo) + `demoMode.ts`
 ├── types/                # Tipos TypeScript globales
 └── utils/                # Utilidades puras (`cn`)
 ```
@@ -76,13 +74,15 @@ features/nombre-feature/
 | **achievements/** | Badges, UI de logros (ruta `/logros/`; hooks transversales en `hooks/gamification/`) |
 | **store/**        | Tienda virtual (UI), modales de compra                                               |
 
-### Tres nombres “store”
+### Dos nombres “store”
 
-| Ruta               | Qué es                                                              |
-| ------------------ | ------------------------------------------------------------------- |
-| `features/store/`  | Componentes y hooks de la tienda                                    |
-| `services/store/`  | Lógica de planes (`SubscriptionPlanService`, `PlanScheduleService`) |
-| `store/` (Zustand) | Estado UI: modo demo, plan seleccionado                             |
+| Ruta               | Qué es                                           |
+| ------------------ | ------------------------------------------------ |
+| `features/store/`  | Componentes y hooks de la tienda de monedas      |
+| `store/` (Zustand) | Estado UI: modo demo                             |
+
+Planes Free/Pro/Premium no están en el producto 2026 (`BILLING_ENABLED=false`). Ver
+[billing-no-2026.md](../decisions/billing-no-2026.md).
 
 ## Capa compartida (`src/shared/`)
 

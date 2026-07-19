@@ -4,10 +4,17 @@ import { Icon } from '@/shared/components/Icon';
 import { useDialogA11y } from '@/shared/hooks/useDialogA11y';
 import { useUserSettingsContext } from '@/features/user/context/UserSettingsContext';
 
+const CONFIRM_PHRASE = {
+  'clear-data': 'BORRAR TODO',
+  'delete-account': 'BORRAR MI CUENTA',
+} as const;
+
 export function SettingsDeleteModal() {
   const {
     showDeleteModal,
     setShowDeleteModal,
+    deleteMode,
+    setDeleteMode,
     deleteConfirmation,
     setDeleteConfirmation,
     loading,
@@ -17,17 +24,19 @@ export function SettingsDeleteModal() {
   const dialogRef = useRef<HTMLDivElement>(null);
   const titleId = useId();
   const confirmId = useId();
+  const phrase = deleteMode ? CONFIRM_PHRASE[deleteMode] : CONFIRM_PHRASE['clear-data'];
 
-  useDialogA11y(
-    showDeleteModal,
-    () => {
-      setShowDeleteModal(false);
-      setDeleteConfirmation('');
-    },
-    dialogRef
-  );
+  const closeModal = () => {
+    setShowDeleteModal(false);
+    setDeleteMode(null);
+    setDeleteConfirmation('');
+  };
 
-  if (!showDeleteModal) return null;
+  useDialogA11y(showDeleteModal, closeModal, dialogRef);
+
+  if (!showDeleteModal || !deleteMode) return null;
+
+  const onConfirm = deleteMode === 'clear-data' ? handleClearAllData : handleDeleteAccount;
 
   return (
     <div
@@ -53,16 +62,15 @@ export function SettingsDeleteModal() {
           Zona de Peligro
         </h2>
         <p className="text-on-surface-muted mb-6 text-center text-sm">
-          Estas acciones son irreversibles. Por favor confirma tu intención.
+          {deleteMode === 'clear-data'
+            ? 'Se eliminarán progreso y exámenes. Tu cuenta de acceso se mantiene.'
+            : 'Se eliminarán datos locales, historial de exámenes en la nube (si aplica) y se cerrará la sesión. Borrar la cuenta Auth puede requerir soporte.'}
         </p>
 
         <div className="space-y-4">
           <div className="border-surface-border bg-surface-via rounded-xl border p-4">
             <p className="text-on-surface-muted mb-2 text-sm font-medium">
-              Escribe{' '}
-              <span className="font-bold text-white">
-                &quot;{deleteConfirmation === 'BORRAR TODO' ? 'BORRAR TODO' : 'BORRAR MI CUENTA'}&quot;
-              </span>
+              Escribe <span className="font-bold text-white">&quot;{phrase}&quot;</span>
             </p>
             <input
               id={confirmId}
@@ -82,10 +90,7 @@ export function SettingsDeleteModal() {
           <div className="flex gap-3">
             <button
               type="button"
-              onClick={() => {
-                setShowDeleteModal(false);
-                setDeleteConfirmation('');
-              }}
+              onClick={closeModal}
               className={cn(
                 'bg-surface-overlay flex-1 cursor-pointer rounded-lg py-2.5 font-medium text-white transition-colors',
                 'focus-visible:ring-app-accent hover:bg-on-surface-muted focus-visible:ring-2 focus-visible:outline-none',
@@ -96,8 +101,8 @@ export function SettingsDeleteModal() {
             </button>
             <button
               type="button"
-              onClick={deleteConfirmation === 'BORRAR TODO' ? handleClearAllData : handleDeleteAccount}
-              disabled={loading || (deleteConfirmation !== 'BORRAR TODO' && deleteConfirmation !== 'BORRAR MI CUENTA')}
+              onClick={onConfirm}
+              disabled={loading || deleteConfirmation !== phrase}
               className={cn(
                 'flex-1 cursor-pointer rounded-lg bg-red-600 py-2.5 font-medium text-white',
                 'transition-colors hover:bg-red-500 disabled:cursor-not-allowed disabled:opacity-50',

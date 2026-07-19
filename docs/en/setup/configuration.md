@@ -8,15 +8,29 @@ Environment variables and runtime modes. For first-time setup, see [installation
 
 Copy [`.env.example`](../../../.env.example) to `.env.local` at the project root.
 
-| Variable                        | Required                  | Description                                                                 |
-| ------------------------------- | ------------------------- | --------------------------------------------------------------------------- |
-| `NEXT_PUBLIC_SUPABASE_URL`      | Yes                       | Supabase project URL                                                        |
-| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Yes                       | Supabase public anon key                                                    |
-| `OPENAI_API_KEY`                | No                        | OpenAI API key for `/api/chat` (AI assistant)                               |
-| `NEXT_PUBLIC_SITE_URL`          | Recommended in production | Public origin for `metadataBase`, sitemap, Open Graph, and canonical URLs   |
-| `NEXT_PUBLIC_TWITTER_SITE`      | No                        | Twitter/X handle (`@icfesmaster`) for `twitter:site` metadata               |
-| `KV_REST_API_URL`               | Recommended in production | Upstash/Vercel KV REST URL for distributed rate limits and chat daily quota |
-| `KV_REST_API_TOKEN`             | Recommended in production | KV token; without it limits are in-memory per serverless instance           |
+| Variable                        | Required                  | Description                                                                   |
+| ------------------------------- | ------------------------- | ----------------------------------------------------------------------------- |
+| `NEXT_PUBLIC_SUPABASE_URL`      | Yes                       | Supabase project URL                                                          |
+| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Yes                       | Supabase public anon key                                                      |
+| `BILLING_ENABLED`               | No (default `false`)      | Free/Pro/Premium plans product; keep off in 2026                              |
+| `NEXT_PUBLIC_BILLING_ENABLED`   | No (default `false`)      | Same flag for client bundles                                                  |
+| `OPENAI_ENABLED`                | No (default `false`)      | Enables the AI assistant on the server; also requires `OPENAI_API_KEY`        |
+| `NEXT_PUBLIC_OPENAI_ENABLED`    | No (default `false`)      | Client build flag (optional; mounts resolve via server `isOpenAIEnabled()`)   |
+| `OPENAI_API_KEY`                | No                        | OpenAI API key for `/api/chat` (assistant stays off without a key)            |
+| `NEXT_PUBLIC_SENTRY_DSN`        | No                        | Sentry DSN for exam runner load/submit errors; unset = no-op                  |
+| `NEXT_PUBLIC_SITE_URL`          | Recommended in production | Public origin for `metadataBase`, sitemap, Open Graph, and canonical URLs     |
+| `NEXT_PUBLIC_TWITTER_SITE`      | No                        | Twitter/X handle (`@icfesmaster`) for `twitter:site` metadata                 |
+| `KV_REST_API_URL`               | Recommended in production | Upstash/Vercel KV REST URL for distributed rate limits and chat daily quota   |
+| `KV_REST_API_TOKEN`             | Recommended in production | KV token; without it limits are in-memory per serverless instance             |
+
+### Feature flags (billing and OpenAI)
+
+Helpers in `src/config/featureFlags.ts`:
+
+- **`isBillingEnabled()`** — false by default. No live Free/Pro/Premium (ADR:
+  [billing-no-2026.md](../decisions/billing-no-2026.md)).
+- **`isOpenAIEnabled()`** — true only when the flag is truthy **and** `OPENAI_API_KEY` is set. Without flag or key,
+  the chat launcher is not mounted and `/api/chat` returns 503.
 
 ### API rate limiting
 

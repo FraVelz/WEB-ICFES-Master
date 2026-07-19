@@ -1,34 +1,16 @@
 import { FULL_EXAM_ROUTE_AREAS } from '@/features/exam/data/examAreas';
-import type { ExamQuestion } from '@/features/exam/types/question';
 import { loadQuestionsByIdsForGrading } from '@/features/exam/services/examQuestionsServer';
-import { isAnswerCorrect } from '@/features/exam/utils/answerKey';
+import {
+  gradeExamAnswersPure,
+  type GradedExamAnswer,
+} from '@/features/exam/services/gradeExamAnswersPure';
 
-export type GradedExamAnswer = {
-  questionId: string;
-  correct: boolean;
-  userAnswer: string;
-  correctAnswer: string;
-  explanation?: string;
-  text: string;
-  options: ExamQuestion['options'];
-};
+export type { GradedExamAnswer };
 
 export async function gradeExamAnswers(answers: Record<string, string>): Promise<GradedExamAnswer[]> {
   const ids = Object.keys(answers);
   const questions = await loadQuestionsByIdsForGrading(ids);
-
-  return questions.map((question) => {
-    const userAnswer = answers[question.id] ?? '';
-    return {
-      questionId: question.id,
-      correct: isAnswerCorrect(userAnswer, question.correctAnswer, question.options),
-      userAnswer,
-      correctAnswer: question.correctAnswer,
-      explanation: question.explanation,
-      text: question.text,
-      options: question.options,
-    };
-  });
+  return gradeExamAnswersPure(questions, answers);
 }
 
 async function gradeFullExamPool(answers: Record<string, string>): Promise<GradedExamAnswer[]> {

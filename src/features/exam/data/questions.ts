@@ -20,6 +20,7 @@ export const ENGLISH_QUESTIONS: ExamQuestion[] = [
     correctAnswer: 'b',
     explanation: 'Third person singular (she) takes "goes" in the present simple.',
     difficulty: 'básico',
+    version: 1,
   },
   {
     id: 'en-2',
@@ -33,6 +34,7 @@ export const ENGLISH_QUESTIONS: ExamQuestion[] = [
     correctAnswer: 'b',
     explanation: '"Books" is plural, so use "There are".',
     difficulty: 'básico',
+    version: 1,
   },
   {
     id: 'en-3',
@@ -46,6 +48,7 @@ export const ENGLISH_QUESTIONS: ExamQuestion[] = [
     correctAnswer: 'c',
     explanation: 'Second conditional uses "were" for hypothetical "I" in formal/formulaic English.',
     difficulty: 'intermedio',
+    version: 1,
   },
   {
     id: 'en-4',
@@ -59,6 +62,7 @@ export const ENGLISH_QUESTIONS: ExamQuestion[] = [
     correctAnswer: 'b',
     explanation: 'Comparison between two days requires the comparative "better".',
     difficulty: 'básico',
+    version: 1,
   },
   {
     id: 'en-5',
@@ -72,6 +76,7 @@ export const ENGLISH_QUESTIONS: ExamQuestion[] = [
     correctAnswer: 'c',
     explanation: 'Present simple affirmative "You like" → tag "don\'t you?".',
     difficulty: 'intermedio',
+    version: 1,
   },
   {
     id: 'en-6',
@@ -85,6 +90,7 @@ export const ENGLISH_QUESTIONS: ExamQuestion[] = [
     correctAnswer: 'a',
     explanation: 'Past passive: was/were + past participle.',
     difficulty: 'intermedio',
+    version: 1,
   },
   {
     id: 'en-7',
@@ -98,6 +104,7 @@ export const ENGLISH_QUESTIONS: ExamQuestion[] = [
     correctAnswer: 'b',
     explanation: 'The clause after "because" states the reason explicitly.',
     difficulty: 'básico',
+    version: 1,
   },
   {
     id: 'en-8',
@@ -111,6 +118,7 @@ export const ENGLISH_QUESTIONS: ExamQuestion[] = [
     correctAnswer: 'b',
     explanation: '"However" introduces a contrast between being tired and finishing homework.',
     difficulty: 'intermedio',
+    version: 1,
   },
   {
     id: 'en-9',
@@ -124,6 +132,7 @@ export const ENGLISH_QUESTIONS: ExamQuestion[] = [
     correctAnswer: 'b',
     explanation: '"Glad" means pleased or happy.',
     difficulty: 'básico',
+    version: 1,
   },
   {
     id: 'en-10',
@@ -137,6 +146,7 @@ export const ENGLISH_QUESTIONS: ExamQuestion[] = [
     correctAnswer: 'b',
     explanation: 'With "neither...nor", the verb often agrees with the nearer plural subject "brothers".',
     difficulty: 'intermedio',
+    version: 1,
   },
 ];
 

@@ -14,10 +14,8 @@ type ProfileStatsSectionProps = {
   title?: string;
 };
 
-const statCardClass = cn(
-  'rounded-xl border border-surface-border bg-surface-via/70 p-4 text-center',
-  'dark:border-transparent dark:bg-surface-overlay/50'
-);
+const statCardClass =
+  'rounded-xl border border-surface-border bg-surface-via/70 p-4 text-center dark:border-transparent dark:bg-surface-overlay/50';
 
 export function ProfileStatsSection({
   achievements,

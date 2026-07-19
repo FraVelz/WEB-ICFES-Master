@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import type { ExamQuestionDifficulty } from '@/features/exam/data/phaseSkipDifficulty';
 import { fetchQuestionsByRouteArea } from '@/features/exam/services/QuestionService';
 import type { ExamQuestionPublic } from '@/features/exam/types/question';
+import { captureExamRunnerError } from '@/lib/monitoring/examSentry';
 
 export function usePracticeExamQuestions(areaStr: string, difficulty?: ExamQuestionDifficulty | null) {
   const [allQuestions, setAllQuestions] = useState<ExamQuestionPublic[]>([]);
@@ -23,6 +24,7 @@ export function usePracticeExamQuestions(areaStr: string, difficulty?: ExamQuest
       })
       .catch((error: unknown) => {
         if (!active) return;
+        captureExamRunnerError(error, { phase: 'load', area: areaStr });
         setQuestionsError(error instanceof Error ? error.message : 'No se pudieron cargar las preguntas.');
         setAllQuestions([]);
       })

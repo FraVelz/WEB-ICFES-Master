@@ -13,6 +13,7 @@ type PracticeMobileAnswerSheetProps = {
   questions: ExamQuestionPublic[];
   answers: Record<string, string>;
   currentQuestion: number;
+  flaggedIds?: ReadonlySet<string>;
   phaseSkipPhaseTitle?: string;
   phaseSkipPassPercent?: number;
   onClose: () => void;
@@ -24,6 +25,7 @@ export function PracticeMobileAnswerSheet({
   questions,
   answers,
   currentQuestion,
+  flaggedIds,
   phaseSkipPhaseTitle,
   phaseSkipPassPercent,
   onClose,
@@ -76,6 +78,7 @@ export function PracticeMobileAnswerSheet({
             totalQuestions={questions.length}
             answers={answers}
             currentQuestion={currentQuestion}
+            flaggedIds={flaggedIds}
             onQuestionClick={(index) => {
               onScrollToQuestion(index);
               onClose();

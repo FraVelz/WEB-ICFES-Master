@@ -15,6 +15,7 @@ export function useUserSettingsState() {
   const [username, setUsername] = useState('');
   const [bio, setBio] = useState('');
   const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [deleteMode, setDeleteMode] = useState<'clear-data' | 'delete-account' | null>(null);
   const [deleteConfirmation, setDeleteConfirmation] = useState('');
   const [supportMode, setSupportMode] = useState('response');
   const [supportCategory, setSupportCategory] = useState('technical');
@@ -52,6 +53,8 @@ export function useUserSettingsState() {
     setBio,
     showDeleteModal,
     setShowDeleteModal,
+    deleteMode,
+    setDeleteMode,
     deleteConfirmation,
     setDeleteConfirmation,
     supportMode,

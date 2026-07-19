@@ -42,11 +42,19 @@ Create `.env.local` in the project root:
 NEXT_PUBLIC_SUPABASE_URL=https://your-project.supabase.co
 NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJ...
 
-# OpenAI (optional, for chat assistant)
+# OpenAI chat (optional; requires OPENAI_ENABLED=true and OPENAI_API_KEY)
+OPENAI_ENABLED=false
+NEXT_PUBLIC_OPENAI_ENABLED=false
 OPENAI_API_KEY=sk-...
+
+# Billing / Free-Pro-Premium (keep false in 2026)
+BILLING_ENABLED=false
+NEXT_PUBLIC_BILLING_ENABLED=false
 ```
 
 To try the app without an account, use **demo mode** from the landing page (no Supabase required for the demo session).
+
+The AI assistant only appears when `OPENAI_ENABLED=true` **and** `OPENAI_API_KEY` is set. Paid plans are not active in 2026 (see [billing-no-2026.md](../decisions/billing-no-2026.md)).
 
 ### 4. Start development server
 

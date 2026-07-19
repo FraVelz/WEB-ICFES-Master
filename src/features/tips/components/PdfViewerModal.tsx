@@ -13,19 +13,11 @@ type PdfViewerModalProps = {
   onClose: () => void;
 };
 
-const actionButtonClass = cn(
-  'inline-flex cursor-pointer items-center gap-1.5 rounded-lg px-2.5 py-1.5 text-sm font-medium transition-colors',
-  'text-on-surface-muted hover:bg-app-ring/20 hover:text-on-surface active:bg-app-ring/30',
-  'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none',
-  'focus-visible:ring-offset-surface-elevated'
-);
+const actionButtonClass =
+  'inline-flex cursor-pointer items-center gap-1.5 rounded-lg px-2.5 py-1.5 text-sm font-medium transition-colors text-on-surface-muted hover:bg-app-ring/20 hover:text-on-surface active:bg-app-ring/30 focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none focus-visible:ring-offset-surface-elevated';
 
-const iconButtonClass = cn(
-  'inline-flex cursor-pointer items-center justify-center rounded-lg p-2 transition-colors',
-  'text-on-surface-muted hover:bg-app-ring/20 hover:text-on-surface active:bg-app-ring/30',
-  'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none',
-  'focus-visible:ring-offset-surface-elevated'
-);
+const iconButtonClass =
+  'inline-flex cursor-pointer items-center justify-center rounded-lg p-2 transition-colors text-on-surface-muted hover:bg-app-ring/20 hover:text-on-surface active:bg-app-ring/30 focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none focus-visible:ring-offset-surface-elevated';
 
 export function PdfViewerModal({ isOpen, title, url, onClose }: PdfViewerModalProps) {
   const dialogRef = useRef<HTMLDivElement>(null);

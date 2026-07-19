@@ -33,11 +33,8 @@ export function LessonMarkdownBody({ content }: LessonMarkdownBodyProps) {
     annotateKatexNodes(root, content);
   }, [content]);
 
-  const linkClass = cn(
-    'focus-visible:ring-app-accent rounded-sm text-blue-400 underline decoration-blue-400/30',
-    'hover:text-blue-300 hover:decoration-blue-300 focus-visible:ring-2',
-    'focus-visible:ring-offset-2 focus-visible:ring-offset-surface-via focus-visible:outline-none'
-  );
+  const linkClass =
+    'focus-visible:ring-app-accent rounded-sm text-blue-400 underline decoration-blue-400/30 hover:text-blue-300 hover:decoration-blue-300 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-surface-via focus-visible:outline-none';
 
   return (
     <div ref={containerRef} role="region" aria-label="Contenido de la lección" className="lesson-markdown-body">

@@ -35,14 +35,8 @@ export function LessonContentFooter({
   const prevRef = useRef<HTMLButtonElement>(null);
   const nextRef = useRef<HTMLButtonElement>(null);
 
-  const navButtonBase = cn(
-    'flex min-w-[44px] cursor-pointer items-center justify-center gap-1.5 rounded-xl',
-    'font-medium transition-[color,background-color,border-color,box-shadow,transform] duration-200',
-    'sm:gap-2 sm:px-4 sm:py-3',
-    'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:ring-offset-2',
-    'focus-visible:outline-none focus-visible:ring-offset-surface-via',
-    'disabled:cursor-not-allowed disabled:opacity-60'
-  );
+  const navButtonBase =
+    'flex min-w-[44px] cursor-pointer items-center justify-center gap-1.5 rounded-xl font-medium transition-[color,background-color,border-color,box-shadow,transform] duration-200 sm:gap-2 sm:px-4 sm:py-3 focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none focus-visible:ring-offset-surface-via disabled:cursor-not-allowed disabled:opacity-60';
 
   const handlePrev = () => {
     if (!prevHref || navigating) return;

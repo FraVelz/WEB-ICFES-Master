@@ -10,12 +10,8 @@ import { ImportanciaSaber11Panel } from '../components/ImportanciaSaber11Panel';
 import { ImportanciaValidacionPanel } from '../components/ImportanciaValidacionPanel';
 import { useContentVariant } from '@/features/content/components/ContentPageShell';
 
-const internalLinkClass = cn(
-  'text-app-accent font-semibold underline underline-offset-2',
-  'hover:text-app-accent-muted transition-colors',
-  'focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none',
-  'focus-visible:ring-offset-surface'
-);
+const internalLinkClass =
+  'text-app-accent font-semibold underline underline-offset-2 hover:text-app-accent-muted transition-colors focus-visible:ring-app-accent focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none focus-visible:ring-offset-surface';
 
 export function ImportanciaPage() {
   const variant = useContentVariant();
