@@ -34,7 +34,7 @@ describe('practiceSessionStorage', () => {
   const baseSnapshot = {
     state: 'in_progress' as const,
     areaSlug: 'matematicas',
-    difficulty: null as const,
+    difficulty: null,
     examConfig: { numQuestions: 2, useTimer: true, timePerQuestion: 2 },
     questions: [
       { id: 'q1', text: 'Uno', options: [{ id: 'a', text: 'A' }] },

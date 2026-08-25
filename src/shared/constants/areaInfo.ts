@@ -1,10 +1,5 @@
 export type AreaId =
-  | 'lectura-critica'
-  | 'matematicas'
-  | 'ciencias-naturales'
-  | 'sociales-ciudadanas'
-  | 'ingles'
-  | 'examen-completo';
+  'lectura-critica' | 'matematicas' | 'ciencias-naturales' | 'sociales-ciudadanas' | 'ingles' | 'examen-completo';
 
 export type AreaInfo = {
   name: string;

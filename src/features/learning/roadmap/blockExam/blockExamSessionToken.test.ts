@@ -1,4 +1,4 @@
-import { afterEach, beforeEach, describe, expect, it } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { signBlockExamSession, verifyBlockExamSession } from './blockExamSessionToken';
 import type { NormalizedQuizQuestion } from '@/features/learning/roadmap/lessonQuiz/quizTypes';
 
@@ -12,16 +12,14 @@ const sampleQuestion: NormalizedQuizQuestion = {
 };
 
 describe('blockExamSessionToken', () => {
-  const originalEnv = { ...process.env };
-
   beforeEach(() => {
-    process.env.NODE_ENV = 'test';
+    vi.stubEnv('NODE_ENV', 'test');
     delete process.env.BLOCK_EXAM_SESSION_SECRET;
     delete process.env.SUPABASE_SERVICE_ROLE_KEY;
   });
 
   afterEach(() => {
-    process.env = { ...originalEnv };
+    vi.unstubAllEnvs();
   });
 
   it('firma y verifica con SUPABASE_SERVICE_ROLE_KEY cuando no hay secreto dedicado', () => {

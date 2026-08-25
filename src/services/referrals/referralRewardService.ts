@@ -14,8 +14,7 @@ function readCompletedLessonCount(achievementsRaw: unknown): number {
     return 0;
   }
   const meta = (achievementsRaw as Record<string, unknown>)[LEARNING_PROGRESS_META_KEY] as
-    | LearningProgressMeta
-    | undefined;
+    LearningProgressMeta | undefined;
   const lessons = meta?.completedLessons;
   return Array.isArray(lessons) ? lessons.length : 0;
 }
