@@ -11,7 +11,7 @@ import {
 /** Documented gold floor — see docs/ops/gold-bank.md (B3-3). */
 export const GOLD_BANK_N_PER_AREA = 8;
 
-const GOLD_BY_AREA: Record<string, { length: number }> = {
+const GOLD_BY_AREA = {
   matematicas: MATHEMATICS_QUESTIONS,
   'lectura-critica': LANGUAGE_QUESTIONS,
   'ciencias-naturales': SCIENCE_QUESTIONS,

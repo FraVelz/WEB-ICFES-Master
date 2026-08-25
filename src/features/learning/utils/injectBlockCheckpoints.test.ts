@@ -1,9 +1,10 @@
 import { describe, expect, it } from 'vitest';
 import { getBlockCheckpointId } from '@/features/learning/data/phase1Blocks';
 import type { LearningPathLesson } from '@/features/learning/services/LearningService';
+import type { LearningPhaseNumber } from '@/features/learning/constants/learningPhases';
 import { injectBlockCheckpoints } from '@/features/learning/utils/injectBlockCheckpoints';
 
-const lesson = (id: string, order: number, blockId?: string, phase = 1): LearningPathLesson => ({
+const lesson = (id: string, order: number, blockId?: string, phase: LearningPhaseNumber = 1): LearningPathLesson => ({
   id,
   order,
   phase,

@@ -8,9 +8,9 @@ updates:
     labels: [dependencies]
     ignore:
       - dependency-name: eslint
-        update-types: ["version-update:semver-major"]
+        update-types: ['version-update:semver-major']
       - dependency-name: typescript
-        update-types: ["version-update:semver-major"]
+        update-types: ['version-update:semver-major']
     groups:
       npm:
         patterns: ['*']

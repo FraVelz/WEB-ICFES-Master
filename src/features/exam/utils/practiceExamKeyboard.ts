@@ -3,10 +3,7 @@
  * 1–4 / A–D select options; N next; P previous; F toggle flag/mark.
  */
 export type PracticeKeyboardAction =
-  | { type: 'selectOption'; optionIndex: number }
-  | { type: 'next' }
-  | { type: 'prev' }
-  | { type: 'toggleFlag' };
+  { type: 'selectOption'; optionIndex: number } | { type: 'next' } | { type: 'prev' } | { type: 'toggleFlag' };
 
 const DIGIT_TO_INDEX: Record<string, number> = {
   Digit1: 0,

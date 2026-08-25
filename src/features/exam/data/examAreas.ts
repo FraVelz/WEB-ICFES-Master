@@ -3,11 +3,7 @@ export type ExamQuestionDbArea = 'matematicas' | 'lectura_critica' | 'ciencias_n
 
 /** Slug de ruta en la app (`/practica/[area]`) */
 export type ExamQuestionRouteArea =
-  | 'matematicas'
-  | 'lectura-critica'
-  | 'ciencias-naturales'
-  | 'sociales-ciudadanas'
-  | 'ingles';
+  'matematicas' | 'lectura-critica' | 'ciencias-naturales' | 'sociales-ciudadanas' | 'ingles';
 
 const EXAM_ROUTE_TO_DB_AREA: Record<ExamQuestionRouteArea, ExamQuestionDbArea> = {
   matematicas: 'matematicas',
